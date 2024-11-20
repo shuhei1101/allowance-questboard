@@ -1,6 +1,8 @@
 import '../families/family_id.dart';
 import 'member.dart';
+import 'member_id.dart';
 
 abstract interface class MemberRepository {
-  List<Member> findMembersBy(FamilyId familyId);
+  Member? find(MemberId memberId);
+  List<Member>? findMembersBy(FamilyId familyId);
 }

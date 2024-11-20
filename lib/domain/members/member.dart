@@ -9,8 +9,8 @@ import 'member_id.dart';
 import 'member_name.dart';
 
 class Member {
-  Member(
-      {required this.id,
+  Member({
+      required this.id,
       required this.familyId,
       required this.name,
       required this.icon,
@@ -21,8 +21,7 @@ class Member {
       required this.minSavings,
       required this.createdAt,
       required this.updatedAt
-    }
-  );
+  });
 
   final MemberId id;
   final FamilyId familyId;

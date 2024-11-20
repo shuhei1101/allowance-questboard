@@ -1,7 +1,10 @@
 import 'package:get_it/get_it.dart';
 
 import '../../domain/families/family_id.dart';
+import '../../domain/members/member_id.dart';
 import '../../domain/members/member_repository.dart';
+import 'exceptions/not_found_member.dart';
+import 'exceptions/not_found_members.dart';
 import 'member_data.dart';
 
 class MemberApplicationService {
@@ -11,8 +14,25 @@ class MemberApplicationService {
 
   late MemberRepository _memberRepository;
 
-  List<MemberData> getMembersBy(String familyId) {
+  /// Raises :
+  /// - [NotFoundMember]
+  MemberData getMember(String memberId) {
+    var member = _memberRepository.find(MemberId(memberId));
+    try {
+      return MemberData(member!);
+    } on TypeError {
+      throw NotFoundMember();
+    }
+  }
+
+  /// Raises :
+  /// - [NotFoundMembers]
+  List<MemberData> getFamilyMembers(String familyId) {
     var members = _memberRepository.findMembersBy(FamilyId(familyId));
-    return members.map((member) => MemberData(member)).toList();
+    try {
+      return members!.map((member) => MemberData(member)).toList();
+    } on TypeError {
+      throw NotFoundMembers();
+    }
   }
 }
