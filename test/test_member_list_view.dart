@@ -25,7 +25,10 @@ class TestMemberListView extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Member List')),
-        body: MemberListView(members),
+        body: MemberListView(
+          members: members,
+          onTap: (testFamilyId) {},
+        ),
       ),
     );
   }

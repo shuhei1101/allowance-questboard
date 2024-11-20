@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../application/members/member_application_service.dart';
 import '../../application/members/member_data.dart';
@@ -19,7 +20,12 @@ class MembersPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('メンバー一覧'),
       ),
-      body: MemberListView(members),
+      body: MemberListView(
+        members: members,
+        onTap: (memberId) {
+          context.push('/test/member/$memberId');
+        },
+      ),
     );
   }
 }
