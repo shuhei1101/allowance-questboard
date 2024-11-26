@@ -1,4 +1,4 @@
-import '../families/family_id.dart';
+import '../family/family_id.dart';
 import 'member.dart';
 import 'member_id.dart';
 

@@ -1,8 +1,8 @@
-import 'package:allowance_questboard/application/members/member_application_service.dart';
-import 'package:allowance_questboard/application/members/member_data.dart';
-import 'package:allowance_questboard/domain/members/member_repository.dart';
+import 'package:allowance_questboard/application/member/member_application_service.dart';
+import 'package:allowance_questboard/application/member/member_data.dart';
+import 'package:allowance_questboard/domain/member/member_repository.dart';
 import 'package:allowance_questboard/infrastructure/inmemory/im_member_repository.dart';
-import 'package:allowance_questboard/presentation/components/members/member_list_view.dart';
+import 'package:allowance_questboard/presentation/component/member/member_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

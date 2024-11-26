@@ -1,20 +1,19 @@
-import 'exceptions/key_already_exists_exception.dart';
-import 'member_exp.dart';
+import 'exceptions.dart';
 import 'rank.dart';
 
 class RankExpMap {
-  final Map<Rank, MemberExp> map;
+  final Map<Rank, int> map;
 
   RankExpMap({required this.map});
 
-  void add(Rank rank, MemberExp exp) {
+  void add(Rank rank, int exp) {
     if (map.containsKey(rank)) {
       throw KeyAlreadyExistsException();
     }
     map[rank] = exp;
   }
 
-  MemberExp? get(Rank rank) {
+  int? get(Rank rank) {
     return map[rank];
   }
 
@@ -22,7 +21,7 @@ class RankExpMap {
     return map.length;
   }
 
-  List<MemberExp> getAllValues() {
+  List<int> getAllValues() {
     return map.values.toList();
   }
 }

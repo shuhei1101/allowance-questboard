@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/families/family_id.dart';
-import '../../domain/members/education.dart';
-import '../../domain/members/grade.dart';
-import '../../domain/members/member.dart';
-import '../../domain/members/member_exp.dart';
-import '../../domain/members/member_id.dart';
-import '../../domain/members/member_name.dart';
-import '../../domain/members/member_repository.dart';
+import '../../domain/family/family_id.dart';
+import '../../domain/member/education.dart';
+import '../../domain/member/grade.dart';
+import '../../domain/member/member.dart';
+import '../../domain/member/member_exp.dart';
+import '../../domain/member/member_id.dart';
+import '../../domain/member/member_name.dart';
+import '../../domain/member/member_repository.dart';
 import '../../domain/shared/birthday.dart';
 import '../../domain/shared/money.dart';
 
@@ -19,7 +19,7 @@ class InMemoryMemberRepository implements MemberRepository {
       familyId: FamilyId("123456"),
       name: MemberName("Alice"),
       icon: const Icon(Icons.person),
-      birthday: Birthday(DateTime(1990, 1, 1)),
+      birthday: Birthday(DateTime(2024, 1, 1)),
       grade: Grade(Education.elementary, 2),
       exp: MemberExp(11),
       balance: Money(10),

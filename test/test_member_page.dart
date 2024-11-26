@@ -6,20 +6,15 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
-  GetIt.I.registerLazySingleton<MemberRepository>(
-      () => InMemoryMemberRepository());
-  runApp(TestMembersPage());
+  GetIt.I.registerLazySingleton<MemberRepository>(() => InMemoryMemberRepository());
+  runApp(TestMemberPage());
 }
 
-// ignore: must_be_immutable
-class TestMembersPage extends StatelessWidget {
-  final router =
-      GoRouter(initialLocation: '/members/4asdf243', routes: $appRoutes);
+class TestMemberPage extends StatelessWidget {
+  final router = GoRouter(initialLocation: '/members/:testFamilyId/member/:testMemberId', routes: $appRoutes);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
-    );
+    return MaterialApp.router(routerConfig: router);
   }
 }
