@@ -13,8 +13,7 @@ class MemberData {
         grade = source.grade.grade,
         exp = source.exp.value,
         balance = source.balance.value,
-        minSavings = source.minSavings.value,
-        level = source.level.value;
+        minSavings = source.minSavings.value;
 
   final String id;
   final String name;
@@ -26,7 +25,6 @@ class MemberData {
   final int exp;
   final int balance;
   final int minSavings;
-  final int level;
 
   String get displayGrade => "$education$grade年生";
 }

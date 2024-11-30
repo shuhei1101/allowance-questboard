@@ -29,7 +29,6 @@ class MockMemberApplicationService implements MemberApplicationService {
       birthday: Birthday(DateTime(2020, 1, 1)),
       grade: Grade(Education.elementary, 2),
       exp: MemberExp(111),
-      level: MemberLevel(1),
       balance: Money(33),
       minSavings: Money(44),
       createdAt: DateTime.now(),

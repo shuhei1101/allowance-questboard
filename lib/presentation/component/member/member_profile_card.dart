@@ -29,14 +29,14 @@ class MemberProfileScreen extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(), // スクロールを無効化
               children: [
                 ProfilePropertyCard(
-                  color: Colors.red,
-                  title: "ランク",
-                  body: member.exp.toString(),
-                ),
-                ProfilePropertyCard(
                   color: Colors.purple,
                   title: "ランク",
-                  body: member.level.toString(),
+                  body: "member.level.toString()",
+                ),
+                ProfilePropertyCard(
+                  color: Colors.red,
+                  title: "達成クエスト",
+                  body: member.exp.toString(),
                 ),
               ],
             ),

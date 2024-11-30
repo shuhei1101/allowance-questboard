@@ -1,10 +1,9 @@
-import 'package:allowance_questboard/domain/member/member_level.dart';
+import 'package:allowance_questboard/domain/family/family_id.dart';
+import 'package:allowance_questboard/domain/shared/age.dart';
+import 'package:allowance_questboard/domain/shared/birthday.dart';
+import 'package:allowance_questboard/domain/shared/money.dart';
 import 'package:flutter/material.dart';
 
-import '../family/family_id.dart';
-import '../shared/age.dart';
-import '../shared/birthday.dart';
-import '../shared/money.dart';
 import 'grade.dart';
 import 'member_exp.dart';
 import 'member_id.dart';
@@ -19,7 +18,6 @@ class Member {
       required this.birthday,
       required this.grade,
       required this.exp,
-      required this.level,
       required this.balance,
       required this.minSavings,
       required this.createdAt,
@@ -32,7 +30,6 @@ class Member {
   final Birthday birthday;
   final Grade grade;
   final MemberExp exp;
-  final MemberLevel level;
   final Money balance;
   final Money minSavings;
   final DateTime createdAt;
