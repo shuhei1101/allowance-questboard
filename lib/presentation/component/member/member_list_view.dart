@@ -16,39 +16,37 @@ class MemberListView extends StatelessWidget {
       child: ListView.builder(
         itemCount: members.length,
         itemBuilder: (context, index) {
-          final member = members[index];
-          return
-              // InkWell(
-              //     onTap: () => onTap(member.id),
-              //     child:
-              Padding(
-                  padding: EdgeInsets.only(bottom: 5),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: () => onTap(member.id),
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                        child: Column(
+          final _member = members[index];
+          return Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () => onTap(_member.id),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                    child: Column(
+                      children: [
+                        MemberListTile(
+                          member: _member,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            MemberListTile(member),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text('ランク:${member.exp}', textAlign: TextAlign.right),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text('今月の報酬:${member.balance}', textAlign: TextAlign.right),
-                              ],
-                            ),
+                            Text('ランク:${_member.exp}', textAlign: TextAlign.right),
                           ],
                         ),
-                      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text('今月の報酬:${_member.balance}', textAlign: TextAlign.right),
+                          ],
+                        ),
+                      ],
                     ),
-                  ));
+                  ),
+                ),
+              ));
         },
       ),
     );

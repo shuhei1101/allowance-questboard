@@ -1,3 +1,4 @@
+import 'package:allowance_questboard/domain/member/member_level.dart';
 import 'package:flutter/material.dart';
 
 import '../family/family_id.dart';
@@ -18,6 +19,7 @@ class Member {
       required this.birthday,
       required this.grade,
       required this.exp,
+      required this.level,
       required this.balance,
       required this.minSavings,
       required this.createdAt,
@@ -30,6 +32,7 @@ class Member {
   final Birthday birthday;
   final Grade grade;
   final MemberExp exp;
+  final MemberLevel level;
   final Money balance;
   final Money minSavings;
   final DateTime createdAt;
@@ -47,4 +50,15 @@ class Member {
 
     return Age(rawAge);
   }
+
+  // // リポジトリ側で実装する
+  // MemberLevel getLevel(Map<MemberLevel, MemberExp> map) {
+  //   for (var entry in map.entries) {
+  //     if (exp.value >= entry.value.value) {
+  //       return entry.key;
+  //     }
+  //   }
+  //   // どのレベルにも一致しない場合、レベル1を返却
+  //   return MemberLevel(1);
+  // }
 }
