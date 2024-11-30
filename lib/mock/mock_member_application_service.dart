@@ -1,5 +1,4 @@
 import 'package:allowance_questboard/application/member/member_application_service.dart';
-import 'package:allowance_questboard/domain/member/member_level.dart';
 import 'package:flutter/material.dart';
 
 import 'package:allowance_questboard/application/member/member_data.dart';
