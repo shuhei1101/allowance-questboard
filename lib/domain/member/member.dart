@@ -48,7 +48,7 @@ class Member {
     return Age(rawAge);
   }
 
-  // // リポジトリ側で実装する
+  // // MemberProfileアプリケーションサービスで実装する
   // MemberLevel getLevel(Map<MemberLevel, MemberExp> map) {
   //   for (var entry in map.entries) {
   //     if (exp.value >= entry.value.value) {
