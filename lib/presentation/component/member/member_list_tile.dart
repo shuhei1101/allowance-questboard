@@ -1,6 +1,7 @@
 import 'package:allowance_questboard/application/member/member_data.dart';
 import 'package:flutter/material.dart';
 
+/// メンバーの[icon][name][id]を表示するListTile
 class MemberListTile extends StatelessWidget {
   MemberListTile({required member}) : _member = member;
 

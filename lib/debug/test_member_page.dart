@@ -1,6 +1,4 @@
 import 'package:allowance_questboard/application/member/member_application_service.dart';
-import 'package:flutter/material.dart';
-
 import 'package:allowance_questboard/application/member/member_data.dart';
 import 'package:allowance_questboard/domain/family/family_id.dart';
 import 'package:allowance_questboard/domain/member/education.dart';
@@ -11,6 +9,24 @@ import 'package:allowance_questboard/domain/member/member_id.dart';
 import 'package:allowance_questboard/domain/member/member_name.dart';
 import 'package:allowance_questboard/domain/shared/birthday.dart';
 import 'package:allowance_questboard/domain/shared/money.dart';
+import 'package:allowance_questboard/presentation/router/app_route.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+
+void main() {
+  GetIt.I.registerFactory<MemberApplicationService>(() => MockMemberApplicationService());
+  runApp(TestMemberPage());
+}
+
+class TestMemberPage extends StatelessWidget {
+  final router = GoRouter(initialLocation: '/members/:testFamilyId/member/:testMemberId', routes: $appRoutes);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(routerConfig: router);
+  }
+}
 
 class MockMemberApplicationService implements MemberApplicationService {
   @override

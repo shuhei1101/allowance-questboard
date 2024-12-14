@@ -2,10 +2,10 @@ import 'package:allowance_questboard/presentation/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 
 main() {
-  runApp(MyApp());
+  runApp(TestAppThemes());
 }
 
-class MyApp extends StatelessWidget {
+class TestAppThemes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(
-              title: Text('Home Scre en'),
+              title: Text('Home Screen'),
             ),
             body: Column(
               children: [

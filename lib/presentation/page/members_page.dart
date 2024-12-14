@@ -1,3 +1,4 @@
+import 'package:allowance_questboard/presentation/page/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -18,8 +19,9 @@ class MembersPage extends StatelessWidget {
     return FutureBuilder<List<MemberData>?>(
         future: _service.getFamilyMembers(familyId),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage();
           _members = snapshot.data;
-
           return Scaffold(
             appBar: AppBar(
               title: const Text('メンバ管理'),

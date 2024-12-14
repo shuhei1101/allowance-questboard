@@ -19,7 +19,7 @@ class MemberPage extends StatelessWidget {
         future: _service.getMember(memberId: memberId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null) ErrorPage();
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage();
           final _member = snapshot.data;
           return Scaffold(
             appBar: AppBar(
