@@ -7,7 +7,7 @@ import 'package:allowance_questboard/domain/quest/quest_name.dart';
 import 'package:allowance_questboard/domain/quest/quest_release_period.dart';
 import 'package:flutter/material.dart';
 
-class Quest {
+abstract class Quest {
   Quest(
       {required this.id,
       required this.name,

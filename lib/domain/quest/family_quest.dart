@@ -1,8 +1,11 @@
+import 'package:allowance_questboard/domain/allowance/allowanceable.dart';
 import 'package:allowance_questboard/domain/family/family_id.dart';
+import 'package:allowance_questboard/domain/quest/key_questable.dart';
 import 'package:allowance_questboard/domain/quest/quest.dart';
 import 'package:allowance_questboard/domain/quest/quest_id.dart';
+import 'package:allowance_questboard/domain/quest/quest_member_statuses.dart';
 
-class FamilyQuest extends Quest {
+class FamilyQuest extends Quest implements Allowanceable, KeyQuestable {
   FamilyQuest({
     required super.id,
     required super.name,
@@ -16,11 +19,15 @@ class FamilyQuest extends Quest {
     required super.levelDetails,
     required super.createdAt,
     required super.updatedAt,
+    required this.familyId,
+    required this.isPublic,
+    required this.memberStatuses,
     required this.isShared,
     required this.sharedQuestId,
-    required this.familyId,
   });
   final FamilyId familyId;
+  final bool isPublic;
+  final QuestMemberStatuses? memberStatuses;
   final bool isShared;
   final QuestId sharedQuestId;
 }

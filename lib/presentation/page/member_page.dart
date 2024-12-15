@@ -20,7 +20,7 @@ class MemberPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
           if (snapshot.hasError || snapshot.data == null) return ErrorPage();
-          final _member = snapshot.data;
+          final member = snapshot.data;
           return Scaffold(
             appBar: AppBar(
               title: Text("プロフィール"),
@@ -30,7 +30,7 @@ class MemberPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  MemberProfileScreen(member: _member!),
+                  MemberProfileScreen(member: member!),
                 ],
               ),
             ),
