@@ -1,4 +1,4 @@
 class QuestCategoryId {
-  QuestCategoryId({required this.value});
+  QuestCategoryId(this.value);
   final String value;
 }

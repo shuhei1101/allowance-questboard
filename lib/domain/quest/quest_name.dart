@@ -1,4 +1,4 @@
 class QuestName {
-  QuestName({required this.value});
+  QuestName(this.value);
   final String value;
 }

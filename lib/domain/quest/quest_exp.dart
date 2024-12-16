@@ -1,4 +1,4 @@
 class QuestExp {
-  QuestExp({required this.value});
+  QuestExp(this.value);
   final int value;
 }

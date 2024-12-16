@@ -27,7 +27,7 @@ abstract class Quest {
   final Icon icon;
   final QuestReleasePeriod releasePeriod;
   final QuestLimitedTimePeriod limitedTimePeriod;
-  final KeyQuests keyQuests;
+  final KeyQuests? keyQuests;
   final String client;
   final String missionDescription;
   final QuestLevelDetails levelDetails;

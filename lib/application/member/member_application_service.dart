@@ -17,7 +17,7 @@ class MemberApplicationService {
     return MemberData(member);
   }
 
-  Future<List<MemberData?>?> getFamilyMembers(String familyId) async {
+  Future<List<MemberData>?> getFamilyMembers(String familyId) async {
     final members = await _memberRepository.findMembersBy(FamilyId(familyId));
 
     if (members == null) return null;
