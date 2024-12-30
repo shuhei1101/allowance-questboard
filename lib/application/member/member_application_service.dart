@@ -22,7 +22,6 @@ class MemberApplicationService {
 
     if (members == null) return null;
 
-    // 取得したメンバーをDTOに変換して返却する
     return members.map((member) => MemberData(member)).toList();
   }
 }

@@ -40,23 +40,20 @@ class FamilyQuestListView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // メンバーのアイコンを表示
                             Row(
                               children: [
-                                if (quest.participants != null)
-                                  for (final participant in quest.participants!)
-                                    if (participant != null)
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 5),
-                                        child: participant.icon,
-                                      ),
-                                // 共有アイコンを表示（共有済みなら青の地球儀マーク）
-                                Icon(
-                                  Icons.public,
-                                  color: quest.isShared ? Colors.blue : Colors.grey,
-                                ),
+                                for (final participant in quest.participants)
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 5),
+                                    child: participant.icon,
+                                  ),
                               ],
-                            )
+                            ),
+                            // 共有アイコンを表示（共有済みなら青の地球儀マーク）
+                            Icon(
+                              Icons.public,
+                              color: quest.isShared ? Colors.blue : Colors.grey,
+                            ),
                           ],
                         ),
                       ],

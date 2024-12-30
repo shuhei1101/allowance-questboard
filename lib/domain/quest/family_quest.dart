@@ -27,7 +27,7 @@ class FamilyQuest extends Quest implements Allowanceable, KeyQuestable {
   });
   final FamilyId familyId;
   final bool isPublic;
-  final QuestParticipants? participants;
+  final QuestParticipants participants;
   final bool isShared;
   final QuestId? sharedQuestId;
 }

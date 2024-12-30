@@ -11,7 +11,6 @@ class MembersPage extends StatelessWidget {
   MembersPage({required this.familyId, super.key}) : _service = GetIt.I<MemberApplicationService>();
 
   final String familyId;
-  late List<MemberData>? _members;
   final MemberApplicationService _service;
 
   @override
@@ -21,22 +20,23 @@ class MembersPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
           if (snapshot.hasError || snapshot.data == null) return ErrorPage();
-          _members = snapshot.data;
+          final members = snapshot.data;
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('メンバ管理'),
-              actions: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
-              ],
-            ),
-            body: MemberListView(
-              members: _members!,
-              onTap: (memberId) {
-                MemberRoute(familyId: familyId, memberId: memberId).push(context);
-              },
-            ),
-          );
+              appBar: AppBar(
+                title: const Text('メンバ管理'),
+                actions: [
+                  IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
+                ],
+              ),
+              body: Expanded(
+                child: MemberListView(
+                  members: members!,
+                  onTap: (memberId) {
+                    MemberRoute(familyId: familyId, memberId: memberId).push(context);
+                  },
+                ),
+              ));
         });
   }
 }
