@@ -1,13 +1,24 @@
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/domain/family/family_id.dart';
 import 'package:allowance_questboard/domain/member/member_repository.dart';
 import 'package:allowance_questboard/domain/quest/family_quest.dart';
 import 'package:allowance_questboard/domain/quest/family_quest_repository.dart';
+import 'package:allowance_questboard/domain/quest/quest_detail_repository.dart';
+import 'package:allowance_questboard/domain/quest/quest_id.dart';
+import 'package:allowance_questboard/domain/quest/quest_participants.dart';
 import 'package:get_it/get_it.dart';
 
 class FamilyQuestApplicationService {
   final FamilyQuestRepository _familyQuestRepository = GetIt.I<FamilyQuestRepository>();
   final MemberRepository _memberRepository = GetIt.I<MemberRepository>();
+  final QuestDetailRepository _questDetailRepository = GetIt.I<QuestDetailRepository>();
+
+  Future<FamilyQuestData?> getFamilyQuest(String questId) async {
+    final familyQuest = await _familyQuestRepository.find(QuestId(questId));
+    if (familyQuest == null) return null;
+    return await _getFamilyQuestData(familyQuest);
+  }
 
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
     final familyQuests = await _familyQuestRepository.findAllBy(FamilyId(familyId));
@@ -20,13 +31,23 @@ class FamilyQuestApplicationService {
   }
 
   Future<FamilyQuestData> _getFamilyQuestData(FamilyQuest familyQuest) async {
-    final participants = familyQuest.participants;
+    final participantsData = await _getParticipantsData(familyQuest.participants);
+    final questDetails = await _getQuestDetailsData(familyQuest.id);
+    return FamilyQuestData.fromDomain(familyQuest: familyQuest, participants: participantsData, questLevelDetails: questDetails);
+  }
+
+  Future<List<ParticipantData>> _getParticipantsData(QuestParticipants participants) async {
     final List<ParticipantData> participantsData = [];
     for (var participant in participants.list) {
       final member = await _memberRepository.find(participant.memberId);
       if (member == null) continue;
       participantsData.add(ParticipantData.fromDomain(status: participant, member: member));
     }
-    return FamilyQuestData.fromDomain(familyQuest: familyQuest, participants: participantsData);
+    return participantsData;
+  }
+
+  Future<Map<int, QuestDetailData>> _getQuestDetailsData(QuestId questId) async {
+    final questLevelDetails = await _questDetailRepository.find(questId);
+    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailData.fromDomain(questDetail: questLevelDetail.value)};
   }
 }

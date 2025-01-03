@@ -4,5 +4,5 @@ import 'member_id.dart';
 
 abstract interface class MemberRepository {
   Future<Member?> find(MemberId memberId);
-  Future<List<Member>?> findMembersBy(FamilyId familyId);
+  Future<List<Member>?> findMembers(FamilyId familyId);
 }

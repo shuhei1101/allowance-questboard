@@ -16,3 +16,9 @@ class ErrorPage extends StatelessWidget {
         ));
   }
 }
+
+void main() {
+  runApp(MaterialApp(
+    home: ErrorPage(),
+  ));
+}
