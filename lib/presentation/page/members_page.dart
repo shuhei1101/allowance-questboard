@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../application/member/member_application_service.dart';
@@ -7,50 +8,36 @@ import '../component/member/member_list_view.dart';
 import '../router/app_route.dart';
 
 class MembersPage extends StatelessWidget {
-  MembersPage({required this.familyId, super.key}) {
-    members = service.getFamilyMembers(familyId);
-  }
+  MembersPage({required familyId, super.key})
+      : _familyId = familyId,
+        _service = GetIt.I<MemberApplicationService>();
 
-  final String familyId;
-  late List<MemberData>? members;
-  final service = MemberApplicationService();
+  final String _familyId;
+  late List<MemberData>? _members;
+  final MemberApplicationService _service;
 
   @override
   Widget build(BuildContext context) {
-    // if (members == null) context.pop();
-    showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: Text("タイトル"),
-            content: Text("メッセージメッセージメッセージメッセージメッセージメッセージ"),
-            actions: <Widget>[
-              // ボタン領域
-              TextButton(
-                child: Text("Cancel"),
-                onPressed: () => Navigator.pop(context),
-              ),
-              TextButton(
-                child: Text("OK"),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
+    return FutureBuilder<List<MemberData>?>(
+        future: _service.getFamilyMembers(_familyId),
+        builder: (context, snapshot) {
+          _members = snapshot.data;
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('メンバ管理'),
+              actions: [
+                IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
+              ],
+            ),
+            body: MemberListView(
+              members: _members!,
+              onTap: (memberId) {
+                MemberRoute(familyId: _familyId, memberId: memberId).push(context);
+              },
+            ),
           );
         });
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('メンバ管理'),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
-        ],
-      ),
-      body: MemberListView(
-        members: members!,
-        onTap: (memberId) {
-          MemberRoute(familyId: familyId, memberId: memberId).push(context);
-        },
-      ),
-    );
   }
 }
