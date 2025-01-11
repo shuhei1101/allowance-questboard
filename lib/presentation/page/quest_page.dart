@@ -3,8 +3,10 @@ import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/presentation/component/quest/quest_detail_page_view.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
+import 'package:allowance_questboard/presentation/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 class QuestPage extends StatelessWidget {
   QuestPage({required this.questId}) : _service = GetIt.I.get<FamilyQuestApplicationService>();
@@ -29,7 +31,6 @@ class QuestPage extends StatelessWidget {
           ),
           body: Column(
             children: [
-              familyQuest.icon,
               Expanded(
                 child: QuestDetailPageView(
                   quest: familyQuest,
@@ -45,20 +46,30 @@ class QuestPage extends StatelessWidget {
 
 void main() {
   GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
-  runApp(MaterialApp(
-    home: QuestPage(questId: "123"),
+  final router = GoRouter(initialLocation: '/quest/123', routes: $appRoutes);
+  runApp(MaterialApp.router(
+    routerConfig: router,
   ));
 }
 
 class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
   @override
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
-    return FamilyQuestData(id: "123", name: "Test Quest", icon: Icon(Icons.person), isPublic: true, isShared: true, participants: [
-      ParticipantData(icon: Icon(Icons.person)),
-    ], questLevelDetails: {
-      1: QuestDetailData(successCondition: "successCondition1", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1),
-      2: QuestDetailData(successCondition: "successCondition2", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1)
-    });
+    return FamilyQuestData(
+      id: "123",
+      name: "Test Quest",
+      icon: Icon(Icons.person),
+      isPublic: true,
+      isShared: true,
+      category: 'テスト分類',
+      participants: [
+        ParticipantData(icon: Icon(Icons.person)),
+      ],
+      questLevelDetails: {
+        1: QuestDetailData(successCondition: "successCondition1", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1),
+        2: QuestDetailData(successCondition: "successCondition2", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1)
+      },
+    );
   }
 
   @override

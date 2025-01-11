@@ -5,8 +5,12 @@ import 'package:allowance_questboard/presentation/component/shared/setting_entry
 import 'package:flutter/material.dart';
 
 class QuestDetailPageView extends StatefulWidget {
-  QuestDetailPageView({required this.quest});
+  QuestDetailPageView({
+    required this.quest,
+    this.defaultLevel = 1,
+  });
   final QuestData quest;
+  final int defaultLevel;
 
   @override
   State<StatefulWidget> createState() => _QuestDetailPageViewState();
@@ -18,6 +22,13 @@ class _QuestDetailPageViewState extends State<QuestDetailPageView> implements Qu
   int _currentPage = 0;
   int _currentLevel = 1;
 
+  @override
+  void initState() {
+    super.initState();
+    _currentLevel = widget.defaultLevel;
+  }
+
+  @override
   void toLevel(int level) {
     setState(() {
       _currentLevel = level;
@@ -94,7 +105,7 @@ class QuestDetailFirst extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         quest.icon,
         SettingEntry(
@@ -105,7 +116,8 @@ class QuestDetailFirst extends StatelessWidget {
               delegate: delegate,
               maxLevel: _maxLevel,
             )),
-        SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text(_questDetail.successCondition)),
+        SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text(quest.category)),
+        SettingEntry(icon: Icon(Icons.abc), title: "成功条件", body: Text(_questDetail.successCondition)),
       ],
     );
   }
@@ -117,7 +129,7 @@ class QuestDetailSecond extends StatelessWidget {
   final QuestDetailData _questDetail;
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         SettingEntry(icon: Icon(Icons.abc), title: "second", body: Text(_questDetail.successCondition)),
         SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text("test")),
@@ -132,7 +144,7 @@ class QuestDetailThird extends StatelessWidget {
   final QuestDetailData _questDetail;
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         SettingEntry(icon: Icon(Icons.abc), title: "third", body: Text(_questDetail.successCondition)),
         SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text("test")),
@@ -148,7 +160,7 @@ void main() {
         title: Text("test"),
       ),
       body: QuestDetailPageView(
-        quest: QuestData(id: "123", icon: Icon(Icons.person), name: "テストクエスト", questLevelDetails: {
+        quest: QuestData(id: "123", icon: Icon(Icons.person), name: "テストクエスト", category: "テスト分類", questLevelDetails: {
           1: QuestDetailData(
             successCondition: "レベル1の成功条件",
             failureCondition: "レベル1の失敗条件",

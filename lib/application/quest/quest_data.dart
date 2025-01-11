@@ -6,12 +6,14 @@ class QuestData {
     required this.id,
     required this.name,
     required this.icon,
+    required this.category,
     required this.questLevelDetails,
   });
   final String id;
   final String name;
   final Icon icon;
-  // レベルに対するquestDetail
+  final String category;
+  // クエストレベルに対するquestDetail
   final Map<int, QuestDetailData> questLevelDetails;
 
   int get maxLevel => questLevelDetails.length;
