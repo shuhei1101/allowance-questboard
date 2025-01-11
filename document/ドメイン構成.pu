@@ -1,0 +1,436 @@
+@startuml "ディレクトリ構成"
+left to right direction
+
+package domain {
+    package credentials {
+        abstract Credential {
+            MailAddress mailAddress
+            Password password
+            {abstract} _fetchEmail()
+        }
+        Credential <|-- FamilyCredential
+        Credential <|-- MemberCredential
+        class FamilyCredential {
+            FamilyId? id
+            _fetchEmail()
+        }
+        class MemberCredential {
+            MemberId? id
+            _fetchEmail()
+        }
+        class CredentialService {
+            Credential credential
+            login()
+            signUp()
+            updatePassword()
+            logout()
+        }
+    }
+    package families {
+        class Family <Reportable> {
+            FamilyId id
+            FamilyName name
+            Icon icon
+            String introduction
+            List<MemberId> memberIds
+            DateTime createdAt
+            DateTime updatedAt
+        }
+        Family *--> FamilyId
+        Family *--> FamilyName
+        class FamilyId {
+            int value
+        }
+        class FamilyName {
+            String value
+        }
+
+    }
+    package members {
+        class Member {
+            MemberId id
+            FamilyId familyId
+            MemberName name
+            Icon icon
+            Birthday birthday
+            Grade grade
+            Exp exp
+            Money balance
+            Money minSavings
+            Datetime createdAt
+            Datetime updatedAt
+            --
+            Age getAge()
+            Level getLevel(MemberLevelExpMap)
+        }
+        Member *--> MemberId
+        Member *--> MemberName
+        Member *--> Grade
+        Member *--> MemberExp
+        class MemberId {
+            String value
+        }
+        class MemberName {
+            String value
+        }
+        class Grade {
+            ' 教育課程名
+            EducationId educationId
+            ' 年数
+            int grade
+            String toString()
+        }
+        class EducationId {
+            String value
+        }
+        class MemberExp { 
+            long value
+        }
+        class Level {
+            int value
+        }
+        class MemberLevelExpMap {
+            Map<Level, Exp> map
+        }
+        class SavingRecode {
+            ' 貯金履歴
+            MemberId memberId
+            Money balance
+            Money difference
+            String reason
+            datetime recordedAt
+        }
+        enum Education {
+            preElementary
+            elementary
+            middleSchool
+            highSchool
+            university
+            postUniversity
+        }
+        EducationPeriod --> Education
+        class EducationPeriod {
+            Map<Education, DateTime> map
+        }
+    }
+    package allowances {
+        ' お小遣い関連（履歴、お小遣いテーブル、ランクテーブル）
+        class AllowanceHistory {
+            MemberId memberId
+            ' クエストや違反行為のオブジェクトを格納
+            Allowanceable target
+            datetime recordedAt
+            ' レコードから情報を取得
+            String title
+            Money amount
+        }
+        AllowanceHistory *--> Allowanceable
+        interface Allowanceable {
+            navigate()
+        }
+        abstract AllowanceTable {
+            Map<Age, Money> ageAllowance
+        }
+        AllowanceTable *--> AgeAllowance
+        AllowanceTable <|-- FamilyAllowanceTable
+        AllowanceTable <|-- SharedAllowanceTable
+        class FamilyAllowanceTable <AllowanceTable> {
+            FamilyId familyId
+        }
+        class SharedAllowanceTable <AllowanceTable, Reportable> {
+            FamilyId familyId
+            int favoritesCount
+            bool isPublic
+            datetime sharedAt
+        }
+        abstract LevelTable {
+            Map<Level, Money> LevelAllowance
+        }
+        LevelTable *--> AllowanceLevel
+        LevelTable <|-- FamilyLevelTable
+        LevelTable <|-- SharedLevelTable
+        class FamilyLevelTable <LevelTable> {
+            FamilyId familyId
+        }
+        class SharedLevelTable <LevelTable, Reportable> {
+            FamilyId familyId
+            int favoritesCount
+            bool isPublic
+        }
+    }
+    package quest {
+        class Quest {
+            QuestId id
+            QuestName name
+            QuestCategoryId categoryId
+            Icon icon
+            QuestReleasePeriod releasePeriod
+            QuestLimitedTimePeriod limitedTimePeriod
+            KeyQuests keyQuests
+            String client
+            String missionDescription
+            QuestLevelDetails levelDetails
+            Exp exp
+            DateTime createdAt
+            DateTime updatedAt
+        }
+        Quest *--> QuestId
+        Quest *--> QuestName
+        Quest *--> QuestReleasePeriod
+        Quest *--> QuestLimitedTimePeriod
+        Quest *--> KeyQuests
+        Quest *--> QuestLevelDetails
+        Quest *--> QuestCategoryId
+        Quest --> QuestLevelExpMap
+        class QuestId {
+            String value
+        }
+        class QuestName {
+            String value
+        }
+        class QuestReleasePeriod {
+            Age ageRestriction
+            DateTime releaseDate
+            DateTime closeDate
+        }
+        class QuestLimitedTimePeriod {
+            bool isEnable
+            DateTime startDate
+            DateTime endDate
+        }
+        class QuestLevelDetails {
+            Map<QuestLevel, QuestDetail> _map
+        }
+        class KeyQuests {
+            List<KeyQuestable> _list
+        }
+        class QuestDetail {
+            SuccessCriteria successCriteria
+            TargetCount targetCount
+            Money rewards
+            MemberExp exp
+            QuestExp exp
+            DateTime updatedAt
+        }
+        class SuccessCriteria {
+            String value
+        }
+        class TargetCount {
+            int value
+        }
+        class QuestLevel {
+            int value
+        }
+        class QuestCategoryId {
+            String value
+        }
+        class QuestCategory {
+            String value
+        }
+
+        Quest <|--- FamilyQuest
+        Quest <|--- SharedQuest
+        Quest <|--- TemplateQuest
+        class SharedQuest <Reportable> {
+            FamilyId familyId
+            DateTime sharedAt
+            List<like> likes
+        }
+        class TemplateQuest {}
+        class FamilyQuest <Allowanceable, KeyQuestable> {
+            FamilyId familyId
+            bool isPublic
+            QuestMembersStatus participants
+            bool isShared
+            QuestId sharedQuestId
+        }
+        FamilyQuest --> QuestStatus
+        FamilyQuest --> QuestMembersStatus
+        class QuestMembersStatus {
+            List<QuestMemberStatus> _list
+        }
+        class QuestMemberStatus {
+            MemberId memberId
+            QuestStatus status
+            QuestExp exp
+        }
+        enum QuestStatus {
+            notAccepted
+            inProgress
+            pendingApproval
+            completed
+        }
+        KeyQuestable <|.. FamilyQuest
+        interface KeyQuestable {}
+
+        class QuestRequest {
+            QuestRequestId id
+            QuestId? questId
+            MemberId clientId
+            QuestRequestTitle title
+            QuestRequestBody body
+            QuestRequestStatus status
+            QuestRequestAnswer answer
+            DateTime requestedAt
+            DateTime answeredAt
+        }
+        QuestRequest *--> QuestRequestId
+        QuestRequest *--> QuestRequestTitle
+        QuestRequest *--> QuestRequestBody
+        QuestRequest *--> QuestRequestStatus
+        QuestRequest *--> QuestRequestAnswer
+        class QuestRequestId {
+            String value
+        }
+        class QuestRequestTitle {
+            String value
+        }
+        class QuestRequestBody {
+            String value
+        }
+        enum QuestRequestStatus {
+            inProgress
+            denied
+            approved
+        }
+        class QuestRequestAnswer {
+            String value
+        }
+    }
+    package ideas {
+        class Idea {
+            IdeaTitle title
+            IdeaBody body
+            Comments comments
+            IdeaAnswer answer
+            IdeaStatus status
+            DateTime postedAt
+            DateTime updatedAt
+            DateTime answeredAt
+        }
+        class IdeaTitle {
+            String value
+        }
+        class IdeaBody {
+            String value
+        }
+        enum IdeaStatus {
+            unprocessed
+            accepted
+            rejected
+        }
+        class IdeaAnswer {
+            String value
+        }
+    }
+    package comments {
+        class CommentsService {
+            filterByLikes(threshold)
+            sortByDate()
+            sortByLikes()
+        }
+        CommentsService -> Comments
+        class Comments {
+            List<Comment> list
+            add(Comment)
+            totalLikes()
+        }
+        Comments *--> Comment
+        class Comment <Reportable> {
+            Comment? reply
+            CommentBody body
+            Map<FamilyId, Like> _likes
+            DateTime commentedAt
+            DateTime updatedAt
+        }
+        Comment *--> CommentBody
+        class CommentBody {
+            String value
+        }
+    }
+    package reports {
+        class report {
+            String id
+            Reportable target
+            ReportReason reason
+            ReportStatus status
+            DateTime reportedAt
+        }
+        report *--> Reportable
+        report *--> ReportStatus
+        interface Reportable {}
+        enum ReportStatus {
+            unprocessed
+            accepted
+            rejected
+        }
+    }
+    package notifications {
+        class Notifications {
+            List<Notification> _notifications
+        }
+        Notifications *--> Notification
+        class Notification {
+            Notifiable target
+            bool isRead
+            DateTime readAt
+            DateTime receivedAt
+        }
+        Notification *--> Notifiable
+        interface Notifiable {
+            navigate()
+        }
+    }
+    package likes {
+        class Like {
+            FaimlyId familyId
+            DateTime likedAt
+        }
+        class Likes {
+            List<Like> _list
+        }
+    }
+    package shared {
+        class MailAddress {
+            String value
+        }
+        class Password {
+            String value
+        }
+        class Birthday {
+            ' 未来じゃないかどうか
+            DateTime date
+        }
+        class Money {
+            long value
+        }
+        class Age {
+            int value
+        }
+        class IconMap {
+            Map<name, code_point> map
+            Icon toIcon(name)
+        }
+
+    }
+}
+package application {
+    package quests {}
+    package users {}
+}
+
+package infractructure {
+    package firestore {}
+    package inmemory {}
+}
+
+package presentation {}
+
+package utility {
+    package convertors {
+    }
+}
+
+
+
+@enduml

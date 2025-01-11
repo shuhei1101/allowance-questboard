@@ -33,39 +33,62 @@ class TestMembersPage extends StatelessWidget {
 class MockMemberApplicationService implements MemberApplicationService {
   @override
   Future<List<MemberData>?> getFamilyMembers(String familyId) async {
-    final members = [
-      Member(
-        id: MemberId("123456"),
-        familyId: FamilyId("123456"),
-        name: MemberName("Alice"),
-        icon: const Icon(Icons.person),
-        birthday: Birthday(DateTime(1990, 1, 1)),
-        grade: Grade(Education.elementary, 2),
-        exp: MemberExp(11),
-        balance: Money(10),
-        minSavings: Money(10),
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
-      Member(
+    // return null;
+    return [
+      MemberData(Member(
         id: MemberId("234567"),
         familyId: FamilyId("123456"),
-        name: MemberName("Bob"),
+        name: MemberName("123"),
         icon: const Icon(Icons.person),
-        birthday: Birthday(DateTime(1990, 1, 1)),
-        grade: Grade(Education.elementary, 2),
+        birthday: Birthday(DateTime(2020, 1, 1)),
+        grade: Grade(
+          education: Education.elementary,
+          grade: 2,
+        ),
         exp: MemberExp(111),
         balance: Money(33),
         minSavings: Money(44),
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-      ),
+      )),
+      MemberData(Member(
+        id: MemberId("234567"),
+        familyId: FamilyId("123456"),
+        name: MemberName("123"),
+        icon: const Icon(Icons.person),
+        birthday: Birthday(DateTime(2020, 1, 1)),
+        grade: Grade(
+          education: Education.elementary,
+          grade: 2,
+        ),
+        exp: MemberExp(111),
+        balance: Money(33),
+        minSavings: Money(44),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ))
     ];
-    return members.map((member) => MemberData(member)).toList();
   }
 
   @override
-  Future<MemberData?> getMember(String memberId) async {
-    return null;
+  Future<MemberData?> getMember({required String memberId}) async {
+    // return null;
+    final member = Member(
+      id: MemberId("234567"),
+      familyId: FamilyId("123456"),
+      name: MemberName("ALICE"),
+      icon: const Icon(Icons.person),
+      birthday: Birthday(DateTime(2020, 1, 1)),
+      grade: Grade(
+        education: Education.elementary,
+        grade: 2,
+      ),
+      exp: MemberExp(111),
+      balance: Money(33),
+      minSavings: Money(44),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+    return MemberData(member);
   }
 }

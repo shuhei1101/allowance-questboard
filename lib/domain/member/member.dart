@@ -1,9 +1,9 @@
+import 'package:allowance_questboard/domain/family/family_id.dart';
+import 'package:allowance_questboard/domain/shared/age.dart';
+import 'package:allowance_questboard/domain/shared/birthday.dart';
+import 'package:allowance_questboard/domain/shared/money.dart';
 import 'package:flutter/material.dart';
 
-import '../family/family_id.dart';
-import '../shared/age.dart';
-import '../shared/birthday.dart';
-import '../shared/money.dart';
 import 'grade.dart';
 import 'member_exp.dart';
 import 'member_id.dart';
@@ -47,4 +47,15 @@ class Member {
 
     return Age(rawAge);
   }
+
+  // // MemberProfileアプリケーションサービスで実装する
+  // MemberLevel getLevel(Map<MemberLevel, MemberExp> map) {
+  //   for (var entry in map.entries) {
+  //     if (exp.value >= entry.value.value) {
+  //       return entry.key;
+  //     }
+  //   }
+  //   // どのレベルにも一致しない場合、レベル1を返却
+  //   return MemberLevel(1);
+  // }
 }

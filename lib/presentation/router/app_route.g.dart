@@ -9,6 +9,8 @@ part of 'app_route.dart';
 List<RouteBase> get $appRoutes => [
       $membersRoute,
       $memberRoute,
+      $familyQuestsRoute,
+      $questRoute,
     ];
 
 RouteBase get $membersRoute => GoRouteData.$route(
@@ -48,6 +50,54 @@ extension $MemberRouteExtension on MemberRoute {
 
   String get location => GoRouteData.$location(
         '/members/${Uri.encodeComponent(familyId)}/member/${Uri.encodeComponent(memberId)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $familyQuestsRoute => GoRouteData.$route(
+      path: '/quests/:familyId',
+      factory: $FamilyQuestsRouteExtension._fromState,
+    );
+
+extension $FamilyQuestsRouteExtension on FamilyQuestsRoute {
+  static FamilyQuestsRoute _fromState(GoRouterState state) => FamilyQuestsRoute(
+        familyId: state.pathParameters['familyId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/quests/${Uri.encodeComponent(familyId)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $questRoute => GoRouteData.$route(
+      path: '/quest/:questId',
+      factory: $QuestRouteExtension._fromState,
+    );
+
+extension $QuestRouteExtension on QuestRoute {
+  static QuestRoute _fromState(GoRouterState state) => QuestRoute(
+        questId: state.pathParameters['questId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/quest/${Uri.encodeComponent(questId)}',
       );
 
   void go(BuildContext context) => context.go(location);
