@@ -1,9 +1,12 @@
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/presentation/component/quest/family_quest_list_view.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
+import 'package:allowance_questboard/presentation/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 class FamilyQuestsPage extends StatelessWidget {
   FamilyQuestsPage({required this.familyId}) : _service = GetIt.I<FamilyQuestApplicationService>();
@@ -26,12 +29,73 @@ class FamilyQuestsPage extends StatelessWidget {
               body: Column(
                 children: [
                   Expanded(
-                    child: FamilyQuestListView(quests: quests!, onTap: (str) {}),
+                    child: FamilyQuestListView(
+                        quests: quests!,
+                        onTap: (String questId) {
+                          FamilyQuestRoute(questId: questId).push(context);
+                        }),
                   )
                 ],
-              )
-              // FamilyQuestListView(quests: quests!, onTap: (str) {}),
-              );
+              ));
         });
+  }
+}
+
+void main() {
+  GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
+  final router = GoRouter(initialLocation: '/quests/123', routes: $appRoutes);
+  runApp(MaterialApp.router(
+    routerConfig: router,
+  ));
+}
+
+class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
+  @override
+  Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
+    return [
+      FamilyQuestData(
+        id: "123",
+        name: "Test Quest",
+        category: "テスト分類",
+        icon: Icon(Icons.abc),
+        isPublic: true,
+        questLevelDetails: {
+          1: QuestDetailData(successCondition: "Complete all tasks", failureCondition: "Fail to complete tasks", targetCount: 5, rewards: 2, memberExp: 150, questExp: 75),
+          2: QuestDetailData(successCondition: "Complete all tasks", failureCondition: "Fail to complete tasks", targetCount: 5, rewards: 2, memberExp: 150, questExp: 75),
+          3: QuestDetailData(successCondition: "Complete all tasks", failureCondition: "Fail to complete tasks", targetCount: 5, rewards: 2, memberExp: 150, questExp: 75),
+        },
+        participants: [],
+        isShared: false,
+      ),
+      FamilyQuestData(
+        id: "123",
+        name: "Test Quest",
+        category: "テスト分類",
+        icon: Icon(Icons.abc),
+        isPublic: true,
+        questLevelDetails: {1: QuestDetailData(successCondition: "Complete all tasks", failureCondition: "Fail to complete tasks", targetCount: 5, rewards: 2, memberExp: 150, questExp: 75)},
+        participants: [],
+        isShared: false,
+      ),
+    ];
+  }
+
+  @override
+  Future<FamilyQuestData?> getFamilyQuest(String questId) async {
+    return FamilyQuestData(
+      id: "123",
+      name: "Test Quest",
+      icon: Icon(Icons.person),
+      isPublic: true,
+      isShared: true,
+      category: 'テスト分類',
+      participants: [
+        ParticipantData(icon: Icon(Icons.person)),
+      ],
+      questLevelDetails: {
+        1: QuestDetailData(successCondition: "successCondition1", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1),
+        2: QuestDetailData(successCondition: "successCondition2", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1)
+      },
+    );
   }
 }

@@ -31,8 +31,7 @@ extension $MembersRouteExtension on MembersRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -56,8 +55,7 @@ extension $MemberRouteExtension on MemberRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -80,8 +78,7 @@ extension $FamilyQuestsRouteExtension on FamilyQuestsRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -91,8 +88,8 @@ RouteBase get $questRoute => GoRouteData.$route(
       factory: $QuestRouteExtension._fromState,
     );
 
-extension $QuestRouteExtension on QuestRoute {
-  static QuestRoute _fromState(GoRouterState state) => QuestRoute(
+extension $QuestRouteExtension on FamilyQuestRoute {
+  static FamilyQuestRoute _fromState(GoRouterState state) => FamilyQuestRoute(
         questId: state.pathParameters['questId']!,
       );
 
@@ -104,8 +101,7 @@ extension $QuestRouteExtension on QuestRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

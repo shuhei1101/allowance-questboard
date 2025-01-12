@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-class QuestPage extends StatelessWidget {
-  QuestPage({required this.questId}) : _service = GetIt.I.get<FamilyQuestApplicationService>();
+class FamilyQuestPage extends StatelessWidget {
+  FamilyQuestPage({required this.questId}) : _service = GetIt.I.get<FamilyQuestApplicationService>();
 
   final String questId;
   final FamilyQuestApplicationService _service;
