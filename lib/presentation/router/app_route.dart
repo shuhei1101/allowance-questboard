@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/presentation/page/family_quests_page.dart';
-import 'package:allowance_questboard/presentation/page/quest_page.dart';
+import 'package:allowance_questboard/presentation/page/family_quest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -44,14 +44,14 @@ class FamilyQuestsRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<QuestRoute>(path: '/quest/:questId')
-class QuestRoute extends GoRouteData {
-  QuestRoute({required this.questId});
+@TypedGoRoute<FamilyQuestRoute>(path: '/quest/:questId')
+class FamilyQuestRoute extends GoRouteData {
+  FamilyQuestRoute({required this.questId});
 
   final String questId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return QuestPage(questId: questId);
+    return FamilyQuestPage(questId: questId);
   }
 }
