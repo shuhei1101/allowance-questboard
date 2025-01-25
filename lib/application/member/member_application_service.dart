@@ -14,7 +14,7 @@ class MemberApplicationService {
 
     if (member == null) return null;
 
-    return MemberData(member);
+    return MemberData.fromDomain(member);
   }
 
   Future<List<MemberData>?> getFamilyMembers(String familyId) async {
@@ -22,6 +22,6 @@ class MemberApplicationService {
 
     if (members == null) return null;
 
-    return members.map((member) => MemberData(member)).toList();
+    return members.map((member) => MemberData.fromDomain(member)).toList();
   }
 }

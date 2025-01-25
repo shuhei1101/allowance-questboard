@@ -20,7 +20,7 @@ class FamilyQuestsPage extends StatelessWidget {
         future: _service.getFamilyQuests(familyId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null) return ErrorPage();
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final quests = snapshot.data;
           return Scaffold(
               appBar: AppBar(
@@ -101,7 +101,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<EditFamilyQuestData?> getEditFamilyQuest(String questId) {
+  Future<FamilyQuestEditingData?> getEditFamilyQuest(String questId) {
     // TODO: implement getEditFamilyQuest
     throw UnimplementedError();
   }

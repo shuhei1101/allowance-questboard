@@ -24,7 +24,7 @@ class FamilyQuestPage extends StatelessWidget {
           Center(
             child: CircularProgressIndicator(),
           );
-        if (snapshot.hasError || snapshot.data == null) return ErrorPage();
+        if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
         final familyQuest = snapshot.data!;
         return Scaffold(
           appBar: AppBar(
@@ -80,7 +80,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<EditFamilyQuestData?> getEditFamilyQuest(String questId) {
+  Future<FamilyQuestEditingData?> getEditFamilyQuest(String questId) {
     // TODO: implement getEditFamilyQuest
     throw UnimplementedError();
   }

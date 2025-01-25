@@ -19,7 +19,7 @@ class MembersPage extends StatelessWidget {
         future: _service.getFamilyMembers(familyId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null) return ErrorPage();
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final members = snapshot.data;
           return Scaffold(
               appBar: AppBar(

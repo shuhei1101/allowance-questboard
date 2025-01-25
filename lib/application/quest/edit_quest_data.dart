@@ -14,7 +14,7 @@ class EditQuestData {
   final Icon icon;
   final String category;
   // クエストレベルに対するquestDetail
-  final Map<int, EditQuestDetailData> questLevelDetails;
+  final Map<int, QuestEditingDetailData> questLevelDetails;
 
   int get maxLevel => questLevelDetails.length;
 }

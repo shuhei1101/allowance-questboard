@@ -6,8 +6,8 @@ import 'package:allowance_questboard/domain/quest/quest_category.dart';
 import 'package:allowance_questboard/domain/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
-class EditFamilyQuestData extends EditQuestData {
-  EditFamilyQuestData({
+class FamilyQuestEditingData extends EditQuestData {
+  FamilyQuestEditingData({
     required super.id,
     required super.name,
     required super.icon,
@@ -18,13 +18,13 @@ class EditFamilyQuestData extends EditQuestData {
     required this.participants,
   });
 
-  factory EditFamilyQuestData.fromDomain({
+  factory FamilyQuestEditingData.fromDomain({
     required FamilyQuest familyQuest,
     required QuestCategory questCategory,
-    required List<EditParticipantData> participants,
-    required Map<int, EditQuestDetailData> questLevelDetails,
+    required List<ParticipantEditingData> participants,
+    required Map<int, QuestEditingDetailData> questLevelDetails,
   }) {
-    return EditFamilyQuestData(
+    return FamilyQuestEditingData(
       id: familyQuest.id.value,
       name: familyQuest.name.value,
       icon: familyQuest.icon,
@@ -38,14 +38,14 @@ class EditFamilyQuestData extends EditQuestData {
 
   final bool isPublic;
   final bool isShared;
-  final List<EditParticipantData> participants;
+  final List<ParticipantEditingData> participants;
 }
 
-class EditParticipantData {
-  EditParticipantData({required this.icon});
+class ParticipantEditingData {
+  ParticipantEditingData({required this.icon});
 
-  factory EditParticipantData.fromDomain({required QuestParticipant status, required Member member}) {
-    return EditParticipantData(icon: member.icon);
+  factory ParticipantEditingData.fromDomain({required QuestParticipant status, required Member member}) {
+    return ParticipantEditingData(icon: member.icon);
   }
 
   final Icon icon;
