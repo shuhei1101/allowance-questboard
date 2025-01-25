@@ -1,3 +1,4 @@
+import 'package:allowance_questboard/presentation/page/family_quest_editing_page.dart';
 import 'package:allowance_questboard/presentation/page/family_quests_page.dart';
 import 'package:allowance_questboard/presentation/page/family_quest_page.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import 'package:go_router/go_router.dart';
 import '../page/member_page.dart';
 import '../page/members_page.dart';
 part 'app_route.g.dart';
+
+// flutter pub run build_runner build
 
 @TypedGoRoute<MembersRoute>(path: '/members/:familyId')
 class MembersRoute extends GoRouteData {
@@ -53,5 +56,17 @@ class FamilyQuestRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return FamilyQuestPage(questId: questId);
+  }
+}
+
+@TypedGoRoute<FamilyQuestEditingRoute>(path: '/quest/:questId/edit')
+class FamilyQuestEditingRoute extends GoRouteData {
+  FamilyQuestEditingRoute({required this.questId});
+
+  final String questId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return FamilyQuestEditingPage(questId: questId);
   }
 }

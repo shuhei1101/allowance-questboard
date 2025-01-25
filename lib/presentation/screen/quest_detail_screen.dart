@@ -1,11 +1,11 @@
 import 'package:allowance_questboard/application/quest/quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/presentation/component/quest/quest_levels_icon.dart';
-import 'package:allowance_questboard/presentation/component/shared/setting_entry.dart';
+import 'package:allowance_questboard/presentation/component/quest_levels_icon.dart';
+import 'package:allowance_questboard/presentation/component/setting_entry.dart';
 import 'package:flutter/material.dart';
 
-class QuestDetailPageView extends StatefulWidget {
-  QuestDetailPageView({
+class QuestDetailScreen extends StatefulWidget {
+  QuestDetailScreen({
     required this.quest,
     this.defaultLevel = 1,
   });
@@ -13,10 +13,10 @@ class QuestDetailPageView extends StatefulWidget {
   final int defaultLevel;
 
   @override
-  State<StatefulWidget> createState() => _QuestDetailPageViewState();
+  State<StatefulWidget> createState() => _QuestDetailScreenState();
 }
 
-class _QuestDetailPageViewState extends State<QuestDetailPageView> implements QuestLevelsIconDelegate {
+class _QuestDetailScreenState extends State<QuestDetailScreen> implements QuestLevelsIconDelegate {
   late List<Widget> _pages;
   final PageController _pageController = PageController();
   int _currentPage = 0;
@@ -159,7 +159,7 @@ void main() {
       appBar: AppBar(
         title: Text("test"),
       ),
-      body: QuestDetailPageView(
+      body: QuestDetailScreen(
         quest: QuestData(id: "123", icon: Icon(Icons.person), name: "テストクエスト", category: "テスト分類", questLevelDetails: {
           1: QuestDetailData(
             successCondition: "レベル1の成功条件",

@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../application/member/member_application_service.dart';
 import '../../application/member/member_data.dart';
-import '../component/member/member_list_view.dart';
+import '../screen/members_screen.dart';
 import '../router/app_route.dart';
 
 class MembersPage extends StatelessWidget {
@@ -19,7 +19,7 @@ class MembersPage extends StatelessWidget {
         future: _service.getFamilyMembers(familyId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null) return ErrorPage();
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final members = snapshot.data;
           return Scaffold(
               appBar: AppBar(
@@ -30,7 +30,7 @@ class MembersPage extends StatelessWidget {
                 ],
               ),
               body: Expanded(
-                child: MemberListView(
+                child: MembersScreen(
                   members: members!,
                   onTap: (memberId) {
                     MemberRoute(familyId: familyId, memberId: memberId).push(context);

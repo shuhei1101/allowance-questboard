@@ -1,8 +1,8 @@
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:flutter/material.dart';
 
-class FamilyQuestListView extends StatelessWidget {
-  const FamilyQuestListView({required this.quests, required this.onTap, super.key});
+class FamilyQuestsScreen extends StatelessWidget {
+  const FamilyQuestsScreen({required this.quests, required this.onTap, super.key});
 
   final List<FamilyQuestData> quests;
   final Function(String questId) onTap;
