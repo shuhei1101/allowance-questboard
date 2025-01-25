@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/presentation/component/member/member_profile_card.dart';
+import 'package:allowance_questboard/presentation/screen/member_profile_screen.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

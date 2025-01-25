@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../application/member/member_application_service.dart';
 import '../../application/member/member_data.dart';
-import '../component/member/member_list_view.dart';
+import '../screen/members_screen.dart';
 import '../router/app_route.dart';
 
 class MembersPage extends StatelessWidget {
@@ -30,7 +30,7 @@ class MembersPage extends StatelessWidget {
                 ],
               ),
               body: Expanded(
-                child: MemberListView(
+                child: MembersScreen(
                   members: members!,
                   onTap: (memberId) {
                     MemberRoute(familyId: familyId, memberId: memberId).push(context);

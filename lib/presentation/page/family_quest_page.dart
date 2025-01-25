@@ -1,7 +1,8 @@
+import 'package:allowance_questboard/application/quest/edit_family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/presentation/component/quest/quest_detail_page_view.dart';
+import 'package:allowance_questboard/presentation/screen/quest_detail_screen.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
 import 'package:allowance_questboard/presentation/router/app_route.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class FamilyQuestPage extends StatelessWidget {
-  FamilyQuestPage({required this.questId}) : _service = GetIt.I.get<FamilyQuestApplicationService>();
+  FamilyQuestPage({required this.questId}) : _service = GetIt.I<FamilyQuestApplicationService>();
 
   final String questId;
   final FamilyQuestApplicationService _service;
@@ -32,7 +33,7 @@ class FamilyQuestPage extends StatelessWidget {
           body: Column(
             children: [
               Expanded(
-                child: QuestDetailPageView(
+                child: QuestDetailScreen(
                   quest: familyQuest,
                 ),
               ),
@@ -75,6 +76,12 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   @override
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) {
     // TODO: implement getFamilyQuests
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<EditFamilyQuestData?> getEditFamilyQuest(String questId) {
+    // TODO: implement getEditFamilyQuest
     throw UnimplementedError();
   }
 }
