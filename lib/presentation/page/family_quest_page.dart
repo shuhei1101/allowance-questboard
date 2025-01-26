@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/edit_family_quest_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
@@ -80,7 +80,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestEditingData?> getEditFamilyQuest(String questId) {
+  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) {
     // TODO: implement getEditFamilyQuest
     throw UnimplementedError();
   }
