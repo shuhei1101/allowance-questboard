@@ -1,7 +1,7 @@
 import 'package:allowance_questboard/domain/quest/quest_detail.dart';
 
-class QuestEditingDetailData {
-  QuestEditingDetailData({
+class QuestDetailSettingData {
+  QuestDetailSettingData({
     required this.successCondition,
     required this.failureCondition,
     required this.targetCount,
@@ -10,8 +10,8 @@ class QuestEditingDetailData {
     required this.questExp,
   });
 
-  factory QuestEditingDetailData.fromDomain({required QuestDetail questDetail}) {
-    return QuestEditingDetailData(
+  factory QuestDetailSettingData.fromDomain({required QuestDetail questDetail}) {
+    return QuestDetailSettingData(
       successCondition: questDetail.successCondition.value,
       failureCondition: questDetail.failureCondition.value,
       targetCount: questDetail.targetCount.value,

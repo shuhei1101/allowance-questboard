@@ -1,18 +1,17 @@
-import 'package:allowance_questboard/application/quest/edit_quest_data.dart';
-import 'package:allowance_questboard/application/quest/edit_quest_detail_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
 import 'package:allowance_questboard/domain/member/member.dart';
 import 'package:allowance_questboard/domain/quest/family_quest.dart';
 import 'package:allowance_questboard/domain/quest/quest_category.dart';
 import 'package:allowance_questboard/domain/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
-class FamilyQuestEditingData extends EditQuestData {
+class FamilyQuestEditingData {
   FamilyQuestEditingData({
-    required super.id,
-    required super.name,
-    required super.icon,
-    required super.category,
-    required super.questLevelDetails,
+    required this.id,
+    required this.name,
+    required this.icon,
+    required this.category,
+    required this.questLevelDetails,
     required this.isPublic,
     required this.isShared,
     required this.participants,
@@ -22,7 +21,7 @@ class FamilyQuestEditingData extends EditQuestData {
     required FamilyQuest familyQuest,
     required QuestCategory questCategory,
     required List<ParticipantEditingData> participants,
-    required Map<int, QuestEditingDetailData> questLevelDetails,
+    required Map<int, QuestDetailSettingData> questLevelDetails,
   }) {
     return FamilyQuestEditingData(
       id: familyQuest.id.value,
@@ -36,9 +35,16 @@ class FamilyQuestEditingData extends EditQuestData {
     );
   }
 
+  final String id;
+  final String name;
+  final Icon icon;
+  final String category;
   final bool isPublic;
   final bool isShared;
   final List<ParticipantEditingData> participants;
+  // クエストレベルに対するquestDetail
+  final Map<int, QuestDetailSettingData> questLevelDetails;
+  int get maxLevel => questLevelDetails.length;
 }
 
 class ParticipantEditingData {
