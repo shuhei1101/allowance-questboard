@@ -1,5 +1,5 @@
-import 'package:allowance_questboard/application/quest/edit_family_quest_data.dart';
-import 'package:allowance_questboard/application/quest/edit_quest_detail_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
@@ -10,76 +10,94 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 abstract interface class ValidateNotifiable {
-  void notify(bool isValid);
+  void notify();
 }
 
-class FamilyQuestEditingPage extends StatefulWidget {
-  FamilyQuestEditingPage({required this.questId}) : _service = GetIt.I<FamilyQuestApplicationService>();
-
+class FamilyQuestEditingPage extends StatelessWidget {
+  FamilyQuestEditingPage({required this.questId});
   final String questId;
-  final FamilyQuestApplicationService _service;
 
-  @override
-  State<StatefulWidget> createState() => FamilyQuestEditingPageState();
-}
-
-class FamilyQuestEditingPageState extends State<FamilyQuestEditingPage> implements ValidateNotifiable {
-  bool _isValid = false;
-  final TextEditingController _controller1 = TextEditingController();
-  final TextEditingController _controller2 = TextEditingController();
-
-  @override
-  void notify(bool isValid) {
-    _isValid = isValid;
-    setState(() => {});
-  }
+  final _service = GetIt.I<FamilyQuestApplicationService>();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<FamilyQuestEditingData?>(
-      future: widget._service.getEditFamilyQuest(widget.questId),
+      future: _service.getFamilyQuestEditingData(questId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator());
         if (snapshot.hasError) return ErrorPage(error: snapshot.error);
         final quest = snapshot.data!;
-        return DefaultTabController(
-          length: 3,
-          child: Scaffold(
-              appBar: AppBar(
-                title: Text(quest.name),
-                bottom: TabBar(
-                  tabs: [
-                    Tab(text: "Detail"),
-                  ],
-                ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: _isValid ? () {} : null,
-                    color: _isValid ? null : Colors.grey,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.preview),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.save),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              body: TabBarView(
-                children: [
-                  GeneralQuestEditingScreen(
-                    questId: widget.questId,
-                    delegate: this,
-                    controller1: _controller1,
-                    controller2: _controller2,
-                  ),
-                ],
-              )),
-        );
+        return FamilyQuestEditingTab(quest: quest);
       },
+    );
+  }
+}
+
+class FamilyQuestEditingTab extends StatefulWidget {
+  FamilyQuestEditingTab({required this.quest});
+  final FamilyQuestEditingData quest;
+
+  @override
+  State<StatefulWidget> createState() => FamilyQuestEditingTabState();
+}
+
+class FamilyQuestEditingTabState extends State<FamilyQuestEditingTab> implements ValidateNotifiable {
+  final _questNameController = TextEditingController();
+  final _questCategoryController = TextEditingController();
+  bool _isValid = false;
+
+  @override
+  void notify() {
+    if (_questNameController.text.isNotEmpty && _questCategoryController.text.isNotEmpty) {
+      setState(() {
+        _isValid = true;
+      });
+      return;
+    }
+    setState(() {
+      _isValid = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 1,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("クエスト編集"),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "一般"),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: _isValid ? () {} : null,
+              color: _isValid ? Colors.red : Colors.grey,
+            ),
+            IconButton(
+              icon: Icon(Icons.preview),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: TabBarView(
+          children: [
+            GeneralQuestEditingScreen(
+              quest: widget.quest,
+              delegate: this,
+              questNameController: _questNameController,
+              questCategoryController: _questCategoryController,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -106,7 +124,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestEditingData?> getEditFamilyQuest(String questId) async {
+  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) async {
     return FamilyQuestEditingData(
       id: "123",
       name: "Test Quest",
@@ -118,7 +136,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
         ParticipantEditingData(icon: Icon(Icons.person)),
       ],
       questLevelDetails: {
-        1: QuestEditingDetailData(
+        1: QuestDetailSettingData(
           successCondition: "Complete all tasks",
           failureCondition: "Fail any task",
           targetCount: 10,

@@ -164,8 +164,8 @@ package domain {
             QuestName name
             QuestCategoryId categoryId
             Icon icon
-            QuestReleasePeriod releasePeriod
-            QuestLimitedTimePeriod limitedTimePeriod
+            AgeRestriction ageRestriction
+            PublishedMonth publishedMonth
             KeyQuests keyQuests
             String client
             String missionDescription
@@ -176,8 +176,9 @@ package domain {
         }
         Quest *--> QuestId
         Quest *--> QuestName
+        Quest *--> AgeRestriction
+        Quest *--> PublishedMonth
         Quest *--> QuestReleasePeriod
-        Quest *--> QuestLimitedTimePeriod
         Quest *--> KeyQuests
         Quest *--> QuestLevelDetails
         Quest *--> QuestCategoryId
@@ -188,15 +189,13 @@ package domain {
         class QuestName {
             String value
         }
-        class QuestReleasePeriod {
-            Age ageRestriction
-            DateTime releaseDate
-            DateTime closeDate
+        class AgeRestriction {
+            Age ageFrom
+            Age ageTill
         }
-        class QuestLimitedTimePeriod {
-            bool isEnable
-            DateTime startDate
-            DateTime endDate
+        class PublishedMonth {
+            DateTime startedOn
+            DateTime endedOn
         }
         class QuestLevelDetails {
             Map<QuestLevel, QuestDetail> _map

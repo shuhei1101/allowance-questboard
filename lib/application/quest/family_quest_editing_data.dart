@@ -9,8 +9,12 @@ class FamilyQuestEditingData {
   FamilyQuestEditingData({
     required this.id,
     required this.name,
-    required this.icon,
     required this.category,
+    required this.icon,
+    required this.ageFrom,
+    required this.ageTill,
+    required this.startedOn,
+    required this.endedOn,
     required this.questLevelDetails,
     required this.isPublic,
     required this.isShared,
@@ -26,8 +30,12 @@ class FamilyQuestEditingData {
     return FamilyQuestEditingData(
       id: familyQuest.id.value,
       name: familyQuest.name.value,
-      icon: familyQuest.icon,
       category: questCategory.value,
+      icon: familyQuest.icon,
+      ageFrom: familyQuest.ageRestriction.ageFrom?.value,
+      ageTill: familyQuest.ageRestriction.ageTill?.value,
+      startedOn: familyQuest.publishedSeason?.startedOn,
+      endedOn: familyQuest.publishedSeason?.endedOn,
       questLevelDetails: questLevelDetails,
       isPublic: familyQuest.isPublic,
       isShared: familyQuest.isShared,
@@ -37,8 +45,12 @@ class FamilyQuestEditingData {
 
   final String id;
   final String name;
-  final Icon icon;
   final String category;
+  final Icon icon;
+  final int? ageFrom;
+  final int? ageTill;
+  final DateTime? startedOn;
+  final DateTime? endedOn;
   final bool isPublic;
   final bool isShared;
   final List<ParticipantEditingData> participants;
