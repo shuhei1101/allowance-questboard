@@ -7,9 +7,8 @@ unzip \
 clang \
 cmake \
 ninja-build \
-pkg-config
-
-RUN flutter doctor
+pkg-config \
+libgtk-3-dev
 
 WORKDIR /workspace
 COPY . /workspace
