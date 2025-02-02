@@ -1,4 +1,4 @@
-FROM cirrusci/flutter:stable
+FROM cirrusci/flutter:3.7.0
 
 RUN apt-get update && apt-get install -y \
 curl \
