@@ -9,6 +9,4 @@ unzip \
 WORKDIR /workspace
 COPY . /workspace
 
-RUN flutter pub get
-
 EXPOSE 3000
