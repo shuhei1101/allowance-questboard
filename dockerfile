@@ -4,7 +4,12 @@ RUN apt-get update && apt-get install -y \
 curl \
 git \
 unzip \
-&& flutter doctor
+clang \
+cmake \
+ninja-build \
+pkg-config
+
+RUN flutter doctor
 
 WORKDIR /workspace
 COPY . /workspace
