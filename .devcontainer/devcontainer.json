@@ -3,18 +3,20 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "runArgs": ["--name", "allowance-questboard"],
+  "runArgs": [
+    "--name=allowance-questboard",
+    "--rm"
+    ],
   "customizations": {
     "vscode": {
       "extensions": [
-		"Dart-Code.dart-code",
-		"Dart-Code.flutter",
-		"ms-azuretools.vscode-docker",
-		"mhutchie.git-graph",
-		"GitHub.copilot",
-		"jebbs.plantuml"
-	]
+        "Dart-Code.dart-code",
+        "Dart-Code.flutter",
+        "ms-azuretools.vscode-docker",
+        "mhutchie.git-graph",
+        "GitHub.copilot",
+        "jebbs.plantuml"
+      ]
     }
-  },
-	"postCreateCommand": "flutter doctor"
+  }
 }
