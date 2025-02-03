@@ -1,7 +1,7 @@
 {
 	"name": "Allowance Questboard Environment",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "../Dockerfile"
   },
   "customizations": {
     "vscode": {
@@ -12,7 +12,13 @@
         "mhutchie.git-graph",
         "GitHub.copilot",
         "jebbs.plantuml"
-      ]
+      ],
+      "settings": {
+        "Flutter Run Additional Args": [
+          "--web-port=3000"
+        ]
+      }
     }
-  }
+  },
+  "forwardPorts": [3000]
 }

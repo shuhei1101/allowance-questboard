@@ -7,7 +7,7 @@
         {
             "name": "allowance_questboard",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "allowance_questboard (profile mode)",
@@ -20,6 +20,13 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
-        }
+        },
+        {
+            "name": "allowance_questboard (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug"
+        },
+
     ]
 }
