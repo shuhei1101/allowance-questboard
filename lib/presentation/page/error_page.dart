@@ -2,6 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
+  ErrorPage({required error}) {
+    if (error is Error) {
+      _message = error.toString();
+      _traceback = error.stackTrace;
+    }
+  }
+
+  late final String _message;
+  late final StackTrace? _traceback;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,9 +19,17 @@ class ErrorPage extends StatelessWidget {
           title: Text("エラー"),
         ),
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [Text("存在しないページです"), TextButton(onPressed: () => Navigator.of(context).pop(), child: Text("戻る"))],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("存在しないページです"),
+                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text("戻る")),
+                Text("error: $_message"),
+                Text("traceback: $_traceback"),
+              ],
+            ),
           ),
         ));
   }
@@ -19,6 +37,8 @@ class ErrorPage extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
-    home: ErrorPage(),
+    home: ErrorPage(
+      error: TypeError(),
+    ),
   ));
 }

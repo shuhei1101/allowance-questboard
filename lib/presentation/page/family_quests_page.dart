@@ -1,7 +1,8 @@
+import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/presentation/component/quest/family_quest_list_view.dart';
+import 'package:allowance_questboard/presentation/screen/family_quests_screen.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
 import 'package:allowance_questboard/presentation/router/app_route.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class FamilyQuestsPage extends StatelessWidget {
         future: _service.getFamilyQuests(familyId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null) return ErrorPage();
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final quests = snapshot.data;
           return Scaffold(
               appBar: AppBar(
@@ -29,7 +30,7 @@ class FamilyQuestsPage extends StatelessWidget {
               body: Column(
                 children: [
                   Expanded(
-                    child: FamilyQuestListView(
+                    child: FamilyQuestsScreen(
                         quests: quests!,
                         onTap: (String questId) {
                           FamilyQuestRoute(questId: questId).push(context);
@@ -97,5 +98,11 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
         2: QuestDetailData(successCondition: "successCondition2", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1)
       },
     );
+  }
+
+  @override
+  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) {
+    // TODO: implement getEditFamilyQuest
+    throw UnimplementedError();
   }
 }

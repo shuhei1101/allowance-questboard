@@ -1,5 +1,5 @@
-import 'package:allowance_questboard/application/quest/edit_family_quest_data.dart';
-import 'package:allowance_questboard/application/quest/edit_quest_detail_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/domain/family/family_id.dart';
@@ -64,34 +64,30 @@ class FamilyQuestApplicationService {
     return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailData.fromDomain(questDetail: questLevelDetail.value)};
   }
 
-  Future<EditFamilyQuestData?> getEditFamilyQuest(String questId) async {
-    final familyQuest = await _familyQuestRepository.find(QuestId(questId));
-    if (familyQuest == null) return null;
-    return await _getEditFamilyQuestData(familyQuest);
-  }
-
   /// Throws:
   /// - [StateError] クエストの取得に失敗した際に発生
-  Future<EditFamilyQuestData> _getEditFamilyQuestData(FamilyQuest familyQuest) async {
-    final participantsData = await _getEditParticipantsData(familyQuest.participants);
+  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) async {
+    final familyQuest = await _familyQuestRepository.find(QuestId(questId));
+    if (familyQuest == null) return null;
+    final participantsData = await _getParticipantEditingData(familyQuest.participants);
     final questCategory = await _questCategoryRepository.find(familyQuest.categoryId);
     if (questCategory == null) throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
-    final questDetails = await _getEditQuestDetailsData(familyQuest.id);
-    return EditFamilyQuestData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
+    final questDetails = await _getQuestDetailsEditingData(familyQuest.id);
+    return FamilyQuestEditingData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
   }
 
-  Future<List<EditParticipantData>> _getEditParticipantsData(QuestParticipants participants) async {
-    final List<EditParticipantData> participantsData = [];
+  Future<List<ParticipantEditingData>> _getParticipantEditingData(QuestParticipants participants) async {
+    final List<ParticipantEditingData> participantsData = [];
     for (var participant in participants.list) {
       final member = await _memberRepository.find(participant.memberId);
       if (member == null) continue;
-      participantsData.add(EditParticipantData.fromDomain(status: participant, member: member));
+      participantsData.add(ParticipantEditingData.fromDomain(status: participant, member: member));
     }
     return participantsData;
   }
 
-  Future<Map<int, EditQuestDetailData>> _getEditQuestDetailsData(QuestId questId) async {
+  Future<Map<int, QuestDetailSettingData>> _getQuestDetailsEditingData(QuestId questId) async {
     final questLevelDetails = await _questDetailRepository.find(questId);
-    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: EditQuestDetailData.fromDomain(questDetail: questLevelDetail.value)};
+    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailSettingData.fromDomain(questDetail: questLevelDetail.value)};
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../application/member/member_data.dart';
-import 'member_list_tile.dart';
+import '../../application/member/member_data.dart';
+import '../component/member_list_tile.dart';
 
-class MemberListView extends StatelessWidget {
-  const MemberListView({required this.members, required this.onTap, super.key});
+class MembersScreen extends StatelessWidget {
+  const MembersScreen({required this.members, required this.onTap, super.key});
 
   final List<MemberData> members;
   final Function(String memberId) onTap;

@@ -2,9 +2,9 @@ import 'package:allowance_questboard/domain/quest/key_quests.dart';
 import 'package:allowance_questboard/domain/quest/quest_category_id.dart';
 import 'package:allowance_questboard/domain/quest/quest_id.dart';
 import 'package:allowance_questboard/domain/quest/quest_level_details.dart';
-import 'package:allowance_questboard/domain/quest/quest_limited_time_period.dart';
+import 'package:allowance_questboard/domain/quest/published_season.dart';
 import 'package:allowance_questboard/domain/quest/quest_name.dart';
-import 'package:allowance_questboard/domain/quest/quest_release_period.dart';
+import 'package:allowance_questboard/domain/quest/age_restriction.dart';
 import 'package:flutter/material.dart';
 
 abstract class Quest {
@@ -13,8 +13,8 @@ abstract class Quest {
       required this.name,
       required this.categoryId,
       required this.icon,
-      required this.releasePeriod,
-      required this.limitedTimePeriod,
+      required this.ageRestriction,
+      required this.publishedSeason,
       required this.keyQuests,
       required this.client,
       required this.missionDescription,
@@ -25,8 +25,8 @@ abstract class Quest {
   final QuestName name;
   final QuestCategoryId categoryId;
   final Icon icon;
-  final QuestReleasePeriod releasePeriod;
-  final QuestLimitedTimePeriod limitedTimePeriod;
+  final AgeRestriction ageRestriction;
+  final PublishedSeason? publishedSeason;
   final KeyQuests? keyQuests;
   final String client;
   final String missionDescription;

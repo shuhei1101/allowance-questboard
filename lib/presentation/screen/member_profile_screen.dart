@@ -1,8 +1,8 @@
-import 'package:allowance_questboard/presentation/component/member/member_list_tile.dart';
-import 'package:allowance_questboard/presentation/component/shared/profile_property_card.dart';
+import 'package:allowance_questboard/presentation/component/member_list_tile.dart';
+import 'package:allowance_questboard/presentation/component/profile_property_card.dart';
 import 'package:flutter/material.dart';
 
-import '../../../application/member/member_data.dart';
+import '../../application/member/member_data.dart';
 
 class MemberProfileScreen extends StatelessWidget {
   const MemberProfileScreen({required this.member, super.key});
