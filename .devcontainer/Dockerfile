@@ -10,6 +10,7 @@ RUN apt-get update -qq && apt install -y --no-install-recommends \
     xz-utils \
     zip \
     libglu1-mesa \
+    CMake \
     # Required for git clone.
     ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/*

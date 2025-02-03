@@ -1,7 +1,7 @@
 {
 	"name": "Allowance Questboard Environment",
     "build": {
-        "dockerfile": "../dockerfile"
+        "dockerfile": "Dockerfile"
       },
     "customizations": {
         "vscode": {
