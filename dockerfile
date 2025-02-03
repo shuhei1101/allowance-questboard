@@ -1,16 +1,23 @@
-FROM cirrusci/flutter:stable
+FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y \
-curl \
-git \
-unzip \
-clang \
-cmake \
-ninja-build \
-pkg-config \
-libgtk-3-dev
+USER root
 
-WORKDIR /workspace
+RUN apt-get update -qq && apt install -y --no-install-recommends \
+    # Required for Flutter.
+    curl \
+    git \
+    unzip \
+    xz-utils \
+    zip \
+    libglu1-mesa \
+    # Required for git clone.
+    ca-certificates \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN git clone -b main https://github.com/flutter/flutter.git /opt/flutter
+ENV PATH="/opt/flutter/bin:${PATH}"
+
 COPY . /workspace
+WORKDIR /workspace
 
-EXPOSE 3000
+ENTRYPOINT ["flutter", "doctor"]
