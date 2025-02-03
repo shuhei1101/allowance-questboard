@@ -3,10 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "runArgs": [
-    "--name=allowance-questboard",
-    "--rm"
-    ],
   "customizations": {
     "vscode": {
       "extensions": [
