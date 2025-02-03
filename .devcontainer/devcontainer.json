@@ -14,7 +14,7 @@
         "jebbs.plantuml"
       ],
       "settings": {
-        "Flutter Run Additional Args": [
+        "dart.flutterRunAdditionalArgs": [
           "--release",
           "-d web-server",
           "--web-hostname=0.0.0.0",
