@@ -15,4 +15,6 @@ RUN apt-get update -qq && apt install -y --no-install-recommends \
 RUN git clone -b main https://github.com/flutter/flutter.git /opt/flutter
 ENV PATH="/opt/flutter/bin:${PATH}"
 
+RUN flutter doctor
+
 CMD ["flutter", "pub", "get"]
