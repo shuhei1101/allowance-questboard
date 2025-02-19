@@ -5,7 +5,9 @@
 
 
 # アプリ概要
-![お小遣いクエストボードサイクル](https://github.com/user-attachments/assets/35f0f4b8-057a-4a74-8111-aee063e7fdd9)
+
+アプリの一連のサイクルは以下です。
+![お小遣いクエストボードサイクル](https://github.com/user-attachments/assets/14daacab-7f41-49b2-a351-8ffdf5c6cfaa)
 
 ユースケースイメージ
 オンラインの活用イメージ
@@ -20,7 +22,7 @@
 # 設計について
 ## 画面
 画面のスクリーンショット
-（FigmaのURL）
+[Figmaリンク](https://www.figma.com/design/WJpCB11rIjR94aZ5yha8hD/%E3%81%8A%E5%B0%8F%E9%81%A3%E3%81%84%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89?node-id=1007-14185&t=penZDoTiJQwgSZ7J-1)
 
 ## データベース設計
 ER図のは一場所
