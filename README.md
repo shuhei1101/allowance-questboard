@@ -1,16 +1,9 @@
-# allowance_questboard
+# はじめに
 
-A new Flutter project.
+# アプリのコンセプト
 
-## Getting Started
+# アプリの概要
+![お小遣いクエストボードサイクル](https://github.com/user-attachments/assets/35f0f4b8-057a-4a74-8111-aee063e7fdd9)
 
-This project is a starting point for a Flutter application.
+# 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
