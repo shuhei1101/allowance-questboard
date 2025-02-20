@@ -1,8 +1,9 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 USER root
+WORKDIR /app
 
-RUN apt-get update -qq && apt install -y --no-install-recommends \
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     curl \
     git \
     unzip \
@@ -12,9 +13,10 @@ RUN apt-get update -qq && apt install -y --no-install-recommends \
     ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN git clone -b main https://github.com/flutter/flutter.git /opt/flutter
+RUN git clone -b stable https://github.com/flutter/flutter.git /opt/flutter
 ENV PATH="/opt/flutter/bin:${PATH}"
 
+RUN flutter precache
 RUN flutter doctor
 
-CMD ["flutter", "pub", "get"]
+CMD ["tail", "-f", "/dev/null"]

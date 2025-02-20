@@ -44,7 +44,6 @@ package domain {
         class FamilyName {
             String value
         }
-
     }
     package members {
         class Member {
