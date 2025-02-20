@@ -52,12 +52,13 @@
 ## データベース設計
 本アプリのデータベース設計は Mermaid記法 を使用して作成しています。\
 詳細は以下から確認できます。
-[ユーザ関連ERD](https://www.mermaidchart.com/raw/29d432f8-eee8-4fde-a9bd-6250c648c78c?theme=light&version=v0.1&format=svg)
-[クエスト関連ERD](https://www.mermaidchart.com/raw/3f328b02-9b02-400e-ae65-b0574c59508c?theme=light&version=v0.1&format=svg) 
-[その他通知等](https://www.mermaidchart.com/app/projects/ed949344-1350-4e83-97f4-506c642ccc31/diagrams/b6cd4ba8-dc7a-4e1a-8d5c-c68674af9910/version/v0.1/edit)
+- [ユーザERD](https://www.mermaidchart.com/raw/29d432f8-eee8-4fde-a9bd-6250c648c78c?theme=light&version=v0.1&format=svg)
+- [クエストERD](https://www.mermaidchart.com/raw/3f328b02-9b02-400e-ae65-b0574c59508c?theme=light&version=v0.1&format=svg) 
+- [その他ERD](https://www.mermaidchart.com/app/projects/ed949344-1350-4e83-97f4-506c642ccc31/diagrams/b6cd4ba8-dc7a-4e1a-8d5c-c68674af9910/version/v0.1/edit)
 
 ## アーキテクチャ設計
-本アプリのアーキテクチャ設計は PlantUML記法 を使用して作成しています。\
+本アプリのドメイン設計は PlantUML記法 を使用して作成しています。\
+詳細は以下から確認できます。
 
 
 # 開発の進捗と今後の予定
