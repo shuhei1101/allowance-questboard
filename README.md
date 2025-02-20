@@ -16,16 +16,6 @@
 
 ![image](https://github.com/user-attachments/assets/f096b26e-6d36-46cf-add6-ac7cbcaeb032)
 
-# 開発環境
-- OS: Ubuntu 22.04 LTS
-- Flutter SDK: 3.13.8
-- Dart SDK: 3.5.3
-- データベース: Firestore
-- 主なライブラリ
-	- 状態管理: flutter_riverpod
-	- ルーティング: go_router
-	- DI管理: get_it
-
 # 機能一覧
 ![サービス利用イメージ](https://github.com/user-attachments/assets/5b87f7b3-8596-4c2b-b15e-350305841a77)
 - クエスト作成・受注・達成報告機能
@@ -40,7 +30,16 @@
  	- 定額お小遣いテーブル設定機能
   	- その他の機能も実装予定
 
-
+# 開発環境
+- OS: Ubuntu 22.04 LTS
+- Flutter SDK: 3.13.8
+- Dart SDK: 3.5.3
+- データベース: Firestore
+- 主なライブラリ
+	- 状態管理: flutter_riverpod
+	- ルーティング: go_router
+	- DI管理: get_it
+ - 
 # 設計について
 ## 画面設計
 本アプリの画面設計は Figma を使用して作成しています。\
