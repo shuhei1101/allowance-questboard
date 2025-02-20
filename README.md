@@ -16,7 +16,7 @@
 
 ![image](https://github.com/user-attachments/assets/f096b26e-6d36-46cf-add6-ac7cbcaeb032)
 
-# 機能一覧
+# 機能紹介
 ![サービス利用イメージ](https://github.com/user-attachments/assets/5b87f7b3-8596-4c2b-b15e-350305841a77)
 - クエスト作成・受注・達成報告機能
 	- 親がクエストを作成し、子供が自由に受注できる。
