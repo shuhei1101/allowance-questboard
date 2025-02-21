@@ -2,6 +2,7 @@ import 'package:allowance_questboard/domain/member/education.dart';
 import 'package:allowance_questboard/domain/member/member.dart';
 import 'package:flutter/widgets.dart';
 
+/// MemberクラスのDTO
 class MemberData {
   MemberData(
       {required this.id,
@@ -35,11 +36,12 @@ class MemberData {
   final Icon icon;
   final DateTime birthday;
   final int age;
-  final String education;
-  final int grade;
-  final int exp;
-  final int balance;
-  final int minSavings;
+  final String education; // 教育課程
+  final int grade; // 学年
+  final int exp; // 経験値
+  final int balance; // 所持金
+  final int minSavings; // 最低貯金額
 
+  // 表示用の学年
   String get displayGrade => "$education$grade年生";
 }
