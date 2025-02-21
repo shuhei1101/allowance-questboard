@@ -46,8 +46,8 @@
 # 設計について
 ## 画面設計
 本アプリの画面設計は Figma を使用して作成しています。\
- [こちら](https://www.figma.com/proto/WJpCB11rIjR94aZ5yha8hD/%E3%81%8A%E5%B0%8F%E9%81%A3%E3%81%84%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89?node-id=0-1&t=60dloXpi9znEWQcy-1) からプロトタイプの動作を確認できます。\
-※上記リンクへのアクセスはFigmaにログインする必要があります。
+ [こちら](https://www.figma.com/proto/WJpCB11rIjR94aZ5yha8hD/%E3%81%8A%E5%B0%8F%E9%81%A3%E3%81%84%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89?node-id=0-1&t=60dloXpi9znEWQcy-1) から実際に作ったプロトタイプを確認できます。\
+※上記リンクはFigmaへのログインが必要です。
 
 ![画面設計例2025-02-21 3 07 26](https://github.com/user-attachments/assets/e6a1ee53-e314-4d0a-b4ec-dc4c39d62ed9)
 
