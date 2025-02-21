@@ -58,6 +58,9 @@
 - [クエストERD](https://www.mermaidchart.com/raw/3f328b02-9b02-400e-ae65-b0574c59508c?theme=light&version=v0.1&format=svg) 
 - [その他ERD](https://www.mermaidchart.com/app/projects/ed949344-1350-4e83-97f4-506c642ccc31/diagrams/b6cd4ba8-dc7a-4e1a-8d5c-c68674af9910/version/v0.1/edit)
 
+※本アプリではリレーショナルデータベースを意識した設計を行っていますが、\
+Firestoreへの適用時は構造を最適化し反映する予定です。
+
 ## アーキテクチャ設計
 本アプリのドメイン設計は PlantUML記法 を使用して作成しています。\
 詳細は以下から確認できます。
