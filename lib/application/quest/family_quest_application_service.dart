@@ -12,20 +12,33 @@ import 'package:allowance_questboard/domain/quest/quest_id.dart';
 import 'package:allowance_questboard/domain/quest/quest_participants.dart';
 import 'package:get_it/get_it.dart';
 
+/// [FamilyQuest]に関するアプリケーションサービス
 class FamilyQuestApplicationService {
   final FamilyQuestRepository _familyQuestRepository = GetIt.I<FamilyQuestRepository>();
   final MemberRepository _memberRepository = GetIt.I<MemberRepository>();
   final QuestDetailRepository _questDetailRepository = GetIt.I<QuestDetailRepository>();
   final QuestCategoryRepository _questCategoryRepository = GetIt.I<QuestCategoryRepository>();
 
+  /// 指定した[questId]に対応するクエスト情報を取得する
+  /// 存在しない場合はnullを返却
+  ///
+  /// ### Parameters:
+  /// - String questId: クエストID
+  /// ### Returns:
+  /// - Future<FamilyQuestData?>: クエスト情報
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     final familyQuest = await _familyQuestRepository.find(QuestId(questId));
     if (familyQuest == null) return null;
     return await _getFamilyQuestData(familyQuest);
   }
 
-  /// Throws:
-  /// - [StateError] クエストの取得に失敗した際に発生
+  /// 指定した[familyId]に対応するクエスト情報リストを取得する \
+  /// 存在しない場合は空のリストを返却
+  ///
+  /// ### Parameters:
+  /// - String familyId: 家族ID
+  /// ### Returns:
+  /// - Future<List<FamilyQuestData>>: クエスト情報リスト
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
     final familyQuests = await _familyQuestRepository.findAllBy(FamilyId(familyId));
     List<FamilyQuestData> familyQuestsData = [];
@@ -34,7 +47,8 @@ class FamilyQuestApplicationService {
       try {
         quest = await _getFamilyQuestData(familyQuest);
         familyQuestsData.add(quest);
-      } on StateError catch (e) {
+      } on StateError {
+        // クエストカテゴリが見つからない場合
         continue;
       }
     }
@@ -64,8 +78,6 @@ class FamilyQuestApplicationService {
     return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailData.fromDomain(questDetail: questLevelDetail.value)};
   }
 
-  /// Throws:
-  /// - [StateError] クエストの取得に失敗した際に発生
   Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) async {
     final familyQuest = await _familyQuestRepository.find(QuestId(questId));
     if (familyQuest == null) return null;
