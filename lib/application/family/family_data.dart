@@ -1,9 +1,7 @@
 import 'package:allowance_questboard/domain/family/family.dart';
 import 'package:flutter/material.dart';
 
-/// FamilyクラスのDTO
-///
-/// 家族情報を表すデータクラス
+/// [Family]のDTO
 class FamilyData {
   FamilyData({
     required this.id,
