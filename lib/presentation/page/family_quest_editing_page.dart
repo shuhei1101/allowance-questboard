@@ -145,6 +145,10 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
           questExp: 100,
         ),
       },
+      ageFrom: 3,
+      ageTill: 12,
+      startedOn: DateTime.now(),
+      endedOn: DateTime.now().add(Duration(days: 7)),
     );
   }
 }

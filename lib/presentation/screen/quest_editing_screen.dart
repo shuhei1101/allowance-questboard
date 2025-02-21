@@ -4,6 +4,8 @@ import 'package:allowance_questboard/presentation/page/family_quest_editing_page
 import 'package:flutter/material.dart';
 
 /// 一般設定画面のリストビュー
+///
+/// クエストの一般設定を行う画面のリストビュー
 class GeneralQuestEditingScreen extends StatefulWidget {
   GeneralQuestEditingScreen({
     required this.quest,
@@ -36,35 +38,35 @@ class GeneralQuestEditingScreenState extends State<GeneralQuestEditingScreen> {
             // onChanged: (value) => print(value),
           ),
         ),
-        SettingEntry(
-          icon: Icon(Icons.settings),
-          title: 'クエストカテゴリ',
-          body: SettingSubEntry(
-            body: DropdownButton<String>(
-              value // ここにクエストカテゴリを入れる。
-              // TODO: Categoryを取得するアプリケーションサービスの作成
-        ),
-        SettingEntry(
-          icon: Icon(Icons.settings),
-          title: 'アイコン',
-          body: SettingSubEntry(body: widget.quest.icon, hasArrow: true),
-        ),
-        SettingSubEntry(
-          title: 'クエスト詳細',
-          body: Text('設定なし'),
-          hasArrow: true,
-        ),
-        SettingEntry(icon: Icon(Icons.settings), title: "受注要件", body: Column(
-          children: [
-            SettingSubEntry(
-              title: '指定方法',
-              // セレクトボックス
-              body: DropdownButton<String>(
-                value: ,
-            ),
-            )
-          ]
-        ))
+        // SettingEntry(
+        //   icon: Icon(Icons.settings),
+        //   title: 'クエストカテゴリ',
+        //   body: SettingSubEntry(
+        //     body: DropdownButton<String>(
+        //       value // ここにクエストカテゴリを入れる。
+        //       // TODO: Categoryを取得するアプリケーションサービスの作成
+        // ),
+        // SettingEntry(
+        //   icon: Icon(Icons.settings),
+        //   title: 'アイコン',
+        //   body: SettingSubEntry(body: widget.quest.icon, hasArrow: true),
+        // ),
+        // SettingSubEntry(
+        //   title: 'クエスト詳細',
+        //   body: Text('設定なし'),
+        //   hasArrow: true,
+        // ),
+        // SettingEntry(icon: Icon(Icons.settings), title: "受注要件", body: Column(
+        //   children: [
+        //     SettingSubEntry(
+        //       title: '指定方法',
+        //       // セレクトボックス
+        //       body: DropdownButton<String>(
+        //         value: ,
+        //     ),
+        //     )
+        //   ]
+        // ))
       ],
     );
   }
