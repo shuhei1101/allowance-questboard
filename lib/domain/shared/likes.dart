@@ -1,9 +1,13 @@
 import 'package:allowance_questboard/domain/shared/like.dart';
 
-class Likes {
-  final List<Like> _list;
+// TODO: このファイルに定義したメソッドは、試しに実装したものです。
 
+/// いいねリストクラス
+///
+/// クエストやコメントなどに紐づき、いいねの合計数を提供する
+class Likes {
   Likes(this._list);
+  final List<Like> _list;
 
   // 日付順にソートしてリストを返却
   List<Like> get sortedByDate => List.from(_list)..sort((a, b) => a.likedAt.compareTo(b.likedAt));
@@ -13,5 +17,6 @@ class Likes {
     _list.add(like);
   }
 
-  List<Like> get all => List.unmodifiable(_list);
+  // いいねをリストとして取得（不変リスト）
+  List<Like> get list => List.unmodifiable(_list);
 }
