@@ -116,7 +116,7 @@ class QuestDetailFirst extends StatelessWidget {
               delegate: delegate,
               maxLevel: _maxLevel,
             )),
-        SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text(quest.category)),
+        SettingEntry(icon: Icon(Icons.abc), title: "クエスト分類", body: Text(quest.category)),
         SettingEntry(icon: Icon(Icons.abc), title: "成功条件", body: Text(_questDetail.successCondition)),
       ],
     );
@@ -132,7 +132,7 @@ class QuestDetailSecond extends StatelessWidget {
     return ListView(
       children: [
         SettingEntry(icon: Icon(Icons.abc), title: "second", body: Text(_questDetail.successCondition)),
-        SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text("test")),
+        SettingEntry(icon: Icon(Icons.abc), title: "クエスト分類", body: Text("test")),
       ],
     );
   }
@@ -147,7 +147,7 @@ class QuestDetailThird extends StatelessWidget {
     return ListView(
       children: [
         SettingEntry(icon: Icon(Icons.abc), title: "third", body: Text(_questDetail.successCondition)),
-        SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text("test")),
+        SettingEntry(icon: Icon(Icons.abc), title: "クエスト分類", body: Text("test")),
       ],
     );
   }

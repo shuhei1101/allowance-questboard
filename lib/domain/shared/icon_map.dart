@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// アイコンとコードポイントのマップクラス
+/// アイコン名に対するコードポイントを定めたマップ
+///
+/// ### 制約
+/// - コードポイントは0x0000から0x10FFFFまでの範囲であること
 class IconMap {
   IconMap(this.map) {
-    // バリデーション
     map.forEach((key, value) {
       if (value < 0 || value > 0x10FFFF) {
         throw ArgumentError.value(value, 'codepoint', 'Invalid codepoint');

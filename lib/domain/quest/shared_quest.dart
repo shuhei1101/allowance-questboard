@@ -3,6 +3,7 @@ import 'package:allowance_questboard/domain/quest/quest.dart';
 import 'package:allowance_questboard/domain/shared/like.dart';
 import 'package:allowance_questboard/domain/shared/reportable.dart';
 
+/// オンライン上で共有されているクエストのドメインモデル
 class SharedQuest extends Quest implements Reportable {
   SharedQuest({
     required super.id,
@@ -13,7 +14,7 @@ class SharedQuest extends Quest implements Reportable {
     required super.publishedSeason,
     required super.keyQuests,
     required super.client,
-    required super.missionDescription,
+    required super.description,
     required super.levelDetails,
     required super.createdAt,
     required super.updatedAt,
@@ -21,7 +22,7 @@ class SharedQuest extends Quest implements Reportable {
     required this.sharedAt,
     required this.likes,
   });
-  final FamilyId familyId;
-  final DateTime sharedAt;
-  final List<Like> likes;
+  final FamilyId familyId; // 共有した家族ID
+  final DateTime sharedAt; // 共有日時
+  final List<Like> likes; // いいねリスト
 }

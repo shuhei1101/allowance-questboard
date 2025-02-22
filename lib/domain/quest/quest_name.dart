@@ -1,4 +1,12 @@
+/// クエスト名値オブジェクト
+///
+/// ### 制約
+/// - 空文字でないこと
 class QuestName {
-  QuestName(this.value);
+  QuestName(this.value) {
+    if (value.isEmpty) {
+      throw ArgumentError.value(value, "value", "must not be empty");
+    }
+  }
   final String value;
 }

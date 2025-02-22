@@ -40,10 +40,10 @@ class GeneralQuestEditingScreenState extends State<GeneralQuestEditingScreen> {
         ),
         // SettingEntry(
         //   icon: Icon(Icons.settings),
-        //   title: 'クエストカテゴリ',
+        //   title: 'クエスト分類',
         //   body: SettingSubEntry(
         //     body: DropdownButton<String>(
-        //       value // ここにクエストカテゴリを入れる。
+        //       value // ここにクエスト分類を入れる。
         //       // TODO: Categoryを取得するアプリケーションサービスの作成
         // ),
         // SettingEntry(

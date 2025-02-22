@@ -1,6 +1,6 @@
 import 'package:allowance_questboard/domain/shared/like.dart';
 
-// TODO: このファイルに定義したメソッドは、試しに実装したものです。
+// HACK: このファイルに定義したメソッドは、試しに実装したものです。
 
 /// いいねリストクラス
 ///

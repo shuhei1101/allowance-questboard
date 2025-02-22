@@ -1,3 +1,4 @@
+/// クエストの進行状況を表す列挙型
 enum QuestStatus {
   notAccepted,
   inProgress,

@@ -2,6 +2,7 @@ import 'package:allowance_questboard/domain/family/family_id.dart';
 import 'package:allowance_questboard/domain/quest/quest.dart';
 import 'package:allowance_questboard/domain/quest/quest_id.dart';
 
+/// オンラインから保存したクエストのドメインモデル
 class SavedQuest extends Quest {
   SavedQuest({
     required super.id,
@@ -12,7 +13,7 @@ class SavedQuest extends Quest {
     required super.publishedSeason,
     required super.keyQuests,
     required super.client,
-    required super.missionDescription,
+    required super.description,
     required super.levelDetails,
     required super.createdAt,
     required super.updatedAt,
@@ -20,7 +21,7 @@ class SavedQuest extends Quest {
     required this.sharedQuestId,
     required this.savedAt,
   });
-  final FamilyId familyId;
-  final QuestId sharedQuestId;
-  final DateTime savedAt;
+  final FamilyId familyId; // 保存した家族ID
+  final QuestId sharedQuestId; // 保存元の共有クエストID
+  final DateTime savedAt; // 保存日時
 }

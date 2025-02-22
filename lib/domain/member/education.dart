@@ -1,3 +1,4 @@
+/// 教育課程
 enum Education {
   preElementary,
   elementary,
@@ -8,6 +9,7 @@ enum Education {
 }
 
 extension EducationExtension on Education {
+  /// 教育課程の表示名
   String get displayName {
     switch (this) {
       case Education.preElementary:

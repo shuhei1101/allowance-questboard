@@ -6,6 +6,7 @@ import 'package:allowance_questboard/domain/quest/quest_category.dart';
 import 'package:allowance_questboard/domain/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
+/// [FamilyQuest]のDTO
 class FamilyQuestData extends QuestData {
   FamilyQuestData({
     required super.id,
@@ -36,11 +37,14 @@ class FamilyQuestData extends QuestData {
     );
   }
 
-  final bool isPublic;
-  final bool isShared;
-  final List<ParticipantData> participants;
+  final bool isPublic; // 公開クエストかどうか
+  final bool isShared; // 共有クエストかどうか
+  final List<ParticipantData> participants; // 参加者情報リスト
 }
 
+/// [QuestParticipant]のDTO
+///
+/// クエスト参加者の情報をまとめたDTO
 class ParticipantData {
   ParticipantData({required this.icon});
 
@@ -48,5 +52,5 @@ class ParticipantData {
     return ParticipantData(icon: member.icon);
   }
 
-  final Icon icon;
+  final Icon icon; // 参加者のアイコン
 }

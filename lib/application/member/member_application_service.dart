@@ -14,8 +14,10 @@ class MemberApplicationService {
   /// 指定した[memberId]に対応するメンバー情報を取得する
   /// 存在しない場合はnullを返す
   ///
-  /// :param String memberId: メンバーID \
-  /// :return Future<MemberData?>: メンバー情報
+  /// ### Parameters
+  /// - String memberId: メンバーID
+  /// ### Returns
+  /// - Future<MemberData?>: メンバー情報
   Future<MemberData?> getMember({required String memberId}) async {
     final member = await _memberRepository.find(MemberId(memberId));
     if (member == null) return null;
@@ -25,8 +27,10 @@ class MemberApplicationService {
   /// 指定した[familyId]に対応する家族の全メンバー情報を取得する
   /// 存在しない場合はnullを返す
   ///
-  /// :param String familyId: 家族ID \
-  /// :return Future<List<MemberData>?>: 家族のメンバー情報
+  /// ### Parameters
+  /// - String familyId: 家族ID
+  /// ### Returns
+  /// - Future<List<MemberData>?>: 家族のメンバー情報
   Future<List<MemberData>?> getFamilyMembers(String familyId) async {
     final members = await _memberRepository.findMembers(FamilyId(familyId));
     if (members == null) return null;

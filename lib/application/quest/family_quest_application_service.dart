@@ -22,9 +22,9 @@ class FamilyQuestApplicationService {
   /// 指定した[questId]に対応するクエスト情報を取得する
   /// 存在しない場合はnullを返却
   ///
-  /// ### Parameters:
+  /// ### Parameters
   /// - String questId: クエストID
-  /// ### Returns:
+  /// ### Returns
   /// - Future<FamilyQuestData?>: クエスト情報
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     final familyQuest = await _familyQuestRepository.find(QuestId(questId));
@@ -35,9 +35,9 @@ class FamilyQuestApplicationService {
   /// 指定した[familyId]に対応するクエスト情報リストを取得する \
   /// 存在しない場合は空のリストを返却
   ///
-  /// ### Parameters:
+  /// ### Parameters
   /// - String familyId: 家族ID
-  /// ### Returns:
+  /// ### Returns
   /// - Future<List<FamilyQuestData>>: クエスト情報リスト
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
     final familyQuests = await _familyQuestRepository.findAllBy(FamilyId(familyId));
@@ -48,7 +48,7 @@ class FamilyQuestApplicationService {
         quest = await _getFamilyQuestData(familyQuest);
         familyQuestsData.add(quest);
       } on StateError {
-        // クエストカテゴリが見つからない場合
+        // クエスト分類が見つからない場合
         continue;
       }
     }
