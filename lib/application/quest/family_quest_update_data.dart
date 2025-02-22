@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/domain/member/member.dart';
 import 'package:allowance_questboard/domain/quest/family_quest.dart';
 import 'package:allowance_questboard/domain/quest/quest_category.dart';
@@ -27,7 +27,7 @@ class FamilyQuestUpdateData {
     required FamilyQuest familyQuest,
     required QuestCategory questCategory,
     required List<ParticipantUpdateDTO> participants,
-    required Map<int, QuestDetailEditingData> questLevelDetails,
+    required Map<int, QuestDetailUpdateData> questLevelDetails,
   }) {
     return FamilyQuestUpdateData(
       id: familyQuest.id.value,
@@ -79,7 +79,7 @@ class FamilyQuestUpdateData {
   final List<ParticipantUpdateDTO> participants;
 
   /// クエストレベルに対するquestDetail
-  final Map<int, QuestDetailEditingData> questLevelDetails;
+  final Map<int, QuestDetailUpdateData> questLevelDetails;
 
   /// クエストの最大レベル
   int get maxLevel => questLevelDetails.length;

@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
-import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/presentation/page/error_page.dart';
@@ -159,7 +159,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
         ParticipantUpdateDTO(icon: Icon(Icons.person)),
       ],
       questLevelDetails: {
-        1: QuestDetailEditingData(
+        1: QuestDetailUpdateData(
           successCondition: "Complete all tasks",
           failureCondition: "Fail any task",
           targetCount: 10,
