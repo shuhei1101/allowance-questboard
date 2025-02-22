@@ -59,6 +59,7 @@ class MockQuestLevelsIconDelegate implements QuestLevelsIconDelegate {
   }
 }
 
+// 動作確認用コード
 void main() {
   runApp(
     MaterialApp(

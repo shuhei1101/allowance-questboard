@@ -222,6 +222,7 @@ class QuestDetailThirdScreen extends StatelessWidget {
   }
 }
 
+// 動作確認用コード
 void main() {
   runApp(MaterialApp(
     home: Scaffold(

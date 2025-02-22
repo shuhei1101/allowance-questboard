@@ -50,6 +50,7 @@ class FamilyQuestPage extends StatelessWidget {
   }
 }
 
+// 動作確認用コード
 void main() {
   GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
   final router = GoRouter(initialLocation: '/quest/123', routes: $appRoutes);
