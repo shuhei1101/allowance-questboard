@@ -82,7 +82,7 @@ Firestoreへの適用時は構造を最適化し反映する予定です。
 
 \
 詳細は以下から確認できます。
-- [全体クラス図](out/document/DDD_clsd/allowance_questboard_DDD_clsd.svg)（画像を拡大するには、右上の「Raw」を押してください。）
+- [アーキテクチャ簡易クラス図](out/document/DDD_clsd/allowance_questboard_DDD_clsd.svg)（画像を拡大するには、右上の「Raw」を押してください。）
 - [ドメインモデルクラス図](out/document/domain_erd/allowance_questboard_clsd.svg)
 - [ディレクトリ構成の説明](document/dir_arch.md)
 
