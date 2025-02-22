@@ -6,7 +6,7 @@ import 'package:allowance_questboard/domain/quest/quest_category.dart';
 import 'package:allowance_questboard/domain/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
-/// [FamilyQuest]のDTO
+/// [FamilyQuest]の表示用DTO
 class FamilyQuestData extends QuestData {
   FamilyQuestData({
     required super.id,
@@ -19,6 +19,7 @@ class FamilyQuestData extends QuestData {
     required this.participants,
   });
 
+  /// ドメインモデル[FamilyQuest]から生成するファクトリコンストラクタ
   factory FamilyQuestData.fromDomain({
     required FamilyQuest familyQuest,
     required QuestCategory questCategory,
@@ -37,20 +38,25 @@ class FamilyQuestData extends QuestData {
     );
   }
 
-  final bool isPublic; // 公開クエストかどうか
-  final bool isShared; // 共有クエストかどうか
-  final List<ParticipantData> participants; // 参加者情報リスト
+  /// 公開クエストかどうか
+  final bool isPublic;
+
+  /// 共有クエストかどうか
+  final bool isShared;
+
+  /// 参加者情報リスト
+  final List<ParticipantData> participants;
 }
 
-/// [QuestParticipant]のDTO
-///
-/// クエスト参加者の情報をまとめたDTO
+/// クエスト参加者の情報[QuestParticipant]の表示用DTO
 class ParticipantData {
   ParticipantData({required this.icon});
 
+  /// [QuestParticipant]から[ParticipantData]を生成するファクトリコンストラクタ
   factory ParticipantData.fromDomain({required QuestParticipant status, required Member member}) {
     return ParticipantData(icon: member.icon);
   }
 
-  final Icon icon; // 参加者のアイコン
+  /// 参加者のアイコン
+  final Icon icon;
 }

@@ -5,11 +5,23 @@ import 'package:allowance_questboard/domain/family/family_name.dart';
 
 /// 家族ドメインモデル
 class Family {
-  Family(this.id, this.name, this.icon, this.introduction, this.createdAt, this.updatedAt);
-  final FamilyId id; // 家族ID
-  final FamilyName name; // 家族名
-  final Icon icon; // 家族アイコン
-  final String introduction; // 家族紹介文
-  final DateTime createdAt; // 作成日時
-  final DateTime updatedAt; // 更新日時
+  Family({required this.id, required this.name, required this.icon, required this.introduction, required this.createdAt, required this.updatedAt});
+
+  /// 家族ID
+  final FamilyId id;
+
+  /// 家族名
+  final FamilyName name;
+
+  /// 家族アイコン
+  final Icon icon;
+
+  /// 家族紹介文
+  final String introduction;
+
+  /// 作成日時
+  final DateTime createdAt;
+
+  /// 更新日時
+  final DateTime updatedAt;
 }

@@ -2,7 +2,7 @@ import '../family/family_id.dart';
 import 'member.dart';
 import 'member_id.dart';
 
-/// [Member]のリポジトリ
+/// [Member]のリポジトリインターフェース
 abstract interface class MemberRepository {
   /// 指定した[MemberId]に対応する[Member]を取得する
   Future<Member?> find(MemberId memberId);

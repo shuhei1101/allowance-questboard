@@ -10,11 +10,24 @@ class QuestDetail {
   QuestDetail(
       {required this.successCondition, required this.failureCondition, required this.targetCount, required this.rewards, required this.memberExp, required this.questExp, required this.updatedAt});
 
-  final QuestSuccessCondition successCondition; // クエスト成功条件
-  final QuestFailureCondition failureCondition; // クエスト失敗条件
-  final QuestTargetCount targetCount; // 成功までの目標回数
-  final Money rewards; // 達成報酬
-  final MemberExp memberExp; // クエスト達成時のメンバー経験値
-  final QuestExp questExp; // クエスト経験値
-  final DateTime updatedAt; // 更新日時
+  /// クエスト成功条件
+  final QuestSuccessCondition successCondition;
+
+  /// クエスト失敗条件
+  final QuestFailureCondition failureCondition;
+
+  /// 成功までの目標回数
+  final QuestTargetCount targetCount;
+
+  /// 達成報酬
+  final Money rewards;
+
+  /// クエスト達成時のメンバー経験値
+  final MemberExp memberExp;
+
+  /// クエスト経験値
+  final QuestExp questExp;
+
+  /// 更新日時
+  final DateTime updatedAt;
 }

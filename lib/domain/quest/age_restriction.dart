@@ -1,10 +1,9 @@
 import 'package:allowance_questboard/domain/shared/age.dart';
 
 /// 年齢制限オブジェクト
-///
-/// ### 制約
-/// - 制限開始年齢が制限終了年齢より小さいこと
 class AgeRestriction {
+  /// ### 制約
+  /// - 制限開始年齢[ageFrom]が制限終了年齢[ageTill]より小さいこと
   AgeRestriction({required this.ageFrom, required this.ageTill}) {
     if (ageFrom != null && ageTill != null) {
       if (ageFrom!.value > ageTill!.value) {
@@ -12,6 +11,10 @@ class AgeRestriction {
       }
     }
   }
-  final Age? ageFrom; // 制限開始年齢
-  final Age? ageTill; // 制限終了年齢
+
+  /// 制限開始年齢
+  final Age? ageFrom;
+
+  /// 制限終了年齢
+  final Age? ageTill;
 }

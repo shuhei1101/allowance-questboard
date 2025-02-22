@@ -22,7 +22,13 @@ class SharedQuest extends Quest implements Reportable {
     required this.sharedAt,
     required this.likes,
   });
-  final FamilyId familyId; // 共有した家族ID
-  final DateTime sharedAt; // 共有日時
-  final List<Like> likes; // いいねリスト
+
+  /// 共有した家族ID
+  final FamilyId familyId;
+
+  /// 共有日時
+  final DateTime sharedAt;
+
+  /// いいねリスト
+  final List<Like> likes;
 }

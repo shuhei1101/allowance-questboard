@@ -8,8 +8,9 @@ import '../page/member_page.dart';
 import '../page/members_page.dart';
 part 'app_route.g.dart';
 
-// flutter pub run build_runner build
+// buildコマンド: flutter pub run build_runner build
 
+/// 家族メンバー一覧画面へのルーティング
 @TypedGoRoute<MembersRoute>(path: '/members/:familyId')
 class MembersRoute extends GoRouteData {
   MembersRoute({required this.familyId});
@@ -22,6 +23,7 @@ class MembersRoute extends GoRouteData {
   }
 }
 
+/// 家族メンバー詳細画面へのルーティング
 @TypedGoRoute<MemberRoute>(path: '/members/:familyId/member/:memberId')
 class MemberRoute extends GoRouteData {
   MemberRoute({required this.familyId, required this.memberId});
@@ -35,6 +37,7 @@ class MemberRoute extends GoRouteData {
   }
 }
 
+/// 家族クエスト一覧画面へのルーティング
 @TypedGoRoute<FamilyQuestsRoute>(path: '/quests/:familyId')
 class FamilyQuestsRoute extends GoRouteData {
   FamilyQuestsRoute({required this.familyId});
@@ -47,6 +50,7 @@ class FamilyQuestsRoute extends GoRouteData {
   }
 }
 
+/// 家族クエスト詳細画面へのルーティング
 @TypedGoRoute<FamilyQuestRoute>(path: '/quest/:questId')
 class FamilyQuestRoute extends GoRouteData {
   FamilyQuestRoute({required this.questId});
@@ -59,6 +63,7 @@ class FamilyQuestRoute extends GoRouteData {
   }
 }
 
+/// 家族クエスト編集画面へのルーティング
 @TypedGoRoute<FamilyQuestEditingRoute>(path: '/quest/:questId/edit')
 class FamilyQuestEditingRoute extends GoRouteData {
   FamilyQuestEditingRoute({required this.questId});

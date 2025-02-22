@@ -9,7 +9,7 @@ import 'member_exp.dart';
 import 'member_id.dart';
 import 'member_name.dart';
 
-/// 家族メンバードメインモデル
+/// 家族メンバーのドメインモデル
 class Member {
   Member(
       {required this.id,
@@ -24,19 +24,42 @@ class Member {
       required this.createdAt,
       required this.updatedAt});
 
-  final MemberId id; // メンバーID
-  final FamilyId familyId; // 属する家族ID
-  final MemberName name; // メンバー名
-  final Icon icon; // メンバーのアイコン
-  final Birthday birthday; // 誕生日
-  final Grade grade; // 教育課程名と年数
-  final MemberExp exp; // 経験値
-  final Money balance; // 残高
-  final Money minSavings; // 最低貯金額
-  final DateTime createdAt; // 作成日時
-  final DateTime updatedAt; // 更新日時
+  /// メンバーID
+  final MemberId id;
 
-  // 年齢
+  /// 属する家族ID
+  final FamilyId familyId;
+
+  /// メンバー名
+  final MemberName name;
+
+  /// メンバーのアイコン
+  final Icon icon;
+
+  /// 誕生日
+  final Birthday birthday;
+
+  /// 教育課程名と年数
+  final Grade grade;
+
+  /// 経験値
+  final MemberExp exp;
+
+  /// 残高
+  final Money balance;
+
+  /// 最低貯金額
+  final Money minSavings;
+
+  /// 作成日時
+  final DateTime createdAt;
+
+  /// 更新日時
+  final DateTime updatedAt;
+
+  /// 年齢
+  ///
+  /// 誕生日から現在日時を引いて年齢を計算する
   Age get age {
     final DateTime today = DateTime.now();
     final DateTime birthDate = birthday.value;

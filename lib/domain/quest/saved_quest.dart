@@ -21,7 +21,13 @@ class SavedQuest extends Quest {
     required this.sharedQuestId,
     required this.savedAt,
   });
-  final FamilyId familyId; // 保存した家族ID
-  final QuestId sharedQuestId; // 保存元の共有クエストID
-  final DateTime savedAt; // 保存日時
+
+  /// 保存した家族ID
+  final FamilyId familyId;
+
+  /// 保存元の共有クエストID
+  final QuestId sharedQuestId;
+
+  /// 保存日時
+  final DateTime savedAt;
 }

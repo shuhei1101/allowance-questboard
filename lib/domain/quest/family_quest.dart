@@ -26,9 +26,19 @@ class FamilyQuest extends Quest implements Allowanceable, KeyQuestable {
     required this.isShared,
     required this.sharedQuestId,
   });
-  final FamilyId familyId; // クエストを保有する家族のID
-  final bool isPublic; // 公開フラグ
-  final QuestParticipants participants; // クエストの参加者リスト
-  final bool isShared; // 共有クエストフラグ
-  final QuestId? sharedQuestId; // 共有クエストID
+
+  /// クエストを保有する家族のID
+  final FamilyId familyId;
+
+  /// 公開フラグ
+  final bool isPublic;
+
+  /// クエストの参加者リスト
+  final QuestParticipants participants;
+
+  /// 共有クエストフラグ
+  final bool isShared;
+
+  /// 共有クエストID
+  final QuestId? sharedQuestId;
 }

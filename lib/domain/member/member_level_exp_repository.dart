@@ -1,7 +1,7 @@
 import 'package:allowance_questboard/domain/family/family_id.dart';
 import 'package:allowance_questboard/domain/member/member_level_exp.dart';
 
-/// [MemberLevelExp]のリポジトリ
+/// [MemberLevelExp]のリポジトリインターフェース
 abstract interface class MemberLevelExpRepository {
   /// 指定した[FamilyId]に対応する[MemberLevelExp]を取得する
   Future<MemberLevelExp?> find(FamilyId id);

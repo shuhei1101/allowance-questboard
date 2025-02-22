@@ -3,21 +3,20 @@ import 'package:allowance_questboard/domain/quest/quest_level.dart';
 
 /// クエストレベルに対するクエスト詳細を定めたマップ
 class QuestLevelDetails {
-  /// ### Raises
-  /// - [ArgumentError]: レベルが連番でない場合
-  QuestLevelDetails(this._map) {
-    _validateMap(_map);
+  /// ### 制約
+  /// - レベルが連番であること
+  QuestLevelDetails(this.map) {
+    _validateMap(map);
   }
-  final Map<QuestLevel, QuestDetail> _map;
 
-  Map<QuestLevel, QuestDetail> get map => _map;
+  final Map<QuestLevel, QuestDetail> map;
 
   /// レベル順にソートした配列を取得
   List<QuestDetail?> toSortedList() {
-    final sortedLevels = _map.keys.toList()..sort((a, b) => a.value.compareTo(b.value));
+    final sortedLevels = map.keys.toList()..sort((a, b) => a.value.compareTo(b.value));
     return sortedLevels
         .map(
-          (e) => _map[e],
+          (e) => map[e],
         )
         .toList();
   }

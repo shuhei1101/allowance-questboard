@@ -5,8 +5,9 @@ import 'package:allowance_questboard/domain/quest/quest_category.dart';
 import 'package:allowance_questboard/domain/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
-class FamilyQuestEditingData {
-  FamilyQuestEditingData({
+/// 家族クエストの編集用DTO
+class FamilyQuestUpdateData {
+  FamilyQuestUpdateData({
     required this.id,
     required this.name,
     required this.category,
@@ -21,13 +22,14 @@ class FamilyQuestEditingData {
     required this.participants,
   });
 
-  factory FamilyQuestEditingData.fromDomain({
+  /// ドメインモデル[FamilyQuest]から生成するファクトリコンストラクタ
+  factory FamilyQuestUpdateData.fromDomain({
     required FamilyQuest familyQuest,
     required QuestCategory questCategory,
-    required List<ParticipantEditingData> participants,
-    required Map<int, QuestDetailSettingData> questLevelDetails,
+    required List<ParticipantUpdateDTO> participants,
+    required Map<int, QuestDetailEditingData> questLevelDetails,
   }) {
-    return FamilyQuestEditingData(
+    return FamilyQuestUpdateData(
       id: familyQuest.id.value,
       name: familyQuest.name.value,
       category: questCategory.value,
@@ -43,28 +45,54 @@ class FamilyQuestEditingData {
     );
   }
 
+  /// クエストID
   final String id;
+
+  /// クエスト名
   final String name;
+
+  /// クエストカテゴリ
   final String category;
+
+  /// クエストアイコン
   final Icon icon;
+
+  /// 年齢制限（下限）
   final int? ageFrom;
+
+  /// 年齢制限（上限）
   final int? ageTill;
+
+  /// クエスト開始日
   final DateTime? startedOn;
+
+  /// クエスト終了日
   final DateTime? endedOn;
+
+  /// 公開設定
   final bool isPublic;
+
+  /// 共有設定
   final bool isShared;
-  final List<ParticipantEditingData> participants;
-  // クエストレベルに対するquestDetail
-  final Map<int, QuestDetailSettingData> questLevelDetails;
+
+  /// 参加者
+  final List<ParticipantUpdateDTO> participants;
+
+  /// クエストレベルに対するquestDetail
+  final Map<int, QuestDetailEditingData> questLevelDetails;
+
+  /// クエストの最大レベル
   int get maxLevel => questLevelDetails.length;
 }
 
-class ParticipantEditingData {
-  ParticipantEditingData({required this.icon});
+/// 参加者の編集用DTO
+class ParticipantUpdateDTO {
+  ParticipantUpdateDTO({required this.icon});
 
-  factory ParticipantEditingData.fromDomain({required QuestParticipant status, required Member member}) {
-    return ParticipantEditingData(icon: member.icon);
+  /// ドメインモデル[QuestParticipant]から生成するファクトリコンストラクタ
+  factory ParticipantUpdateDTO.fromDomain({required QuestParticipant status, required Member member}) {
+    return ParticipantUpdateDTO(icon: member.icon);
   }
-
+  // 参加者のアイコン
   final Icon icon;
 }

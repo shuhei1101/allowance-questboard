@@ -1,9 +1,8 @@
 /// パスワード値オブジェクト
-///
-/// ### 制約
-/// - 空文字列でないこと
-/// - 8文字以上であること
 class Password {
+  /// ### 制約
+  /// - 空文字列でないこと
+  /// - 8文字以上であること
   Password(this.value) {
     if (value.isEmpty) {
       throw ArgumentError.value(value, 'value', 'must not be empty');

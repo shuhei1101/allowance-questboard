@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
 import 'package:allowance_questboard/presentation/component/setting_entry.dart';
 import 'package:allowance_questboard/presentation/page/family_quest_editing_page.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +13,17 @@ class GeneralQuestEditingScreen extends StatefulWidget {
     required this.questNameController,
     required this.questCategoryController,
   });
-  final FamilyQuestEditingData quest;
+
+  /// クエスト情報
+  final FamilyQuestUpdateData quest;
+
+  /// バリデートチェック更新時の通知処理を委譲される画面
   final ValidateNotifiable delegate;
+
+  /// クエスト名の入力コントローラ
   final TextEditingController questNameController;
+
+  /// クエスト分類の入力コントローラ
   final TextEditingController questCategoryController;
 
   @override
@@ -33,11 +41,13 @@ class GeneralQuestEditingScreenState extends State<GeneralQuestEditingScreen> {
           body: TextField(
             controller: widget.questNameController,
             onChanged: (value) {
-              widget.delegate.notify();
+              widget.delegate.validateNotify();
             },
             // onChanged: (value) => print(value),
           ),
         ),
+        // TOOD: クエスト分類の選択ボックスを追加
+
         // SettingEntry(
         //   icon: Icon(Icons.settings),
         //   title: 'クエスト分類',

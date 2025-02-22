@@ -24,16 +24,40 @@ abstract class Quest {
       required this.levelDetails,
       required this.createdAt,
       required this.updatedAt});
+
+  /// クエストID
   final QuestId id;
-  final QuestName name; // クエスト名
-  final QuestCategoryId categoryId; // クエスト分類ID
-  final Icon icon; // クエストアイコン
-  final AgeRestriction ageRestriction; // クエスト受注年齢制限
-  final PublishedSeason? publishedSeason; // クエストの公開期間
-  final KeyQuests? keyQuests; // キークエスト一覧
-  final QuestClient client; // クエスト依頼者名
-  final QuestDescription description; // クエストの詳細情報
-  final QuestLevelDetails levelDetails; // クエスト詳細とレベルのマップ情報
+
+  /// クエスト名
+  final QuestName name;
+
+  /// クエスト分類ID
+  final QuestCategoryId categoryId;
+
+  /// クエストアイコン
+  final Icon icon;
+
+  /// クエスト受注年齢制限
+  final AgeRestriction ageRestriction;
+
+  /// クエストの公開期間
+  final PublishedSeason? publishedSeason;
+
+  /// キークエスト一覧
+  final KeyQuests? keyQuests;
+
+  /// クエスト依頼者名
+  final QuestClient client;
+
+  /// クエストの詳細情報
+  final QuestDescription description;
+
+  /// クエスト詳細とレベルのマップ情報
+  final QuestLevelDetails levelDetails;
+
+  /// クエスト作成日時
   final DateTime createdAt;
+
+  /// クエスト更新日時
   final DateTime updatedAt;
 }

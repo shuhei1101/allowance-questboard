@@ -1,10 +1,9 @@
 import 'package:allowance_questboard/util/validator.dart';
 
 /// メールアドレス値オブジェクト
-///
-/// ### 制約
-/// - メールアドレスの形式であること
 class MailAddress {
+  /// ### 制約
+  /// - メールアドレスの形式であること
   MailAddress(this.value) {
     if (isMailAddress(value)) {
       throw ArgumentError.value(value, 'value', 'Invalid mail address');

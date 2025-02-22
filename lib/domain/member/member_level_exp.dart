@@ -4,6 +4,8 @@ import 'package:allowance_questboard/domain/member/member_level.dart';
 /// メンバーレベルに対する経験値を定めたマップオブジェクト
 class MemberLevelExp {
   MemberLevelExp(this.map);
+
+  /// メンバーレベルと経験値のマップ
   final Map<MemberLevel, MemberExp> map;
 
   /// 指定した[MemberExp]から現在の[MemberLevel]を取得する

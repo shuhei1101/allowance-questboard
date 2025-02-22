@@ -2,7 +2,7 @@ import 'package:allowance_questboard/domain/member/education.dart';
 import 'package:allowance_questboard/domain/member/member.dart';
 import 'package:flutter/widgets.dart';
 
-/// MemberクラスのDTO
+/// [Member]クラスの表示用DTO
 class MemberData {
   MemberData(
       {required this.id,
@@ -16,6 +16,7 @@ class MemberData {
       required this.balance,
       required this.minSavings});
 
+  /// ドメインモデル[Member]から生成するファクトリコンストラクタ
   factory MemberData.fromDomain(Member source) {
     return MemberData(
       id: source.id.value,
@@ -31,17 +32,36 @@ class MemberData {
     );
   }
 
+  /// メンバーID
   final String id;
-  final String name;
-  final Icon icon;
-  final DateTime birthday;
-  final int age;
-  final String education; // 教育課程
-  final int grade; // 学年
-  final int exp; // 経験値
-  final int balance; // 所持金
-  final int minSavings; // 最低貯金額
 
-  // 表示用の学年
+  /// メンバー名
+  final String name;
+
+  /// メンバーアイコン
+  final Icon icon;
+
+  /// 誕生日
+  final DateTime birthday;
+
+  /// 年齢
+  final int age;
+
+  /// 教育課程
+  final String education;
+
+  /// 学年
+  final int grade;
+
+  /// 経験値
+  final int exp;
+
+  /// 所持金
+  final int balance;
+
+  /// 最低貯金額
+  final int minSavings;
+
+  /// 表示用の学年
   String get displayGrade => "$education$grade年生";
 }
