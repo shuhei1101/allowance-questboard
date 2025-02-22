@@ -86,8 +86,6 @@ Firestoreへの適用時は構造を最適化し反映する予定です。
 - [ドメインモデルクラス図](out/document/domain_erd/allowance_questboard_clsd.svg)
 - [ディレクトリ構成の説明](document/dir_arch.md)
 
-設計する上で参考にした書籍: [ドメイン駆動設計入門 ボトムアップでわかる！ドメイン駆動設計の基本](https://www.shoeisha.co.jp/book/detail/9784798150727)
-
 # 開発
 - 現在のタスク
 	- クエスト画面作成（一覧・詳細・編集）
