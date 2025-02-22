@@ -65,7 +65,6 @@ Firestoreへの適用時は構造を最適化し反映する予定です。
 本アプリのドメイン設計は PlantUML記法 を使用して作成しています。\
 詳細は以下から確認できます。
 - [ドメインモデルクラス図](https://raw.githubusercontent.com/shuhei1101/allowance-questboard/refs/heads/main/out/document/domain_erd/allowance_questboard_clsd.svg?token=GHSAT0AAAAAAC5FSZUIGCAFNJTMZJBVSRQAZ5ZQSDA)\
-※イメージが小さい場合、右上の「Raw」ボタンから拡大してください。
 
 # 開発
 - 現在のタスク
