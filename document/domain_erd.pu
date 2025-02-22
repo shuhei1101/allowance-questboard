@@ -180,13 +180,13 @@ package domain {
         class FamilyLevelTable <LevelTable> {
             +FamilyId familyId
         }
-        note right of FamilyLevelTable: 家族の経験値とレベルのマップテーブル
+        note right of FamilyLevelTable: 家族の経験値とレベルのマップ
         class SharedLevelTable <LevelTable, Reportable> {
             +FamilyId familyId
             +int favoritesCount
             +bool isPublic
         }
-        note right of SharedLevelTable: オンライン上に共有した経験値とレベルのマップテーブル
+        note right of SharedLevelTable: オンライン上に共有した経験値とレベルのマップ
     }
     package quest {
         class Quest {
