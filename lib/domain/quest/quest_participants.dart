@@ -1,7 +1,8 @@
 import 'package:allowance_questboard/domain/quest/quest_participant.dart';
 
+/// クエスト参加者のリストオブジェクト
 class QuestParticipants {
-  QuestParticipants(this._list);
-  final List<QuestParticipant> _list;
-  List<QuestParticipant> get list => _list;
+  QuestParticipants(this.list);
+
+  final List<QuestParticipant> list;
 }

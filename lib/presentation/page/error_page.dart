@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
+  /// エラーページ
+  ///
+  /// [error]には発生したエラーを指定する
+  /// [snapshot.error]は[Object]型なので、初期化時にエラーの型に応じてキャストする
   ErrorPage({required error}) {
     if (error is Error) {
       _message = error.toString();
@@ -35,6 +38,7 @@ class ErrorPage extends StatelessWidget {
   }
 }
 
+// 動作確認用コード
 void main() {
   runApp(MaterialApp(
     home: ErrorPage(

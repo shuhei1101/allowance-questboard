@@ -9,6 +9,7 @@ import 'member_exp.dart';
 import 'member_id.dart';
 import 'member_name.dart';
 
+/// 家族メンバーのドメインモデル
 class Member {
   Member(
       {required this.id,
@@ -23,32 +24,56 @@ class Member {
       required this.createdAt,
       required this.updatedAt});
 
+  /// メンバーID
   final MemberId id;
+
+  /// 属する家族ID
   final FamilyId familyId;
+
+  /// メンバー名
   final MemberName name;
+
+  /// メンバーのアイコン
   final Icon icon;
+
+  /// 誕生日
   final Birthday birthday;
+
+  /// 教育課程名と年数
   final Grade grade;
+
+  /// 経験値
   final MemberExp exp;
+
+  /// 残高
   final Money balance;
+
+  /// 最低貯金額
   final Money minSavings;
+
+  /// 作成日時
   final DateTime createdAt;
+
+  /// 更新日時
   final DateTime updatedAt;
 
+  /// 年齢
+  ///
+  /// 誕生日から現在日時を引いて年齢を計算する
   Age get age {
     final DateTime today = DateTime.now();
     final DateTime birthDate = birthday.value;
     int rawAge = today.year - birthDate.year;
 
-    // 誕生日がまだ来ていない場合は1歳引く
     if (today.month < birthDate.month || (today.month == birthDate.month && today.day < birthDate.day)) {
+      // 誕生日がまだ来ていない場合は1歳引く
       rawAge--;
     }
 
     return Age(rawAge);
   }
 
-  // // MemberProfileアプリケーションサービスで実装する
+  // TODO: MemberProfileアプリケーションサービスで実装する
   // MemberLevel getLevel(Map<MemberLevel, MemberExp> map) {
   //   for (var entry in map.entries) {
   //     if (exp.value >= entry.value.value) {

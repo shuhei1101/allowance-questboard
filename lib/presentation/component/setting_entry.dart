@@ -2,10 +2,18 @@ import 'package:allowance_questboard/presentation/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 
 class SettingEntry extends StatelessWidget {
+  /// 設定画面のエントリ用ウィジェット
   SettingEntry({required this.icon, required this.title, required this.body});
 
+  /// 設定のアイコン
   final Icon icon;
+
+  /// 設定項目のタイトル
   final String title;
+
+  /// 設定項目の内容
+  ///
+  /// サブエントリを指定する場合は[SettingSubEntry]を指定する
   final Widget body;
 
   @override
@@ -30,11 +38,21 @@ class SettingEntry extends StatelessWidget {
 }
 
 class SettingSubEntry extends StatelessWidget {
+  /// 設定画面のサブエントリ用ウィジェット
+  ///
+  /// [SettingEntry]のbodyに指定して使用するサブエントリ
   SettingSubEntry({this.title = "", required this.body, this.onTap, required this.hasArrow});
 
+  /// 設定項目のタイトル
   final String title;
+
+  /// 設定項目の内容。アイコンやテキストなど
   final Widget body;
+
+  /// タップ時の処理
   final VoidCallback? onTap;
+
+  /// 矢印アイコンを表示するか
   final bool hasArrow;
 
   @override
@@ -54,7 +72,7 @@ class SettingSubEntry extends StatelessWidget {
   }
 }
 
-// runappしてscaffoldの中にSettingEntryを入れる
+// 動作確認用コード
 void main() {
   runApp(MaterialApp(
     home: Scaffold(

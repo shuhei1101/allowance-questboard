@@ -1,4 +1,12 @@
+/// クエストの成功条件を表すオブジェクト
 class QuestSuccessCondition {
-  QuestSuccessCondition(this.value);
+  /// ### 制約
+  /// - 空文字でないこと
+  QuestSuccessCondition(this.value) {
+    if (value.isEmpty) {
+      throw ArgumentError.value(value, "value", "must not be empty");
+    }
+  }
+
   final String value;
 }

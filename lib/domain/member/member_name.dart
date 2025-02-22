@@ -1,9 +1,12 @@
+/// メンバ名値オブジェクト
 class MemberName {
+  /// ### ## 制約
+  /// - 空文字でないこと
   MemberName(this.value) {
     if (value == "") {
-      throw ArgumentError('メンバ名は空白にできません。');
+      throw ArgumentError.value(value, "value", "must not be empty");
     }
   }
 
-  late String value;
+  final String value;
 }

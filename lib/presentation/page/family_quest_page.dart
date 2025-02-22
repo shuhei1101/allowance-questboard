@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
@@ -10,14 +10,17 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class FamilyQuestPage extends StatelessWidget {
+  /// 家族クエストの詳細画面
   FamilyQuestPage({required this.questId}) : _service = GetIt.I<FamilyQuestApplicationService>();
 
+  /// 表示対象のクエストID
   final String questId;
   final FamilyQuestApplicationService _service;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<FamilyQuestData?>(
+      // 画面表示時にクエスト情報を取得
       future: _service.getFamilyQuest(questId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
@@ -26,6 +29,8 @@ class FamilyQuestPage extends StatelessWidget {
           );
         if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
         final familyQuest = snapshot.data!;
+
+        // クエスト情報を取得できた場合、詳細画面を表示
         return Scaffold(
           appBar: AppBar(
             title: Text(familyQuest.name),
@@ -75,13 +80,12 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
 
   @override
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) {
-    // TODO: implement getFamilyQuests
+    //
     throw UnimplementedError();
   }
 
   @override
-  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) {
-    // TODO: implement getEditFamilyQuest
+  Future<FamilyQuestUpdateData?> getFamilyQuestEditingData(String questId) {
     throw UnimplementedError();
   }
 }

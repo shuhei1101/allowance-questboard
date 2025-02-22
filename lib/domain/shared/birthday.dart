@@ -1,9 +1,11 @@
+/// 誕生日値オブジェクト
 class Birthday {
-  final DateTime value;
+  /// ### 制約
+  /// - 現在日時より過去の日付であること
   Birthday(this.value) {
-    final today = DateTime.now();
-    if (value.isAfter(today)) {
-      throw ArgumentError('誕生日は未来の日付に設定できません。');
+    if (value.isAfter(DateTime.now())) {
+      throw ArgumentError.value(value, 'birthday', 'Future date is invalid');
     }
   }
+  final DateTime value;
 }

@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
@@ -12,20 +12,35 @@ import 'package:allowance_questboard/domain/quest/quest_id.dart';
 import 'package:allowance_questboard/domain/quest/quest_participants.dart';
 import 'package:get_it/get_it.dart';
 
+/// [FamilyQuest]に関するアプリケーションサービス
 class FamilyQuestApplicationService {
+  FamilyQuestApplicationService();
+
   final FamilyQuestRepository _familyQuestRepository = GetIt.I<FamilyQuestRepository>();
   final MemberRepository _memberRepository = GetIt.I<MemberRepository>();
   final QuestDetailRepository _questDetailRepository = GetIt.I<QuestDetailRepository>();
   final QuestCategoryRepository _questCategoryRepository = GetIt.I<QuestCategoryRepository>();
 
+  /// 指定した[questId]に対応するクエスト情報を取得する
+  /// 存在しない場合はnullを返却
+  ///
+  /// ### Parameters
+  /// - String questId: クエストID
+  /// ### Returns
+  /// - Future<[FamilyQuestData]?>: クエスト情報
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     final familyQuest = await _familyQuestRepository.find(QuestId(questId));
     if (familyQuest == null) return null;
     return await _getFamilyQuestData(familyQuest);
   }
 
-  /// Throws:
-  /// - [StateError] クエストの取得に失敗した際に発生
+  /// 指定した[familyId]に対応するクエスト情報リストを取得する \
+  /// 存在しない場合は空のリストを返却
+  ///
+  /// ### Parameters
+  /// - String familyId: 家族ID
+  /// ### Returns
+  /// - Future<List<[FamilyQuestData]>>: クエスト情報リスト
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
     final familyQuests = await _familyQuestRepository.findAllBy(FamilyId(familyId));
     List<FamilyQuestData> familyQuestsData = [];
@@ -34,22 +49,40 @@ class FamilyQuestApplicationService {
       try {
         quest = await _getFamilyQuestData(familyQuest);
         familyQuestsData.add(quest);
-      } on StateError catch (e) {
+      } on StateError {
+        // クエスト分類が見つからない場合
         continue;
       }
     }
     return familyQuestsData;
   }
 
+  /// 指定したquestIdに対応するクエスト情報を取得する
+  /// 存在しない場合はnullを返却
+  ///
+  /// ### Parameters
+  /// - String questId: クエストID
+  /// ### Returns
+  /// - Future<[FamilyQuestUpdateData]?>: クエスト情報
+  /// ### Throws
+  /// - StateError: クエスト分類が見つからない場合
   Future<FamilyQuestData> _getFamilyQuestData(FamilyQuest familyQuest) async {
-    final participantsData = await _getParticipantsData(familyQuest.participants);
+    final participantsData = await _participantsToData(familyQuest.participants);
     final questCategory = await _questCategoryRepository.find(familyQuest.categoryId);
     if (questCategory == null) throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
     final questDetails = await _getQuestDetailsData(familyQuest.id);
     return FamilyQuestData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
   }
 
-  Future<List<ParticipantData>> _getParticipantsData(QuestParticipants participants) async {
+  /// [QuestParticipants]を[ParticipantData]のリストに変換する
+  ///
+  /// 対象のメンバーが存在しない場合はリストに含めない
+  ///
+  /// ### Parameters
+  /// - [QuestParticipants] participants: クエスト参加者
+  /// ### Returns
+  /// - Future<List<[ParticipantData]>>: クエスト参加者情報リスト
+  Future<List<ParticipantData>> _participantsToData(QuestParticipants participants) async {
     final List<ParticipantData> participantsData = [];
     for (var participant in participants.list) {
       final member = await _memberRepository.find(participant.memberId);
@@ -59,35 +92,53 @@ class FamilyQuestApplicationService {
     return participantsData;
   }
 
+  /// 指定した[QuestId]のクエストが持つ詳細情報をマップで取得する
+  ///
+  /// ### Parameters
+  /// - [QuestId] questId: クエストID
+  /// ### Returns
+  /// - Future<Map<int, [QuestDetailData]>>: クエスト詳細情報
   Future<Map<int, QuestDetailData>> _getQuestDetailsData(QuestId questId) async {
     final questLevelDetails = await _questDetailRepository.find(questId);
     return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailData.fromDomain(questDetail: questLevelDetail.value)};
   }
 
-  /// Throws:
-  /// - [StateError] クエストの取得に失敗した際に発生
-  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) async {
+  /// 指定した[questId]に対応する編集用クエスト情報を取得する
+  ///
+  /// ### Parameters
+  /// - String questId: クエストID
+  /// ### Returns
+  /// - Future<[FamilyQuestUpdateData]?>: クエスト情報
+  Future<FamilyQuestUpdateData?> getFamilyQuestEditingData(String questId) async {
     final familyQuest = await _familyQuestRepository.find(QuestId(questId));
     if (familyQuest == null) return null;
-    final participantsData = await _getParticipantEditingData(familyQuest.participants);
+    final participantsData = await _participantsToEditingData(familyQuest.participants);
     final questCategory = await _questCategoryRepository.find(familyQuest.categoryId);
     if (questCategory == null) throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
     final questDetails = await _getQuestDetailsEditingData(familyQuest.id);
-    return FamilyQuestEditingData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
+    return FamilyQuestUpdateData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
   }
 
-  Future<List<ParticipantEditingData>> _getParticipantEditingData(QuestParticipants participants) async {
-    final List<ParticipantEditingData> participantsData = [];
+  /// [QuestParticipants]を[ParticipantUpdateDTO]のリストに変換する
+  /// 対象のメンバーが存在しない場合はリストに含めない
+  ///
+  /// ### Parameters
+  /// - [QuestParticipants] participants: クエスト参加者
+  /// ### Returns
+  /// - Future<List<[ParticipantUpdateDTO]>>: 編集用クエスト参加者情報リスト
+  Future<List<ParticipantUpdateDTO>> _participantsToEditingData(QuestParticipants participants) async {
+    final List<ParticipantUpdateDTO> participantsData = [];
     for (var participant in participants.list) {
       final member = await _memberRepository.find(participant.memberId);
       if (member == null) continue;
-      participantsData.add(ParticipantEditingData.fromDomain(status: participant, member: member));
+      participantsData.add(ParticipantUpdateDTO.fromDomain(status: participant, member: member));
     }
     return participantsData;
   }
 
-  Future<Map<int, QuestDetailSettingData>> _getQuestDetailsEditingData(QuestId questId) async {
+  /// 指定した[QuestId]のクエストが持つ詳細情報をマップで取得する
+  Future<Map<int, QuestDetailEditingData>> _getQuestDetailsEditingData(QuestId questId) async {
     final questLevelDetails = await _questDetailRepository.find(questId);
-    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailSettingData.fromDomain(questDetail: questLevelDetail.value)};
+    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailEditingData.fromDomain(questDetail: questLevelDetail.value)};
   }
 }

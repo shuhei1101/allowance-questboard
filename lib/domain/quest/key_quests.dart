@@ -1,6 +1,8 @@
 import 'package:allowance_questboard/domain/quest/key_questable.dart';
 
+/// キークエストリスト
 class KeyQuests {
-  KeyQuests(this._list);
-  final List<KeyQuestable> _list;
+  KeyQuests(this.list);
+
+  final List<KeyQuestable> list;
 }

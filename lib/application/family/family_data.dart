@@ -1,9 +1,7 @@
 import 'package:allowance_questboard/domain/family/family.dart';
 import 'package:flutter/material.dart';
 
-/// FamilyクラスのDTO
-///
-/// 家族情報を表すデータクラス
+/// [Family]の表示用DTO
 class FamilyData {
   FamilyData({
     required this.id,
@@ -14,6 +12,7 @@ class FamilyData {
     required this.updatedAt,
   });
 
+  /// ドメインモデル[Family]から生成するファクトリコンストラクタ
   factory FamilyData.fromDomain(Family source) {
     return FamilyData(
       id: source.id.value,
@@ -25,10 +24,21 @@ class FamilyData {
     );
   }
 
+  /// 家族ID
   final String id;
+
+  /// 家族名
   final String name;
+
+  /// 家族アイコン
   final Icon icon;
-  final String introduction; // 家族紹介文
+
+  /// 家族紹介文
+  final String introduction;
+
+  /// 作成日時
   final DateTime createdAt;
+
+  /// 更新日時
   final DateTime updatedAt;
 }

@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_editing_data.dart';
+import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
@@ -10,18 +10,24 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class FamilyQuestsPage extends StatelessWidget {
+  /// 家族クエスト一覧画面
   FamilyQuestsPage({required this.familyId}) : _service = GetIt.I<FamilyQuestApplicationService>();
+
+  /// 対象の家族ID
   final String familyId;
   final FamilyQuestApplicationService _service;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<FamilyQuestData>>(
+        // 家族IDから家族クエスト一覧を取得
         future: _service.getFamilyQuests(familyId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
           if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final quests = snapshot.data;
+
+          // 家族クエスト一覧を取得できた場合、一覧画面を表示
           return Scaffold(
               appBar: AppBar(
                 title: const Text('クエスト画面'),
@@ -42,6 +48,7 @@ class FamilyQuestsPage extends StatelessWidget {
   }
 }
 
+// 動作確認用コード
 void main() {
   GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
   final router = GoRouter(initialLocation: '/quests/123', routes: $appRoutes);
@@ -101,8 +108,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) {
-    // TODO: implement getEditFamilyQuest
+  Future<FamilyQuestUpdateData?> getFamilyQuestEditingData(String questId) {
     throw UnimplementedError();
   }
 }

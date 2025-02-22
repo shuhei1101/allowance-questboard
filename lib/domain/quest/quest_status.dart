@@ -1,3 +1,4 @@
+/// クエストの進行状況を表す列挙型
 enum QuestStatus {
   notAccepted,
   inProgress,
@@ -6,6 +7,7 @@ enum QuestStatus {
 }
 
 extension QuestStatusExtension on QuestStatus {
+  /// 進行状況の表示名
   String get displayName {
     switch (this) {
       case QuestStatus.notAccepted:

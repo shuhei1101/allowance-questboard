@@ -5,6 +5,7 @@ import 'package:allowance_questboard/domain/quest/quest.dart';
 import 'package:allowance_questboard/domain/quest/quest_id.dart';
 import 'package:allowance_questboard/domain/quest/quest_participants.dart';
 
+/// 家族クエストドメインモデル
 class FamilyQuest extends Quest implements Allowanceable, KeyQuestable {
   FamilyQuest({
     required super.id,
@@ -15,7 +16,7 @@ class FamilyQuest extends Quest implements Allowanceable, KeyQuestable {
     required super.publishedSeason,
     required super.keyQuests,
     required super.client,
-    required super.missionDescription,
+    required super.description,
     required super.levelDetails,
     required super.createdAt,
     required super.updatedAt,
@@ -25,9 +26,19 @@ class FamilyQuest extends Quest implements Allowanceable, KeyQuestable {
     required this.isShared,
     required this.sharedQuestId,
   });
+
+  /// クエストを保有する家族のID
   final FamilyId familyId;
+
+  /// 公開フラグ
   final bool isPublic;
+
+  /// クエストの参加者リスト
   final QuestParticipants participants;
+
+  /// 共有クエストフラグ
   final bool isShared;
+
+  /// 共有クエストID
   final QuestId? sharedQuestId;
 }

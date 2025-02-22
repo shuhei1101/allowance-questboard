@@ -1,8 +1,8 @@
-/// クエスト分類ID値オブジェクト
-class QuestCategoryId {
+/// クエスト依頼者の値オブジェクト
+class QuestClient {
   /// ### 制約
   /// - 空文字でないこと
-  QuestCategoryId(this.value) {
+  QuestClient(this.value) {
     if (value == "") {
       throw ArgumentError.value(value, "value", "must not be empty");
     }
