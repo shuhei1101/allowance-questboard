@@ -1,4 +1,4 @@
-@startuml "allowance_questboard_clsd"
+@startuml "allowance_questboard_domain_clsd"
 left to right direction
 
 package domain {
