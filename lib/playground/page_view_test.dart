@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
 class PageViewWithButtons extends StatefulWidget {
   @override
-  _PageViewWithButtonsState createState() => _PageViewWithButtonsState();
+  State<PageViewWithButtons> createState() => _PageViewWithButtonsState();
 }
 
 class _PageViewWithButtonsState extends State<PageViewWithButtons> {

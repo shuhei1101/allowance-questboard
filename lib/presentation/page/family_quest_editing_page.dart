@@ -113,13 +113,11 @@ void main() {
 class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
   @override
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
-    // TODO: implement getFamilyQuest
     throw UnimplementedError();
   }
 
   @override
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
-    // TODO: implement getFamilyQuests
     throw UnimplementedError();
   }
 

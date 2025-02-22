@@ -75,13 +75,12 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
 
   @override
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) {
-    // TODO: implement getFamilyQuests
+    //
     throw UnimplementedError();
   }
 
   @override
   Future<FamilyQuestEditingData?> getFamilyQuestEditingData(String questId) {
-    // TODO: implement getEditFamilyQuest
     throw UnimplementedError();
   }
 }
