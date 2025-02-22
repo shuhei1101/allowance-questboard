@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// メンバーの[icon][name][id]を表示するListTile
 class MemberListTile extends StatelessWidget {
-  MemberListTile({required member}) : _member = member;
+  const MemberListTile({super.key, required member}) : _member = member;
 
   final MemberData _member;
 
@@ -13,7 +13,7 @@ class MemberListTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: _member.icon,
-      title: Text('${_member.name}'),
+      title: Text('$_member.name'),
       subtitle: Text(
         '@${_member.id}',
         style: theme.textTheme.labelSmall,
