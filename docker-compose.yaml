@@ -7,6 +7,6 @@ services:
     volumes:
       - .:/app
     ports:
-      - 3000:40095
-    command: flutter pub get
+      - 3000:3000
+    command: ["flutter", "pub" ,"get"]
       
