@@ -20,25 +20,33 @@
 本アプリには、親が子供の成長をサポートするためのさまざまな機能が備わっています。\
 以下にサービス利用イメージと代表的な機能を紹介します。
 
-![サービス利用イメージ](https://github.com/user-attachments/assets/5b87f7b3-8596-4c2b-b15e-350305841a77)
-- クエスト作成・受注・達成報告機能
-	- 親がクエストを作成し、子供が自由に受注できる。
- 	- 達成報告が承認されると報酬（お小遣い・経験値）を獲得可能。
-- オンライン機能
-	- 親がクエストをオンライン上に共有できる。
-	- 親ユーザはオンラインに公開されたクエストに対して保存や「いいね」、コメントが可能。
-- 支払い管理機能
-	- 毎月獲得した報酬金と定額のお小遣い額の明細を親と子ユーザそれぞれに表示する。
-	- 現実で支払い完了後、親と子に支払い／受取の完了確認を行う。
- 	- 双方の確認が完了するまでは一部機能が制限される。 
-- その他
-	- 罰金機能
- 	- 貯金機能
- 	- 定額お小遣いテーブル設定機能
-  	- その他の機能も実装予定
+![サービス利用イメージ](https://github.com/user-attachments/assets/6866a5c0-0b5e-4e91-8de0-a9d34b5b8090)
+
+① クエスト作成・編集機能
+- 親が子供向けのクエストを作成・編集できる。
+- クエストごとに 成功条件（例：写真提出、チェックリストの完了など）を設定可能。
+- 達成時に獲得できる 報酬（金額や経験値） を自由に設定できる。
+
+② クエスト受注機能
+- 子供は登録されたクエストの中から自由に選んで受注できる。
+
+③ 報酬支払／達成報告機能
+- 親と子の双方が、毎月の報酬額や定額のお小遣いの明細を確認できる。
+- 実際に支払いが完了した後、親と子がそれぞれに「支払い完了」「受取完了」の確認を行う。
+- 双方の確認が完了するまで、一部の機能が制限される。
+
+④ オンラインクエスト公開／取得機能
+- 親がクエストをオンライン上に共有できる。
+- 他の親ユーザは、公開されたクエストに対して「保存」「いいね」「コメント」が可能。
+
+その他の機能
+- 罰金機能：違反行為に対する罰金を設定し、お小遣いから差し引くことが可能。
+- 貯金機能：子供がお小遣いを貯金し、必要なときに引き出せる。
+- 定額お小遣いテーブル設定機能：月ごとに固定のお小遣い額を設定できる。
+- その他の機能も実装予定
 
 # 開発環境
-- OS: Ubuntu 22.04 LTS
+- OS: MacOS／Ubuntu 22.04（Dockerコンテナ）
 - Flutter SDK: 3.13.8
 - Dart SDK: 3.5.3
 - データベース: Firestore
@@ -50,8 +58,8 @@
 # 設計について
 ## 画面設計
 本アプリの画面設計は Figma を使用して作成しています。\
- [こちら](https://www.figma.com/proto/WJpCB11rIjR94aZ5yha8hD/%E3%81%8A%E5%B0%8F%E9%81%A3%E3%81%84%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89?node-id=0-1&t=60dloXpi9znEWQcy-1) から実際に作ったプロトタイプを確認できます。\
-※上記リンクはFigmaへのログインが必要です。
+ [こちら](https://www.figma.com/proto/WJpCB11rIjR94aZ5yha8hD/%E3%81%8A%E5%B0%8F%E9%81%A3%E3%81%84%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89?node-id=0-1&t=60dloXpi9znEWQcy-1) からプロトタイプを確認できます。\
+（上記リンクはFigmaのログインが必要です。）
 
 ![画面設計例2025-02-21 3 07 26](https://github.com/user-attachments/assets/e6a1ee53-e314-4d0a-b4ec-dc4c39d62ed9)
 
@@ -62,13 +70,13 @@
 - [クエストERD](https://www.mermaidchart.com/raw/3f328b02-9b02-400e-ae65-b0574c59508c?theme=light&version=v0.1&format=svg) 
 - [その他ERD](https://www.mermaidchart.com/app/projects/ed949344-1350-4e83-97f4-506c642ccc31/diagrams/b6cd4ba8-dc7a-4e1a-8d5c-c68674af9910/version/v0.1/edit)
 
-※本アプリではリレーショナルデータベースを意識した設計を行っていますが、\
+※本アプリではDBの構造を理解するためリレーショナルデータベースを意識した設計を行っていますが、\
 Firestoreへの適用時は構造を最適化し反映する予定です。
 
 ## アーキテクチャ設計
-本アプリのドメイン設計は PlantUML記法 を使用して作成しています。\
+本アプリのドメイン設計は PlantUML記法 を使用して作成しています。 \
 詳細は以下から確認できます。
-- [ドメインモデルクラス図](https://raw.githubusercontent.com/shuhei1101/allowance-questboard/refs/heads/main/out/document/domain_erd/allowance_questboard_clsd.svg?token=GHSAT0AAAAAAC5FSZUIGCAFNJTMZJBVSRQAZ5ZQSDA)\
+- [ドメインモデルクラス図](https://raw.githubusercontent.com/shuhei1101/allowance-questboard/refs/heads/main/out/document/domain_erd/allowance_questboard_clsd.svg?token=GHSAT0AAAAAAC5FSZUIGCAFNJTMZJBVSRQAZ5ZQSDA)
 
 # 開発
 - 現在のタスク
