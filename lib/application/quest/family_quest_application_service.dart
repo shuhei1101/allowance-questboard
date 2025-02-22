@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
-import 'package:allowance_questboard/application/quest/quest_detail_editing_data.dart';
+import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/domain/family/family_id.dart';
@@ -137,8 +137,8 @@ class FamilyQuestApplicationService {
   }
 
   /// 指定した[QuestId]のクエストが持つ詳細情報をマップで取得する
-  Future<Map<int, QuestDetailEditingData>> _getQuestDetailsEditingData(QuestId questId) async {
+  Future<Map<int, QuestDetailUpdateData>> _getQuestDetailsEditingData(QuestId questId) async {
     final questLevelDetails = await _questDetailRepository.find(questId);
-    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailEditingData.fromDomain(questDetail: questLevelDetail.value)};
+    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailUpdateData.fromDomain(questDetail: questLevelDetail.value)};
   }
 }
