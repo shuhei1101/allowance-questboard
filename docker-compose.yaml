@@ -8,4 +8,5 @@ services:
       - .:/app
     ports:
       - 3000:40095
+    command: flutter pub get
       
