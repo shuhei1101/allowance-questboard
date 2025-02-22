@@ -51,15 +51,6 @@ class QuestLevelsIcon extends StatelessWidget {
 }
 
 // 動作確認用コード
-class MockQuestLevelsIconDelegate implements QuestLevelsIconDelegate {
-  @override
-  void toLevel(int level) {
-    // ignore: avoid_print
-    print("Level changed to $level");
-  }
-}
-
-// 動作確認用コード
 void main() {
   runApp(
     MaterialApp(
@@ -74,4 +65,12 @@ void main() {
       ),
     ),
   );
+}
+
+class MockQuestLevelsIconDelegate implements QuestLevelsIconDelegate {
+  @override
+  void toLevel(int level) {
+    // ignore: avoid_print
+    print("Level changed to $level");
+  }
 }
