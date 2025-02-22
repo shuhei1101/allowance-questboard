@@ -75,14 +75,18 @@
 Firestoreへの適用時は構造を最適化し反映する予定です。
 
 ## アーキテクチャ設計
-本アプリのアーキテクチャは ドメイン駆動設計 を参考に設計しています。\
-そのため、アプリケーションサービスやリポジトリインターフェースなどのクラス図は省略しており、
-ドメインモデルのみクラス図を作成しています。\
+![allowance_questboard_DDD_clsd](https://github.com/user-attachments/assets/e578480e-fd85-4cdf-ad19-0d716d2d729c)
+
+本アプリは 「クエストの作成・管理」「報酬の計算」「罰金の適用」 など、複数のビジネスルールを持ち、
+個人開発としては機能が多く、今後の拡張性も考慮する必要があるため、アーキテクチャにドメイン駆動設計（DDD） を採用しました。
+
 \
 詳細は以下から確認できます。
+- [全体クラス図](out/document/DDD_clsd/allowance_questboard_DDD_clsd.svg)（画像を拡大するには、右上の「Raw」を押してください。）
 - [ドメインモデルクラス図](out/document/domain_erd/allowance_questboard_clsd.svg)
-（画像を拡大するには、右上の「Raw」を押してください。）
-- [ディレクトリ構成説明](document/dir_arch.md)
+- [ディレクトリ構成の説明](document/dir_arch.md)
+
+設計する上で参考にした書籍: [ドメイン駆動設計入門 ボトムアップでわかる！ドメイン駆動設計の基本](https://www.shoeisha.co.jp/book/detail/9784798150727)
 
 # 開発
 - 現在のタスク
