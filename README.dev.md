@@ -15,10 +15,19 @@ Flutter run -d web-server --target=lib/app.dart --web-port=8080 --web-hostname=0
 ### デバッグありで実行（dockerコンテナ内）
 main関数の上のRun/Debugを押す。
 
-### テストの実行
+### テストの実行（flutter依存）
 ```bash
-flutter test
+flutter test xxx_test.dart
 ```
+- パッケージ「flutter_test」のインポートが必要。
+
+### テストの実行（dartのみ）
+```bash
+dart test xxx_test.dart
+```
+- パッケージ「test」のインポートが必要。
+- 軽量
+- フォルダ名を指定すると、フォルダ内の<*_test.dart>を全て実行する。
 
 ### 依存関係の取得
 ```bash
@@ -47,10 +56,12 @@ flutter doctor
 ### build_runnerの実行
 ```bash
 flutter pub run build_runner build
+dart pub run build_runner build
 ```
 - ライブラリ「go_router」のルーティングコード自動生成
 - ライブラリ「freezed」のモデルコード自動生成
 - 実行後、dartファイル「xxx.g.dart」が生成される。
+- 1:delete, 2:Cancel build, 3: List conflictsの選択が表示される場合、基本的には1を選択する。
 
 # 設定ファイル
 ### `const`や`final`のanalysisを無効にする
@@ -93,3 +104,19 @@ analyzer:
 - バックエンドのクラスの説明は、クラスの上に記述する。
 
 
+# 単体テストの書き方
+### モックの振る舞い変更
+```dart
+// モックの振る舞いを変更
+when(mock.method()).thenReturn(value);
+// FormatExceptionをスロー
+when(mock.someMethod(any)).thenThrow(FormatException('Invalid format')); 
+```
+
+### 例外検知
+```dart
+expect(
+  () => throw SocketException('Network error'),
+  throwsA(isA<SocketException>()),
+);
+```
