@@ -1,6 +1,6 @@
 import 'package:allowance_questboard/domain/member/education.dart';
 import 'package:allowance_questboard/domain/member/grade.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   /// 正常系

@@ -5,7 +5,7 @@ import 'package:allowance_questboard/playground/try_unittest/calculator.dart';
 import 'package:allowance_questboard/playground/try_unittest/printer.dart';
 
 import 'package:mockito/annotations.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import 'printer_test.mocks.dart';

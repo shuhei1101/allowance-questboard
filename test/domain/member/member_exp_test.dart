@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/domain/member/member_exp.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   /// 正常系
