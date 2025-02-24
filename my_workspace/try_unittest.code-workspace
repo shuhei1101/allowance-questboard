@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../lib/playground/try_unittest"
+		},
+		{
+			"path": "../test/playground/try_unittest"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
