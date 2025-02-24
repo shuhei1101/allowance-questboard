@@ -20,6 +20,5 @@ ENV PATH="/opt/flutter/bin:${PATH}"
 
 RUN flutter precache
 RUN flutter doctor
-RUN flutter pub get
 
 CMD ["flutter", "test", "test"]
