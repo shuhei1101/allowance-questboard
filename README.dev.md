@@ -119,4 +119,4 @@ expect(
   () => throw SocketException('Network error'),
   throwsA(isA<SocketException>()),
 );
-```
+``` 
