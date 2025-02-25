@@ -13,7 +13,7 @@ on:
 jobs:
   flutter-test:
     # GitHub Actionsの実行環境のOSを指定
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       # リポジトリをGitHub Actionsの実行環境へコピー
