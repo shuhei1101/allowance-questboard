@@ -42,7 +42,7 @@ class FamilyQuestApplicationService {
   /// ### Returns
   /// - Future<List<[FamilyQuestData]>>: クエスト情報リスト
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
-    final familyQuests = await _familyQuestRepository.findAllBy(FamilyId(familyId));
+    final familyQuests = await _familyQuestRepository.findAll(FamilyId(familyId));
     List<FamilyQuestData> familyQuestsData = [];
     for (var familyQuest in familyQuests ?? []) {
       late FamilyQuestData quest;

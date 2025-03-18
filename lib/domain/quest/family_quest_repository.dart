@@ -8,5 +8,5 @@ abstract interface class FamilyQuestRepository {
   Future<FamilyQuest?> find(QuestId questId);
 
   /// 指定した[FamilyId]に対応する[FamilyQuest]ドメインモデルを全件取得する
-  Future<List<FamilyQuest>?> findAllBy(FamilyId familyId);
+  Future<List<FamilyQuest>?> findAll(FamilyId familyId);
 }
