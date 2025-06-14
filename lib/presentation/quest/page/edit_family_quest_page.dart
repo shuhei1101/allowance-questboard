@@ -2,61 +2,54 @@ import 'package:allowance_questboard/application/quest/family_quest_update_data.
 import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
-import 'package:allowance_questboard/presentation/page/error_page.dart';
-import 'package:allowance_questboard/presentation/router/app_route.dart';
-import 'package:allowance_questboard/presentation/screen/quest_editing_screen.dart';
+import 'package:allowance_questboard/presentation/quest/screen/quest_editing_screen.dart';
+import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
+import 'package:allowance_questboard/presentation/shared/page/error_page.dart';
+import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+import 'package:get_it/get_it.dart' show GetIt;
+import 'package:go_router/go_router.dart' show GoRouter;
 
-// TODO: 作成中
-
-/// バリデートチェック通知用インターフェース
-///
-/// バリデートチェックが必要な画面で実装する
 abstract interface class ValidateNotifiable {
-  /// バリデートチェックが正常に通知された際に呼び出される
-  ///
-  ///
   void validateNotify();
 }
 
-class FamilyQuestEditingPage extends StatelessWidget {
-  /// 家族クエストの新規・編集画面
-  FamilyQuestEditingPage({required this.questId});
+class EditFamilyQuestPage extends ConsumerWidget {
+  EditFamilyQuestPage({required this.questId});
 
-  /// 更新対象のクエストID
   final String questId;
 
-  final _service = GetIt.I<FamilyQuestApplicationService>();
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(editFamilyQuestStateProvider);
+    final notifier = ref.read(editFamilyQuestStateProvider.notifier);
     return FutureBuilder<FamilyQuestUpdateData?>(
       // 画面表示時にクエスト情報を取得
-      future: _service.getFamilyQuestEditingData(questId),
+      future: notifier.getEditFamilyQuestData(questId),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator());
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Center(child: CircularProgressIndicator());
         if (snapshot.hasError) return ErrorPage(error: snapshot.error);
         final quest = snapshot.data!;
 
         // クエスト情報を取得できた場合、編集画面を表示
-        return FamilyQuestEditingTab(quest: quest);
+        return EditFamilyQuestTab(quest: quest);
       },
     );
   }
 }
 
-class FamilyQuestEditingTab extends StatefulWidget {
+class EditFamilyQuestTab extends StatefulWidget {
   /// 家族クエスト編集画面内のタブ画面
-  FamilyQuestEditingTab({required this.quest});
+  EditFamilyQuestTab({required this.quest});
   final FamilyQuestUpdateData quest;
 
   @override
-  State<StatefulWidget> createState() => FamilyQuestEditingTabState();
+  State<StatefulWidget> createState() => EditFamilyQuestTabState();
 }
 
-class FamilyQuestEditingTabState extends State<FamilyQuestEditingTab> implements ValidateNotifiable {
+class EditFamilyQuestTabState extends State<EditFamilyQuestTab> implements ValidateNotifiable {
   /// クエスト名の入力コントローラ
   final _questNameController = TextEditingController();
 
@@ -113,7 +106,7 @@ class FamilyQuestEditingTabState extends State<FamilyQuestEditingTab> implements
         ),
         body: TabBarView(
           children: [
-            GeneralQuestEditingScreen(
+            EditGeneralQuestScreen(
               quest: widget.quest,
               delegate: this,
               questNameController: _questNameController,
@@ -147,7 +140,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestUpdateData?> getFamilyQuestEditingData(String questId) async {
+  Future<FamilyQuestUpdateData?> getEditFamilyQuestData(String questId) async {
     return FamilyQuestUpdateData(
       id: "123",
       name: "Test Quest",

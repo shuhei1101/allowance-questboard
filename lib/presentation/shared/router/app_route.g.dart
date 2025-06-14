@@ -11,127 +11,162 @@ List<RouteBase> get $appRoutes => [
       $memberRoute,
       $familyQuestsRoute,
       $familyQuestRoute,
-      $familyQuestEditingRoute,
+      $editFamilyQuestRoute,
     ];
 
 RouteBase get $membersRoute => GoRouteData.$route(
       path: '/members/:familyId',
-      factory: $MembersRouteExtension._fromState,
+      factory: _$MembersRoute._fromState,
     );
 
-extension $MembersRouteExtension on MembersRoute {
+mixin _$MembersRoute on GoRouteData {
   static MembersRoute _fromState(GoRouterState state) => MembersRoute(
         familyId: state.pathParameters['familyId']!,
       );
 
+  MembersRoute get _self => this as MembersRoute;
+
+  @override
   String get location => GoRouteData.$location(
-        '/members/${Uri.encodeComponent(familyId)}',
+        '/members/${Uri.encodeComponent(_self.familyId)}',
       );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $memberRoute => GoRouteData.$route(
       path: '/members/:familyId/member/:memberId',
-      factory: $MemberRouteExtension._fromState,
+      factory: _$MemberRoute._fromState,
     );
 
-extension $MemberRouteExtension on MemberRoute {
+mixin _$MemberRoute on GoRouteData {
   static MemberRoute _fromState(GoRouterState state) => MemberRoute(
         familyId: state.pathParameters['familyId']!,
         memberId: state.pathParameters['memberId']!,
       );
 
+  MemberRoute get _self => this as MemberRoute;
+
+  @override
   String get location => GoRouteData.$location(
-        '/members/${Uri.encodeComponent(familyId)}/member/${Uri.encodeComponent(memberId)}',
+        '/members/${Uri.encodeComponent(_self.familyId)}/member/${Uri.encodeComponent(_self.memberId)}',
       );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $familyQuestsRoute => GoRouteData.$route(
       path: '/quests/:familyId',
-      factory: $FamilyQuestsRouteExtension._fromState,
+      factory: _$FamilyQuestsRoute._fromState,
     );
 
-extension $FamilyQuestsRouteExtension on FamilyQuestsRoute {
+mixin _$FamilyQuestsRoute on GoRouteData {
   static FamilyQuestsRoute _fromState(GoRouterState state) => FamilyQuestsRoute(
         familyId: state.pathParameters['familyId']!,
       );
 
+  FamilyQuestsRoute get _self => this as FamilyQuestsRoute;
+
+  @override
   String get location => GoRouteData.$location(
-        '/quests/${Uri.encodeComponent(familyId)}',
+        '/quests/${Uri.encodeComponent(_self.familyId)}',
       );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $familyQuestRoute => GoRouteData.$route(
       path: '/quest/:questId',
-      factory: $FamilyQuestRouteExtension._fromState,
+      factory: _$FamilyQuestRoute._fromState,
     );
 
-extension $FamilyQuestRouteExtension on FamilyQuestRoute {
+mixin _$FamilyQuestRoute on GoRouteData {
   static FamilyQuestRoute _fromState(GoRouterState state) => FamilyQuestRoute(
         questId: state.pathParameters['questId']!,
       );
 
+  FamilyQuestRoute get _self => this as FamilyQuestRoute;
+
+  @override
   String get location => GoRouteData.$location(
-        '/quest/${Uri.encodeComponent(questId)}',
+        '/quest/${Uri.encodeComponent(_self.questId)}',
       );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $familyQuestEditingRoute => GoRouteData.$route(
+RouteBase get $editFamilyQuestRoute => GoRouteData.$route(
       path: '/quest/:questId/edit',
-      factory: $FamilyQuestEditingRouteExtension._fromState,
+      factory: _$EditFamilyQuestRoute._fromState,
     );
 
-extension $FamilyQuestEditingRouteExtension on FamilyQuestEditingRoute {
-  static FamilyQuestEditingRoute _fromState(GoRouterState state) =>
-      FamilyQuestEditingRoute(
+mixin _$EditFamilyQuestRoute on GoRouteData {
+  static EditFamilyQuestRoute _fromState(GoRouterState state) =>
+      EditFamilyQuestRoute(
         questId: state.pathParameters['questId']!,
       );
 
+  EditFamilyQuestRoute get _self => this as EditFamilyQuestRoute;
+
+  @override
   String get location => GoRouteData.$location(
-        '/quest/${Uri.encodeComponent(questId)}/edit',
+        '/quest/${Uri.encodeComponent(_self.questId)}/edit',
       );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }

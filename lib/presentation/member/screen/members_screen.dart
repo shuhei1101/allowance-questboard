@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:allowance_questboard/application/member/member_data.dart';
-import 'package:allowance_questboard/presentation/component/member_list_tile.dart';
+import 'package:allowance_questboard/presentation/member/component/member_list_tile.dart';
 
 class MembersScreen extends StatelessWidget {
   /// メンバー一覧画面

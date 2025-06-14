@@ -1,18 +1,18 @@
-import 'package:allowance_questboard/presentation/page/family_quest_editing_page.dart';
-import 'package:allowance_questboard/presentation/page/family_quests_page.dart';
-import 'package:allowance_questboard/presentation/page/family_quest_page.dart';
+import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
+import 'package:allowance_questboard/presentation/quest/page/family_quests_page.dart';
+import 'package:allowance_questboard/presentation/quest/page/family_quest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../page/member_page.dart';
-import '../page/members_page.dart';
+import '../../member/page/member_page.dart';
+import '../../member/page/members_page.dart';
 part 'app_route.g.dart';
 
 // buildコマンド: flutter pub run build_runner build
 
 /// 家族メンバー一覧画面へのルーティング
 @TypedGoRoute<MembersRoute>(path: '/members/:familyId')
-class MembersRoute extends GoRouteData {
+class MembersRoute extends GoRouteData with _$MembersRoute {
   MembersRoute({required this.familyId});
 
   final String familyId;
@@ -25,7 +25,7 @@ class MembersRoute extends GoRouteData {
 
 /// 家族メンバー詳細画面へのルーティング
 @TypedGoRoute<MemberRoute>(path: '/members/:familyId/member/:memberId')
-class MemberRoute extends GoRouteData {
+class MemberRoute extends GoRouteData with _$MemberRoute {
   MemberRoute({required this.familyId, required this.memberId});
 
   final String familyId;
@@ -39,7 +39,7 @@ class MemberRoute extends GoRouteData {
 
 /// 家族クエスト一覧画面へのルーティング
 @TypedGoRoute<FamilyQuestsRoute>(path: '/quests/:familyId')
-class FamilyQuestsRoute extends GoRouteData {
+class FamilyQuestsRoute extends GoRouteData with _$FamilyQuestsRoute {
   FamilyQuestsRoute({required this.familyId});
 
   final String familyId;
@@ -52,7 +52,7 @@ class FamilyQuestsRoute extends GoRouteData {
 
 /// 家族クエスト詳細画面へのルーティング
 @TypedGoRoute<FamilyQuestRoute>(path: '/quest/:questId')
-class FamilyQuestRoute extends GoRouteData {
+class FamilyQuestRoute extends GoRouteData with _$FamilyQuestRoute {
   FamilyQuestRoute({required this.questId});
 
   final String questId;
@@ -64,14 +64,14 @@ class FamilyQuestRoute extends GoRouteData {
 }
 
 /// 家族クエスト編集画面へのルーティング
-@TypedGoRoute<FamilyQuestEditingRoute>(path: '/quest/:questId/edit')
-class FamilyQuestEditingRoute extends GoRouteData {
-  FamilyQuestEditingRoute({required this.questId});
+@TypedGoRoute<EditFamilyQuestRoute>(path: '/quest/:questId/edit')
+class EditFamilyQuestRoute extends GoRouteData with _$EditFamilyQuestRoute {
+  EditFamilyQuestRoute({required this.questId});
 
   final String questId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return FamilyQuestEditingPage(questId: questId);
+    return EditFamilyQuestPage(questId: questId);
   }
 }

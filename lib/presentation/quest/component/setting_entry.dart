@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/presentation/theme/app_themes.dart';
+import 'package:allowance_questboard/presentation/shared/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 
 class SettingEntry extends StatelessWidget {

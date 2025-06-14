@@ -5,7 +5,7 @@ import 'package:allowance_questboard/domain/model/quest/value_object/quest_descr
 import 'package:allowance_questboard/domain/model/quest/value_object/quest_id.dart';
 import 'package:allowance_questboard/domain/model/quest/quest_level_details.dart';
 import 'package:allowance_questboard/domain/model/quest/value_object/published_season.dart';
-import 'package:allowance_questboard/domain/model/quest/value_object/quest_name.dart';
+import 'package:allowance_questboard/domain/model/quest/value_object/quest_title.dart';
 import 'package:allowance_questboard/domain/model/quest/value_object/age_restriction.dart';
 import 'package:flutter/material.dart';
 

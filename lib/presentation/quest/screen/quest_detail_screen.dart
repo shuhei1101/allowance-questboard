@@ -1,7 +1,7 @@
 import 'package:allowance_questboard/application/quest/quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/presentation/component/quest_levels_icon.dart';
-import 'package:allowance_questboard/presentation/component/setting_entry.dart';
+import 'package:allowance_questboard/presentation/quest/component/quest_levels_icon.dart';
+import 'package:allowance_questboard/presentation/quest/component/setting_entry.dart';
 import 'package:flutter/material.dart';
 
 class QuestDetailScreen extends StatefulWidget {
@@ -58,7 +58,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> implements QuestL
   void _toPage(int page) {
     if (page < 0) page = _pages.length - 1;
     if (page > _pages.length - 1) page = 0;
-    _pageController.animateToPage(page, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    _pageController.animateToPage(page,
+        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
     setState(() => _currentPage = page);
   }
 
@@ -166,7 +167,8 @@ class QuestDetailFirstScreen extends StatelessWidget {
               maxLevel: _maxLevel,
             )),
         SettingEntry(icon: Icon(Icons.abc), title: "クエストカテゴリ", body: Text(quest.category)),
-        SettingEntry(icon: Icon(Icons.abc), title: "成功条件", body: Text(_questDetail.successCondition)),
+        SettingEntry(
+            icon: Icon(Icons.abc), title: "成功条件", body: Text(_questDetail.successCondition)),
         // TODO: クエスト詳細画面の1ページ目の設定項目を追加する
       ],
     );
@@ -177,7 +179,8 @@ class QuestDetailSecondScreen extends StatelessWidget {
   /// クエスト詳細画面の2ページ目
   ///
   /// 主にクエストの依頼内容を表示する
-  QuestDetailSecondScreen({required this.currentLevel, required QuestData quest}) : _questDetail = quest.questLevelDetails[currentLevel]!;
+  QuestDetailSecondScreen({required this.currentLevel, required QuestData quest})
+      : _questDetail = quest.questLevelDetails[currentLevel]!;
 
   /// 表示対象のクエスト詳細情報
   final int currentLevel;
@@ -191,7 +194,8 @@ class QuestDetailSecondScreen extends StatelessWidget {
     return ListView(
       children: [
         // TODO: 表示する情報を設定する
-        SettingEntry(icon: Icon(Icons.abc), title: "依頼主", body: Text(_questDetail.successCondition)),
+        SettingEntry(
+            icon: Icon(Icons.abc), title: "依頼主", body: Text(_questDetail.successCondition)),
         SettingEntry(icon: Icon(Icons.abc), title: "依頼内容", body: Text("test")),
       ],
     );
@@ -202,7 +206,8 @@ class QuestDetailThirdScreen extends StatelessWidget {
   /// クエスト詳細画面の3ページ目
   ///
   /// 主にクエストの報酬内容を表示する
-  QuestDetailThirdScreen({required this.currentLevel, required QuestData quest}) : _questDetail = quest.questLevelDetails[currentLevel]!;
+  QuestDetailThirdScreen({required this.currentLevel, required QuestData quest})
+      : _questDetail = quest.questLevelDetails[currentLevel]!;
 
   /// 現在のレベル
   final int currentLevel;
@@ -214,7 +219,8 @@ class QuestDetailThirdScreen extends StatelessWidget {
     return ListView(
       children: [
         // TODO: 表示する情報を設定する
-        SettingEntry(icon: Icon(Icons.abc), title: "受注可能年齢", body: Text(_questDetail.successCondition)),
+        SettingEntry(
+            icon: Icon(Icons.abc), title: "受注可能年齢", body: Text(_questDetail.successCondition)),
         SettingEntry(icon: Icon(Icons.abc), title: "掲載開始時期", body: Text("test")),
         // TODO: 表示情報を追加する
       ],
@@ -230,32 +236,37 @@ void main() {
         title: Text("test"),
       ),
       body: QuestDetailScreen(
-        quest: QuestData(id: "123", icon: Icon(Icons.person), name: "テストクエスト", category: "テスト分類", questLevelDetails: {
-          1: QuestDetailData(
-            successCondition: "レベル1の成功条件",
-            failureCondition: "レベル1の失敗条件",
-            memberExp: 11,
-            questExp: 11,
-            rewards: 11,
-            targetCount: 11,
-          ),
-          2: QuestDetailData(
-            successCondition: "レベル2の成功条件",
-            failureCondition: "レベル2の失敗条件",
-            memberExp: 11,
-            questExp: 11,
-            rewards: 11,
-            targetCount: 11,
-          ),
-          3: QuestDetailData(
-            successCondition: "レベル3の成功条件",
-            failureCondition: "レベル3の失敗条件",
-            memberExp: 11,
-            questExp: 11,
-            rewards: 11,
-            targetCount: 11,
-          ),
-        }),
+        quest: QuestData(
+            id: "123",
+            icon: Icon(Icons.person),
+            name: "テストクエスト",
+            category: "テスト分類",
+            questLevelDetails: {
+              1: QuestDetailData(
+                successCondition: "レベル1の成功条件",
+                failureCondition: "レベル1の失敗条件",
+                memberExp: 11,
+                questExp: 11,
+                rewards: 11,
+                targetCount: 11,
+              ),
+              2: QuestDetailData(
+                successCondition: "レベル2の成功条件",
+                failureCondition: "レベル2の失敗条件",
+                memberExp: 11,
+                questExp: 11,
+                rewards: 11,
+                targetCount: 11,
+              ),
+              3: QuestDetailData(
+                successCondition: "レベル3の成功条件",
+                failureCondition: "レベル3の失敗条件",
+                memberExp: 11,
+                questExp: 11,
+                rewards: 11,
+                targetCount: 11,
+              ),
+            }),
       ),
     ),
   ));

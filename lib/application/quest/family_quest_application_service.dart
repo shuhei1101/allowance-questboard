@@ -69,9 +69,14 @@ class FamilyQuestApplicationService {
   Future<FamilyQuestData> _getFamilyQuestData(FamilyQuest familyQuest) async {
     final participantsData = await _participantsToData(familyQuest.participants);
     final questCategory = await _questCategoryRepository.find(familyQuest.categoryId);
-    if (questCategory == null) throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
+    if (questCategory == null)
+      throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
     final questDetails = await _getQuestDetailsData(familyQuest.id);
-    return FamilyQuestData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
+    return FamilyQuestData.fromDomain(
+        familyQuest: familyQuest,
+        questCategory: questCategory,
+        participants: participantsData,
+        questLevelDetails: questDetails);
   }
 
   /// [QuestParticipants]を[ParticipantData]のリストに変換する
@@ -100,7 +105,10 @@ class FamilyQuestApplicationService {
   /// - Future<Map<int, [QuestDetailData]>>: クエスト詳細情報
   Future<Map<int, QuestDetailData>> _getQuestDetailsData(QuestId questId) async {
     final questLevelDetails = await _questDetailRepository.find(questId);
-    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailData.fromDomain(questDetail: questLevelDetail.value)};
+    return {
+      for (var questLevelDetail in questLevelDetails.map.entries)
+        questLevelDetail.key.value: QuestDetailData.fromDomain(questDetail: questLevelDetail.value)
+    };
   }
 
   /// 指定した[questId]に対応する編集用クエスト情報を取得する
@@ -109,14 +117,19 @@ class FamilyQuestApplicationService {
   /// - String questId: クエストID
   /// ### Returns
   /// - Future<[FamilyQuestUpdateData]?>: クエスト情報
-  Future<FamilyQuestUpdateData?> getFamilyQuestEditingData(String questId) async {
+  Future<FamilyQuestUpdateData?> getEditFamilyQuestData(String questId) async {
     final familyQuest = await _familyQuestRepository.find(QuestId(questId));
     if (familyQuest == null) return null;
     final participantsData = await _participantsToEditingData(familyQuest.participants);
     final questCategory = await _questCategoryRepository.find(familyQuest.categoryId);
-    if (questCategory == null) throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
+    if (questCategory == null)
+      throw StateError('Quest category not found for categoryId: ${familyQuest.categoryId}');
     final questDetails = await _getQuestDetailsEditingData(familyQuest.id);
-    return FamilyQuestUpdateData.fromDomain(familyQuest: familyQuest, questCategory: questCategory, participants: participantsData, questLevelDetails: questDetails);
+    return FamilyQuestUpdateData.fromDomain(
+        familyQuest: familyQuest,
+        questCategory: questCategory,
+        participants: participantsData,
+        questLevelDetails: questDetails);
   }
 
   /// [QuestParticipants]を[ParticipantUpdateDTO]のリストに変換する
@@ -126,7 +139,8 @@ class FamilyQuestApplicationService {
   /// - [QuestParticipants] participants: クエスト参加者
   /// ### Returns
   /// - Future<List<[ParticipantUpdateDTO]>>: 編集用クエスト参加者情報リスト
-  Future<List<ParticipantUpdateDTO>> _participantsToEditingData(QuestParticipants participants) async {
+  Future<List<ParticipantUpdateDTO>> _participantsToEditingData(
+      QuestParticipants participants) async {
     final List<ParticipantUpdateDTO> participantsData = [];
     for (var participant in participants.list) {
       final member = await _memberRepository.find(participant.memberId);
@@ -139,6 +153,10 @@ class FamilyQuestApplicationService {
   /// 指定した[QuestId]のクエストが持つ詳細情報をマップで取得する
   Future<Map<int, QuestDetailUpdateData>> _getQuestDetailsEditingData(QuestId questId) async {
     final questLevelDetails = await _questDetailRepository.find(questId);
-    return {for (var questLevelDetail in questLevelDetails.map.entries) questLevelDetail.key.value: QuestDetailUpdateData.fromDomain(questDetail: questLevelDetail.value)};
+    return {
+      for (var questLevelDetail in questLevelDetails.map.entries)
+        questLevelDetail.key.value:
+            QuestDetailUpdateData.fromDomain(questDetail: questLevelDetail.value)
+    };
   }
 }

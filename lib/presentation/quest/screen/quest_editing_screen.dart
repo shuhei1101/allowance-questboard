@@ -1,13 +1,13 @@
 import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
-import 'package:allowance_questboard/presentation/component/setting_entry.dart';
-import 'package:allowance_questboard/presentation/page/family_quest_editing_page.dart';
+import 'package:allowance_questboard/presentation/quest/component/setting_entry.dart';
+import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
 import 'package:flutter/material.dart';
 
 /// 一般設定画面のリストビュー
 ///
 /// クエストの一般設定を行う画面のリストビュー
-class GeneralQuestEditingScreen extends StatefulWidget {
-  GeneralQuestEditingScreen({
+class EditGeneralQuestScreen extends StatefulWidget {
+  EditGeneralQuestScreen({
     required this.quest,
     required this.delegate,
     required this.questNameController,
@@ -27,10 +27,10 @@ class GeneralQuestEditingScreen extends StatefulWidget {
   final TextEditingController questCategoryController;
 
   @override
-  State<StatefulWidget> createState() => GeneralQuestEditingScreenState();
+  State<StatefulWidget> createState() => EditGeneralQuestScreenState();
 }
 
-class GeneralQuestEditingScreenState extends State<GeneralQuestEditingScreen> {
+class EditGeneralQuestScreenState extends State<EditGeneralQuestScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView(

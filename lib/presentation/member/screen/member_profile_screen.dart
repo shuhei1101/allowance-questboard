@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:allowance_questboard/presentation/component/member_list_tile.dart';
-import 'package:allowance_questboard/presentation/component/profile_property_card.dart';
+import 'package:allowance_questboard/presentation/member/component/member_list_tile.dart';
+import 'package:allowance_questboard/presentation/member/component/profile_property_card.dart';
 import 'package:allowance_questboard/application/member/member_data.dart';
 
 // TODO: 下段の情報を追加する

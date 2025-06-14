@@ -1,16 +1,17 @@
-import 'package:allowance_questboard/presentation/router/app_route.dart';
-import 'package:allowance_questboard/presentation/screen/member_profile_screen.dart';
-import 'package:allowance_questboard/presentation/page/error_page.dart';
+import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
+import 'package:allowance_questboard/presentation/member/screen/member_profile_screen.dart';
+import 'package:allowance_questboard/presentation/shared/page/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../application/member/member_application_service.dart';
-import '../../application/member/member_data.dart';
+import '../../../application/member/member_application_service.dart';
+import '../../../application/member/member_data.dart';
 
 class MemberPage extends StatelessWidget {
   /// メンバー詳細画面
-  MemberPage({required this.familyId, required this.memberId, super.key}) : _service = GetIt.I<MemberApplicationService>();
+  MemberPage({required this.familyId, required this.memberId, super.key})
+      : _service = GetIt.I<MemberApplicationService>();
 
   final MemberApplicationService _service;
 
@@ -26,7 +27,8 @@ class MemberPage extends StatelessWidget {
         // 画面表示時にメンバー情報を取得
         future: _service.getMember(memberId: memberId),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) Center(child: CircularProgressIndicator());
+          if (snapshot.connectionState == ConnectionState.waiting)
+            Center(child: CircularProgressIndicator());
           if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final member = snapshot.data;
 

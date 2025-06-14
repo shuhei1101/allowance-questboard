@@ -2,9 +2,9 @@ import 'package:allowance_questboard/application/quest/family_quest_update_data.
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/presentation/screen/quest_detail_screen.dart';
-import 'package:allowance_questboard/presentation/page/error_page.dart';
-import 'package:allowance_questboard/presentation/router/app_route.dart';
+import 'package:allowance_questboard/presentation/quest/screen/quest_detail_screen.dart';
+import 'package:allowance_questboard/presentation/shared/page/error_page.dart';
+import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -73,8 +73,20 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
         ParticipantData(icon: Icon(Icons.person)),
       ],
       questLevelDetails: {
-        1: QuestDetailData(successCondition: "successCondition1", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1),
-        2: QuestDetailData(successCondition: "successCondition2", failureCondition: "failureCondition2", targetCount: 1, rewards: 1, memberExp: 1, questExp: 1)
+        1: QuestDetailData(
+            successCondition: "successCondition1",
+            failureCondition: "failureCondition2",
+            targetCount: 1,
+            rewards: 1,
+            memberExp: 1,
+            questExp: 1),
+        2: QuestDetailData(
+            successCondition: "successCondition2",
+            failureCondition: "failureCondition2",
+            targetCount: 1,
+            rewards: 1,
+            memberExp: 1,
+            questExp: 1)
       },
     );
   }
@@ -86,7 +98,7 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestUpdateData?> getFamilyQuestEditingData(String questId) {
+  Future<FamilyQuestUpdateData?> getEditFamilyQuestData(String questId) {
     throw UnimplementedError();
   }
 }
