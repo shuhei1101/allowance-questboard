@@ -23,7 +23,7 @@ package "application" #LightGreen {
 
     class QuestData {
         + int id
-        + String name
+        + String title
         + something ...
     }
 
@@ -64,7 +64,7 @@ package "domain" #LightPink {
 
     class Quest {
         + QuestId id
-        + QuestName name
+        + QuestTitle title
         + something ...
     }
 

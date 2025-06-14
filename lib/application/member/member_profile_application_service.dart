@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/application/member/member_profile_data.dart';
-import 'package:allowance_questboard/domain/member/member.dart';
+import 'package:allowance_questboard/domain/model/member/member.dart';
 
 /// [Member]のプロフィール情報に関するアプリケーションサービス
 class MemberProfileApplicationService {

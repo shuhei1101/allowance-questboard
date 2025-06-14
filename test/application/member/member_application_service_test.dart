@@ -1,16 +1,16 @@
 // MemberApplicationServiceのユニットテスト
 
 import 'package:allowance_questboard/application/member/member_application_service.dart';
-import 'package:allowance_questboard/domain/family/family_id.dart';
-import 'package:allowance_questboard/domain/member/education.dart';
-import 'package:allowance_questboard/domain/member/grade.dart';
-import 'package:allowance_questboard/domain/member/member.dart';
-import 'package:allowance_questboard/domain/member/member_exp.dart';
-import 'package:allowance_questboard/domain/member/member_id.dart';
-import 'package:allowance_questboard/domain/member/member_name.dart';
-import 'package:allowance_questboard/domain/member/member_repository.dart';
-import 'package:allowance_questboard/domain/shared/birthday.dart';
-import 'package:allowance_questboard/domain/shared/money.dart';
+import 'package:allowance_questboard/domain/model/family/family_id.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/education.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/grade.dart';
+import 'package:allowance_questboard/domain/model/member/member.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/member_exp.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/member_id.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/member_name.dart';
+import 'package:allowance_questboard/domain/repository/member/member_repository.dart';
+import 'package:allowance_questboard/domain/model/shared/birthday.dart';
+import 'package:allowance_questboard/domain/model/shared/money.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';

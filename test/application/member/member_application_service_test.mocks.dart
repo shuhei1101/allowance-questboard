@@ -5,11 +5,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:allowance_questboard/domain/family/family_id.dart' as _i6;
-import 'package:allowance_questboard/domain/member/member.dart' as _i4;
-import 'package:allowance_questboard/domain/member/member_id.dart' as _i5;
-import 'package:allowance_questboard/domain/member/member_repository.dart'
-    as _i2;
+import 'package:allowance_questboard/domain/model/family/family_id.dart' as _i6;
+import 'package:allowance_questboard/domain/model/member/member.dart' as _i4;
+import 'package:allowance_questboard/domain/model/member/value_object/member_id.dart' as _i5;
+import 'package:allowance_questboard/domain/repository/member/member_repository.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -35,18 +34,14 @@ class MockMemberRepository extends _i1.Mock implements _i2.MemberRepository {
   }
 
   @override
-  _i3.Future<_i4.Member?> find(_i5.MemberId? memberId) =>
-      (super.noSuchMethod(
-            Invocation.method(#find, [memberId]),
-            returnValue: _i3.Future<_i4.Member?>.value(),
-          )
-          as _i3.Future<_i4.Member?>);
+  _i3.Future<_i4.Member?> find(_i5.MemberId? memberId) => (super.noSuchMethod(
+        Invocation.method(#find, [memberId]),
+        returnValue: _i3.Future<_i4.Member?>.value(),
+      ) as _i3.Future<_i4.Member?>);
 
   @override
-  _i3.Future<List<_i4.Member>?> findMembers(_i6.FamilyId? familyId) =>
-      (super.noSuchMethod(
-            Invocation.method(#findMembers, [familyId]),
-            returnValue: _i3.Future<List<_i4.Member>?>.value(),
-          )
-          as _i3.Future<List<_i4.Member>?>);
+  _i3.Future<List<_i4.Member>?> findMembers(_i6.FamilyId? familyId) => (super.noSuchMethod(
+        Invocation.method(#findMembers, [familyId]),
+        returnValue: _i3.Future<List<_i4.Member>?>.value(),
+      ) as _i3.Future<List<_i4.Member>?>);
 }

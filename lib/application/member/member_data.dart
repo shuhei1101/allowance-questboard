@@ -1,5 +1,5 @@
-import 'package:allowance_questboard/domain/member/education.dart';
-import 'package:allowance_questboard/domain/member/member.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/education.dart';
+import 'package:allowance_questboard/domain/model/member/member.dart';
 import 'package:flutter/widgets.dart';
 
 /// [Member]クラスの表示用DTO

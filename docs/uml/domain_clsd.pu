@@ -191,7 +191,7 @@ package domain {
     package quest {
         class Quest {
             +QuestId id
-            +QuestName name
+            +QuestTitle title
             +QuestCategoryId categoryId
             +Icon icon
             +AgeRestriction ageRestriction
@@ -206,7 +206,7 @@ package domain {
         }
         note top of Quest: クエストのドメインモデル
         Quest *--> QuestId
-        Quest *--> QuestName
+        Quest *--> QuestTitle
         Quest *--> AgeRestriction
         Quest *--> PublishedMonth
         Quest *--> QuestReleasePeriod
@@ -217,7 +217,7 @@ package domain {
         class QuestId {
             +String value
         }
-        class QuestName {
+        class QuestTitle {
             +String value
         }
         class AgeRestriction {

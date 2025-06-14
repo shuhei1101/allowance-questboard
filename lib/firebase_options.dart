@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBh6gjsYeOTkjcstjAPlG38Gh0ewaldDmM',
-    appId: '1:714159499544:android:77d81697ac7e27ee19566d',
+    appId: '1:714159499544:android:ae4665f73a3a848519566d',
     messagingSenderId: '714159499544',
     projectId: 'allowance-questboard',
     storageBucket: 'allowance-questboard.firebasestorage.app',
@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'allowance-questboard.firebasestorage.app',
     measurementId: 'G-4FDD6MTSQK',
   );
+
 }

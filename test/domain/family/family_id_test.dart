@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/domain/family/family_id.dart';
+import 'package:allowance_questboard/domain/model/family/family_id.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
