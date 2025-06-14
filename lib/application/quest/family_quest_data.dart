@@ -1,9 +1,9 @@
 import 'package:allowance_questboard/application/quest/quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/domain/member/member.dart';
-import 'package:allowance_questboard/domain/quest/family_quest.dart';
-import 'package:allowance_questboard/domain/quest/quest_category.dart';
-import 'package:allowance_questboard/domain/quest/quest_participant.dart';
+import 'package:allowance_questboard/domain/model/member/member.dart';
+import 'package:allowance_questboard/domain/model/quest/family_quest.dart';
+import 'package:allowance_questboard/domain/model/quest/value_object/quest_category.dart';
+import 'package:allowance_questboard/domain/model/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
 /// [FamilyQuest]の表示用DTO
@@ -28,7 +28,7 @@ class FamilyQuestData extends QuestData {
   }) {
     return FamilyQuestData(
       id: familyQuest.id.value,
-      name: familyQuest.name.value,
+      name: familyQuest.title.value,
       icon: familyQuest.icon,
       category: questCategory.value,
       questLevelDetails: questLevelDetails,

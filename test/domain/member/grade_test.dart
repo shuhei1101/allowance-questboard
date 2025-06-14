@@ -1,5 +1,5 @@
-import 'package:allowance_questboard/domain/member/education.dart';
-import 'package:allowance_questboard/domain/member/grade.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/education.dart';
+import 'package:allowance_questboard/domain/model/member/value_object/grade.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

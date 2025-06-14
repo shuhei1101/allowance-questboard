@@ -2,14 +2,14 @@ import 'package:allowance_questboard/application/quest/family_quest_update_data.
 import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
-import 'package:allowance_questboard/domain/family/family_id.dart';
-import 'package:allowance_questboard/domain/member/member_repository.dart';
-import 'package:allowance_questboard/domain/quest/family_quest.dart';
-import 'package:allowance_questboard/domain/quest/family_quest_repository.dart';
-import 'package:allowance_questboard/domain/quest/quest_category_repository.dart';
-import 'package:allowance_questboard/domain/quest/quest_detail_repository.dart';
-import 'package:allowance_questboard/domain/quest/quest_id.dart';
-import 'package:allowance_questboard/domain/quest/quest_participants.dart';
+import 'package:allowance_questboard/domain/model/family/family_id.dart';
+import 'package:allowance_questboard/domain/repository/member/member_repository.dart';
+import 'package:allowance_questboard/domain/model/quest/family_quest.dart';
+import 'package:allowance_questboard/domain/repository/quest/family_quest_repository.dart';
+import 'package:allowance_questboard/domain/repository/quest/quest_category_repository.dart';
+import 'package:allowance_questboard/domain/repository/quest/quest_detail_repository.dart';
+import 'package:allowance_questboard/domain/model/quest/value_object/quest_id.dart';
+import 'package:allowance_questboard/domain/model/quest/quest_participants.dart';
 import 'package:get_it/get_it.dart';
 
 /// [FamilyQuest]に関するアプリケーションサービス
@@ -42,7 +42,7 @@ class FamilyQuestApplicationService {
   /// ### Returns
   /// - Future<List<[FamilyQuestData]>>: クエスト情報リスト
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
-    final familyQuests = await _familyQuestRepository.findAllBy(FamilyId(familyId));
+    final familyQuests = await _familyQuestRepository.findAll(FamilyId(familyId));
     List<FamilyQuestData> familyQuestsData = [];
     for (var familyQuest in familyQuests ?? []) {
       late FamilyQuestData quest;

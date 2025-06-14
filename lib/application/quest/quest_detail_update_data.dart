@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/domain/quest/quest_detail.dart';
+import 'package:allowance_questboard/domain/model/quest/value_object/quest_detail.dart';
 
 /// クエスト詳細情報の編集用DTO
 class QuestDetailUpdateData {

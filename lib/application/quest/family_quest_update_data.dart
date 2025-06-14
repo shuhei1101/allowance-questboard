@@ -1,8 +1,8 @@
 import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
-import 'package:allowance_questboard/domain/member/member.dart';
-import 'package:allowance_questboard/domain/quest/family_quest.dart';
-import 'package:allowance_questboard/domain/quest/quest_category.dart';
-import 'package:allowance_questboard/domain/quest/quest_participant.dart';
+import 'package:allowance_questboard/domain/model/member/member.dart';
+import 'package:allowance_questboard/domain/model/quest/family_quest.dart';
+import 'package:allowance_questboard/domain/model/quest/value_object/quest_category.dart';
+import 'package:allowance_questboard/domain/model/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
 /// 家族クエストの編集用DTO
@@ -31,7 +31,7 @@ class FamilyQuestUpdateData {
   }) {
     return FamilyQuestUpdateData(
       id: familyQuest.id.value,
-      name: familyQuest.name.value,
+      name: familyQuest.title.value,
       category: questCategory.value,
       icon: familyQuest.icon,
       ageFrom: familyQuest.ageRestriction.ageFrom?.value,
