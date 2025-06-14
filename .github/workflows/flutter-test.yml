@@ -1,31 +1,32 @@
 name: Flutter Test
 
 on:
-  # mainブランチにpushされたとき
   push:
     branches:
       - main
-  # mainブランチにpull requestを送ったとき
   pull_request:
     branches:
       - main
 
 jobs:
   flutter-test:
-    # GitHub Actionsの実行環境のOSを指定
     runs-on: ubuntu-22.04
 
     steps:
-      # リポジトリをGitHub Actionsの実行環境へコピー
       - name: Check out the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      # Dockerのビルド環境のセットアップ
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+          channel: 'stable'
 
-      # Dockerイメージの作成とコンテナの実行
-      - name: Build and run Docker container
-        run: |
-          docker build -f Dockerfile.test -t flutter-test .
-          docker run flutter-test
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
