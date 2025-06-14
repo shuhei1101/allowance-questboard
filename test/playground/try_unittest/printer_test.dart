@@ -1,8 +1,8 @@
 // ここでは、Calculatorクラスのモックを作成し、
 // Printerクラスのテストを行う実験。
 
-import 'package:allowance_questboard/playground/try_unittest/calculator.dart';
-import 'package:allowance_questboard/playground/try_unittest/printer.dart';
+import 'package:allowance_questboard/sandbox/try_unittest/calculator.dart';
+import 'package:allowance_questboard/sandbox/try_unittest/printer.dart';
 
 import 'package:mockito/annotations.dart';
 import 'package:flutter_test/flutter_test.dart';

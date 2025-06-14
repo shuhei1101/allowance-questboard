@@ -3,8 +3,7 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:allowance_questboard/playground/try_unittest/calculator.dart'
-    as _i2;
+import 'package:allowance_questboard/sandbox/try_unittest/calculator.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -31,26 +30,21 @@ class MockCalculator extends _i1.Mock implements _i2.Calculator {
 
   @override
   int add(int? a, int? b) =>
-      (super.noSuchMethod(Invocation.method(#add, [a, b]), returnValue: 0)
-          as int);
+      (super.noSuchMethod(Invocation.method(#add, [a, b]), returnValue: 0) as int);
 
   @override
   int sub(int? a, int? b) =>
-      (super.noSuchMethod(Invocation.method(#sub, [a, b]), returnValue: 0)
-          as int);
+      (super.noSuchMethod(Invocation.method(#sub, [a, b]), returnValue: 0) as int);
 
   @override
   int mul(int? a, int? b) =>
-      (super.noSuchMethod(Invocation.method(#mul, [a, b]), returnValue: 0)
-          as int);
+      (super.noSuchMethod(Invocation.method(#mul, [a, b]), returnValue: 0) as int);
 
   @override
   double div(int? a, int? b) =>
-      (super.noSuchMethod(Invocation.method(#div, [a, b]), returnValue: 0.0)
-          as double);
+      (super.noSuchMethod(Invocation.method(#div, [a, b]), returnValue: 0.0) as double);
 
   @override
   int addWithAPI(int? a) =>
-      (super.noSuchMethod(Invocation.method(#addWithAPI, [a]), returnValue: 0)
-          as int);
+      (super.noSuchMethod(Invocation.method(#addWithAPI, [a]), returnValue: 0) as int);
 }

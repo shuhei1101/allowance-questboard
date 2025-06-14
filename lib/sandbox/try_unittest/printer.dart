@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/playground/try_unittest/calculator.dart';
+import 'package:allowance_questboard/sandbox/try_unittest/calculator.dart';
 
 class Printer {
   Printer(this.calculator);

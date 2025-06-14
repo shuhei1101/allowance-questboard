@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/playground/try_unittest/num_generator.dart';
+import 'package:allowance_questboard/sandbox/try_unittest/num_generator.dart';
 
 class Calculator {
   int add(int a, int b) {
