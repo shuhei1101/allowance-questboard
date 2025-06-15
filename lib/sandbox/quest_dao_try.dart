@@ -2,7 +2,7 @@ import 'package:allowance_questboard/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:allowance_questboard/infrastracture/dao/quest_dao.dart';
+import 'package:allowance_questboard/infrastracture/dao/interface/quest_dao.dart';
 import 'package:allowance_questboard/infrastracture/entity/quest_entity.dart';
 
 void main() async {

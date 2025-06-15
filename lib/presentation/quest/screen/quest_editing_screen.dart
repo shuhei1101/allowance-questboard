@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
+import 'package:allowance_questboard/application/quest/update_family_quest_response.dart';
 import 'package:allowance_questboard/presentation/quest/component/setting_entry.dart';
 import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class EditGeneralQuestScreen extends HookConsumerWidget {
     required this.quest,
   });
 
-  final FamilyQuestUpdateData quest;
+  final UpdateFamilyQuestResponse quest;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -6,8 +6,8 @@ import 'package:allowance_questboard/domain/model/quest/quest_participant.dart';
 import 'package:flutter/material.dart';
 
 /// 家族クエストの編集用DTO
-class FamilyQuestUpdateData {
-  FamilyQuestUpdateData({
+class UpdateFamilyQuestResponse {
+  UpdateFamilyQuestResponse({
     required this.id,
     required this.title,
     required this.category,
@@ -23,13 +23,13 @@ class FamilyQuestUpdateData {
   });
 
   /// ドメインモデル[FamilyQuest]から生成するファクトリコンストラクタ
-  factory FamilyQuestUpdateData.fromDomain({
+  factory UpdateFamilyQuestResponse.fromDomain({
     required FamilyQuest familyQuest,
     required QuestCategory questCategory,
-    required List<ParticipantUpdateDTO> participants,
-    required Map<int, QuestDetailUpdateData> questLevelDetails,
+    required List<UpdateParticipantResponse> participants,
+    required Map<int, QuestDetailResponse> questLevelDetails,
   }) {
-    return FamilyQuestUpdateData(
+    return UpdateFamilyQuestResponse(
       id: familyQuest.id.value,
       title: familyQuest.title.value,
       category: questCategory.value,
@@ -76,23 +76,23 @@ class FamilyQuestUpdateData {
   final bool isShared;
 
   /// 参加者
-  final List<ParticipantUpdateDTO> participants;
+  final List<UpdateParticipantResponse> participants;
 
   /// クエストレベルに対するquestDetail
-  final Map<int, QuestDetailUpdateData> questLevelDetails;
+  final Map<int, QuestDetailResponse> questLevelDetails;
 
   /// クエストの最大レベル
   int get maxLevel => questLevelDetails.length;
 }
 
 /// 参加者の編集用DTO
-class ParticipantUpdateDTO {
-  ParticipantUpdateDTO({required this.icon});
+class UpdateParticipantResponse {
+  UpdateParticipantResponse({required this.icon});
 
   /// ドメインモデル[QuestParticipant]から生成するファクトリコンストラクタ
-  factory ParticipantUpdateDTO.fromDomain(
+  factory UpdateParticipantResponse.fromDomain(
       {required QuestParticipant status, required Member member}) {
-    return ParticipantUpdateDTO(icon: member.icon);
+    return UpdateParticipantResponse(icon: member.icon);
   }
   // 参加者のアイコン
   final Icon icon;

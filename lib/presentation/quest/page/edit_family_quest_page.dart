@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
+import 'package:allowance_questboard/application/quest/update_family_quest_response.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
@@ -23,7 +23,7 @@ class EditFamilyQuestPage extends HookConsumerWidget {
     final state = ref.watch(editFamilyQuestStateProvider);
     final future = useMemoized(() => notifier.getEditFamilyQuestData(questId));
 
-    return FutureBuilder<FamilyQuestUpdateData?>(
+    return FutureBuilder<UpdateFamilyQuestResponse?>(
       future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
@@ -67,7 +67,7 @@ class EditFamilyQuestPage extends HookConsumerWidget {
 
 class EditFamilyQuestTab extends StatelessWidget {
   const EditFamilyQuestTab({required this.quest});
-  final FamilyQuestUpdateData quest;
+  final UpdateFamilyQuestResponse quest;
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +103,8 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestUpdateData?> getEditFamilyQuestData(String questId) async {
-    return FamilyQuestUpdateData(
+  Future<UpdateFamilyQuestResponse?> getEditFamilyQuestData(String questId) async {
+    return UpdateFamilyQuestResponse(
       id: "123",
       title: "Test Quest",
       icon: Icon(Icons.ac_unit),
@@ -112,10 +112,10 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
       isPublic: true,
       isShared: true,
       participants: [
-        ParticipantUpdateDTO(icon: Icon(Icons.person)),
+        UpdateParticipantResponse(icon: Icon(Icons.person)),
       ],
       questLevelDetails: {
-        1: QuestDetailUpdateData(
+        1: QuestDetailResponse(
           successCondition: "Complete all tasks",
           failureCondition: "Fail any task",
           targetCount: 10,
