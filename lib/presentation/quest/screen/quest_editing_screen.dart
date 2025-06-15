@@ -1,49 +1,34 @@
 import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
 import 'package:allowance_questboard/presentation/quest/component/setting_entry.dart';
-import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
+import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// 一般設定画面のリストビュー
-///
-/// クエストの一般設定を行う画面のリストビュー
-class EditGeneralQuestScreen extends StatefulWidget {
+class EditGeneralQuestScreen extends HookConsumerWidget {
   EditGeneralQuestScreen({
     required this.quest,
-    required this.delegate,
-    required this.questNameController,
-    required this.questCategoryController,
   });
 
-  /// クエスト情報
   final FamilyQuestUpdateData quest;
 
-  /// バリデートチェック更新時の通知処理を委譲される画面
-  final ValidateNotifiable delegate;
-
-  /// クエスト名の入力コントローラ
-  final TextEditingController questNameController;
-
-  /// クエスト分類の入力コントローラ
-  final TextEditingController questCategoryController;
-
   @override
-  State<StatefulWidget> createState() => EditGeneralQuestScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.watch(editFamilyQuestStateProvider.notifier);
 
-class EditGeneralQuestScreenState extends State<EditGeneralQuestScreen> {
-  @override
-  Widget build(BuildContext context) {
+    final titleController = useTextEditingController(text: quest.title);
+
     return ListView(
       children: [
         SettingEntry(
           icon: Icon(Icons.settings),
           title: 'クエスト名',
           body: TextField(
-            controller: widget.questNameController,
+            controller: titleController,
             onChanged: (value) {
-              widget.delegate.validateNotify();
+              print("value: $value");
+              notifier.updateQuestTitle(title: value);
             },
-            // onChanged: (value) => print(value),
           ),
         ),
         // TOOD: クエスト分類の選択ボックスを追加

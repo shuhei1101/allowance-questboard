@@ -3,6 +3,6 @@ import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final editFamilyQuestStateProvider =
-    StateNotifierProvider.autoDispose<EditFamilyQuestStateNotifier, EditFamilyQuestState>(
+    StateNotifierProvider<EditFamilyQuestStateNotifier, EditFamilyQuestState>(
   (ref) => EditFamilyQuestStateNotifier(const EditFamilyQuestState()),
 );

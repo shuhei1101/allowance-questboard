@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EditFamilyQuestState {
   QuestTitleState get questTitleState;
+  bool get isValid;
 
   /// Create a copy of EditFamilyQuestState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,15 +32,16 @@ mixin _$EditFamilyQuestState {
         (other.runtimeType == runtimeType &&
             other is EditFamilyQuestState &&
             (identical(other.questTitleState, questTitleState) ||
-                other.questTitleState == questTitleState));
+                other.questTitleState == questTitleState) &&
+            (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, questTitleState);
+  int get hashCode => Object.hash(runtimeType, questTitleState, isValid);
 
   @override
   String toString() {
-    return 'EditFamilyQuestState(questTitleState: $questTitleState)';
+    return 'EditFamilyQuestState(questTitleState: $questTitleState, isValid: $isValid)';
   }
 }
 
@@ -49,7 +51,7 @@ abstract mixin class $EditFamilyQuestStateCopyWith<$Res> {
           $Res Function(EditFamilyQuestState) _then) =
       _$EditFamilyQuestStateCopyWithImpl;
   @useResult
-  $Res call({QuestTitleState questTitleState});
+  $Res call({QuestTitleState questTitleState, bool isValid});
 }
 
 /// @nodoc
@@ -66,12 +68,17 @@ class _$EditFamilyQuestStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? questTitleState = null,
+    Object? isValid = null,
   }) {
     return _then(_self.copyWith(
       questTitleState: null == questTitleState
           ? _self.questTitleState
           : questTitleState // ignore: cast_nullable_to_non_nullable
               as QuestTitleState,
+      isValid: null == isValid
+          ? _self.isValid
+          : isValid // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -80,11 +87,15 @@ class _$EditFamilyQuestStateCopyWithImpl<$Res>
 
 class _EditFamilyQuestState implements EditFamilyQuestState {
   const _EditFamilyQuestState(
-      {this.questTitleState = const QuestTitleState('', null)});
+      {this.questTitleState = const QuestTitleState('', null),
+      this.isValid = false});
 
   @override
   @JsonKey()
   final QuestTitleState questTitleState;
+  @override
+  @JsonKey()
+  final bool isValid;
 
   /// Create a copy of EditFamilyQuestState
   /// with the given fields replaced by the non-null parameter values.
@@ -101,15 +112,16 @@ class _EditFamilyQuestState implements EditFamilyQuestState {
         (other.runtimeType == runtimeType &&
             other is _EditFamilyQuestState &&
             (identical(other.questTitleState, questTitleState) ||
-                other.questTitleState == questTitleState));
+                other.questTitleState == questTitleState) &&
+            (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, questTitleState);
+  int get hashCode => Object.hash(runtimeType, questTitleState, isValid);
 
   @override
   String toString() {
-    return 'EditFamilyQuestState(questTitleState: $questTitleState)';
+    return 'EditFamilyQuestState(questTitleState: $questTitleState, isValid: $isValid)';
   }
 }
 
@@ -121,7 +133,7 @@ abstract mixin class _$EditFamilyQuestStateCopyWith<$Res>
       __$EditFamilyQuestStateCopyWithImpl;
   @override
   @useResult
-  $Res call({QuestTitleState questTitleState});
+  $Res call({QuestTitleState questTitleState, bool isValid});
 }
 
 /// @nodoc
@@ -138,12 +150,17 @@ class __$EditFamilyQuestStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? questTitleState = null,
+    Object? isValid = null,
   }) {
     return _then(_EditFamilyQuestState(
       questTitleState: null == questTitleState
           ? _self.questTitleState
           : questTitleState // ignore: cast_nullable_to_non_nullable
               as QuestTitleState,
+      isValid: null == isValid
+          ? _self.isValid
+          : isValid // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

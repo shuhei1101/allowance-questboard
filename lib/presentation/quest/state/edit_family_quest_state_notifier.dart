@@ -10,12 +10,28 @@ class EditFamilyQuestStateNotifier extends StateNotifier<EditFamilyQuestState> {
 
   EditFamilyQuestStateNotifier(super.state);
 
-  void updateQuestTitle(String title) {
+  void initializeWithQuest(FamilyQuestUpdateData quest) {
+    state = state.copyWith(
+      questTitleState: QuestTitleState.fromInput(quest.title),
+    );
+    _updateIsValid();
+  }
+
+  void updateQuestTitle({required String title}) {
     state = state.copyWith(questTitleState: QuestTitleState.fromInput(title));
+    _updateIsValid();
+  }
+
+  void _updateIsValid() {
+    final isValid = state.questTitleState.isValid;
+    state = state.copyWith(isValid: isValid);
   }
 
   Future<FamilyQuestUpdateData?> getEditFamilyQuestData(String questId) async {
     final quest = await _service.getEditFamilyQuestData(questId);
+    if (quest != null) {
+      initializeWithQuest(quest);
+    }
     return quest;
   }
 }

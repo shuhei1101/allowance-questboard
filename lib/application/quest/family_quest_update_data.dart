@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class FamilyQuestUpdateData {
   FamilyQuestUpdateData({
     required this.id,
-    required this.name,
+    required this.title,
     required this.category,
     required this.icon,
     required this.ageFrom,
@@ -31,7 +31,7 @@ class FamilyQuestUpdateData {
   }) {
     return FamilyQuestUpdateData(
       id: familyQuest.id.value,
-      name: familyQuest.title.value,
+      title: familyQuest.title.value,
       category: questCategory.value,
       icon: familyQuest.icon,
       ageFrom: familyQuest.ageRestriction.ageFrom?.value,
@@ -49,7 +49,7 @@ class FamilyQuestUpdateData {
   final String id;
 
   /// クエスト名
-  final String name;
+  final String title;
 
   /// クエストカテゴリ
   final String category;
@@ -90,7 +90,8 @@ class ParticipantUpdateDTO {
   ParticipantUpdateDTO({required this.icon});
 
   /// ドメインモデル[QuestParticipant]から生成するファクトリコンストラクタ
-  factory ParticipantUpdateDTO.fromDomain({required QuestParticipant status, required Member member}) {
+  factory ParticipantUpdateDTO.fromDomain(
+      {required QuestParticipant status, required Member member}) {
     return ParticipantUpdateDTO(icon: member.icon);
   }
   // 参加者のアイコン
