@@ -60,7 +60,7 @@ classDiagram
     }
 
     namespace backend {
-        class QuestController {
+        class index {
             member(UpdateQuestRequest): UpdateQuestResponse
         }
 
@@ -100,8 +100,8 @@ classDiagram
     EditQuestPageStateNotifier --> UpdateQuestResponse
     EditQuestPageStateNotifier --> QuestApiClient
     
-    QuestApiClient --> QuestController
-    QuestController --> QuestApplicationService
+    QuestApiClient --> index
+    index --> QuestApplicationService
 
     QuestApplicationService --> QuestQueryService
     QuestApplicationService --> QuestRepository
