@@ -102,9 +102,9 @@ erDiagram
         int grade "学年"
     }
     
-    members ||--|{ savings_history: ""
+    members ||--|{ savings_records: ""
 
-    savings_history {
+    savings_records {
         %% 貯金額の履歴
         
         uuid id PK

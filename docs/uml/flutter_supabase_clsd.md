@@ -113,8 +113,4 @@ classDiagram
     QuestRepository --> QuestQueryService
     QuestDao --> QuestEntity
     QuestDao --> DB
-
-
-
-
 ```
