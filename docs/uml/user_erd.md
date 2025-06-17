@@ -161,9 +161,9 @@ erDiagram
         datetime created_at "作成日時"
     }
 
-    families ||--|{ level_exp: ""
+    families ||--|{ exp_by_level: ""
 
-    level_exp {
+    exp_by_level {
         uuid id PK
         %% ---
         int family_id FK
@@ -248,9 +248,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    allowance_table ||--|{ age_allowance: ""
+    allowance_table ||--|{ allowance_by_age: ""
 
-    age_allowance {
+    allowance_by_age {
         %% 年齢ごとのお小遣い額。
 
         uuid id PK
@@ -263,7 +263,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    age_allowance ||--|{ age_allowance_history: ""
+    allowance_by_age ||--|{ age_allowance_history: ""
 
     age_allowance_history {
         %% 年齢ごとのお小遣い額の履歴。
@@ -294,9 +294,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    level_table ||--|{ level_allowance: ""
+    level_table ||--|{ allowance_by_level: ""
 
-    level_allowance {
+    allowance_by_level {
         %% ランクごとの報酬
 
         uuid id PK
@@ -309,7 +309,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    level_allowance ||--|{ level_allowance_history: ""
+    allowance_by_level ||--|{ level_allowance_history: ""
 
     level_allowance_history {
         %% ランクごとの報酬の履歴。

@@ -195,7 +195,79 @@ CREATE TABLE member.withdrawal_request_status_translations (
 );
 
 -- 引き落とし申請フォーム
--- CREATE TABLE member.withdrawal_requests (
---     id serial PRIMARY KEY,
---     member_id int NOT NULL REFERENCES member.members (id) ON DELETE CASCADE,
---     family_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+CREATE TABLE member.withdrawal_requests (
+    id serial PRIMARY KEY,
+    family_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+    member_id int NOT NULL REFERENCES member.members (id) ON DELETE CASCADE,
+    status_id int NOT NULL REFERENCES member.withdrawal_request_status (id) ON DELETE RESTRICT,
+    amount int NOT NULL DEFAULT 0,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now()
+);
+-- 引き落とし申請フォーム(翻訳)
+CREATE TABLE member.withdrawal_requests_translations (
+    id serial PRIMARY KEY,
+    withdrawal_request_id int NOT NULL REFERENCES member.withdrawal_requests (id) ON DELETE CASCADE,
+    languages_code varchar NOT NULL REFERENCES public.languages (code) ON DELETE RESTRICT,
+    reason text
+);
+
+-- フォローフォロワーテーブル
+CREATE TABLE member.followers (
+    id serial PRIMARY KEY,
+    follower_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+    followed_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+    created_at timestamptz NOT NULL DEFAULT now(),
+);
+
+-- レベルごとの経験値テーブル
+CREATE TABLE member.exp_by_level (
+    id serial PRIMARY KEY,
+    family_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+    level int NOT NULL UNIQUE,
+    exp int NOT NULL DEFAULT 0,
+);
+
+
+
+-- お小遣いテーブル
+CREATE TABLE member.allowance_table (
+    id serial PRIMARY KEY,
+    subtype varchar NOT NULL,
+    subtype_id int NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+    
+-- メンバーお小遣いテーブル
+CREATE TABLE member.member_allowance_table (
+    id serial PRIMARY KEY,
+    member_id int NOT NULL REFERENCES member.members (id) ON DELETE CASCADE,
+    parent_id int NOT NULL REFERENCES member.allowance_table (id) ON DELETE CASCADE,
+);
+
+-- 家族お小遣いテーブル
+CREATE TABLE member.family_allowance_table (
+    id serial PRIMARY KEY,
+    family_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+    parent_id int NOT NULL REFERENCES member.allowance_table (id) ON DELETE CASCADE,
+);
+
+-- 公開お小遣いテーブル
+CREATE TABLE member.public_allowance_table (
+    id serial PRIMARY KEY,
+    parent_id int NOT NULL REFERENCES member.allowance_table (id) ON DELETE CASCADE,
+    family_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+    family_table_id int NOT NULL REFERENCES member.family_allowance_table (id) ON DELETE RESTRICT,
+    favorites_count int NOT NULL DEFAULT 0,
+);
+
+-- 年齢ごとのお小遣いテーブル
+CREATE TABLE member.allowance_by_age (
+    id serial PRIMARY KEY,
+    table_id int NOT NULL REFERENCES member.allowance_table (id) ON DELETE CASCADE,
+    age int NOT NULL,
+    amount int NOT NULL DEFAULT 0,
+    updated_at timestamptz DEFAULT now()
+);
