@@ -70,9 +70,8 @@ classDiagram
             description: QuestDescription
         }
         class QuestDescription
-        class QuestApplicationService {
-            findById(int): QuestResponse
-            save(UpdateQuestRequest): UpdateQuestResponse
+        class UpdateQuestUseCase {
+            execute(UpdateQuestCommand): UpdateQuestResult
         }
         class QuestQueryService {
             findById(QuestId): QuestDto
@@ -99,13 +98,15 @@ classDiagram
     EditQuestPageStateNotifier --> UpdateQuestRequest
     EditQuestPageStateNotifier --> UpdateQuestResponse
     EditQuestPageStateNotifier --> QuestApiClient
+    QuestApiClient --> UpdateQuestRequest
+    QuestApiClient --> UpdateQuestResponse
     
     QuestApiClient --> index
-    index --> QuestApplicationService
+    index --> UpdateQuestUseCase
 
-    QuestApplicationService --> QuestQueryService
-    QuestApplicationService --> QuestRepository
-    QuestApplicationService --> Quest
+    UpdateQuestUseCase --> QuestQueryService
+    UpdateQuestUseCase --> QuestRepository
+    UpdateQuestUseCase --> Quest
     QuestQueryService --> DB
     QuestRepository --> Quest
     QuestRepository --> QuestDao
