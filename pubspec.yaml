@@ -26,6 +26,7 @@ dependencies:
   state_notifier: ^1.0.0
   flutter_hooks: ^0.21.2
   hooks_riverpod: ^2.6.1
+  supabase_auth_ui: ^0.5.5
 
 
 

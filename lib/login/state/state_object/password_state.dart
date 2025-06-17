@@ -1,24 +1,18 @@
-class PasswordState {
-  final String password;
-  final bool isValid;
+import 'package:allowance_questboard/shared/state/state_object.dart';
 
-  PasswordState({
-    required this.password,
-    required this.isValid,
-  });
+class PasswordState extends StateObject<String> {
+  PasswordState({required super.value});
 
-  factory PasswordState.fromInput(String password) {
-    final isValid = validate(password);
-    return PasswordState(
-      password: password,
-      isValid: isValid,
-    );
+  @override
+  String? validate(String value) {
+    // パスワードは空であってはいけない
+    if (value.isEmpty) {
+      return "パスワードは必須です";
+    }
+    // パスワードは8文字以上でなければならない
+    if (value.length < 8) {
+      return "パスワードは8文字以上でなければなりません";
+    }
+    return null;
   }
-  static bool validate(String value) {
-    // パスワードのバリデーションルールを定義
-    // ここでは、8文字以上であることを確認
-    return value.length >= 8;
-  }
-
-  bool get isValidPassword => isValid;
 }
