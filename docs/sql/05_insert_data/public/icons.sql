@@ -6,7 +6,7 @@ VALUES
   ('Social', 3, true);
 
 -- icons の挿入例
-INSERT INTO public.icons (icon_code, category_id, sort_order, is_active)
+INSERT INTO public.icons (code, category_id, sort_order, is_active)
 VALUES
   ('home', 1, 1, true),
   ('menu', 1, 2, true),
