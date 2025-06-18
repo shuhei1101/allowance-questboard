@@ -6,6 +6,7 @@ import 'package:allowance_questboard/presentation/quest/screen/quest_editing_scr
 import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
 import 'package:allowance_questboard/presentation/shared/page/error_page.dart';
 import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
+import 'package:allowance_questboard/shared/setup/l10n_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
@@ -19,6 +20,7 @@ class EditFamilyQuestPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useMemoized(() => L10nProvider.update(context));
     final notifier = ref.read(editFamilyQuestStateProvider.notifier);
     final state = ref.watch(editFamilyQuestStateProvider);
     final future = useMemoized(() => notifier.getEditFamilyQuestData(questId));
@@ -83,15 +85,18 @@ class EditFamilyQuestTab extends StatelessWidget {
 
 // 動作確認用コード
 void main() {
-  GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
-  final router = GoRouter(initialLocation: '/quest/123/edit', routes: $appRoutes);
+  GetIt.I.registerSingleton<FamilyQuestApplicationService>(
+      MockFamilyQuestApplicationService());
+  final router =
+      GoRouter(initialLocation: '/quest/123/edit', routes: $appRoutes);
   runApp(ProviderScope(
       child: MaterialApp.router(
     routerConfig: router,
   )));
 }
 
-class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
+class MockFamilyQuestApplicationService
+    implements FamilyQuestApplicationService {
   @override
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     throw UnimplementedError();
@@ -103,7 +108,8 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<UpdateFamilyQuestResponse?> getEditFamilyQuestData(String questId) async {
+  Future<UpdateFamilyQuestResponse?> getEditFamilyQuestData(
+      String questId) async {
     return UpdateFamilyQuestResponse(
       id: "123",
       title: "Test Quest",

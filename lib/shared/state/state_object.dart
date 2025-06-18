@@ -2,7 +2,7 @@ abstract class StateObject<T> {
   final T value;
   late String? errorMessage;
 
-  StateObject({required this.value}) {
+  StateObject(this.value) {
     errorMessage = validate(value);
   }
 

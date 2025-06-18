@@ -11,6 +11,6 @@ abstract class EditFamilyQuestState with _$EditFamilyQuestState {
   }) = _EditFamilyQuestState;
 
   factory EditFamilyQuestState.initial() => EditFamilyQuestState(
-        questTitleState: QuestTitleState(value: ''),
+        questTitleState: QuestTitleState(''),
       );
 }

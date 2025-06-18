@@ -115,3 +115,21 @@ classDiagram
     QuestDao --> QuestEntity
     QuestDao --> DB
 ```
+
+## ログイン周り
+```mermaid
+sequenceDiagram
+    LoginPageStateNotifier ->> FamilyHomePage: 遷移(familyId)
+    FamilyHomePage ->> FamilyHomePageNotifier: 生成
+    FamilyHomePage ->> FamilyHomePageNotifier: fetchFamilyHomeData(familyId)
+    FamilyHomePageNotifier ->> FamilyHomeApi: fetchFamilyHomeData(familyId)
+    FamilyHomeApi ->> FamilyFactory: fromFamilyHomeJson(json)
+    FamilyHomeApi ->> MemberFactory: fromFamilyHomeJson(json)
+    FamilyHomeApi ->> QuestFactory: fromFamilyHomeJson(json)
+    FamilyHomeApi ->> FamilyHomePageNotifier: FamilyHomeModelを返却
+```
+
+```mermaid
+sequenceDiagram
+    LoginPageStateNotifier ->> supabase
+```

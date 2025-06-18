@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/domain/model/family/family.dart';
+import 'package:allowance_questboard/family/shared/model/family.dart';
 import 'package:flutter/material.dart';
 
 /// [Family]の表示用DTO

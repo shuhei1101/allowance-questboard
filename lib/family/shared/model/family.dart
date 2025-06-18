@@ -5,7 +5,13 @@ import 'package:allowance_questboard/domain/model/family/family_name.dart';
 
 /// 家族ドメインモデル
 class Family {
-  Family({required this.id, required this.name, required this.icon, required this.introduction, required this.createdAt, required this.updatedAt});
+  Family(
+      {required this.id,
+      required this.name,
+      required this.icon,
+      required this.introduction,
+      required this.createdAt,
+      required this.updatedAt});
 
   /// 家族ID
   final FamilyId id;
@@ -24,4 +30,6 @@ class Family {
 
   /// 更新日時
   final DateTime updatedAt;
+
+  static fromJson(e) {}
 }
