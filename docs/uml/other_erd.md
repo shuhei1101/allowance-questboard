@@ -123,7 +123,7 @@ erDiagram
     something ||--o{ allowance_history: ""
     member ||--o{ allowance_history: ""
 
-    allowance_history {
+    allowance_records {
         %% 月ごとのお小遣い明細の記録。 
         %% 
         %% クエスト履歴や月のお小遣いなどと紐づく。
