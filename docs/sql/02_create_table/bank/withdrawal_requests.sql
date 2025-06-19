@@ -1,6 +1,12 @@
 
 -- 引き落とし申請フォーム
--- CREATE TABLE member.withdrawal_requests (
---     id serial PRIMARY KEY,
---     member_id int NOT NULL REFERENCES member.members (id) ON DELETE CASCADE,
---     family_id int NOT NULL REFERENCES member.families (id) ON DELETE CASCADE,
+CREATE TABLE IF NOT EXISTS withdrawal_requests (
+    id serial PRIMARY KEY,
+    requester_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+    approver_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
+    status_id int NOT NULL REFERENCES withdrawal_request_status (id) ON DELETE RESTRICT,  
+    amount int NOT NULL,
+    reason varchar NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now(),
+);  

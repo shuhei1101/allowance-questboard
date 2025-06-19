@@ -1,5 +1,5 @@
 -- 翻訳コードテーブル
-CREATE TABLE public.languages (
+CREATE TABLE IF NOT EXISTS languages (
     -- en, ja
     code varchar PRIMARY KEY,
     -- English, Japan

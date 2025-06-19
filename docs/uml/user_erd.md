@@ -15,30 +15,44 @@ erDiagram
         %% 最新の家族情報を保持
 
         int id PK
-        %% ---
-        String user_id FK
-        %% ---
-        String name UK "家名"
-        String icon_name "アイコン"
-        String bio "説明文"
-        %% ---
+        String user_id FK "supabase.user.id"
+        String icon_code FK "icons.code"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    families }|--|| families_history: ""
+    families ||--|{ families_translations: ""
+
+    families_translations {
+        int id PK
+        int family_id FK "families.id"
+        String language_code FK "languages.code"
+        String name UK "家名"
+        String bio "説明文"
+    }
+
+    history_families }|--|| families: ""
     
-    families_history {
+    history_families {
         %% 家族テーブルの履歴
 
         int id PK
-        %% ---
-        int family_id FK
-        %% ---
+        int family_id FK "families.id"
         String name "家名"
-        String icon_name "アイコン"
-        %% ---
+        String icon_code FK "icons.code"
         datetime recorded_at "更新日時"
+    }
+
+    history_families ||--|{ history_families_translations: ""
+
+    history_families_translations {
+        %% 家族テーブルの履歴の翻訳
+
+        int id PK
+        int history_family_id FK "history_families.id"
+        String language_code FK "languages.code"
+        String name "家名"
+        String bio "説明文"
     }
 
     families ||--|{ members: ""
@@ -49,19 +63,16 @@ erDiagram
         %% 最新のユーザ情報を保持
 
         int id PK
-        %% ---
         int family_id FK
-        %% ---
         String mail_address "メールアドレス"
         String password "パスワード"
         String name "ユーザ名"
-        String icon_name "アイコン"
+        String icon_code FK "icons.code"
         date birthday "誕生日"
         int grade_id FK "学年や職業"
         int exp "経験値"
         int balance "貯金残高"
         int min_savings "ひと月の最低貯金額"
-        %% ---
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -72,19 +83,16 @@ erDiagram
         %% userテーブルの履歴
 
         int id PK
-        %% ---
         int user_id FK
-        %% ---
         String mail_address "メールアドレス"
         String password "パスワード"
         String name "ユーザ名"
-        String icon_name "アイコン"
+        String icon_code FK "icons.code"
         String age "年齢"
         date birthday "誕生日"
         int grade_id FK "学年や職業"
         int exp "経験値"
         int balance "貯金残高"
-        %% ---
        datetime updated_at "更新日時"
     }
 
@@ -97,7 +105,6 @@ erDiagram
         %% 例: 小学1年~大学4年 社会人 母親 父親など
         int id PK
         int member_id FK
-        %% ---
         int education_id FK
         int grade "学年"
     }
@@ -108,35 +115,30 @@ erDiagram
         %% 貯金額の履歴
         
         int id PK
-        %% ---
         int member_id FK
-        %% ---
         int saving "貯金額"
         int balance "残高"
         String reason "引き落とし理由"
-        %% ---
         datetime updated_at "更新日時"
     }
 
 
-    members ||--|{ withdrawal_request: ""
+    members ||--|{ withdrawal_requests: ""
 
-    withdrawal_request {
+    withdrawal_requests {
         %% 引き落とし申請フォーム
 
         int id PK
-        %% ---
-        int family_id FK
-        int member_id FK
-        %% ---
-        int status_id
+        int requester_id FK "members.id"
+        int approver_id FK "families.id"
+        int status_id FK "withdrawal_status.id"
         int amount "引き落とし額"
-        %% ---
+        String reason "引き落とし理由"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    withdrawal_request }|--|| withdrawal_status: ""
+    withdrawal_requests }|--|| withdrawal_status: ""
 
     withdrawal_status {
         %% 引き落とし申請のステータス
@@ -144,7 +146,6 @@ erDiagram
         %% 例: 申請中、承認、却下
 
         int id PK
-        %% ---
         String name
     }
 
@@ -154,10 +155,8 @@ erDiagram
         %% フォローフォロワーを関連づけたテーブル
 
         int id PK
-        %% ---
-        int follower_id FK
-        int followee_id FK
-        %% ---
+        int follower_id FK "families.id"
+        int followee_id FK "families.id"
         datetime created_at "作成日時"
     }
 
@@ -165,9 +164,7 @@ erDiagram
 
     exp_by_level {
         uuid id PK
-        %% ---
         int family_id FK
-        %% ---
         int level "レベル"
         int exp "必要な経験値"
     }
@@ -176,10 +173,8 @@ erDiagram
         %% お小遣いテーブル
 
         int id PK
-        %% ---
-        String inheritable_type FK "継承先のクラス名"
-        int inheritable_id FK "継承先のレコードのID"
-        %% ---
+        String subclass_type FK "継承先のクラス名"
+        int subclass_id FK "継承先のレコードのID"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -191,8 +186,7 @@ erDiagram
         %% メンバーのお小遣いテーブル
 
         int id PK
-        %% ---
-        int table_id FK
+        int superclass_id FK "allowance_table.id"
         int member_id FK
     }
 
@@ -203,11 +197,8 @@ erDiagram
         %% お小遣いテーブルのテンプレート
 
         int id PK
-        %% ---
-        int table_id FK
+        int superclass_id FK "allowance_table.id"
         int family_id FK
-        %% ---
-        datetime created_at "作成日時"
     }
 
     allowance_table ||--o| shared_allowance_table: "inherits to"
@@ -217,16 +208,11 @@ erDiagram
         %% 公開されたお小遣いテーブル
 
         int id PK
-        %% ---
         int table_id FK
         int family_id FK
-        %% ---
         int family_table_id FK "共有元のお小遣いテーブルID"
         bool is_public "公開しているかどうか"
-        %% ---
         int favorites_count "お気に入り登録数"
-        %% ---
-        datetime created_at "作成日時"
     }
 
     shared_allowance_table ||--|{ shared_allowance_table_history: ""
@@ -235,16 +221,11 @@ erDiagram
         %% 公開されたお小遣いテーブルの履歴
 
         int id PK
-        %% ---
         int shared_table_id FK
-        %% ---
         int table_id FK
         int family_id
-        %% ---
         int family_table_id "共有元のお小遣いテーブルID"
-        %% ---
         int favorites_count "お気に入り登録数"
-        %% ---
         datetime updated_at "更新日時"
     }
 
@@ -254,12 +235,9 @@ erDiagram
         %% 年齢ごとのお小遣い額。
 
         int id PK
-        %% ---
         int table_id FK "お小遣いテーブルのID"
-        %% ---
         int age "年齢"
         int amount "お小遣い額"
-        %% ---
         datetime updated_at "更新日時"
     }
 
@@ -269,14 +247,11 @@ erDiagram
         %% 年齢ごとのお小遣い額の履歴
 
         int id PK
-        %% ---
         int table_id FK "お小遣いテーブルのID"
-        %% ---
         int age_allowance_id FK
-        %% ---
         int age "年齢"
         int amount "お小遣い額"
-        %% ---
+        datetime updated_at "更新日時"
         datetime updated_at "更新日時"
     }
 
@@ -286,10 +261,8 @@ erDiagram
         %% ランクごとのお小遣い額
 
         int id PK
-        %% ---
-        String inheritable_type FK "継承先のクラス名"
-        int inheritable_id FK "継承先のレコードのID"
-        %% ---
+        String subclass_type FK "継承先のクラス名"
+        int subclass_id FK "継承先のレコードのID"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -300,12 +273,9 @@ erDiagram
         %% ランクごとの報酬
 
         int id PK
-        %% ---
         int table_id FK
-        %% ---
         int level "レベル"
         int amount "お小遣い額"
-        %% ---
         datetime updated_at "更新日時"
     }
 
@@ -315,14 +285,10 @@ erDiagram
         %% ランクごとの報酬の履歴
 
         int id PK
-        %% ---
         int table_id FK
-        %% ---
         int level_allowance_id FK
-        %% ---
         int level "レベル"
         int amount "お小遣い額"
-        %% ---
         datetime updated_at "更新日時"
     }
 
@@ -333,7 +299,6 @@ erDiagram
         %% テンプレートランクテーブル
 
         int id PK
-        %% ---
         int family_id FK
         int table_id FK
     }
@@ -344,7 +309,6 @@ erDiagram
         %% メンバーのランクテーブル
 
         int id PK
-        %% ---
         int member_id FK
         int table_id FK
     }
@@ -355,14 +319,11 @@ erDiagram
         %% 公開されたランクテーブル
 
         int id PK
-        %% ---
         int table_id FK
         int family_id
-        %% ---
         int family_table_id "共有元のランクテーブルID"
-        %% ---
+        bool is_public "公開しているかどうか"
         int favorites_count "お気に入り登録数"
-        %% ---
         datetime created_at "作成日時"
     }
 
@@ -372,16 +333,11 @@ erDiagram
         %% 公開されたランクテーブルの履歴
 
         int id PK
-        %% ---
         int shared_table_id FK
-        %% ---
         int table_id FK
         int family_id
-        %% ---
         int family_table_id "共有元のランクテーブルID"
-        %% ---
         int favorites_count "お気に入り登録数"
-        %% ---
         datetime updated_at "更新日時"
     }
 
@@ -394,10 +350,8 @@ erDiagram
         %% 見た目上だけの設定なため、履歴テーブルは無し
         
         int id PK
-        %% ---
         int member_id FK
         int education_id FK
-        %% ---
         int period "期間"
     }
 
@@ -407,7 +361,6 @@ erDiagram
         %% 教育課程の名前
 
         int id PK
-        %% ---
         String name "教育課程名(小学、高校等)"
     }
 ```
