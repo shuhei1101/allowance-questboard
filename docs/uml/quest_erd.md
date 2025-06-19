@@ -1,7 +1,7 @@
 ```mermaid
 erDiagram
 
-    quest {
+    quests {
         %% quest基盤テーブル。
         %% 
         %% クラステーブル継承の親テーブル。
@@ -30,7 +30,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest ||--|{ quest_history: ""
+    quests ||--|{ quest_history: ""
 
     quest_history {
         %% クエスト基盤の履歴テーブル
@@ -57,9 +57,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest }|--|| quest_details: ""
+    quests }|--|| quest_details_by_level: ""
 
-    quest_level_exp {
+    quest_exp_by_level {
         String id
         String quest_id
         %% ---
@@ -67,7 +67,7 @@ erDiagram
         int exp "クエスト経験値"
     }
 
-    quest_details {
+    quest_details_by_level {
         %% レベルごとのクエスト条件テーブル。
 
         String id PK
@@ -86,7 +86,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_details ||--|{ quest_details_history: ""
+    quest_details_by_level ||--|{ quest_details_history: ""
 
     quest_details_history {
         %% クエスト詳細の履歴テーブル。
@@ -109,10 +109,10 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest ||--o| family_quest: "inherits to"
+    quests ||--o| family_quest: "inherits to"
     family ||--o{ family_quest:""
 
-    family_quest {
+    family_quests {
         %% 家族が作成したクエストテーブル。
 
         String id PK
@@ -126,7 +126,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    family_quest ||--|{ family_quest_history: ""
+    family_quests ||--|{ family_quest_history: ""
 
     family_quest_history {
         %% 家族クエストの履歴テーブル。
@@ -144,13 +144,13 @@ erDiagram
     }
 
 
-    family_quest ||--o| shared_quest: ""
+    family_quests ||--o| shared_quest: ""
 
 
     family }|--|| shared_quest: ""
-    quest ||--o| shared_quest: "inherits to"
+    quests ||--o| shared_quest: "inherits to"
 
-    shared_quest {
+    shared_quests {
         %% 家族がオンライン上に共有したクエストテーブル。
         %% 
         %% いいね数の確認方法: 
@@ -167,7 +167,7 @@ erDiagram
         int pinned_comment_id FK "ピン留めされたコメントID"
     }
 
-    shared_quest ||--o{ shared_quest_history: ""
+    shared_quests ||--o{ shared_quest_history: ""
 
     shared_quest_history {
         %% 家族がオンライン上に共有したクエストテーブルの履歴。
@@ -182,14 +182,14 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    shared_quest ||--o| comment: "pin"
+    shared_quests ||--o| comment: "pin"
 
     family }|--o| saved_quest: ""
-    quest }|--o| saved_quest: "inherits to"
+    quests }|--o| saved_quest: "inherits to"
 
-    shared_quest ||--o{ saved_quest: ""
+    shared_quests ||--o{ saved_quest: ""
 
-    saved_quest {
+    saved_quests {
         %% 家族が保存(いいね)したクエストテーブル。
         %% 
         %% 作成元クエストの更新確認方法:
@@ -206,9 +206,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest }|--o| template_quest: "inherits to"
+    quests }|--o| template_quest: "inherits to"
 
-    template_quest {
+    template_quests {
         %% アプリのテンプレートクエストテーブル。
 
         String id PK
@@ -217,7 +217,7 @@ erDiagram
         %% ---
     }
 
-    member_quest {
+    member_quests {
         %% メンバーに公開されているクエストのテーブル。
         %% 
         %% メンバーとクエストの中間テーブル。
@@ -230,14 +230,13 @@ erDiagram
         %% ---
         int status FK "クエスト状況"
         %% ---
-        bool is_deleted "論理削除フラグ"
         datetime published_at "公開日時"
         datetime achievemented_at "達成日時"
     }
 
-    member_quest ||--o{ participated_member: ""
+    member_quests ||--o{ participated_member: ""
 
-    member_quest }|--|| member_quest_status: ""
+    member_quests }|--|| member_quest_status: ""
 
     member_quest_status {
         %% 現在のクエスト状況。
@@ -250,13 +249,13 @@ erDiagram
     }
 
     member }|--|| member_quest:""
-    family_quest }|--|| member_quest:""
+    family_quests }|--|| member_quest:""
 
 
 
-    quest }|--|| quest_category:""
+    quests }|--|| quest_category:""
 
-    quest }|--|| quest_category: ""
+    quests }|--|| quest_category: ""
 
     quest_category {
         %% クエスト分類テーブルの基盤。
@@ -304,7 +303,7 @@ erDiagram
         int custom_quest_category_id FK
     }
 
-    quest }|--|{ key_quests:""
+    quests }|--|{ key_quests:""
 
     key_quests {
         %% キークエストテーブル。
@@ -324,9 +323,9 @@ erDiagram
 
     member ||--o{ quest_request: ""
     family ||--o{ quest_request: ""
-    quest ||--o{ quest_request: ""
+    quests ||--o{ quest_request: ""
 
-    quest_request {
+    quest_requests {
         %% クエストの要望申請。
         %% 
         %% 新規クエストの要望の場合:
@@ -341,18 +340,17 @@ erDiagram
         int quest_id FK "既存クエスト"
         %% ---
         String title "タイトル"
-        String body "内容"
-        bool is_new_request "新規要望かどうか"
+        String description "内容"
+        bool is_new_requests "新規要望かどうか"
         int status_id FK ""
         String answer "回答"
         %% ---
-        bool is_deleted "論理削除フラグ"
         datetime created_at "作成日時"
         datetime answered_at "回答日時"
         datetime updated_at "更新日時"
     }
 
-    quest_request }|--|| request_status: ""
+    quest_requests }|--|| request_status: ""
 
     request_status {
         %% ウエストの要望申請のステータス。

@@ -1,5 +1,5 @@
 -- 国籍テーブル
-CREATE TABLE countries (
+CREATE TABLE IF NOT EXISTS countries (
     id serial PRIMARY KEY,
     name varchar NOT NULL UNIQUE,
     icon_code integer REFERENCES icons (id) ON DELETE SET NULL,
