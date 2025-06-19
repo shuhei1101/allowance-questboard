@@ -1,3 +1,5 @@
+import 'package:allowance_questboard/shared/util/generator.dart';
+
 class JsonRpcRequest {
   final String method;
   final Map<String, dynamic> params;
@@ -40,10 +42,8 @@ class RpcError {
 }
 
 class JsonRpcHandler {
-  int _idCounter = 1;
-
   JsonRpcRequest buildRequest(String method, Map<String, dynamic> params) {
-    final id = _idCounter++;
+    final id = idGenerate();
     return JsonRpcRequest(method: method, params: params, id: id);
   }
 
@@ -68,26 +68,3 @@ class JsonRpcHandler {
     }
   }
 }
-
-final handler = JsonRpcHandler();
-final req = handler.buildRequest("createUser", {
-  "email": "test@example.com",
-  "birthday": "2025-01-01"
-});
-
-final response = await http.post(
-  Uri.parse(apiUrl),
-  headers: {'Content-Type': 'application/json'},
-  body: jsonEncode(req.toJson()),
-);
-
-final parsed = handler.parseResponse<CreateUserResponse>(
-  jsonDecode(response.body),
-  CreateUserResponse.fromJson,
-);
-
-if (parsed.error != null) {
-  throw Exception(parsed.error!.message);
-}
-
-print(parsed.result!.email);

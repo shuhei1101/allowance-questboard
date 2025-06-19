@@ -2,11 +2,10 @@ import 'dart:math';
 
 final Random _random = Random();
 
-String id_generate() {
+int idGenerate() {
   final now = DateTime.now();
 
-  final formattedTime =
-      '${now.year.toString().padLeft(4, '0')}'
+  final formattedTime = '${now.year.toString().padLeft(4, '0')}'
       '${now.month.toString().padLeft(2, '0')}'
       '${now.day.toString().padLeft(2, '0')}'
       '${now.hour.toString().padLeft(2, '0')}'
@@ -16,5 +15,5 @@ String id_generate() {
 
   final randomPart = _random.nextInt(100000).toString().padLeft(5, '0');
 
-  return '$formattedTime$randomPart';
+  return int.parse('$formattedTime$randomPart');
 }

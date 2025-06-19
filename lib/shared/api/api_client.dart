@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:allowance_questboard/shared/api/rpc_handler.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
@@ -7,36 +8,29 @@ class ApiClient {
 
   ApiClient(this.baseUrl, this.httpClient);
 
-  Future<http.Response> get(String path) async {
-    final response = await httpClient.get(Uri.parse('$baseUrl$path'));
-    _handleError(response);
-    return response;
-  }
+  /// [url]: APIエンドポイント (例: "/functions/v1/login")
+  /// [method]: JSON-RPCのメソッド名 (例: "loginFamily")
+  /// [params]: メソッドのパラメータ (Map形式)
+  /// [fromJson]: レスポンスのresult部分を変換する関数
+  Future<JsonRpcResponse<T>> request<T>({
+    required String url,
+    required String method,
+    required Map<String, dynamic> params,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) async {
+    final handler = JsonRpcHandler();
+    final request = handler.buildRequest(method, params);
 
-  Future<http.Response> post(String path, Map<String, dynamic> body) async {
     final response = await httpClient.post(
-      Uri.parse('$baseUrl$path'),
+      Uri.parse('$baseUrl$url'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(body),
+      body: jsonEncode(request.toJson()),
     );
-    _handleError(response);
-    return response;
-  }
 
-  Future<http.Response> put(String path, Map<String, dynamic> body) async {
-    final response = await httpClient.put(
-      Uri.parse('$baseUrl$path'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(body),
-    );
     _handleError(response);
-    return response;
-  }
 
-  Future<http.Response> delete(String path) async {
-    final response = await httpClient.delete(Uri.parse('$baseUrl$path'));
-    _handleError(response);
-    return response;
+    final Map<String, dynamic> json = jsonDecode(response.body);
+    return JsonRpcHandler().parseResponse<T>(json, fromJson);
   }
 
   void _handleError(http.Response response) {
