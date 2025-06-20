@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS exp_by_level (
     level int NOT NULL,
     exp int NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
-    updated_at timestamptz NOT NULL DEFAULT now()
+    updated_at timestamptz NOT NULL DEFAULT now(),
+    UNIQUE (family_id, level)
 );
 
 COMMENT ON TABLE exp_by_level IS '親が子供の経験値とレベルの関係を定義するテーブル';
@@ -20,5 +21,7 @@ CREATE TABLE IF NOT EXISTS history.exp_by_level (
     family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
     level int NOT NULL,
     exp int NOT NULL,
-    recorded_at timestamptz NOT NULL DEFAULT now(),
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now(),
+    recorded_at timestamptz NOT NULL DEFAULT now()
 );

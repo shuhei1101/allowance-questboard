@@ -1,5 +1,5 @@
 -- 履歴更新関数作成
-CREATE OR REPLACE FUNCTION public.capture_family_snapshot()
+CREATE OR REPLACE FUNCTION capture_family_snapshot()
 RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO history.families (
@@ -23,7 +23,7 @@ $$ LANGUAGE plpgsql
 SET search_path = public;
 
 -- 日付更新関数作成
-CREATE OR REPLACE FUNCTION public.set_updated_at()
+CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = now();

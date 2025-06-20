@@ -1,144 +1,232 @@
 ```mermaid
 erDiagram
 
-    family ||--|{ user_likes: ""
-    user_likes {
-        int id
-        String family_id
-        int comment_id "いいねしたコメントID"
-        datetime liked_at "いいねをした日"
-    }
-    user_likes }|--|| comment: ""
-
-    icon {
-        %% アイコン一覧
-        %% 
-        %% 使用できるアイコンが全て格納されている
-
-        String id PK
-        %% ---
-        String name
-        String code_point
-    }
-
-    idea {
-        %% 意見箱のトピック
-        %% 
-        %% 編集はできず、削除のみ。
-        %% 間違えた場合は、コメント欄でやり取りを行う。
-
-        String id PK
-        %% ---
-        string title "意見のタイトル"
-        string body "内容"
-        bool status_id "ステータスID"
-        string answer "回答"
-        %% ---
-        bool is_deleted "論理削除フラグ"
-        datetime posted_at "投稿日時"
+    comments {
+        %% コメントを管理するテーブル
+        int id PK
+        int user_type FK "user_types.id"
+        int user_id "ユーザID（ポリモーフィック：family_id または member_id）"
+        int commentable_type FK "commentable_types.id"
+        int commentable_id "コメント対象ID（ポリモーフィック）"
+        int parent_comment_id FK "comments.id（返信の場合）"
+        String body "コメント本文"
+        datetime commented_at "コメント投稿日時"
+        datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    something {
-        %% user, quest, commentなどのなんらかの複数のコレクション。
-    }
+    comments ||--|| commentable_types: ""
 
-    something ||--o{ comment: ""
-    idea ||--o{ comment: "is polymorphically related by"
-
-    comment {
-        %% post(quest or penalty)用のコメント欄。
-        %% 
-        %% コメントの階層は二つまで。(親コメントと子コメントの二つ。)
-
-        String id PK
-        %% ---
-        int user_id FK "投稿者"
-        %% ---
-        string commentable_type "関連するテーブル名"
-        int commentable_id "関連するレコード"
-        %% ---
-        int parent_comment_id
-        string body "本文"
-        %% ---
-        bool is_deleted "論理削除フラグ"
-        datetime commented_at "投稿日時"
+    commentable_types {
+        %% コメント可能なオブジェクトのタイプ
+        int id PK
+        String type UK "コメント可能タイプコード（quests, comments等）"
+        String description "コメント可能タイプの説明"
+        datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    comment ||--o{ comment_history: ""
-    comment ||--o| comment : ""
+    comments ||--|| user_types: ""
 
-    comment_history {
-        %% コメントの履歴
+    user_types {
+        %% ユーザのタイプを分類
+        int id PK
+        String type UK "ユーザタイプコード（family, member等）"
+        String description "ユーザタイプの説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
 
-        String id PK
-        %% ---
+    comments ||--o| comments: "self-reference for replies"
+
+    comments ||--|{ comment_likes: ""
+
+    comment_likes {
+        %% コメントへのいいね
+        int id PK
         int comment_id FK
-        %% ---
-        string body "本文"
+        int user_type FK "user_types.id"
+        int user_id "ユーザID（ポリモーフィック）"
+        datetime liked_at "いいねした日時"
+        datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    something ||--o{ report: ""
+    comment_likes ||--|| user_types: ""
 
-    report {
-        %% 通報テーブル。
-        %% 
-        %% 通報対象のテーブルとレコードを保持。
-        
-        String id PK
-        %% ---
-        int reported_by FK "通報者ID"
-        %% ---
-        string reportable_type "対象のテーブル名"
-        int reportable_id FK "対象のレコードID"
-        %% ---
-        string reason "通報理由"
-        string status_id FK "ステータスID"
-        datetime reported_at "通報された日時"
-    }
-
-    something ||--o{ notification: ""
-
-    notification {
-        %% 通知テーブル。
-
-        String id PK
-        %% ---
-        string notifiable_user_type "受け取りユーザのテーブル名"
-        int notifiable_user_id FK "対象のレコードID"
-        %% ---
-        string notifiable_type "対象のテーブル名"
-        int notifiable_id FK "対象のレコードID"
-        %% ---
-        string screen_name "遷移先の画面名"
-        bool is_read "既読フラグ"
+    notifications {
+        %% ユーザへの通知
+        int id PK
+        int user_type FK "user_types.id"
+        int user_id "ユーザID（ポリモーフィック）"
+        int notifiable_type FK "notifiable_types.id"
+        int notifiable_id "通知対象ID（ポリモーフィック）"
+        int push_to FK "screens.id（遷移先スクリーン）"
+        boolean is_read "既読フラグ"
         datetime read_at "既読日時"
-        %% ---
-        bool is_deleted "論理削除フラグ"
-        datetime received_at "受信日時"
+        datetime received_at "通知受信日時"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
 
-    something ||--o{ allowance_history: ""
-    member ||--o{ allowance_history: ""
+    notifications ||--|| user_types: ""
+    notifications ||--|| notifiable_types: ""
+    notifications ||--|| screens: ""
 
-    allowance_records {
-        %% 月ごとのお小遣い明細の記録。 
-        %% 
-        %% クエスト履歴や月のお小遣いなどと紐づく。
-
-        String id PK
-        %% ---
-        int member_id FK
-        %% ---
-        string allowanceable_type FK
-        int allowanceable_id FK
-        %% ---
-        string title "履歴名"
-        int amount "お小遣い額"
-        datetime recorded_at "起票日時"
+    notifiable_types {
+        %% 通知対象となるオブジェクトのタイプ
+        int id PK
+        String type UK "通知対象タイプコード（family, member, quest, comment等）"
+        String description "通知対象タイプの説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
 
+    notifiable_types ||--|{ notifiable_types_translations: ""
 
+    notifiable_types_translations {
+        int id PK
+        int notifiable_type_id FK
+        int language_id FK
+        String description "通知対象タイプ説明の翻訳"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    screens {
+        %% アプリケーションの画面/ページ
+        int id PK
+        String name UK "スクリーン名"
+        String description "スクリーンの説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    reports {
+        %% 通報テーブル
+        int id PK
+        int reporter_type FK "user_types.id"
+        int reporter_id "通報者ID（ポリモーフィック）"
+        int reportable_type FK "reportable_types.id"
+        int reportable_id "通報対象ID（ポリモーフィック）"
+        int status_id FK "report_status.id"
+        String reason "通報理由"
+        String description "通報内容の詳細"
+        datetime reported_at "通報された日時"
+        datetime resolved_at "解決日時"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    reports ||--|| user_types: ""
+    reports ||--|| reportable_types: ""
+    reports ||--|| report_status: ""
+
+    reportable_types {
+        %% レポート対象となるオブジェクトのタイプ
+        int id PK
+        String type UK "レポート対象タイプコード（family, member, quest, comment等）"
+        String description "レポート対象タイプの説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    report_status {
+        %% レポートの処理状態
+        int id PK
+        String code UK "ステータスコード（pending, reviewed, resolved, dismissed）"
+        String status "ステータス名"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    icons {
+        %% アイコン情報
+        int id PK
+        String code UK "アイコンコード"
+        int category_id FK "icon_category.id（NULL許可）"
+        String file_path "アイコンファイルのパス"
+        String alt_text "代替テキスト"
+        int sort_order "表示順序"
+        boolean is_active "有効フラグ"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    icons ||--|| icon_category: ""
+
+    icon_category {
+        %% アイコンのカテゴリ
+        int id PK
+        String code UK "カテゴリコード"
+        int sort_order "表示順序"
+        boolean is_active "有効フラグ"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    icon_category ||--|{ icon_category_translations: ""
+
+    icon_category_translations {
+        int id PK
+        int category_id FK
+        int language_id FK
+        String name "カテゴリ名の翻訳"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    languages {
+        %% 言語マスタテーブル
+        int id PK
+        String code UK "言語コード（ISO 639-1準拠）"
+        String name "言語名"
+        boolean is_active "有効フラグ"
+        int sort_order "表示順序"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    notifiable_types_translations ||--|| languages: ""
+    icon_category_translations ||--|| languages: ""
+
+    currencies {
+        %% 通貨情報
+        int id PK
+        String code UK "通貨コード（ISO 4217準拠）"
+        String name "通貨名"
+        String symbol UK "通貨記号"
+        boolean is_active "有効フラグ"
+        int sort_order "表示順序"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    exchange_rates {
+        %% 通貨間の為替レート
+        int id PK
+        int base_currency FK "currencies.id"
+        int target_currency FK "currencies.id"
+        decimal rate "為替レート（正の値のみ、小数点以下6桁）"
+        date effective_date "適用日"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    exchange_rates ||--|| currencies: "base_currency"
+    currencies ||--|{ exchange_rates: "target_currency"
+
+    countries {
+        %% 国家情報
+        int id PK
+        String code UK "国家コード（ISO 3166-1 alpha-3準拠）"
+        String name UK "国家名"
+        int icon_id FK "icons.id（国旗アイコン、NULL許可）"
+        boolean is_active "有効フラグ"
+        int sort_order "表示順序"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    countries ||--|| icons: ""
 ```

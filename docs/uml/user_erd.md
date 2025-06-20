@@ -3,20 +3,16 @@ erDiagram
     user {
         %% supabase認証テーブル
         uuid id PK
-        String mail_address "メールアドレス"
-        String password "パスワード"
+        String email "メールアドレス"
     }
 
-    user ||--|| family: ""
+    user ||--|| families: ""
 
     families {
         %% 家族テーブル
-        %% 
-        %% 最新の家族情報を保持
-
         int id PK
-        String user_id FK "supabase.user.id"
-        String icon_code FK "icons.code"
+        uuid user_id FK "外部キー、一意制約"
+        int icon_id FK "NULL許可"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -25,156 +21,192 @@ erDiagram
 
     families_translations {
         int id PK
-        int family_id FK "families.id"
-        String language_code FK "languages.code"
-        String name UK "家名"
-        String bio "説明文"
-    }
-
-    history_families }|--|| families: ""
-    
-    history_families {
-        %% 家族テーブルの履歴
-
-        int id PK
-        int family_id FK "families.id"
-        String name "家名"
-        String icon_code FK "icons.code"
-        datetime recorded_at "更新日時"
-    }
-
-    history_families ||--|{ history_families_translations: ""
-
-    history_families_translations {
-        %% 家族テーブルの履歴の翻訳
-
-        int id PK
-        int history_family_id FK "history_families.id"
-        String language_code FK "languages.code"
-        String name "家名"
-        String bio "説明文"
-    }
-
-    families ||--|{ members: ""
+        int family_id FK
+        int language_id FK
+        String name "家族名の翻訳"
+        String bio "自己紹介の翻訳"
+    }    families ||--|{ members: ""
 
     members {
         %% メンバー(子供ユーザ)
-        %% 
-        %% 最新のユーザ情報を保持
-
         int id PK
+        uuid user_id FK "外部キー、一意制約"
         int family_id FK
-        String mail_address "メールアドレス"
-        String password "パスワード"
-        String name "ユーザ名"
-        String icon_code FK "icons.code"
+        String name "メンバー名"
+        int icon_id FK "NULL許可"
         date birthday "誕生日"
-        int grade_id FK "学年や職業"
-        int exp "経験値"
-        int balance "貯金残高"
-        int min_savings "ひと月の最低貯金額"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    members ||--|{ members_history: ""
-
-    members_history {
-        %% userテーブルの履歴
-
-        int id PK
-        int user_id FK
-        String mail_address "メールアドレス"
-        String password "パスワード"
-        String name "ユーザ名"
-        String icon_code FK "icons.code"
-        String age "年齢"
-        date birthday "誕生日"
-        int grade_id FK "学年や職業"
-        int exp "経験値"
-        int balance "貯金残高"
-       datetime updated_at "更新日時"
-    }
-
-    members }|--|| member_grade: ""
+    members ||--|| member_grade: ""
     member_grade ||--|| education: ""
 
     member_grade {
-        %% ユーザの現在の学歴・職業
-        %% 
-        %% 例: 小学1年~大学4年 社会人 母親 父親など
+        %% メンバーの現在の学年や職業
         int id PK
-        int member_id FK
+        int member_id FK "一意制約"
         int education_id FK
-        int grade "学年"
-    }
-    
-    members ||--|{ savings_records: ""
-
-    savings_records {
-        %% 貯金額の履歴
-        
-        int id PK
-        int member_id FK
-        int saving "貯金額"
-        int balance "残高"
-        String reason "引き落とし理由"
+        int grade "学年（正の値のみ）"
+        datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
+    education {
+        %% 学歴マスタテーブル
+        int id PK
+        String code UK "学歴コード"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    education ||--|{ education_translations: ""
+
+    education_translations {
+        int id PK
+        int education_id FK
+        int language_id FK
+        String name "学歴名の翻訳"
+    }
+
+    members ||--|{ education_period: ""
+
+    education_period {
+        %% メンバーの教育期間
+        int id PK
+        int member_id FK
+        int education_id FK
+        int period "教育期間（年数、正の値のみ）"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }    members ||--|{ savings_records: ""
+
+    savings_records {
+        %% 貯金記録の履歴
+        int id PK
+        int member_id FK
+        int amount "貯金額（正の値は入金、負の値は出金）"
+        int balance "貯金の残高（負の値は不可）"
+        String reason "貯金の理由"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    savings_records ||--|{ savings_records_translations: ""
+
+    savings_records_translations {
+        int id PK
+        int savings_record_id FK
+        int language_id FK
+        String reason "貯金の理由の翻訳"
+    }
 
     members ||--|{ withdrawal_requests: ""
 
     withdrawal_requests {
-        %% 引き落とし申請フォーム
-
+        %% 引き落とし申請テーブル
         int id PK
         int requester_id FK "members.id"
         int approver_id FK "families.id"
-        int status_id FK "withdrawal_status.id"
-        int amount "引き落とし額"
+        int status_id FK "withdrawal_request_status.id"
+        int amount "引き落とし金額（正の値のみ）"
         String reason "引き落とし理由"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    withdrawal_requests }|--|| withdrawal_status: ""
+    withdrawal_requests ||--|| withdrawal_request_status: ""
 
-    withdrawal_status {
-        %% 引き落とし申請のステータス
-        %% 
-        %% 例: 申請中、承認、却下
-
+    withdrawal_request_status {
+        %% 引き落とし申請ステータス
         int id PK
-        String name
+        String code UK "ステータスコード"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
 
-    families ||--|{ follows:""
+    withdrawal_request_status ||--|{ withdrawal_request_status_translations: ""
+
+    withdrawal_request_status_translations {
+        int id PK
+        int withdrawal_request_status_id FK
+        int language_id FK
+        String name "ステータス名の翻訳"
+    }    families ||--|{ follows: ""
 
     follows {
-        %% フォローフォロワーを関連づけたテーブル
-
+        %% フォロー関係テーブル
         int id PK
         int follower_id FK "families.id"
-        int followee_id FK "families.id"
+        int followed_id FK "families.id"
         datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
 
     families ||--|{ exp_by_level: ""
 
     exp_by_level {
-        uuid id PK
+        %% 親が子供の経験値とレベルの関係を定義
+        int id PK
         int family_id FK
         int level "レベル"
-        int exp "必要な経験値"
+        int exp "レベルに必要な経験値"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
 
-    allowance_table {
-        %% お小遣いテーブル
+    user ||--|| user_settings: ""
 
+    user_settings {
+        %% ユーザの基本設定
+        uuid user_id PK "auth.users.id"
+        int language_id FK
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    user_settings ||--|| languages: ""
+
+    languages {
+        %% 言語マスタテーブル
         int id PK
-        String subclass_type FK "継承先のクラス名"
-        int subclass_id FK "継承先のレコードのID"
+        String code UK "言語コード（ISO 639-1準拠）"
+        String name "言語名"
+        boolean is_active "有効フラグ"
+        int sort_order "表示順序"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    members ||--|{ allowance_records: ""
+
+    allowance_records {
+        %% お小遣いの記録テーブル
+        int id PK
+        int member_id FK
+        int allowanceable_type FK "allowanceable_types.id"
+        int allowanceable_id "お小遣いの対象ID（ポリモーフィック）"
+        String title "お小遣いのタイトル"
+        int amount "お小遣いの金額（負の値は不可）"
+        datetime recorded_at "お小遣いが記録された日時"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    allowance_records ||--|| allowanceable_types: ""
+
+    allowanceable_types {
+        %% お小遣いの種類を管理
+        int id PK
+        String type UK "お小遣いの種類コード"
+        String description "お小遣い種類の説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }    allowance_table {
+        %% お小遣い設定の基底テーブル（ポリモーフィック関連）
+        int id PK
+        String subclass_type "サブクラスタイプ（member, family, shared）"
+        int subclass_id "サブクラスID（ポリモーフィック）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -183,184 +215,113 @@ erDiagram
     members ||--|| member_allowance_table: ""
 
     member_allowance_table {
-        %% メンバーのお小遣いテーブル
-
+        %% メンバー個人のお小遣い設定テーブル
         int id PK
-        int superclass_id FK "allowance_table.id"
+        int superclass_id FK "allowance_table.id（一意制約）"
         int member_id FK
-    }
-
-    allowance_table ||--o| family_allowance_table: "inherits to"
-    families ||--|{ family_allowance_table: ""
-
-    family_allowance_table {
-        %% お小遣いテーブルのテンプレート
-
-        int id PK
-        int superclass_id FK "allowance_table.id"
-        int family_id FK
-    }
-
-    allowance_table ||--o| shared_allowance_table: "inherits to"
-    family_allowance_table ||--o| shared_allowance_table: ""
-
-    shared_allowance_table {
-        %% 公開されたお小遣いテーブル
-
-        int id PK
-        int table_id FK
-        int family_id FK
-        int family_table_id FK "共有元のお小遣いテーブルID"
-        bool is_public "公開しているかどうか"
-        int favorites_count "お気に入り登録数"
-    }
-
-    shared_allowance_table ||--|{ shared_allowance_table_history: ""
-
-    shared_allowance_table_history {
-        %% 公開されたお小遣いテーブルの履歴
-
-        int id PK
-        int shared_table_id FK
-        int table_id FK
-        int family_id
-        int family_table_id "共有元のお小遣いテーブルID"
-        int favorites_count "お気に入り登録数"
+        datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
-
-    allowance_table ||--|{ allowance_by_age: ""
-
-    allowance_by_age {
-        %% 年齢ごとのお小遣い額。
-
-        int id PK
-        int table_id FK "お小遣いテーブルのID"
-        int age "年齢"
-        int amount "お小遣い額"
-        datetime updated_at "更新日時"
-    }
-
-    allowance_by_age ||--|{ age_allowance_history: ""
-
-    age_allowance_history {
-        %% 年齢ごとのお小遣い額の履歴
-
-        int id PK
-        int table_id FK "お小遣いテーブルのID"
-        int age_allowance_id FK
-        int age "年齢"
-        int amount "お小遣い額"
-        datetime updated_at "更新日時"
-        datetime updated_at "更新日時"
-    }
-
-    families ||--|| family_level_table: ""
 
     level_table {
-        %% ランクごとのお小遣い額
-
+        %% レベル設定の基底テーブル（ポリモーフィック関連）
         int id PK
-        String subclass_type FK "継承先のクラス名"
-        int subclass_id FK "継承先のレコードのID"
+        String subclass_type "サブクラスタイプ（member, family, shared）"
+        int subclass_id "サブクラスID（ポリモーフィック）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    level_table ||--|{ allowance_by_level: ""
-
-    allowance_by_level {
-        %% ランクごとの報酬
-
-        int id PK
-        int table_id FK
-        int level "レベル"
-        int amount "お小遣い額"
-        datetime updated_at "更新日時"
-    }
-
-    allowance_by_level ||--|{ level_allowance_history: ""
-
-    level_allowance_history {
-        %% ランクごとの報酬の履歴
-
-        int id PK
-        int table_id FK
-        int level_allowance_id FK
-        int level "レベル"
-        int amount "お小遣い額"
-        datetime updated_at "更新日時"
-    }
-
-    level_table ||--o| family_level_table: ""
-    level_table ||--o| member_level_table: ""
-
-    family_level_table {
-        %% テンプレートランクテーブル
-
-        int id PK
-        int family_id FK
-        int table_id FK
-    }
-
-    members }o--|| member_level_table: ""
+    level_table ||--o| member_level_table: "inherits to"
+    members ||--|| member_level_table: ""
 
     member_level_table {
-        %% メンバーのランクテーブル
-
+        %% メンバー個人のレベル設定テーブル
         int id PK
+        int superclass_id FK "level_table.id（一意制約）"
         int member_id FK
-        int table_id FK
-    }
-
-    level_table ||--o| shared_level_table: "inherits to"
-
-    shared_level_table {
-        %% 公開されたランクテーブル
-
-        int id PK
-        int table_id FK
-        int family_id
-        int family_table_id "共有元のランクテーブルID"
-        bool is_public "公開しているかどうか"
-        int favorites_count "お気に入り登録数"
         datetime created_at "作成日時"
-    }
-
-    shared_level_table ||--|{ shared_level_table_history: ""
-
-    shared_level_table_history {
-        %% 公開されたランクテーブルの履歴
-
-        int id PK
-        int shared_table_id FK
-        int table_id FK
-        int family_id
-        int family_table_id "共有元のランクテーブルID"
-        int favorites_count "お気に入り登録数"
         datetime updated_at "更新日時"
     }
 
-    members }|--|| education_period: ""
-
-    education_period {
-        %% 学年の開始月と期間設定するテーブル
-        %% 
-        %% 例「大学期間は2年」のように設定可能
-        %% 見た目上だけの設定なため、履歴テーブルは無し
-        
+    user_types {
+        %% ユーザのタイプを分類するテーブル
         int id PK
-        int member_id FK
-        int education_id FK
-        int period "期間"
+        String type UK "ユーザタイプコード（family, member等）"
+        String description "ユーザタイプの説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
 
-    education_period o|--|| education: ""
-
-    education {
-        %% 教育課程の名前
-
+    comment_likes {
+        %% コメントへのいいね
         int id PK
-        String name "教育課程名(小学、高校等)"
+        int comment_id FK
+        int user_type FK "user_types.id"
+        int user_id "ユーザID（ポリモーフィック）"
+        datetime liked_at "いいねした日時"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
     }
+
+    comment_likes ||--|| user_types: ""
+
+    icons {
+        %% アイコン情報
+        int id PK
+        String code UK "アイコンコード"
+        int category_id FK "icon_category.id（NULL許可）"
+        String file_path "アイコンファイルのパス"
+        int sort_order "表示順序"
+        boolean is_active "有効フラグ"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    icons ||--|| icon_category: ""
+
+    icon_category {
+        %% アイコンのカテゴリ
+        int id PK
+        String code UK "カテゴリコード"
+        int sort_order "表示順序"
+        boolean is_active "有効フラグ"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    icon_category ||--|{ icon_category_translations: ""
+
+    icon_category_translations {
+        int id PK
+        int category_id FK
+        int language_id FK
+        String name "カテゴリ名の翻訳"
+    }
+
+    currencies {
+        %% 通貨情報を管理するマスタテーブル
+        int id PK
+        String code UK "通貨コード（ISO 4217準拠）"
+        String name "通貨名"
+        String symbol UK "通貨記号"
+        boolean is_active "有効フラグ"
+        int sort_order "表示順序"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    countries {
+        %% 国家情報を管理するマスタテーブル
+        int id PK
+        String code UK "国家コード（ISO 3166-1 alpha-3準拠）"
+        String name UK "国家名"
+        int icon_id FK "icons.id（NULL許可）"
+        boolean is_active "有効フラグ"
+        int sort_order "表示順序"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    countries ||--|| icons: ""
 ```
