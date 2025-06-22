@@ -2,36 +2,52 @@
 ```mermaid
 classDiagram
     direction LR
-    namespace frontend {
-        class EditQuestPage {
+    namespace frontend_flutter {
+        class QuestPage {
             saveButton: Button
-            notifier: EditQuestPageStateNotifier
+            notifier: QuestPageStateNotifier
         }
-        class EditQuestForm {
-            emailTextField: TextField
-            passwordTextField: TextField
+        class QuestForm {
+            hogeTextField: TextField
         }
-        class EditQuestPageStateNotifier {
+        class QuestPageStateNotifier {
             setTitle(String)
             setDescription(String)
             setIsValid(bool)
             submit()
         }
-        class UpdateQuestRequest {
-            questId: String
-            title?: String
-            description?: String
+        class QuestSummaryDto {
+            id: String
+            title: String
+            description: String
         }
-        class UpdateQuestResponse {
-            success: bool
-            message: String
+        class GetQuestsResult {
+            quests: QuestSummaryDto[]
+        }
+
+        class GetQuestsUseCase {
+            execute(familyId: int): QuestPageState
+        }
+        class fe.QuestQueryService {
+            findByFamilyId(familyId: int): fe.QuestQueryModel[]
+        }
+        class fe.QuestQueryModel {
+            id: String
+            title: String
+            description: String
+        }
+
+        class fe.ApplyQuestUseCase
+
+        class ApplyQuestResult {
+            fromResponse(ApplyQuestResponse): ApplyQuestResult
         }
 
         class QuestApiClient {
-            updateQuest(UpdateQuestRequest): UpdateQuestResponse
+            applyQuest(ApplyQuestRequest): ApplyQuestResponse
         }
         
-        class EditQuestPageState {
+        class QuestPageState {
             QuestTitleState: String
             QuestDescriptionState: String
             isValid: bool
@@ -59,9 +75,9 @@ classDiagram
         }
     }
 
-    namespace backend {
-        class index {
-            member(UpdateQuestRequest): UpdateQuestResponse
+    namespace backend_ {
+        class QuestController {
+            member(ApplyQuestRequest): ApplyQuestResponse
         }
 
         class Quest {
@@ -69,12 +85,12 @@ classDiagram
             title: QuestTitle
             description: QuestDescription
         }
-        class QuestDescription
-        class UpdateQuestUseCase {
-            execute(UpdateQuestCommand): UpdateQuestResult
+
+        class ApplyQuestUseCase {
+            execute(ApplyQuestCommand): ApplyQuestResult
         }
         class QuestQueryService {
-            findById(QuestId): QuestDto
+            hoge(): SummaryQuestDto[]
         }
         class QuestRepository
         class QuestDao
@@ -82,38 +98,47 @@ classDiagram
     }
 
     namespace database {
-        class DB
+        class Supabase
     }
 
 
-    EditQuestPage --> EditQuestPageStateNotifier
-    EditQuestPage --> EditQuestForm
-    EditQuestPageStateNotifier --> EditQuestPageState
-    EditQuestPageState --> QuestTitleState
-    EditQuestPageState --> QuestDescriptionState
+    QuestPage --> QuestPageStateNotifier
+    QuestPage --> QuestForm
+    QuestPageStateNotifier --> GetQuestsUseCase
+    GetQuestsUseCase --> fe.QuestQueryService
+    fe.QuestQueryService --> Supabase: realtimeデータ同期
+    fe.QuestQueryService --> fe.QuestQueryModel:  生成
+    GetQuestsUseCase --> fe.QuestQueryModel: 取得
+    GetQuestsUseCase --> GetQuestsResult: 生成
+    QuestPageStateNotifier --> GetQuestsResult: 取得
+    GetQuestsResult --> QuestSummaryDto: 保持
+
+    QuestPageStateNotifier --> QuestPageState
+    QuestPageState --> QuestTitleState
+    QuestPageState --> QuestDescriptionState
 
     QuestTitleState ..|> InputState
     QuestDescriptionState ..|> InputState
     
-    EditQuestPageStateNotifier --> UpdateQuestRequest
-    EditQuestPageStateNotifier --> UpdateQuestResponse
-    EditQuestPageStateNotifier --> QuestApiClient
-    QuestApiClient --> UpdateQuestRequest
-    QuestApiClient --> UpdateQuestResponse
+    QuestPageStateNotifier --> fe.ApplyQuestUseCase
+    fe.ApplyQuestUseCase --> QuestApiClient: 実行し、mapを取得
+    fe.ApplyQuestUseCase --> ApplyQuestResult: 生成
+    QuestPageStateNotifier --> ApplyQuestResult: 取得
     
-    QuestApiClient --> index
-    index --> UpdateQuestUseCase
+    QuestApiClient --> QuestController
+    QuestController --> ApplyQuestUseCase
 
-    UpdateQuestUseCase --> QuestQueryService
-    UpdateQuestUseCase --> QuestRepository
-    UpdateQuestUseCase --> Quest
-    QuestQueryService --> DB
+    ApplyQuestUseCase --> QuestQueryService
+    ApplyQuestUseCase --> QuestRepository
+    ApplyQuestUseCase --> Quest
+    QuestQueryService --> Supabase
     QuestRepository --> Quest
     QuestRepository --> QuestDao
     QuestRepository --> QuestEntity
     QuestRepository --> QuestQueryService
     QuestDao --> QuestEntity
-    QuestDao --> DB
+    QuestDao --> Supabase
+
 ```
 
 ## ログイン周り
