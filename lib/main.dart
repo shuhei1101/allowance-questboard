@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
-  setupApp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupApp();
   runApp(const MyApp());
 }
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        home: const LoginPage(),
+        home: LoginPage(),
       ),
     );
   }

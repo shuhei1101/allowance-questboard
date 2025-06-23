@@ -1,10 +1,12 @@
-import 'package:allowance_questboard/login/state/login_page_state_provider.dart';
-import 'package:allowance_questboard/core/router/app_route.dart';
+import 'package:allowance_questboard/login/state/auth_state_provider.dart';
 import 'package:allowance_questboard/core/setup/l10n_provider.dart';
+import 'package:allowance_questboard/login/usecase/get_family_id_usecase.dart';
+import 'package:allowance_questboard/login/usecase/get_member_id_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
@@ -16,12 +18,15 @@ import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 /// - 両方のフィールドのバリデーションを確認
 /// - バリデーションが問題なければ、ログインボタンを有効化
 class LoginPage extends HookConsumerWidget {
-  const LoginPage({super.key});
+  final GetFamilyIdUsecase getFamilyIdUsecase = GetIt.I<GetFamilyIdUsecase>();
+  final GetMemberIdUsecase getMemberIdUsecase = GetIt.I<GetMemberIdUsecase>();
+
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useMemoized(() => L10nProvider.update(context));
-    final notifier = ref.read(loginPageStateProvider.notifier);
+    final notifier = ref.watch(authStateProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,37 +34,23 @@ class LoginPage extends HookConsumerWidget {
       ),
       body: Column(
         children: [
-          // Create a Email sign-in/sign-up form
+          // 電子メールサインイン/サインアップフォームを作成します
           SupaEmailAuth(
               redirectTo: kIsWeb ? null : 'io.mydomain.myapp://callback',
               onSignInComplete: (response) async {
-                print('ログインボタンが押されました');
-                print('ログインレスポンス: $response');
-
                 final supabaseUser = Supabase.instance.client.auth.currentUser;
-                print('Supabaseユーザー: $supabaseUser');
                 final userId = supabaseUser?.id;
-                print('ユーザーID: $userId');
 
                 if (userId == null) {
-                  print('ユーザーIDがnullです');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('ユーザーIDの取得に失敗しました')),
                   );
                   return;
                 }
 
-                try {
-                  final familyId = await notifier.getFamilyId(userId);
-                  print('Family ID: $familyId');
-                  if (!context.mounted) return;
-                  FamilyHomeRoute().push(context);
-                } catch (e) {
-                  print('Family ID取得エラー: $e');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Family ID取得エラー: ${e.toString()}')),
-                  );
-                }
+                notifier.updateUserId(userId);
+                notifier.updateFamilyId(await getFamilyIdUsecase.execute(userId));
+                notifier.updateMemberId(await getMemberIdUsecase.execute(userId));
               },
               onSignUpComplete: (response) {
                 print('サインアップ完了: $response');
@@ -125,7 +116,7 @@ class LoginPage extends HookConsumerWidget {
 void main() {
   print('Starting LoginPage...');
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: MaterialApp(
         home: LoginPage(),
       ),
