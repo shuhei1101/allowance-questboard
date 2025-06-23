@@ -1,73 +1,51 @@
-// デフォルトのカウンターアプリ
+// Flutter app entry point
 
-// import 'package:allowance_questboard/presentation/theme/app_themes.dart';
-// import 'package:flutter/material.dart';
+import 'package:allowance_questboard/application/auth/auth_provider.dart';
+import 'package:allowance_questboard/config/supabase_config.dart';
+import 'package:allowance_questboard/login/state/login_state_provider.dart';
+import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Supabaseの初期化（実際の値はconfig/supabase_config.dartで設定）
+  await Supabase.initialize(
+    url: SupabaseConfig.url,
+    anonKey: SupabaseConfig.anonKey,
+  );
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+  // DIコンテナの設定
+  setupDependencies();
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: AppThemes.commonTheme,
-//       darkTheme: ThemeData(),
-//       home: const MyHomePage(title: 'Flutter Demo aaa Home Page'),
-//     );
-//   }
-// }
+  runApp(const ProviderScope(child: MyApp()));
+}
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
+void setupDependencies() {
+  // AuthProviderをシングルトンとして登録
+  GetIt.I.registerSingleton<AuthProvider>(AuthProvider());
+}
 
-//   final String title;
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 認証状態を監視してルートを決定
+    final authState = ref.watch(authProvider);
+    
+    final router = GoRouter(
+      initialLocation: authState.isAuthenticated ? '/quests/default' : '/login',
+      routes: $appRoutes,
+    );
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       _counter++;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Theme(
-//       data: AppThemes.commonTheme,
-//       child: Scaffold(
-//         appBar: AppBar(
-//           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//           title: Text(widget.title),
-//         ),
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               const Text(
-//                 'You have pushed the button this many times:',
-//               ),
-//               Text(
-//                 '$_counter',
-//                 style: Theme.of(context).textTheme.headlineMedium,
-//               ),
-//             ],
-//           ),
-//         ),
-//         floatingActionButton: FloatingActionButton(
-//           onPressed: _incrementCounter,
-//           tooltip: 'Increment',
-//           child: const Icon(Icons.add),
-//         ),
-//       ),
-//     );
-//   }
-// }
+    return MaterialApp.router(
+      title: 'Allowance Questboard',
+      routerConfig: router,
+    );
+  }
+}
