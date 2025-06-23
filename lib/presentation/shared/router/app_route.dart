@@ -1,6 +1,7 @@
 import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quests_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quest_page.dart';
+import 'package:allowance_questboard/presentation/login/page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,17 @@ import '../../member/page/members_page.dart';
 part 'app_route.g.dart';
 
 // buildコマンド: flutter pub run build_runner build
+
+/// ログイン画面へのルーティング
+@TypedGoRoute<LoginRoute>(path: '/login')
+class LoginRoute extends GoRouteData with _$LoginRoute {
+  const LoginRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const LoginPage();
+  }
+}
 
 /// 家族メンバー一覧画面へのルーティング
 @TypedGoRoute<MembersRoute>(path: '/members/:familyId')

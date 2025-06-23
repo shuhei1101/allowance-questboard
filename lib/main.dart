@@ -1,73 +1,63 @@
-// デフォルトのカウンターアプリ
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:allowance_questboard/presentation/shared/theme/app_themes.dart';
+import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
+import 'package:allowance_questboard/presentation/login/state/login_state_provider.dart';
 
-// import 'package:allowance_questboard/presentation/theme/app_themes.dart';
-// import 'package:flutter/material.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Supabase初期化
+  await Supabase.initialize(
+    url: 'YOUR_SUPABASE_URL', // TODO: 実際のSupabaseプロジェクトのURLに置き換え
+    anonKey: 'YOUR_SUPABASE_ANON_KEY', // TODO: 実際のSupabaseプロジェクトのanon keyに置き換え
+  );
+  
+  runApp(const ProviderScope(child: MyApp()));
+}
 
-// void main() {
-//   runApp(const MyApp());
-// }
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+    
+    // GoRouterの設定
+    final router = GoRouter(
+      routes: $appRoutes,
+      initialLocation: authState.isAuthenticated ? 
+        (authState.isFamilyUser ? '/quests/${authState.familyId!.value}' : '/members/${authState.memberId!.value}') : 
+        '/login',
+      redirect: (context, state) {
+        final isAuthenticated = authState.isAuthenticated;
+        final isLoggingIn = state.location == '/login';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: AppThemes.commonTheme,
-//       darkTheme: ThemeData(),
-//       home: const MyHomePage(title: 'Flutter Demo aaa Home Page'),
-//     );
-//   }
-// }
+        // 認証されていない場合はログイン画面にリダイレクト
+        if (!isAuthenticated && !isLoggingIn) {
+          return '/login';
+        }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
+        // 認証済みでログイン画面にいる場合は適切な画面にリダイレクト
+        if (isAuthenticated && isLoggingIn) {
+          if (authState.isFamilyUser) {
+            return '/quests/${authState.familyId!.value}';
+          } else if (authState.isMemberUser) {
+            return '/members/${authState.memberId!.value}';
+          }
+        }
 
-//   final String title;
+        return null;
+      },
+    );
 
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       _counter++;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Theme(
-//       data: AppThemes.commonTheme,
-//       child: Scaffold(
-//         appBar: AppBar(
-//           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//           title: Text(widget.title),
-//         ),
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               const Text(
-//                 'You have pushed the button this many times:',
-//               ),
-//               Text(
-//                 '$_counter',
-//                 style: Theme.of(context).textTheme.headlineMedium,
-//               ),
-//             ],
-//           ),
-//         ),
-//         floatingActionButton: FloatingActionButton(
-//           onPressed: _incrementCounter,
-//           tooltip: 'Increment',
-//           child: const Icon(Icons.add),
-//         ),
-//       ),
-//     );
-//   }
-// }
+    return MaterialApp.router(
+      title: 'おこづかいクエストボード',
+      theme: AppThemes.commonTheme,
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
