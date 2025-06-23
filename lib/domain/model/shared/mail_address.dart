@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/util/validator.dart';
+import 'package:allowance_questboard/shared/util/validator.dart';
 
 /// メールアドレス値オブジェクト
 class MailAddress {

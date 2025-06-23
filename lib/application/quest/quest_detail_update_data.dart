@@ -1,8 +1,8 @@
 import 'package:allowance_questboard/domain/model/quest/value_object/quest_detail.dart';
 
 /// クエスト詳細情報の編集用DTO
-class QuestDetailUpdateData {
-  QuestDetailUpdateData({
+class QuestDetailResponse {
+  QuestDetailResponse({
     required this.successCondition,
     required this.failureCondition,
     required this.targetCount,
@@ -12,8 +12,8 @@ class QuestDetailUpdateData {
   });
 
   /// ドメインモデル[QuestDetail]から生成するファクトリコンストラクタ
-  factory QuestDetailUpdateData.fromDomain({required QuestDetail questDetail}) {
-    return QuestDetailUpdateData(
+  factory QuestDetailResponse.fromDomain({required QuestDetail questDetail}) {
+    return QuestDetailResponse(
       successCondition: questDetail.successCondition.value,
       failureCondition: questDetail.failureCondition.value,
       targetCount: questDetail.targetCount.value,
