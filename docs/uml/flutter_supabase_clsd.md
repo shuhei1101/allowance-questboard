@@ -138,7 +138,6 @@ classDiagram
     QuestRepository --> QuestQueryService
     QuestDao --> QuestEntity
     QuestDao --> Supabase
-
 ```
 
 ## ログイン周り
