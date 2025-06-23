@@ -4,9 +4,9 @@ import 'package:allowance_questboard/application/quest/family_quest_application_
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/presentation/quest/screen/quest_editing_screen.dart';
 import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
-import 'package:allowance_questboard/presentation/shared/page/error_page.dart';
-import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
-import 'package:allowance_questboard/shared/setup/l10n_provider.dart';
+import 'package:allowance_questboard/shared/page/error_page.dart';
+import 'package:allowance_questboard/core/router/app_route.dart';
+import 'package:allowance_questboard/core/setup/l10n_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';

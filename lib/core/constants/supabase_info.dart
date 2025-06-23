@@ -1,5 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 class SupabaseInfo {
   // supabaseのURL
   static const String supabaseUrl = "https://esoxujkmlwzotpgwbyxq.supabase.co";

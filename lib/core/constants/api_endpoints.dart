@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/shared/constants/supabase_info.dart';
+import 'package:allowance_questboard/core/constants/supabase_info.dart';
 
 class ApiEndpoints {
   // バックエンドのAPIベースURL(商用はSupabaseUrlと同一)

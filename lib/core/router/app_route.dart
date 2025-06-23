@@ -4,12 +4,11 @@ import 'package:allowance_questboard/login/page/login_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quests_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quest_page.dart';
-import 'package:allowance_questboard/login/page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../member/page/member_page.dart';
-import '../../member/page/members_page.dart';
+import '../../presentation/member/page/member_page.dart';
+import '../../presentation/member/page/members_page.dart';
 part 'app_route.g.dart';
 
 // buildコマンド: flutter pub run build_runner build
@@ -19,20 +18,16 @@ part 'app_route.g.dart';
 class LoginRoute extends GoRouteData with _$LoginRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return Loginpage();
+    return LoginPage();
   }
 }
 
 /// 家族ホーム画面へのルーティング
-@TypedGoRoute<FamilyHomeRoute>(path: '/family/:familyId')
+@TypedGoRoute<FamilyHomeRoute>(path: '/family')
 class FamilyHomeRoute extends GoRouteData with _$FamilyHomeRoute {
-  FamilyHomeRoute(FamilyId familyId) : familyId = familyId.value;
-
-  final String familyId;
-
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return FamilyHomePage(familyId);
+    return FamilyHomePage();
   }
 }
 

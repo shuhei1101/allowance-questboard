@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/shared/setup/l10n_provider.dart';
+import 'package:allowance_questboard/core/setup/l10n_provider.dart';
 import 'package:allowance_questboard/shared/state/state_object.dart';
 import 'package:allowance_questboard/shared/util/validator.dart';
 
