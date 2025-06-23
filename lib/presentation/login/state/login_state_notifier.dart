@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:allowance_questboard/application/auth/auth_provider.dart';
 import 'package:allowance_questboard/application/auth/get_family_id_use_case.dart';
 import 'package:allowance_questboard/application/auth/get_member_id_use_case.dart';
@@ -11,11 +12,76 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
     this._authProvider,
     this._getFamilyIdUseCase,
     this._getMemberIdUseCase,
-  ) : super(const LoginState());
+  ) : super(const LoginState()) {
+    // Supabaseの認証状態変更を監視
+    _authSubscription = Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+      final AuthChangeEvent event = data.event;
+      final Session? session = data.session;
+      
+      if (event == AuthChangeEvent.signedIn && session?.user != null) {
+        _handleAuthSuccess(session!.user!.id);
+      } else if (event == AuthChangeEvent.signedOut) {
+        _authProvider.logout();
+      }
+    });
+  }
 
   final AuthProvider _authProvider;
   final GetFamilyIdUseCase _getFamilyIdUseCase;
   final GetMemberIdUseCase _getMemberIdUseCase;
+  late final StreamSubscription<AuthState> _authSubscription;
+
+  @override
+  void dispose() {
+    _authSubscription.cancel();
+    super.dispose();
+  }
+
+  /// 認証成功時の処理
+  Future<void> _handleAuthSuccess(String userId) async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    
+    try {
+      // AuthProviderにユーザー情報を設定
+      _authProvider.setUserInfo(userId);
+
+      // ログインモードに応じてIDを取得
+      if (state.isFamilyMode) {
+        final familyIdResult = await _getFamilyIdUseCase.execute(userId);
+        familyIdResult.fold(
+          (error) {
+            state = state.copyWith(
+              isLoading: false,
+              errorMessage: '家族情報の取得に失敗しました: $error',
+            );
+          },
+          (familyId) {
+            _authProvider.setFamilyId(familyId);
+            state = state.copyWith(isLoading: false);
+          },
+        );
+      } else {
+        final memberIdResult = await _getMemberIdUseCase.execute(userId);
+        memberIdResult.fold(
+          (error) {
+            state = state.copyWith(
+              isLoading: false,
+              errorMessage: 'メンバー情報の取得に失敗しました: $error',
+            );
+          },
+          (memberId) {
+            _authProvider.setMemberId(memberId);
+            state = state.copyWith(isLoading: false);
+          },
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'ユーザー情報の処理に失敗しました: ${e.toString()}',
+      );
+    }
+  }
 
   /// ログインモードを切り替え（家族/メンバー）
   void toggleLoginMode() {
@@ -56,43 +122,7 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
         return false;
       }
 
-      final String userId = response.user!.id;
-      
-      // AuthProviderにユーザー情報を設定
-      _authProvider.setUserInfo(userId);
-
-      // ログインモードに応じてIDを取得
-      if (state.isFamilyMode) {
-        final familyIdResult = await _getFamilyIdUseCase.execute(userId);
-        familyIdResult.fold(
-          (error) {
-            state = state.copyWith(
-              isLoading: false,
-              errorMessage: '家族情報の取得に失敗しました',
-            );
-            return;
-          },
-          (familyId) {
-            _authProvider.setFamilyId(familyId);
-          },
-        );
-      } else {
-        final memberIdResult = await _getMemberIdUseCase.execute(userId);
-        memberIdResult.fold(
-          (error) {
-            state = state.copyWith(
-              isLoading: false,
-              errorMessage: 'メンバー情報の取得に失敗しました',
-            );
-            return;
-          },
-          (memberId) {
-            _authProvider.setMemberId(memberId);
-          },
-        );
-      }
-
-      state = state.copyWith(isLoading: false);
+      // 認証状態の変更は onAuthStateChange リスナーで処理される
       return true;
     } catch (e) {
       state = state.copyWith(

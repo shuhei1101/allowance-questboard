@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:allowance_questboard/presentation/login/state/login_state_provider.dart';
+import 'package:allowance_questboard/presentation/login/component/login_mode_toggle.dart';
+import 'package:allowance_questboard/presentation/login/component/oauth_login_section.dart';
 import 'package:allowance_questboard/util/validator.dart';
-import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 /// ログイン画面
 class LoginScreen extends HookConsumerWidget {
@@ -36,7 +37,10 @@ class LoginScreen extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // ログインモード切り替えトグル
-              _buildModeToggle(loginState, loginNotifier),
+              LoginModeToggle(
+                isFamilyMode: loginState.isFamilyMode,
+                onToggle: loginNotifier.toggleLoginMode,
+              ),
               const SizedBox(height: 32),
               
               // メールアドレス入力
@@ -164,86 +168,10 @@ class LoginScreen extends HookConsumerWidget {
               
               const SizedBox(height: 32),
               
-              // OAuth ログイン (Supabase Auth UI)
-              _buildOAuthSection(context),
+              // OAuth ログイン
+              const OAuthLoginSection(),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  /// ログインモード切り替えトグル
-  Widget _buildModeToggle(dynamic loginState, dynamic loginNotifier) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const Text(
-              'ログインモード',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            ToggleButtons(
-              isSelected: [loginState.isFamilyMode, !loginState.isFamilyMode],
-              onPressed: (index) {
-                loginNotifier.toggleLoginMode();
-              },
-              borderRadius: BorderRadius.circular(8),
-              children: const [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('家族'),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('メンバー'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              loginState.isFamilyMode 
-                ? '家族としてログインします' 
-                : 'メンバーとしてログインします',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// OAuth ログインセクション
-  Widget _buildOAuthSection(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const Text(
-              'ソーシャルログイン',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            // Google ログイン (例)
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  // TODO: Google OAuth の実装
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Google ログインは準備中です'),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.account_circle),
-                label: const Text('Google でログイン'),
-              ),
-            ),
-          ],
         ),
       ),
     );
