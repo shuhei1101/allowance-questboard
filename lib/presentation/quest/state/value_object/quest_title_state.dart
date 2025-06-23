@@ -1,15 +1,19 @@
-import 'package:allowance_questboard/domain/model/quest/value_object/quest_title.dart';
+import 'package:allowance_questboard/shared/setup/l10n_provider.dart';
+import 'package:allowance_questboard/shared/state/state_object.dart';
 
-class QuestTitleState {
-  final String value;
-  final String? errorMessage;
+class QuestTitleState extends StateObject<String> {
+  QuestTitleState(super.value);
 
-  const QuestTitleState(this.value, this.errorMessage);
-
-  factory QuestTitleState.fromInput(String value) {
-    String? errorMessage = QuestTitle.validate(value) ? null : 'クエスト名は空ではいけません';
-    return QuestTitleState(value, errorMessage);
+  @override
+  String? validate(String value) {
+    // クエスト名は空であってはいけない
+    if (value.isEmpty) {
+      return L10nProvider.I.questRequired;
+    }
+    // クエスト名は50文字以内でなければならない
+    if (value.length > 50) {
+      return L10nProvider.I.questInvalid;
+    }
+    return null;
   }
-
-  bool get isValid => errorMessage == null;
 }

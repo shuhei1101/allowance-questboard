@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/application/quest/family_quest_update_data.dart';
+import 'package:allowance_questboard/application/quest/update_family_quest_response.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_update_data.dart';
 import 'package:allowance_questboard/application/quest/family_quest_application_service.dart';
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
@@ -6,6 +6,7 @@ import 'package:allowance_questboard/presentation/quest/screen/quest_editing_scr
 import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
 import 'package:allowance_questboard/presentation/shared/page/error_page.dart';
 import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
+import 'package:allowance_questboard/shared/setup/l10n_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
@@ -19,11 +20,12 @@ class EditFamilyQuestPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useMemoized(() => L10nProvider.update(context));
     final notifier = ref.read(editFamilyQuestStateProvider.notifier);
     final state = ref.watch(editFamilyQuestStateProvider);
     final future = useMemoized(() => notifier.getEditFamilyQuestData(questId));
 
-    return FutureBuilder<FamilyQuestUpdateData?>(
+    return FutureBuilder<UpdateFamilyQuestResponse?>(
       future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
@@ -67,7 +69,7 @@ class EditFamilyQuestPage extends HookConsumerWidget {
 
 class EditFamilyQuestTab extends StatelessWidget {
   const EditFamilyQuestTab({required this.quest});
-  final FamilyQuestUpdateData quest;
+  final UpdateFamilyQuestResponse quest;
 
   @override
   Widget build(BuildContext context) {
@@ -83,15 +85,18 @@ class EditFamilyQuestTab extends StatelessWidget {
 
 // 動作確認用コード
 void main() {
-  GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
-  final router = GoRouter(initialLocation: '/quest/123/edit', routes: $appRoutes);
+  GetIt.I.registerSingleton<FamilyQuestApplicationService>(
+      MockFamilyQuestApplicationService());
+  final router =
+      GoRouter(initialLocation: '/quest/123/edit', routes: $appRoutes);
   runApp(ProviderScope(
       child: MaterialApp.router(
     routerConfig: router,
   )));
 }
 
-class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
+class MockFamilyQuestApplicationService
+    implements FamilyQuestApplicationService {
   @override
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     throw UnimplementedError();
@@ -103,8 +108,9 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
   }
 
   @override
-  Future<FamilyQuestUpdateData?> getEditFamilyQuestData(String questId) async {
-    return FamilyQuestUpdateData(
+  Future<UpdateFamilyQuestResponse?> getEditFamilyQuestData(
+      String questId) async {
+    return UpdateFamilyQuestResponse(
       id: "123",
       title: "Test Quest",
       icon: Icon(Icons.ac_unit),
@@ -112,10 +118,10 @@ class MockFamilyQuestApplicationService implements FamilyQuestApplicationService
       isPublic: true,
       isShared: true,
       participants: [
-        ParticipantUpdateDTO(icon: Icon(Icons.person)),
+        UpdateParticipantResponse(icon: Icon(Icons.person)),
       ],
       questLevelDetails: {
-        1: QuestDetailUpdateData(
+        1: QuestDetailResponse(
           successCondition: "Complete all tasks",
           failureCondition: "Fail any task",
           targetCount: 10,

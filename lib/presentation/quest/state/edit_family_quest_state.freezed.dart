@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$EditFamilyQuestState {
-  QuestTitleState get questTitleState;
+  QuestTitleState? get questTitleState;
   bool get isValid;
 
   /// Create a copy of EditFamilyQuestState
@@ -51,7 +51,7 @@ abstract mixin class $EditFamilyQuestStateCopyWith<$Res> {
           $Res Function(EditFamilyQuestState) _then) =
       _$EditFamilyQuestStateCopyWithImpl;
   @useResult
-  $Res call({QuestTitleState questTitleState, bool isValid});
+  $Res call({QuestTitleState? questTitleState, bool isValid});
 }
 
 /// @nodoc
@@ -67,14 +67,14 @@ class _$EditFamilyQuestStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? questTitleState = null,
+    Object? questTitleState = freezed,
     Object? isValid = null,
   }) {
     return _then(_self.copyWith(
-      questTitleState: null == questTitleState
+      questTitleState: freezed == questTitleState
           ? _self.questTitleState
           : questTitleState // ignore: cast_nullable_to_non_nullable
-              as QuestTitleState,
+              as QuestTitleState?,
       isValid: null == isValid
           ? _self.isValid
           : isValid // ignore: cast_nullable_to_non_nullable
@@ -86,13 +86,10 @@ class _$EditFamilyQuestStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _EditFamilyQuestState implements EditFamilyQuestState {
-  const _EditFamilyQuestState(
-      {this.questTitleState = const QuestTitleState('', null),
-      this.isValid = false});
+  const _EditFamilyQuestState({this.questTitleState, this.isValid = false});
 
   @override
-  @JsonKey()
-  final QuestTitleState questTitleState;
+  final QuestTitleState? questTitleState;
   @override
   @JsonKey()
   final bool isValid;
@@ -133,7 +130,7 @@ abstract mixin class _$EditFamilyQuestStateCopyWith<$Res>
       __$EditFamilyQuestStateCopyWithImpl;
   @override
   @useResult
-  $Res call({QuestTitleState questTitleState, bool isValid});
+  $Res call({QuestTitleState? questTitleState, bool isValid});
 }
 
 /// @nodoc
@@ -149,14 +146,14 @@ class __$EditFamilyQuestStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? questTitleState = null,
+    Object? questTitleState = freezed,
     Object? isValid = null,
   }) {
     return _then(_EditFamilyQuestState(
-      questTitleState: null == questTitleState
+      questTitleState: freezed == questTitleState
           ? _self.questTitleState
           : questTitleState // ignore: cast_nullable_to_non_nullable
-              as QuestTitleState,
+              as QuestTitleState?,
       isValid: null == isValid
           ? _self.isValid
           : isValid // ignore: cast_nullable_to_non_nullable

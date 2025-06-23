@@ -1,3 +1,6 @@
+import 'package:allowance_questboard/domain/model/family/family_id.dart';
+import 'package:allowance_questboard/home/page/family_home_page.dart';
+import 'package:allowance_questboard/login/page/login_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quests_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quest_page.dart';
@@ -14,11 +17,22 @@ part 'app_route.g.dart';
 /// ログイン画面へのルーティング
 @TypedGoRoute<LoginRoute>(path: '/login')
 class LoginRoute extends GoRouteData with _$LoginRoute {
-  const LoginRoute();
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return Loginpage();
+  }
+}
+
+/// 家族ホーム画面へのルーティング
+@TypedGoRoute<FamilyHomeRoute>(path: '/family/:familyId')
+class FamilyHomeRoute extends GoRouteData with _$FamilyHomeRoute {
+  FamilyHomeRoute(FamilyId familyId) : familyId = familyId.value;
+
+  final String familyId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const LoginPage();
+    return FamilyHomePage(familyId);
   }
 }
 

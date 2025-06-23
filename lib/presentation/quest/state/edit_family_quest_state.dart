@@ -6,7 +6,11 @@ part 'edit_family_quest_state.freezed.dart';
 @freezed
 abstract class EditFamilyQuestState with _$EditFamilyQuestState {
   const factory EditFamilyQuestState({
-    @Default(QuestTitleState('', null)) QuestTitleState questTitleState,
+    QuestTitleState? questTitleState,
     @Default(false) bool isValid,
   }) = _EditFamilyQuestState;
+
+  factory EditFamilyQuestState.initial() => EditFamilyQuestState(
+        questTitleState: QuestTitleState(''),
+      );
 }
