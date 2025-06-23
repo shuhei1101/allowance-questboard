@@ -1,6 +1,7 @@
 // Flutter app entry point
 
 import 'package:allowance_questboard/application/auth/auth_provider.dart';
+import 'package:allowance_questboard/config/supabase_config.dart';
 import 'package:allowance_questboard/login/state/login_state_provider.dart';
 import 'package:allowance_questboard/presentation/shared/router/app_route.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Supabaseの初期化（実際の値は環境変数から取得することを推奨）
+  // Supabaseの初期化（実際の値はconfig/supabase_config.dartで設定）
   await Supabase.initialize(
-    url: 'YOUR_SUPABASE_URL',
-    anonKey: 'YOUR_SUPABASE_ANON_KEY',
+    url: SupabaseConfig.url,
+    anonKey: SupabaseConfig.anonKey,
   );
 
   // DIコンテナの設定

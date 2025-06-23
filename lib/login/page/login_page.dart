@@ -20,11 +20,9 @@ class LoginPage extends ConsumerWidget {
             if (next.isFamilyLogin && next.familyId != null) {
               // 家族ホーム画面に遷移（現在は家族クエスト画面に遷移）
               FamilyQuestsRoute(familyId: next.familyId!).go(context);
-            } else if (next.isMemberLogin && next.memberId != null) {
-              // ユーザーホーム画面に遷移（現在はメンバー詳細画面に遷移）
-              // 注意: MemberRouteはfamilyIdも必要だが、仮の値を使用
-              // 実際の実装では適切なfamilyIdを取得する必要がある
-              MemberRoute(familyId: 'temp', memberId: next.memberId!).go(context);
+            } else if (next.isMemberLogin && next.memberId != null && next.familyId != null) {
+              // ユーザーホーム画面に遷移（メンバー詳細画面に遷移）
+              MemberRoute(familyId: next.familyId!, memberId: next.memberId!).go(context);
             }
           }
         });

@@ -20,7 +20,7 @@ class AuthProvider extends ChangeNotifier {
   bool get isAuthenticated => _isAuthenticated;
   
   /// ログイン種別（家族またはメンバー）
-  bool get isFamilyLogin => _familyId != null;
+  bool get isFamilyLogin => _memberId == null && _familyId != null;
   bool get isMemberLogin => _memberId != null;
 
   /// ユーザー情報を設定（ログイン時）
