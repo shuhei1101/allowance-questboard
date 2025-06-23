@@ -12,7 +12,7 @@ class EmailState extends StateObject<String> {
       return L10nProvider.I.emailRequired;
     }
     // メールアドレスの形式が正しいかを検証
-    if (isMailAddress(value)) {
+    if (!isMailAddress(value)) {
       return L10nProvider.I.emailInvalid;
     }
     return null;
