@@ -1,5 +1,5 @@
-import 'package:allowance_questboard/infrastracture/query_service/family_query_service.dart';
-import 'package:allowance_questboard/infrastracture/query_service/member_query_service.dart';
+import 'package:allowance_questboard/family/query_service/family_query_service.dart';
+import 'package:allowance_questboard/member/query_service/member_query_service.dart';
 import 'package:allowance_questboard/login/state/login_page_state.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

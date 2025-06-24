@@ -1,5 +1,4 @@
-import 'package:allowance_questboard/domain/model/family/family_id.dart';
-import 'package:allowance_questboard/home/page/family_home_page.dart';
+import 'package:allowance_questboard/family/home/page/family_home_page.dart';
 import 'package:allowance_questboard/login/page/login_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/edit_family_quest_page.dart';
 import 'package:allowance_questboard/presentation/quest/page/family_quests_page.dart';

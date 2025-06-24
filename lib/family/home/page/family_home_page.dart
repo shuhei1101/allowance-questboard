@@ -9,9 +9,9 @@ class FamilyHomePage extends HookConsumerWidget {
 
     // タブごとの中身は仮でContainerなど空にしておく
     final pages = <Widget>[
+      const Center(child: Text('クエストタブ（未実装）')),
       const Center(child: Text('ホームタブ（未実装）')),
-      const Center(child: Text('検索タブ（未実装）')),
-      const Center(child: Text('設定タブ（未実装）')),
+      const Center(child: Text('通知タブ（未実装）')),
     ];
 
     return Scaffold(

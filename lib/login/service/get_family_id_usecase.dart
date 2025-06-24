@@ -2,15 +2,15 @@ import 'package:allowance_questboard/family/query_service/family_query_service.d
 import 'package:get_it/get_it.dart';
 
 class GetFamilyIdUsecase {
-  final FamilyQueryService _familyQueryService = GetIt.I<FamilyQueryService>();
+  final FamilyQueryService _memberQueryService = GetIt.I<FamilyQueryService>();
   GetFamilyIdUsecase();
 
   Future<int?> execute(String userId) async {
     try {
-      final familyId = await _familyQueryService.fetchFamilyId(userId);
-      return familyId;
+      final memberId = await _memberQueryService.fetchFamilyId(userId);
+      return memberId;
     } catch (e) {
-      print('family IDの取得に失敗: $e');
+      print('memberIdの取得に失敗: $e');
       return null;
     }
   }

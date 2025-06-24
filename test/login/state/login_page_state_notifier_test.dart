@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/family/usecase/get_family_id_use_case.dart';
-import 'package:allowance_questboard/infrastracture/query_service/family_query_service.dart';
+import 'package:allowance_questboard/family/query_service/family_query_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test/test.dart';
 
