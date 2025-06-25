@@ -1,5 +1,5 @@
 -- 貯金記録テーブルのテストデータ
-INSERT INTO savings_records (member_id, amount, balance) VALUES
+INSERT INTO savings_records (child_id, amount, balance) VALUES
 -- 佐藤太郎の貯金記録
 (11, 100, 100),
 (11, 50, 150),

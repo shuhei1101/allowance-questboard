@@ -14,24 +14,24 @@ DROP TABLE IF EXISTS history.comments CASCADE;
 DROP TABLE IF EXISTS history.allowance_by_level CASCADE;
 DROP TABLE IF EXISTS history.shared_level_table CASCADE;
 DROP TABLE IF EXISTS history.family_level_table CASCADE;
-DROP TABLE IF EXISTS history.member_level_table CASCADE;
+DROP TABLE IF EXISTS history.child_level_table CASCADE;
 DROP TABLE IF EXISTS history.level_table CASCADE;
 DROP TABLE IF EXISTS history.allowance_by_age CASCADE;
 DROP TABLE IF EXISTS history.shared_allowance_table CASCADE;
 DROP TABLE IF EXISTS history.family_allowance_table CASCADE;
-DROP TABLE IF EXISTS history.member_allowance_table CASCADE;
+DROP TABLE IF EXISTS history.child_allowance_table CASCADE;
 DROP TABLE IF EXISTS history.allowance_table CASCADE;
 DROP TABLE IF EXISTS history.exp_by_level CASCADE;
-DROP TABLE IF EXISTS history.member_stats CASCADE;
-DROP TABLE IF EXISTS history.members_settings CASCADE;
-DROP TABLE IF EXISTS history.members CASCADE;
+DROP TABLE IF EXISTS history.child_stats CASCADE;
+DROP TABLE IF EXISTS history.children_settings CASCADE;
+DROP TABLE IF EXISTS history.children CASCADE;
 DROP TABLE IF EXISTS history.families_translations CASCADE;
 DROP TABLE IF EXISTS history.families CASCADE;
 
 -- 子テーブルの削除（外部キーを持つテーブル）
-DROP TABLE IF EXISTS member_quests CASCADE;
-DROP TABLE IF EXISTS member_quest_status_translations CASCADE;
-DROP TABLE IF EXISTS member_quest_status CASCADE;
+DROP TABLE IF EXISTS child_quests CASCADE;
+DROP TABLE IF EXISTS child_quest_status_translations CASCADE;
+DROP TABLE IF EXISTS child_quest_status CASCADE;
 DROP TABLE IF EXISTS template_quests CASCADE;
 DROP TABLE IF EXISTS saved_quests CASCADE;
 DROP TABLE IF EXISTS family_quests CASCADE;
@@ -75,25 +75,25 @@ DROP TABLE IF EXISTS allowance_by_level CASCADE;
 DROP TABLE IF EXISTS allowance_by_age CASCADE;
 DROP TABLE IF EXISTS shared_level_table CASCADE;
 DROP TABLE IF EXISTS family_level_table CASCADE;
-DROP TABLE IF EXISTS member_level_table CASCADE;
+DROP TABLE IF EXISTS child_level_table CASCADE;
 DROP TABLE IF EXISTS level_table CASCADE;
-DROP TABLE IF EXISTS member_level_sub_types CASCADE;
+DROP TABLE IF EXISTS child_level_sub_types CASCADE;
 DROP TABLE IF EXISTS shared_allowance_table CASCADE;
 DROP TABLE IF EXISTS family_allowance_table CASCADE;
-DROP TABLE IF EXISTS member_allowance_table CASCADE;
+DROP TABLE IF EXISTS child_allowance_table CASCADE;
 DROP TABLE IF EXISTS allowance_table CASCADE;
 DROP TABLE IF EXISTS allowance_table_sub_types CASCADE;
 DROP TABLE IF EXISTS exp_by_level CASCADE;
-DROP TABLE IF EXISTS member_stats CASCADE;
-DROP TABLE IF EXISTS members_settings CASCADE;
-DROP TABLE IF EXISTS member_grade CASCADE;
+DROP TABLE IF EXISTS child_stats CASCADE;
+DROP TABLE IF EXISTS children_settings CASCADE;
+DROP TABLE IF EXISTS child_grade CASCADE;
 DROP TABLE IF EXISTS education_period CASCADE;
 DROP TABLE IF EXISTS education_translations CASCADE;
 DROP TABLE IF EXISTS education CASCADE;
 DROP TABLE IF EXISTS follows CASCADE;
 
 -- メンバー基本テーブル
-DROP TABLE IF EXISTS members CASCADE;
+DROP TABLE IF EXISTS children CASCADE;
 
 -- 家族関連
 DROP TABLE IF EXISTS families_settings CASCADE;

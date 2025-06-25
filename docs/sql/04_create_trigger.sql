@@ -1,7 +1,7 @@
 -- =====更新日トリガー=====
 -- メンバー
-CREATE TRIGGER trigger_set_updated_at_member
-BEFORE UPDATE ON member.families
+CREATE TRIGGER trigger_set_updated_at_child
+BEFORE UPDATE ON child.families
 FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
 
@@ -22,6 +22,6 @@ EXECUTE FUNCTION set_updated_at();
 
 -- =====履歴トリガー=====
 CREATE TRIGGER trigger_capture_family_snapshot
-BEFORE DELETE OR UPDATE ON member.families
+BEFORE DELETE OR UPDATE ON child.families
 FOR EACH ROW
 EXECUTE FUNCTION capture_family_snapshot();

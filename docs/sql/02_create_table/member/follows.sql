@@ -14,4 +14,4 @@ COMMENT ON COLUMN follows.id IS 'フォローID（主キー）';
 COMMENT ON COLUMN follows.follower_id IS 'フォロワーの家族ID（外部キー）';
 COMMENT ON COLUMN follows.followed_id IS 'フォローされている家族ID（外部キー）';
 COMMENT ON COLUMN follows.created_at IS 'フォローが作成された日時';
-COMMENT ON COLUMN follows.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN follows.updated_at IS '更新日時';

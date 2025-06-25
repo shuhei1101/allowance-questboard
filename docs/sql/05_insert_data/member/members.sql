@@ -1,5 +1,5 @@
 -- メンバーテーブルのテストデータ
-INSERT INTO members (user_id, family_id, name, icon_id, birthday) VALUES
+INSERT INTO children (user_id, family_id, name, icon_id, birthday) VALUES
 ('550e8400-e29b-41d4-a716-446655440005'::uuid, 1, '佐藤太郎', 6, '2012-04-15'), -- 小学生
 ('550e8400-e29b-41d4-a716-446655440006'::uuid, 1, '佐藤花子', 7, '2015-08-22'), -- 幼稚園
 ('550e8400-e29b-41d4-a716-446655440007'::uuid, 2, '田中次郎', 6, '2010-12-03'), -- 中学生

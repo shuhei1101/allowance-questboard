@@ -120,7 +120,7 @@ erDiagram
     }
 
     something ||--o{ allowance_history: ""
-    member ||--o{ allowance_history: ""
+    child ||--o{ allowance_history: ""
 
     allowance_records {
         %% 月ごとのお小遣い明細の記録 
@@ -129,7 +129,7 @@ erDiagram
 
         int id PK
         %% ---
-        int member_id FK
+        int child_id FK
         %% ---
         string allowanceable_type FK
         int allowanceable_id FK

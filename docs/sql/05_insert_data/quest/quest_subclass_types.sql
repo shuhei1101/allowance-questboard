@@ -4,4 +4,4 @@ INSERT INTO quest_subclass_types (type, description) VALUES
 ('template_quests', 'テンプレートクエスト'),
 ('family_quests', '家族クエスト'),
 ('saved_quests', '保存済みクエスト'),
-('member_quests', 'メンバークエスト');
+('child_quests', 'メンバークエスト');

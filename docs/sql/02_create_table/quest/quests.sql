@@ -26,8 +26,8 @@ COMMENT ON COLUMN quests.age_to IS '対象年齢上限（age_from以上）';
 COMMENT ON COLUMN quests.has_published_month IS '季節限定フラグ';
 COMMENT ON COLUMN quests.month_from IS '公開開始月（1-12、季節限定の場合のみ）';
 COMMENT ON COLUMN quests.month_to IS '公開終了月（1-12、季節限定の場合のみ）';
-COMMENT ON COLUMN quests.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN quests.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN quests.created_at IS '作成日時';
+COMMENT ON COLUMN quests.updated_at IS '更新日時';
 
 -- クエスト(履歴)
 CREATE TABLE IF NOT EXISTS history.quests (
@@ -70,8 +70,8 @@ COMMENT ON COLUMN quest_translations.language_id IS '言語ID（外部キー）'
 COMMENT ON COLUMN quest_translations.title IS 'クエストタイトルの翻訳（空文字不可）';
 COMMENT ON COLUMN quest_translations.client IS 'クライアント名の翻訳（空文字不可）';
 COMMENT ON COLUMN quest_translations.request_detail IS '依頼詳細の翻訳';
-COMMENT ON COLUMN quest_translations.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN quest_translations.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN quest_translations.created_at IS '作成日時';
+COMMENT ON COLUMN quest_translations.updated_at IS '更新日時';
 
 -- クエスト(翻訳履歴)
 CREATE TABLE IF NOT EXISTS history.quest_translations (
@@ -177,64 +177,64 @@ CREATE TABLE IF NOT EXISTS template_quests (
 COMMENT ON TABLE template_quests IS 'アプリ提供のテンプレートクエストを管理するテーブル';
 
 -- メンバークエストステータステーブル
-CREATE TABLE IF NOT EXISTS member_quest_status (
+CREATE TABLE IF NOT EXISTS child_quest_status (
     id serial PRIMARY KEY,
     code varchar(20) NOT NULL UNIQUE,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-COMMENT ON TABLE member_quest_status IS 'メンバーのクエスト進行状態を管理するマスタテーブル';
-COMMENT ON COLUMN member_quest_status.id IS 'ステータスID（主キー）';
-COMMENT ON COLUMN member_quest_status.code IS 'ステータスコード（例：assigned, in_progress, completed等）';
-COMMENT ON COLUMN member_quest_status.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN member_quest_status.updated_at IS 'レコードの更新日時';
+COMMENT ON TABLE child_quest_status IS 'メンバーのクエスト進行状態を管理するマスタテーブル';
+COMMENT ON COLUMN child_quest_status.id IS 'ステータスID（主キー）';
+COMMENT ON COLUMN child_quest_status.code IS 'ステータスコード（例：assigned, in_progress, completed等）';
+COMMENT ON COLUMN child_quest_status.created_at IS '作成日時';
+COMMENT ON COLUMN child_quest_status.updated_at IS '更新日時';
 
 -- メンバークエストステータス翻訳テーブル
-CREATE TABLE IF NOT EXISTS member_quest_status_translations (
+CREATE TABLE IF NOT EXISTS child_quest_status_translations (
     id serial PRIMARY KEY,
-    member_quest_status_id int NOT NULL REFERENCES member_quest_status (id) ON DELETE CASCADE,
+    child_quest_status_id int NOT NULL REFERENCES child_quest_status (id) ON DELETE CASCADE,
     language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     name varchar(100) NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
-    UNIQUE (member_quest_status_id, language_id)
+    UNIQUE (child_quest_status_id, language_id)
 );
 
-COMMENT ON TABLE member_quest_status_translations IS 'メンバークエストステータスの多言語対応テーブル';
-COMMENT ON COLUMN member_quest_status_translations.id IS '翻訳ID（主キー）';
-COMMENT ON COLUMN member_quest_status_translations.member_quest_status_id IS 'ステータスID（外部キー）';
-COMMENT ON COLUMN member_quest_status_translations.language_id IS '言語ID（外部キー）';
-COMMENT ON COLUMN member_quest_status_translations.name IS 'ステータス名の翻訳';
-COMMENT ON COLUMN member_quest_status_translations.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN member_quest_status_translations.updated_at IS 'レコードの更新日時';
+COMMENT ON TABLE child_quest_status_translations IS 'メンバークエストステータスの多言語対応テーブル';
+COMMENT ON COLUMN child_quest_status_translations.id IS '翻訳ID（主キー）';
+COMMENT ON COLUMN child_quest_status_translations.child_quest_status_id IS 'ステータスID（外部キー）';
+COMMENT ON COLUMN child_quest_status_translations.language_id IS '言語ID（外部キー）';
+COMMENT ON COLUMN child_quest_status_translations.name IS 'ステータス名の翻訳';
+COMMENT ON COLUMN child_quest_status_translations.created_at IS '作成日時';
+COMMENT ON COLUMN child_quest_status_translations.updated_at IS '更新日時';
 
 
 -- メンバークエストテーブル
-CREATE TABLE IF NOT EXISTS member_quests (
+CREATE TABLE IF NOT EXISTS child_quests (
     id serial PRIMARY KEY,
     quest_id int NOT NULL REFERENCES quests (id) ON DELETE RESTRICT,
-    member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+    child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
     current_level int NOT NULL DEFAULT 1 CHECK (current_level > 0),
-    status int NOT NULL REFERENCES member_quest_status (id) ON DELETE RESTRICT,
+    status int NOT NULL REFERENCES child_quest_status (id) ON DELETE RESTRICT,
     published_at timestamptz NOT NULL DEFAULT now(),
     achieved_at timestamptz,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
-    UNIQUE (quest_id, member_id),
+    UNIQUE (quest_id, child_id),
     CHECK (
         (achieved_at IS NULL) OR 
         (achieved_at IS NOT NULL AND achieved_at >= published_at)
     )
 );
 
-COMMENT ON TABLE member_quests IS 'メンバーに公開されているクエストとその進行状況を管理するテーブル';
-COMMENT ON COLUMN member_quests.id IS 'メンバークエストID（主キー）';
-COMMENT ON COLUMN member_quests.quest_id IS 'クエストID（外部キー）';
-COMMENT ON COLUMN member_quests.member_id IS 'メンバーID（外部キー）';
-COMMENT ON COLUMN member_quests.current_level IS '現在のレベル（正の値のみ）';
-COMMENT ON COLUMN member_quests.status IS 'クエストステータスID（外部キー）';
-COMMENT ON COLUMN member_quests.published_at IS 'クエスト公開日時';
-COMMENT ON COLUMN member_quests.achieved_at IS 'クエスト達成日時（未達成の場合はNULL）';
-COMMENT ON COLUMN member_quests.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN member_quests.updated_at IS 'レコードの更新日時';
+COMMENT ON TABLE child_quests IS 'メンバーに公開されているクエストとその進行状況を管理するテーブル';
+COMMENT ON COLUMN child_quests.id IS 'メンバークエストID（主キー）';
+COMMENT ON COLUMN child_quests.quest_id IS 'クエストID（外部キー）';
+COMMENT ON COLUMN child_quests.child_id IS 'メンバーID（外部キー）';
+COMMENT ON COLUMN child_quests.current_level IS '現在のレベル（正の値のみ）';
+COMMENT ON COLUMN child_quests.status IS 'クエストステータスID（外部キー）';
+COMMENT ON COLUMN child_quests.published_at IS 'クエスト公開日時';
+COMMENT ON COLUMN child_quests.achieved_at IS 'クエスト達成日時（未達成の場合はNULL）';
+COMMENT ON COLUMN child_quests.created_at IS '作成日時';
+COMMENT ON COLUMN child_quests.updated_at IS '更新日時';

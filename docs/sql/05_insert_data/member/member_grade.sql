@@ -1,5 +1,5 @@
 -- メンバー学年テーブルのテストデータ
-INSERT INTO member_grade (member_id, education_id, grade) VALUES
+INSERT INTO child_grade (child_id, education_id, grade) VALUES
 (11, 2, 5), -- 佐藤太郎：小学校5年生
 (12, 1, 1), -- 佐藤花子：就学前（年長）
 (13, 3, 2), -- 田中次郎：中学校2年生

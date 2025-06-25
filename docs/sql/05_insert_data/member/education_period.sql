@@ -1,5 +1,5 @@
 -- 教育期間テーブルのテストデータ
-INSERT INTO education_period (member_id, education_id, period) VALUES
+INSERT INTO education_period (child_id, education_id, period) VALUES
 -- 佐藤太郎（現在小学5年生）
 (11, 1, 2), -- 就学前2年間
 (11, 2, 6), -- 小学校6年間予定

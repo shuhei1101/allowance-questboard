@@ -80,7 +80,7 @@ erDiagram
         int target_count "クエスト達成までの回数"
 
         int rewards "報酬金"
-        int member_exp "経験値"
+        int child_exp "経験値"
         int quest_exp "クエスト経験値"
         %% ---
         datetime updated_at "更新日時"
@@ -217,14 +217,14 @@ erDiagram
         %% ---
     }
 
-    member_quests {
+    child_quests {
         %% メンバーに公開されているクエストのテーブル。
         %% 
         %% メンバーとクエストの中間テーブル。
 
         String id PK
         %% ---
-        int member_id FK
+        int child_id FK
         int family_quest_id FK
         int level "クエストレベル"
         %% ---
@@ -234,11 +234,11 @@ erDiagram
         datetime achievemented_at "達成日時"
     }
 
-    member_quests ||--o{ participated_member: ""
+    child_quests ||--o{ participated_child: ""
 
-    member_quests }|--|| member_quest_status: ""
+    child_quests }|--|| child_quest_status: ""
 
-    member_quest_status {
+    child_quest_status {
         %% 現在のクエスト状況。
         %% 
         %% 例: 未受注、進行中、申請中、達成済み
@@ -248,8 +248,8 @@ erDiagram
         String name
     }
 
-    member }|--|| member_quest:""
-    family_quests }|--|| member_quest:""
+    child }|--|| child_quest:""
+    family_quests }|--|| child_quest:""
 
 
 
@@ -321,7 +321,7 @@ erDiagram
         int key_quest_details "キークエストの必要レベル"
     }
 
-    member ||--o{ quest_request: ""
+    child ||--o{ quest_request: ""
     family ||--o{ quest_request: ""
     quests ||--o{ quest_request: ""
 
@@ -336,7 +336,7 @@ erDiagram
         String id PK
         %% ---
         int family_id FK "家族ID"
-        int member_id FK "依頼人"
+        int child_id FK "依頼人"
         int quest_id FK "既存クエスト"
         %% ---
         String title "タイトル"
@@ -450,14 +450,14 @@ erDiagram
     %% }
 
 
-    %% member_penalty {
+    %% child_penalty {
     %%     String id PK
-    %%     int member_id FK
+    %%     int child_id FK
     %%     int family_penalty_id FK
     %% }
 
-    %% member ||--|{ member_penalty:""
-    %% family_penalty ||--|{ member_penalty:""
+    %% child ||--|{ child_penalty:""
+    %% family_penalty ||--|{ child_penalty:""
 
 
 

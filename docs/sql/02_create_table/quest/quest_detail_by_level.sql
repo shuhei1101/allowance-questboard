@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS quest_details_by_level (
     target_count int NOT NULL CHECK (target_count > 0),
     reward int NOT NULL CHECK (reward >= 0),
     currency_id int NOT NULL REFERENCES currencies (id) ON DELETE RESTRICT,
-    member_exp int NOT NULL CHECK (member_exp >= 0),
+    child_exp int NOT NULL CHECK (child_exp >= 0),
     quest_exp int NOT NULL CHECK (quest_exp >= 0),
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
@@ -22,10 +22,10 @@ COMMENT ON COLUMN quest_details_by_level.success_criteria IS '成功条件（空
 COMMENT ON COLUMN quest_details_by_level.target_count IS '目標回数（正の値のみ）';
 COMMENT ON COLUMN quest_details_by_level.reward IS '報酬金額（負の値不可）';
 COMMENT ON COLUMN quest_details_by_level.currency_id IS '通貨ID（外部キー）';
-COMMENT ON COLUMN quest_details_by_level.member_exp IS 'メンバー獲得経験値（負の値不可）';
+COMMENT ON COLUMN quest_details_by_level.child_exp IS 'メンバー獲得経験値（負の値不可）';
 COMMENT ON COLUMN quest_details_by_level.quest_exp IS 'クエスト獲得経験値（負の値不可）';
-COMMENT ON COLUMN quest_details_by_level.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN quest_details_by_level.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN quest_details_by_level.created_at IS '作成日時';
+COMMENT ON COLUMN quest_details_by_level.updated_at IS '更新日時';
 
 -- quest_details_by_level(履歴)
 CREATE TABLE IF NOT EXISTS history.quest_details_by_level (
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS history.quest_details_by_level (
     target_count int NOT NULL,
     reward int NOT NULL,
     currency_id int NOT NULL REFERENCES currencies (id) ON DELETE RESTRICT,
-    member_exp int NOT NULL,
+    child_exp int NOT NULL,
     quest_exp int NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),

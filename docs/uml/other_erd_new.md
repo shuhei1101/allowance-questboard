@@ -6,7 +6,7 @@ erDiagram
         %% コメントを管理するテーブル
         int id PK
         int user_type FK "user_types.id"
-        int user_id "ユーザID（ポリモーフィック：family_id または member_id）"
+        int user_id "ユーザID（ポリモーフィック：family_id または child_id）"
         int commentable_type FK "commentable_types.id"
         int commentable_id "コメント対象ID（ポリモーフィック）"
         int parent_comment_id FK "comments.id（返信の場合）"
@@ -32,7 +32,7 @@ erDiagram
     user_types {
         %% ユーザのタイプを分類
         int id PK
-        String type UK "ユーザタイプコード（family, member等）"
+        String type UK "ユーザタイプコード（family, child等）"
         String description "ユーザタイプの説明"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -77,7 +77,7 @@ erDiagram
     notifiable_types {
         %% 通知対象となるオブジェクトのタイプ
         int id PK
-        String type UK "通知対象タイプコード（family, member, quest, comment等）"
+        String type UK "通知対象タイプコード（family, child, quest, comment等）"
         String description "通知対象タイプの説明"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -126,7 +126,7 @@ erDiagram
     reportable_types {
         %% レポート対象となるオブジェクトのタイプ
         int id PK
-        String type UK "レポート対象タイプコード（family, member, quest, comment等）"
+        String type UK "レポート対象タイプコード（family, child, quest, comment等）"
         String description "レポート対象タイプの説明"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"

@@ -12,8 +12,8 @@ COMMENT ON COLUMN icon_category.id IS 'アイコンカテゴリID（主キー）
 COMMENT ON COLUMN icon_category.code IS 'カテゴリコード（一意制約）';
 COMMENT ON COLUMN icon_category.sort_order IS '表示順序';
 COMMENT ON COLUMN icon_category.is_active IS '有効フラグ';
-COMMENT ON COLUMN icon_category.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN icon_category.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN icon_category.created_at IS '作成日時';
+COMMENT ON COLUMN icon_category.updated_at IS '更新日時';
 
 -- アイコンカテゴリ翻訳テーブル
 CREATE TABLE IF NOT EXISTS icon_category_translations (
@@ -31,8 +31,8 @@ COMMENT ON COLUMN icon_category_translations.id IS '翻訳ID（主キー）';
 COMMENT ON COLUMN icon_category_translations.category_id IS 'アイコンカテゴリID（外部キー）';
 COMMENT ON COLUMN icon_category_translations.language_id IS '言語ID（外部キー）';
 COMMENT ON COLUMN icon_category_translations.name IS 'カテゴリ名の翻訳';
-COMMENT ON COLUMN icon_category_translations.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN icon_category_translations.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN icon_category_translations.created_at IS '作成日時';
+COMMENT ON COLUMN icon_category_translations.updated_at IS '更新日時';
 
 -- アイコンテーブル
 CREATE TABLE IF NOT EXISTS icons (
@@ -49,5 +49,5 @@ COMMENT ON COLUMN icons.id IS 'アイコンID（主キー）';
 COMMENT ON COLUMN icons.code IS 'アイコンコード（一意制約）';
 COMMENT ON COLUMN icons.category_id IS 'アイコンカテゴリID（外部キー、NULL許可）';
 COMMENT ON COLUMN icons.sort_order IS '表示順序';
-COMMENT ON COLUMN icons.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN icons.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN icons.created_at IS '作成日時';
+COMMENT ON COLUMN icons.updated_at IS '更新日時';

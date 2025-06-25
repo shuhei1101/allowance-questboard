@@ -1,5 +1,5 @@
 -- お小遣い記録テーブルのテストデータ
-INSERT INTO allowance_records (member_id, allowanceable_type, allowanceable_id, title, amount, recorded_at) VALUES
+INSERT INTO allowance_records (child_id, allowanceable_type, allowanceable_id, title, amount, recorded_at) VALUES
 -- 佐藤太郎のお小遣い記録
 (11, 1, 1, '家事お手伝いボーナス', 100, '2025-06-15 10:00:00+09'),
 (11, 3, 1, 'お皿洗いクエスト達成', 75, '2025-06-18 15:30:00+09'),

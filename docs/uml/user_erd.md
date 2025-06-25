@@ -25,9 +25,9 @@ erDiagram
         int language_id FK
         String name "家族名の翻訳"
         String bio "自己紹介の翻訳"
-    }    families ||--|{ members: ""
+    }    families ||--|{ children: ""
 
-    members {
+    children {
         %% メンバー(子供ユーザ)
         int id PK
         uuid user_id FK "外部キー、一意制約"
@@ -39,13 +39,13 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    members ||--|| member_grade: ""
-    member_grade ||--|| education: ""
+    children ||--|| child_grade: ""
+    child_grade ||--|| education: ""
 
-    member_grade {
+    child_grade {
         %% メンバーの現在の学年や職業
         int id PK
-        int member_id FK "一意制約"
+        int child_id FK "一意制約"
         int education_id FK
         int grade "学年（正の値のみ）"
         datetime created_at "作成日時"
@@ -69,22 +69,22 @@ erDiagram
         String name "学歴名の翻訳"
     }
 
-    members ||--|{ education_period: ""
+    children ||--|{ education_period: ""
 
     education_period {
         %% メンバーの教育期間
         int id PK
-        int member_id FK
+        int child_id FK
         int education_id FK
         int period "教育期間（年数、正の値のみ）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
-    }    members ||--|{ savings_records: ""
+    }    children ||--|{ savings_records: ""
 
     savings_records {
         %% 貯金記録の履歴
         int id PK
-        int member_id FK
+        int child_id FK
         int amount "貯金額（正の値は入金、負の値は出金）"
         int balance "貯金の残高（負の値は不可）"
         String reason "貯金の理由"
@@ -101,12 +101,12 @@ erDiagram
         String reason "貯金の理由の翻訳"
     }
 
-    members ||--|{ withdrawal_requests: ""
+    children ||--|{ withdrawal_requests: ""
 
     withdrawal_requests {
         %% 引き落とし申請テーブル
         int id PK
-        int requester_id FK "members.id"
+        int requester_id FK "children.id"
         int approver_id FK "families.id"
         int status_id FK "withdrawal_request_status.id"
         int amount "引き落とし金額（正の値のみ）"
@@ -178,12 +178,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    members ||--|{ allowance_records: ""
+    children ||--|{ allowance_records: ""
 
     allowance_records {
         %% お小遣いの記録テーブル
         int id PK
-        int member_id FK
+        int child_id FK
         int allowanceable_type FK "allowanceable_types.id"
         int allowanceable_id "お小遣いの対象ID（ポリモーフィック）"
         String title "お小遣いのタイトル"
@@ -205,20 +205,20 @@ erDiagram
     }    allowance_table {
         %% お小遣い設定の基底テーブル（ポリモーフィック関連）
         int id PK
-        String subclass_type "サブクラスタイプ（member, family, shared）"
+        String subclass_type "サブクラスタイプ（child, family, shared）"
         int subclass_id "サブクラスID（ポリモーフィック）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    allowance_table ||--o| member_allowance_table: "inherits to"
-    members ||--|| member_allowance_table: ""
+    allowance_table ||--o| child_allowance_table: "inherits to"
+    children ||--|| child_allowance_table: ""
 
-    member_allowance_table {
+    child_allowance_table {
         %% メンバー個人のお小遣い設定テーブル
         int id PK
         int superclass_id FK "allowance_table.id（一意制約）"
-        int member_id FK
+        int child_id FK
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -226,20 +226,20 @@ erDiagram
     level_table {
         %% レベル設定の基底テーブル（ポリモーフィック関連）
         int id PK
-        String subclass_type "サブクラスタイプ（member, family, shared）"
+        String subclass_type "サブクラスタイプ（child, family, shared）"
         int subclass_id "サブクラスID（ポリモーフィック）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    level_table ||--o| member_level_table: "inherits to"
-    members ||--|| member_level_table: ""
+    level_table ||--o| child_level_table: "inherits to"
+    children ||--|| child_level_table: ""
 
-    member_level_table {
+    child_level_table {
         %% メンバー個人のレベル設定テーブル
         int id PK
         int superclass_id FK "level_table.id（一意制約）"
-        int member_id FK
+        int child_id FK
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -247,7 +247,7 @@ erDiagram
     user_types {
         %% ユーザのタイプを分類するテーブル
         int id PK
-        String type UK "ユーザタイプコード（family, member等）"
+        String type UK "ユーザタイプコード（family, child等）"
         String description "ユーザタイプの説明"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"

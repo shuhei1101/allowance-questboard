@@ -1,5 +1,5 @@
 -- クエスト詳細（レベル別）テーブルのテストデータ
-INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_count, reward, currency_id, member_exp, quest_exp) VALUES
+INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_count, reward, currency_id, child_exp, quest_exp) VALUES
 -- お皿洗い（クエストID: 1）
 (1, 1, '食器を洗って乾燥させる', 1, 50, 1, 10, 5),
 (1, 2, '食器を洗って食器棚に片付ける', 1, 75, 1, 15, 8),

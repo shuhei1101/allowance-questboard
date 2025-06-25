@@ -40,7 +40,7 @@ erDiagram
         int target_count "目標回数（正の値のみ）"
         int reward "報酬金額（負の値不可）"
         int currency_id FK "currencies.id"
-        int member_exp "メンバー獲得経験値"
+        int child_exp "メンバー獲得経験値"
         int quest_exp "クエスト獲得経験値"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -104,7 +104,7 @@ erDiagram
         %% メンバーからのクエストリクエスト
         int id PK
         int family_id FK
-        int member_id FK "リクエスト者"
+        int child_id FK "リクエスト者"
         int quest_id FK "既存クエストID（既存クエストの場合のみ）"
         int status_id FK "quest_request_status.id"
         String title "リクエストタイトル"

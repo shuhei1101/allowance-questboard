@@ -17,8 +17,8 @@ COMMENT ON COLUMN currencies.name IS '通貨名（例：US Dollar, Euro, Japanes
 COMMENT ON COLUMN currencies.symbol IS '通貨記号（例：$, €, ¥）';
 COMMENT ON COLUMN currencies.is_active IS '有効フラグ';
 COMMENT ON COLUMN currencies.sort_order IS '表示順序';
-COMMENT ON COLUMN currencies.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN currencies.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN currencies.created_at IS '作成日時';
+COMMENT ON COLUMN currencies.updated_at IS '更新日時';
 
 -- 為替レートテーブル
 CREATE TABLE IF NOT EXISTS exchange_rates (
@@ -39,5 +39,5 @@ COMMENT ON COLUMN exchange_rates.base_currency IS '基準通貨ID（外部キー
 COMMENT ON COLUMN exchange_rates.target_currency IS '対象通貨ID（外部キー）';
 COMMENT ON COLUMN exchange_rates.rate IS '為替レート（正の値のみ、小数点以下6桁）';
 COMMENT ON COLUMN exchange_rates.effective_date IS '適用日';
-COMMENT ON COLUMN exchange_rates.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN exchange_rates.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN exchange_rates.created_at IS '作成日時';
+COMMENT ON COLUMN exchange_rates.updated_at IS '更新日時';

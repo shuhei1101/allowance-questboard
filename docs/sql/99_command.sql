@@ -1,5 +1,5 @@
 -- スキーマ削除
-DROP SCHEMA member CASCADE;
+DROP SCHEMA child CASCADE;
 DROP SCHEMA quest CASCADE;
 
 -- 家族テーブル削除

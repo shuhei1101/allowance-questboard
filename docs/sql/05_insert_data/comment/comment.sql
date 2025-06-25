@@ -3,7 +3,7 @@ INSERT INTO commentable_types (type, description) VALUES
 ('quests', 'クエストに対するコメント'),
 ('comments', 'コメントに対する返信コメント'),
 ('families', '家族に対するコメント'),
-('members', 'メンバーに対するコメント');
+('children', 'メンバーに対するコメント');
 
 -- コメントテーブルのテストデータ
 INSERT INTO comments (user_type, user_id, commentable_type, commentable_id, parent_comment_id, body, commented_at) VALUES

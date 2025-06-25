@@ -42,7 +42,7 @@ INSERT INTO quest_translations (quest_id, language_id, title, client, request_de
 (24, 2, 'Take Care of the Pet', 'Dad', 'Please clean the hamster cage.');
 
 -- メンバークエストステータステーブルのテストデータ
-INSERT INTO member_quest_status (code) VALUES
+INSERT INTO child_quest_status (code) VALUES
 ('assigned'),     -- 公開済み
 ('in_progress'),  -- 進行中
 ('completed'),    -- 完了
@@ -50,7 +50,7 @@ INSERT INTO member_quest_status (code) VALUES
 ('on_hold');      -- 保留中
 
 -- メンバークエストステータス翻訳テーブルのテストデータ
-INSERT INTO member_quest_status_translations (member_quest_status_id, language_id, name) VALUES
+INSERT INTO child_quest_status_translations (child_quest_status_id, language_id, name) VALUES
 -- 公開済み
 (6, 1, '公開済み'),
 (6, 2, 'Assigned'),
@@ -111,29 +111,29 @@ INSERT INTO saved_quests (quest_id, family_id, shared_quest_id, saved_at) VALUES
 (4, 4, 3, '2025-06-15 15:00:00+09'); -- スミス家のランニングクエストを保存
 
 -- メンバークエストテーブルのテストデータ
-INSERT INTO member_quests (quest_id, member_id, current_level, status, published_at, achieved_at) VALUES
--- 佐藤太郎のクエスト (member_id: 1)
+INSERT INTO child_quests (quest_id, child_id, current_level, status, published_at, achieved_at) VALUES
+-- 佐藤太郎のクエスト (child_id: 1)
 (1, 1, 2, 3, '2025-06-10 08:00:00+09', '2025-06-15 18:00:00+09'), -- お皿洗い（完了）
 (2, 1, 1, 2, '2025-06-12 09:00:00+09', NULL), -- 洗濯たたみ（進行中）
 (7, 1, 1, 1, '2025-06-18 10:00:00+09', NULL), -- 花壇の水やり（公開済み）
--- 佐藤花子のクエスト (member_id: 2)
+-- 佐藤花子のクエスト (child_id: 2)
 (2, 2, 1, 2, '2025-06-14 09:00:00+09', NULL), -- 洗濯たたみ（進行中）
 (8, 2, 1, 1, '2025-06-19 11:00:00+09', NULL), -- ペットのお世話（公開済み）
--- 田中次郎のクエスト (member_id: 3)
+-- 田中次郎のクエスト (child_id: 3)
 (3, 3, 3, 3, '2025-06-11 07:00:00+09', '2025-06-17 19:00:00+09'), -- 宿題をする（完了）
 (4, 3, 2, 2, '2025-06-13 06:00:00+09', NULL), -- ランニング（進行中）
 (1, 3, 1, 1, '2025-06-20 08:00:00+09', NULL), -- お皿洗い（公開済み）
--- Emily Smithのクエスト (member_id: 4)
+-- Emily Smithのクエスト (child_id: 4)
 (3, 4, 1, 2, '2025-06-12 08:00:00+09', NULL), -- 宿題をする（進行中）
 (4, 4, 1, 1, '2025-06-16 07:00:00+09', NULL), -- ランニング（公開済み）
 (5, 4, 2, 3, '2025-06-10 09:00:00+09', '2025-06-18 16:00:00+09'), -- 部屋の片付け（完了）
--- 鈴木三郎のクエスト (member_id: 5)
+-- 鈴木三郎のクエスト (child_id: 5)
 (3, 5, 4, 3, '2025-06-09 07:00:00+09', '2025-06-19 20:00:00+09'), -- 宿題をする（完了）
 (4, 5, 3, 2, '2025-06-11 06:00:00+09', NULL), -- ランニング（進行中）
 (5, 5, 1, 1, '2025-06-17 10:00:00+09', NULL); -- 部屋の片付け（公開済み）
 
 -- クエスト詳細（レベル別）テーブルのテストデータ
-INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_count, reward, currency_id, member_exp, quest_exp) VALUES
+INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_count, reward, currency_id, child_exp, quest_exp) VALUES
 -- お皿洗い（クエストID: 1）
 (1, 1, '食器を洗って乾燥させる', 1, 50, 1, 10, 5),
 (1, 2, '食器を洗って食器棚に片付ける', 1, 75, 1, 15, 8),
@@ -260,7 +260,7 @@ INSERT INTO quest_exp_by_level (quest_id, level, exp) VALUES
 (8, 3, 200);
 
 -- クエストリクエストテーブルのテストデータ
-INSERT INTO quest_requests (family_id, member_id, quest_id, title, description, is_new_request, status_id, answer, answered_at) VALUES
+INSERT INTO quest_requests (family_id, child_id, quest_id, title, description, is_new_request, status_id, answer, answered_at) VALUES
 -- 新規クエストリクエスト（承認済み）
 (1, 1, NULL, 'ゲームを1時間だけする', '宿題を終わらせたあとに、1時間だけゲームをしたいです。', true, 2, '宿題が完了したことを確認できたので承認します。', '2025-06-10 19:00:00+09'),
 -- 既存クエストリクエスト（申請中）

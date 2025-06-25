@@ -26,7 +26,7 @@
 5. 02_create_table/other/countries.sql
 
 -- 学歴マスタ
-6. 02_create_table/member/education.sql
+6. 02_create_table/child/education.sql
 
 -- ユーザタイプ
 7. 02_create_table/comment/user_types.sql
@@ -53,49 +53,49 @@
 ### 3. 認証システム（auth.users）に依存するテーブル
 ```sql
 -- ユーザ設定（auth.usersに依存）
-14. 02_create_table/member/user_settings.sql
+14. 02_create_table/child/user_settings.sql
 
 -- 家族テーブル（auth.usersに依存）
-15. 02_create_table/member/families.sql
+15. 02_create_table/child/families.sql
 ```
 
 ### 4. 家族テーブルに依存するテーブル
 ```sql
 -- メンバーテーブル（families, icons, educationに依存）
-16. 02_create_table/member/members.sql
+16. 02_create_table/child/children.sql
 
--- メンバー学年（members, educationに依存）
-17. 02_create_table/member/member_grade.sql
+-- メンバー学年（children, educationに依存）
+17. 02_create_table/child/child_grade.sql
 
--- 教育期間（members, educationに依存）
-18. 02_create_table/member/education_reriod.sql
+-- 教育期間（children, educationに依存）
+18. 02_create_table/child/education_reriod.sql
 
 -- フォロー関係（familiesに依存）
-19. 02_create_table/member/follows.sql
+19. 02_create_table/child/follows.sql
 
 -- 経験値レベル設定（familiesに依存）
-20. 02_create_table/member/exp_by_level.sql
+20. 02_create_table/child/exp_by_level.sql
 ```
 
 ### 5. サブタイプテーブル関連
 ```sql
 -- お小遣いテーブルサブタイプ
-21. 02_create_table/member/allowance_table_sub_types.sql
+21. 02_create_table/child/allowance_table_sub_types.sql
 
 -- レベルテーブルサブタイプ
-22. 02_create_table/member/level_table_sub_types.sql
+22. 02_create_table/child/level_table_sub_types.sql
 ```
 
-### 6. お小遣いテーブル関連（members, families, allowance_table_sub_typesに依存）
+### 6. お小遣いテーブル関連（children, families, allowance_table_sub_typesに依存）
 ```sql
 -- お小遣いテーブル基底クラス
-23. 02_create_table/member/allowance_table.sql
+23. 02_create_table/child/allowance_table.sql
 ```
 
-### 7. レベルテーブル関連（members, families, member_level_sub_typesに依存）
+### 7. レベルテーブル関連（children, families, child_level_sub_typesに依存）
 ```sql
 -- レベルテーブル基底クラス
-24. 02_create_table/member/level_table.sql
+24. 02_create_table/child/level_table.sql
 ```
 
 ### 8. クエストサブクラスタイプ（依存関係なし）
@@ -133,7 +133,7 @@
 -- クエスト経験値（questsに依存）
 32. 02_create_table/quest/quest_exp_by_level.sql
 
--- クエストリクエスト（families, members, questsに依存）
+-- クエストリクエスト（families, children, questsに依存）
 33. 02_create_table/quest/quest_requests.sql
 ```
 
@@ -144,23 +144,23 @@
 34. 02_create_table/notification/notification.sql
 ```
 
-### 13. 銀行関連（membersに依存）
+### 13. 銀行関連（childrenに依存）
 ```sql
--- 貯金記録（membersに依存）
+-- 貯金記録（childrenに依存）
 35. 02_create_table/bank/savings_records.sql
 
--- お小遣い記録（members, allowanceable_typesに依存）
+-- お小遣い記録（children, allowanceable_typesに依存）
 36. 02_create_table/bank/allowance_records.sql
 
--- 引き落とし申請（members, families, withdrawal_request_statusに依存）
+-- 引き落とし申請（children, families, withdrawal_request_statusに依存）
 37. 02_create_table/bank/withdrawal_request_status.sql
 38. 02_create_table/bank/withdrawal_requests.sql
 ```
 
--- お小遣い記録（members, allowanceable_typesに依存）
+-- お小遣い記録（children, allowanceable_typesに依存）
 35. 02_create_table/bank/allowance_records.sql
 
--- 引き落とし申請（members, families, withdrawal_request_statusに依存）
+-- 引き落とし申請（children, families, withdrawal_request_statusに依存）
 36. 02_create_table/bank/withdrawal_request_status.sql
 37. 02_create_table/bank/withdrawal_requests.sql
 ```
@@ -169,14 +169,14 @@
 
 ### 基本的な依存関係の流れ
 1. **マスタテーブル** → **認証関連** → **家族・メンバー** → **機能テーブル**
-2. **auth.users** → **families** → **members** → **各機能テーブル**
+2. **auth.users** → **families** → **children** → **各機能テーブル**
 3. **languages** → **各翻訳テーブル**
 4. **currencies** → **金額関連テーブル**
 5. **icons** → **アイコン参照テーブル**
 
 ### 特に注意が必要な依存関係
-- `members`テーブルは`families`テーブルに依存
-- 多くの機能テーブルが`members`と`families`に依存
+- `children`テーブルは`families`テーブルに依存
+- 多くの機能テーブルが`children`と`families`に依存
 - 翻訳テーブルは必ず`languages`テーブルに依存
 - 金額関連テーブルは`currencies`テーブルに依存
 - 履歴テーブル（`history.`スキーマ）は対応する元テーブルの作成後

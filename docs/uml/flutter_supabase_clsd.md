@@ -77,7 +77,7 @@ classDiagram
 
     namespace backend_ {
         class QuestController {
-            member(ApplyQuestRequest): ApplyQuestResponse
+            child(ApplyQuestRequest): ApplyQuestResponse
         }
 
         class Quest {
@@ -94,7 +94,7 @@ classDiagram
         }
         class QuestRepository
         class QuestDao
-        class QuestEntity
+        class QuestsEntity
     }
 
     namespace database {
@@ -134,9 +134,9 @@ classDiagram
     QuestQueryService --> Supabase
     QuestRepository --> Quest
     QuestRepository --> QuestDao
-    QuestRepository --> QuestEntity
+    QuestRepository --> QuestsEntity
     QuestRepository --> QuestQueryService
-    QuestDao --> QuestEntity
+    QuestDao --> QuestsEntity
     QuestDao --> Supabase
 ```
 

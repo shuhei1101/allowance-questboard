@@ -1,7 +1,7 @@
 -- 通知対象タイプテーブルのテストデータ
 INSERT INTO notifiable_types (type, description) VALUES
 ('family', '家族に関する通知'),
-('member', 'メンバーに関する通知'),
+('child', 'メンバーに関する通知'),
 ('quest', 'クエストに関する通知'),
 ('comment', 'コメントに関する通知'),
 ('withdrawal', '引き落とし申請に関する通知'),
@@ -14,7 +14,7 @@ INSERT INTO notifiable_types_translations (notifiable_type_id, language_id, desc
 (1, 2, 'Family notifications'),
 -- メンバー
 (2, 1, 'メンバーに関する通知'),
-(2, 2, 'Member notifications'),
+(2, 2, 'child notifications'),
 -- クエスト
 (3, 1, 'クエストに関する通知'),
 (3, 2, 'Quest notifications'),

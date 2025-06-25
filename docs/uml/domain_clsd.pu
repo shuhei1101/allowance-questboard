@@ -39,7 +39,7 @@ package domain {
             +FamilyName name
             +Icon icon
             +String introduction
-            +List<MemberId> memberIds
+            +List<MemberId> childIds
             +DateTime createdAt
             +DateTime updatedAt
         }
@@ -53,8 +53,8 @@ package domain {
             +String value
         }
     }
-    package members {
-        class Member {
+    package children {
+        class child {
             +MemberId id
             +FamilyId familyId
             +MemberName name
@@ -70,11 +70,11 @@ package domain {
             +Age getAge()
             +Level getLevel(MemberLevelExpMap)
         }
-        note top of Member: メンバー（子供）のドメインモデル
-        Member *--> MemberId
-        Member *--> MemberName
-        Member *--> Grade
-        Member *--> MemberExp
+        note top of child: メンバー（子供）のドメインモデル
+        child *--> MemberId
+        child *--> MemberName
+        child *--> Grade
+        child *--> MemberExp
         class MemberId {
             +String value
         }
@@ -107,7 +107,7 @@ package domain {
         MemberLevelExpMap *--> MemberExp
         class SavingRecode {
             ' 貯金履歴
-            +MemberId memberId
+            +MemberId childId
             +Money balance
             +Money difference
             +String reason
@@ -138,7 +138,7 @@ package domain {
     package allowances {
         ' お小遣い関連（履歴、お小遣いテーブル、ランクテーブル）
         class AllowanceHistory {
-            +MemberId memberId
+            +MemberId childId
             ' クエストや違反行為のオブジェクトを格納
             +Allowanceable target
             +datetime recordedAt
@@ -296,19 +296,19 @@ package domain {
         class FamilyQuest <Allowanceable, KeyQuestable> {
             +FamilyId familyId
             +bool isPublic
-            +QuestMembersStatus participants
+            +QuestChildrenStatus participants
             +bool isShared
             +QuestId sharedQuestId
         }
         note top of FamilyQuest: 家族が保持するクエスト
         FamilyQuest --> QuestStatus
-        FamilyQuest --> QuestMembersStatus
-        class QuestMembersStatus {
+        FamilyQuest --> QuestChildrenStatus
+        class QuestChildrenStatus {
             +List<QuestMemberStatus> _list
         }
-        note right of QuestMembersStatus: クエストのメンバーのステータス
+        note right of QuestChildrenStatus: クエストのメンバーのステータス
         class QuestMemberStatus {
-            +MemberId memberId
+            +MemberId childId
             +QuestStatus status
             +QuestExp exp
         }

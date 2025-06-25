@@ -1,11 +1,11 @@
 -- レベルテーブル（基底クラス）のテストデータ
 INSERT INTO level_table (subclass_type, subclass_id) VALUES
 -- メンバー個人のレベル設定
-(1, 11), -- 佐藤太郎用（member）
-(1, 12), -- 佐藤花子用（member）
-(1, 13), -- 田中次郎用（member）
-(1, 14), -- Emily Smith用（member）
-(1, 15), -- 鈴木三郎用（member）
+(1, 11), -- 佐藤太郎用（child）
+(1, 12), -- 佐藤花子用（child）
+(1, 13), -- 田中次郎用（child）
+(1, 14), -- Emily Smith用（child）
+(1, 15), -- 鈴木三郎用（child）
 -- 家族のレベル設定
 (2, 1), -- 佐藤家用（family）
 (2, 2), -- 田中家用（family）
@@ -13,7 +13,7 @@ INSERT INTO level_table (subclass_type, subclass_id) VALUES
 (2, 4); -- 鈴木家用（family）
 
 -- メンバーレベルテーブルのテストデータ
-INSERT INTO member_level_table (superclass_id, member_id) VALUES
+INSERT INTO child_level_table (superclass_id, child_id) VALUES
 (1, 11), -- 佐藤太郎
 (2, 12), -- 佐藤花子
 (3, 13), -- 田中次郎

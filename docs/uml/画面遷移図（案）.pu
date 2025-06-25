@@ -36,7 +36,7 @@ package "家族画面" #LightPink {
         edit()
         follow()
         setting()
-        member_list()
+        child_list()
     }
     class edit {
         save()
@@ -63,7 +63,7 @@ package "管理者設定" #LightSlateGray {
     }
 }
 
-家族画面.single --> メンバー画面.collection: member_list()
+家族画面.single --> メンバー画面.collection: child_list()
 package "メンバー画面" #FloralWhite {
     class collection {
         select()

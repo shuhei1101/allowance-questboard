@@ -201,13 +201,13 @@
 
         INSERT INTO user_types (type, description) VALUES
         ('family', '家族（親）ユーザー'),
-        ('member', 'メンバー（子供）ユーザー');
+        ('child', 'メンバー（子供）ユーザー');
 
     -- レポート対象タイプ
 
         INSERT INTO reportable_types (type, description) VALUES
         ('family', '家族（親）に対するレポート'),
-        ('member', 'メンバー（子供）に対するレポート'),
+        ('child', 'メンバー（子供）に対するレポート'),
         ('quest', 'クエストに対するレポート'),
         ('comment', 'コメントに対するレポート');
 
@@ -223,7 +223,7 @@
 
         INSERT INTO notifiable_types (type, description) VALUES
         ('family', '家族に関する通知'),
-        ('member', 'メンバーに関する通知'),
+        ('child', 'メンバーに関する通知'),
         ('quest', 'クエストに関する通知'),
         ('comment', 'コメントに関する通知'),
         ('withdrawal', '引き落とし申請に関する通知'),
@@ -236,7 +236,7 @@
         (1, 2, 'Family notifications'),
         -- メンバー
         (2, 1, 'メンバーに関する通知'),
-        (2, 2, 'Member notifications'),
+        (2, 2, 'child notifications'),
         -- クエスト
         (3, 1, 'クエストに関する通知'),
         (3, 2, 'Quest notifications'),
@@ -256,7 +256,7 @@
         ('quest_page', 'クエスト詳細ページ'),
         ('comment_page', 'コメント詳細ページ'),
         ('family_page', '家族詳細ページ'),
-        ('member_page', 'メンバー詳細ページ'),
+        ('child_page', 'メンバー詳細ページ'),
         ('withdrawal_page', '引き落とし申請ページ'),
         ('savings_page', '貯金ページ'),
         ('allowance_page', 'お小遣い履歴ページ'),
@@ -287,7 +287,7 @@
 
         INSERT INTO allowanceable_types (type, description) VALUES
         ('family', '家族からのお小遣い'),
-        ('member', 'メンバー間のお小遣い'),
+        ('child', 'メンバー間のお小遣い'),
         ('quest', 'クエスト報酬'),
         ('comment', 'コメント報酬');
 
@@ -505,7 +505,7 @@
 
     -- メンバーテーブル（修正版）
 
-        INSERT INTO members (user_id, family_id, name, icon_id, birthday) VALUES
+        INSERT INTO children (user_id, family_id, name, icon_id, birthday) VALUES
         ('550e8400-e29b-41d4-a716-446655440005'::uuid, 1, '佐藤太郎', 6, '2014-04-15'), -- 小学生（11歳）
         ('550e8400-e29b-41d4-a716-446655440006'::uuid, 1, '佐藤花子', 7, '2018-08-22'), -- 幼稚園（6歳）
         ('550e8400-e29b-41d4-a716-446655440007'::uuid, 2, '田中次郎', 6, '2011-12-03'), -- 中学生（13歳）
@@ -513,7 +513,7 @@
         ('550e8400-e29b-41d4-a716-446655440009'::uuid, 4, '鈴木三郎', 6, '2008-09-18'); -- 高校生（16歳）
 
     -- メンバー設定テーブル
-        INSERT INTO members_settings (member_id, min_savings) VALUES
+        INSERT INTO children_settings (child_id, min_savings) VALUES
         (1, 1000), -- 佐藤太郎：最低貯金額1000円
         (2, 500),  -- 佐藤花子：最低貯金額500円
         (3, 2000), -- 田中次郎：最低貯金額2000円
@@ -521,7 +521,7 @@
         (5, 3000); -- 鈴木三郎：最低貯金額3000円
 
     -- メンバーステータステーブル
-        INSERT INTO member_stats (member_id, exp, balance) VALUES
+        INSERT INTO child_stats (child_id, exp, balance) VALUES
         (1, 450, 1500),  -- 佐藤太郎：経験値450、残高1500円
         (2, 180, 800),   -- 佐藤花子：経験値180、残高800円
         (3, 750, 3200),  -- 田中次郎：経験値750、残高3200円
@@ -530,7 +530,7 @@
 
     -- メンバー学年（修正版）
 
-        INSERT INTO member_grade (member_id, education_id, grade) VALUES
+        INSERT INTO child_grade (child_id, education_id, grade) VALUES
         (1, 2, 5), -- 佐藤太郎：小学校5年生
         (2, 1, 1), -- 佐藤花子：就学前（年長）
         (3, 3, 2), -- 田中次郎：中学校2年生
@@ -539,7 +539,7 @@
 
     -- 教育期間
 
-        INSERT INTO education_period (member_id, education_id, period) VALUES
+        INSERT INTO education_period (child_id, education_id, period) VALUES
         -- 佐藤太郎（現在小学5年生）
         (1, 1, 2), -- 就学前2年間
         (1, 2, 6), -- 小学校6年間予定
@@ -625,14 +625,14 @@
     -- お小遣いテーブルサブタイプ
 
         INSERT INTO allowance_table_sub_types (type, description) VALUES
-        ('member_allowance_table', 'メンバー個人のお小遣い設定'),
+        ('child_allowance_table', 'メンバー個人のお小遣い設定'),
         ('family_allowance_table', '家族のお小遣い設定'),
         ('shared_allowance_table', '共有お小遣い設定');
 
     -- レベルテーブルサブタイプ
 
-        INSERT INTO member_level_sub_types (type, description) VALUES
-        ('member_level_table', 'メンバー個人のレベル設定'),
+        INSERT INTO child_level_sub_types (type, description) VALUES
+        ('child_level_table', 'メンバー個人のレベル設定'),
         ('family_level_table', '家族のレベル設定'),
         ('shared_level_table', '共有レベル設定');
 
@@ -644,11 +644,11 @@
 
         INSERT INTO allowance_table (subclass_type, subclass_id) VALUES
         -- メンバー個人のお小遣い設定
-        (1, 1), -- 佐藤太郎用（member）
-        (1, 2), -- 佐藤花子用（member）
-        (1, 3), -- 田中次郎用（member）
-        (1, 4), -- Emily Smith用（member）
-        (1, 5), -- 鈴木三郎用（member）
+        (1, 1), -- 佐藤太郎用（child）
+        (1, 2), -- 佐藤花子用（child）
+        (1, 3), -- 田中次郎用（child）
+        (1, 4), -- Emily Smith用（child）
+        (1, 5), -- 鈴木三郎用（child）
         -- 家族のお小遣い設定
         (2, 1), -- 佐藤家用（family）
         (2, 2), -- 田中家用（family）
@@ -656,7 +656,7 @@
         (2, 4); -- 鈴木家用（family）
 
     -- メンバーお小遣いテーブル
-        INSERT INTO member_allowance_table (superclass_id, member_id) VALUES
+        INSERT INTO child_allowance_table (superclass_id, child_id) VALUES
         (1, 1), -- 佐藤太郎
         (2, 2), -- 佐藤花子
         (3, 3), -- 田中次郎
@@ -718,7 +718,7 @@
         ('template_quests', 'テンプレートクエスト'),
         ('family_quests', '家族クエスト'),
         ('saved_quests', '保存済みクエスト'),
-        ('member_quests', 'メンバークエスト');
+        ('child_quests', 'メンバークエスト');
 
     -- クエストカテゴリサブクラスタイプ
 
@@ -831,7 +831,7 @@
 
     -- クエスト詳細（レベル別）
 
-        INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_count, reward, currency_id, member_exp, quest_exp) VALUES
+        INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_count, reward, currency_id, child_exp, quest_exp) VALUES
         -- お皿洗い（クエストID: 1）
         (1, 1, '食器を洗って乾燥させる', 1, 50, 1, 10, 5),
         (1, 2, '食器を洗って食器棚に片付ける', 1, 75, 1, 15, 8),
@@ -945,7 +945,7 @@
         ('quests', 'クエストに対するコメント'),
         ('comments', 'コメントに対する返信コメント'),
         ('families', '家族に対するコメント'),
-        ('members', 'メンバーに対するコメント');
+        ('children', 'メンバーに対するコメント');
 
     -- コメントテーブル
 
@@ -1043,7 +1043,7 @@
 
     -- お小遣い記録テーブル
 
-        INSERT INTO allowance_records (member_id, allowanceable_type, allowanceable_id, title, amount, recorded_at) VALUES
+        INSERT INTO allowance_records (child_id, allowanceable_type, allowanceable_id, title, amount, recorded_at) VALUES
         -- 佐藤太郎のお小遣い記録
         (1, 1, 1, '家事お手伝いボーナス', 100, '2025-06-15 10:00:00+09'),
         (1, 3, 1, 'お皿洗いクエスト達成', 75, '2025-06-18 15:30:00+09'),
@@ -1062,7 +1062,7 @@
 
     -- 貯金記録テーブル
 
-        INSERT INTO savings_records (member_id, amount, balance, recorded_at) VALUES
+        INSERT INTO savings_records (child_id, amount, balance, recorded_at) VALUES
         -- 佐藤太郎の貯金記録
         (1, 100, 100, '2025-06-01 10:00:00+09'),
         (1, 50, 150, '2025-06-05 14:00:00+09'),
@@ -1104,7 +1104,7 @@
 
     -- クエストリクエストテーブル
 
-        INSERT INTO quest_requests (family_id, member_id, quest_id, title, description, is_new_request, status_id, answer, answered_at, requested_at) VALUES
+        INSERT INTO quest_requests (family_id, child_id, quest_id, title, description, is_new_request, status_id, answer, answered_at, requested_at) VALUES
         -- 新規クエストリクエスト（承認済み）
         (1, 1, NULL, 'ゲームを1時間だけする', '宿題を終わらせたあとに、1時間だけゲームをしたいです。', true, 2, '宿題が完了したことを確認できたので承認します。', '2025-06-10 19:00:00+09', '2025-06-10 18:00:00+09'),
         -- 既存クエストリクエスト（申請中）
@@ -1124,7 +1124,7 @@
 
     -- メンバークエストステータス
 
-        INSERT INTO member_quest_status (code) VALUES
+        INSERT INTO child_quest_status (code) VALUES
         ('available'),
         ('assigned'),
         ('in_progress'),
@@ -1133,7 +1133,7 @@
         ('expired');
 
     -- メンバークエストステータス翻訳テーブル
-        INSERT INTO member_quest_status_translations (member_quest_status_id, language_id, name) VALUES
+        INSERT INTO child_quest_status_translations (child_quest_status_id, language_id, name) VALUES
         -- available（利用可能）
         (1, 1, '利用可能'),
         (1, 2, 'Available'),
@@ -1203,27 +1203,27 @@
 
     -- メンバークエスト
 
-        INSERT INTO member_quests (quest_id, member_id, current_level, status_id, published_at, achieved_at) VALUES
-        -- 佐藤太郎（member_id: 1）のクエスト
+        INSERT INTO child_quests (quest_id, child_id, current_level, status_id, published_at, achieved_at) VALUES
+        -- 佐藤太郎（child_id: 1）のクエスト
         (1, 1, 1, 4, '2025-06-18 10:00:00+09', '2025-06-18 15:30:00+09'), -- 部屋の片付け（完了）
         (2, 1, 2, 3, '2025-06-19 08:00:00+09', NULL), -- 宿題をする（進行中）
         (3, 1, 1, 1, '2025-06-20 09:00:00+09', NULL), -- お皿洗い（利用可能）
         
-        -- 佐藤花子（member_id: 2）のクエスト
+        -- 佐藤花子（child_id: 2）のクエスト
         (1, 2, 1, 2, '2025-06-18 10:00:00+09', NULL), -- 部屋の片付け（アサイン済み）
         (4, 2, 1, 4, '2025-06-19 07:00:00+09', '2025-06-19 18:00:00+09'), -- 靴を揃える（完了）
         
-        -- 田中次郎（member_id: 3）のクエスト
+        -- 田中次郎（child_id: 3）のクエスト
         (2, 3, 2, 4, '2025-06-17 08:00:00+09', '2025-06-17 20:00:00+09'), -- 宿題をする（完了）
         (1, 3, 1, 3, '2025-06-19 10:00:00+09', NULL), -- 部屋の片付け（進行中）
         (5, 3, 1, 1, '2025-06-20 08:00:00+09', NULL), -- 洗濯物をたたむ（利用可能）
         
-        -- Emily Smith（member_id: 4）のクエスト
+        -- Emily Smith（child_id: 4）のクエスト
         (3, 4, 1, 4, '2025-06-18 11:00:00+09', '2025-06-18 16:00:00+09'), -- お皿洗い（完了）
         (1, 4, 1, 2, '2025-06-19 09:00:00+09', NULL), -- 部屋の片付け（アサイン済み）
         (4, 4, 1, 1, '2025-06-20 10:00:00+09', NULL), -- 靴を揃える（利用可能）
         
-        -- 鈴木三郎（member_id: 5）のクエスト
+        -- 鈴木三郎（child_id: 5）のクエスト
         (5, 5, 2, 4, '2025-06-16 14:00:00+09', '2025-06-16 17:00:00+09'), -- 洗濯物をたたむ（完了）
         (2, 5, 2, 4, '2025-06-18 08:00:00+09', '2025-06-18 21:00:00+09'), -- 宿題をする（完了）
         (6, 5, 3, 3, '2025-06-20 08:00:00+09', NULL); -- 年末大掃除（進行中）

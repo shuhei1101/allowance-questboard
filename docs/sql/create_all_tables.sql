@@ -27,8 +27,8 @@
         COMMENT ON COLUMN languages.name IS '言語名（例：English, Japanese）';
         COMMENT ON COLUMN languages.is_active IS '有効フラグ';
         COMMENT ON COLUMN languages.sort_order IS '表示順序（小さい値が上位）';
-        COMMENT ON COLUMN languages.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN languages.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN languages.created_at IS '作成日時';
+        COMMENT ON COLUMN languages.updated_at IS '更新日時';
 
 -- 通貨マスタ
     -- 通貨マスタテーブル
@@ -50,8 +50,8 @@
         COMMENT ON COLUMN currencies.symbol IS '通貨記号（例：$, €, ¥）';
         COMMENT ON COLUMN currencies.is_active IS '有効フラグ';
         COMMENT ON COLUMN currencies.sort_order IS '表示順序';
-        COMMENT ON COLUMN currencies.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN currencies.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN currencies.created_at IS '作成日時';
+        COMMENT ON COLUMN currencies.updated_at IS '更新日時';
 
     -- 為替レートテーブル
         CREATE TABLE IF NOT EXISTS exchange_rates (
@@ -72,8 +72,8 @@
         COMMENT ON COLUMN exchange_rates.target_currency IS '対象通貨ID（外部キー）';
         COMMENT ON COLUMN exchange_rates.rate IS '為替レート（正の値のみ、小数点以下6桁）';
         COMMENT ON COLUMN exchange_rates.effective_date IS '適用日';
-        COMMENT ON COLUMN exchange_rates.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN exchange_rates.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN exchange_rates.created_at IS '作成日時';
+        COMMENT ON COLUMN exchange_rates.updated_at IS '更新日時';
 
 -- アイコン関連
     -- アイコンカテゴリテーブル
@@ -91,8 +91,8 @@
         COMMENT ON COLUMN icon_category.code IS 'カテゴリコード（一意制約）';
         COMMENT ON COLUMN icon_category.sort_order IS '表示順序';
         COMMENT ON COLUMN icon_category.is_active IS '有効フラグ';
-        COMMENT ON COLUMN icon_category.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN icon_category.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN icon_category.created_at IS '作成日時';
+        COMMENT ON COLUMN icon_category.updated_at IS '更新日時';
 
     -- アイコンカテゴリ翻訳テーブル
         CREATE TABLE IF NOT EXISTS icon_category_translations (
@@ -110,8 +110,8 @@
         COMMENT ON COLUMN icon_category_translations.category_id IS 'アイコンカテゴリID（外部キー）';
         COMMENT ON COLUMN icon_category_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN icon_category_translations.name IS 'カテゴリ名の翻訳';
-        COMMENT ON COLUMN icon_category_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN icon_category_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN icon_category_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN icon_category_translations.updated_at IS '更新日時';
 
     -- アイコンテーブル
         CREATE TABLE IF NOT EXISTS icons (
@@ -134,8 +134,8 @@
         COMMENT ON COLUMN icons.alt_text IS '代替テキスト（アクセシビリティ対応）';
         COMMENT ON COLUMN icons.sort_order IS '表示順序';
         COMMENT ON COLUMN icons.is_active IS '有効フラグ';
-        COMMENT ON COLUMN icons.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN icons.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN icons.created_at IS '作成日時';
+        COMMENT ON COLUMN icons.updated_at IS '更新日時';
 
 -- 国家マスタ
     -- 国家マスタテーブル
@@ -155,8 +155,8 @@
         COMMENT ON COLUMN countries.icon_id IS '国旗アイコンID（外部キー、NULL許可）';
         COMMENT ON COLUMN countries.is_active IS '有効フラグ';
         COMMENT ON COLUMN countries.sort_order IS '表示順序';
-        COMMENT ON COLUMN countries.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN countries.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN countries.created_at IS '作成日時';
+        COMMENT ON COLUMN countries.updated_at IS '更新日時';
 
 -- 学歴マスタ
     -- 学歴マスタテーブル
@@ -170,8 +170,8 @@
         COMMENT ON TABLE education IS '学歴の種類を管理するマスタテーブル';
         COMMENT ON COLUMN education.id IS '学歴ID（主キー）';
         COMMENT ON COLUMN education.code IS '学歴コード（例：elementary, junior_high, high_school等）';
-        COMMENT ON COLUMN education.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN education.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN education.created_at IS '作成日時';
+        COMMENT ON COLUMN education.updated_at IS '更新日時';
 
     -- 学歴翻訳テーブル
         CREATE TABLE IF NOT EXISTS education_translations (
@@ -189,14 +189,14 @@
         COMMENT ON COLUMN education_translations.education_id IS '学歴ID（外部キー）';
         COMMENT ON COLUMN education_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN education_translations.name IS '学歴名の翻訳';
-        COMMENT ON COLUMN education_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN education_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN education_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN education_translations.updated_at IS '更新日時';
 
 -- ユーザタイプ
     -- ユーザタイプテーブル
         CREATE TABLE IF NOT EXISTS user_types (
             id serial PRIMARY KEY,
-            type varchar(20) NOT NULL UNIQUE,  -- family, member
+            type varchar(20) NOT NULL UNIQUE,  -- family, child
             description text NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
@@ -204,16 +204,16 @@
 
         COMMENT ON TABLE user_types IS 'ユーザのタイプを分類するテーブル';
         COMMENT ON COLUMN user_types.id IS 'ユーザタイプID（主キー）';
-        COMMENT ON COLUMN user_types.type IS 'ユーザタイプコード（family, member等）';
+        COMMENT ON COLUMN user_types.type IS 'ユーザタイプコード（family, child等）';
         COMMENT ON COLUMN user_types.description IS 'ユーザタイプの説明';
-        COMMENT ON COLUMN user_types.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN user_types.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN user_types.created_at IS '作成日時';
+        COMMENT ON COLUMN user_types.updated_at IS '更新日時';
 
 -- レポート対象タイプ
     -- レポート対象タイプテーブル
         CREATE TABLE IF NOT EXISTS reportable_types (
             id serial PRIMARY KEY,
-            type varchar(50) NOT NULL UNIQUE,  -- family, member, quest, comment
+            type varchar(50) NOT NULL UNIQUE,  -- family, child, quest, comment
             description text NOT NULL CHECK (length(description) > 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
@@ -221,10 +221,10 @@
 
         COMMENT ON TABLE reportable_types IS 'レポート対象となるオブジェクトのタイプを管理するマスタテーブル';
         COMMENT ON COLUMN reportable_types.id IS 'レポート対象タイプID（主キー）';
-        COMMENT ON COLUMN reportable_types.type IS 'レポート対象タイプコード（family, member, quest, comment等）';
+        COMMENT ON COLUMN reportable_types.type IS 'レポート対象タイプコード（family, child, quest, comment等）';
         COMMENT ON COLUMN reportable_types.description IS 'レポート対象タイプの説明（空文字不可）';
-        COMMENT ON COLUMN reportable_types.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN reportable_types.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN reportable_types.created_at IS '作成日時';
+        COMMENT ON COLUMN reportable_types.updated_at IS '更新日時';
 
 -- レポートステータス
     -- レポートステータステーブル
@@ -247,14 +247,14 @@
         COMMENT ON COLUMN report_status.id IS 'ステータスID（主キー）';
         COMMENT ON COLUMN report_status.code IS 'ステータスコード（例：pending, reviewed, resolved, dismissed）';
         COMMENT ON COLUMN report_status.status IS 'ステータス名';
-        COMMENT ON COLUMN report_status.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN report_status.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN report_status.created_at IS '作成日時';
+        COMMENT ON COLUMN report_status.updated_at IS '更新日時';
 
     -- レポートテーブル
         CREATE TABLE IF NOT EXISTS reports (
             id serial PRIMARY KEY,
             reporter_type int NOT NULL REFERENCES user_types (id) ON DELETE RESTRICT,
-            reporter_id int NOT NULL,  -- ユーザID (family_id or member_id)
+            reporter_id int NOT NULL,  -- ユーザID (family_id or child_id)
             reportable_type int NOT NULL REFERENCES reportable_types (id) ON DELETE RESTRICT,
             reportable_id int NOT NULL,
             status_id int NOT NULL REFERENCES report_status (id) ON DELETE RESTRICT,
@@ -290,21 +290,21 @@
         COMMENT ON TABLE reports IS 'ユーザからのレポート（通報）を管理するテーブル';
         COMMENT ON COLUMN reports.id IS 'レポートID（主キー）';
         COMMENT ON COLUMN reports.reporter_type IS 'レポーター種別ID（外部キー）';
-        COMMENT ON COLUMN reports.reporter_id IS 'レポーターID（ポリモーフィック：family_id または member_id）';
+        COMMENT ON COLUMN reports.reporter_id IS 'レポーターID（ポリモーフィック：family_id または child_id）';
         COMMENT ON COLUMN reports.reportable_type IS 'レポート対象タイプID（外部キー）';
         COMMENT ON COLUMN reports.reportable_id IS 'レポート対象ID（ポリモーフィック）';
         COMMENT ON COLUMN reports.status_id IS 'ステータスID（外部キー）';
         COMMENT ON COLUMN reports.reported_at IS 'レポート作成日時';
         COMMENT ON COLUMN reports.resolved_at IS 'レポート解決日時（未解決の場合はNULL）';
-        COMMENT ON COLUMN reports.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN reports.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN reports.created_at IS '作成日時';
+        COMMENT ON COLUMN reports.updated_at IS '更新日時';
 
     -- レポート履歴テーブル
         CREATE TABLE IF NOT EXISTS history.reports (
             id serial PRIMARY KEY,
             report_id int NOT NULL REFERENCES reports (id) ON DELETE CASCADE,
             reporter_type int NOT NULL REFERENCES user_types (id) ON DELETE RESTRICT,
-            reporter_id int NOT NULL,  -- ユーザID (family_id or member_id)
+            reporter_id int NOT NULL,  -- ユーザID (family_id or child_id)
             reportable_type int NOT NULL REFERENCES reportable_types (id) ON DELETE RESTRICT,
             reportable_id int NOT NULL,
             status_id int NOT NULL REFERENCES report_status (id) ON DELETE RESTRICT,
@@ -325,14 +325,14 @@
         COMMENT ON COLUMN history.reports.status_id IS 'ステータスID（履歴時点）';
         COMMENT ON COLUMN history.reports.reported_at IS 'レポート作成日時（履歴時点）';
         COMMENT ON COLUMN history.reports.resolved_at IS 'レポート解決日時（履歴時点）';
-        COMMENT ON COLUMN history.reports.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.reports.updated_at IS '元レコードの更新日時';
+        COMMENT ON COLUMN history.reports.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.reports.updated_at IS '元更新日時';
 
 -- 通知対象タイプ
     -- 通知対象タイプテーブル
         CREATE TABLE IF NOT EXISTS notifiable_types (
             id serial PRIMARY KEY,
-            type varchar(50) NOT NULL UNIQUE,  -- family, member, quest, comment
+            type varchar(50) NOT NULL UNIQUE,  -- family, child, quest, comment
             description text NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
@@ -340,10 +340,10 @@
 
         COMMENT ON TABLE notifiable_types IS '通知対象となるオブジェクトのタイプを管理するテーブル';
         COMMENT ON COLUMN notifiable_types.id IS '通知対象タイプID（主キー）';
-        COMMENT ON COLUMN notifiable_types.type IS '通知対象タイプコード（family, member, quest, comment等）';
+        COMMENT ON COLUMN notifiable_types.type IS '通知対象タイプコード（family, child, quest, comment等）';
         COMMENT ON COLUMN notifiable_types.description IS '通知対象タイプの説明';
-        COMMENT ON COLUMN notifiable_types.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN notifiable_types.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN notifiable_types.created_at IS '作成日時';
+        COMMENT ON COLUMN notifiable_types.updated_at IS '更新日時';
 
     -- 通知対象タイプ翻訳テーブル
         CREATE TABLE IF NOT EXISTS notifiable_types_translations (
@@ -361,8 +361,8 @@
         COMMENT ON COLUMN notifiable_types_translations.notifiable_type_id IS '通知対象タイプID（外部キー）';
         COMMENT ON COLUMN notifiable_types_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN notifiable_types_translations.description IS '通知対象タイプ説明の翻訳';
-        COMMENT ON COLUMN notifiable_types_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN notifiable_types_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN notifiable_types_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN notifiable_types_translations.updated_at IS '更新日時';
 
     -- スクリーン
         CREATE TABLE IF NOT EXISTS screens (
@@ -379,8 +379,8 @@
         COMMENT ON COLUMN screens.id IS 'スクリーンID（主キー）';
         COMMENT ON COLUMN screens.name IS 'スクリーン名（一意制約）';
         COMMENT ON COLUMN screens.description IS 'スクリーンの説明';
-        COMMENT ON COLUMN screens.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN screens.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN screens.created_at IS '作成日時';
+        COMMENT ON COLUMN screens.updated_at IS '更新日時';
 
 -- 引き落とし申請ステータス
     -- 引き落とし申請ステータス
@@ -394,8 +394,8 @@
         COMMENT ON TABLE withdrawal_request_status IS '引き落とし申請のステータスを管理するテーブル';
         COMMENT ON COLUMN withdrawal_request_status.id IS 'ステータスID（主キー）';
         COMMENT ON COLUMN withdrawal_request_status.code IS 'ステータスコード（例：pending, approved, rejected）';
-        COMMENT ON COLUMN withdrawal_request_status.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN withdrawal_request_status.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN withdrawal_request_status.created_at IS '作成日時';
+        COMMENT ON COLUMN withdrawal_request_status.updated_at IS '更新日時';
 
     -- 引き落とし申請ステータス翻訳テーブル
         CREATE TABLE IF NOT EXISTS withdrawal_request_status_translations (
@@ -416,7 +416,7 @@
     -- allowanceable_types
         CREATE TABLE IF NOT EXISTS allowanceable_types (
             id serial PRIMARY KEY,
-            type varchar(50) NOT NULL UNIQUE,  -- family, member, quest, comment
+            type varchar(50) NOT NULL UNIQUE,  -- family, child, quest, comment
             description text NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
@@ -424,10 +424,10 @@
 
         COMMENT ON TABLE allowanceable_types IS 'お小遣いの種類を管理するテーブル';
         COMMENT ON COLUMN allowanceable_types.id IS 'お小遣い種類ID（主キー）';
-        COMMENT ON COLUMN allowanceable_types.type IS 'お小遣いの種類コード（family, member, quest, comment等）';
+        COMMENT ON COLUMN allowanceable_types.type IS 'お小遣いの種類コード（family, child, quest, comment等）';
         COMMENT ON COLUMN allowanceable_types.description IS 'お小遣い種類の説明';
-        COMMENT ON COLUMN allowanceable_types.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN allowanceable_types.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN allowanceable_types.created_at IS '作成日時';
+        COMMENT ON COLUMN allowanceable_types.updated_at IS '更新日時';
 
 -- =============================================================================
 -- 3. 認証システム（auth.users）に依存するテーブル
@@ -445,8 +445,8 @@
         COMMENT ON TABLE user_settings IS 'ユーザの基本設定を管理するテーブル';
         COMMENT ON COLUMN user_settings.user_id IS 'ユーザID（主キー、外部キー）';
         COMMENT ON COLUMN user_settings.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN user_settings.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN user_settings.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN user_settings.created_at IS '作成日時';
+        COMMENT ON COLUMN user_settings.updated_at IS '更新日時';
 
 -- 家族テーブル（auth.usersに依存）
     -- 家族テーブル
@@ -462,8 +462,8 @@
         COMMENT ON COLUMN families.id IS '家族ID（主キー）';
         COMMENT ON COLUMN families.user_id IS 'ユーザID（外部キー、一意制約）';
         COMMENT ON COLUMN families.icon_id IS 'アイコンID（外部キー、NULL許可）';
-        COMMENT ON COLUMN families.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN families.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN families.created_at IS '作成日時';
+        COMMENT ON COLUMN families.updated_at IS '更新日時';
 
     -- 家族履歴テーブル
         CREATE TABLE IF NOT EXISTS history.families (
@@ -483,8 +483,8 @@
         COMMENT ON COLUMN history.families.user_id IS 'ユーザID（外部キー）';
         COMMENT ON COLUMN history.families.icon_id IS 'アイコンID（履歴時点）';
         COMMENT ON COLUMN history.families.bio IS '自己紹介（履歴時点）';
-        COMMENT ON COLUMN history.families.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.families.updated_at IS '元レコードの更新日時';
+        COMMENT ON COLUMN history.families.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.families.updated_at IS '元更新日時';
         COMMENT ON COLUMN history.families.recorded_at IS '履歴記録日時';
 
     -- 家族翻訳テーブル
@@ -505,8 +505,8 @@
         COMMENT ON COLUMN families_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN families_translations.name IS '家族名の翻訳';
         COMMENT ON COLUMN families_translations.bio IS '自己紹介の翻訳';
-        COMMENT ON COLUMN families_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN families_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN families_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN families_translations.updated_at IS '更新日時';
 
     -- 家族翻訳履歴テーブル
         CREATE TABLE IF NOT EXISTS history.families_translations (
@@ -528,8 +528,8 @@
         COMMENT ON COLUMN history.families_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN history.families_translations.name IS '家族名の翻訳（履歴時点）';
         COMMENT ON COLUMN history.families_translations.bio IS '自己紹介の翻訳（履歴時点）';
-        COMMENT ON COLUMN history.families_translations.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.families_translations.updated_at IS '元レコードの更新日時';
+        COMMENT ON COLUMN history.families_translations.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.families_translations.updated_at IS '元更新日時';
         COMMENT ON COLUMN history.families_translations.recorded_at IS '履歴記録日時';
 
     -- 家族設定テーブル
@@ -543,8 +543,8 @@
         COMMENT ON TABLE families_settings IS '家族の設定情報を管理するテーブル';
         COMMENT ON COLUMN families_settings.family_id IS '家族ID（主キー、外部キー）';
         COMMENT ON COLUMN families_settings.currency_id IS '通貨ID（外部キー）';
-        COMMENT ON COLUMN families_settings.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN families_settings.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN families_settings.created_at IS '作成日時';
+        COMMENT ON COLUMN families_settings.updated_at IS '更新日時';
 
 -- =============================================================================
 -- 4. 家族テーブルに依存するテーブル
@@ -552,7 +552,7 @@
 
 -- メンバーテーブル（families, icons, educationに依存）
     -- メンバーテーブル
-        CREATE TABLE IF NOT EXISTS members (
+        CREATE TABLE IF NOT EXISTS children (
             id serial PRIMARY KEY,
             user_id uuid NOT NULL UNIQUE REFERENCES auth.users (id) ON DELETE CASCADE,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
@@ -563,20 +563,20 @@
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE members IS 'メンバー（子供）の基本情報を管理するテーブル';
-        COMMENT ON COLUMN members.id IS 'メンバーID（主キー）';
-        COMMENT ON COLUMN members.user_id IS 'ユーザID（外部キー、一意制約）';
-        COMMENT ON COLUMN members.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN members.name IS 'メンバー名（空文字不可）';
-        COMMENT ON COLUMN members.icon_id IS 'アイコンID（外部キー、NULL許可）';
-        COMMENT ON COLUMN members.birthday IS '誕生日（未来日不可）';
-        COMMENT ON COLUMN members.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN members.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE children IS 'メンバー（子供）の基本情報を管理するテーブル';
+        COMMENT ON COLUMN children.id IS 'メンバーID（主キー）';
+        COMMENT ON COLUMN children.user_id IS 'ユーザID（外部キー、一意制約）';
+        COMMENT ON COLUMN children.family_id IS '家族ID（外部キー）';
+        COMMENT ON COLUMN children.name IS 'メンバー名（空文字不可）';
+        COMMENT ON COLUMN children.icon_id IS 'アイコンID（外部キー、NULL許可）';
+        COMMENT ON COLUMN children.birthday IS '誕生日（未来日不可）';
+        COMMENT ON COLUMN children.created_at IS '作成日時';
+        COMMENT ON COLUMN children.updated_at IS '更新日時';
 
     -- メンバー履歴テーブル
-        CREATE TABLE IF NOT EXISTS history.members (
+        CREATE TABLE IF NOT EXISTS history.children (
             id serial PRIMARY KEY,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             user_id uuid NOT NULL REFERENCES auth.users (id) ON DELETE CASCADE,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
             name varchar(100) NOT NULL,
@@ -587,77 +587,77 @@
             recorded_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE history.members IS 'メンバー情報の変更履歴を管理するテーブル';
-        COMMENT ON COLUMN history.members.id IS '履歴ID（主キー）';
-        COMMENT ON COLUMN history.members.member_id IS 'メンバーID（外部キー）';
-        COMMENT ON COLUMN history.members.user_id IS 'ユーザID（外部キー）';
-        COMMENT ON COLUMN history.members.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN history.members.name IS 'メンバー名（履歴時点）';
-        COMMENT ON COLUMN history.members.icon_id IS 'アイコンID（履歴時点）';
-        COMMENT ON COLUMN history.members.birthday IS '誕生日（履歴時点）';
-        COMMENT ON COLUMN history.members.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.members.updated_at IS '元レコードの更新日時';
-        COMMENT ON COLUMN history.members.recorded_at IS '履歴記録日時';
+        COMMENT ON TABLE history.children IS 'メンバー情報の変更履歴を管理するテーブル';
+        COMMENT ON COLUMN history.children.id IS '履歴ID（主キー）';
+        COMMENT ON COLUMN history.children.child_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN history.children.user_id IS 'ユーザID（外部キー）';
+        COMMENT ON COLUMN history.children.family_id IS '家族ID（外部キー）';
+        COMMENT ON COLUMN history.children.name IS 'メンバー名（履歴時点）';
+        COMMENT ON COLUMN history.children.icon_id IS 'アイコンID（履歴時点）';
+        COMMENT ON COLUMN history.children.birthday IS '誕生日（履歴時点）';
+        COMMENT ON COLUMN history.children.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.children.updated_at IS '元更新日時';
+        COMMENT ON COLUMN history.children.recorded_at IS '履歴記録日時';
 
     -- メンバー設定テーブル
-        CREATE TABLE IF NOT EXISTS members_settings (
+        CREATE TABLE IF NOT EXISTS children_settings (
             id serial PRIMARY KEY,
-            member_id int NOT NULL UNIQUE REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL UNIQUE REFERENCES children (id) ON DELETE CASCADE,
             min_savings int DEFAULT 0 CHECK (min_savings >= 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE members_settings IS 'メンバーの設定情報を管理するテーブル';
-        COMMENT ON COLUMN members_settings.id IS '設定ID（主キー）';
-        COMMENT ON COLUMN members_settings.member_id IS 'メンバーID（外部キー、一意制約）';
-        COMMENT ON COLUMN members_settings.min_savings IS '最低貯金額（負の値不可）';
-        COMMENT ON COLUMN members_settings.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN members_settings.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE children_settings IS 'メンバーの設定情報を管理するテーブル';
+        COMMENT ON COLUMN children_settings.id IS '設定ID（主キー）';
+        COMMENT ON COLUMN children_settings.child_id IS 'メンバーID（外部キー、一意制約）';
+        COMMENT ON COLUMN children_settings.min_savings IS '最低貯金額（負の値不可）';
+        COMMENT ON COLUMN children_settings.created_at IS '作成日時';
+        COMMENT ON COLUMN children_settings.updated_at IS '更新日時';
 
     -- メンバー設定履歴テーブル
-        CREATE TABLE IF NOT EXISTS history.members_settings (
+        CREATE TABLE IF NOT EXISTS history.children_settings (
             id serial PRIMARY KEY,
-            member_settings_id int NOT NULL REFERENCES members_settings (id) ON DELETE CASCADE,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_settings_id int NOT NULL REFERENCES children_settings (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             min_savings int DEFAULT 0,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
             recorded_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE history.members_settings IS 'メンバー設定の変更履歴を管理するテーブル';
-        COMMENT ON COLUMN history.members_settings.id IS '履歴ID（主キー）';
-        COMMENT ON COLUMN history.members_settings.member_settings_id IS '元の設定ID（外部キー）';
-        COMMENT ON COLUMN history.members_settings.member_id IS 'メンバーID（外部キー）';
-        COMMENT ON COLUMN history.members_settings.min_savings IS '最低貯金額（履歴時点）';
-        COMMENT ON COLUMN history.members_settings.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.members_settings.updated_at IS '元レコードの更新日時';
-        COMMENT ON COLUMN history.members_settings.recorded_at IS '履歴記録日時';
+        COMMENT ON TABLE history.children_settings IS 'メンバー設定の変更履歴を管理するテーブル';
+        COMMENT ON COLUMN history.children_settings.id IS '履歴ID（主キー）';
+        COMMENT ON COLUMN history.children_settings.child_settings_id IS '元の設定ID（外部キー）';
+        COMMENT ON COLUMN history.children_settings.child_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN history.children_settings.min_savings IS '最低貯金額（履歴時点）';
+        COMMENT ON COLUMN history.children_settings.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.children_settings.updated_at IS '元更新日時';
+        COMMENT ON COLUMN history.children_settings.recorded_at IS '履歴記録日時';
 
     -- メンバーステータステーブル
-        CREATE TABLE IF NOT EXISTS member_stats (
+        CREATE TABLE IF NOT EXISTS child_stats (
             id serial PRIMARY KEY,
-            member_id int NOT NULL UNIQUE REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL UNIQUE REFERENCES children (id) ON DELETE CASCADE,
             exp int DEFAULT 0 CHECK (exp >= 0),
             balance int DEFAULT 0 CHECK (balance >= 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE member_stats IS 'メンバーのゲーム的ステータスを管理するテーブル';
-        COMMENT ON COLUMN member_stats.id IS 'ステータスID（主キー）';
-        COMMENT ON COLUMN member_stats.member_id IS 'メンバーID（外部キー、一意制約）';
-        COMMENT ON COLUMN member_stats.exp IS '経験値（負の値不可）';
-        COMMENT ON COLUMN member_stats.balance IS '残高（負の値不可）';
-        COMMENT ON COLUMN member_stats.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN member_stats.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE child_stats IS 'メンバーのゲーム的ステータスを管理するテーブル';
+        COMMENT ON COLUMN child_stats.id IS 'ステータスID（主キー）';
+        COMMENT ON COLUMN child_stats.child_id IS 'メンバーID（外部キー、一意制約）';
+        COMMENT ON COLUMN child_stats.exp IS '経験値（負の値不可）';
+        COMMENT ON COLUMN child_stats.balance IS '残高（負の値不可）';
+        COMMENT ON COLUMN child_stats.created_at IS '作成日時';
+        COMMENT ON COLUMN child_stats.updated_at IS '更新日時';
 
     -- メンバーステータス履歴テーブル
-        CREATE TABLE IF NOT EXISTS history.member_stats (
+        CREATE TABLE IF NOT EXISTS history.child_stats (
             id serial PRIMARY KEY,
-            member_stats_id int NOT NULL REFERENCES member_stats (id) ON DELETE CASCADE,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_stats_id int NOT NULL REFERENCES child_stats (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             exp int DEFAULT 0,
             balance int DEFAULT 0,
             created_at timestamptz NOT NULL DEFAULT now(),
@@ -665,54 +665,54 @@
             recorded_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE history.member_stats IS 'メンバーステータスの変更履歴を管理するテーブル';
-        COMMENT ON COLUMN history.member_stats.id IS '履歴ID（主キー）';
-        COMMENT ON COLUMN history.member_stats.member_stats_id IS '元のステータスID（外部キー）';
-        COMMENT ON COLUMN history.member_stats.member_id IS 'メンバーID（外部キー）';
-        COMMENT ON COLUMN history.member_stats.exp IS '経験値（履歴時点）';
-        COMMENT ON COLUMN history.member_stats.balance IS '残高（履歴時点）';
-        COMMENT ON COLUMN history.member_stats.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.member_stats.updated_at IS '元レコードの更新日時';
-        COMMENT ON COLUMN history.member_stats.recorded_at IS '履歴記録日時';
+        COMMENT ON TABLE history.child_stats IS 'メンバーステータスの変更履歴を管理するテーブル';
+        COMMENT ON COLUMN history.child_stats.id IS '履歴ID（主キー）';
+        COMMENT ON COLUMN history.child_stats.child_stats_id IS '元のステータスID（外部キー）';
+        COMMENT ON COLUMN history.child_stats.child_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN history.child_stats.exp IS '経験値（履歴時点）';
+        COMMENT ON COLUMN history.child_stats.balance IS '残高（履歴時点）';
+        COMMENT ON COLUMN history.child_stats.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.child_stats.updated_at IS '元更新日時';
+        COMMENT ON COLUMN history.child_stats.recorded_at IS '履歴記録日時';
 
--- メンバー学年（members, educationに依存）
+-- メンバー学年（children, educationに依存）
     -- メンバー学年テーブル
-        CREATE TABLE IF NOT EXISTS member_grade (
+        CREATE TABLE IF NOT EXISTS child_grade (
             id serial PRIMARY KEY,
-            member_id int NOT NULL UNIQUE REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL UNIQUE REFERENCES children (id) ON DELETE CASCADE,
             education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
             grade int NOT NULL CHECK (grade > 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE member_grade IS 'メンバーの現在の学年や職業を管理するテーブル';
-        COMMENT ON COLUMN member_grade.id IS '学年ID（主キー）';
-        COMMENT ON COLUMN member_grade.member_id IS 'メンバーID（外部キー、一意制約）';
-        COMMENT ON COLUMN member_grade.education_id IS '学歴ID（外部キー）';
-        COMMENT ON COLUMN member_grade.grade IS '学年（正の値のみ）';
-        COMMENT ON COLUMN member_grade.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN member_grade.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE child_grade IS 'メンバーの現在の学年や職業を管理するテーブル';
+        COMMENT ON COLUMN child_grade.id IS '学年ID（主キー）';
+        COMMENT ON COLUMN child_grade.child_id IS 'メンバーID（外部キー、一意制約）';
+        COMMENT ON COLUMN child_grade.education_id IS '学歴ID（外部キー）';
+        COMMENT ON COLUMN child_grade.grade IS '学年（正の値のみ）';
+        COMMENT ON COLUMN child_grade.created_at IS '作成日時';
+        COMMENT ON COLUMN child_grade.updated_at IS '更新日時';
 
--- 教育期間（members, educationに依存）
+-- 教育期間（children, educationに依存）
     -- 教育期間テーブル
         CREATE TABLE IF NOT EXISTS education_period (
             id serial PRIMARY KEY,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
             period int NOT NULL CHECK (period > 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (member_id, education_id)
+            UNIQUE (child_id, education_id)
         );
 
         COMMENT ON TABLE education_period IS 'メンバーの教育期間を管理するテーブル';
         COMMENT ON COLUMN education_period.id IS '教育期間ID（主キー）';
-        COMMENT ON COLUMN education_period.member_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN education_period.child_id IS 'メンバーID（外部キー）';
         COMMENT ON COLUMN education_period.education_id IS '学歴ID（外部キー）';
         COMMENT ON COLUMN education_period.period IS '教育期間（年数、正の値のみ）';
-        COMMENT ON COLUMN education_period.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN education_period.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN education_period.created_at IS '作成日時';
+        COMMENT ON COLUMN education_period.updated_at IS '更新日時';
 
 -- フォロー関係（familiesに依存）
     -- フォロー関係テーブル
@@ -731,7 +731,7 @@
         COMMENT ON COLUMN follows.follower_id IS 'フォロワーの家族ID（外部キー）';
         COMMENT ON COLUMN follows.followed_id IS 'フォローされている家族ID（外部キー）';
         COMMENT ON COLUMN follows.created_at IS 'フォローが作成された日時';
-        COMMENT ON COLUMN follows.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN follows.updated_at IS '更新日時';
 
 -- 経験値レベル設定（familiesに依存）
     -- exp_by_level
@@ -768,8 +768,8 @@
         COMMENT ON COLUMN history.exp_by_level.family_id IS '家族ID（外部キー）';
         COMMENT ON COLUMN history.exp_by_level.level IS 'レベル（履歴時点）';
         COMMENT ON COLUMN history.exp_by_level.exp IS '経験値（履歴時点）';
-        COMMENT ON COLUMN history.exp_by_level.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.exp_by_level.updated_at IS '元レコードの更新日時';
+        COMMENT ON COLUMN history.exp_by_level.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.exp_by_level.updated_at IS '元更新日時';
         COMMENT ON COLUMN history.exp_by_level.recorded_at IS '履歴記録日時';
 
 -- =============================================================================
@@ -779,19 +779,19 @@
     -- お小遣いテーブルサブタイプ
         CREATE TABLE IF NOT EXISTS allowance_table_sub_types (
             id serial PRIMARY KEY,
-            type varchar NOT NULL UNIQUE,  -- member_allowance_table, family_allowance_table, shared_allowance_table
+            type varchar NOT NULL UNIQUE,  -- child_allowance_table, family_allowance_table, shared_allowance_table
             description text NOT NULL
         );
 
     -- レベルテーブルサブタイプ
-        CREATE TABLE IF NOT EXISTS member_level_sub_types (
+        CREATE TABLE IF NOT EXISTS child_level_sub_types (
             id serial PRIMARY KEY,
-            type varchar NOT NULL UNIQUE,  -- member_level_table, family_level_table
+            type varchar NOT NULL UNIQUE,  -- child_level_table, family_level_table
             description text NOT NULL
         );
 
 -- =============================================================================
--- 6. お小遣いテーブル関連（members, families, allowance_table_sub_typesに依存）
+-- 6. お小遣いテーブル関連（children, families, allowance_table_sub_typesに依存）
 -- =============================================================================
 
     -- お小遣いテーブル基底クラス
@@ -806,10 +806,10 @@
 
         COMMENT ON TABLE allowance_table IS 'お小遣い設定の基底テーブル（ポリモーフィック関連）';
         COMMENT ON COLUMN allowance_table.id IS 'お小遣いテーブルID（主キー）';
-        COMMENT ON COLUMN allowance_table.subclass_type IS 'サブクラスタイプ（member, family, shared）';
+        COMMENT ON COLUMN allowance_table.subclass_type IS 'サブクラスタイプ（child, family, shared）';
         COMMENT ON COLUMN allowance_table.subclass_id IS 'サブクラスID（ポリモーフィック）';
-        COMMENT ON COLUMN allowance_table.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN allowance_table.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN allowance_table.created_at IS '作成日時';
+        COMMENT ON COLUMN allowance_table.updated_at IS '更新日時';
 
     -- お小遣いテーブル履歴
         CREATE TABLE IF NOT EXISTS history.allowance_table (
@@ -827,25 +827,25 @@
         COMMENT ON COLUMN history.allowance_table.allowance_table_id IS '元のお小遣いテーブルID（外部キー）';
         COMMENT ON COLUMN history.allowance_table.subclass_type IS 'サブクラスタイプ（履歴時点）';
         COMMENT ON COLUMN history.allowance_table.subclass_id IS 'サブクラスID（履歴時点）';
-        COMMENT ON COLUMN history.allowance_table.created_at IS '元レコードの作成日時';
-        COMMENT ON COLUMN history.allowance_table.updated_at IS '元レコードの更新日時';
+        COMMENT ON COLUMN history.allowance_table.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.allowance_table.updated_at IS '元更新日時';
         COMMENT ON COLUMN history.allowance_table.recorded_at IS '履歴記録日時';
 
     -- メンバーお小遣いテーブル
-        CREATE TABLE IF NOT EXISTS member_allowance_table (
+        CREATE TABLE IF NOT EXISTS child_allowance_table (
             id serial PRIMARY KEY,
             superclass_id int NOT NULL UNIQUE REFERENCES allowance_table (id) ON DELETE CASCADE,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE member_allowance_table IS 'メンバー個人のお小遣い設定テーブル';
-        COMMENT ON COLUMN member_allowance_table.id IS 'メンバーお小遣いID（主キー）';
-        COMMENT ON COLUMN member_allowance_table.superclass_id IS 'お小遣いテーブルID（外部キー、一意制約）';
-        COMMENT ON COLUMN member_allowance_table.member_id IS 'メンバーID（外部キー）';
-        COMMENT ON COLUMN member_allowance_table.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN member_allowance_table.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE child_allowance_table IS 'メンバー個人のお小遣い設定テーブル';
+        COMMENT ON COLUMN child_allowance_table.id IS 'メンバーお小遣いID（主キー）';
+        COMMENT ON COLUMN child_allowance_table.superclass_id IS 'お小遣いテーブルID（外部キー、一意制約）';
+        COMMENT ON COLUMN child_allowance_table.child_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN child_allowance_table.created_at IS '作成日時';
+        COMMENT ON COLUMN child_allowance_table.updated_at IS '更新日時';
 
     -- 家族お小遣いテーブル
         CREATE TABLE IF NOT EXISTS family_allowance_table (
@@ -860,8 +860,8 @@
         COMMENT ON COLUMN family_allowance_table.id IS '家族お小遣いID（主キー）';
         COMMENT ON COLUMN family_allowance_table.superclass_id IS 'お小遣いテーブルID（外部キー、一意制約）';
         COMMENT ON COLUMN family_allowance_table.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN family_allowance_table.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN family_allowance_table.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN family_allowance_table.created_at IS '作成日時';
+        COMMENT ON COLUMN family_allowance_table.updated_at IS '更新日時';
 
     -- 年齢別お小遣いテーブル
         CREATE TABLE IF NOT EXISTS allowance_by_age (
@@ -878,18 +878,18 @@
         COMMENT ON COLUMN allowance_by_age.allowance_table_id IS 'お小遣いテーブルID（外部キー）';
         COMMENT ON COLUMN allowance_by_age.age IS '年齢（負の値不可）';
         COMMENT ON COLUMN allowance_by_age.amount IS 'お小遣い金額（負の値不可）';
-        COMMENT ON COLUMN allowance_by_age.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN allowance_by_age.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN allowance_by_age.created_at IS '作成日時';
+        COMMENT ON COLUMN allowance_by_age.updated_at IS '更新日時';
 
 -- =============================================================================
--- 7. 銀行関連テーブル（members, families, allowanceable_typesなどに依存）
+-- 7. 銀行関連テーブル（children, families, allowanceable_typesなどに依存）
 -- =============================================================================
 
 -- お小遣い記録
     -- allowance_records
         CREATE TABLE IF NOT EXISTS allowance_records (
             id serial PRIMARY KEY,
-            member_id int NOT NULL REFERENCES members(id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children(id) ON DELETE CASCADE,
             allowanceable_type int NOT NULL REFERENCES allowanceable_types(id) ON DELETE RESTRICT,
             allowanceable_id int NOT NULL,
             title varchar(255) NOT NULL,
@@ -901,20 +901,20 @@
 
         COMMENT ON TABLE allowance_records IS 'お小遣いの記録テーブル';
         COMMENT ON COLUMN allowance_records.id IS 'お小遣い記録ID（主キー）';
-        COMMENT ON COLUMN allowance_records.member_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN allowance_records.child_id IS 'メンバーID（外部キー）';
         COMMENT ON COLUMN allowance_records.allowanceable_type IS 'お小遣いの種類ID（外部キー）';
         COMMENT ON COLUMN allowance_records.allowanceable_id IS 'お小遣いの対象ID（ポリモーフィック）';
         COMMENT ON COLUMN allowance_records.title IS 'お小遣いのタイトル';
         COMMENT ON COLUMN allowance_records.amount IS 'お小遣いの金額（負の値は不可）';
         COMMENT ON COLUMN allowance_records.recorded_at IS 'お小遣いが記録された日時';
-        COMMENT ON COLUMN allowance_records.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN allowance_records.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN allowance_records.created_at IS '作成日時';
+        COMMENT ON COLUMN allowance_records.updated_at IS '更新日時';
 
 -- 貯金記録
     -- 貯金記録テーブル
         CREATE TABLE IF NOT EXISTS savings_records (
             id serial PRIMARY KEY,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             amount int NOT NULL DEFAULT 0 CHECK (amount != 0),
             balance int NOT NULL DEFAULT 0 CHECK (balance >= 0),
             created_at timestamptz NOT NULL DEFAULT now(),
@@ -924,17 +924,17 @@
 
         COMMENT ON TABLE savings_records IS '貯金記録の履歴を管理するテーブル';
         COMMENT ON COLUMN savings_records.id IS '貯金記録ID（主キー）';
-        COMMENT ON COLUMN savings_records.member_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN savings_records.child_id IS 'メンバーID（外部キー）';
         COMMENT ON COLUMN savings_records.amount IS '貯金額（正の値は入金、負の値は出金）';
         COMMENT ON COLUMN savings_records.balance IS '貯金の残高（負の値は不可）';
         COMMENT ON COLUMN savings_records.created_at IS '貯金の履歴レコードが作成された日時';
-        COMMENT ON COLUMN savings_records.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN savings_records.updated_at IS '更新日時';
 
 -- 引き落とし申請
     -- 引き落とし申請テーブル
         CREATE TABLE IF NOT EXISTS withdrawal_requests (
             id serial PRIMARY KEY,
-            requester_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            requester_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             approver_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
             status_id int NOT NULL REFERENCES withdrawal_request_status (id) ON DELETE RESTRICT,  
             amount int NOT NULL CHECK (amount > 0),
@@ -952,8 +952,8 @@
         COMMENT ON COLUMN withdrawal_requests.status_id IS '申請ステータスID（外部キー）';
         COMMENT ON COLUMN withdrawal_requests.amount IS '引き落とし金額（正の値のみ）';
         COMMENT ON COLUMN withdrawal_requests.reason IS '引き落とし理由';
-        COMMENT ON COLUMN withdrawal_requests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN withdrawal_requests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN withdrawal_requests.created_at IS '作成日時';
+        COMMENT ON COLUMN withdrawal_requests.updated_at IS '更新日時';
 
 -- =============================================================================
 -- 8. 通知関連テーブル
@@ -963,7 +963,7 @@
     CREATE TABLE IF NOT EXISTS notifications (
         id serial PRIMARY KEY,
         user_type int NOT NULL REFERENCES user_types (id) ON DELETE RESTRICT,
-        user_id int NOT NULL,  -- ユーザID (family_id or member_id)
+        user_id int NOT NULL,  -- ユーザID (family_id or child_id)
         notifiable_type int NOT NULL REFERENCES notifiable_types (id) ON DELETE RESTRICT,
         notifiable_id int NOT NULL,  -- 通知対象ID
         push_to int REFERENCES screens (id) ON DELETE SET NULL,
@@ -977,15 +977,15 @@
     COMMENT ON TABLE notifications IS 'ユーザへの通知を管理するテーブル';
     COMMENT ON COLUMN notifications.id IS '通知ID（主キー）';
     COMMENT ON COLUMN notifications.user_type IS 'ユーザタイプID（外部キー）';
-    COMMENT ON COLUMN notifications.user_id IS 'ユーザID（ポリモーフィック：family_id または member_id）';
+    COMMENT ON COLUMN notifications.user_id IS 'ユーザID（ポリモーフィック：family_id または child_id）';
     COMMENT ON COLUMN notifications.notifiable_type IS '通知対象タイプID（外部キー）';
     COMMENT ON COLUMN notifications.notifiable_id IS '通知対象ID（ポリモーフィック）';
     COMMENT ON COLUMN notifications.push_to IS '遷移先スクリーンID（外部キー、NULL許可）';
     COMMENT ON COLUMN notifications.is_read IS '既読フラグ';
     COMMENT ON COLUMN notifications.read_at IS '既読日時（未読の場合はNULL）';
     COMMENT ON COLUMN notifications.received_at IS '通知受信日時';
-    COMMENT ON COLUMN notifications.created_at IS 'レコードの作成日時';
-    COMMENT ON COLUMN notifications.updated_at IS 'レコードの更新日時';
+    COMMENT ON COLUMN notifications.created_at IS '作成日時';
+    COMMENT ON COLUMN notifications.updated_at IS '更新日時';
 
 -- 通知テーブルのインデックス
     CREATE INDEX idx_notifications_user ON notifications (user_type, user_id);
@@ -1010,14 +1010,14 @@
     COMMENT ON COLUMN commentable_types.id IS 'コメント可能タイプID（主キー）';
     COMMENT ON COLUMN commentable_types.type IS 'コメント可能タイプコード（quests, comments等）';
     COMMENT ON COLUMN commentable_types.description IS 'コメント可能タイプの説明';
-    COMMENT ON COLUMN commentable_types.created_at IS 'レコードの作成日時';
-    COMMENT ON COLUMN commentable_types.updated_at IS 'レコードの更新日時';
+    COMMENT ON COLUMN commentable_types.created_at IS '作成日時';
+    COMMENT ON COLUMN commentable_types.updated_at IS '更新日時';
 
 -- コメントテーブル
     CREATE TABLE IF NOT EXISTS comments (
         id serial PRIMARY KEY,
         user_type int NOT NULL REFERENCES user_types (id) ON DELETE RESTRICT,
-        user_id int NOT NULL,  -- ユーザID (family_id or member_id)
+        user_id int NOT NULL,  -- ユーザID (family_id or child_id)
         commentable_type int NOT NULL REFERENCES commentable_types (id) ON DELETE RESTRICT,
         commentable_id int NOT NULL,  -- コメント対象ID
         parent_comment_id int REFERENCES comments (id) ON DELETE CASCADE,
@@ -1030,21 +1030,21 @@
     COMMENT ON TABLE comments IS 'コメントを管理するテーブル';
     COMMENT ON COLUMN comments.id IS 'コメントID（主キー）';
     COMMENT ON COLUMN comments.user_type IS 'ユーザタイプID（外部キー）';
-    COMMENT ON COLUMN comments.user_id IS 'ユーザID（ポリモーフィック：family_id または member_id）';
+    COMMENT ON COLUMN comments.user_id IS 'ユーザID（ポリモーフィック：family_id または child_id）';
     COMMENT ON COLUMN comments.commentable_type IS 'コメント対象タイプID（外部キー）';
     COMMENT ON COLUMN comments.commentable_id IS 'コメント対象ID（ポリモーフィック）';
     COMMENT ON COLUMN comments.parent_comment_id IS '親コメントID（返信の場合）';
     COMMENT ON COLUMN comments.body IS 'コメント本文（空文字不可）';
     COMMENT ON COLUMN comments.commented_at IS 'コメント投稿日時';
-    COMMENT ON COLUMN comments.created_at IS 'レコードの作成日時';
-    COMMENT ON COLUMN comments.updated_at IS 'レコードの更新日時';
+    COMMENT ON COLUMN comments.created_at IS '作成日時';
+    COMMENT ON COLUMN comments.updated_at IS '更新日時';
 
 -- コメントいいね
     CREATE TABLE IF NOT EXISTS comment_likes (
         id serial PRIMARY KEY,
         comment_id int NOT NULL REFERENCES comments (id) ON DELETE CASCADE,
         user_type int NOT NULL REFERENCES user_types (id) ON DELETE RESTRICT,
-        user_id int NOT NULL,  -- ユーザID (family_id or member_id)
+        user_id int NOT NULL,  -- ユーザID (family_id or child_id)
         liked_at timestamptz NOT NULL DEFAULT now(),
         created_at timestamptz NOT NULL DEFAULT now(),
         updated_at timestamptz NOT NULL DEFAULT now(),
@@ -1055,17 +1055,17 @@
     COMMENT ON COLUMN comment_likes.id IS 'いいねID（主キー）';
     COMMENT ON COLUMN comment_likes.comment_id IS 'コメントID（外部キー）';
     COMMENT ON COLUMN comment_likes.user_type IS 'ユーザタイプID（外部キー）';
-    COMMENT ON COLUMN comment_likes.user_id IS 'ユーザID（ポリモーフィック：family_id または member_id）';
+    COMMENT ON COLUMN comment_likes.user_id IS 'ユーザID（ポリモーフィック：family_id または child_id）';
     COMMENT ON COLUMN comment_likes.liked_at IS 'いいねした日時';
-    COMMENT ON COLUMN comment_likes.created_at IS 'レコードの作成日時';
-    COMMENT ON COLUMN comment_likes.updated_at IS 'レコードの更新日時';
+    COMMENT ON COLUMN comment_likes.created_at IS '作成日時';
+    COMMENT ON COLUMN comment_likes.updated_at IS '更新日時';
 
 -- コメント履歴テーブル
     CREATE TABLE IF NOT EXISTS history.comments (
         id serial PRIMARY KEY,
         comment_id int NOT NULL REFERENCES comments (id) ON DELETE CASCADE,
         user_type int NOT NULL REFERENCES user_types (id) ON DELETE RESTRICT,
-        user_id int NOT NULL,  -- ユーザID (family_id or member_id)
+        user_id int NOT NULL,  -- ユーザID (family_id or child_id)
         commentable_type int NOT NULL REFERENCES commentable_types (id) ON DELETE RESTRICT,
         commentable_id int NOT NULL,
         parent_comment_id int REFERENCES comments (id) ON DELETE CASCADE,
@@ -1086,8 +1086,8 @@
     COMMENT ON COLUMN history.comments.parent_comment_id IS '親コメントID';
     COMMENT ON COLUMN history.comments.body IS 'コメント本文（履歴時点）';
     COMMENT ON COLUMN history.comments.commented_at IS 'コメント投稿日時';
-    COMMENT ON COLUMN history.comments.created_at IS '元レコードの作成日時';
-    COMMENT ON COLUMN history.comments.updated_at IS '元レコードの更新日時';
+    COMMENT ON COLUMN history.comments.created_at IS '元作成日時';
+    COMMENT ON COLUMN history.comments.updated_at IS '元更新日時';
     COMMENT ON COLUMN history.comments.recorded_at IS '履歴記録日時';
 
 -- コメント翻訳テーブル
@@ -1106,8 +1106,8 @@
     COMMENT ON COLUMN comments_translations.comment_id IS 'コメントID（外部キー）';
     COMMENT ON COLUMN comments_translations.language_id IS '言語ID（外部キー）';
     COMMENT ON COLUMN comments_translations.body IS 'コメント本文の翻訳（空文字不可）';
-    COMMENT ON COLUMN comments_translations.created_at IS 'レコードの作成日時';
-    COMMENT ON COLUMN comments_translations.updated_at IS 'レコードの更新日時';
+    COMMENT ON COLUMN comments_translations.created_at IS '作成日時';
+    COMMENT ON COLUMN comments_translations.updated_at IS '更新日時';
 
 -- コメント翻訳履歴テーブル
     CREATE TABLE IF NOT EXISTS history.comments_translations (
@@ -1127,8 +1127,8 @@
     COMMENT ON COLUMN history.comments_translations.comment_id IS 'コメントID';
     COMMENT ON COLUMN history.comments_translations.language_id IS '言語ID（外部キー）';
     COMMENT ON COLUMN history.comments_translations.body IS 'コメント本文の翻訳（履歴時点）';
-    COMMENT ON COLUMN history.comments_translations.created_at IS '元レコードの作成日時';
-    COMMENT ON COLUMN history.comments_translations.updated_at IS '元レコードの更新日時';
+    COMMENT ON COLUMN history.comments_translations.created_at IS '元作成日時';
+    COMMENT ON COLUMN history.comments_translations.updated_at IS '元更新日時';
     COMMENT ON COLUMN history.comments_translations.recorded_at IS '履歴記録日時';
 
 
@@ -1162,8 +1162,8 @@
         COMMENT ON COLUMN quest_category.id IS 'クエストカテゴリID（主キー）';
         COMMENT ON COLUMN quest_category.subclass_type IS 'サブクラスタイプ（template, custom, family）';
         COMMENT ON COLUMN quest_category.subclass_id IS 'サブクラスID（ポリモーフィック）';
-        COMMENT ON COLUMN quest_category.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_category.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_category.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_category.updated_at IS '更新日時';
 
     -- クエストカテゴリ翻訳テーブル
         CREATE TABLE IF NOT EXISTS quest_category_translations (
@@ -1181,8 +1181,8 @@
         COMMENT ON COLUMN quest_category_translations.quest_category_id IS 'クエストカテゴリID（外部キー）';
         COMMENT ON COLUMN quest_category_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN quest_category_translations.name IS 'カテゴリ名の翻訳（空文字不可）';
-        COMMENT ON COLUMN quest_category_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_category_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_category_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_category_translations.updated_at IS '更新日時';
 
     -- テンプレートクエストカテゴリテーブル
         CREATE TABLE IF NOT EXISTS template_quest_category (
@@ -1201,8 +1201,8 @@
         COMMENT ON COLUMN template_quest_category.code IS 'カテゴリコード（一意制約）';
         COMMENT ON COLUMN template_quest_category.sort_order IS '表示順序';
         COMMENT ON COLUMN template_quest_category.is_active IS '有効フラグ';
-        COMMENT ON COLUMN template_quest_category.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN template_quest_category.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN template_quest_category.created_at IS '作成日時';
+        COMMENT ON COLUMN template_quest_category.updated_at IS '更新日時';
 
     -- カスタムクエストカテゴリテーブル
         CREATE TABLE IF NOT EXISTS custom_quest_category (
@@ -1217,8 +1217,8 @@
         COMMENT ON COLUMN custom_quest_category.id IS 'カスタムカテゴリID（主キー）';
         COMMENT ON COLUMN custom_quest_category.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
         COMMENT ON COLUMN custom_quest_category.family_id IS '作成者の家族ID（外部キー）';
-        COMMENT ON COLUMN custom_quest_category.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN custom_quest_category.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN custom_quest_category.created_at IS '作成日時';
+        COMMENT ON COLUMN custom_quest_category.updated_at IS '更新日時';
 
     -- 家族クエストカテゴリテーブル
         CREATE TABLE IF NOT EXISTS family_quest_category (
@@ -1233,19 +1233,19 @@
         COMMENT ON COLUMN family_quest_category.id IS '家族カテゴリID（主キー）';
         COMMENT ON COLUMN family_quest_category.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
         COMMENT ON COLUMN family_quest_category.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN family_quest_category.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN family_quest_category.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN family_quest_category.created_at IS '作成日時';
+        COMMENT ON COLUMN family_quest_category.updated_at IS '更新日時';
 
     -- クエストサブクラスタイプ
         CREATE TABLE IF NOT EXISTS quest_subclass_types (
             id serial PRIMARY KEY,
-            type varchar NOT NULL UNIQUE,  -- member, family
+            type varchar NOT NULL UNIQUE,  -- child, family
             description text NOT NULL
         );
 
         COMMENT ON TABLE quest_subclass_types IS 'クエストのサブクラスタイプを管理するテーブル';
         COMMENT ON COLUMN quest_subclass_types.id IS 'サブクラスタイプID（主キー）';
-        COMMENT ON COLUMN quest_subclass_types.type IS 'タイプコード（member, family）';
+        COMMENT ON COLUMN quest_subclass_types.type IS 'タイプコード（child, family）';
         COMMENT ON COLUMN quest_subclass_types.description IS 'タイプの説明';
 
     -- クエスト（基底テーブル）
@@ -1276,8 +1276,8 @@
         COMMENT ON COLUMN quests.has_published_month IS '季節限定フラグ';
         COMMENT ON COLUMN quests.month_from IS '公開開始月（1-12、季節限定の場合のみ）';
         COMMENT ON COLUMN quests.month_to IS '公開終了月（1-12、季節限定の場合のみ）';
-        COMMENT ON COLUMN quests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quests.created_at IS '作成日時';
+        COMMENT ON COLUMN quests.updated_at IS '更新日時';
 
     -- クエスト履歴テーブル
         CREATE TABLE IF NOT EXISTS history.quests (
@@ -1321,8 +1321,8 @@
         COMMENT ON COLUMN quest_translations.title IS 'クエストタイトルの翻訳（空文字不可）';
         COMMENT ON COLUMN quest_translations.client IS 'クライアント名の翻訳（空文字不可）';
         COMMENT ON COLUMN quest_translations.request_detail IS '依頼詳細の翻訳';
-        COMMENT ON COLUMN quest_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_translations.updated_at IS '更新日時';
 
     -- クエスト翻訳履歴テーブル
         CREATE TABLE IF NOT EXISTS history.quest_translations (
@@ -1350,7 +1350,7 @@
             target_count int NOT NULL CHECK (target_count > 0),
             reward int NOT NULL CHECK (reward >= 0),
             currency_id int NOT NULL REFERENCES currencies (id) ON DELETE RESTRICT,
-            member_exp int NOT NULL CHECK (member_exp >= 0),
+            child_exp int NOT NULL CHECK (child_exp >= 0),
             quest_exp int NOT NULL CHECK (quest_exp >= 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
@@ -1365,10 +1365,10 @@
         COMMENT ON COLUMN quest_details_by_level.target_count IS '目標回数（正の値のみ）';
         COMMENT ON COLUMN quest_details_by_level.reward IS '報酬金額（負の値不可）';
         COMMENT ON COLUMN quest_details_by_level.currency_id IS '通貨ID（外部キー）';
-        COMMENT ON COLUMN quest_details_by_level.member_exp IS 'メンバー獲得経験値（負の値不可）';
+        COMMENT ON COLUMN quest_details_by_level.child_exp IS 'メンバー獲得経験値（負の値不可）';
         COMMENT ON COLUMN quest_details_by_level.quest_exp IS 'クエスト獲得経験値（負の値不可）';
-        COMMENT ON COLUMN quest_details_by_level.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_details_by_level.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_details_by_level.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_details_by_level.updated_at IS '更新日時';
 
     -- クエスト詳細履歴テーブル
         CREATE TABLE IF NOT EXISTS history.quest_details_by_level (
@@ -1379,7 +1379,7 @@
             target_count int NOT NULL,
             reward int NOT NULL,
             currency_id int NOT NULL REFERENCES currencies (id) ON DELETE RESTRICT,
-            member_exp int NOT NULL,
+            child_exp int NOT NULL,
             quest_exp int NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
@@ -1406,8 +1406,8 @@
         COMMENT ON COLUMN quest_details_by_level_translations.quest_details_by_level_id IS 'クエスト詳細ID（外部キー）';
         COMMENT ON COLUMN quest_details_by_level_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN quest_details_by_level_translations.success_criteria IS '成功条件の翻訳';
-        COMMENT ON COLUMN quest_details_by_level_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_details_by_level_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_details_by_level_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_details_by_level_translations.updated_at IS '更新日時';
 
     -- クエスト詳細翻訳履歴テーブル
         CREATE TABLE IF NOT EXISTS history.quest_details_by_level_translations (
@@ -1441,8 +1441,8 @@
         COMMENT ON COLUMN quest_exp_by_level.quest_id IS 'クエストID（外部キー）';
         COMMENT ON COLUMN quest_exp_by_level.level IS 'レベル（正の値のみ）';
         COMMENT ON COLUMN quest_exp_by_level.exp IS '必要経験値（負の値不可）';
-        COMMENT ON COLUMN quest_exp_by_level.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_exp_by_level.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_exp_by_level.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_exp_by_level.updated_at IS '更新日時';
 
     -- クエスト経験値履歴テーブル
         CREATE TABLE IF NOT EXISTS history.quest_exp_by_level (
@@ -1471,8 +1471,8 @@
         COMMENT ON TABLE quest_request_status IS 'クエストリクエストの状態を管理するマスタテーブル';
         COMMENT ON COLUMN quest_request_status.id IS 'ステータスID（主キー）';
         COMMENT ON COLUMN quest_request_status.code IS 'ステータスコード（例：pending, approved, rejected）';
-        COMMENT ON COLUMN quest_request_status.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_request_status.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_request_status.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_request_status.updated_at IS '更新日時';
 
     -- クエストリクエストステータス翻訳テーブル
         CREATE TABLE IF NOT EXISTS quest_request_status_translations (
@@ -1490,14 +1490,14 @@
         COMMENT ON COLUMN quest_request_status_translations.quest_request_status_id IS 'ステータスID（外部キー）';
         COMMENT ON COLUMN quest_request_status_translations.language_id IS '言語ID（外部キー）';
         COMMENT ON COLUMN quest_request_status_translations.name IS 'ステータス名の翻訳';
-        COMMENT ON COLUMN quest_request_status_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN quest_request_status_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_request_status_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_request_status_translations.updated_at IS '更新日時';
 
     -- クエストリクエストテーブル
         CREATE TABLE IF NOT EXISTS quest_requests (
             id serial PRIMARY KEY,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             quest_id int REFERENCES quests (id) ON DELETE CASCADE,  -- 既存クエストの場合のみ
             title varchar(200) NOT NULL CHECK (length(title) > 0),
             description text NOT NULL CHECK (length(description) > 0),
@@ -1513,16 +1513,16 @@
         COMMENT ON TABLE quest_requests IS 'メンバーからのクエストリクエストを管理するテーブル';
         COMMENT ON COLUMN quest_requests.id IS 'リクエストID（主キー）';
         COMMENT ON COLUMN quest_requests.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN quest_requests.member_id IS 'リクエスト者のメンバーID（外部キー）';
+        COMMENT ON COLUMN quest_requests.child_id IS 'リクエスト者のメンバーID（外部キー）';
         COMMENT ON COLUMN quest_requests.quest_id IS '既存クエストID（既存クエストの場合のみ、外部キー）';
         COMMENT ON COLUMN quest_requests.title IS 'リクエストタイトル（空文字不可）';
         COMMENT ON COLUMN quest_requests.description IS 'リクエスト説明（空文字不可）';
         COMMENT ON COLUMN quest_requests.is_new_request IS '新規クエストリクエストフラグ';
         COMMENT ON COLUMN quest_requests.status_id IS 'ステータスID（外部キー）';
         COMMENT ON COLUMN quest_requests.answer IS '回答内容';
-        COMMENT ON COLUMN quest_requests.created_at IS 'レコードの作成日時';
+        COMMENT ON COLUMN quest_requests.created_at IS '作成日時';
         COMMENT ON COLUMN quest_requests.answered_at IS '回答日時';
-        COMMENT ON COLUMN quest_requests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN quest_requests.updated_at IS '更新日時';
 
     -- 共有クエストテーブル
         CREATE TABLE IF NOT EXISTS shared_quests (
@@ -1544,8 +1544,8 @@
         COMMENT ON COLUMN shared_quests.pinned_comment_id IS 'ピン留めコメントID（任意）';
         COMMENT ON COLUMN shared_quests.is_public IS '公開フラグ';
         COMMENT ON COLUMN shared_quests.shared_at IS '共有日時';
-        COMMENT ON COLUMN shared_quests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN shared_quests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN shared_quests.created_at IS '作成日時';
+        COMMENT ON COLUMN shared_quests.updated_at IS '更新日時';
 
     -- 共有クエスト履歴テーブル
         CREATE TABLE IF NOT EXISTS history.shared_quests (
@@ -1589,8 +1589,8 @@
         COMMENT ON COLUMN family_quests.is_shared IS '共有フラグ';
         COMMENT ON COLUMN family_quests.shared_quest_id IS '共有クエストID（共有時のみ）';
         COMMENT ON COLUMN family_quests.adopted_at IS 'クエスト採用日時';
-        COMMENT ON COLUMN family_quests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN family_quests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN family_quests.created_at IS '作成日時';
+        COMMENT ON COLUMN family_quests.updated_at IS '更新日時';
 
     -- 家族クエスト履歴テーブル
         CREATE TABLE IF NOT EXISTS history.family_quests (
@@ -1626,8 +1626,8 @@
         COMMENT ON COLUMN saved_quests.quest_id IS 'クエストID（外部キー）';
         COMMENT ON COLUMN saved_quests.family_id IS '家族ID（外部キー）';
         COMMENT ON COLUMN saved_quests.saved_at IS '保存日時';
-        COMMENT ON COLUMN saved_quests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN saved_quests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN saved_quests.created_at IS '作成日時';
+        COMMENT ON COLUMN saved_quests.updated_at IS '更新日時';
 
     -- テンプレートクエストテーブル（アプリのテンプレートクエスト）
         CREATE TABLE IF NOT EXISTS template_quests (
@@ -1640,67 +1640,67 @@
         COMMENT ON TABLE template_quests IS 'アプリ提供のテンプレートクエストを管理するテーブル';
         COMMENT ON COLUMN template_quests.id IS 'テンプレートクエストID（主キー）';
         COMMENT ON COLUMN template_quests.quest_id IS 'クエストID（外部キー、一意制約）';
-        COMMENT ON COLUMN template_quests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN template_quests.updated_at IS 'レコードの更新日時';
+        COMMENT ON COLUMN template_quests.created_at IS '作成日時';
+        COMMENT ON COLUMN template_quests.updated_at IS '更新日時';
 
     -- メンバークエストステータステーブル
-        CREATE TABLE IF NOT EXISTS member_quest_status (
+        CREATE TABLE IF NOT EXISTS child_quest_status (
             id serial PRIMARY KEY,
             code varchar(20) NOT NULL UNIQUE,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE member_quest_status IS 'メンバーのクエスト進行状態を管理するマスタテーブル';
-        COMMENT ON COLUMN member_quest_status.id IS 'ステータスID（主キー）';
-        COMMENT ON COLUMN member_quest_status.code IS 'ステータスコード（例：assigned, in_progress, completed等）';
-        COMMENT ON COLUMN member_quest_status.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN member_quest_status.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE child_quest_status IS 'メンバーのクエスト進行状態を管理するマスタテーブル';
+        COMMENT ON COLUMN child_quest_status.id IS 'ステータスID（主キー）';
+        COMMENT ON COLUMN child_quest_status.code IS 'ステータスコード（例：assigned, in_progress, completed等）';
+        COMMENT ON COLUMN child_quest_status.created_at IS '作成日時';
+        COMMENT ON COLUMN child_quest_status.updated_at IS '更新日時';
 
     -- メンバークエストステータス翻訳テーブル
-        CREATE TABLE IF NOT EXISTS member_quest_status_translations (
+        CREATE TABLE IF NOT EXISTS child_quest_status_translations (
             id serial PRIMARY KEY,
-            member_quest_status_id int NOT NULL REFERENCES member_quest_status (id) ON DELETE CASCADE,
+            child_quest_status_id int NOT NULL REFERENCES child_quest_status (id) ON DELETE CASCADE,
             language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (member_quest_status_id, language_id)
+            UNIQUE (child_quest_status_id, language_id)
         );
 
-        COMMENT ON TABLE member_quest_status_translations IS 'メンバークエストステータスの多言語対応テーブル';
-        COMMENT ON COLUMN member_quest_status_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN member_quest_status_translations.member_quest_status_id IS 'ステータスID（外部キー）';
-        COMMENT ON COLUMN member_quest_status_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN member_quest_status_translations.name IS 'ステータス名の翻訳';
-        COMMENT ON COLUMN member_quest_status_translations.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN member_quest_status_translations.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE child_quest_status_translations IS 'メンバークエストステータスの多言語対応テーブル';
+        COMMENT ON COLUMN child_quest_status_translations.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN child_quest_status_translations.child_quest_status_id IS 'ステータスID（外部キー）';
+        COMMENT ON COLUMN child_quest_status_translations.language_id IS '言語ID（外部キー）';
+        COMMENT ON COLUMN child_quest_status_translations.name IS 'ステータス名の翻訳';
+        COMMENT ON COLUMN child_quest_status_translations.created_at IS '作成日時';
+        COMMENT ON COLUMN child_quest_status_translations.updated_at IS '更新日時';
 
     -- メンバークエストテーブル
-        CREATE TABLE IF NOT EXISTS member_quests (
+        CREATE TABLE IF NOT EXISTS child_quests (
             id serial PRIMARY KEY,
             quest_id int NOT NULL REFERENCES quests (id) ON DELETE CASCADE,
-            member_id int NOT NULL REFERENCES members (id) ON DELETE CASCADE,
+            child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
             current_level int NOT NULL CHECK (current_level > 0) DEFAULT 1,
-            status_id int NOT NULL REFERENCES member_quest_status (id) ON DELETE RESTRICT,
+            status_id int NOT NULL REFERENCES child_quest_status (id) ON DELETE RESTRICT,
             published_at timestamptz NOT NULL DEFAULT now(),
             achieved_at timestamptz DEFAULT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (quest_id, member_id),
+            UNIQUE (quest_id, child_id),
             CHECK (
                 (achieved_at IS NULL) OR 
                 (achieved_at IS NOT NULL AND achieved_at >= published_at)
             )
         );
 
-        COMMENT ON TABLE member_quests IS 'メンバーに公開されているクエストとその進行状況を管理するテーブル';
-        COMMENT ON COLUMN member_quests.id IS 'メンバークエストID（主キー）';
-        COMMENT ON COLUMN member_quests.quest_id IS 'クエストID（外部キー）';
-        COMMENT ON COLUMN member_quests.member_id IS 'メンバーID（外部キー）';
-        COMMENT ON COLUMN member_quests.current_level IS '現在のレベル（正の値のみ）';
-        COMMENT ON COLUMN member_quests.status_id IS 'クエストステータスID（外部キー）';
-        COMMENT ON COLUMN member_quests.published_at IS 'クエスト公開日時';
-        COMMENT ON COLUMN member_quests.achieved_at IS 'クエスト達成日時（未達成の場合はNULL）';
-        COMMENT ON COLUMN member_quests.created_at IS 'レコードの作成日時';
-        COMMENT ON COLUMN member_quests.updated_at IS 'レコードの更新日時';
+        COMMENT ON TABLE child_quests IS 'メンバーに公開されているクエストとその進行状況を管理するテーブル';
+        COMMENT ON COLUMN child_quests.id IS 'メンバークエストID（主キー）';
+        COMMENT ON COLUMN child_quests.quest_id IS 'クエストID（外部キー）';
+        COMMENT ON COLUMN child_quests.child_id IS 'メンバーID（外部キー）';
+        COMMENT ON COLUMN child_quests.current_level IS '現在のレベル（正の値のみ）';
+        COMMENT ON COLUMN child_quests.status_id IS 'クエストステータスID（外部キー）';
+        COMMENT ON COLUMN child_quests.published_at IS 'クエスト公開日時';
+        COMMENT ON COLUMN child_quests.achieved_at IS 'クエスト達成日時（未達成の場合はNULL）';
+        COMMENT ON COLUMN child_quests.created_at IS '作成日時';
+        COMMENT ON COLUMN child_quests.updated_at IS '更新日時';

@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS withdrawal_request_status (
 COMMENT ON TABLE withdrawal_request_status IS '引き落とし申請のステータスを管理するテーブル';
 COMMENT ON COLUMN withdrawal_request_status.id IS 'ステータスID（主キー）';
 COMMENT ON COLUMN withdrawal_request_status.code IS 'ステータスコード（例：pending, approved, rejected）';
-COMMENT ON COLUMN withdrawal_request_status.created_at IS 'レコードの作成日時';
-COMMENT ON COLUMN withdrawal_request_status.updated_at IS 'レコードの更新日時';
+COMMENT ON COLUMN withdrawal_request_status.created_at IS '作成日時';
+COMMENT ON COLUMN withdrawal_request_status.updated_at IS '更新日時';
 
 -- 引き落とし申請ステータス翻訳テーブル
 CREATE TABLE IF NOT EXISTS withdrawal_request_status_translations (
