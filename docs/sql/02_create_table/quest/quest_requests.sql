@@ -1,35 +1,35 @@
 -- クエストリクエストステータステーブル
-CREATE TABLE IF NOT EXISTS quest_request_status (
+CREATE TABLE IF NOT EXISTS quest_request_statuses (
     id serial PRIMARY KEY,
     code varchar(20) NOT NULL UNIQUE,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-COMMENT ON TABLE quest_request_status IS 'クエストリクエストの状態を管理するマスタテーブル';
-COMMENT ON COLUMN quest_request_status.id IS 'ステータスID（主キー）';
-COMMENT ON COLUMN quest_request_status.code IS 'ステータスコード（例：pending, approved, rejected）';
-COMMENT ON COLUMN quest_request_status.created_at IS '作成日時';
-COMMENT ON COLUMN quest_request_status.updated_at IS '更新日時';
+COMMENT ON TABLE quest_request_statuses IS 'クエストリクエストの状態を管理するマスタテーブル';
+COMMENT ON COLUMN quest_request_statuses.id IS 'ステータスID（主キー）';
+COMMENT ON COLUMN quest_request_statuses.code IS 'ステータスコード（例：pending, approved, rejected）';
+COMMENT ON COLUMN quest_request_statuses.created_at IS '作成日時';
+COMMENT ON COLUMN quest_request_statuses.updated_at IS '更新日時';
 
 -- クエストリクエストステータス翻訳テーブル
-CREATE TABLE IF NOT EXISTS quest_request_status_translations (
+CREATE TABLE IF NOT EXISTS quest_request_status_translation (
     id serial PRIMARY KEY,
-    quest_request_status_id int NOT NULL REFERENCES quest_request_status (id) ON DELETE CASCADE,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    quest_request_status_id int NOT NULL REFERENCES quest_request_statuses (id) ON DELETE CASCADE,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     name varchar(100) NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
-    UNIQUE (quest_request_status_id, language_id)
+    UNIQUE (quest_request_status_id, language_code)
 );
 
-COMMENT ON TABLE quest_request_status_translations IS 'クエストリクエストステータスの多言語対応テーブル';
-COMMENT ON COLUMN quest_request_status_translations.id IS '翻訳ID（主キー）';
-COMMENT ON COLUMN quest_request_status_translations.quest_request_status_id IS 'ステータスID（外部キー）';
-COMMENT ON COLUMN quest_request_status_translations.language_id IS '言語ID（外部キー）';
-COMMENT ON COLUMN quest_request_status_translations.name IS 'ステータス名の翻訳';
-COMMENT ON COLUMN quest_request_status_translations.created_at IS '作成日時';
-COMMENT ON COLUMN quest_request_status_translations.updated_at IS '更新日時';
+COMMENT ON TABLE quest_request_status_translation IS 'クエストリクエストステータスの多言語対応テーブル';
+COMMENT ON COLUMN quest_request_status_translation.id IS '翻訳ID（主キー）';
+COMMENT ON COLUMN quest_request_status_translation.quest_request_status_id IS 'ステータスID（外部キー）';
+COMMENT ON COLUMN quest_request_status_translation.language_code IS '言語ID（外部キー）';
+COMMENT ON COLUMN quest_request_status_translation.name IS 'ステータス名の翻訳';
+COMMENT ON COLUMN quest_request_status_translation.created_at IS '作成日時';
+COMMENT ON COLUMN quest_request_status_translation.updated_at IS '更新日時';
 
 -- クエストリクエストテーブル
 CREATE TABLE IF NOT EXISTS quest_requests (
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS quest_requests (
     title varchar(200) NOT NULL CHECK (length(title) > 0),
     description text NOT NULL CHECK (length(description) > 0),
     is_new_request boolean NOT NULL DEFAULT true,
-    status_id int NOT NULL REFERENCES quest_request_status (id) ON DELETE RESTRICT,
+    status_id int NOT NULL REFERENCES quest_request_statuses (id) ON DELETE RESTRICT,
     answer text,
     created_at timestamptz NOT NULL DEFAULT now(),
     answered_at timestamptz DEFAULT NULL,

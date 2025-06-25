@@ -83,12 +83,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    notifiable_types ||--|{ notifiable_types_translations: ""
+    notifiable_types ||--|{ notifiable_types_translation: ""
 
-    notifiable_types_translations {
+    notifiable_types_translation {
         int id PK
         int notifiable_type_id FK
-        int language_id FK
+        int language_code FK
         String description "通知対象タイプ説明の翻訳"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -110,7 +110,7 @@ erDiagram
         int reporter_id "通報者ID（ポリモーフィック）"
         int reportable_type FK "reportable_types.id"
         int reportable_id "通報対象ID（ポリモーフィック）"
-        int status_id FK "report_status.id"
+        int status_id FK "report_statuses.id"
         String reason "通報理由"
         String description "通報内容の詳細"
         datetime reported_at "通報された日時"
@@ -121,7 +121,7 @@ erDiagram
 
     reports ||--|| user_types: ""
     reports ||--|| reportable_types: ""
-    reports ||--|| report_status: ""
+    reports ||--|| report_statuses: ""
 
     reportable_types {
         %% レポート対象となるオブジェクトのタイプ
@@ -132,7 +132,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    report_status {
+    report_statuses {
         %% レポートの処理状態
         int id PK
         String code UK "ステータスコード（pending, reviewed, resolved, dismissed）"
@@ -145,7 +145,7 @@ erDiagram
         %% アイコン情報
         int id PK
         String code UK "アイコンコード"
-        int category_id FK "icon_category.id（NULL許可）"
+        int category_id FK "icon_categories.id（NULL許可）"
         String file_path "アイコンファイルのパス"
         String alt_text "代替テキスト"
         int sort_order "表示順序"
@@ -154,9 +154,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    icons ||--|| icon_category: ""
+    icons ||--|| icon_categories: ""
 
-    icon_category {
+    icon_categories {
         %% アイコンのカテゴリ
         int id PK
         String code UK "カテゴリコード"
@@ -166,12 +166,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    icon_category ||--|{ icon_category_translations: ""
+    icon_categories ||--|{ icon_categories_translation: ""
 
-    icon_category_translations {
+    icon_categories_translation {
         int id PK
         int category_id FK
-        int language_id FK
+        int language_code FK
         String name "カテゴリ名の翻訳"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -188,8 +188,8 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    notifiable_types_translations ||--|| languages: ""
-    icon_category_translations ||--|| languages: ""
+    notifiable_types_translation ||--|| languages: ""
+    icon_categories_translation ||--|| languages: ""
 
     currencies {
         %% 通貨情報

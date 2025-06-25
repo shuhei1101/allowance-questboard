@@ -6,7 +6,7 @@ erDiagram
         int id PK
         String subclass_type "サブクラスタイプ（template, family, custom）"
         int subclass_id "サブクラスID（ポリモーフィック）"
-        int category_id FK "quest_category.id"
+        int category_id FK "quest_categories.id"
         int icon_id FK "icons.id"
         int age_from "対象年齢下限（負の値不可）"
         int age_to "対象年齢上限"
@@ -17,12 +17,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quests ||--|{ quest_translations: ""
+    quests ||--|{ quests_translation: ""
 
-    quest_translations {
+    quests_translation {
         int id PK
         int quest_id FK
-        int language_id FK
+        int language_code FK
         String title "クエストタイトルの翻訳"
         String client "クライアント名の翻訳"
         datetime created_at "作成日時"
@@ -46,12 +46,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_details_by_level ||--|{ quest_details_by_level_translations: ""
+    quest_details_by_level ||--|{ quest_details_by_level_translation: ""
 
-    quest_details_by_level_translations {
+    quest_details_by_level_translation {
         int id PK
         int quest_details_by_level_id FK
-        int language_id FK
+        int language_code FK
         String success_criteria "成功条件の翻訳"
     }
 
@@ -67,9 +67,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quests ||--|| quest_category: ""
+    quests ||--|| quest_categories: ""
 
-    quest_category {
+    quest_categories {
         %% クエストカテゴリの基底テーブル
         int id PK
         String subclass_type "サブクラスタイプ（template, custom, family）"
@@ -78,23 +78,23 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_category ||--|{ quest_category_translations: ""
+    quest_categories ||--|{ quest_categories_translation: ""
 
-    quest_category_translations {
+    quest_categories_translation {
         int id PK
         int quest_category_id FK
-        int language_id FK
+        int language_code FK
         String name "カテゴリ名の翻訳"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 
-    quest_category ||--o| template_quest_category: "inherits to"
+    quest_categories ||--o| template_quest_categories: "inherits to"
 
-    template_quest_category {
+    template_quest_categories {
         %% アプリ提供のテンプレートクエストカテゴリ
         int id PK
-        int category_id FK "quest_category.id（一意制約）"
+        int category_id FK "quest_categories.id（一意制約）"
         String code UK "カテゴリコード"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -106,7 +106,7 @@ erDiagram
         int family_id FK
         int child_id FK "リクエスト者"
         int quest_id FK "既存クエストID（既存クエストの場合のみ）"
-        int status_id FK "quest_request_status.id"
+        int status_id FK "quest_request_statuses.id"
         String title "リクエストタイトル"
         String description "リクエスト内容"
         String requested_reward "希望報酬"
@@ -114,9 +114,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_requests ||--|| quest_request_status: ""
+    quest_requests ||--|| quest_request_statuses: ""
 
-    quest_request_status {
+    quest_request_statuses {
         %% クエストリクエストの状態
         int id PK
         String code UK "ステータスコード"
@@ -124,12 +124,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_request_status ||--|{ quest_request_status_translations: ""
+    quest_request_statuses ||--|{ quest_request_status_translation: ""
 
-    quest_request_status_translations {
+    quest_request_status_translation {
         int id PK
         int quest_request_status_id FK
-        int language_id FK
+        int language_code FK
         String name "ステータス名の翻訳"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -160,16 +160,16 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_translations ||--|| languages: ""
-    quest_category_translations ||--|| languages: ""
-    quest_request_status_translations ||--|| languages: ""
-    quest_details_by_level_translations ||--|| languages: ""
+    quests_translation ||--|| languages: ""
+    quest_categories_translation ||--|| languages: ""
+    quest_request_status_translation ||--|| languages: ""
+    quest_details_by_level_translation ||--|| languages: ""
 
     icons {
         %% アイコン情報
         int id PK
         String code UK "アイコンコード"
-        int category_id FK "icon_category.id（NULL許可）"
+        int category_id FK "icon_categories.id（NULL許可）"
         String file_path "アイコンファイルのパス"
         String alt_text "代替テキスト"
         int sort_order "表示順序"

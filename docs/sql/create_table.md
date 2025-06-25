@@ -26,7 +26,7 @@
 5. 02_create_table/other/countries.sql
 
 -- 学歴マスタ
-6. 02_create_table/child/education.sql
+6. 02_create_table/child/educations.sql
 
 -- ユーザタイプ
 7. 02_create_table/comment/user_types.sql
@@ -110,7 +110,7 @@
 ### 9. クエストカテゴリ関連（quest_category_subclass_typesに依存）
 ```sql
 -- クエストカテゴリ基底クラス
-27. 02_create_table/quest/quest_category.sql
+27. 02_create_table/quest/quest_categories.sql
 ```
 
 ### 10. コメント関連（依存関係が複雑なため後回し）
@@ -122,7 +122,7 @@
 29. 02_create_table/comment/comment_likes.sql
 ```
 
-### 11. クエスト関連（quest_subclass_types, quest_category, iconsに依存）
+### 11. クエスト関連（quest_subclass_types, quest_categories, iconsに依存）
 ```sql
 -- クエストテーブル
 30. 02_create_table/quest/quests.sql

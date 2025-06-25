@@ -253,11 +253,11 @@ erDiagram
 
 
 
-    quests }|--|| quest_category:""
+    quests }|--|| quest_categories:""
 
-    quests }|--|| quest_category: ""
+    quests }|--|| quest_categories: ""
 
-    quest_category {
+    quest_categories {
         %% クエスト分類テーブルの基盤。
         %% 
         %% クラステーブル継承。
@@ -270,10 +270,10 @@ erDiagram
         String name "分類名"
     }
 
-    quest_category ||--o| template_quest_category: "inherits to"
-    quest_category ||--o| custom_quest_category: "inherits to"
+    quest_categories ||--o| template_quest_categories: "inherits to"
+    quest_categories ||--o| custom_quest_categories: "inherits to"
 
-    template_quest_category {
+    template_quest_categories {
         %% テンプレートクエスト分類テーブル。
 
         String id PK
@@ -281,7 +281,7 @@ erDiagram
         int category_id FK
     }
 
-    custom_quest_category {
+    custom_quest_categories {
         %% 家族が設定したクエスト分類テーブル。
         %% 
         %% [家族-クエスト分類]間は多対多なため、中間テーブルで管理。
@@ -291,10 +291,10 @@ erDiagram
         int category_id FK
     }
 
-    family }|--|| family_quest_category: ""
-    custom_quest_category }|--|| family_quest_category: ""
+    family }|--|| family_quest_categories: ""
+    custom_quest_categories }|--|| family_quest_categories: ""
 
-    family_quest_category {
+    family_quest_categories {
         %% 家族とクエスト分類の中間テーブル。
 
         String id PK
@@ -350,9 +350,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    quest_requests }|--|| request_status: ""
+    quest_requests }|--|| request_statuses: ""
 
-    request_status {
+    request_statuses {
         %% ウエストの要望申請のステータス。
         %% 
         %% 例: 申請中、否認、承認
@@ -405,10 +405,10 @@ erDiagram
     %%     int shared_penalty_id FK
     %% }
 
-    %% family_penalty ||--|| family_penalty_status: ""
+    %% family_penalty ||--|| family_penalty_statuses: ""
 
     %% %% ペナルティステータス(公開or非公開)
-    %% family_penalty_status {
+    %% family_penalty_statuses {
     %%     String id PK
     %%     String name "ステータス名"
     %% }
@@ -461,39 +461,39 @@ erDiagram
 
 
 
-    %% penalty }|--|| penalty_category:""
+    %% penalty }|--|| penalty_categories:""
 
-    %% penalty }|--|| penalty_category: ""
+    %% penalty }|--|| penalty_categories: ""
 
 
     %% %% テンプレ分類とカスタム分類は分けることにした。
     %% %% テンプレ分類の読み込みが早くなる
     %% %% 一つのテーブルだと負荷が集中するため
-    %% penalty_category {
+    %% penalty_categories {
     %%     String id PK
     %%     String inheritable_type FK "継承先のテーブル名"
     %%     int inheritable_id FK "継承先のレコードのID"
     %%     String name "分類名"
     %% }
 
-    %% penalty_category ||--o| template_penalty_category: "inherits to"
-    %% penalty_category ||--o| custom_penalty_category: "inherits to"
+    %% penalty_categories ||--o| template_penalty_categories: "inherits to"
+    %% penalty_categories ||--o| custom_penalty_categories: "inherits to"
 
-    %% template_penalty_category {
+    %% template_penalty_categories {
     %%     String id PK
     %%     int category_id FK
     %% }
 
-    %% custom_penalty_category {
+    %% custom_penalty_categories {
     %%     String id PK
     %%     int category_id FK
     %%     int family_id FK
     %% }
 
-    %% family }|--|| family_penalty_category: ""
-    %% custom_penalty_category }|--|| family_penalty_category: ""
+    %% family }|--|| family_penalty_categories: ""
+    %% custom_penalty_categories }|--|| family_penalty_categories: ""
 
-    %% family_penalty_category {
+    %% family_penalty_categories {
     %%     String id PK
     %%     int family_id FK
     %%     int category_id FK

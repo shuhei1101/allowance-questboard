@@ -9,7 +9,7 @@ INSERT INTO auth.users (
     raw_app_meta_data, 
     raw_user_meta_data, 
     is_super_admin, 
-    email_change_confirm_status, 
+    email_change_confirm_statuses, 
     is_sso_user, 
     is_anonymous
 ) VALUES

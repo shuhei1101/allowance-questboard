@@ -71,42 +71,42 @@ COMMENT ON COLUMN history.comments.updated_at IS '元更新日時';
 COMMENT ON COLUMN history.comments.recorded_at IS '履歴記録日時';
 
 -- コメント翻訳テーブル
-CREATE TABLE IF NOT EXISTS comments_translations (
+CREATE TABLE IF NOT EXISTS comments_translation (
     id serial PRIMARY KEY,
     comment_id int NOT NULL REFERENCES comments (id) ON DELETE CASCADE,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     body text NOT NULL CHECK (length(body) > 0),
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
-    UNIQUE (comment_id, language_id)
+    UNIQUE (comment_id, language_code)
 );
 
-COMMENT ON TABLE comments_translations IS 'コメントの多言語対応テーブル';
-COMMENT ON COLUMN comments_translations.id IS '翻訳ID（主キー）';
-COMMENT ON COLUMN comments_translations.comment_id IS 'コメントID（外部キー）';
-COMMENT ON COLUMN comments_translations.language_id IS '言語ID（外部キー）';
-COMMENT ON COLUMN comments_translations.body IS 'コメント本文の翻訳（空文字不可）';
-COMMENT ON COLUMN comments_translations.created_at IS '作成日時';
-COMMENT ON COLUMN comments_translations.updated_at IS '更新日時';
+COMMENT ON TABLE comments_translation IS 'コメントの多言語対応テーブル';
+COMMENT ON COLUMN comments_translation.id IS '翻訳ID（主キー）';
+COMMENT ON COLUMN comments_translation.comment_id IS 'コメントID（外部キー）';
+COMMENT ON COLUMN comments_translation.language_code IS '言語ID（外部キー）';
+COMMENT ON COLUMN comments_translation.body IS 'コメント本文の翻訳（空文字不可）';
+COMMENT ON COLUMN comments_translation.created_at IS '作成日時';
+COMMENT ON COLUMN comments_translation.updated_at IS '更新日時';
 
 -- コメント翻訳履歴テーブル
-CREATE TABLE IF NOT EXISTS history.comments_translations (
+CREATE TABLE IF NOT EXISTS history.comments_translation (
     id serial PRIMARY KEY,
-    comment_translation_id int NOT NULL REFERENCES comments_translations (id) ON DELETE CASCADE,
+    comment_translation_id int NOT NULL REFERENCES comments_translation (id) ON DELETE CASCADE,
     comment_id int NOT NULL,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     body text NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
     recorded_at timestamptz NOT NULL DEFAULT now()
 );
 
-COMMENT ON TABLE history.comments_translations IS 'コメント翻訳の変更履歴を管理するテーブル';
-COMMENT ON COLUMN history.comments_translations.id IS '翻訳履歴ID（主キー）';
-COMMENT ON COLUMN history.comments_translations.comment_translation_id IS '元の翻訳ID（外部キー）';
-COMMENT ON COLUMN history.comments_translations.comment_id IS 'コメントID';
-COMMENT ON COLUMN history.comments_translations.language_id IS '言語ID（外部キー）';
-COMMENT ON COLUMN history.comments_translations.body IS 'コメント本文の翻訳（履歴時点）';
-COMMENT ON COLUMN history.comments_translations.created_at IS '元作成日時';
-COMMENT ON COLUMN history.comments_translations.updated_at IS '元更新日時';
-COMMENT ON COLUMN history.comments_translations.recorded_at IS '履歴記録日時';
+COMMENT ON TABLE history.comments_translation IS 'コメント翻訳の変更履歴を管理するテーブル';
+COMMENT ON COLUMN history.comments_translation.id IS '翻訳履歴ID（主キー）';
+COMMENT ON COLUMN history.comments_translation.comment_translation_id IS '元の翻訳ID（外部キー）';
+COMMENT ON COLUMN history.comments_translation.comment_id IS 'コメントID';
+COMMENT ON COLUMN history.comments_translation.language_code IS '言語ID（外部キー）';
+COMMENT ON COLUMN history.comments_translation.body IS 'コメント本文の翻訳（履歴時点）';
+COMMENT ON COLUMN history.comments_translation.created_at IS '元作成日時';
+COMMENT ON COLUMN history.comments_translation.updated_at IS '元更新日時';
+COMMENT ON COLUMN history.comments_translation.recorded_at IS '履歴記録日時';

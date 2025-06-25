@@ -22,7 +22,7 @@ INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_co
 (5, 3, '部屋全体をきれいに片付ける', 1, 150, 1, 30, 15);
 
 -- クエスト詳細翻訳テーブルのテストデータ
-INSERT INTO quest_details_by_level_translations (quest_details_by_level_id, language_id, success_criteria) VALUES
+INSERT INTO quest_details_by_level_translation (quest_details_by_level_id, language_code, success_criteria) VALUES
 -- お皿洗い
 (1, 2, 'Wash dishes and let them dry'),
 (2, 2, 'Wash dishes and put them in the cupboard'),

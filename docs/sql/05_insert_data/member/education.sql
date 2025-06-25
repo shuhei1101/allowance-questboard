@@ -1,5 +1,5 @@
 -- 学歴マスタテーブルのテストデータ
-INSERT INTO education (code) VALUES
+INSERT INTO educations (code) VALUES
 ('preschool'),
 ('elementary'),
 ('junior_high'),
@@ -10,7 +10,7 @@ INSERT INTO education (code) VALUES
 ('other');
 
 -- 学歴翻訳テーブルのテストデータ
-INSERT INTO education_translations (education_id, language_id, name) VALUES
+INSERT INTO educations_translation (education_id, language_code, name) VALUES
 -- 就学前
 (1, 1, '就学前'),
 (1, 2, 'Preschool'),

@@ -23,7 +23,7 @@ INSERT INTO comments (user_type, user_id, commentable_type, commentable_id, pare
 (2, 1, 4, 3, NULL, '一郎くんは勉強熱心で感心しています。', '2025-06-19 17:00:00+09');
 
 -- コメント翻訳テーブルのテストデータ
-INSERT INTO comments_translations (comment_id, language_id, body) VALUES
+INSERT INTO comments_translation (comment_id, language_code, body) VALUES
 -- 日本語コメントの英語翻訳
 (1, 2, 'Washing dishes is tough at first, but it becomes fun once you get used to it!'),
 (2, 2, 'Youre doing great! The dishes were washed very cleanly.'),

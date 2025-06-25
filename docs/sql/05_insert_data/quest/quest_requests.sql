@@ -1,12 +1,12 @@
 -- クエストリクエストステータステーブルのテストデータ
-INSERT INTO quest_request_status (code) VALUES
+INSERT INTO quest_request_statuses (code) VALUES
 ('pending'),
 ('approved'),
 ('rejected'),
 ('cancelled');
 
 -- クエストリクエストステータス翻訳テーブルのテストデータ
-INSERT INTO quest_request_status_translations (quest_request_status_id, language_id, name) VALUES
+INSERT INTO quest_request_status_translation (quest_request_status_id, language_code, name) VALUES
 -- 申請中
 (1, 1, '申請中'),
 (1, 2, 'Pending'),

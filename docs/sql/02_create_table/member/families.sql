@@ -37,32 +37,32 @@ COMMENT ON COLUMN history.families.updated_at IS '元更新日時';
 COMMENT ON COLUMN history.families.recorded_at IS '履歴記録日時';
 
 -- 家族翻訳テーブル
-CREATE TABLE IF NOT EXISTS families_translations (
+CREATE TABLE IF NOT EXISTS families_translation (
     id serial PRIMARY KEY,
     family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     name varchar(100) NOT NULL,
     bio text,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
-    UNIQUE (family_id, language_id)
+    UNIQUE (family_id, language_code)
 );
 
-COMMENT ON TABLE families_translations IS '家族情報の多言語対応テーブル';
-COMMENT ON COLUMN families_translations.id IS '翻訳ID（主キー）';
-COMMENT ON COLUMN families_translations.family_id IS '家族ID（外部キー）';
-COMMENT ON COLUMN families_translations.language_id IS '言語ID（外部キー）';
-COMMENT ON COLUMN families_translations.name IS '家族名の翻訳';
-COMMENT ON COLUMN families_translations.bio IS '自己紹介の翻訳';
-COMMENT ON COLUMN families_translations.created_at IS '作成日時';
-COMMENT ON COLUMN families_translations.updated_at IS '更新日時';
+COMMENT ON TABLE families_translation IS '家族情報の多言語対応テーブル';
+COMMENT ON COLUMN families_translation.id IS '翻訳ID（主キー）';
+COMMENT ON COLUMN families_translation.family_id IS '家族ID（外部キー）';
+COMMENT ON COLUMN families_translation.language_code IS '言語ID（外部キー）';
+COMMENT ON COLUMN families_translation.name IS '家族名の翻訳';
+COMMENT ON COLUMN families_translation.bio IS '自己紹介の翻訳';
+COMMENT ON COLUMN families_translation.created_at IS '作成日時';
+COMMENT ON COLUMN families_translation.updated_at IS '更新日時';
 
 -- 家族翻訳履歴テーブル
-CREATE TABLE IF NOT EXISTS history.families_translations (
+CREATE TABLE IF NOT EXISTS history.families_translation (
     id serial PRIMARY KEY,
-    family_translation_id int NOT NULL REFERENCES families_translations (id) ON DELETE CASCADE,
+    family_translation_id int NOT NULL REFERENCES families_translation (id) ON DELETE CASCADE,
     family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     name varchar(100) NOT NULL,
     bio text,
     created_at timestamptz NOT NULL DEFAULT now(),
@@ -70,16 +70,16 @@ CREATE TABLE IF NOT EXISTS history.families_translations (
     recorded_at timestamptz NOT NULL DEFAULT now()
 );
 
-COMMENT ON TABLE history.families_translations IS '家族翻訳情報の変更履歴を管理するテーブル';
-COMMENT ON COLUMN history.families_translations.id IS '翻訳履歴ID（主キー）';
-COMMENT ON COLUMN history.families_translations.family_translation_id IS '元の翻訳ID（外部キー）';
-COMMENT ON COLUMN history.families_translations.family_id IS '家族ID（外部キー）';
-COMMENT ON COLUMN history.families_translations.language_id IS '言語ID（外部キー）';
-COMMENT ON COLUMN history.families_translations.name IS '家族名の翻訳（履歴時点）';
-COMMENT ON COLUMN history.families_translations.bio IS '自己紹介の翻訳（履歴時点）';
-COMMENT ON COLUMN history.families_translations.created_at IS '元作成日時';
-COMMENT ON COLUMN history.families_translations.updated_at IS '元更新日時';
-COMMENT ON COLUMN history.families_translations.recorded_at IS '履歴記録日時';
+COMMENT ON TABLE history.families_translation IS '家族翻訳情報の変更履歴を管理するテーブル';
+COMMENT ON COLUMN history.families_translation.id IS '翻訳履歴ID（主キー）';
+COMMENT ON COLUMN history.families_translation.family_translation_id IS '元の翻訳ID（外部キー）';
+COMMENT ON COLUMN history.families_translation.family_id IS '家族ID（外部キー）';
+COMMENT ON COLUMN history.families_translation.language_code IS '言語ID（外部キー）';
+COMMENT ON COLUMN history.families_translation.name IS '家族名の翻訳（履歴時点）';
+COMMENT ON COLUMN history.families_translation.bio IS '自己紹介の翻訳（履歴時点）';
+COMMENT ON COLUMN history.families_translation.created_at IS '元作成日時';
+COMMENT ON COLUMN history.families_translation.updated_at IS '元更新日時';
+COMMENT ON COLUMN history.families_translation.recorded_at IS '履歴記録日時';
 
 -- 家族設定テーブル
 CREATE TABLE IF NOT EXISTS families_settings (

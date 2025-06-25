@@ -16,7 +16,7 @@ INSERT INTO template_quests (quest_id) VALUES
 (1), (2), (3), (4), (5), (6);
 
 -- クエスト翻訳テーブルのテストデータ
-INSERT INTO quest_translations (quest_id, language_id, title, client, request_detail) VALUES
+INSERT INTO quests_translation (quest_id, language_code, title, client, request_detail) VALUES
 -- お皿洗い
 (17, 1, 'お皿洗いをしよう', 'お母さん', '食事後のお皿やコップを洗って片付けてください。'),
 (17, 2, 'Wash the Dishes', 'Mom', 'Please wash and put away dishes and cups after meals.'),
@@ -50,7 +50,7 @@ INSERT INTO child_quest_status (code) VALUES
 ('on_hold');      -- 保留中
 
 -- メンバークエストステータス翻訳テーブルのテストデータ
-INSERT INTO child_quest_status_translations (child_quest_status_id, language_id, name) VALUES
+INSERT INTO child_quest_statuses_translation (child_quest_status_id, language_code, name) VALUES
 -- 公開済み
 (6, 1, '公開済み'),
 (6, 2, 'Assigned'),
@@ -168,7 +168,7 @@ INSERT INTO quest_details_by_level (quest_id, level, success_criteria, target_co
 (8, 3, 'ハムスターの完全なお世話', 1, 150, 1, 30, 15);
 
 -- クエスト詳細翻訳テーブルのテストデータ
-INSERT INTO quest_details_by_level_translations (quest_details_by_level_id, language_id, success_criteria) VALUES
+INSERT INTO quest_details_by_level_translation (quest_details_by_level_id, language_code, success_criteria) VALUES
 -- お皿洗い
 (1, 2, 'Wash dishes and let them dry'),
 (2, 2, 'Wash dishes and put them in the cupboard'),
@@ -203,14 +203,14 @@ INSERT INTO quest_details_by_level_translations (quest_details_by_level_id, lang
 (24, 2, 'Complete hamster care');
 
 -- クエストリクエストステータステーブルのテストデータ
-INSERT INTO quest_request_status (code) VALUES
+INSERT INTO quest_request_statuses (code) VALUES
 ('pending'),
 ('approved'),
 ('rejected'),
 ('cancelled');
 
 -- クエストリクエストステータス翻訳テーブルのテストデータ
-INSERT INTO quest_request_status_translations (quest_request_status_id, language_id, name) VALUES
+INSERT INTO quest_request_status_translation (quest_request_status_id, language_code, name) VALUES
 -- 申請中
 (1, 1, '申請中'),
 (1, 2, 'Pending'),

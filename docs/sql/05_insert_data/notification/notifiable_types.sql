@@ -8,7 +8,7 @@ INSERT INTO notifiable_types (type, description) VALUES
 ('savings', '貯金に関する通知');
 
 -- 通知対象タイプ翻訳テーブルのテストデータ
-INSERT INTO notifiable_types_translations (notifiable_type_id, language_id, description) VALUES
+INSERT INTO notifiable_types_translation (notifiable_type_id, language_code, description) VALUES
 -- 家族
 (1, 1, '家族に関する通知'),
 (1, 2, 'Family notifications'),

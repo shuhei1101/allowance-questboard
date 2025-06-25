@@ -1,5 +1,5 @@
 -- レポートステータステーブルのテストデータ
-INSERT INTO report_status (code, status) VALUES
+INSERT INTO report_statuses (code, status) VALUES
 ('pending', '申請中'),
 ('reviewed', 'レビュー中'),
 ('resolved', '解決済み'),

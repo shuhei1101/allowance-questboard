@@ -77,7 +77,7 @@
 
 -- アイコン関連
     -- アイコンカテゴリテーブル
-        CREATE TABLE IF NOT EXISTS icon_category (
+        CREATE TABLE IF NOT EXISTS icon_categories (
             id serial PRIMARY KEY,
             code varchar(50) NOT NULL UNIQUE,
             sort_order int DEFAULT 0,
@@ -86,38 +86,38 @@
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE icon_category IS 'アイコンのカテゴリを管理するテーブル';
-        COMMENT ON COLUMN icon_category.id IS 'アイコンカテゴリID（主キー）';
-        COMMENT ON COLUMN icon_category.code IS 'カテゴリコード（一意制約）';
-        COMMENT ON COLUMN icon_category.sort_order IS '表示順序';
-        COMMENT ON COLUMN icon_category.is_active IS '有効フラグ';
-        COMMENT ON COLUMN icon_category.created_at IS '作成日時';
-        COMMENT ON COLUMN icon_category.updated_at IS '更新日時';
+        COMMENT ON TABLE icon_categories IS 'アイコンのカテゴリを管理するテーブル';
+        COMMENT ON COLUMN icon_categories.id IS 'アイコンカテゴリID（主キー）';
+        COMMENT ON COLUMN icon_categories.code IS 'カテゴリコード（一意制約）';
+        COMMENT ON COLUMN icon_categories.sort_order IS '表示順序';
+        COMMENT ON COLUMN icon_categories.is_active IS '有効フラグ';
+        COMMENT ON COLUMN icon_categories.created_at IS '作成日時';
+        COMMENT ON COLUMN icon_categories.updated_at IS '更新日時';
 
     -- アイコンカテゴリ翻訳テーブル
-        CREATE TABLE IF NOT EXISTS icon_category_translations (
+        CREATE TABLE IF NOT EXISTS icon_categories_translation (
             id serial PRIMARY KEY,
-            category_id int NOT NULL REFERENCES icon_category(id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages(id) ON DELETE RESTRICT,
+            category_id int NOT NULL REFERENCES icon_categories(id) ON DELETE CASCADE,
+            language_code int NOT NULL REFERENCES languages(id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (category_id, language_id)
+            UNIQUE (category_id, language_code)
         );
 
-        COMMENT ON TABLE icon_category_translations IS 'アイコンカテゴリの多言語対応テーブル';
-        COMMENT ON COLUMN icon_category_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN icon_category_translations.category_id IS 'アイコンカテゴリID（外部キー）';
-        COMMENT ON COLUMN icon_category_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN icon_category_translations.name IS 'カテゴリ名の翻訳';
-        COMMENT ON COLUMN icon_category_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN icon_category_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE icon_categories_translation IS 'アイコンカテゴリの多言語対応テーブル';
+        COMMENT ON COLUMN icon_categories_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN icon_categories_translation.category_id IS 'アイコンカテゴリID（外部キー）';
+        COMMENT ON COLUMN icon_categories_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN icon_categories_translation.name IS 'カテゴリ名の翻訳';
+        COMMENT ON COLUMN icon_categories_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN icon_categories_translation.updated_at IS '更新日時';
 
     -- アイコンテーブル
         CREATE TABLE IF NOT EXISTS icons (
             id serial PRIMARY KEY,
             code varchar(100) NOT NULL UNIQUE,  -- アイコンコード
-            category_id int REFERENCES icon_category(id) ON DELETE SET NULL,
+            category_id int REFERENCES icon_categories(id) ON DELETE SET NULL,
             file_path varchar(500),  -- アイコンファイルのパス
             alt_text varchar(200),  -- 代替テキスト
             sort_order int DEFAULT 0,
@@ -160,37 +160,37 @@
 
 -- 学歴マスタ
     -- 学歴マスタテーブル
-        CREATE TABLE IF NOT EXISTS education (
+        CREATE TABLE IF NOT EXISTS educations (
             id serial PRIMARY KEY,
             code varchar(20) NOT NULL UNIQUE,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE education IS '学歴の種類を管理するマスタテーブル';
-        COMMENT ON COLUMN education.id IS '学歴ID（主キー）';
-        COMMENT ON COLUMN education.code IS '学歴コード（例：elementary, junior_high, high_school等）';
-        COMMENT ON COLUMN education.created_at IS '作成日時';
-        COMMENT ON COLUMN education.updated_at IS '更新日時';
+        COMMENT ON TABLE educations IS '学歴の種類を管理するマスタテーブル';
+        COMMENT ON COLUMN educations.id IS '学歴ID（主キー）';
+        COMMENT ON COLUMN educations.code IS '学歴コード（例：elementary, junior_high, high_school等）';
+        COMMENT ON COLUMN educations.created_at IS '作成日時';
+        COMMENT ON COLUMN educations.updated_at IS '更新日時';
 
     -- 学歴翻訳テーブル
-        CREATE TABLE IF NOT EXISTS education_translations (
+        CREATE TABLE IF NOT EXISTS educations_translation (
             id serial PRIMARY KEY,
-            education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            education_id int NOT NULL REFERENCES educations (id) ON DELETE CASCADE,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (education_id, language_id)
+            UNIQUE (education_id, language_code)
         );
 
-        COMMENT ON TABLE education_translations IS '学歴の多言語対応テーブル';
-        COMMENT ON COLUMN education_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN education_translations.education_id IS '学歴ID（外部キー）';
-        COMMENT ON COLUMN education_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN education_translations.name IS '学歴名の翻訳';
-        COMMENT ON COLUMN education_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN education_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE educations_translation IS '学歴の多言語対応テーブル';
+        COMMENT ON COLUMN educations_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN educations_translation.education_id IS '学歴ID（外部キー）';
+        COMMENT ON COLUMN educations_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN educations_translation.name IS '学歴名の翻訳';
+        COMMENT ON COLUMN educations_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN educations_translation.updated_at IS '更新日時';
 
 -- ユーザタイプ
     -- ユーザタイプテーブル
@@ -228,7 +228,7 @@
 
 -- レポートステータス
     -- レポートステータステーブル
-        CREATE TABLE IF NOT EXISTS report_status (
+        CREATE TABLE IF NOT EXISTS report_statuses (
             id serial PRIMARY KEY,
             code varchar(20) NOT NULL UNIQUE,
             status varchar(50) NOT NULL,
@@ -236,19 +236,19 @@
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-    -- report_status テーブルにビジネスロジック制約を追加
-        ALTER TABLE report_status
+    -- report_statuses テーブルにビジネスロジック制約を追加
+        ALTER TABLE report_statuses
         ADD CONSTRAINT chk_report_status_code_format 
         CHECK (code ~ '^[a-z_][a-z0-9_]*$'),
         ADD CONSTRAINT chk_report_status_name_length 
         CHECK (length(status) >= 2 AND length(status) <= 50);
 
-        COMMENT ON TABLE report_status IS 'レポートの処理状態を管理するマスタテーブル';
-        COMMENT ON COLUMN report_status.id IS 'ステータスID（主キー）';
-        COMMENT ON COLUMN report_status.code IS 'ステータスコード（例：pending, reviewed, resolved, dismissed）';
-        COMMENT ON COLUMN report_status.status IS 'ステータス名';
-        COMMENT ON COLUMN report_status.created_at IS '作成日時';
-        COMMENT ON COLUMN report_status.updated_at IS '更新日時';
+        COMMENT ON TABLE report_statuses IS 'レポートの処理状態を管理するマスタテーブル';
+        COMMENT ON COLUMN report_statuses.id IS 'ステータスID（主キー）';
+        COMMENT ON COLUMN report_statuses.code IS 'ステータスコード（例：pending, reviewed, resolved, dismissed）';
+        COMMENT ON COLUMN report_statuses.status IS 'ステータス名';
+        COMMENT ON COLUMN report_statuses.created_at IS '作成日時';
+        COMMENT ON COLUMN report_statuses.updated_at IS '更新日時';
 
     -- レポートテーブル
         CREATE TABLE IF NOT EXISTS reports (
@@ -257,7 +257,7 @@
             reporter_id int NOT NULL,  -- ユーザID (family_id or child_id)
             reportable_type int NOT NULL REFERENCES reportable_types (id) ON DELETE RESTRICT,
             reportable_id int NOT NULL,
-            status_id int NOT NULL REFERENCES report_status (id) ON DELETE RESTRICT,
+            status_id int NOT NULL REFERENCES report_statuses (id) ON DELETE RESTRICT,
             reported_at timestamptz NOT NULL DEFAULT now(),
             resolved_at timestamptz DEFAULT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
@@ -283,7 +283,7 @@
     -- パフォーマンス向上のためのインデックス
         CREATE INDEX IF NOT EXISTS idx_reports_reporter ON reports (reporter_type, reporter_id);
         CREATE INDEX IF NOT EXISTS idx_reports_reportable ON reports (reportable_type, reportable_id);
-        CREATE INDEX IF NOT EXISTS idx_reports_status ON reports (status_id);
+        CREATE INDEX IF NOT EXISTS idx_reports_statuses ON reports (status_id);
         CREATE INDEX IF NOT EXISTS idx_reports_reported_at ON reports (reported_at);
         CREATE INDEX IF NOT EXISTS idx_reports_resolved_at ON reports (resolved_at) WHERE resolved_at IS NOT NULL;
 
@@ -307,7 +307,7 @@
             reporter_id int NOT NULL,  -- ユーザID (family_id or child_id)
             reportable_type int NOT NULL REFERENCES reportable_types (id) ON DELETE RESTRICT,
             reportable_id int NOT NULL,
-            status_id int NOT NULL REFERENCES report_status (id) ON DELETE RESTRICT,
+            status_id int NOT NULL REFERENCES report_statuses (id) ON DELETE RESTRICT,
             reported_at timestamptz NOT NULL DEFAULT now(),
             resolved_at timestamptz DEFAULT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
@@ -346,23 +346,23 @@
         COMMENT ON COLUMN notifiable_types.updated_at IS '更新日時';
 
     -- 通知対象タイプ翻訳テーブル
-        CREATE TABLE IF NOT EXISTS notifiable_types_translations (
+        CREATE TABLE IF NOT EXISTS notifiable_types_translation (
             id serial PRIMARY KEY,
             notifiable_type_id int NOT NULL REFERENCES notifiable_types (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             description text NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (notifiable_type_id, language_id)
+            UNIQUE (notifiable_type_id, language_code)
         );
 
-        COMMENT ON TABLE notifiable_types_translations IS '通知対象タイプの多言語対応テーブル';
-        COMMENT ON COLUMN notifiable_types_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN notifiable_types_translations.notifiable_type_id IS '通知対象タイプID（外部キー）';
-        COMMENT ON COLUMN notifiable_types_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN notifiable_types_translations.description IS '通知対象タイプ説明の翻訳';
-        COMMENT ON COLUMN notifiable_types_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN notifiable_types_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE notifiable_types_translation IS '通知対象タイプの多言語対応テーブル';
+        COMMENT ON COLUMN notifiable_types_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN notifiable_types_translation.notifiable_type_id IS '通知対象タイプID（外部キー）';
+        COMMENT ON COLUMN notifiable_types_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN notifiable_types_translation.description IS '通知対象タイプ説明の翻訳';
+        COMMENT ON COLUMN notifiable_types_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN notifiable_types_translation.updated_at IS '更新日時';
 
     -- スクリーン
         CREATE TABLE IF NOT EXISTS screens (
@@ -398,19 +398,19 @@
         COMMENT ON COLUMN withdrawal_request_status.updated_at IS '更新日時';
 
     -- 引き落とし申請ステータス翻訳テーブル
-        CREATE TABLE IF NOT EXISTS withdrawal_request_status_translations (
+        CREATE TABLE IF NOT EXISTS withdrawal_request_statuses_translation (
             id serial PRIMARY KEY,
             withdrawal_request_status_id int NOT NULL REFERENCES withdrawal_request_status (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
-            UNIQUE (withdrawal_request_status_id, language_id)
+            UNIQUE (withdrawal_request_status_id, language_code)
         );
 
-        COMMENT ON TABLE withdrawal_request_status_translations IS '引き落とし申請ステータスの多言語対応テーブル';
-        COMMENT ON COLUMN withdrawal_request_status_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN withdrawal_request_status_translations.withdrawal_request_status_id IS 'ステータスID（外部キー）';
-        COMMENT ON COLUMN withdrawal_request_status_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN withdrawal_request_status_translations.name IS 'ステータス名の翻訳';
+        COMMENT ON TABLE withdrawal_request_statuses_translation IS '引き落とし申請ステータスの多言語対応テーブル';
+        COMMENT ON COLUMN withdrawal_request_statuses_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN withdrawal_request_statuses_translation.withdrawal_request_status_id IS 'ステータスID（外部キー）';
+        COMMENT ON COLUMN withdrawal_request_statuses_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN withdrawal_request_statuses_translation.name IS 'ステータス名の翻訳';
 
 -- お小遣い種類
     -- allowanceable_types
@@ -437,14 +437,14 @@
     -- ユーザ設定テーブル
         CREATE TABLE IF NOT EXISTS user_settings (
             user_id uuid PRIMARY KEY REFERENCES auth.users (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
         COMMENT ON TABLE user_settings IS 'ユーザの基本設定を管理するテーブル';
         COMMENT ON COLUMN user_settings.user_id IS 'ユーザID（主キー、外部キー）';
-        COMMENT ON COLUMN user_settings.language_id IS '言語ID（外部キー）';
+        COMMENT ON COLUMN user_settings.language_code IS '言語ID（外部キー）';
         COMMENT ON COLUMN user_settings.created_at IS '作成日時';
         COMMENT ON COLUMN user_settings.updated_at IS '更新日時';
 
@@ -488,32 +488,32 @@
         COMMENT ON COLUMN history.families.recorded_at IS '履歴記録日時';
 
     -- 家族翻訳テーブル
-        CREATE TABLE IF NOT EXISTS families_translations (
+        CREATE TABLE IF NOT EXISTS families_translation (
             id serial PRIMARY KEY,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             bio text,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (family_id, language_id)
+            UNIQUE (family_id, language_code)
         );
 
-        COMMENT ON TABLE families_translations IS '家族情報の多言語対応テーブル';
-        COMMENT ON COLUMN families_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN families_translations.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN families_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN families_translations.name IS '家族名の翻訳';
-        COMMENT ON COLUMN families_translations.bio IS '自己紹介の翻訳';
-        COMMENT ON COLUMN families_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN families_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE families_translation IS '家族情報の多言語対応テーブル';
+        COMMENT ON COLUMN families_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN families_translation.family_id IS '家族ID（外部キー）';
+        COMMENT ON COLUMN families_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN families_translation.name IS '家族名の翻訳';
+        COMMENT ON COLUMN families_translation.bio IS '自己紹介の翻訳';
+        COMMENT ON COLUMN families_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN families_translation.updated_at IS '更新日時';
 
     -- 家族翻訳履歴テーブル
-        CREATE TABLE IF NOT EXISTS history.families_translations (
+        CREATE TABLE IF NOT EXISTS history.families_translation (
             id serial PRIMARY KEY,
-            family_translation_id int NOT NULL REFERENCES families_translations (id) ON DELETE CASCADE,
+            family_translation_id int NOT NULL REFERENCES families_translation (id) ON DELETE CASCADE,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             bio text,
             created_at timestamptz NOT NULL DEFAULT now(),
@@ -521,16 +521,16 @@
             recorded_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE history.families_translations IS '家族翻訳情報の変更履歴を管理するテーブル';
-        COMMENT ON COLUMN history.families_translations.id IS '翻訳履歴ID（主キー）';
-        COMMENT ON COLUMN history.families_translations.family_translation_id IS '元の翻訳ID（外部キー）';
-        COMMENT ON COLUMN history.families_translations.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN history.families_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN history.families_translations.name IS '家族名の翻訳（履歴時点）';
-        COMMENT ON COLUMN history.families_translations.bio IS '自己紹介の翻訳（履歴時点）';
-        COMMENT ON COLUMN history.families_translations.created_at IS '元作成日時';
-        COMMENT ON COLUMN history.families_translations.updated_at IS '元更新日時';
-        COMMENT ON COLUMN history.families_translations.recorded_at IS '履歴記録日時';
+        COMMENT ON TABLE history.families_translation IS '家族翻訳情報の変更履歴を管理するテーブル';
+        COMMENT ON COLUMN history.families_translation.id IS '翻訳履歴ID（主キー）';
+        COMMENT ON COLUMN history.families_translation.family_translation_id IS '元の翻訳ID（外部キー）';
+        COMMENT ON COLUMN history.families_translation.family_id IS '家族ID（外部キー）';
+        COMMENT ON COLUMN history.families_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN history.families_translation.name IS '家族名の翻訳（履歴時点）';
+        COMMENT ON COLUMN history.families_translation.bio IS '自己紹介の翻訳（履歴時点）';
+        COMMENT ON COLUMN history.families_translation.created_at IS '元作成日時';
+        COMMENT ON COLUMN history.families_translation.updated_at IS '元更新日時';
+        COMMENT ON COLUMN history.families_translation.recorded_at IS '履歴記録日時';
 
     -- 家族設定テーブル
         CREATE TABLE IF NOT EXISTS families_settings (
@@ -680,7 +680,7 @@
         CREATE TABLE IF NOT EXISTS child_grade (
             id serial PRIMARY KEY,
             child_id int NOT NULL UNIQUE REFERENCES children (id) ON DELETE CASCADE,
-            education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
+            education_id int NOT NULL REFERENCES educations (id) ON DELETE CASCADE,
             grade int NOT NULL CHECK (grade > 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
@@ -699,7 +699,7 @@
         CREATE TABLE IF NOT EXISTS education_period (
             id serial PRIMARY KEY,
             child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
-            education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
+            education_id int NOT NULL REFERENCES educations (id) ON DELETE CASCADE,
             period int NOT NULL CHECK (period > 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
@@ -1091,45 +1091,45 @@
     COMMENT ON COLUMN history.comments.recorded_at IS '履歴記録日時';
 
 -- コメント翻訳テーブル
-    CREATE TABLE IF NOT EXISTS comments_translations (
+    CREATE TABLE IF NOT EXISTS comments_translation (
         id serial PRIMARY KEY,
         comment_id int NOT NULL REFERENCES comments (id) ON DELETE CASCADE,
-        language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+        language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
         body text NOT NULL CHECK (length(body) > 0),
         created_at timestamptz NOT NULL DEFAULT now(),
         updated_at timestamptz NOT NULL DEFAULT now(),
-        UNIQUE (comment_id, language_id)
+        UNIQUE (comment_id, language_code)
     );
 
-    COMMENT ON TABLE comments_translations IS 'コメントの多言語対応テーブル';
-    COMMENT ON COLUMN comments_translations.id IS '翻訳ID（主キー）';
-    COMMENT ON COLUMN comments_translations.comment_id IS 'コメントID（外部キー）';
-    COMMENT ON COLUMN comments_translations.language_id IS '言語ID（外部キー）';
-    COMMENT ON COLUMN comments_translations.body IS 'コメント本文の翻訳（空文字不可）';
-    COMMENT ON COLUMN comments_translations.created_at IS '作成日時';
-    COMMENT ON COLUMN comments_translations.updated_at IS '更新日時';
+    COMMENT ON TABLE comments_translation IS 'コメントの多言語対応テーブル';
+    COMMENT ON COLUMN comments_translation.id IS '翻訳ID（主キー）';
+    COMMENT ON COLUMN comments_translation.comment_id IS 'コメントID（外部キー）';
+    COMMENT ON COLUMN comments_translation.language_code IS '言語ID（外部キー）';
+    COMMENT ON COLUMN comments_translation.body IS 'コメント本文の翻訳（空文字不可）';
+    COMMENT ON COLUMN comments_translation.created_at IS '作成日時';
+    COMMENT ON COLUMN comments_translation.updated_at IS '更新日時';
 
 -- コメント翻訳履歴テーブル
-    CREATE TABLE IF NOT EXISTS history.comments_translations (
+    CREATE TABLE IF NOT EXISTS history.comments_translation (
         id serial PRIMARY KEY,
-        comment_translation_id int NOT NULL REFERENCES comments_translations (id) ON DELETE CASCADE,
+        comment_translation_id int NOT NULL REFERENCES comments_translation (id) ON DELETE CASCADE,
         comment_id int NOT NULL,
-        language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+        language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
         body text NOT NULL,
         created_at timestamptz NOT NULL DEFAULT now(),
         updated_at timestamptz NOT NULL DEFAULT now(),
         recorded_at timestamptz NOT NULL DEFAULT now()
     );
 
-    COMMENT ON TABLE history.comments_translations IS 'コメント翻訳の変更履歴を管理するテーブル';
-    COMMENT ON COLUMN history.comments_translations.id IS '翻訳履歴ID（主キー）';
-    COMMENT ON COLUMN history.comments_translations.comment_translation_id IS '元の翻訳ID（外部キー）';
-    COMMENT ON COLUMN history.comments_translations.comment_id IS 'コメントID';
-    COMMENT ON COLUMN history.comments_translations.language_id IS '言語ID（外部キー）';
-    COMMENT ON COLUMN history.comments_translations.body IS 'コメント本文の翻訳（履歴時点）';
-    COMMENT ON COLUMN history.comments_translations.created_at IS '元作成日時';
-    COMMENT ON COLUMN history.comments_translations.updated_at IS '元更新日時';
-    COMMENT ON COLUMN history.comments_translations.recorded_at IS '履歴記録日時';
+    COMMENT ON TABLE history.comments_translation IS 'コメント翻訳の変更履歴を管理するテーブル';
+    COMMENT ON COLUMN history.comments_translation.id IS '翻訳履歴ID（主キー）';
+    COMMENT ON COLUMN history.comments_translation.comment_translation_id IS '元の翻訳ID（外部キー）';
+    COMMENT ON COLUMN history.comments_translation.comment_id IS 'コメントID';
+    COMMENT ON COLUMN history.comments_translation.language_code IS '言語ID（外部キー）';
+    COMMENT ON COLUMN history.comments_translation.body IS 'コメント本文の翻訳（履歴時点）';
+    COMMENT ON COLUMN history.comments_translation.created_at IS '元作成日時';
+    COMMENT ON COLUMN history.comments_translation.updated_at IS '元更新日時';
+    COMMENT ON COLUMN history.comments_translation.recorded_at IS '履歴記録日時';
 
 
 -- =============================================================================
@@ -1139,17 +1139,17 @@
     -- クエストカテゴリサブクラスタイプ
         CREATE TABLE IF NOT EXISTS quest_category_subclass_types (
             id serial PRIMARY KEY,
-            type varchar NOT NULL UNIQUE,  -- template_quest_category, custom_quest_category
+            type varchar NOT NULL UNIQUE,  -- template_quest_categories, custom_quest_categories
             description text NOT NULL
         );
 
         COMMENT ON TABLE quest_category_subclass_types IS 'クエストカテゴリのサブクラスタイプを管理するテーブル';
         COMMENT ON COLUMN quest_category_subclass_types.id IS 'サブクラスタイプID（主キー）';
-        COMMENT ON COLUMN quest_category_subclass_types.type IS 'タイプコード（template_quest_category, custom_quest_category）';
+        COMMENT ON COLUMN quest_category_subclass_types.type IS 'タイプコード（template_quest_categories, custom_quest_categories）';
         COMMENT ON COLUMN quest_category_subclass_types.description IS 'タイプの説明';
 
     -- クエストカテゴリ（基底クラス）
-        CREATE TABLE IF NOT EXISTS quest_category (
+        CREATE TABLE IF NOT EXISTS quest_categories (
             id serial PRIMARY KEY,
             subclass_type int NOT NULL REFERENCES quest_category_subclass_types (id) ON DELETE RESTRICT,
             subclass_id int NOT NULL,
@@ -1158,36 +1158,36 @@
             UNIQUE (subclass_type, subclass_id)
         );
 
-        COMMENT ON TABLE quest_category IS 'クエストカテゴリの基底テーブル（ポリモーフィック関連）';
-        COMMENT ON COLUMN quest_category.id IS 'クエストカテゴリID（主キー）';
-        COMMENT ON COLUMN quest_category.subclass_type IS 'サブクラスタイプ（template, custom, family）';
-        COMMENT ON COLUMN quest_category.subclass_id IS 'サブクラスID（ポリモーフィック）';
-        COMMENT ON COLUMN quest_category.created_at IS '作成日時';
-        COMMENT ON COLUMN quest_category.updated_at IS '更新日時';
+        COMMENT ON TABLE quest_categories IS 'クエストカテゴリの基底テーブル（ポリモーフィック関連）';
+        COMMENT ON COLUMN quest_categories.id IS 'クエストカテゴリID（主キー）';
+        COMMENT ON COLUMN quest_categories.subclass_type IS 'サブクラスタイプ（template, custom, family）';
+        COMMENT ON COLUMN quest_categories.subclass_id IS 'サブクラスID（ポリモーフィック）';
+        COMMENT ON COLUMN quest_categories.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_categories.updated_at IS '更新日時';
 
     -- クエストカテゴリ翻訳テーブル
-        CREATE TABLE IF NOT EXISTS quest_category_translations (
+        CREATE TABLE IF NOT EXISTS quest_categories_translation (
             id serial PRIMARY KEY,
-            quest_category_id int NOT NULL REFERENCES quest_category (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            quest_category_id int NOT NULL REFERENCES quest_categories (id) ON DELETE CASCADE,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL CHECK (length(name) > 0),
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (quest_category_id, language_id)
+            UNIQUE (quest_category_id, language_code)
         );
 
-        COMMENT ON TABLE quest_category_translations IS 'クエストカテゴリの多言語対応テーブル';
-        COMMENT ON COLUMN quest_category_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN quest_category_translations.quest_category_id IS 'クエストカテゴリID（外部キー）';
-        COMMENT ON COLUMN quest_category_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN quest_category_translations.name IS 'カテゴリ名の翻訳（空文字不可）';
-        COMMENT ON COLUMN quest_category_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN quest_category_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE quest_categories_translation IS 'クエストカテゴリの多言語対応テーブル';
+        COMMENT ON COLUMN quest_categories_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN quest_categories_translation.quest_category_id IS 'クエストカテゴリID（外部キー）';
+        COMMENT ON COLUMN quest_categories_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN quest_categories_translation.name IS 'カテゴリ名の翻訳（空文字不可）';
+        COMMENT ON COLUMN quest_categories_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_categories_translation.updated_at IS '更新日時';
 
     -- テンプレートクエストカテゴリテーブル
-        CREATE TABLE IF NOT EXISTS template_quest_category (
+        CREATE TABLE IF NOT EXISTS template_quest_categories (
             id serial PRIMARY KEY,
-            category_id int NOT NULL UNIQUE REFERENCES quest_category (id) ON DELETE CASCADE,
+            category_id int NOT NULL UNIQUE REFERENCES quest_categories (id) ON DELETE CASCADE,
             code varchar(50) NOT NULL UNIQUE,
             sort_order int DEFAULT 0,
             is_active boolean NOT NULL DEFAULT true,
@@ -1195,46 +1195,46 @@
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE template_quest_category IS 'アプリ提供のテンプレートクエストカテゴリテーブル';
-        COMMENT ON COLUMN template_quest_category.id IS 'テンプレートカテゴリID（主キー）';
-        COMMENT ON COLUMN template_quest_category.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
-        COMMENT ON COLUMN template_quest_category.code IS 'カテゴリコード（一意制約）';
-        COMMENT ON COLUMN template_quest_category.sort_order IS '表示順序';
-        COMMENT ON COLUMN template_quest_category.is_active IS '有効フラグ';
-        COMMENT ON COLUMN template_quest_category.created_at IS '作成日時';
-        COMMENT ON COLUMN template_quest_category.updated_at IS '更新日時';
+        COMMENT ON TABLE template_quest_categories IS 'アプリ提供のテンプレートクエストカテゴリテーブル';
+        COMMENT ON COLUMN template_quest_categories.id IS 'テンプレートカテゴリID（主キー）';
+        COMMENT ON COLUMN template_quest_categories.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
+        COMMENT ON COLUMN template_quest_categories.code IS 'カテゴリコード（一意制約）';
+        COMMENT ON COLUMN template_quest_categories.sort_order IS '表示順序';
+        COMMENT ON COLUMN template_quest_categories.is_active IS '有効フラグ';
+        COMMENT ON COLUMN template_quest_categories.created_at IS '作成日時';
+        COMMENT ON COLUMN template_quest_categories.updated_at IS '更新日時';
 
     -- カスタムクエストカテゴリテーブル
-        CREATE TABLE IF NOT EXISTS custom_quest_category (
+        CREATE TABLE IF NOT EXISTS custom_quest_categories (
             id serial PRIMARY KEY,
-            category_id int NOT NULL UNIQUE REFERENCES quest_category (id) ON DELETE CASCADE,
+            category_id int NOT NULL UNIQUE REFERENCES quest_categories (id) ON DELETE CASCADE,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE custom_quest_category IS '家族が作成したカスタムクエストカテゴリテーブル';
-        COMMENT ON COLUMN custom_quest_category.id IS 'カスタムカテゴリID（主キー）';
-        COMMENT ON COLUMN custom_quest_category.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
-        COMMENT ON COLUMN custom_quest_category.family_id IS '作成者の家族ID（外部キー）';
-        COMMENT ON COLUMN custom_quest_category.created_at IS '作成日時';
-        COMMENT ON COLUMN custom_quest_category.updated_at IS '更新日時';
+        COMMENT ON TABLE custom_quest_categories IS '家族が作成したカスタムクエストカテゴリテーブル';
+        COMMENT ON COLUMN custom_quest_categories.id IS 'カスタムカテゴリID（主キー）';
+        COMMENT ON COLUMN custom_quest_categories.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
+        COMMENT ON COLUMN custom_quest_categories.family_id IS '作成者の家族ID（外部キー）';
+        COMMENT ON COLUMN custom_quest_categories.created_at IS '作成日時';
+        COMMENT ON COLUMN custom_quest_categories.updated_at IS '更新日時';
 
     -- 家族クエストカテゴリテーブル
-        CREATE TABLE IF NOT EXISTS family_quest_category (
+        CREATE TABLE IF NOT EXISTS family_quest_categories (
             id serial PRIMARY KEY,
-            category_id int NOT NULL UNIQUE REFERENCES quest_category (id) ON DELETE CASCADE,
+            category_id int NOT NULL UNIQUE REFERENCES quest_categories (id) ON DELETE CASCADE,
             family_id int NOT NULL REFERENCES families (id) ON DELETE CASCADE,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE family_quest_category IS '家族固有のクエストカテゴリテーブル';
-        COMMENT ON COLUMN family_quest_category.id IS '家族カテゴリID（主キー）';
-        COMMENT ON COLUMN family_quest_category.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
-        COMMENT ON COLUMN family_quest_category.family_id IS '家族ID（外部キー）';
-        COMMENT ON COLUMN family_quest_category.created_at IS '作成日時';
-        COMMENT ON COLUMN family_quest_category.updated_at IS '更新日時';
+        COMMENT ON TABLE family_quest_categories IS '家族固有のクエストカテゴリテーブル';
+        COMMENT ON COLUMN family_quest_categories.id IS '家族カテゴリID（主キー）';
+        COMMENT ON COLUMN family_quest_categories.category_id IS 'クエストカテゴリID（外部キー、一意制約）';
+        COMMENT ON COLUMN family_quest_categories.family_id IS '家族ID（外部キー）';
+        COMMENT ON COLUMN family_quest_categories.created_at IS '作成日時';
+        COMMENT ON COLUMN family_quest_categories.updated_at IS '更新日時';
 
     -- クエストサブクラスタイプ
         CREATE TABLE IF NOT EXISTS quest_subclass_types (
@@ -1253,7 +1253,7 @@
             id serial PRIMARY KEY,
             subclass_type int NOT NULL REFERENCES quest_subclass_types (id) ON DELETE RESTRICT,
             subclass_id int NOT NULL,
-            category_id int NOT NULL REFERENCES quest_category (id) ON DELETE RESTRICT,
+            category_id int NOT NULL REFERENCES quest_categories (id) ON DELETE RESTRICT,
             icon_id int NOT NULL REFERENCES icons (id) ON DELETE RESTRICT,
             age_from int NOT NULL CHECK (age_from >= 0),
             age_to int NOT NULL CHECK (age_to >= age_from),
@@ -1285,7 +1285,7 @@
             quest_id int NOT NULL REFERENCES quests (id) ON DELETE CASCADE,
             subclass_type int NOT NULL REFERENCES quest_subclass_types (id) ON DELETE RESTRICT,
             subclass_id int NOT NULL,
-            category_id int NOT NULL REFERENCES quest_category (id) ON DELETE RESTRICT,
+            category_id int NOT NULL REFERENCES quest_categories (id) ON DELETE RESTRICT,
             icon_id int NOT NULL REFERENCES icons (id) ON DELETE RESTRICT,
             age_from int NOT NULL,
             age_to int NOT NULL,
@@ -1302,33 +1302,33 @@
         COMMENT ON COLUMN history.quests.recorded_at IS '履歴記録日時';
 
     -- クエスト翻訳テーブル
-        CREATE TABLE IF NOT EXISTS quest_translations (
+        CREATE TABLE IF NOT EXISTS quests_translation (
             id serial PRIMARY KEY,
             quest_id int NOT NULL REFERENCES quests (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             title varchar(200) NOT NULL CHECK (length(title) > 0),
             client varchar(100) NOT NULL CHECK (length(client) > 0),
             request_detail text,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (quest_id, language_id)
+            UNIQUE (quest_id, language_code)
         );
 
-        COMMENT ON TABLE quest_translations IS 'クエスト情報の多言語対応テーブル';
-        COMMENT ON COLUMN quest_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN quest_translations.quest_id IS 'クエストID（外部キー）';
-        COMMENT ON COLUMN quest_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN quest_translations.title IS 'クエストタイトルの翻訳（空文字不可）';
-        COMMENT ON COLUMN quest_translations.client IS 'クライアント名の翻訳（空文字不可）';
-        COMMENT ON COLUMN quest_translations.request_detail IS '依頼詳細の翻訳';
-        COMMENT ON COLUMN quest_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN quest_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE quests_translation IS 'クエスト情報の多言語対応テーブル';
+        COMMENT ON COLUMN quests_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN quests_translation.quest_id IS 'クエストID（外部キー）';
+        COMMENT ON COLUMN quests_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN quests_translation.title IS 'クエストタイトルの翻訳（空文字不可）';
+        COMMENT ON COLUMN quests_translation.client IS 'クライアント名の翻訳（空文字不可）';
+        COMMENT ON COLUMN quests_translation.request_detail IS '依頼詳細の翻訳';
+        COMMENT ON COLUMN quests_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN quests_translation.updated_at IS '更新日時';
 
     -- クエスト翻訳履歴テーブル
-        CREATE TABLE IF NOT EXISTS history.quest_translations (
+        CREATE TABLE IF NOT EXISTS history.quests_translation (
             id serial PRIMARY KEY,
-            quest_translation_id int NOT NULL REFERENCES quest_translations (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            quests_translation_id int NOT NULL REFERENCES quests_translation (id) ON DELETE CASCADE,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             title varchar NOT NULL,
             client varchar NOT NULL,
             request_detail text,
@@ -1337,9 +1337,9 @@
             recorded_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE history.quest_translations IS 'クエスト翻訳情報の変更履歴を管理するテーブル';
-        COMMENT ON COLUMN history.quest_translations.quest_translation_id IS '元の翻訳レコードID';
-        COMMENT ON COLUMN history.quest_translations.recorded_at IS '履歴記録日時';
+        COMMENT ON TABLE history.quests_translation IS 'クエスト翻訳情報の変更履歴を管理するテーブル';
+        COMMENT ON COLUMN history.quests_translation.quests_translation_id IS '元の翻訳レコードID';
+        COMMENT ON COLUMN history.quests_translation.recorded_at IS '履歴記録日時';
 
     -- クエスト詳細（レベル別）テーブル
         CREATE TABLE IF NOT EXISTS quest_details_by_level (
@@ -1391,39 +1391,39 @@
         COMMENT ON COLUMN history.quest_details_by_level.recorded_at IS '履歴記録日時';
 
     -- クエスト詳細翻訳テーブル
-        CREATE TABLE IF NOT EXISTS quest_details_by_level_translations (
+        CREATE TABLE IF NOT EXISTS quest_details_by_level_translation (
             id serial PRIMARY KEY,
             quest_details_by_level_id int NOT NULL REFERENCES quest_details_by_level (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             success_criteria text NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (quest_details_by_level_id, language_id)
+            UNIQUE (quest_details_by_level_id, language_code)
         );
 
-        COMMENT ON TABLE quest_details_by_level_translations IS 'クエスト詳細の多言語対応テーブル';
-        COMMENT ON COLUMN quest_details_by_level_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN quest_details_by_level_translations.quest_details_by_level_id IS 'クエスト詳細ID（外部キー）';
-        COMMENT ON COLUMN quest_details_by_level_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN quest_details_by_level_translations.success_criteria IS '成功条件の翻訳';
-        COMMENT ON COLUMN quest_details_by_level_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN quest_details_by_level_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE quest_details_by_level_translation IS 'クエスト詳細の多言語対応テーブル';
+        COMMENT ON COLUMN quest_details_by_level_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN quest_details_by_level_translation.quest_details_by_level_id IS 'クエスト詳細ID（外部キー）';
+        COMMENT ON COLUMN quest_details_by_level_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN quest_details_by_level_translation.success_criteria IS '成功条件の翻訳';
+        COMMENT ON COLUMN quest_details_by_level_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_details_by_level_translation.updated_at IS '更新日時';
 
     -- クエスト詳細翻訳履歴テーブル
-        CREATE TABLE IF NOT EXISTS history.quest_details_by_level_translations (
+        CREATE TABLE IF NOT EXISTS history.quest_details_by_level_translation (
             id serial PRIMARY KEY,
             quest_details_by_level_translation_id int NOT NULL,
             quest_details_by_level_id int NOT NULL,
-            language_id int NOT NULL,
+            language_code int NOT NULL,
             success_criteria text NOT NULL,
             created_at timestamptz NOT NULL,
             updated_at timestamptz NOT NULL,
             recorded_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE history.quest_details_by_level_translations IS 'クエスト詳細翻訳の変更履歴を管理するテーブル';
-        COMMENT ON COLUMN history.quest_details_by_level_translations.quest_details_by_level_translation_id IS '元の翻訳レコードID';
-        COMMENT ON COLUMN history.quest_details_by_level_translations.recorded_at IS '履歴記録日時';
+        COMMENT ON TABLE history.quest_details_by_level_translation IS 'クエスト詳細翻訳の変更履歴を管理するテーブル';
+        COMMENT ON COLUMN history.quest_details_by_level_translation.quest_details_by_level_translation_id IS '元の翻訳レコードID';
+        COMMENT ON COLUMN history.quest_details_by_level_translation.recorded_at IS '履歴記録日時';
 
     -- クエスト経験値（レベル別）テーブル
         CREATE TABLE IF NOT EXISTS quest_exp_by_level (
@@ -1461,37 +1461,37 @@
         COMMENT ON COLUMN history.quest_exp_by_level.recorded_at IS '履歴記録日時';
 
     -- クエストリクエストステータステーブル
-        CREATE TABLE IF NOT EXISTS quest_request_status (
+        CREATE TABLE IF NOT EXISTS quest_request_statuses (
             id serial PRIMARY KEY,
             code varchar(20) NOT NULL UNIQUE,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now()
         );
 
-        COMMENT ON TABLE quest_request_status IS 'クエストリクエストの状態を管理するマスタテーブル';
-        COMMENT ON COLUMN quest_request_status.id IS 'ステータスID（主キー）';
-        COMMENT ON COLUMN quest_request_status.code IS 'ステータスコード（例：pending, approved, rejected）';
-        COMMENT ON COLUMN quest_request_status.created_at IS '作成日時';
-        COMMENT ON COLUMN quest_request_status.updated_at IS '更新日時';
+        COMMENT ON TABLE quest_request_statuses IS 'クエストリクエストの状態を管理するマスタテーブル';
+        COMMENT ON COLUMN quest_request_statuses.id IS 'ステータスID（主キー）';
+        COMMENT ON COLUMN quest_request_statuses.code IS 'ステータスコード（例：pending, approved, rejected）';
+        COMMENT ON COLUMN quest_request_statuses.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_request_statuses.updated_at IS '更新日時';
 
     -- クエストリクエストステータス翻訳テーブル
-        CREATE TABLE IF NOT EXISTS quest_request_status_translations (
+        CREATE TABLE IF NOT EXISTS quest_request_status_translation (
             id serial PRIMARY KEY,
-            quest_request_status_id int NOT NULL REFERENCES quest_request_status (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            quest_request_status_id int NOT NULL REFERENCES quest_request_statuses (id) ON DELETE CASCADE,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (quest_request_status_id, language_id)
+            UNIQUE (quest_request_status_id, language_code)
         );
 
-        COMMENT ON TABLE quest_request_status_translations IS 'クエストリクエストステータスの多言語対応テーブル';
-        COMMENT ON COLUMN quest_request_status_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN quest_request_status_translations.quest_request_status_id IS 'ステータスID（外部キー）';
-        COMMENT ON COLUMN quest_request_status_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN quest_request_status_translations.name IS 'ステータス名の翻訳';
-        COMMENT ON COLUMN quest_request_status_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN quest_request_status_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE quest_request_status_translation IS 'クエストリクエストステータスの多言語対応テーブル';
+        COMMENT ON COLUMN quest_request_status_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN quest_request_status_translation.quest_request_status_id IS 'ステータスID（外部キー）';
+        COMMENT ON COLUMN quest_request_status_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN quest_request_status_translation.name IS 'ステータス名の翻訳';
+        COMMENT ON COLUMN quest_request_status_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN quest_request_status_translation.updated_at IS '更新日時';
 
     -- クエストリクエストテーブル
         CREATE TABLE IF NOT EXISTS quest_requests (
@@ -1502,7 +1502,7 @@
             title varchar(200) NOT NULL CHECK (length(title) > 0),
             description text NOT NULL CHECK (length(description) > 0),
             is_new_request boolean NOT NULL DEFAULT true,
-            status_id int NOT NULL REFERENCES quest_request_status (id) ON DELETE RESTRICT,
+            status_id int NOT NULL REFERENCES quest_request_statuses (id) ON DELETE RESTRICT,
             answer text,
             created_at timestamptz NOT NULL DEFAULT now(),
             answered_at timestamptz DEFAULT NULL,
@@ -1658,23 +1658,23 @@
         COMMENT ON COLUMN child_quest_status.updated_at IS '更新日時';
 
     -- メンバークエストステータス翻訳テーブル
-        CREATE TABLE IF NOT EXISTS child_quest_status_translations (
+        CREATE TABLE IF NOT EXISTS child_quest_statuses_translation (
             id serial PRIMARY KEY,
             child_quest_status_id int NOT NULL REFERENCES child_quest_status (id) ON DELETE CASCADE,
-            language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+            language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
             name varchar(100) NOT NULL,
             created_at timestamptz NOT NULL DEFAULT now(),
             updated_at timestamptz NOT NULL DEFAULT now(),
-            UNIQUE (child_quest_status_id, language_id)
+            UNIQUE (child_quest_status_id, language_code)
         );
 
-        COMMENT ON TABLE child_quest_status_translations IS 'メンバークエストステータスの多言語対応テーブル';
-        COMMENT ON COLUMN child_quest_status_translations.id IS '翻訳ID（主キー）';
-        COMMENT ON COLUMN child_quest_status_translations.child_quest_status_id IS 'ステータスID（外部キー）';
-        COMMENT ON COLUMN child_quest_status_translations.language_id IS '言語ID（外部キー）';
-        COMMENT ON COLUMN child_quest_status_translations.name IS 'ステータス名の翻訳';
-        COMMENT ON COLUMN child_quest_status_translations.created_at IS '作成日時';
-        COMMENT ON COLUMN child_quest_status_translations.updated_at IS '更新日時';
+        COMMENT ON TABLE child_quest_statuses_translation IS 'メンバークエストステータスの多言語対応テーブル';
+        COMMENT ON COLUMN child_quest_statuses_translation.id IS '翻訳ID（主キー）';
+        COMMENT ON COLUMN child_quest_statuses_translation.child_quest_status_id IS 'ステータスID（外部キー）';
+        COMMENT ON COLUMN child_quest_statuses_translation.language_code IS '言語ID（外部キー）';
+        COMMENT ON COLUMN child_quest_statuses_translation.name IS 'ステータス名の翻訳';
+        COMMENT ON COLUMN child_quest_statuses_translation.created_at IS '作成日時';
+        COMMENT ON COLUMN child_quest_statuses_translation.updated_at IS '更新日時';
 
     -- メンバークエストテーブル
         CREATE TABLE IF NOT EXISTS child_quests (

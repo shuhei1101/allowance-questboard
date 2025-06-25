@@ -6,8 +6,8 @@ FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
 
 -- アイコン関連
-CREATE TRIGGER trigger_set_updated_at_icon_category
-BEFORE UPDATE ON icon_category
+CREATE TRIGGER trigger_set_updated_at_icon_categories
+BEFORE UPDATE ON icon_categories
 FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
 

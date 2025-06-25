@@ -53,7 +53,7 @@
     -- アイコン関連
 
     -- アイコンカテゴリテーブルのテストデータ
-        INSERT INTO icon_category (code, sort_order) VALUES
+        INSERT INTO icon_categories (code, sort_order) VALUES
         ('animals', 1),
         ('people', 2),
         ('objects', 3),
@@ -66,7 +66,7 @@
         ('buildings', 10);
 
     -- アイコンカテゴリ翻訳テーブル
-        INSERT INTO icon_category_translations (category_id, language_id, name) VALUES
+        INSERT INTO icon_categories_translation (category_id, language_code, name) VALUES
         -- 動物カテゴリ
         (1, 1, '動物'),
         (1, 2, 'Animals'),
@@ -160,7 +160,7 @@
 
     -- 学歴マスタ
 
-        INSERT INTO education (code) VALUES
+        INSERT INTO educations (code) VALUES
         ('preschool'),
         ('elementary'),
         ('junior_high'),
@@ -171,7 +171,7 @@
         ('other');
 
     -- 学歴翻訳テーブル
-        INSERT INTO education_translations (education_id, language_id, name) VALUES
+        INSERT INTO educations_translation (education_id, language_code, name) VALUES
         -- 就学前
         (1, 1, '就学前'),
         (1, 2, 'Preschool'),
@@ -213,7 +213,7 @@
 
     -- レポートステータス
 
-        INSERT INTO report_status (code, status) VALUES
+        INSERT INTO report_statuses (code, status) VALUES
         ('pending', '申請中'),
         ('reviewed', 'レビュー中'),
         ('resolved', '解決済み'),
@@ -230,7 +230,7 @@
         ('savings', '貯金に関する通知');
 
     -- 通知対象タイプ翻訳テーブル
-        INSERT INTO notifiable_types_translations (notifiable_type_id, language_id, description) VALUES
+        INSERT INTO notifiable_types_translation (notifiable_type_id, language_code, description) VALUES
         -- 家族
         (1, 1, '家族に関する通知'),
         (1, 2, 'Family notifications'),
@@ -272,7 +272,7 @@
         ('rejected');
 
     -- 引き落とし申請ステータス翻訳テーブル
-        INSERT INTO withdrawal_request_status_translations (withdrawal_request_status_id, language_id, name) VALUES
+        INSERT INTO withdrawal_request_statuses_translation (withdrawal_request_status_id, language_code, name) VALUES
         -- 申請中
         (1, 1, '申請中'),
         (1, 2, 'Pending'),
@@ -307,7 +307,7 @@
         -- raw_app_meta_data, 
         -- raw_user_meta_data, 
         -- is_super_admin, 
-        -- email_change_confirm_status, 
+        -- email_change_confirm_statuses, 
         -- is_sso_user, 
         -- is_anonymous
         -- ) VALUES
@@ -458,7 +458,7 @@
 
     -- ユーザ設定テーブル
 
-        INSERT INTO user_settings (user_id, language_id) VALUES
+        INSERT INTO user_settings (user_id, language_code) VALUES
         ('550e8400-e29b-41d4-a716-446655440001'::uuid, 1), -- 佐藤家の親（日本語）
         ('550e8400-e29b-41d4-a716-446655440002'::uuid, 1), -- 田中家の親（日本語）
         ('550e8400-e29b-41d4-a716-446655440003'::uuid, 2), -- スミス家の親（英語）
@@ -478,7 +478,7 @@
         ('550e8400-e29b-41d4-a716-446655440004'::uuid, 9);  -- 鈴木家（女性アイコン）
 
     -- 家族翻訳テーブル
-        INSERT INTO families_translations (family_id, language_id, name, bio) VALUES
+        INSERT INTO families_translation (family_id, language_code, name, bio) VALUES
         -- 佐藤家
         (1, 1, '佐藤家', '東京在住の4人家族です。子供たちの成長を楽しく見守っています。'),
         (1, 2, 'Sato Family', 'A family of four living in Tokyo. We enjoy watching our children grow.'),
@@ -723,29 +723,29 @@
     -- クエストカテゴリサブクラスタイプ
 
         INSERT INTO quest_category_subclass_types (type, description) VALUES
-        ('template_quest_category', 'テンプレートクエスト'),
-        ('family_quest_category', '家族クエスト'),
-        ('custom_quest_category', 'カスタムクエスト');
+        ('template_quest_categories', 'テンプレートクエスト'),
+        ('family_quest_categories', '家族クエスト'),
+        ('custom_quest_categories', 'カスタムクエスト');
 
     -- クエストカテゴリ（基底クラス）
 
-        INSERT INTO quest_category (subclass_type, subclass_id) VALUES
-        -- テンプレートクエストカテゴリ (subclass_type: 1 = template_quest_category)
+        INSERT INTO quest_categories (subclass_type, subclass_id) VALUES
+        -- テンプレートクエストカテゴリ (subclass_type: 1 = template_quest_categories)
         (1, 1), -- 家事手伝い
         (1, 2), -- 勉強・学習
         (1, 3), -- 運動・スポーツ
         (1, 4), -- 片付け・整理
         (1, 5), -- お手伝い全般
-        -- 家族クエストカテゴリ (subclass_type: 2 = family_quest_category)
+        -- 家族クエストカテゴリ (subclass_type: 2 = family_quest_categories)
         (2, 1), -- 佐藤家用
         (2, 2), -- 田中家用
         (2, 3), -- スミス家用
         (2, 4), -- 鈴木家用
-        -- カスタムクエストカテゴリ（佐藤家作成） (subclass_type: 3 = custom_quest_category)
+        -- カスタムクエストカテゴリ（佐藤家作成） (subclass_type: 3 = custom_quest_categories)
         (3, 1); -- 佐藤家のオリジナルカテゴリ
 
     -- テンプレートクエストカテゴリテーブル
-        INSERT INTO template_quest_category (category_id, code, sort_order, is_active) VALUES
+        INSERT INTO template_quest_categories (category_id, code, sort_order, is_active) VALUES
         (1, 'housework', 1, true),
         (2, 'study', 2, true),
         (3, 'exercise', 3, true),
@@ -753,18 +753,18 @@
         (5, 'help_general', 5, true);
 
     -- 家族クエストカテゴリテーブル
-        INSERT INTO family_quest_category (category_id, family_id) VALUES
+        INSERT INTO family_quest_categories (category_id, family_id) VALUES
         (6, 1), -- 佐藤家
         (7, 2), -- 田中家
         (8, 3), -- スミス家
         (9, 4); -- 鈴木家
 
     -- カスタムクエストカテゴリテーブル
-        INSERT INTO custom_quest_category (category_id, family_id) VALUES
+        INSERT INTO custom_quest_categories (category_id, family_id) VALUES
         (10, 1); -- 佐藤家のカスタムカテゴリ
 
     -- クエストカテゴリ翻訳テーブル
-        INSERT INTO quest_category_translations (quest_category_id, language_id, name) VALUES
+        INSERT INTO quest_categories_translation (quest_category_id, language_code, name) VALUES
         -- 家事手伝い
         (1, 1, '家事手伝い'),
         (1, 2, 'Household Chores'),
@@ -809,7 +809,7 @@
         (1), (2), (3), (4), (5), (6);
 
     -- クエスト翻訳テーブル
-        INSERT INTO quest_translations (quest_id, language_id, title, client, request_detail) VALUES
+        INSERT INTO quests_translation (quest_id, language_code, title, client, request_detail) VALUES
         -- お皿洗い
         (1, 1, 'お皿洗いをしよう', 'お母さん', '食事後のお皿やコップを洗って片付けてください。'),
         (1, 2, 'Wash the Dishes', 'Mom', 'Please wash and put away dishes and cups after meals.'),
@@ -858,7 +858,7 @@
         (6, 3, '家全体の大掃除を完了する', 1, 800, 1, 150, 75);
 
     -- クエスト詳細翻訳テーブル
-        INSERT INTO quest_details_by_level_translations (quest_details_by_level_id, language_id, success_criteria) VALUES
+        INSERT INTO quest_details_by_level_translation (quest_details_by_level_id, language_code, success_criteria) VALUES
         -- お皿洗い
         (1, 2, 'Wash dishes and let them dry'),
         (2, 2, 'Wash dishes and put them in the cupboard'),
@@ -914,14 +914,14 @@
 
     -- クエストリクエストステータス
 
-        INSERT INTO quest_request_status (code) VALUES
+        INSERT INTO quest_request_statuses (code) VALUES
         ('pending'),
         ('approved'),
         ('rejected'),
         ('cancelled');
 
     -- クエストリクエストステータス翻訳テーブル
-        INSERT INTO quest_request_status_translations (quest_request_status_id, language_id, name) VALUES
+        INSERT INTO quest_request_status_translation (quest_request_status_id, language_code, name) VALUES
         -- 申請中
         (1, 1, '申請中'),
         (1, 2, 'Pending'),
@@ -967,7 +967,7 @@
 
     -- コメント翻訳テーブル
 
-        INSERT INTO comments_translations (comment_id, language_id, body) VALUES
+        INSERT INTO comments_translation (comment_id, language_code, body) VALUES
         -- 日本語コメントの英語翻訳
         (1, 2, 'Washing dishes is tough at first, but it becomes fun once you get used to it!'),
         (2, 2, 'Youre doing great! The dishes were washed very cleanly.'),
@@ -1133,7 +1133,7 @@
         ('expired');
 
     -- メンバークエストステータス翻訳テーブル
-        INSERT INTO child_quest_status_translations (child_quest_status_id, language_id, name) VALUES
+        INSERT INTO child_quest_statuses_translation (child_quest_status_id, language_code, name) VALUES
         -- available（利用可能）
         (1, 1, '利用可能'),
         (1, 2, 'Available'),

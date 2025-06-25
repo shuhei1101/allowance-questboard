@@ -6,7 +6,7 @@ INSERT INTO families (user_id, icon_id) VALUES
 ('550e8400-e29b-41d4-a716-446655440004'::uuid, 9);  -- 鈴木家（女性アイコン）
 
 -- 家族翻訳テーブルのテストデータ
-INSERT INTO families_translations (family_id, language_id, name, bio) VALUES
+INSERT INTO families_translation (family_id, language_code, name, bio) VALUES
 -- 佐藤家
 (1, 1, '佐藤家', '東京在住の4人家族です。子供たちの成長を楽しく見守っています。'),
 (1, 2, 'Sato Family', 'A family of four living in Tokyo. We enjoy watching our children grow.'),

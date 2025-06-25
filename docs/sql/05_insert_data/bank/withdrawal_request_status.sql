@@ -6,7 +6,7 @@ INSERT INTO withdrawal_request_status (code) VALUES
 ('cancelled');
 
 -- 引き落とし申請ステータス翻訳テーブルのテストデータ
-INSERT INTO withdrawal_request_status_translations (withdrawal_request_status_id, language_id, name) VALUES
+INSERT INTO withdrawal_request_statuses_translation (withdrawal_request_status_id, language_code, name) VALUES
 -- 申請中
 (1, 1, '申請中'),
 (1, 2, 'Pending'),

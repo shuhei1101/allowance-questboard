@@ -34,7 +34,7 @@ INSERT INTO savings_records (child_id, amount, balance) VALUES
 (15, -500, 3050);
 
 -- 貯金記録翻訳テーブルのテストデータ
-INSERT INTO savings_records_translations (savings_record_id, language_id, reason) VALUES
+INSERT INTO savings_records_translation (savings_record_id, language_code, reason) VALUES
 -- 佐藤太郎の記録（英語翻訳）
 (1, 2, 'Initial savings'),
 (2, 2, 'Saved from allowance'),

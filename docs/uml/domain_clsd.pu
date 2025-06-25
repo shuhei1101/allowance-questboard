@@ -83,7 +83,7 @@ package domain {
         }
         class Grade {
             ' 教育課程名
-            +Education education
+            +educations education
             ' 年数
             +int grade
             +String toString()
@@ -116,7 +116,7 @@ package domain {
         note top of SavingRecode
             貯金履歴
         end note
-        enum Education {
+        enum educations {
             +preElementary
             +elementary
             +middleSchool

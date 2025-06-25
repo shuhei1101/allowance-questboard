@@ -17,12 +17,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    families ||--|{ families_translations: ""
+    families ||--|{ families_translation: ""
 
-    families_translations {
+    families_translation {
         int id PK
         int family_id FK
-        int language_id FK
+        int language_code FK
         String name "家族名の翻訳"
         String bio "自己紹介の翻訳"
     }    families ||--|{ children: ""
@@ -52,7 +52,7 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    education {
+    educations {
         %% 学歴マスタテーブル
         int id PK
         String code UK "学歴コード"
@@ -60,12 +60,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    education ||--|{ education_translations: ""
+    educations ||--|{ educations_translation: ""
 
-    education_translations {
+    educations_translation {
         int id PK
         int education_id FK
-        int language_id FK
+        int language_code FK
         String name "学歴名の翻訳"
     }
 
@@ -92,12 +92,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    savings_records ||--|{ savings_records_translations: ""
+    savings_records ||--|{ savings_records_translation: ""
 
-    savings_records_translations {
+    savings_records_translation {
         int id PK
         int savings_record_id FK
-        int language_id FK
+        int language_code FK
         String reason "貯金の理由の翻訳"
     }
 
@@ -125,12 +125,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    withdrawal_request_status ||--|{ withdrawal_request_status_translations: ""
+    withdrawal_request_status ||--|{ withdrawal_request_statuses_translation: ""
 
-    withdrawal_request_status_translations {
+    withdrawal_request_statuses_translation {
         int id PK
         int withdrawal_request_status_id FK
-        int language_id FK
+        int language_code FK
         String name "ステータス名の翻訳"
     }    families ||--|{ follows: ""
 
@@ -160,7 +160,7 @@ erDiagram
     user_settings {
         %% ユーザの基本設定
         uuid user_id PK "auth.users.id"
-        int language_id FK
+        int language_code FK
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -270,7 +270,7 @@ erDiagram
         %% アイコン情報
         int id PK
         String code UK "アイコンコード"
-        int category_id FK "icon_category.id（NULL許可）"
+        int category_id FK "icon_categories.id（NULL許可）"
         String file_path "アイコンファイルのパス"
         int sort_order "表示順序"
         boolean is_active "有効フラグ"
@@ -278,9 +278,9 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    icons ||--|| icon_category: ""
+    icons ||--|| icon_categories: ""
 
-    icon_category {
+    icon_categories {
         %% アイコンのカテゴリ
         int id PK
         String code UK "カテゴリコード"
@@ -290,12 +290,12 @@ erDiagram
         datetime updated_at "更新日時"
     }
 
-    icon_category ||--|{ icon_category_translations: ""
+    icon_categories ||--|{ icon_categories_translation: ""
 
-    icon_category_translations {
+    icon_categories_translation {
         int id PK
         int category_id FK
-        int language_id FK
+        int language_code FK
         String name "カテゴリ名の翻訳"
     }
 

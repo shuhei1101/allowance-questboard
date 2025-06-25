@@ -1,5 +1,5 @@
 -- アイコンカテゴリテーブルのテストデータ
-INSERT INTO icon_category (code, sort_order) VALUES
+INSERT INTO icon_categories (code, sort_order) VALUES
 ('animals', 1),
 ('people', 2),
 ('objects', 3),
@@ -12,7 +12,7 @@ INSERT INTO icon_category (code, sort_order) VALUES
 ('buildings', 10);
 
 -- アイコンカテゴリ翻訳テーブルのテストデータ
-INSERT INTO icon_category_translations (category_id, language_id, name) VALUES
+INSERT INTO icon_categories_translation (category_id, language_code, name) VALUES
 -- 動物カテゴリ
 (1, 1, '動物'),
 (1, 2, 'Animals'),

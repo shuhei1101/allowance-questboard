@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS education_period (
     id serial PRIMARY KEY,
     child_id int NOT NULL REFERENCES children (id) ON DELETE CASCADE,
-    education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
+    education_id int NOT NULL REFERENCES educations (id) ON DELETE CASCADE,
     period int NOT NULL CHECK (period > 0),
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),

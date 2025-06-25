@@ -46,28 +46,28 @@ CREATE TABLE IF NOT EXISTS history.quest_details_by_level (
 COMMENT ON TABLE history.quest_details_by_level IS 'クエスト詳細情報の変更履歴を管理するテーブル';
 
 -- quest_details_by_level(翻訳)
-CREATE TABLE IF NOT EXISTS quest_details_by_level_translations (
+CREATE TABLE IF NOT EXISTS quest_details_by_level_translation (
     id serial PRIMARY KEY,
     quest_details_by_level_id int NOT NULL REFERENCES quest_details_by_level (id) ON DELETE CASCADE,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     success_criteria text NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
-    UNIQUE (quest_details_by_level_id, language_id)
+    UNIQUE (quest_details_by_level_id, language_code)
 );
 
-COMMENT ON TABLE quest_details_by_level_translations IS 'クエスト詳細の多言語対応テーブル';
-COMMENT ON COLUMN quest_details_by_level_translations.success_criteria IS '成功条件の翻訳';
+COMMENT ON TABLE quest_details_by_level_translation IS 'クエスト詳細の多言語対応テーブル';
+COMMENT ON COLUMN quest_details_by_level_translation.success_criteria IS '成功条件の翻訳';
 
 -- quest_details_by_level(翻訳履歴)
-CREATE TABLE IF NOT EXISTS history.quest_details_by_level_translations (
+CREATE TABLE IF NOT EXISTS history.quest_details_by_level_translation (
     id serial PRIMARY KEY,
-    quest_details_by_level_translation_id int NOT NULL REFERENCES quest_details_by_level_translations (id) ON DELETE RESTRICT,
-    language_id int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
+    quest_details_by_level_translation_id int NOT NULL REFERENCES quest_details_by_level_translation (id) ON DELETE RESTRICT,
+    language_code int NOT NULL REFERENCES languages (id) ON DELETE RESTRICT,
     success_criteria text NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
     recorded_at timestamptz NOT NULL DEFAULT now()
 );
 
-COMMENT ON TABLE history.quest_details_by_level_translations IS 'クエスト詳細翻訳の変更履歴を管理するテーブル';
+COMMENT ON TABLE history.quest_details_by_level_translation IS 'クエスト詳細翻訳の変更履歴を管理するテーブル';

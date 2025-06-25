@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS child_grade (
     id serial PRIMARY KEY,
     child_id int NOT NULL UNIQUE REFERENCES children (id) ON DELETE CASCADE,
-    education_id int NOT NULL REFERENCES education (id) ON DELETE CASCADE,
+    education_id int NOT NULL REFERENCES educations (id) ON DELETE CASCADE,
     grade int NOT NULL CHECK (grade > 0),
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
