@@ -1,0 +1,9 @@
+[submodule "submodules/flutter"]
+	path = submodules/flutter
+	url = https://github.com/shuhei1101/allowance-questboard-flutter.git
+[submodule "submodules/ap"]
+	path = submodules/ap
+	url = https://github.com/shuhei1101/allowance-questboard-ap.git
+[submodule "submodules/edge"]
+	path = submodules/edge
+	url = https://github.com/shuhei1101/allowance-questboard-edge.git
