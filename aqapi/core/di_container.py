@@ -1,0 +1,54 @@
+import inspect
+from typing import TypeVar, Type, Dict, Any, Callable, Optional, cast, List
+
+T = TypeVar('T')
+
+
+class DIContainer:
+    """
+    シンプルで軽量な依存性注入システムを提供します。
+    """
+
+    def __init__(self):
+        self._container: Dict[Type, Any] = {}
+
+    def register(self, type: Type[T], obj: T) -> None:
+        """
+        インスタンスを登録する
+        
+        :param Type[T] type: 登録する型
+        :param T obj: 登録するインスタンス
+        """
+        self._container[type] = obj
+
+    def register_multiple(self, type: Type[T], objs: List[T]) -> None:
+        """
+        複数のインスタンスを登録する
+        
+        :param Type[T] type: 登録する型
+        :param List[T] objs: 登録するインスタンスのリスト
+        """
+        self._container[type] = objs
+
+    def get(self, type: Type[T]) -> T:
+        """
+        登録されたインスタンスを取得する
+        
+        :param Type[T] type: 取得する型
+        :return T: インスタンス
+        :raises KeyError: 型が登録されていない場合
+        """
+        if type in self._container:
+            return cast(T, self._container[type])
+        
+        raise KeyError(f"型 {type} は登録されていません")
+
+    def reset(self) -> None:
+        """
+        すべての登録をクリアする（単体テスト用）
+        """
+        self._container.clear()
+
+
+# グローバルDIコンテナインスタンス
+injector = DIContainer()
