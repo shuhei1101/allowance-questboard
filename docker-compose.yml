@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.work
+    image: myapp:latest
+    container_name: aqapi
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - ~/.ssh/id_ed25519:/root/.ssh/id_ed25519
+    environment:
+      - NODE_ENV=production
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
