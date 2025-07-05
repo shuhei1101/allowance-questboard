@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../lib/presentation"
+		},
+		{
+			"path": "../test/presentation"
+		}
+	],
+	"settings": {}
+}

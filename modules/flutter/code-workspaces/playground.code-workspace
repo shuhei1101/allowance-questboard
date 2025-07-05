@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "playground",
+			"path": "../lib/playground"
+		},
+		{
+			"name": "playground",
+			"path": "../test/playground"
+		}
+	],
+	"settings": {}
+}
