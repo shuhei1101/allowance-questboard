@@ -1,0 +1,531 @@
+@startuml "allowance_questboard_domain_clsd"
+left to right direction
+
+package domain {
+    package credentials {
+        abstract Credential {
+            +MailAddress mailAddress
+            +Password password
+            {abstract} fetchEmail()
+        }
+        note top of Credential: 資格情報の基底クラス
+
+        Credential <|-- FamilyCredential
+        Credential <|-- MemberCredential
+        class FamilyCredential {
+            +FamilyId? id
+            fetchEmail()
+        }
+        note bottom of FamilyCredential: 家族の資格情報
+        class MemberCredential {
+            +MemberId? id
+            fetchEmail()
+        }
+        note top of MemberCredential: メンバーの資格情報
+        class CredentialService {
+            +Credential credential
+            +login()
+            +signUp()
+            +updatePassword()
+            +logout()
+        }
+        note top of CredentialService
+            資格情報に関連する操作を提供するサービス
+        end note
+    }
+    package families {
+        class Family <Reportable> {
+            +FamilyId id
+            +FamilyName name
+            +Icon icon
+            +String introduction
+            +List<MemberId> childIds
+            +DateTime createdAt
+            +DateTime updatedAt
+        }
+        note top of Family: 家族のドメインモデル
+        Family *--> FamilyId
+        Family *--> FamilyName
+        class FamilyId {
+            +int value
+        }
+        class FamilyName {
+            +String value
+        }
+    }
+    package children {
+        class child {
+            +MemberId id
+            +FamilyId familyId
+            +MemberName name
+            +Icon icon
+            +Birthday birthday
+            +Grade grade
+            +Exp exp
+            +Money balance
+            +Money minSavings
+            +Datetime createdAt
+            +Datetime updatedAt
+            --
+            +Age getAge()
+            +Level getLevel(MemberLevelExpMap)
+        }
+        note top of child: メンバー（子供）のドメインモデル
+        child *--> MemberId
+        child *--> MemberName
+        child *--> Grade
+        child *--> MemberExp
+        class MemberId {
+            +String value
+        }
+        class MemberName {
+            +String value
+        }
+        class Grade {
+            ' 教育課程名
+            +educations education
+            ' 年数
+            +int grade
+            +String toString()
+        }
+        note right of Grade
+            教育課程と年数
+        end note
+        class MemberExp { 
+            +long value
+        }
+        note top of MemberExp: メンバーの経験値
+        class Level {
+            +int value
+        }
+        note bottom of Level: レベル
+        class MemberLevelExpMap {
+            +Map<Level, Exp> map
+        }
+        note top of MemberLevelExpMap: レベルと経験値のマップ
+        MemberLevelExpMap *--> Level
+        MemberLevelExpMap *--> MemberExp
+        class SavingRecode {
+            ' 貯金履歴
+            +MemberId childId
+            +Money balance
+            +Money difference
+            +String reason
+            +datetime recordedAt
+        }
+        note top of SavingRecode
+            貯金履歴
+        end note
+        enum educations {
+            +preElementary
+            +elementary
+            +middleSchool
+            +highSchool
+            +university
+            +postUniversity
+        }
+        note top of Education
+            教育課程
+        end note
+        EducationPeriod --> Education
+        class EducationPeriod {
+            +Map<Education, DateTime> map
+        }
+        note top of EducationPeriod
+            教育課程と期間のマップ
+        end note
+    }
+    package allowances {
+        ' お小遣い関連（履歴、お小遣いテーブル、ランクテーブル）
+        class AllowanceHistory {
+            +MemberId childId
+            ' クエストや違反行為のオブジェクトを格納
+            +Allowanceable target
+            +datetime recordedAt
+            ' レコードから情報を取得
+            +String title
+            +Money amount
+        }
+        note top of AllowanceHistory: お小遣い履歴
+        AllowanceHistory *--> Allowanceable
+        interface Allowanceable {
+            +navigate() ' お小遣いの詳細を表示
+        }
+        note top of Allowanceable: お小遣い関連の操作
+        abstract AllowanceTable {
+            +Map<Age, Money> ageAllowance
+        }
+        note top of AllowanceTable
+            お小遣いテーブルの基底クラス
+            定額のお小遣いを年齢ごとに設定
+        end note
+        AllowanceTable <|-- FamilyAllowanceTable
+        AllowanceTable <|-- SharedAllowanceTable
+        class FamilyAllowanceTable <AllowanceTable> {
+            +FamilyId familyId
+        }
+        note right of FamilyAllowanceTable: 家族のお小遣いテーブル
+        class SharedAllowanceTable <AllowanceTable, Reportable> {
+            +FamilyId familyId
+            +int favoritesCount
+            +bool isPublic
+            +datetime sharedAt
+        }
+        note right of SharedAllowanceTable: オンライン上に共有したお小遣いテーブル
+        abstract LevelTable {
+            +Map<Level, Money> LevelAllowance
+        }
+        LevelTable <|-- FamilyLevelTable
+        LevelTable <|-- SharedLevelTable
+        class FamilyLevelTable <LevelTable> {
+            +FamilyId familyId
+        }
+        note right of FamilyLevelTable: 家族の経験値とレベルのマップ
+        class SharedLevelTable <LevelTable, Reportable> {
+            +FamilyId familyId
+            +int favoritesCount
+            +bool isPublic
+        }
+        note right of SharedLevelTable: オンライン上に共有した経験値とレベルのマップ
+    }
+    package quest {
+        class Quest {
+            +QuestId id
+            +QuestTitle title
+            +QuestCategoryId categoryId
+            +Icon icon
+            +AgeRestriction ageRestriction
+            +PublishedMonth publishedMonth
+            +KeyQuests keyQuests
+            +String client
+            +String missionDescription
+            +QuestLevelDetails levelDetails
+            +Exp exp
+            +DateTime createdAt
+            +DateTime updatedAt
+        }
+        note top of Quest: クエストのドメインモデル
+        Quest *--> QuestId
+        Quest *--> QuestTitle
+        Quest *--> AgeRestriction
+        Quest *--> PublishedMonth
+        Quest *--> QuestReleasePeriod
+        Quest *--> KeyQuests
+        Quest *--> QuestLevelDetails
+        Quest *--> QuestCategoryId
+        Quest --> QuestLevelExpMap
+        class QuestId {
+            +String value
+        }
+        class QuestTitle {
+            +String value
+        }
+        class AgeRestriction {
+            +Age ageFrom
+            +Age ageTill
+        }
+        note right of AgeRestriction: クエストの年齢制限
+        class PublishedMonth {
+            +DateTime startedOn
+            +DateTime endedOn
+        }
+        note right of PublishedMonth: クエストの公開期間
+        class QuestLevelDetails {
+            +Map<QuestLevel, QuestDetail> _map
+        }
+        note top of QuestLevelDetails
+            クエストのレベルごとの詳細
+        end note
+        QuestLevelDetails *--> QuestLevel
+        QuestLevelDetails *--> QuestDetail
+        class KeyQuests {
+            +List<KeyQuestable> _list
+        }
+        note right of KeyQuests
+            キークエストリスト
+            これらのクエストをクリアすることで、当該クエストが解放される
+        end note
+        class QuestDetail {
+            +SuccessCriteria successCriteria
+            +TargetCount targetCount
+            +Money rewards
+            +MemberExp exp
+            +QuestExp exp
+            +DateTime updatedAt
+        }
+        QuestDetail *--> SuccessCriteria
+        QuestDetail *--> TargetCount
+        QuestDetail *--> Money
+        QuestDetail *--> QuestExp
+        note top of QuestDetail
+            クエストの詳細
+            クエストは各レベルごとに詳細モデルを保持する
+        end note
+        class SuccessCriteria {
+            +String value
+        }
+        note right of SuccessCriteria: クエストの成功条件
+        class TargetCount {
+            +int value
+        }
+        note right of TargetCount: クエストの目標数
+        class QuestLevel {
+            +int value
+        }
+        note right of QuestLevel: 現在のクエストのレベル
+        class QuestCategoryId {
+            +String value
+        }
+        note right of QuestCategoryId: クエストのカテゴリId
+        class QuestCategory {
+            +String value
+        }
+        note right of QuestCategory: クエストのカテゴリ
+
+        Quest <|--- FamilyQuest
+        Quest <|--- SharedQuest
+        Quest <|--- TemplateQuest
+        class SharedQuest <Reportable> {
+            +FamilyId familyId
+            +DateTime sharedAt
+            +List<like> likes
+        }
+        note right of SharedQuest: オンライン上に共有したクエスト
+        class TemplateQuest {}
+        note right of TemplateQuest: オンラインから保存したクエスト
+        class FamilyQuest <Allowanceable, KeyQuestable> {
+            +FamilyId familyId
+            +bool isPublic
+            +QuestChildrenStatus participants
+            +bool isShared
+            +QuestId sharedQuestId
+        }
+        note top of FamilyQuest: 家族が保持するクエスト
+        FamilyQuest --> QuestStatus
+        FamilyQuest --> QuestChildrenStatus
+        class QuestChildrenStatus {
+            +List<QuestMemberStatus> _list
+        }
+        note right of QuestChildrenStatus: クエストのメンバーのステータス
+        class QuestMemberStatus {
+            +MemberId childId
+            +QuestStatus status
+            +QuestExp exp
+        }
+        note right of QuestMemberStatus: クエストのメンバーのステータス
+        enum QuestStatus {
+            +notAccepted
+            +inProgress
+            +pendingApproval
+            +completed
+        }
+        note right of QuestStatus: クエストのステータス
+        KeyQuestable <|.. FamilyQuest
+        interface KeyQuestable {}
+        note right of KeyQuestable
+            キークエストになるモデル
+            今後、違反行為モデルを作成した際に、このインターフェースを実装する
+        end note
+
+        class QuestRequest {
+            +QuestRequestId id
+            +QuestId? questId
+            +MemberId clientId
+            +QuestRequestTitle title
+            +QuestRequestBody body
+            +QuestRequestStatus status
+            +QuestRequestAnswer answer
+            +DateTime requestedAt
+            +DateTime answeredAt
+        }
+        note top of QuestRequest
+            クエストのリクエストモデル
+            子供がクエストをリクエストする際に使用
+        end note
+        QuestRequest *--> QuestRequestId
+        QuestRequest *--> QuestRequestTitle
+        QuestRequest *--> QuestRequestBody
+        QuestRequest *--> QuestRequestStatus
+        QuestRequest *--> QuestRequestAnswer
+        class QuestRequestId {
+            +String value
+        }
+        class QuestRequestTitle {
+            +String value
+        }
+        note right of QuestRequestTitle: クエストのリクエストタイトル
+        class QuestRequestBody {
+            +String value
+        }
+        note right of QuestRequestBody: クエストのリクエスト内容
+        enum QuestRequestStatus {
+            +inProgress
+            +denied
+            +approved
+        }
+        note right of QuestRequestStatus: クエストのリクエストステータス
+        class QuestRequestAnswer {
+            +String value
+        }
+        note right of QuestRequestAnswer: クエストのリクエスト回答
+    }
+    package ideas {
+        class Idea {
+            +IdeaTitle title
+            +IdeaBody body
+            +Comments comments
+            +IdeaAnswer answer
+            +IdeaStatus status
+            +DateTime postedAt
+            +DateTime updatedAt
+            +DateTime answeredAt
+        }
+        note top of Idea: ユーザからのアプリ改善意見モデル
+        class IdeaTitle {
+            +String value
+        }
+        note right of IdeaTitle: アイデアのタイトル
+        class IdeaBody {
+            +String value
+        }
+        note right of IdeaBody: アイデアの内容
+        enum IdeaStatus {
+            +unprocessed
+            +accepted
+            +rejected
+        }
+        note right of IdeaStatus: アイデアのステータス
+        class IdeaAnswer {
+            +String value
+        }
+        note right of IdeaAnswer: アイデアの回答
+    }
+    package comments {
+        class CommentsService {
+            +filterByLikes(threshold)
+            +sortByDate()
+            +sortByLikes()
+        }
+        note top of CommentsService: コメントの操作を提供するサービス
+        CommentsService -> Comments
+        class Comments {
+            +List<Comment> list
+            +add(Comment)
+            +totalLikes()
+        }
+        note top of Comments
+            コメントリスト
+            コメントの投稿、いいねの合計数を提供
+        end note
+        Comments *--> Comment
+        class Comment <Reportable> {
+            +Comment? reply
+            +CommentBody body
+            +Map<FamilyId, Like> _likes
+            +DateTime commentedAt
+            +DateTime updatedAt
+        }
+        note top of Comment: コメントモデル
+        Comment *--> CommentBody
+        class CommentBody {
+            +String value
+        }
+        note right of CommentBody: コメントの内容
+    }
+    package reports {
+        class report {
+            +String id
+            +Reportable target
+            +ReportReason reason
+            +ReportStatus status
+            +DateTime reportedAt
+        }
+        note top of report
+            通報モデル
+            ユーザが不適切なコンテンツを通報する際に使用
+        end note
+        report *--> Reportable
+        report *--> ReportStatus
+        interface Reportable {}
+        note top of Reportable
+            通報可能なモデル
+            オンライン上のクエストやコメントが通報可能
+        end note
+        enum ReportStatus {
+            +unprocessed
+            +accepted
+            +rejected
+        }
+        note right of ReportStatus: 通報のステータス
+    }
+    package notifications {
+        class Notifications {
+            +List<Notification> _notifications
+        }
+        note top of Notifications: 通知リスト
+        Notifications *--> Notification
+        class Notification {
+            +Notifiable target
+            +bool isRead
+            +DateTime readAt
+            +DateTime receivedAt
+        }
+        note top of Notification: 通知モデル
+        Notification *--> Notifiable
+        interface Notifiable {
+            +navigate()
+        }
+        note top of Notifiable
+            通知可能なモデル
+            クエストのリクエストやコメントが通知可能
+        end note
+    }
+    package likes {
+        class Like {
+            +FaimlyId familyId
+            +DateTime likedAt
+        }
+        note top of Like: いいねモデル
+        class Likes {
+            +List<Like> _list
+        }
+        note top of Likes
+            いいねリスト
+            クエストやコメントにひも付き、いいねの合計数を提供
+        end note
+    }
+    package shared {
+        class MailAddress {
+            +String value
+        }
+        note right of MailAddress: メールアドレス
+        class Password {
+            +String value
+        }
+        note right of Password: パスワード
+        class Birthday {
+            ' 未来じゃないかどうか
+            +DateTime date
+        }
+        note right of Birthday: 誕生日
+        class Money {
+            +long value
+        }
+        note right of Money: 金額
+        class Age {
+            +int value
+        }
+        note right of Age: 年齢
+        class IconMap {
+            +Map<name, code_point> map
+            +Icon toIcon(name)
+        }
+        note top of IconMap
+            Flutterアイコンのマップ
+
+            アイコン名とコードポイントのマップ
+        end note
+    }
+}
+
+@enduml
