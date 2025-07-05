@@ -1,9 +1,0 @@
-{
-  "@@locale": "en",
-  "emailRequired": "Email address is required",
-  "emailInvalid": "Invalid email address format",
-  "passwordRequired": "Password is required",
-  "passwordInvalid": "Password is incorrectly formatted",
-  "questRequired": "Quest is required",
-  "questInvalid": "The quest is incorrectly formatted"
-}
