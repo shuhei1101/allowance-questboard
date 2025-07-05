@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@std/log": "jsr:@std/log@^0.224.14"
+  }
+}
