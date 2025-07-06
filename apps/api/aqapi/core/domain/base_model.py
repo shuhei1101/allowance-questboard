@@ -1,5 +1,8 @@
-from abc import ABC
+from abc import ABC, abstractmethod
+from typing import TypeVar, Any
 from aqapi.core.domain.value_object.version import Version
+
+T = TypeVar('T', bound='BaseModel')
 
 
 class BaseModel(ABC):
@@ -19,3 +22,9 @@ class BaseModel(ABC):
         if not isinstance(other, BaseModel):
             return NotImplemented
         return self._version == other.version()
+    
+    @classmethod
+    @abstractmethod
+    def from_raw(cls: type[T], raw_data: Any) -> T:
+        """生データからドメインモデルを作成する"""
+        pass

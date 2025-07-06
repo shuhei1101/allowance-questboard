@@ -26,12 +26,12 @@ class TestQuest:
         quest = Quest(quest_id, title, description, level, created_at, updated_at, version)
         
         # Assert
-        assert quest.id == quest_id
-        assert quest.title == title
-        assert quest.description == description
-        assert quest.level == level
-        assert quest.created_at == created_at
-        assert quest.updated_at == updated_at
+        assert quest._id == quest_id
+        assert quest._title == title
+        assert quest._description == description
+        assert quest._level == level
+        assert quest._created_at == created_at
+        assert quest._updated_at == updated_at
         assert quest.version() == version
     
     def test_create_newで新しいクエストが作成できること(self):
@@ -44,13 +44,13 @@ class TestQuest:
         quest = Quest.create_new(title, description, level)
         
         # Assert
-        assert quest.title == title
-        assert quest.description == description
-        assert quest.level == level
+        assert quest._title == title
+        assert quest._description == description
+        assert quest._level == level
         assert quest.version().value == 1
-        assert quest.id is not None
-        assert quest.created_at is not None
-        assert quest.updated_at is not None
+        assert quest._id is not None
+        assert quest._created_at is not None
+        assert quest._updated_at is not None
     
     def test_update_titleでタイトルが更新されること(self):
         # Arrange
@@ -60,16 +60,16 @@ class TestQuest:
             QuestLevel(1)
         )
         original_version = quest.version().value
-        original_updated_at = quest.updated_at
+        original_updated_at = quest._updated_at
         new_title = QuestTitle("新しいタイトル")
         
         # Act
         quest.update_title(new_title)
         
         # Assert
-        assert quest.title == new_title
+        assert quest._title == new_title
         assert quest.version().value == original_version + 1
-        assert quest.updated_at > original_updated_at
+        assert quest._updated_at > original_updated_at
     
     def test_update_descriptionで詳細が更新されること(self):
         # Arrange
@@ -85,7 +85,7 @@ class TestQuest:
         quest.update_description(new_description)
         
         # Assert
-        assert quest.description == new_description
+        assert quest._description == new_description
         assert quest.version().value == original_version + 1
     
     def test_update_levelでレベルが更新されること(self):
@@ -102,5 +102,34 @@ class TestQuest:
         quest.update_level(new_level)
         
         # Assert
-        assert quest.level == new_level
+        assert quest._level == new_level
         assert quest.version().value == original_version + 1
+    
+    def test_from_rawで生データからクエストが作成できること(self):
+        # Arrange
+        raw_data = {
+            'id': '550e8400-e29b-41d4-a716-446655440000',
+            'title': 'テストクエスト',
+            'description': 'テスト詳細',
+            'level': 5,
+            'created_at': '2024-01-01T00:00:00+00:00',
+            'updated_at': '2024-01-01T00:00:00+00:00',
+            'version': 1
+        }
+        
+        # Act
+        quest = Quest.from_raw(raw_data)
+        
+        # Assert
+        assert quest._title.value == 'テストクエスト'
+        assert quest._description.value == 'テスト詳細'
+        assert quest._level.value == 5
+        assert quest.version().value == 1
+    
+    def test_from_rawで不正なデータ型の場合ValueError例外が発生すること(self):
+        # Arrange
+        invalid_data = "invalid_data"
+        
+        # Act & Assert
+        with pytest.raises(ValueError, match="Questの生データは辞書である必要があります。"):
+            Quest.from_raw(invalid_data)

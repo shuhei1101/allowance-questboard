@@ -48,3 +48,31 @@ class TestQuestId:
         
         # Assert
         assert result == str(test_uuid)
+    
+    def test_from_rawでUUID文字列からQuestIdが作成できること(self):
+        # Arrange
+        uuid_str = "550e8400-e29b-41d4-a716-446655440000"
+        
+        # Act
+        quest_id = QuestId.from_raw(uuid_str)
+        
+        # Assert
+        assert str(quest_id.value) == uuid_str
+    
+    def test_from_rawでUUIDオブジェクトからQuestIdが作成できること(self):
+        # Arrange
+        test_uuid = uuid4()
+        
+        # Act
+        quest_id = QuestId.from_raw(test_uuid)
+        
+        # Assert
+        assert quest_id.value == test_uuid
+    
+    def test_from_rawで不正な型の場合ValueError例外が発生すること(self):
+        # Arrange
+        invalid_data = 123
+        
+        # Act & Assert
+        with pytest.raises(ValueError, match="QuestIdの生データはUUIDまたは文字列である必要があります。"):
+            QuestId.from_raw(invalid_data)
