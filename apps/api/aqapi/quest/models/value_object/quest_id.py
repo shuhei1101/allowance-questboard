@@ -14,8 +14,7 @@ class QuestId(BaseValueObject):
         self.value = value
         super().__init__()
     
-    def validate(self) -> None:
-        """値の検証を行う"""
+    def _validate(self) -> None:
         if self.value is None:
             raise ValueError("クエストIDは必須です。")
     

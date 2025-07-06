@@ -13,8 +13,7 @@ class QuestDescription(BaseValueObject):
         self.value = value.strip() if value else None
         super().__init__()
     
-    def validate(self) -> None:
-        """値の検証を行う"""
+    def _validate(self) -> None:
         if self.value is not None and len(self.value.strip()) > 1000:
             raise ValueError("クエスト詳細は1000文字以内で設定してください。")
     

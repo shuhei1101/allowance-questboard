@@ -11,7 +11,7 @@ class ConcreteValueObject(BaseValueObject):
         self.value = value
         super().__init__()
     
-    def validate(self) -> None:
+    def _validate(self) -> None:
         if self.value is None:
             raise ValueError("値は必須です。")
     
@@ -27,7 +27,7 @@ class InvalidValueObject(BaseValueObject):
         self.value = value
         super().__init__()
     
-    def validate(self) -> None:
+    def _validate(self) -> None:
         raise ValueError("常に無効です。")
     
     @classmethod
@@ -66,5 +66,5 @@ class TestBaseValueObject:
         # Assert
         assert issubclass(BaseValueObject, ABC)
         assert hasattr(BaseValueObject, '__abstractmethods__')
-        assert 'validate' in BaseValueObject.__abstractmethods__
+        assert '_validate' in BaseValueObject.__abstractmethods__
         assert 'from_raw' in BaseValueObject.__abstractmethods__

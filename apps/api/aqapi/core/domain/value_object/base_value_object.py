@@ -8,10 +8,10 @@ class BaseValueObject(ABC):
     """値オブジェクトの基底クラス"""
     
     def __init__(self):
-        self.validate()
+        self._validate()
     
     @abstractmethod
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """値オブジェクトの値を検証する"""
         pass
     

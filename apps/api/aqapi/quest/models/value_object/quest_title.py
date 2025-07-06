@@ -13,8 +13,7 @@ class QuestTitle(BaseValueObject):
         self.value = value.strip() if value else ""
         super().__init__()
     
-    def validate(self) -> None:
-        """値の検証を行う"""
+    def _validate(self) -> None:
         if not self.value or not self.value.strip():
             raise ValueError("クエスト名は必須です。")
         if len(self.value.strip()) > 100:

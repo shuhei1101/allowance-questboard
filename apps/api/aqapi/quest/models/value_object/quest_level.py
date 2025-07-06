@@ -13,8 +13,7 @@ class QuestLevel(BaseValueObject):
         self.value = value
         super().__init__()
     
-    def validate(self) -> None:
-        """値の検証を行う"""
+    def _validate(self) -> None:
         if not isinstance(self.value, int):
             raise ValueError("クエストレベルは整数で設定してください。")
         if self.value < 0 or self.value > 10:
