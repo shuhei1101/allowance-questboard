@@ -11,7 +11,7 @@ class ChildGradesEntity(BaseEntity):
     __tablename__ = "child_grades"
     __table_args__ = (
         # 学年は0より大きい
-        CheckConstraint("grade > 0", name="chk_child_grade_grade_positive")
+        CheckConstraint("grade > 0", name="chk_child_grade_grade_positive"),
     )
 
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID(外部キー)")

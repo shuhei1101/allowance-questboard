@@ -10,8 +10,7 @@ class NotificationsEntity(BaseEntity):
 
     __tablename__ = "notifications"
     __table_args__ = (
-        Index("idx_notifications_user", "user_type", "user_id"),
-        Index("idx_notifications_unread", "user_type", "user_id", "is_read", postgresql_where="is_read = false"),
+        Index("idx_notifications_unread", "recipient_id", "is_read", postgresql_where="is_read = false"),
         Index("idx_notifications_received_at", "received_at"),
         Index("idx_notifications_notifiable", "notifiable_type", "notifiable_id"),
     )
@@ -24,6 +23,6 @@ class NotificationsEntity(BaseEntity):
     read_at = Column(DateTime(timezone=True), nullable=True, comment="既読日時")
     received_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="通知受信日時")
 
-    user_type_ref = relationship("UserTypesEntity")
+    family_member = relationship("FamilyMembersEntity")
     notifiable_type_ref = relationship("NotifiableTypesEntity")
     screen = relationship("ScreensEntity")

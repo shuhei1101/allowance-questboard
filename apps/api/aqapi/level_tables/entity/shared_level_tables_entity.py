@@ -11,7 +11,7 @@ class SharedLevelTablesEntity(BaseEntity):
     __tablename__ = "shared_level_tables"
     __table_args__ = (
         # 一意制約  
-        UniqueConstraint("family_level_table_id", "family_id"),
+        UniqueConstraint("family_level_table_id", "shared_by"),
     )
 
 

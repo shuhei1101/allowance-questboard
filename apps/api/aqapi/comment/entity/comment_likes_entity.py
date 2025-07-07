@@ -9,11 +9,7 @@ class CommentLikesEntity(BaseEntity):
     """コメントのいいねエンティティ"""
 
     __tablename__ = "comment_likes"
-    __table_args__ = (
-        # 一意制約
-        UniqueConstraint("comment_id", "user_type", "user_id"),
-    )
-
+   
     comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=False, comment="コメントID(外部キー)")
     liked_by = Column(Integer, ForeignKey("family_members.id", ondelete="SET NULL"), nullable=False, comment="家族メンバーID")
     liked_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="いいねした日時")

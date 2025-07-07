@@ -11,7 +11,7 @@ class SavedQuestsEntity(BaseEntity):
     __tablename__ = "saved_quests"
     __table_args__ = (
         # 一意制約
-        UniqueConstraint("quest_id", "family_id"),
+        UniqueConstraint("quest_id", "saved_by"),
     )
 
     quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID(外部キー)")

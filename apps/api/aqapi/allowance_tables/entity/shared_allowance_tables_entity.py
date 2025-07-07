@@ -11,7 +11,7 @@ class SharedAllowanceTablesEntity(BaseEntity):
     __tablename__ = "shared_allowance_tables"
     __table_args__ = (
         # 家族とテーブルで一意
-        UniqueConstraint("family_allowance_table_id", "family_id"),
+        UniqueConstraint("family_allowance_table_id", "shared_by"),
     )
 
     family_allowance_table_id = Column(Integer, ForeignKey("shared_allowance_tables.id", ondelete="CASCADE"), nullable=False, comment="共有お小遣いテーブルID")
