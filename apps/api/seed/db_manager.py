@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-"""
-Entityの初期化と情報表示機能を提供するモジュール
-"""
 from sqlalchemy import text
 
 from aqapi.core.config.db_config import DB_CONF
@@ -42,6 +38,7 @@ class DBManager:
 
         except Exception as e:
             print(f"テーブル作成でエラーが発生しました: {e}")
+            raise
 
     def drop_tables(self):
         """すべてのテーブルを削除"""
@@ -119,6 +116,7 @@ class DBManager:
         except Exception as e:
             print(f"削除処理でエラーが発生しました: {e}")
             db.rollback()
+            raise
         finally:
             db.close()
 

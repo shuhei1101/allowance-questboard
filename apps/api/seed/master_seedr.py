@@ -63,8 +63,10 @@ class MasterSeedr:
         except IntegrityError as e:
             session.rollback()
             print(f"重複エラーでロールバックされました: {e}")
+            raise
         except Exception as e:
             session.rollback()
             print(f"マスタデータ投入でエラーが発生しました: {e}")
+            raise
         finally:
             session.close()
