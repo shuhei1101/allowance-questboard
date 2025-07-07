@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity
 from sqlalchemy.orm import relationship
 from aqapi.core.config.db_config import DB_CONF
 
@@ -21,13 +21,14 @@ class MemberQuestStatusesEntity(BaseEntity):
                 MemberQuestStatusesEntity(code="completed", description="完了"),
             ]
 
-class MemberQuestStatusesTranslationEntity(BaseTranslationEntity):
+class MemberQuestStatusesTranslationEntity(BaseEntity):
     """子供クエストステータス翻訳エンティティ"""
 
     __tablename__ = "child_quest_statuses_translation"
     __table_args__ = (UniqueConstraint("child_quest_status_id", "language_id"),)
 
     child_quest_status_id = Column(Integer, ForeignKey("child_quest_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
+    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
     child_quest_status = relationship("MemberQuestStatusesEntity")

@@ -68,12 +68,3 @@ class BaseHistoryEntity(BaseEntity):
     def from_source(cls, source):
         """元のレコードから履歴エンティティを生成"""
         raise NotImplementedError("from_sourceメソッドはサブクラスで実装する必要があります")
-
-class BaseTranslationEntity(BaseEntity):
-    """翻訳テーブル用の基底クラス"""
-
-    __abstract__ = True
-
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
-    
-    language = relationship("LanguagesEntity")

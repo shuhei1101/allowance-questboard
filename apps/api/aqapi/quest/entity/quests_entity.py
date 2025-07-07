@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey, String, Text, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -44,7 +44,7 @@ class QuestsEntity(BaseEntity):
             QuestsEntity(subclass_type=3, subclass_id=1, category_id=3, icon_id=3, age_from=5, age_to=15),
         ]
 
-class QuestsTranslationEntity(BaseTranslationEntity):
+class QuestsTranslationEntity(BaseEntity):
     """クエスト翻訳エンティティ"""
 
     __tablename__ = "quests_translation"
