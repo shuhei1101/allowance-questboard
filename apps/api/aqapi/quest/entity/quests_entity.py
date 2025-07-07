@@ -22,7 +22,7 @@ class QuestsEntity(BaseEntity):
         CheckConstraint("month_to IS NULL OR (month_to >= 1 AND month_to <= 12)", name="chk_quests_month_to_valid"),
     )
 
-    subclass_type = Column(Integer, ForeignKey("quest_subclass_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
+    subclass_type = Column(Integer, ForeignKey("quest_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
     subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
     category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="RESTRICT"), nullable=False, comment="クエストカテゴリID")
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="RESTRICT"), nullable=False, comment="アイコンID")

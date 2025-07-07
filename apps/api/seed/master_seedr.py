@@ -10,7 +10,7 @@ from aqapi.notification.entity.notifiable_types_entity import NotifiableTypesEnt
 from aqapi.quest.entity.child_quest_statuses_entity import MemberQuestStatusesEntity, MemberQuestStatusesTranslationEntity
 from aqapi.quest.entity.quest_category_types_entity import QuestCategoryTypesEntity
 from aqapi.quest.entity.quest_request_statuses_entity import QuestRequestStatusesEntity, QuestRequestStatusesTranslationEntity
-from aqapi.quest.entity.quest_subclass_table_types_entity import QuestSubclassTableTypesEntity
+from aqapi.quest.entity.quest_types_entity import QuestTypesEntity
 from aqapi.report.entity.report_statuses_entity import ReportStatusesEntity, ReportStatusesTranslationEntity
 from aqapi.report.entity.reportable_types_entity import ReportableTableTypesEntity
 from aqapi.shared.entity.currencies_entity import CurrenciesEntity
@@ -39,7 +39,7 @@ class MasterSeedr:
             IconPlatforms.seed(session)
             IconNameByPlatormEntity.seed(session)
             FamilyMemberTypesEntity.seed(session)
-            QuestSubclassTableTypesEntity.seed(session)
+            QuestTypesEntity.seed(session)
             QuestCategoryTypesEntity.seed(session)
             AllowanceTableTypesEntity.seed(session)
             AllowanceableTableTypesEntity.seed(session)

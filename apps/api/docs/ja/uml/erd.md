@@ -382,7 +382,7 @@ erDiagram
         String description "クエスト説明"
         Integer category_id FK "quest_categories.id"
         Integer icon_id FK "icons.id"
-        Integer subclass_type FK "quest_subclass_table_types.id"
+        Integer subclass_type FK "quest_types.id"
         Integer subclass_id "サブクラスID"
     }
 
@@ -409,7 +409,7 @@ erDiagram
         String description "説明"
     }
 
-    quest_subclass_table_types {
+    quest_types {
         String table_name UK "テーブル名"
         String description "説明"
     }
@@ -436,7 +436,7 @@ erDiagram
     %% Relationships
     quests }|--|| quest_categories: ""
     quests }|--|| icons: ""
-    quests }|--|| quest_subclass_table_types: ""
+    quests }|--|| quest_types: ""
     quests_translation }|--|| quests: ""
     quests_translation }|--|| languages: ""
     quest_categories }|--|| quest_category_types: ""

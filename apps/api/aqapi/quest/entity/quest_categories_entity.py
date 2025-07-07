@@ -12,10 +12,10 @@ class QuestCategoriesEntity(BaseEntity):
     __tablename__ = "quest_categories"
     __table_args__ = (
         # 一意制約
-        UniqueConstraint("subclass_type", "subclass_id", name="uq_quest_category_subclass_type_id"),
+        UniqueConstraint("subclass_type", "subclass_id", name="uq_quest_category_type_id"),
     )
 
-    subclass_type = Column(Integer, ForeignKey("quest_category_subclass_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
+    subclass_type = Column(Integer, ForeignKey("quest_category_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
     subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
 
     subclass_type_ref = relationship("QuestCategoryTypesEntity")
