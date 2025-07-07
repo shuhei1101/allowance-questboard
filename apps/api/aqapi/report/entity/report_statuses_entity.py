@@ -32,12 +32,12 @@ class ReportStatusesTranslationEntity(BaseTranslationEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-                ReportStatusesTranslationEntity(id=1, language_id=1, status="審査待ち"),
-                ReportStatusesTranslationEntity(id=1, language_id=2, status="pending"),
-                ReportStatusesTranslationEntity(id=2, language_id=1, status="承認済み"),
-                ReportStatusesTranslationEntity(id=2, language_id=2, status="approved"),
-                ReportStatusesTranslationEntity(id=3, language_id=1, status="却下"),
-                ReportStatusesTranslationEntity(id=3, language_id=2, status="rejected"),
-                ReportStatusesTranslationEntity(id=4, language_id=1, status="解決済み"),
-                ReportStatusesTranslationEntity(id=4, language_id=2, status="resolved"),
+                ReportStatusesTranslationEntity(report_status_id=1, language_id=1, status="審査待ち"),
+                ReportStatusesTranslationEntity(report_status_id=1, language_id=2, status="pending"),
+                ReportStatusesTranslationEntity(report_status_id=2, language_id=1, status="承認済み"),
+                ReportStatusesTranslationEntity(report_status_id=2, language_id=2, status="approved"),
+                ReportStatusesTranslationEntity(report_status_id=3, language_id=1, status="却下"),
+                ReportStatusesTranslationEntity(report_status_id=3, language_id=2, status="rejected"),
+                ReportStatusesTranslationEntity(report_status_id=4, language_id=1, status="解決済み"),
+                ReportStatusesTranslationEntity(report_status_id=4, language_id=2, status="resolved"),
             ]
