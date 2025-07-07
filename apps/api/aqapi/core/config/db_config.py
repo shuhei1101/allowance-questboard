@@ -50,8 +50,8 @@ class DBConfig:
         import os
 
         # 各Entityモジュールを動的にインポート
-        base_path = os.path.dirname(os.path.dirname(__file__))  # aqapi/ディレクトリ
-        entity_pattern = os.path.join(base_path, "api", "v1", "*", "entity", "*.py")
+        base_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))  # aqapi/ディレクトリ
+        entity_pattern = os.path.join(base_path, "*", "entity", "*.py")
         entity_files = glob.glob(entity_pattern)
 
         imported_modules = []
@@ -75,6 +75,7 @@ class DBConfig:
                 print(f"✓ インポート成功: {full_module_name}")
             except Exception as e:
                 print(f"✗ インポートエラー {full_module_name}: {e}")
+                raise
 
         print(
             f"すべてのEntityクラスの初期化が完了しました (成功: {len(imported_modules)}件)"
