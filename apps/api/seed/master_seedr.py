@@ -12,7 +12,7 @@ from aqapi.quest.entity.quest_category_types_entity import QuestCategoryTypesEnt
 from aqapi.quest.entity.quest_request_statuses_entity import QuestRequestStatusesEntity, QuestRequestStatusesTranslationEntity
 from aqapi.quest.entity.quest_types_entity import QuestTypesEntity
 from aqapi.report.entity.report_statuses_entity import ReportStatusesEntity, ReportStatusesTranslationEntity
-from aqapi.report.entity.reportable_types_entity import ReportableTableTypesEntity
+from aqapi.report.entity.reportable_types_entity import ReportableTypesEntity
 from aqapi.shared.entity.currencies_entity import CurrenciesEntity
 from aqapi.shared.entity.currency_by_language_entity import CurrencyByLanguageEntity
 from aqapi.shared.entity.exchange_rates_entity import ExchangeRatesEntity
@@ -48,7 +48,7 @@ class MasterSeedr:
             WithdrawalRequestStatusesEntity.seed(session)
             WithdrawalRequestStatusesTranslationEntity.seed(session)
             NotifiableTypesEntity.seed(session)
-            ReportableTableTypesEntity.seed(session)
+            ReportableTypesEntity.seed(session)
             EducationsEntity.seed(session)
             EducationsTranslationEntity.seed(session)
             ExchangeRatesEntity.seed(session)

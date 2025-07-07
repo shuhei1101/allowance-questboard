@@ -4,7 +4,7 @@ from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
-class ReportableTableTypesEntity(BaseEntity):
+class ReportableTypesEntity(BaseEntity):
     """レポート対象タイプエンティティ"""
 
     __tablename__ = "reportable_types"
@@ -15,10 +15,10 @@ class ReportableTableTypesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-            ReportableTableTypesEntity(
+            ReportableTypesEntity(
                 table_name="families", description="家族関連のレポート"
             ),
-            ReportableTableTypesEntity(
+            ReportableTypesEntity(
                 table_name="comments", description="子供関連のレポート"
             ),
         ]
