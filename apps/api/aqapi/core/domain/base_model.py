@@ -14,7 +14,7 @@ class BaseModel(ABC):
     def version(self) -> Version:
         return self._version
 
-    def increment_version(self) -> None:
+    def _update_version(self) -> None:
         """バージョンを1上げ、更新フラグを設定する"""
         if not self._is_updated:
             self._is_updated = True

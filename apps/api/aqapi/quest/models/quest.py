@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, Optional
 from aqapi.core.domain.base_model import BaseModel
@@ -12,6 +12,12 @@ from aqapi.quest.models.value_object.quest_level import QuestLevel
 @dataclass
 class Quest(BaseModel):
     """クエストドメインモデル"""
+    _id: QuestId = field(repr=False)
+    _title: QuestTitle = field(repr=False)
+    _description: QuestDescription = field(repr=False)
+    _level: QuestLevel = field(repr=False)
+    _created_at: Optional[datetime] = field(repr=False)
+    _updated_at: Optional[datetime] = field(repr=False)
     
     def __init__(self, id: QuestId, title: QuestTitle, description: QuestDescription, level: QuestLevel, created_at: Optional[datetime], updated_at: Optional[datetime], version: Version):
         super().__init__(version)
@@ -25,20 +31,17 @@ class Quest(BaseModel):
     def update_title(self, title: QuestTitle) -> None:
         """クエストタイトルを更新する"""
         self._title = title
-        self._updated_at = None  # DB側で更新
-        self.increment_version()
+        self._update_version()
     
     def update_description(self, description: QuestDescription) -> None:
         """クエスト詳細を更新する"""
         self._description = description
-        self._updated_at = None  # DB側で更新
-        self.increment_version()
+        self._update_version()
     
     def update_level(self, level: QuestLevel) -> None:
         """クエストレベルを更新する"""
         self._level = level
-        self._updated_at = None  # DB側で更新
-        self.increment_version()
+        self._update_version()
     
     @classmethod
     def create_new(cls, title: QuestTitle, description: QuestDescription, level: QuestLevel) -> 'Quest':

@@ -76,7 +76,6 @@ class TestQuest:
             # 検証
             assert quest._title == new_title
             assert quest.version().value == original_version + 1
-            assert quest._updated_at is None  # DB側で更新
     
     class Test_update_description:
         """update_descriptionメソッドのテスト"""

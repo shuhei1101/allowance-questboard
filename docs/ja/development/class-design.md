@@ -14,9 +14,9 @@ def __init__(self, id: int, name: str):
     self.name = name
 
 # 良い例: 長い場合は改行して記述
-def __init__(a, b, c,
-             d, e, f,
-             g, h, i
+def __init__(self, id: QuestId, title: QuestTitle,
+             description: QuestDescription, level: QuestLevel,
+             created_at: Optional[datetime], updated_at: Optional[datetime]
 ):
     super().__init__(version)
     self._id = id
