@@ -22,6 +22,7 @@ from aqapi.shared.entity.icon_platforms import IconPlatforms
 from aqapi.shared.entity.icons_entity import IconsEntity
 from aqapi.shared.entity.languages_entity import LanguagesEntity
 from aqapi.shared.entity.screens_entity import ScreensEntity
+
 class MasterSeedr:
 
     def seed(self):
