@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 class AllowanceByAgeEntity(BaseEntity):
     """年齢別お小遣いテーブルエンティティ"""

@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func, CheckConstraint
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -20,13 +20,12 @@ class ReportStatusesEntity(BaseEntity):
             ReportStatusesEntity(code="resolved"),
         ]
 
-class ReportStatusesTranslationEntity(BaseEntity):
+class ReportStatusesTranslationEntity(BaseTranslationEntity):
     """レポートステータス翻訳エンティティ"""
 
     __tablename__ = "report_statuses_translation"
 
     report_status_id = Column(Integer, ForeignKey("report_statuses.id", ondelete="CASCADE"), nullable=False, comment="レポートステータスID")
-    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     status = Column(String(50), nullable=False, comment="翻訳されたステータス名")
 
 

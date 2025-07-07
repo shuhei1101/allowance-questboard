@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 
 
 class LanguagesEntity(BaseEntity):

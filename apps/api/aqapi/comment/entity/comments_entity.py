@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, Text, DateTime, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -54,7 +54,7 @@ class CommentsHistoryEntity(BaseHistoryEntity):
         )
 
 
-class CommentsTranslationEntity(BaseEntity):
+class CommentsTranslationEntity(BaseTranslationEntity):
     """コメント翻訳エンティティ"""
 
     __tablename__ = "comments_translation"
@@ -66,8 +66,6 @@ class CommentsTranslationEntity(BaseEntity):
     )
 
     comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=False, comment="コメントID")
-    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     body = Column(Text, nullable=False, comment="コメント本文の翻訳")
 
     comment = relationship("CommentsEntity")
-    language = relationship("LanguagesEntity")

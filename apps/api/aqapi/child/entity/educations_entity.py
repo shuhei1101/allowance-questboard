@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -22,7 +22,7 @@ class EducationsEntity(BaseEntity):
             EducationsEntity(code="graduate_school"),
         ]
     
-class EducationsTranslationEntity(BaseEntity):
+class EducationsTranslationEntity(BaseTranslationEntity):
     """学歴翻訳エンティティ"""
 
     __tablename__ = "educations_translation"
@@ -34,8 +34,6 @@ class EducationsTranslationEntity(BaseEntity):
     name = Column(String(100), nullable=False, comment="学歴名の翻訳")
 
     educations = relationship("EducationsEntity")
-    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
-    language = relationship("LanguagesEntity")
 
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:

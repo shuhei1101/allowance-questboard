@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
