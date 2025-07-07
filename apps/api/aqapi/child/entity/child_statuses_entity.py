@@ -2,20 +2,20 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
 
 
-class ChildStatsesEntity(BaseEntity):
-    """子供ステータスエンティティ"""
+class ChildStatusesEntity(BaseEntity):
+    """子供のステータスを定義するエンティティ"""
 
-    __tablename__ = "child_statses"
+    __tablename__ = "child_statuses"
     __table_args__ = (
         # レベルは0より大きい
-        CheckConstraint("current_level > 0", name="chk_child_stats_current_level_positive"),
+        CheckConstraint("current_level > 0", name="chk_child_statuses_current_level_positive"),
         # 経験値は0以上
-        CheckConstraint("total_exp >= 0", name="chk_child_stats_total_exp_non_negative"),
+        CheckConstraint("total_exp >= 0", name="chk_child_statuses_total_exp_non_negative"),
         # 貯金額は0以上
-        CheckConstraint("current_savings >= 0", name="chk_child_stats_current_savings_non_negative"),
+        CheckConstraint("current_savings >= 0", name="chk_child_statuses_current_savings_non_negative"),
     )
 
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, unique=True, comment="子供ID")

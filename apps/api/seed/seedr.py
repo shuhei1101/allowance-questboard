@@ -115,9 +115,11 @@ class Seedr:
 
 if __name__ == "__main__":
     seedr = Seedr()
-    try:
-        action = sys.argv[1].lower() if len(sys.argv) > 1 else None
-        seedr.main(action)  # type: ignore
-    except Exception:
-        seedr._drop_table()
-        # Seedr()._reset_db()
+    Seedr()._reset_db()
+    # try:
+    #     action = sys.argv[1].lower() if len(sys.argv) > 1 else None
+    #     seedr.main(action)  # type: ignore
+    # except Exception:
+    #     # seedr._drop_table()
+    #     print("引数が不正です。指定されたアクションがありません。")
+    #     Seedr()._reset_db()

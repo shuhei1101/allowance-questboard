@@ -15,7 +15,6 @@ class ScreensEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-            ScreensEntity(name="quest_request", description="クエストリクエスト画面"),
-            ScreensEntity(name="quest_request_detail", description="クエストリクエスト詳細画面"),
-            ScreensEntity(name="quest_request_create", description="クエストリクエスト作成画面"),
+            ScreensEntity(name="families", description="クエストリクエスト画面"),
+            ScreensEntity(name="quests", description="クエストリクエスト詳細画面"),
         ]

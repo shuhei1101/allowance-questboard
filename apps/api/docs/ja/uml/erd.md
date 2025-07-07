@@ -196,7 +196,7 @@ erDiagram
         Date end_date "終了日"
     }
 
-    child_stats {
+    child_statuses {
         %% 履歴あり
         Integer child_id FK "children.id"
         Integer total_quests_completed "完了クエスト総数"
@@ -219,7 +219,7 @@ erDiagram
     child_settings }|--|| allowance_tables: ""
     child_grades }|--|| children: ""
     child_grades }|--|| education_periods: ""
-    child_stats }|--|| children: ""
+    child_statuses }|--|| children: ""
 ```
 
 ## bank

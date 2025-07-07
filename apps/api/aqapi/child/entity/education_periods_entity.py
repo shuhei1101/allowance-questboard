@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
 
 
 class EducationPeriodsEntity(BaseEntity):
@@ -10,7 +10,7 @@ class EducationPeriodsEntity(BaseEntity):
     
     例えば、小学校は6年間、中学校は3年間、高校は3年間など、教育機関ごとに期間を定義する
     これにより、子供の学歴履歴を管理し、教育機関ごとの期間を追跡できるようにする
-    子供を作成したときに初期値が設定される
+    子供を作成したときに初期値が設定され、親が自由に設定可能
     """
 
     __tablename__ = "education_periods"
