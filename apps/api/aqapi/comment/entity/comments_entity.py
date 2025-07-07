@@ -14,14 +14,14 @@ class CommentsEntity(BaseEntity):
         CheckConstraint("length(body) > 0", name="chk_comments_body_not_empty"),
     )
 
-    commented_by = Column(Integer, nullable=False, comment="ユーザID(ポリモーフィック：family_id または child_id)")
+    commented_by = Column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="コメント投稿者ID")
     commentable_type = Column(Integer, ForeignKey("commentable_types.id", ondelete="RESTRICT"), nullable=False, comment="コメント対象タイプID")
     commentable_id = Column(Integer, nullable=False, comment="コメント対象ID")
     parent_comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=True, comment="親コメントID")
     body = Column(Text, nullable=False, comment="コメント本文")
     commented_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="コメント投稿日時")
 
-    user_type_ref = relationship("UserTypesEntity", foreign_keys=[commented_by])
+    family_member = relationship("FamilyMembersEntity", foreign_keys=[commented_by])
     commentable_type_ref = relationship("CommentableTypesEntity", foreign_keys=[commentable_type])
     parent_comment = relationship("CommentsEntity", foreign_keys=[parent_comment_id])
 
