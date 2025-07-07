@@ -4,7 +4,6 @@ from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
 from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
-
 class AllowanceRecordsEntity(BaseEntity):
     """お小遣い記録エンティティ"""
 
@@ -22,4 +21,4 @@ class AllowanceRecordsEntity(BaseEntity):
     recorded_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="お小遣いが記録された日時")
 
     child = relationship("ChildrenEntity", foreign_keys=[child_id])
-    allowanceable_table_type = relationship("AllowanceableTableTypesEntity", foreign_keys=[allowanceable_type])
+    allowanceable_table_type = relationship("AllowanceableTypesEntity", foreign_keys=[allowanceable_type])
