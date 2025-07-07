@@ -14,7 +14,7 @@ class SharedAllowanceTablesEntity(BaseEntity):
         UniqueConstraint("family_allowance_table_id", "shared_by"),
     )
 
-    family_allowance_table_id = Column(Integer, ForeignKey("shared_allowance_tables.id", ondelete="CASCADE"), nullable=False, comment="共有お小遣いテーブルID")
+    family_allowance_table_id = Column(Integer, ForeignKey("family_allowance_tables.id", ondelete="CASCADE"), nullable=False, comment="共有お小遣いテーブルID")
     shared_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="共有元家族ID")
 
     family_allowance_table = relationship("FamilyAllowanceTablesEntity", foreign_keys=[family_allowance_table_id])
