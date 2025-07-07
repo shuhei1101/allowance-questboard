@@ -1,227 +1,169 @@
-# 🎨 DDD設計思想
+# 🎨 フロントエンド設計思想
 
-## Domain Driven Design (ドメイン駆動設計) の適用
+## アーキテクチャ概要
 
-このFlutterアプリケーションでは、Eric Evansの提唱するDDD（ドメイン駆動設計）の概念を採用し、ビジネスドメインを中心とした設計を行っています。
+**重要**: このFlutterアプリケーションでは、**DDD（ドメイン駆動設計）はフロントエンド側では使用していません**。  
+**ビジネスロジックはすべてAPIサーバー側で処理され**、フロントエンド側では以下の責務のみを担当します：
 
-## 戦略的設計
+- **バリデーション処理**  
+- **状態管理**  
+- **UI表示・操作**  
+- **API通信**  
 
-### 境界づけられたコンテキスト (Bounded Context)
+詳細な処理の流れについては、[アーキテクチャ図](../../../../docs/ja/shared/uml/flutter_supabase_clsd.md)を参照してください。
 
-本アプリケーションでは、以下のコンテキストに分割されています：
+## フロントエンドの設計パターン
 
-#### 1. 👨‍👩‍👧‍👦 家族コンテキスト (Family Context)
-- **責務**: 家族の管理、家族メンバーの関係性
-- **場所**: `lib/family/`
-- **主要概念**: 家族、家族メンバー、親子関係
+### 1. 状態管理パターン
 
-#### 2. 👤 メンバーコンテキスト (Member Context)
-- **責務**: 個別メンバーの管理、プロフィール
-- **場所**: `lib/member/`
-- **主要概念**: メンバー、プロフィール、権限
+フロントエンドでは**StateNotifier + Riverpod**を使用した状態管理を採用しています。
 
-#### 3. 🎯 クエストコンテキスト (Quest Context)
-- **責務**: クエスト管理、進捗追跡、報酬システム
-- **場所**: `lib/quest/`
-- **主要概念**: クエスト、進捗、報酬、達成状況
-
-#### 4. 🔐 認証コンテキスト (Authentication Context)
-- **責務**: ユーザー認証、セッション管理
-- **場所**: `lib/login/`
-- **主要概念**: ユーザー、認証、セッション
-
-## 戦術的設計
-
-### エンティティ (Entity)
-**特徴**: 一意性を持つオブジェクト
-**配置**: `lib/domain/model/`
-
-例:
 ```dart
-class Member {
-  final MemberId id;
-  final MemberName name;
-  final MemberRole role;
+class QuestPageStateNotifier extends StateNotifier<QuestPageState> {
+  QuestPageStateNotifier() : super(QuestPageState.initial());
   
-  // ビジネスロジック
-  bool canAssignQuest() {
-    return role.isParent();
+  // 入力値の設定（バリデーション付き）
+  void setTitle(String title) {
+    final titleState = QuestTitleState(title);
+    state = state.copyWith(
+      questTitleState: titleState,
+      isValid: _validateForm(),
+    );
+  }
+  
+  void setDescription(String description) {
+    final descriptionState = QuestDescriptionState(description);
+    state = state.copyWith(
+      questDescriptionState: descriptionState,
+      isValid: _validateForm(),
+    );
+  }
+  
+  // フォーム送信
+  Future<void> submit() async {
+    if (!state.isValid) return;
+    
+    final useCase = ref.read(applyQuestUseCaseProvider);
+    final result = await useCase.execute(/* ... */);
+    // 結果処理
   }
 }
 ```
 
-### 値オブジェクト (Value Object)
-**特徴**: 不変で等価性によって識別されるオブジェクト
-**配置**: `lib/domain/model/`
+### 2. バリデーション処理
 
-例:
+フロントエンドでは入力値の基本的なバリデーションを行います：
+
 ```dart
-class QuestReward {
-  final int amount;
-  final Currency currency;
+mixin InputState {
+  String get value;
+  String? get errorMessage;
   
-  const QuestReward(this.amount, this.currency);
-  
-  // 値オブジェクトの等価性
+  bool _validate();
+  bool isValid() => _validate();
+}
+
+class QuestTitleState with InputState {
   @override
-  bool operator ==(Object other) => 
-    other is QuestReward && 
-    amount == other.amount && 
-    currency == other.currency;
-}
-```
-
-### リポジトリ (Repository)
-**責務**: ドメインオブジェクトのコレクションのような操作を提供
-**インターフェース**: `lib/domain/repository/`
-**実装**: `lib/infrastracture/`
-
-```dart
-// インターフェース
-abstract class QuestRepository {
-  Future<List<Quest>> findByMember(MemberId memberId);
-  Future<void> save(Quest quest);
-}
-
-// 実装
-class FirestoreQuestRepository implements QuestRepository {
-  // Firestoreを使った具体的な実装
-}
-```
-
-### ドメインサービス (Domain Service)
-**責務**: エンティティや値オブジェクトに属さないビジネスロジック
-**配置**: `lib/domain/service/`
-
-```dart
-class QuestAssignmentService {
-  bool canAssignQuestToMember(Quest quest, Member member) {
-    // 複数のドメインオブジェクトに関わるビジネスルール
-    return member.isActive() && 
-           quest.isAssignable() && 
-           !member.hasConflictingQuest(quest);
-  }
-}
-```
-
-### アプリケーションサービス (Application Service)
-**責務**: ユースケースの実行、トランザクションの制御
-**配置**: `lib/application/`
-
-```dart
-class AssignQuestUseCase {
-  final QuestRepository questRepository;
-  final MemberRepository memberRepository;
+  final String value;
+  @override
+  final String? errorMessage;
   
-  Future<void> execute(AssignQuestCommand command) async {
-    final quest = await questRepository.findById(command.questId);
-    final member = await memberRepository.findById(command.memberId);
-    
-    // ドメインサービスを使用したビジネスルールの検証
-    if (!questAssignmentService.canAssignQuestToMember(quest, member)) {
-      throw QuestAssignmentNotAllowedException();
-    }
-    
-    quest.assignTo(member);
-    await questRepository.save(quest);
-  }
-}
-```
-
-## アーキテクチャパターンの適用
-
-### 1. リポジトリパターン
-データアクセスの抽象化により、ドメイン層が具体的なデータストアに依存しない設計
-
-### 2. ファクトリパターン
-複雑なドメインオブジェクトの生成を担当
-```dart
-class QuestFactory {
-  static Quest createDailyQuest(
-    String title, 
-    QuestReward reward, 
-    MemberId assigneeId
-  ) {
-    return Quest(
-      id: QuestId.generate(),
-      title: QuestTitle(title),
-      reward: reward,
-      type: QuestType.daily(),
-      assigneeId: assigneeId,
-      createdAt: DateTime.now(),
-    );
-  }
-}
-```
-
-### 3. 仕様パターン (Specification Pattern)
-複雑なビジネスルールをオブジェクトとして表現
-```dart
-class CompletableQuestSpecification {
-  bool isSatisfiedBy(Quest quest) {
-    return quest.isAssigned() && 
-           quest.hasAllRequiredSteps() &&
-           !quest.isExpired();
-  }
-}
-```
-
-## ドメインイベント
-
-重要なビジネスイベントをドメインイベントとして表現し、疎結合なシステムを実現
-
-```dart
-abstract class DomainEvent {
-  final DateTime occurredAt;
-  DomainEvent() : occurredAt = DateTime.now();
-}
-
-class QuestCompletedEvent extends DomainEvent {
-  final QuestId questId;
-  final MemberId completedBy;
-  final QuestReward earnedReward;
+  QuestTitleState(this.value) : errorMessage = _validateTitle(value);
   
-  QuestCompletedEvent(this.questId, this.completedBy, this.earnedReward);
-}
-```
-
-## FlutterにおけるDDDの適用ポイント
-
-### 1. Riverpodとの統合
-ドメインサービスやアプリケーションサービスをProviderとして登録
-```dart
-final questRepositoryProvider = Provider<QuestRepository>((ref) {
-  return FirestoreQuestRepository();
-});
-
-final assignQuestUseCaseProvider = Provider<AssignQuestUseCase>((ref) {
-  return AssignQuestUseCase(ref.read(questRepositoryProvider));
-});
-```
-
-### 2. 状態管理との連携
-ドメインオブジェクトの状態変化をUIに反映
-```dart
-final questListProvider = StateNotifierProvider<QuestListNotifier, List<Quest>>((ref) {
-  return QuestListNotifier(ref.read(questRepositoryProvider));
-});
-```
-
-### 3. バリデーションの統合
-ドメインオブジェクトのバリデーションをUI層で活用
-```dart
-class QuestTitleInput extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return TextFormField(
-      validator: (value) {
-        try {
-          QuestTitle(value ?? '');
-          return null;
-        } catch (e) {
-          return e.toString();
-        }
-      },
-    );
+  @override
+  bool _validate() => errorMessage == null;
+  
+  static String? _validateTitle(String value) {
+    if (value.isEmpty) return 'タイトルを入力してください';
+    if (value.length > 50) return 'タイトルは50文字以内で入力してください';
+    return null;
   }
 }
 ```
+
+### 3. UseCase パターン
+
+フロントエンド側のUseCaseは、APIとの通信とデータ変換を担当します：
+
+```dart
+class GetQuestsUseCase {
+  final QuestQueryService _questQueryService;
+  
+  GetQuestsUseCase(this._questQueryService);
+  
+  Future<GetQuestsResult> execute(int familyId) async {
+    // QueryServiceからデータ取得
+    final queryModels = await _questQueryService.findByFamilyId(familyId);
+    
+    // DTOに変換して結果として返す
+    final questDtos = queryModels
+        .map((model) => QuestSummaryDto.fromQueryModel(model))
+        .toList();
+        
+    return GetQuestsResult(quests: questDtos);
+  }
+}
+```
+
+### 4. API通信パターン
+
+```dart
+class QuestApiClient {
+  Future<ApplyQuestResponse> applyQuest(ApplyQuestRequest request) async {
+    // APIサーバーにリクエスト送信
+    final response = await _httpClient.post('/api/quests/apply', 
+      body: request.toJson());
+    
+    return ApplyQuestResponse.fromJson(response.data);
+  }
+}
+```
+
+## データ同期
+
+### Supabaseリアルタイム同期
+
+```dart
+class QuestQueryService {
+  Stream<List<QuestQueryModel>> watchByFamilyId(int familyId) {
+    return _supabaseClient
+        .from('quests')
+        .stream(primaryKey: ['id'])
+        .eq('family_id', familyId)
+        .map((data) => data.map((json) => QuestQueryModel.fromJson(json)).toList());
+  }
+  
+  Future<List<QuestQueryModel>> findByFamilyId(int familyId) async {
+    final data = await _supabaseClient
+        .from('quests')
+        .select()
+        .eq('family_id', familyId);
+        
+    return data.map((json) => QuestQueryModel.fromJson(json)).toList();
+  }
+}
+```
+
+## 責務の分離
+
+### フロントエンド（Flutter）の責務
+- ✅ **入力バリデーション**: フォーム入力値の基本的な検証
+- ✅ **状態管理**: UI状態の管理
+- ✅ **データ表示**: サーバーから取得したデータの表示
+- ✅ **ユーザー操作**: ボタンクリック、フォーム入力等のUI操作
+- ✅ **API通信**: サーバーとのデータ送受信
+- ✅ **リアルタイム同期**: Supabaseを使ったデータ同期
+
+### バックエンド（APIサーバー）の責務
+- 🔒 **ビジネスロジック**: すべての業務ルール
+- 🔒 **データ永続化**: データベースへの保存・更新
+- 🔒 **セキュリティ**: 認証・認可
+- 🔒 **整合性チェック**: データの整合性保証
+
+## 設計の利点
+
+1. **責務の明確化**: フロントエンドとバックエンドの責務が明確に分離
+2. **保守性**: ビジネスロジックの変更がフロントエンドに影響しない
+3. **テスト容易性**: バリデーション処理のみのテストで済む
+4. **セキュリティ**: 重要な処理はすべてサーバー側で実行
