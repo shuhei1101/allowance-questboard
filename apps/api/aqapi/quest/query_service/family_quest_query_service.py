@@ -1,13 +1,14 @@
 from typing import Optional
 from sqlalchemy import Tuple
 from sqlalchemy.orm import Session
-from aqapi.api.v1.family_member.entity.children_entity import ChildrenEntity
-from aqapi.api.v1.quest.entity.family_quests_entity import FamilyQuestsEntity
-from aqapi.api.v1.quest.entity.child_quests_entity import MemberQuestsEntity
-from aqapi.api.v1.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEntity
-from aqapi.api.v1.quest.routes.family_quest_summaries_route import FamilyQuestItems
+
+from aqapi.child.entity.children_entity import ChildrenEntity
 from aqapi.core.pagination.pagination_meta import PaginationMeta
 from aqapi.core.pagination.paginator import Paginator
+from aqapi.quest.api.v1.family_quest_summaries_route import FamilyQuestItems
+from aqapi.quest.entity.child_quests_entity import MemberQuestsEntity
+from aqapi.quest.entity.family_quests_entity import FamilyQuestsEntity
+from aqapi.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEntity
 
 
 class FamilyQuestQueryService:
