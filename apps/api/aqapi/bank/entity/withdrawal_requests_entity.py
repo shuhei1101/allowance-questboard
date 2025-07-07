@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class WithdrawalRequestsEntity(BaseEntity):
@@ -24,4 +24,4 @@ class WithdrawalRequestsEntity(BaseEntity):
 
     requester = relationship("ChildrenEntity", foreign_keys=[requested_by])
     approver = relationship("FamiliesEntity", foreign_keys=[approved_by])
-    status = relationship("WithdrawalRequestStatusesEntity")
+    status = relationship("WithdrawalRequestStatusesEntity", foreign_keys=[status_id])

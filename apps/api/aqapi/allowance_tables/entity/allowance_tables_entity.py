@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class AllowanceTablesEntity(BaseEntity):
@@ -17,7 +17,7 @@ class AllowanceTablesEntity(BaseEntity):
     subclass_type = Column(Integer, ForeignKey("allowance_table_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ",)
     subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
 
-    allowance_tables_sub_table_type = relationship("AllowanceTableTypesEntity")
+    allowance_tables_sub_table_type = relationship("AllowanceTableTypesEntity", foreign_keys=[subclass_type])
 
 class AllowanceTablesHistoryEntity(BaseHistoryEntity):
     """お小遣いテーブル履歴エンティティ"""

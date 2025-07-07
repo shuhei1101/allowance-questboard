@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -22,4 +22,4 @@ class QuestExpByLevelEntity(BaseEntity):
     level = Column(Integer, nullable=False, comment="レベル")
     exp = Column(Integer, nullable=False, comment="必要経験値")
 
-    quest = relationship("QuestsEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])

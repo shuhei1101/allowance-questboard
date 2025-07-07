@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -25,9 +25,9 @@ class MemberQuestsEntity(BaseEntity):
     published_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="クエスト公開日時")
     achieved_at = Column(DateTime(timezone=True), nullable=True, comment="クエスト達成日時")
 
-    quest = relationship("QuestsEntity")
-    child = relationship("ChildrenEntity")
-    status = relationship("MemberQuestStatusesEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
+    status = relationship("MemberQuestStatusesEntity", foreign_keys=[status_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

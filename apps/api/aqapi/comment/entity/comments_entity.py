@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, Text, DateTime, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -14,16 +14,16 @@ class CommentsEntity(BaseEntity):
         CheckConstraint("length(body) > 0", name="chk_comments_body_not_empty"),
     )
 
-    commented_by = Column(Integer, nullable=False, comment="ユーザID(ポリモーフィック：family_id または child_id)")
+    commented_by = Column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="コメント投稿者ID")
     commentable_type = Column(Integer, ForeignKey("commentable_types.id", ondelete="RESTRICT"), nullable=False, comment="コメント対象タイプID")
     commentable_id = Column(Integer, nullable=False, comment="コメント対象ID")
     parent_comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=True, comment="親コメントID")
     body = Column(Text, nullable=False, comment="コメント本文")
     commented_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="コメント投稿日時")
 
-    user_type_ref = relationship("UserTypesEntity")
-    commentable_type_ref = relationship("CommentableTypesEntity")
-    parent_comment = relationship("CommentsEntity")
+    family_member = relationship("FamilyMembersEntity", foreign_keys=[commented_by])
+    commentable_type_ref = relationship("CommentableTypesEntity", foreign_keys=[commentable_type])
+    parent_comment = relationship("CommentsEntity", foreign_keys=[parent_comment_id])
 
 
 class CommentsHistoryEntity(BaseHistoryEntity):
@@ -54,7 +54,7 @@ class CommentsHistoryEntity(BaseHistoryEntity):
         )
 
 
-class CommentsTranslationEntity(BaseEntity):
+class CommentsTranslationEntity(BaseTranslationEntity):
     """コメント翻訳エンティティ"""
 
     __tablename__ = "comments_translation"
@@ -66,8 +66,6 @@ class CommentsTranslationEntity(BaseEntity):
     )
 
     comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=False, comment="コメントID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     body = Column(Text, nullable=False, comment="コメント本文の翻訳")
 
-    comment = relationship("CommentsEntity")
-    language = relationship("LanguagesEntity")
+    comment = relationship("CommentsEntity", foreign_keys=[comment_id])

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class SavingsRecordsEntity(BaseEntity):
@@ -21,4 +21,4 @@ class SavingsRecordsEntity(BaseEntity):
     balance = Column(Integer, nullable=False, default=0, comment="貯金残高")
     recorded_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="貯金記録日時")
 
-    saver = relationship("ChildrenEntity", foreign_keys=[saved_by], back_populates="savings_records")
+    saver = relationship("ChildrenEntity", foreign_keys=[saved_by])

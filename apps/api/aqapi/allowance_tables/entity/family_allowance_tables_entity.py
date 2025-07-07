@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class FamilyAllowanceTablesEntity(BaseEntity):
@@ -14,8 +14,8 @@ class FamilyAllowanceTablesEntity(BaseEntity):
     family_id = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID",)
     is_public = Column(Boolean, default=False, nullable=False, comment="公開フラグ",)
 
-    allowance_table = relationship("AllowanceTablesEntity")
-    family = relationship("FamiliesEntity")
+    allowance_table = relationship("AllowanceTablesEntity", foreign_keys=[superclass_id])
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])
 
 class FamilyAllowanceTablesHistoryEntity(BaseHistoryEntity):
     """家族お小遣いテーブル履歴エンティティ"""

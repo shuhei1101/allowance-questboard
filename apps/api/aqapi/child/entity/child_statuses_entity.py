@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class ChildStatusesEntity(BaseEntity):
@@ -23,4 +23,4 @@ class ChildStatusesEntity(BaseEntity):
     total_exp = Column(Integer, nullable=False, default=0, comment="累計獲得経験値")
     current_savings = Column(Integer, nullable=False, default=0, comment="現在の貯金額")
 
-    child = relationship("ChildrenEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])

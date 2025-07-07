@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, CheckConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -14,5 +14,5 @@ class ChildLevelTablesEntity(BaseEntity):
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
 
     # Relationships
-    level_table = relationship("LevelTablesEntity")
-    child = relationship("ChildrenEntity")
+    level_table = relationship("LevelTablesEntity", foreign_keys=[superclass_id])
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])

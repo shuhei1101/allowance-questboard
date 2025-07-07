@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import List
 from sqlalchemy import Column, Integer, Numeric, Date, DateTime, ForeignKey, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 

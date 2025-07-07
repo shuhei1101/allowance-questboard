@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class UserSettingsEntity(BaseEntity):
@@ -11,9 +11,9 @@ class UserSettingsEntity(BaseEntity):
     __tablename__ = "user_settings"
 
     user_id = Column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), primary_key=True, comment="ユーザID")
-    language_id = Column(String(10), ForeignKey("languages.code", ondelete="RESTRICT"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="RESTRICT"), nullable=False, comment="言語コード")
 
-    language = relationship("LanguagesEntity")
+    language = relationship("LanguagesEntity", foreign_keys=[language_id])
 
 class UserSettingsHistoryEntity(BaseHistoryEntity):
     """ユーザ設定履歴エンティティ"""
@@ -21,7 +21,7 @@ class UserSettingsHistoryEntity(BaseHistoryEntity):
     __tablename__ = "user_settings_history"
 
     user_id = Column(UUID(as_uuid=True))
-    language_id = Column(String(10))
+    language_id = Column(Integer)
 
     @classmethod
     def from_source(cls, source: "UserSettingsEntity"):

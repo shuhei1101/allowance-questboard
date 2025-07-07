@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Index, Integer, Boolean, DateTime, ForeignKey, String, Text, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship
 
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -18,9 +18,9 @@ class ReportsEntity(BaseEntity):
     resolved_at = Column(DateTime(timezone=True), nullable=True, comment="レポート解決日時")
 
     # Relationships
-    reporter = relationship("FamilyMembersEntity")
-    reportable_type_ref = relationship("ReportableTypesEntity")
-    status = relationship("ReportStatusesEntity")
+    reporter = relationship("FamilyMembersEntity", foreign_keys=[reported_by])
+    reportable_type_ref = relationship("ReportableTypesEntity", foreign_keys=[reportable_type])
+    status = relationship("ReportStatusesEntity", foreign_keys=[status_id])
 
 
 class ReportsHistoryEntity(BaseHistoryEntity):

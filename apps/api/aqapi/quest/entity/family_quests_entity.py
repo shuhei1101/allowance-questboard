@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -21,6 +21,6 @@ class FamilyQuestsEntity(BaseEntity):
     is_shared = Column(Boolean, nullable=False, default=False, comment="共有フラグ")
     shared_quest_id = Column(Integer, ForeignKey("shared_quests.id", ondelete="SET NULL"), nullable=True, comment="共有クエストID")
 
-    quest = relationship("QuestsEntity")
-    family = relationship("FamiliesEntity")
-    shared_quest = relationship("SharedQuestsEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])
+    shared_quest = relationship("SharedQuestsEntity", foreign_keys=[shared_quest_id])

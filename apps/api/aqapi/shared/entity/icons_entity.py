@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -14,7 +14,7 @@ class IconsEntity(BaseEntity):
     sort_order = Column(Integer, default=0, comment="表示順序")
     is_active = Column(Boolean, nullable=False, default=True, comment="有効フラグ")
 
-    category = relationship("IconCategoriesEntity")
+    category = relationship("IconCategoriesEntity", foreign_keys=[category_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

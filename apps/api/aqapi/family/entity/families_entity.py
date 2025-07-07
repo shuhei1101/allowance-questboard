@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class FamiliesEntity(BaseEntity):
@@ -14,7 +14,7 @@ class FamiliesEntity(BaseEntity):
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="SET NULL"), nullable=True, comment="アイコンID")
     introduction = Column(Text, nullable=True, comment="説明文")
 
-    icon = relationship("IconsEntity")
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
 class FamiliesHistoryEntity(BaseHistoryEntity):
     """家族履歴エンティティ"""
@@ -26,4 +26,4 @@ class FamiliesHistoryEntity(BaseHistoryEntity):
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="SET NULL"), nullable=True, comment="アイコンID")
     introduction = Column(Text, nullable=True, comment="説明文")
 
-    icon = relationship("IconsEntity")
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])

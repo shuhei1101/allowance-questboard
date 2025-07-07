@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from sqlalchemy.orm import relationship
 from aqapi.core.config.db_config import DB_CONF
 
@@ -20,21 +20,15 @@ class WithdrawalRequestStatusesEntity(BaseEntity):
             WithdrawalRequestStatusesEntity(code="completed"),
         ]
 
-class WithdrawalRequestStatusesTranslationEntity(BaseEntity):
+class WithdrawalRequestStatusesTranslationEntity(BaseTranslationEntity):
     """引き落とし申請ステータス翻訳エンティティ"""
 
     __tablename__ = "withdrawal_request_statuses_translation"
-    __table_args__ = (
-        # 一意制約
-        UniqueConstraint("withdrawal_request_status_id", "language_id", name="uq_withdrawal_request_statuses_translation_language"),
-    )
 
     withdrawal_request_status_id = Column(Integer, ForeignKey("withdrawal_request_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
-    withdrawal_request_status = relationship("WithdrawalRequestStatusesEntity")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
-    language = relationship("LanguagesEntity")
+    withdrawal_request_status = relationship("WithdrawalRequestStatusesEntity", foreign_keys=[withdrawal_request_status_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

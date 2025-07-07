@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class ChildAllowanceTablesEntity(BaseEntity):
@@ -13,8 +13,8 @@ class ChildAllowanceTablesEntity(BaseEntity):
     superclass_id = Column(Integer, ForeignKey("allowance_tables.id", ondelete="CASCADE"), nullable=False, unique=True, comment="お小遣いテーブルID",)
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID",)
 
-    allowance_table = relationship("AllowanceTablesEntity")
-    child = relationship("ChildrenEntity")
+    allowance_table = relationship("AllowanceTablesEntity", foreign_keys=[superclass_id])
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
 
 class ChildAllowanceTablesHistoryEntity(BaseHistoryEntity):
     """子供お小遣いテーブル履歴エンティティ"""

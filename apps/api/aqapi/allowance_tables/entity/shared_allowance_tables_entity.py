@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class SharedAllowanceTablesEntity(BaseEntity):
@@ -11,14 +11,14 @@ class SharedAllowanceTablesEntity(BaseEntity):
     __tablename__ = "shared_allowance_tables"
     __table_args__ = (
         # 家族とテーブルで一意
-        UniqueConstraint("family_allowance_table_id", "family_id"),
+        UniqueConstraint("family_allowance_table_id", "shared_by"),
     )
 
-    family_allowance_table_id = Column(Integer, ForeignKey("shared_allowance_tables.id", ondelete="CASCADE"), nullable=False, comment="共有お小遣いテーブルID")
+    family_allowance_table_id = Column(Integer, ForeignKey("family_allowance_tables.id", ondelete="CASCADE"), nullable=False, comment="共有お小遣いテーブルID")
     shared_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="共有元家族ID")
 
-    family_allowance_table = relationship("FamilyAllowanceTablesEntity")
-    family = relationship("FamiliesEntity")
+    family_allowance_table = relationship("FamilyAllowanceTablesEntity", foreign_keys=[family_allowance_table_id])
+    family = relationship("FamiliesEntity", foreign_keys=[shared_by])
 
 class SharedAllowanceTablesHistoryEntity(BaseHistoryEntity):
     """保存された共有お小遣いテーブル履歴エンティティ"""

@@ -15,7 +15,7 @@
 - テーブル名: `__tablename__ = 'quests'`
 - テーブル制約: `__table_args__ = (UniqueConstraint('id', name='uq_quests_id'),)`
 - カラム: `id = Column(Integer, primary_key=True)`
-- リレーションシップ: `children = relationship('ChildEntity', back_populates='parent')`
+- リレーションシップ: `children = relationship('ChildEntity', foreign_keys=[child_id])`
 
 ## ベースクラス
 エンティティは以下のいずれかのベースクラスを継承します(`aqapi/core/entity/base_entity.py`):

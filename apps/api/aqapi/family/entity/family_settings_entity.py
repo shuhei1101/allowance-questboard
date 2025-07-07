@@ -37,8 +37,8 @@ class FamilySettingsEntity(DB_CONF.Base):
     )
 
     # リレーション
-    family = relationship("FamiliesEntity")
-    currency = relationship("CurrenciesEntity")
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])
+    currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
 
     def __repr__(self):
         return f"<FamilySettingsEntity(family_id={self.family_id}, currency_id={self.currency_id})>"

@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from sqlalchemy.orm import relationship
 from aqapi.core.config.db_config import DB_CONF
 
@@ -21,7 +21,7 @@ class QuestRequestStatusesEntity(BaseEntity):
                 QuestRequestStatusesEntity(code="rejected", description="却下"),
             ]
 
-class QuestRequestStatusesTranslationEntity(BaseEntity):
+class QuestRequestStatusesTranslationEntity(BaseTranslationEntity):
     """クエストリクエストステータス翻訳エンティティ"""
 
     __tablename__ = "quest_request_statuses_translation"
@@ -30,11 +30,9 @@ class QuestRequestStatusesTranslationEntity(BaseEntity):
     )
 
     quest_request_status_id = Column(Integer, ForeignKey("quest_request_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
     
-    quest_request_statuses = relationship("QuestRequestStatusesEntity")
-    language = relationship("LanguagesEntity")
+    quest_request_statuses = relationship("QuestRequestStatusesEntity", foreign_keys=[quest_request_status_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

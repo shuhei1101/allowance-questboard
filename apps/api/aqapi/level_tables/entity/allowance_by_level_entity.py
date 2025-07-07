@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -23,4 +23,4 @@ class AllowanceByLevelEntity(BaseEntity):
     level = Column(Integer, nullable=False, comment="レベル")
     amount = Column(Integer, nullable=False, default=0, comment="お小遣い金額")
 
-    allowance_tables = relationship("AllowanceTablesEntity")
+    allowance_tables = relationship("AllowanceTablesEntity", foreign_keys=[allowance_table_id])

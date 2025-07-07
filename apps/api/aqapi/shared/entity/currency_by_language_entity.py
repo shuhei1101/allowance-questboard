@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime, func
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -14,8 +14,8 @@ class CurrencyByLanguageEntity(BaseEntity):
     language_id = Column(Integer, ForeignKey("languages.id", ondelete="CASCADE"), nullable=False, comment="言語コード")
 
     # Relationships
-    currency = relationship("CurrenciesEntity")
-    language = relationship("LanguagesEntity")
+    currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
+    language = relationship("LanguagesEntity", foreign_keys=[language_id])
 
     @classmethod
     def _seed_data(cls) -> list[BaseEntity]:

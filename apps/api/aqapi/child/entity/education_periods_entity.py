@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, U
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
 
 
 class EducationPeriodsEntity(BaseEntity):
@@ -25,5 +25,5 @@ class EducationPeriodsEntity(BaseEntity):
     education_id = Column(Integer, ForeignKey("educations.id", ondelete="RESTRICT"), nullable=False, comment="学歴ID")
     period = Column(Integer, nullable=False, comment="教育期間")
 
-    child = relationship("ChildrenEntity")
-    educations = relationship("EducationsEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
+    educations = relationship("EducationsEntity", foreign_keys=[education_id])

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -11,7 +11,7 @@ class SharedQuestsEntity(BaseEntity):
     __tablename__ = "shared_quests"
     __table_args__ = (
         # 一意制約
-        UniqueConstraint("family_id", "quest_id"),
+        UniqueConstraint("shared_by", "quest_id"),
     )
 
     quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID(外部キー)")

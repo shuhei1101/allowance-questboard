@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -35,10 +35,10 @@ class QuestDetailsByLevelEntity(BaseEntity):
     child_exp = Column(Integer, nullable=False, comment="子供獲得経験値")
     quest_exp = Column(Integer, nullable=False, comment="クエスト獲得経験値")
 
-    quest = relationship("QuestsEntity")
-    currency = relationship("CurrenciesEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+    currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
 
-class QuestDetailsByLevelTranslationEntity(BaseEntity):
+class QuestDetailsByLevelTranslationEntity(BaseTranslationEntity):
     """クエスト詳細翻訳エンティティ"""
 
     __tablename__ = "quest_details_by_level_translation"
@@ -47,8 +47,6 @@ class QuestDetailsByLevelTranslationEntity(BaseEntity):
     )
 
     quest_details_by_level_id = Column(Integer, ForeignKey("quest_details_by_level.id", ondelete="CASCADE"), nullable=False, comment="クエスト詳細ID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     success_criteria = Column(Text, nullable=False, comment="成功条件の翻訳")
 
-    quest_details_by_level = relationship("QuestDetailsByLevelEntity")
-    language = relationship("LanguagesEntity")
+    quest_details_by_level = relationship("QuestDetailsByLevelEntity", foreign_keys=[quest_details_by_level_id])

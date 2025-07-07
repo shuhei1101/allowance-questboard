@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -18,7 +18,7 @@ class TemplateQuestsEntity(BaseEntity):
         comment="クエストID(外部キー、一意制約)",
     )
 
-    quest = relationship("QuestsEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

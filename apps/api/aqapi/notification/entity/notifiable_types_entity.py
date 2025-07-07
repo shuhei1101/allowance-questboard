@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, DateTime, func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -15,6 +15,6 @@ class NotifiableTypesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-            NotifiableTypesEntity(type="child_quests", description="子供クエストの通知"),
+            NotifiableTypesEntity(table_name="child_quests", description="子供クエストの通知"),
         ]
         

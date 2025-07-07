@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, CheckConstraint, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -15,5 +15,5 @@ class FamilyLevelTablesEntity(BaseEntity):
     is_public = Column(Boolean, default=False, nullable=False, comment="公開フラグ")
 
     # Relationships
-    level_table = relationship("LevelTablesEntity")
-    family = relationship("FamiliesEntity")
+    level_table = relationship("LevelTablesEntity", foreign_keys=[superclass_id])
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])
