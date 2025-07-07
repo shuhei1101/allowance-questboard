@@ -47,7 +47,7 @@ class QuestDetailsByLevelTranslationEntity(BaseEntity):
     )
 
     quest_details_by_level_id = Column(Integer, ForeignKey("quest_details_by_level.id", ondelete="CASCADE"), nullable=False, comment="クエスト詳細ID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     success_criteria = Column(Text, nullable=False, comment="成功条件の翻訳")
 
     quest_details_by_level = relationship("QuestDetailsByLevelEntity")

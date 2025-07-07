@@ -11,7 +11,7 @@ class UserSettingsEntity(BaseEntity):
     __tablename__ = "user_settings"
 
     user_id = Column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), primary_key=True, comment="ユーザID")
-    language_id = Column(String(10), ForeignKey("languages.code", ondelete="RESTRICT"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="RESTRICT"), nullable=False, comment="言語コード")
 
     language = relationship("LanguagesEntity")
 
@@ -21,7 +21,7 @@ class UserSettingsHistoryEntity(BaseHistoryEntity):
     __tablename__ = "user_settings_history"
 
     user_id = Column(UUID(as_uuid=True))
-    language_id = Column(String(10))
+    language_id = Column(Integer)
 
     @classmethod
     def from_source(cls, source: "UserSettingsEntity"):

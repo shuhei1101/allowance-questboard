@@ -30,7 +30,7 @@ class IconCategoriesTranslationEntity(BaseEntity):
     )
 
     category_id = Column(Integer, ForeignKey("icon_categories.id", ondelete="RESTRICT"),  nullable=False, comment="アイコンカテゴリID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
     category = relationship("IconCategoriesEntity")

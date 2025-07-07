@@ -55,7 +55,7 @@ class QuestsTranslationEntity(BaseEntity):
     )
 
     quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID")
-    language_id = Column(String(10), ForeignKey("languages.code", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     title = Column(String(200), nullable=False, comment="クエストタイトルの翻訳")
     client = Column(String(100), nullable=False, comment="クライアント名の翻訳")
     request_detail = Column(Text, nullable=True, comment="依頼詳細の翻訳")

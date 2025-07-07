@@ -30,7 +30,7 @@ class QuestCategoriesTranslationEntity(BaseEntity):
     )
 
     quest_category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, comment="クエストカテゴリID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
     language = relationship("LanguagesEntity")
 

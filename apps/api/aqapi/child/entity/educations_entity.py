@@ -34,7 +34,7 @@ class EducationsTranslationEntity(BaseEntity):
     name = Column(String(100), nullable=False, comment="学歴名の翻訳")
 
     educations = relationship("EducationsEntity")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     language = relationship("LanguagesEntity")
 
     @classmethod

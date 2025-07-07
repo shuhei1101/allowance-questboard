@@ -15,7 +15,7 @@ class AllowanceRecordsEntity(BaseEntity):
     )
 
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
-    allowanceable_type = Column(Integer, ForeignKey("allowanceable_table_types.table_name", ondelete="SET NULL"), nullable=True, comment="お小遣いの種類ID")
+    allowanceable_type = Column(Integer, ForeignKey("allowanceable_types.id", ondelete="SET NULL"), nullable=True, comment="お小遣いの種類ID")
     allowanceable_id = Column(Integer, nullable=False, comment="お小遣いの対象ID")
     title = Column(String(255), nullable=False, comment="お小遣いのタイトル")
     amount = Column(Integer, nullable=False, comment="お小遣い額")

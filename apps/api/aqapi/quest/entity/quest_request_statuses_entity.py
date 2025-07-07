@@ -30,7 +30,7 @@ class QuestRequestStatusesTranslationEntity(BaseEntity):
     )
 
     quest_request_status_id = Column(Integer, ForeignKey("quest_request_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
     
     quest_request_statuses = relationship("QuestRequestStatusesEntity")

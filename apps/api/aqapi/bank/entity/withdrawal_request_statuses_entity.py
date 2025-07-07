@@ -33,7 +33,7 @@ class WithdrawalRequestStatusesTranslationEntity(BaseEntity):
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
     withdrawal_request_status = relationship("WithdrawalRequestStatusesEntity")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     language = relationship("LanguagesEntity")
 
     @classmethod

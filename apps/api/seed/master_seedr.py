@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 
 from aqapi.allowance_tables.entity.allowance_table_types_entity import AllowanceTableTypesEntity
-from aqapi.bank.entity.allowanceable_table_types_entity import AllowanceableTableTypesEntity
+from aqapi.bank.entity.allowanceable_types_entity import AllowanceableTypesEntity
 from aqapi.bank.entity.withdrawal_request_statuses_entity import WithdrawalRequestStatusesEntity, WithdrawalRequestStatusesTranslationEntity
 from aqapi.child.entity.educations_entity import EducationsEntity, EducationsTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
@@ -42,7 +42,7 @@ class MasterSeedr:
             QuestTypesEntity.seed(session)
             QuestCategoryTypesEntity.seed(session)
             AllowanceTableTypesEntity.seed(session)
-            AllowanceableTableTypesEntity.seed(session)
+            AllowanceableTypesEntity.seed(session)
             ReportStatusesEntity.seed(session)
             ReportStatusesTranslationEntity.seed(session)
             WithdrawalRequestStatusesEntity.seed(session)

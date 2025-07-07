@@ -66,7 +66,7 @@ class CommentsTranslationEntity(BaseEntity):
     )
 
     comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=False, comment="コメントID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     body = Column(Text, nullable=False, comment="コメント本文の翻訳")
 
     comment = relationship("CommentsEntity")

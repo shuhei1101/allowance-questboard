@@ -43,7 +43,7 @@ erDiagram
 
     educations_translation {
         Integer education_id FK "educations.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "学歴名の翻訳"
     }
 
@@ -80,7 +80,7 @@ erDiagram
 
     icon_categories_translation {
         Integer category_id FK "icon_categories.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "カテゴリ名の翻訳"
     }
 
@@ -96,7 +96,7 @@ erDiagram
 erDiagram
     user_settings {
         UUID user_id FK,UK "auth.users.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
     }
 
     user_settings }|--|| languages: ""
@@ -129,7 +129,7 @@ erDiagram
     family_settings {
         Integer family_id FK "families.id"
         String default_currency_code FK "currencies.code"
-        String default_language_code FK "languages.code"
+        String default_language_code FK "languages.id"
     }
 
     follows {
@@ -228,14 +228,14 @@ erDiagram
 erDiagram
     allowance_records {
         Integer child_id FK "children.id"
-        Integer allowanceable_type FK "allowanceable_table_types.table_name"
+        Integer allowanceable_type FK "allowanceable_types.id"
         Integer allowanceable_id "お小遣いの対象ID"
         String title "お小遣いのタイトル"
         Integer amount "お小遣い額"
         DateTime recorded_at "お小遣いが記録された日時"
     }
 
-    allowanceable_table_types {
+    allowanceable_types {
         String table_name UK "お小遣い支給対象テーブル名"
         String description "説明"
     }
@@ -263,13 +263,13 @@ erDiagram
 
     withdrawal_request_statuses_translation {
         Integer withdrawal_request_status_id FK "withdrawal_request_statuses.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "ステータス名の翻訳"
     }
 
     %% Relationships
     allowance_records }|--|| children: ""
-    allowance_records }|--|| allowanceable_table_types: ""
+    allowance_records }|--|| allowanceable_types: ""
     savings_records }|--|| children: ""
     withdrawal_requests }|--|| children: ""
     withdrawal_requests }|--|| withdrawal_request_statuses: ""
@@ -388,7 +388,7 @@ erDiagram
 
     quests_translation {
         Integer quest_id FK "quests.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String title "タイトルの翻訳"
         String description "説明の翻訳"
     }
@@ -400,7 +400,7 @@ erDiagram
 
     quest_categories_translation {
         Integer quest_category_id FK "quest_categories.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "カテゴリ名の翻訳"
     }
 
@@ -423,7 +423,7 @@ erDiagram
 
     template_quest_categories_translation {
         Integer template_category_id FK "template_quest_categories.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "カテゴリ名の翻訳"
     }
 
@@ -501,7 +501,7 @@ erDiagram
 
     child_quest_statuses_translation {
         Integer status_id FK "child_quest_statuses.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "ステータス名の翻訳"
     }
 
@@ -521,7 +521,7 @@ erDiagram
 
     quest_request_statuses_translation {
         Integer status_id FK "quest_request_statuses.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String name "ステータス名の翻訳"
     }
 
@@ -556,7 +556,7 @@ erDiagram
 
     quest_details_by_level_translation {
         Integer quest_details_by_level_id FK "quest_details_by_level.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String success_criteria "成功条件の翻訳"
     }
 
@@ -597,7 +597,7 @@ erDiagram
 
     comments_translation {
         Integer comment_id FK "comments.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String body "コメント本文の翻訳"
     }
 
@@ -652,7 +652,7 @@ erDiagram
 erDiagram
     reports {
         Integer reporter_id FK "family_members.id"
-        Integer reportable_type FK "reportable_table_types.id"
+        Integer reportable_type FK "reportable_types.id"
         Integer reportable_id "通報対象ID"
         String reason "通報理由"
         Integer status_id FK "report_statuses.id"
@@ -665,18 +665,18 @@ erDiagram
 
     report_statuses_translation {
         Integer report_status_id FK "report_statuses.id"
-        String language_id FK "languages.code"
+        String language_id FK "languages.id"
         String status "翻訳されたステータス名"
     }
 
-    reportable_table_types {
+    reportable_types {
         String table_name UK "レポート対象テーブル名"
         String description "レポート対象タイプの説明"
     }
 
     %% Relationships
     reports }|--|| family_members: ""
-    reports }|--|| reportable_table_types: ""
+    reports }|--|| reportable_types: ""
     reports }|--|| report_statuses: ""
     report_statuses_translation }|--|| report_statuses: ""
     report_statuses_translation }|--|| languages: ""

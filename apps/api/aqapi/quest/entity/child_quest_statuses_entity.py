@@ -28,7 +28,7 @@ class MemberQuestStatusesTranslationEntity(BaseEntity):
     __table_args__ = (UniqueConstraint("child_quest_status_id", "language_id"),)
 
     child_quest_status_id = Column(Integer, ForeignKey("child_quest_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
     child_quest_status = relationship("MemberQuestStatusesEntity")

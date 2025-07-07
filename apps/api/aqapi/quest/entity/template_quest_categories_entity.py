@@ -35,7 +35,7 @@ class TemplateQuestCategoriesTranslationEntity(BaseEntity):
     )
 
     template_quest_category_id = Column(Integer, ForeignKey("template_quest_categories.id", ondelete="CASCADE"), nullable=False, comment="テンプレートクエストカテゴリID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
+    language_id = Column(Integer, ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
     template_quest_category = relationship("TemplateQuestCategoriesEntity")
