@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime, UniqueConstraint, func
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from sqlalchemy.orm import relationship
 from aqapi.core.config.db_config import DB_CONF
 
@@ -21,7 +21,7 @@ class IconCategoriesEntity(BaseEntity):
             IconCategoriesEntity(sort_order=3, is_active=True),
         ]
 
-class IconCategoriesTranslationEntity(BaseEntity):
+class IconCategoriesTranslationEntity(BaseTranslationEntity):
     """アイコンカテゴリ翻訳エンティティ"""
 
     __tablename__ = "icon_categories_translation"
@@ -30,7 +30,6 @@ class IconCategoriesTranslationEntity(BaseEntity):
     )
 
     category_id = Column(Integer, ForeignKey("icon_categories.id", ondelete="RESTRICT"),  nullable=False, comment="アイコンカテゴリID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
     category = relationship("IconCategoriesEntity")

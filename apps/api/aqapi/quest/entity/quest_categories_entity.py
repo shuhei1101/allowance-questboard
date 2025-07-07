@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from sqlalchemy import CheckConstraint, Column, Integer, DateTime, ForeignKey, String, func, UniqueConstraint
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -20,18 +20,17 @@ class QuestCategoriesEntity(BaseEntity):
 
     subclass_type_ref = relationship("QuestCategoryTypesEntity")
 
-class QuestCategoriesTranslationEntity(BaseEntity):
+class QuestCategoriesTranslationEntity(BaseTranslationEntity):
     """クエストカテゴリ翻訳エンティティ"""
 
     __tablename__ = "quest_categories_translation"
+
+    quest_category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, comment="クエストカテゴリID")
+    name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
+
     __table_args__ = (
         UniqueConstraint("quest_category_id", "language_id", name="uq_quest_categories_translation_category_language"),
         CheckConstraint("length(name) > 0", name="chk_quest_categories_translation_name_not_empty"),
     )
-
-    quest_category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, comment="クエストカテゴリID")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
-    name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
-    language = relationship("LanguagesEntity")
 
     quest_categories = relationship("QuestCategoriesEntity")

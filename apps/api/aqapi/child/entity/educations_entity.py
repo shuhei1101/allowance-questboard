@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
 from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -22,19 +22,16 @@ class EducationsEntity(BaseEntity):
             EducationsEntity(code="graduate_school"),
         ]
     
-class EducationsTranslationEntity(BaseEntity):
+class EducationsTranslationEntity(BaseTranslationEntity):
     """学歴翻訳エンティティ"""
 
     __tablename__ = "educations_translation"
-    __table_args__ = (
-        UniqueConstraint("education_id", "language_id", name="uq_educations_translation_education_language"),
-    )
+    __table_args__ = (UniqueConstraint("education_id", "language_id", name="uq_educations_translation_education_language"))
 
     education_id = Column(Integer, ForeignKey("educations.id", ondelete="CASCADE"), nullable=False, comment="学歴ID(外部キー)")
     name = Column(String(100), nullable=False, comment="学歴名の翻訳")
 
     educations = relationship("EducationsEntity")
-    language_id = Column(String(10), ForeignKey("languages.id", ondelete="SET NULL"), nullable=False, comment="言語コード")
     language = relationship("LanguagesEntity")
 
     @classmethod
