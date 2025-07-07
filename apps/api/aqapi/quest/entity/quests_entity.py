@@ -32,7 +32,7 @@ class QuestsEntity(BaseEntity):
     month_from = Column(Integer, nullable=True, comment="公開開始月")
     month_to = Column(Integer, nullable=True, comment="公開終了月")
 
-    subclass_type_ref = relationship("QuestSubclassTypesEntity", foreign_keys=[subclass_type])
+    subclass_type_ref = relationship("QuestTypesEntity", foreign_keys=[subclass_type])
     category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
     icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
