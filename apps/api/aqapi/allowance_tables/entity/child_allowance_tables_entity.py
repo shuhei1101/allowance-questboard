@@ -13,8 +13,8 @@ class ChildAllowanceTablesEntity(BaseEntity):
     superclass_id = Column(Integer, ForeignKey("allowance_tables.id", ondelete="CASCADE"), nullable=False, unique=True, comment="お小遣いテーブルID",)
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID",)
 
-    allowance_table = relationship("AllowanceTablesEntity")
-    child = relationship("ChildrenEntity")
+    allowance_table = relationship("AllowanceTablesEntity", foreign_keys=[superclass_id])
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
 
 class ChildAllowanceTablesHistoryEntity(BaseHistoryEntity):
     """子供お小遣いテーブル履歴エンティティ"""

@@ -23,6 +23,6 @@ class NotificationsEntity(BaseEntity):
     read_at = Column(DateTime(timezone=True), nullable=True, comment="既読日時")
     received_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="通知受信日時")
 
-    family_member = relationship("FamilyMembersEntity")
-    notifiable_type_ref = relationship("NotifiableTypesEntity")
-    screen = relationship("ScreensEntity")
+    family_member = relationship("FamilyMembersEntity", foreign_keys=[recipient_id])
+    notifiable_type_ref = relationship("NotifiableTypesEntity", foreign_keys=[notifiable_type])
+    screen = relationship("ScreensEntity", foreign_keys=[push_to])

@@ -15,7 +15,7 @@ class TemplateQuestCategoriesEntity(BaseEntity):
     sort_order = Column(Integer, default=0, comment="表示順序")
     is_active = Column(Boolean, nullable=False, default=True, comment="有効フラグ")
 
-    category = relationship("QuestCategoriesEntity")
+    category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
@@ -37,7 +37,7 @@ class TemplateQuestCategoriesTranslationEntity(BaseTranslationEntity):
     template_quest_category_id = Column(Integer, ForeignKey("template_quest_categories.id", ondelete="CASCADE"), nullable=False, comment="テンプレートクエストカテゴリID")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
-    template_quest_category = relationship("TemplateQuestCategoriesEntity")
+    template_quest_category = relationship("TemplateQuestCategoriesEntity", foreign_keys=[template_quest_category_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

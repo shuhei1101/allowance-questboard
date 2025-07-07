@@ -14,8 +14,8 @@ class FamilyAllowanceTablesEntity(BaseEntity):
     family_id = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID",)
     is_public = Column(Boolean, default=False, nullable=False, comment="公開フラグ",)
 
-    allowance_table = relationship("AllowanceTablesEntity")
-    family = relationship("FamiliesEntity")
+    allowance_table = relationship("AllowanceTablesEntity", foreign_keys=[superclass_id])
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])
 
 class FamilyAllowanceTablesHistoryEntity(BaseHistoryEntity):
     """家族お小遣いテーブル履歴エンティティ"""

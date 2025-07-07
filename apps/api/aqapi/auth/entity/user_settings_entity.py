@@ -13,7 +13,7 @@ class UserSettingsEntity(BaseEntity):
     user_id = Column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), primary_key=True, comment="ユーザID")
     language_id = Column(Integer, ForeignKey("languages.id", ondelete="RESTRICT"), nullable=False, comment="言語コード")
 
-    language = relationship("LanguagesEntity")
+    language = relationship("LanguagesEntity", foreign_keys=[language_id])
 
 class UserSettingsHistoryEntity(BaseHistoryEntity):
     """ユーザ設定履歴エンティティ"""

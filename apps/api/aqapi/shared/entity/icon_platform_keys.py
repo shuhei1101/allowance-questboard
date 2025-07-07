@@ -16,7 +16,7 @@ class IconNameByPlatormEntity(BaseEntity):
     platform_id = Column(Integer, ForeignKey("icon_platforms.id", ondelete="CASCADE"), nullable=False, comment="プラットフォームタイプ(外部キー)")
     name = Column(String(100), nullable=False, comment="アイコン名(例: 'Add', 'Delete')")
 
-    icon = relationship("IconsEntity")
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

@@ -30,7 +30,7 @@ class MemberQuestStatusesTranslationEntity(BaseTranslationEntity):
     child_quest_status_id = Column(Integer, ForeignKey("child_quest_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
-    child_quest_status = relationship("MemberQuestStatusesEntity")
+    child_quest_status = relationship("MemberQuestStatusesEntity", foreign_keys=[child_quest_status_id])
 
 
     @classmethod

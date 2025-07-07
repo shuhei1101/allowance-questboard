@@ -32,7 +32,7 @@ class IconCategoriesTranslationEntity(BaseTranslationEntity):
     category_id = Column(Integer, ForeignKey("icon_categories.id", ondelete="RESTRICT"),  nullable=False, comment="アイコンカテゴリID")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
-    category = relationship("IconCategoriesEntity")
+    category = relationship("IconCategoriesEntity", foreign_keys=[category_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

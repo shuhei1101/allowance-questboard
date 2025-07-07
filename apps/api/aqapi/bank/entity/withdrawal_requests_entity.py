@@ -24,4 +24,4 @@ class WithdrawalRequestsEntity(BaseEntity):
 
     requester = relationship("ChildrenEntity", foreign_keys=[requested_by])
     approver = relationship("FamiliesEntity", foreign_keys=[approved_by])
-    status = relationship("WithdrawalRequestStatusesEntity")
+    status = relationship("WithdrawalRequestStatusesEntity", foreign_keys=[status_id])

@@ -18,9 +18,9 @@ class ReportsEntity(BaseEntity):
     resolved_at = Column(DateTime(timezone=True), nullable=True, comment="レポート解決日時")
 
     # Relationships
-    reporter = relationship("FamilyMembersEntity")
-    reportable_type_ref = relationship("ReportableTypesEntity")
-    status = relationship("ReportStatusesEntity")
+    reporter = relationship("FamilyMembersEntity", foreign_keys=[reported_by])
+    reportable_type_ref = relationship("ReportableTypesEntity", foreign_keys=[reportable_type])
+    status = relationship("ReportStatusesEntity", foreign_keys=[status_id])
 
 
 class ReportsHistoryEntity(BaseHistoryEntity):

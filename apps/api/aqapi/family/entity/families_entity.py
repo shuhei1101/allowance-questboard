@@ -14,7 +14,7 @@ class FamiliesEntity(BaseEntity):
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="SET NULL"), nullable=True, comment="アイコンID")
     introduction = Column(Text, nullable=True, comment="説明文")
 
-    icon = relationship("IconsEntity")
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
 class FamiliesHistoryEntity(BaseHistoryEntity):
     """家族履歴エンティティ"""
@@ -26,4 +26,4 @@ class FamiliesHistoryEntity(BaseHistoryEntity):
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="SET NULL"), nullable=True, comment="アイコンID")
     introduction = Column(Text, nullable=True, comment="説明文")
 
-    icon = relationship("IconsEntity")
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])

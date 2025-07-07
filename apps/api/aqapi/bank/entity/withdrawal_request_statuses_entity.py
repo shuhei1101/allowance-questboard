@@ -28,7 +28,7 @@ class WithdrawalRequestStatusesTranslationEntity(BaseTranslationEntity):
     withdrawal_request_status_id = Column(Integer, ForeignKey("withdrawal_request_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
-    withdrawal_request_status = relationship("WithdrawalRequestStatusesEntity")
+    withdrawal_request_status = relationship("WithdrawalRequestStatusesEntity", foreign_keys=[withdrawal_request_status_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

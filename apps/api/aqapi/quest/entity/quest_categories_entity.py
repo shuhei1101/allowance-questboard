@@ -18,7 +18,7 @@ class QuestCategoriesEntity(BaseEntity):
     subclass_type = Column(Integer, ForeignKey("quest_category_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
     subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
 
-    subclass_type_ref = relationship("QuestCategoryTypesEntity")
+    subclass_type_ref = relationship("QuestCategoryTypesEntity", foreign_keys=[subclass_type])
 
 class QuestCategoriesTranslationEntity(BaseTranslationEntity):
     """クエストカテゴリ翻訳エンティティ"""
@@ -32,4 +32,4 @@ class QuestCategoriesTranslationEntity(BaseTranslationEntity):
     quest_category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, comment="クエストカテゴリID")
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
-    quest_categories = relationship("QuestCategoriesEntity")
+    quest_categories = relationship("QuestCategoriesEntity", foreign_keys=[quest_category_id])

@@ -32,7 +32,7 @@ class QuestRequestStatusesTranslationEntity(BaseTranslationEntity):
     quest_request_status_id = Column(Integer, ForeignKey("quest_request_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
     
-    quest_request_statuses = relationship("QuestRequestStatusesEntity")
+    quest_request_statuses = relationship("QuestRequestStatusesEntity", foreign_keys=[quest_request_status_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

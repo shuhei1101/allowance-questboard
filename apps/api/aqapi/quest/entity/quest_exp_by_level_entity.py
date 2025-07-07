@@ -22,4 +22,4 @@ class QuestExpByLevelEntity(BaseEntity):
     level = Column(Integer, nullable=False, comment="レベル")
     exp = Column(Integer, nullable=False, comment="必要経験値")
 
-    quest = relationship("QuestsEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])

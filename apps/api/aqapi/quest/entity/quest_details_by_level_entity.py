@@ -35,8 +35,8 @@ class QuestDetailsByLevelEntity(BaseEntity):
     child_exp = Column(Integer, nullable=False, comment="子供獲得経験値")
     quest_exp = Column(Integer, nullable=False, comment="クエスト獲得経験値")
 
-    quest = relationship("QuestsEntity")
-    currency = relationship("CurrenciesEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+    currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
 
 class QuestDetailsByLevelTranslationEntity(BaseTranslationEntity):
     """クエスト詳細翻訳エンティティ"""
@@ -49,4 +49,4 @@ class QuestDetailsByLevelTranslationEntity(BaseTranslationEntity):
     quest_details_by_level_id = Column(Integer, ForeignKey("quest_details_by_level.id", ondelete="CASCADE"), nullable=False, comment="クエスト詳細ID")
     success_criteria = Column(Text, nullable=False, comment="成功条件の翻訳")
 
-    quest_details_by_level = relationship("QuestDetailsByLevelEntity")
+    quest_details_by_level = relationship("QuestDetailsByLevelEntity", foreign_keys=[quest_details_by_level_id])

@@ -18,7 +18,7 @@ class TemplateQuestsEntity(BaseEntity):
         comment="クエストID(外部キー、一意制約)",
     )
 
-    quest = relationship("QuestsEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

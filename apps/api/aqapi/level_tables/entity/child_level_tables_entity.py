@@ -14,5 +14,5 @@ class ChildLevelTablesEntity(BaseEntity):
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
 
     # Relationships
-    level_table = relationship("LevelTablesEntity")
-    child = relationship("ChildrenEntity")
+    level_table = relationship("LevelTablesEntity", foreign_keys=[superclass_id])
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])

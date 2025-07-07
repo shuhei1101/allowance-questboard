@@ -18,5 +18,5 @@ class ChildGradesEntity(BaseEntity):
     education_id = Column(Integer, ForeignKey("educations.id", ondelete="RESTRICT"), nullable=False, comment="学歴ID")
     grade = Column(Integer, nullable=False, comment="学年")
 
-    child = relationship("ChildrenEntity")
-    educations = relationship("EducationsEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
+    educations = relationship("EducationsEntity", foreign_keys=[education_id])

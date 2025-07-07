@@ -18,5 +18,5 @@ class SavedQuestsEntity(BaseEntity):
     saved_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID")
     saved_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="保存日時")
 
-    quest = relationship("QuestsEntity")
-    family = relationship("FamiliesEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+    family = relationship("FamiliesEntity", foreign_keys=[saved_by])

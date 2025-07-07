@@ -32,9 +32,9 @@ class QuestsEntity(BaseEntity):
     month_from = Column(Integer, nullable=True, comment="公開開始月")
     month_to = Column(Integer, nullable=True, comment="公開終了月")
 
-    subclass_type_ref = relationship("QuestSubclassTypesEntity")
-    category = relationship("QuestCategoriesEntity")
-    icon = relationship("IconsEntity")
+    subclass_type_ref = relationship("QuestSubclassTypesEntity", foreign_keys=[subclass_type])
+    category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
@@ -59,4 +59,4 @@ class QuestsTranslationEntity(BaseTranslationEntity):
     client = Column(String(100), nullable=False, comment="クライアント名の翻訳")
     request_detail = Column(Text, nullable=True, comment="依頼詳細の翻訳")
 
-    quest = relationship("QuestsEntity")
+    quest = relationship("QuestsEntity", foreign_keys=[quest_id])

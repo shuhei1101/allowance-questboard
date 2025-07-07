@@ -25,5 +25,5 @@ class EducationPeriodsEntity(BaseEntity):
     education_id = Column(Integer, ForeignKey("educations.id", ondelete="RESTRICT"), nullable=False, comment="学歴ID")
     period = Column(Integer, nullable=False, comment="教育期間")
 
-    child = relationship("ChildrenEntity")
-    educations = relationship("EducationsEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
+    educations = relationship("EducationsEntity", foreign_keys=[education_id])

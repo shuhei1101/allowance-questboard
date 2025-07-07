@@ -23,4 +23,4 @@ class ChildStatusesEntity(BaseEntity):
     total_exp = Column(Integer, nullable=False, default=0, comment="累計獲得経験値")
     current_savings = Column(Integer, nullable=False, default=0, comment="現在の貯金額")
 
-    child = relationship("ChildrenEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])

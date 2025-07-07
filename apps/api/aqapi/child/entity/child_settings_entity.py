@@ -13,7 +13,7 @@ class ChildSettingsEntity(BaseEntity):
     child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, unique=True, comment="子供ID")
     min_savings = Column(Integer, nullable=False, default=0, comment="最低貯金額")
 
-    child = relationship("ChildrenEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
 
 
 class ChildSettingsHistoryEntity(BaseHistoryEntity):

@@ -23,4 +23,4 @@ class AllowanceByLevelEntity(BaseEntity):
     level = Column(Integer, nullable=False, comment="レベル")
     amount = Column(Integer, nullable=False, default=0, comment="お小遣い金額")
 
-    allowance_tables = relationship("AllowanceTablesEntity")
+    allowance_tables = relationship("AllowanceTablesEntity", foreign_keys=[allowance_table_id])

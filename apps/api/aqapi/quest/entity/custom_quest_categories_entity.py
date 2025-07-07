@@ -13,5 +13,5 @@ class CustomQuestCategoriesEntity(BaseEntity):
     category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, unique=True, comment="クエストカテゴリID")
     family_id = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="作成者の家族ID")
 
-    category = relationship("QuestCategoriesEntity")
-    family = relationship("FamiliesEntity")
+    category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])

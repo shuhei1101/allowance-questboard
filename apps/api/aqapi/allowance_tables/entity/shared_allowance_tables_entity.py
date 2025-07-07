@@ -17,8 +17,8 @@ class SharedAllowanceTablesEntity(BaseEntity):
     family_allowance_table_id = Column(Integer, ForeignKey("shared_allowance_tables.id", ondelete="CASCADE"), nullable=False, comment="共有お小遣いテーブルID")
     shared_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="共有元家族ID")
 
-    family_allowance_table = relationship("FamilyAllowanceTablesEntity")
-    family = relationship("FamiliesEntity")
+    family_allowance_table = relationship("FamilyAllowanceTablesEntity", foreign_keys=[family_allowance_table_id])
+    family = relationship("FamiliesEntity", foreign_keys=[shared_by])
 
 class SharedAllowanceTablesHistoryEntity(BaseHistoryEntity):
     """保存された共有お小遣いテーブル履歴エンティティ"""

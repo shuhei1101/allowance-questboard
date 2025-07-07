@@ -14,5 +14,5 @@ class CommentLikesEntity(BaseEntity):
     liked_by = Column(Integer, ForeignKey("family_members.id", ondelete="SET NULL"), nullable=False, comment="家族メンバーID")
     liked_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="いいねした日時")
 
-    comment = relationship("CommentsEntity")
-    family_member = relationship("FamilyMembersEntity")
+    comment = relationship("CommentsEntity", foreign_keys=[comment_id])
+    family_member = relationship("FamilyMembersEntity", foreign_keys=[liked_by])

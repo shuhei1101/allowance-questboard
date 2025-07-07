@@ -18,5 +18,5 @@ class SharedLevelTablesEntity(BaseEntity):
     family_level_table_id = Column(Integer, ForeignKey("family_level_tables.id", ondelete="CASCADE"), nullable=False, comment="共有レベルテーブルID(外部キー)")
     shared_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID")
 
-    family_level_table = relationship("FamilyLevelTablesEntity")
-    family = relationship("FamiliesEntity")
+    family_level_table = relationship("FamilyLevelTablesEntity", foreign_keys=[family_level_table_id])
+    family = relationship("FamiliesEntity", foreign_keys=[shared_by])

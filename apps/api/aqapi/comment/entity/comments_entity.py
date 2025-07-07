@@ -21,9 +21,9 @@ class CommentsEntity(BaseEntity):
     body = Column(Text, nullable=False, comment="コメント本文")
     commented_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="コメント投稿日時")
 
-    user_type_ref = relationship("UserTypesEntity")
-    commentable_type_ref = relationship("CommentableTypesEntity")
-    parent_comment = relationship("CommentsEntity")
+    user_type_ref = relationship("UserTypesEntity", foreign_keys=[commented_by])
+    commentable_type_ref = relationship("CommentableTypesEntity", foreign_keys=[commentable_type])
+    parent_comment = relationship("CommentsEntity", foreign_keys=[parent_comment_id])
 
 
 class CommentsHistoryEntity(BaseHistoryEntity):
@@ -68,4 +68,4 @@ class CommentsTranslationEntity(BaseTranslationEntity):
     comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=False, comment="コメントID")
     body = Column(Text, nullable=False, comment="コメント本文の翻訳")
 
-    comment = relationship("CommentsEntity")
+    comment = relationship("CommentsEntity", foreign_keys=[comment_id])

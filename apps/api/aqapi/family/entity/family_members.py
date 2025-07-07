@@ -20,7 +20,7 @@ class FamilyMembersEntity(BaseEntity):
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="SET NULL"), nullable=True, comment="アイコンID(外部キー、NULL許可)")
     birthday = Column(Date, nullable=False, comment="誕生日(未来日不可)")
 
-    icon = relationship("IconsEntity")
+    icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
 class FamilyMembersHistoryEntity(BaseHistoryEntity):
     """家族メンバー履歴エンティティ"""

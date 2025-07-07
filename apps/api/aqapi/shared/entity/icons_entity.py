@@ -14,7 +14,7 @@ class IconsEntity(BaseEntity):
     sort_order = Column(Integer, default=0, comment="表示順序")
     is_active = Column(Boolean, nullable=False, default=True, comment="有効フラグ")
 
-    category = relationship("IconCategoriesEntity")
+    category = relationship("IconCategoriesEntity", foreign_keys=[category_id])
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

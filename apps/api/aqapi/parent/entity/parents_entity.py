@@ -17,5 +17,5 @@ class ParentsEntity(BaseEntity):
     family_member_id = Column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="家族メンバーID")
     family_id = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID")
     
-    family = relationship("FamiliesEntity")
-    family_member = relationship("FamilyMembersEntity")
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])
+    family_member = relationship("FamilyMembersEntity", foreign_keys=[family_member_id])

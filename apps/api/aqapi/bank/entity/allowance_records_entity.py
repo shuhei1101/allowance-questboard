@@ -21,5 +21,5 @@ class AllowanceRecordsEntity(BaseEntity):
     amount = Column(Integer, nullable=False, comment="お小遣い額")
     recorded_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="お小遣いが記録された日時")
 
-    child = relationship("ChildrenEntity")
-    allowanceable_table_type = relationship("AllowanceableTableTypesEntity")
+    child = relationship("ChildrenEntity", foreign_keys=[child_id])
+    allowanceable_table_type = relationship("AllowanceableTableTypesEntity", foreign_keys=[allowanceable_type])

@@ -14,8 +14,8 @@ class CurrencyByLanguageEntity(BaseEntity):
     language_id = Column(Integer, ForeignKey("languages.id", ondelete="CASCADE"), nullable=False, comment="言語コード")
 
     # Relationships
-    currency = relationship("CurrenciesEntity")
-    language = relationship("LanguagesEntity")
+    currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
+    language = relationship("LanguagesEntity", foreign_keys=[language_id])
 
     @classmethod
     def _seed_data(cls) -> list[BaseEntity]:

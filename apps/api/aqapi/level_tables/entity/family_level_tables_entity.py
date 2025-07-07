@@ -15,5 +15,5 @@ class FamilyLevelTablesEntity(BaseEntity):
     is_public = Column(Boolean, default=False, nullable=False, comment="公開フラグ")
 
     # Relationships
-    level_table = relationship("LevelTablesEntity")
-    family = relationship("FamiliesEntity")
+    level_table = relationship("LevelTablesEntity", foreign_keys=[superclass_id])
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])

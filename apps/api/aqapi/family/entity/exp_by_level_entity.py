@@ -14,4 +14,4 @@ class ExpByLevelEntity(BaseEntity):
     level = Column(Integer, nullable=False, comment="レベル")
     exp = Column(Integer, nullable=False, comment="レベルに必要な経験値")
 
-    family = relationship("FamiliesEntity")
+    family = relationship("FamiliesEntity", foreign_keys=[family_id])

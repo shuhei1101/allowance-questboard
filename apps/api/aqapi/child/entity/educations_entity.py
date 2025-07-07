@@ -33,7 +33,7 @@ class EducationsTranslationEntity(BaseTranslationEntity):
     education_id = Column(Integer, ForeignKey("educations.id", ondelete="CASCADE"), nullable=False, comment="学歴ID(外部キー)")
     name = Column(String(100), nullable=False, comment="学歴名の翻訳")
 
-    educations = relationship("EducationsEntity")
+    educations = relationship("EducationsEntity", foreign_keys=[education_id])
 
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
