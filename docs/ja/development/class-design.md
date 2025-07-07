@@ -3,7 +3,7 @@
 ## コンストラクタ
 
 ### 書式設定
-- コンストラクタの引数は、横に40文字〜60文字くらいまでは改行せず続けて記述する
+- コンストラクタの引数は、横に40文字〜60文字もしくは引数3つが最大まで改行せず続けて記述する
 - それを超える長さの場合は改行して記述する
 - 可読性を重視し、縦に長くなりすぎないようにバランスを取る
 
@@ -14,15 +14,9 @@ def __init__(self, id: int, name: str):
     self.name = name
 
 # 良い例: 長い場合は改行して記述
-def __init__(
-    self,
-    id: QuestId,
-    title: QuestTitle,
-    description: QuestDescription,
-    level: QuestLevel,
-    created_at: datetime,
-    updated_at: datetime,
-    version: Version
+def __init__(a, b, c,
+             d, e, f,
+             g, h, i
 ):
     super().__init__(version)
     self._id = id
@@ -34,7 +28,7 @@ def __init__(
 
 ### 抽象クラス
 - 抽象クラスは`ABC`を継承し、`@abstractmethod`デコレーターを使用する
-- 抽象メソッドの実装時は、特に理由がない限り関数コメントは書かなくてよい
+- 具象クラスで抽象メソッドのオーバーライド時は、特に理由がない限り関数コメントは書かなくてよい
 - ただし、実装側にのみ特定のロジックを含む場合はその限りではない
 
 ```python

@@ -1,6 +1,5 @@
 import pytest
 from datetime import datetime, UTC
-from uuid import uuid4
 from aqapi.quest.models.quest import Quest
 from aqapi.quest.models.value_object.quest_id import QuestId
 from aqapi.quest.models.value_object.quest_title import QuestTitle
@@ -17,7 +16,7 @@ class TestQuest:
         
         def test_正常な値でQuestが作成できること(self):
             # 準備
-            quest_id = QuestId(uuid4())
+            quest_id = QuestId(123)
             title = QuestTitle("テストクエスト")
             description = QuestDescription("テスト用のクエスト詳細")
             level = QuestLevel(5)
@@ -54,9 +53,9 @@ class TestQuest:
             assert quest._description == description
             assert quest._level == level
             assert quest.version().value == 1
-            assert quest._id is not None
-            assert quest._created_at is not None
-            assert quest._updated_at is not None
+            assert quest._id.value is None  # DB側で自動採番
+            assert quest._created_at is None  # DB側で設定
+            assert quest._updated_at is None  # DB側で設定
     
     class Test_update_title:
         """update_titleメソッドのテスト"""
@@ -69,7 +68,6 @@ class TestQuest:
                 QuestLevel(1)
             )
             original_version = quest.version().value
-            original_updated_at = quest._updated_at
             new_title = QuestTitle("新しいタイトル")
             
             # 実行
@@ -78,7 +76,7 @@ class TestQuest:
             # 検証
             assert quest._title == new_title
             assert quest.version().value == original_version + 1
-            assert quest._updated_at > original_updated_at
+            assert quest._updated_at is None  # DB側で更新
     
     class Test_update_description:
         """update_descriptionメソッドのテスト"""
@@ -126,7 +124,7 @@ class TestQuest:
         def test_from_rawで生データからクエストが作成できること(self):
             # 準備
             raw_data = {
-                'id': '550e8400-e29b-41d4-a716-446655440000',
+                'id': 123,
                 'title': 'テストクエスト',
                 'description': 'テスト詳細',
                 'level': 5,
@@ -139,6 +137,7 @@ class TestQuest:
             quest = Quest.from_raw(raw_data)
             
             # 検証
+            assert quest._id.value == 123
             assert quest._title.value == 'テストクエスト'
             assert quest._description.value == 'テスト詳細'
             assert quest._level.value == 5
