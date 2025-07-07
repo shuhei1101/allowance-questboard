@@ -15,6 +15,6 @@ class NotifiableTypesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-            NotifiableTypesEntity(type="child_quests", description="子供クエストの通知"),
+            NotifiableTypesEntity(table_name="child_quests", description="子供クエストの通知"),
         ]
         
