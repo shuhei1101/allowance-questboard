@@ -171,11 +171,8 @@ erDiagram
 %% child
 erDiagram
     children {
-        %% 履歴あり
-        Integer family_member_id UK,FK "family_members.id"
-        Integer level "レベル"
-        Integer exp "経験値"
-        Integer balance "お小遣い残高"
+        Integer family_member_id FK "family_members.id"
+        Integer family_id FK "families.id"
     }
 
     child_settings {
@@ -197,13 +194,10 @@ erDiagram
     }
 
     child_statuses {
-        %% 履歴あり
         Integer child_id FK "children.id"
-        Integer total_quests_completed "完了クエスト総数"
-        Integer total_allowance_earned "獲得お小遣い総額"
-        Integer current_streak "連続完了日数"
-        Integer max_streak "最大連続完了日数"
-        DateTime last_quest_completed_at "最後のクエスト完了日時"
+        Integer current_level "現在のレベル"
+        Integer total_exp "累計獲得経験値"
+        Integer current_savings "現在の貯金額"
     }
 
     education_periods {
@@ -215,6 +209,7 @@ erDiagram
 
     %% Relationships
     children }|--|| family_members: ""
+    children }|--|| families: ""
     child_settings }|--|| children: ""
     child_settings }|--|| allowance_tables: ""
     child_grades }|--|| children: ""
@@ -375,18 +370,22 @@ erDiagram
 %% quest/definition
 erDiagram
     quests {
-        String title "クエストタイトル"
-        String description "クエスト説明"
+        Integer subclass_type FK "quest_types.id"
         Integer category_id FK "quest_categories.id"
         Integer icon_id FK "icons.id"
-        Integer subclass_id "サブクラスID"
+        Integer age_from "対象年齢下限"
+        Integer age_to "対象年齢上限"
+        Boolean has_published_month "季節限定フラグ"
+        Integer month_from "公開開始月"
+        Integer month_to "公開終了月"
     }
 
     quests_translation {
         Integer quest_id FK "quests.id"
         String language_id FK "languages.id"
-        String title "タイトルの翻訳"
-        String description "説明の翻訳"
+        String title "クエストタイトルの翻訳"
+        String client "クライアント名の翻訳"
+        String request_detail "依頼詳細の翻訳"
     }
 
     quest_categories {
@@ -581,7 +580,7 @@ erDiagram
 %% comment
 erDiagram
     comments {
-        Integer commented_by "ユーザID(ポリモーフィック)"
+        Integer commented_by FK "family_members.id"
         Integer commentable_type FK "commentable_types.id"
         Integer parent_comment_id FK "comments.id"
         String body "コメント本文"
@@ -607,6 +606,7 @@ erDiagram
 
     %% Relationships
     comments }|--|| commentable_types: ""
+    comments }|--|| family_members: ""
     comments }|--o| comments: "parent_comment"
     comments_translation }|--|| comments: ""
     comments_translation }|--|| languages: ""
@@ -619,13 +619,12 @@ erDiagram
 %% notification
 erDiagram
     notifications {
-        Integer notifiable_type FK "notifiable_types.id"
         Integer recipient_id FK "family_members.id"
-        String title "通知タイトル"
-        String message "通知メッセージ"
+        Integer notifiable_type FK "notifiable_types.id"
+        Integer push_to FK "screens.id"
         Boolean is_read "既読フラグ"
-        DateTime notified_at "通知日時"
         DateTime read_at "既読日時"
+        DateTime received_at "通知受信日時"
     }
 
     notifiable_types {
@@ -636,6 +635,7 @@ erDiagram
     %% Relationships
     notifications }|--|| notifiable_types: ""
     notifications }|--|| family_members: ""
+    notifications }|--|| screens: ""
 ```
 
 ## report
