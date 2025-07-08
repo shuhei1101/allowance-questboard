@@ -243,12 +243,12 @@ erDiagram
 
     withdrawal_requests {
         Integer requested_by FK "children.id"
-        Integer amount "引き落とし額"
+        Integer approved_by FK "families.id"
         Integer status_id FK "withdrawal_request_statuses.id"
+        Integer amount "引き落とし金額"
         String reason "引き落とし理由"
-        DateTime requested_at "引き落とし申請日時"
-        DateTime processed_at "処理日時"
-        Integer processed_by FK "family_members.id"
+        DateTime requested_at "申請日時"
+        DateTime approved_at "承認日時"
     }
 
     withdrawal_request_statuses {
@@ -266,8 +266,8 @@ erDiagram
     allowance_records }|--|| allowanceable_types: ""
     savings_records }|--|| children: ""
     withdrawal_requests }|--|| children: ""
+    withdrawal_requests }|--|| families: "approved_by"
     withdrawal_requests }|--|| withdrawal_request_statuses: ""
-    withdrawal_requests }|--|| family_members: "processed_by"
     withdrawal_request_statuses_translation }|--|| withdrawal_request_statuses: ""
     withdrawal_request_statuses_translation }|--|| languages: ""
 ```
@@ -454,15 +454,17 @@ erDiagram
     }
 
     family_quests {
-        Integer superclass_id UK,FK "quests.id"
+        Integer quest_id FK "quests.id"
         Integer family_id FK "families.id"
-        Integer difficulty_level "難易度レベル"
-        Boolean is_public "公開フラグ"
     }
 
     shared_quests {
-        Integer family_quest_id FK "family_quests.id"
+        Integer quest_id FK "quests.id"
+        Integer source_family_quest_id FK "family_quests.id"
         Integer shared_by FK "families.id"
+        Integer pinned_comment_id FK "comments.id"
+        Boolean is_public "公開フラグ"
+        DateTime shared_at "共有日時"
     }
 
     %% Relationships
@@ -470,8 +472,10 @@ erDiagram
     template_quests }|--|| template_quest_categories: ""
     family_quests }|--|| quests: ""
     family_quests }|--|| families: ""
-    shared_quests }|--|| family_quests: ""
+    shared_quests }|--|| quests: ""
+    shared_quests }|--|| family_quests: "source_family_quest"
     shared_quests }|--|| families: ""
+    shared_quests }|--|| comments: "pinned_comment"
 ```
 
 ## quest/execution
@@ -479,14 +483,12 @@ erDiagram
 %% quest/execution
 erDiagram
     quest_members {
-        Integer quest_id FK "quests.id"
-        Integer child_id FK "children.id"
+        Integer family_quest_id FK "family_quests.id"
+        Integer member_id FK "children.id"
+        Integer current_level "現在のレベル"
         Integer status_id FK "quest_member_statuses.id"
-        DateTime assigned_at "割り当て日時"
-        DateTime completed_at "完了日時"
-        Integer progress "進捗"
-        Integer exp_earned "獲得経験値"
-        Integer allowance_earned "獲得お小遣い"
+        DateTime published_at "クエスト公開日時"
+        DateTime achieved_at "クエスト達成日時"
     }
 
     quest_member_statuses {
@@ -561,7 +563,7 @@ erDiagram
     }
 
     saved_quests {
-        Integer quest_id FK "shared_quests.id"
+        Integer shared_quest_id FK "shared_quests.id"
         Integer saved_by FK "families.id"
     }
 
@@ -571,8 +573,8 @@ erDiagram
     quest_details_by_level_translation }|--|| quest_details_by_level: ""
     quest_details_by_level_translation }|--|| languages: ""
     quest_exp_by_level }|--|| quests: ""
-    saved_quests }|--|| quests: ""
-    saved_quests }|--|| family_members: ""
+    saved_quests }|--|| shared_quests: ""
+    saved_quests }|--|| families: ""
 ```
 
 ## comment
