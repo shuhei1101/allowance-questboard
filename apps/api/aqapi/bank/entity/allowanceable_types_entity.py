@@ -16,5 +16,5 @@ class AllowanceableTypesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [
-            AllowanceableTypesEntity(table_name="child_quests", description="メンバーのクエストテーブル"),
+            AllowanceableTypesEntity(table_name="quest_members", description="メンバーのクエストテーブル"),
         ]

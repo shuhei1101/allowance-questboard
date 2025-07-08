@@ -7,7 +7,7 @@ from aqapi.child.entity.educations_entity import EducationsEntity, EducationsTra
 from aqapi.core.config.db_config import DB_CONF
 from aqapi.family.entity.family_member_types import FamilyMemberTypesEntity
 from aqapi.notification.entity.notifiable_types_entity import NotifiableTypesEntity
-from aqapi.quest.entity.child_quest_statuses_entity import MemberQuestStatusesEntity, MemberQuestStatusesTranslationEntity
+from aqapi.quest.entity.quest_member_statuses_entity import QuestMemberStatusesEntity, MemberQuestStatusesTranslationEntity
 from aqapi.quest.entity.quest_category_types_entity import QuestCategoryTypesEntity
 from aqapi.quest.entity.quest_request_statuses_entity import QuestRequestStatusesEntity, QuestRequestStatusesTranslationEntity
 from aqapi.quest.entity.quest_types_entity import QuestTypesEntity
@@ -57,7 +57,7 @@ class MasterSeedr:
             self._seed_and_commit(session, ExchangeRatesEntity)
             self._seed_and_commit(session, QuestRequestStatusesEntity)
             self._seed_and_commit(session, QuestRequestStatusesTranslationEntity)
-            self._seed_and_commit(session, MemberQuestStatusesEntity)
+            self._seed_and_commit(session, QuestMemberStatusesEntity)
             self._seed_and_commit(session, MemberQuestStatusesTranslationEntity)
             self._seed_and_commit(session, ScreensEntity)
             self._seed_and_commit(session, QuestsEntity)

@@ -484,10 +484,10 @@ erDiagram
 ```mermaid
 %% quest/execution
 erDiagram
-    child_quests {
+    quest_members {
         Integer quest_id FK "quests.id"
         Integer child_id FK "children.id"
-        Integer status_id FK "child_quest_statuses.id"
+        Integer status_id FK "quest_member_statuses.id"
         DateTime assigned_at "割り当て日時"
         DateTime completed_at "完了日時"
         Integer progress "進捗"
@@ -495,12 +495,12 @@ erDiagram
         Integer allowance_earned "獲得お小遣い"
     }
 
-    child_quest_statuses {
+    quest_member_statuses {
         String code UK "ステータスコード"
     }
 
-    child_quest_statuses_translation {
-        Integer status_id FK "child_quest_statuses.id"
+    quest_member_statuses_translation {
+        Integer status_id FK "quest_member_statuses.id"
         String language_id FK "languages.id"
         String name "ステータス名の翻訳"
     }
@@ -526,11 +526,11 @@ erDiagram
     }
 
     %% Relationships
-    child_quests }|--|| quests: ""
-    child_quests }|--|| children: ""
-    child_quests }|--|| child_quest_statuses: ""
-    child_quest_statuses_translation }|--|| child_quest_statuses: ""
-    child_quest_statuses_translation }|--|| languages: ""
+    quest_members }|--|| quests: ""
+    quest_members }|--|| children: ""
+    quest_members }|--|| quest_member_statuses: ""
+    quest_member_statuses_translation }|--|| quest_member_statuses: ""
+    quest_member_statuses_translation }|--|| languages: ""
     quest_requests }|--|| quests: ""
     quest_requests }|--|| children: ""
     quest_requests }|--|| quest_request_statuses: ""

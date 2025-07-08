@@ -217,7 +217,7 @@ erDiagram
         %% ---
     }
 
-    child_quests {
+    quest_members {
         %% メンバーに公開されているクエストのテーブル。
         %% 
         %% メンバーとクエストの中間テーブル。
@@ -234,9 +234,9 @@ erDiagram
         datetime achievemented_at "達成日時"
     }
 
-    child_quests ||--o{ participated_child: ""
+    quest_members ||--o{ participated_child: ""
 
-    child_quests }|--|| child_quest_status: ""
+    quest_members }|--|| child_quest_status: ""
 
     child_quest_status {
         %% 現在のクエスト状況。

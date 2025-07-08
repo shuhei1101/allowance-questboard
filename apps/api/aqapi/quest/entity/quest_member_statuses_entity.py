@@ -5,10 +5,10 @@ from sqlalchemy.orm import relationship
 from aqapi.core.config.db_config import DB_CONF
 
 
-class MemberQuestStatusesEntity(BaseEntity):
+class QuestMemberStatusesEntity(BaseEntity):
     """子供クエストステータスエンティティ"""
 
-    __tablename__ = "child_quest_statuses"
+    __tablename__ = "quest_member_statuses"
 
     code = Column(String(20), nullable=False, unique=True, comment="ステータスコード")
     description = Column(String(255), nullable=True, comment="ステータスの説明")
@@ -16,21 +16,21 @@ class MemberQuestStatusesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-                MemberQuestStatusesEntity(code="assigned", description="割り当て済み"),
-                MemberQuestStatusesEntity(code="in_progress", description="進行中"),
-                MemberQuestStatusesEntity(code="completed", description="完了"),
+                QuestMemberStatusesEntity(code="assigned", description="割り当て済み"),
+                QuestMemberStatusesEntity(code="in_progress", description="進行中"),
+                QuestMemberStatusesEntity(code="completed", description="完了"),
             ]
 
 class MemberQuestStatusesTranslationEntity(BaseTranslationEntity):
     """子供クエストステータス翻訳エンティティ"""
 
-    __tablename__ = "child_quest_statuses_translation"
+    __tablename__ = "quest_member_statuses_translation"
     __table_args__ = (UniqueConstraint("child_quest_status_id", "language_id"),)
 
-    child_quest_status_id = Column(Integer, ForeignKey("child_quest_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
+    child_quest_status_id = Column(Integer, ForeignKey("quest_member_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
     name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
 
-    child_quest_status = relationship("MemberQuestStatusesEntity", foreign_keys=[child_quest_status_id])
+    child_quest_status = relationship("QuestMemberStatusesEntity", foreign_keys=[child_quest_status_id])
 
 
     @classmethod
