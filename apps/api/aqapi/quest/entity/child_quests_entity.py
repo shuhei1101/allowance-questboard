@@ -5,7 +5,7 @@ from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, Bas
 from aqapi.core.config.db_config import DB_CONF
 
 
-class MemberQuestsEntity(BaseEntity):
+class ChildQuestsEntity(BaseEntity):
     """子供クエストエンティティ"""
 
     __tablename__ = "child_quests"
