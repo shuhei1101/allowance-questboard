@@ -12,12 +12,10 @@ class NotificationsEntity(BaseEntity):
     __table_args__ = (
         Index("idx_notifications_unread", "recipient_id", "is_read", postgresql_where="is_read = false"),
         Index("idx_notifications_received_at", "received_at"),
-        Index("idx_notifications_notifiable", "notifiable_type", "notifiable_id"),
     )
 
     recipient_id = Column(Integer, ForeignKey("family_members.id", ondelete="SET NULL"), nullable=True, comment="家族メンバーID")
     notifiable_type = Column(Integer, ForeignKey("notifiable_types.id", ondelete="RESTRICT"), nullable=False, comment="通知対象タイプID")
-    notifiable_id = Column(Integer, nullable=False, comment="通知対象ID")
     push_to = Column(Integer, ForeignKey("screens.id", ondelete="SET NULL"), nullable=True, comment="遷移先スクリーンID")
     is_read = Column(Boolean, nullable=False, default=False, comment="既読フラグ")
     read_at = Column(DateTime(timezone=True), nullable=True, comment="既読日時")

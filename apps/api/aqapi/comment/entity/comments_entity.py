@@ -16,7 +16,6 @@ class CommentsEntity(BaseEntity):
 
     commented_by = Column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="コメント投稿者ID")
     commentable_type = Column(Integer, ForeignKey("commentable_types.id", ondelete="RESTRICT"), nullable=False, comment="コメント対象タイプID")
-    commentable_id = Column(Integer, nullable=False, comment="コメント対象ID")
     parent_comment_id = Column(Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=True, comment="親コメントID")
     body = Column(Text, nullable=False, comment="コメント本文")
     commented_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="コメント投稿日時")
@@ -33,7 +32,6 @@ class CommentsHistoryEntity(BaseHistoryEntity):
 
     commented_by = Column(Integer)
     commentable_type = Column(Integer)
-    commentable_id = Column(Integer)
     parent_comment_id = Column(Integer)
     body = Column(Text)
     commented_at = Column(DateTime(timezone=True))
@@ -45,7 +43,6 @@ class CommentsHistoryEntity(BaseHistoryEntity):
             source_id=source.id,
             commented_by=source.commented_by,
             commentable_type=source.commentable_type,
-            commentable_id=source.commentable_id,
             parent_comment_id=source.parent_comment_id,
             body=source.body,
             commented_at=source.commented_at,

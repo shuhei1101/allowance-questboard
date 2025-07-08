@@ -18,7 +18,7 @@ class QuestMembersEntity(BaseEntity):
         # 達成日時は公開日時以降
         CheckConstraint("(achieved_at IS NULL) OR (achieved_at IS NOT NULL AND achieved_at >= published_at)", name="chk_quest_members_achieved_after_published"),
         # 一意制約
-        UniqueConstraint("quest_id", "child_id"),
+        UniqueConstraint("family_quest_id", "member_id"),
     )
 
     family_quest_id = Column(Integer, ForeignKey("family_quests.id", ondelete="CASCADE"), nullable=False, comment="家族クエストID")
@@ -37,8 +37,8 @@ class QuestMembersHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "quest_members_history"
 
-    quest_id = Column(Integer)
-    child_id = Column(Integer)
+    family_quest_id = Column(Integer)
+    member_id = Column(Integer)
     current_level = Column(Integer)
     status_id = Column(Integer)
     published_at = Column(DateTime(timezone=True))
@@ -49,8 +49,8 @@ class QuestMembersHistoryEntity(BaseHistoryEntity):
         """元のレコードから履歴エンティティを生成"""
         return cls(
             source_id=source.id,
-            quest_id=source.quest_id,
-            child_id=source.member_id,
+            family_quest_id=source.family_quest_id,
+            member_id=source.member_id,
             current_level=source.current_level,
             status_id=source.status_id,
             published_at=source.published_at,

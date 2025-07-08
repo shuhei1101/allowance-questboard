@@ -9,13 +9,8 @@ class AllowanceTablesEntity(BaseEntity):
     """お小遣いテーブル基底クラスエンティティ"""
 
     __tablename__ = "allowance_tables"
-    __table_args__ = (
-        # ポリモーフィックなサブクラスを識別するための制約
-        UniqueConstraint("subclass_type", "subclass_id"),
-    )
 
     subclass_type = Column(Integer, ForeignKey("allowance_table_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ",)
-    subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
 
     allowance_tables_sub_table_type = relationship("AllowanceTableTypesEntity", foreign_keys=[subclass_type])
 
@@ -25,7 +20,6 @@ class AllowanceTablesHistoryEntity(BaseHistoryEntity):
     __tablename__ = "allowance_tables_history"
 
     subclass_type = Column(Integer)
-    subclass_id = Column(Integer)
 
     @classmethod
     def from_source(cls, source: "AllowanceTablesEntity"):

@@ -15,4 +15,3 @@ class LevelTablesEntity(BaseEntity):
     )
 
     subclass_type = Column(Integer, ForeignKey("level_table_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
-    subclass_id = Column(Integer, nullable=False, comment="サブクラスID")

@@ -7,12 +7,13 @@ from aqapi.child.entity.educations_entity import EducationsEntity, EducationsTra
 from aqapi.core.config.db_config import DB_CONF
 from aqapi.family.entity.family_member_types import FamilyMemberTypesEntity
 from aqapi.notification.entity.notifiable_types_entity import NotifiableTypesEntity
+from aqapi.quest.entity.quest_categories_entity import QuestCategoriesEntity
 from aqapi.quest.entity.quest_member_statuses_entity import QuestMemberStatusesEntity, MemberQuestStatusesTranslationEntity
 from aqapi.quest.entity.quest_category_types_entity import QuestCategoryTypesEntity
 from aqapi.quest.entity.quest_request_statuses_entity import QuestRequestStatusesEntity, QuestRequestStatusesTranslationEntity
 from aqapi.quest.entity.quest_types_entity import QuestTypesEntity
 from aqapi.quest.entity.quests_entity import QuestsEntity
-from aqapi.quest.entity.template_quest_categories_entity import TemplateQuestCategoriesEntity, TemplateQuestCategoriesTranslationEntity
+from aqapi.quest.entity.template_quest_categories_entity import TemplateQuestCategoriesEntity
 from aqapi.quest.entity.template_quests_entity import TemplateQuestsEntity
 from aqapi.report.entity.report_statuses_entity import ReportStatusesEntity, ReportStatusesTranslationEntity
 from aqapi.report.entity.reportable_types_entity import ReportableTypesEntity
@@ -60,10 +61,11 @@ class MasterSeedr:
             self._seed_and_commit(session, QuestMemberStatusesEntity)
             self._seed_and_commit(session, MemberQuestStatusesTranslationEntity)
             self._seed_and_commit(session, ScreensEntity)
+            self._seed_and_commit(session, QuestCategoriesEntity)
+            self._seed_and_commit(session, TemplateQuestCategoriesEntity)
             self._seed_and_commit(session, QuestsEntity)
             self._seed_and_commit(session, TemplateQuestsEntity)
             self._seed_and_commit(session, TemplateQuestCategoriesEntity)
-            self._seed_and_commit(session, TemplateQuestCategoriesTranslationEntity)
 
             print("マスタデータの投入が完了しました")
 

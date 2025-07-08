@@ -229,7 +229,6 @@ erDiagram
     allowance_records {
         Integer child_id FK "children.id"
         Integer allowanceable_type FK "allowanceable_types.id"
-        Integer allowanceable_id "お小遣いの対象ID"
         String title "お小遣いのタイトル"
         Integer amount "お小遣い額"
         DateTime recorded_at "お小遣いが記録された日時"
@@ -285,7 +284,6 @@ erDiagram
     allowance_tables {
         %% 履歴あり
         Integer subclass_type FK "allowance_table_types.id(継承先のクラス名)"
-        Integer subclass_id "継承先のレコードのID"
     }
 
     allowance_table_types {
@@ -333,7 +331,6 @@ erDiagram
 erDiagram
     level_tables {
         Integer subclass_type FK "level_table_types.id(継承先のクラス名)"
-        Integer subclass_id "継承先のレコードのID"
     }
 
     level_table_types {
@@ -382,7 +379,6 @@ erDiagram
         String description "クエスト説明"
         Integer category_id FK "quest_categories.id"
         Integer icon_id FK "icons.id"
-        Integer subclass_type FK "quest_types.id"
         Integer subclass_id "サブクラスID"
     }
 
@@ -395,7 +391,6 @@ erDiagram
 
     quest_categories {
         Integer subclass_type FK "quest_category_types.id"
-        Integer subclass_id "サブクラスID"
     }
 
     quest_categories_translation {
@@ -526,7 +521,7 @@ erDiagram
     }
 
     %% Relationships
-    quest_members }|--|| quests: ""
+    quest_members }|--|| family_quests: ""
     quest_members }|--|| children: ""
     quest_members }|--|| quest_member_statuses: ""
     quest_member_statuses_translation }|--|| quest_member_statuses: ""
@@ -567,9 +562,8 @@ erDiagram
     }
 
     saved_quests {
-        Integer quest_id FK "quests.id"
-        Integer family_member_id FK "family_members.id"
-        DateTime saved_at "保存日時"
+        Integer quest_id FK "shared_quests.id"
+        Integer saved_by FK "families.id"
     }
 
     %% Relationships
@@ -589,7 +583,6 @@ erDiagram
     comments {
         Integer commented_by "ユーザID(ポリモーフィック)"
         Integer commentable_type FK "commentable_types.id"
-        Integer commentable_id "コメント対象ID"
         Integer parent_comment_id FK "comments.id"
         String body "コメント本文"
         DateTime commented_at "コメント投稿日時"
@@ -627,7 +620,6 @@ erDiagram
 erDiagram
     notifications {
         Integer notifiable_type FK "notifiable_types.id"
-        Integer notifiable_id "通知対象ID"
         Integer recipient_id FK "family_members.id"
         String title "通知タイトル"
         String message "通知メッセージ"
@@ -653,7 +645,6 @@ erDiagram
     reports {
         Integer reporter_id FK "family_members.id"
         Integer reportable_type FK "reportable_types.id"
-        Integer reportable_id "通報対象ID"
         String reason "通報理由"
         Integer status_id FK "report_statuses.id"
         DateTime reported_at "通報日時"

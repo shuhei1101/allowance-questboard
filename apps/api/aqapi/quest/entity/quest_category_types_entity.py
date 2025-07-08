@@ -14,12 +14,6 @@ class QuestCategoryTypesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-            QuestCategoryTypesEntity(
-                table_name="template_quest_categories",
-                description="テンプレートカテゴリ",
-            ),
-            QuestCategoryTypesEntity(
-                table_name="custom_quest_categories",
-                description="家族がカスタムしたカテゴリ",
-            ),
+            QuestCategoryTypesEntity(table_name="template_quest_categories", description="テンプレートカテゴリ"),
+            QuestCategoryTypesEntity(table_name="custom_quest_categories", description="家族がカスタムしたカテゴリ"),
         ]

@@ -154,7 +154,7 @@ erDiagram
         %% 家族がオンライン上に共有したクエストテーブル。
         %% 
         %% いいね数の確認方法: 
-        %%      saved_questテーブルで自身のid検索を実施する。
+        %%      saved_questsテーブルで自身のid検索を実施する。
         %% 作成元クエストの更新確認方法:
         %%      このshared_questの更新日と比較して更新確認を実施する。
 
@@ -184,10 +184,10 @@ erDiagram
 
     shared_quests ||--o| comment: "pin"
 
-    family }|--o| saved_quest: ""
-    quests }|--o| saved_quest: "inherits to"
+    family }|--o| saved_quests: ""
+    quests }|--o| saved_quests: ""
 
-    shared_quests ||--o{ saved_quest: ""
+    shared_quests ||--o{ saved_quests: ""
 
     saved_quests {
         %% 家族が保存(いいね)したクエストテーブル。

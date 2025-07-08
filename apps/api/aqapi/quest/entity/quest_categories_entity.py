@@ -10,15 +10,18 @@ class QuestCategoriesEntity(BaseEntity):
     """クエストカテゴリエンティティ"""
 
     __tablename__ = "quest_categories"
-    __table_args__ = (
-        # 一意制約
-        UniqueConstraint("subclass_type", "subclass_id", name="uq_quest_category_type_id"),
-    )
 
     subclass_type = Column(Integer, ForeignKey("quest_category_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
-    subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
 
     subclass_type_ref = relationship("QuestCategoryTypesEntity", foreign_keys=[subclass_type])
+
+    @classmethod
+    def _seed_data(cls) -> List['BaseEntity']:
+        return [
+            QuestCategoriesEntity(subclass_type=1),  # 1 家事
+            QuestCategoriesEntity(subclass_type=1),  # 2 勉強
+            QuestCategoriesEntity(subclass_type=1),  # 3 運動
+        ]
 
 class QuestCategoriesTranslationEntity(BaseTranslationEntity):
     """クエストカテゴリ翻訳エンティティ"""
@@ -33,3 +36,14 @@ class QuestCategoriesTranslationEntity(BaseTranslationEntity):
     name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
     quest_categories = relationship("QuestCategoriesEntity", foreign_keys=[quest_category_id])
+
+    @classmethod
+    def _seed_data(cls) -> list['BaseEntity']:
+        return [
+            QuestCategoriesTranslationEntity(template_quest_category_id=1, name="家事", language_id="ja"),
+            QuestCategoriesTranslationEntity(template_quest_category_id=1, name="Housework", language_id="en"),
+            QuestCategoriesTranslationEntity(template_quest_category_id=2, name="勉強", language_id="ja"),
+            QuestCategoriesTranslationEntity(template_quest_category_id=2, name="Study", language_id="en"),
+            QuestCategoriesTranslationEntity(template_quest_category_id=3, name="運動", language_id="ja"),
+            QuestCategoriesTranslationEntity(template_quest_category_id=3, name="Exercise", language_id="en"),
+        ]
