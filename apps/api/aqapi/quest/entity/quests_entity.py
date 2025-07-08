@@ -46,10 +46,9 @@ class QuestsEntity(BaseEntity):
 
     @classmethod
     def from_model(cls, model):
-        """ドメインモデルからエンティティを作成する"""
         # 基本的なフィールドのみを設定（DB側で管理される項目は除く）
         return cls(
-            id=model._id.value if model._id.value else None,
+            id=model.id().value if model.id().value else None,
             version=model.version().value,
             # DB側で管理される項目（created_at, updated_at など）は含めない
         )

@@ -70,39 +70,3 @@ class TestQuestLevel:
         
         # Assert
         assert result == str(test_level)
-    
-    def test_from_rawで整数からQuestLevelが作成できること(self):
-        # Arrange
-        level_int = 8
-        
-        # Act
-        quest_level = QuestLevel.from_raw(level_int)
-        
-        # Assert
-        assert quest_level.value == level_int
-    
-    def test_from_rawで数字文字列からQuestLevelが作成できること(self):
-        # Arrange
-        level_str = "6"
-        
-        # Act
-        quest_level = QuestLevel.from_raw(level_str)
-        
-        # Assert
-        assert quest_level.value == 6
-    
-    def test_from_rawで不正な型の場合ValueError例外が発生すること(self):
-        # Arrange
-        invalid_data = "invalid"
-        
-        # Act & Assert
-        with pytest.raises(ValueError, match="QuestLevelの生データは整数または数字文字列である必要があります。"):
-            QuestLevel.from_raw(invalid_data)
-    
-    def test_from_rawで非数字文字列の場合ValueError例外が発生すること(self):
-        # Arrange
-        invalid_data = "abc"
-        
-        # Act & Assert
-        with pytest.raises(ValueError, match="QuestLevelの生データは整数または数字文字列である必要があります。"):
-            QuestLevel.from_raw(invalid_data)

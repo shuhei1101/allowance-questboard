@@ -116,36 +116,3 @@ class TestQuest:
             # 検証
             assert quest._level == new_level
             assert quest.version().value == original_version + 1
-    
-    class Test_from_raw:
-        """from_rawメソッドのテスト"""
-        
-        def test_from_rawで生データからクエストが作成できること(self):
-            # 準備
-            raw_data = {
-                'id': 123,
-                'title': 'テストクエスト',
-                'description': 'テスト詳細',
-                'level': 5,
-                'created_at': '2024-01-01T00:00:00+00:00',
-                'updated_at': '2024-01-01T00:00:00+00:00',
-                'version': 1
-            }
-            
-            # 実行
-            quest = Quest.from_raw(raw_data)
-            
-            # 検証
-            assert quest._id.value == 123
-            assert quest._title.value == 'テストクエスト'
-            assert quest._description.value == 'テスト詳細'
-            assert quest._level.value == 5
-            assert quest.version().value == 1
-        
-        def test_from_rawで不正なデータ型の場合ValueError例外が発生すること(self):
-            # 準備
-            invalid_data = "invalid_data"
-            
-            # 実行 & 検証
-            with pytest.raises(ValueError, match="Questの生データは辞書である必要があります。"):
-                Quest.from_raw(invalid_data)

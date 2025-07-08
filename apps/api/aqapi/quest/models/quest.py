@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Dict, Optional
 from aqapi.core.domain.base_model import BaseModel
 from aqapi.core.domain.value_object.version import Version
 from aqapi.quest.models.value_object.quest_id import QuestId
@@ -12,12 +12,12 @@ from aqapi.quest.models.value_object.quest_level import QuestLevel
 @dataclass
 class Quest(BaseModel):
     """クエストドメインモデル"""
-    _id: QuestId = field(repr=False)
-    _title: QuestTitle = field(repr=False)
-    _description: QuestDescription = field(repr=False)
-    _level: QuestLevel = field(repr=False)
-    _created_at: Optional[datetime] = field(repr=False)
-    _updated_at: Optional[datetime] = field(repr=False)
+    _id: QuestId = field()
+    _title: QuestTitle = field()
+    _description: QuestDescription = field()
+    _level: QuestLevel = field()
+    _created_at: Optional[datetime] = field()
+    _updated_at: Optional[datetime] = field()
     
     def __init__(self, id: QuestId, title: QuestTitle, description: QuestDescription, level: QuestLevel, created_at: Optional[datetime], updated_at: Optional[datetime], version: Version):
         super().__init__(version)
@@ -27,6 +27,22 @@ class Quest(BaseModel):
         self._level = level
         self._created_at = created_at
         self._updated_at = updated_at
+    
+    def id(self) -> QuestId:
+        """クエストIDを取得する"""
+        return self._id
+    
+    def title(self) -> QuestTitle:
+        """クエストタイトルを取得する"""
+        return self._title
+    
+    def description(self) -> QuestDescription:
+        """クエスト詳細を取得する"""
+        return self._description
+    
+    def level(self) -> QuestLevel:
+        """クエストレベルを取得する"""
+        return self._level
     
     def update_title(self, title: QuestTitle) -> None:
         """クエストタイトルを更新する"""
@@ -54,20 +70,4 @@ class Quest(BaseModel):
             created_at=None,  # DB側で設定
             updated_at=None,  # DB側で設定
             version=Version(1)
-        )
-    
-    @classmethod
-    def from_raw(cls, raw_data: Any) -> 'Quest':
-        """生データからクエストを作成する"""
-        if not isinstance(raw_data, dict):
-            raise ValueError("Questの生データは辞書である必要があります。")
-        
-        return cls(
-            id=QuestId.from_raw(raw_data['id']),
-            title=QuestTitle.from_raw(raw_data['title']),
-            description=QuestDescription.from_raw(raw_data['description']),
-            level=QuestLevel.from_raw(raw_data['level']),
-            created_at=datetime.fromisoformat(raw_data['created_at']) if raw_data.get('created_at') else None,
-            updated_at=datetime.fromisoformat(raw_data['updated_at']) if raw_data.get('updated_at') else None,
-            version=Version(raw_data['version'])
         )

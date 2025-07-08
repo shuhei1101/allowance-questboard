@@ -47,7 +47,7 @@ class BaseEntity(DB_CONF.Base):
     @classmethod
     @abstractmethod
     def from_model(cls, model):
-        """ドメインモデルからエンティティを作成する抽象メソッド"""
+        """ドメインモデルからエンティティを作成する"""
         pass
 
     @classmethod

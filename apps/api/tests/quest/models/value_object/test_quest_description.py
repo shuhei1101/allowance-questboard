@@ -77,28 +77,3 @@ class TestQuestDescription:
         
         # Assert
         assert result == test_description
-    
-    def test_from_rawで文字列からQuestDescriptionが作成できること(self):
-        # Arrange
-        description_str = "from_rawテスト詳細"
-        
-        # Act
-        quest_description = QuestDescription.from_raw(description_str)
-        
-        # Assert
-        assert quest_description.value == description_str
-    
-    def test_from_rawでNoneからQuestDescriptionが作成できること(self):
-        # Act
-        quest_description = QuestDescription.from_raw(None)
-        
-        # Assert
-        assert quest_description.value is None
-    
-    def test_from_rawで不正な型の場合ValueError例外が発生すること(self):
-        # Arrange
-        invalid_data = 123
-        
-        # Act & Assert
-        with pytest.raises(ValueError, match="QuestDescriptionの生データは文字列またはNoneである必要があります。"):
-            QuestDescription.from_raw(invalid_data)

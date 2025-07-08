@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Any
+from typing import Optional
 from aqapi.core.domain.value_object.base_value_object import BaseValueObject
 
 
@@ -16,14 +16,6 @@ class QuestDescription(BaseValueObject):
     def _validate(self) -> None:
         if self.value is not None and len(self.value.strip()) > 1000:
             raise ValueError("クエスト詳細は1000文字以内で設定してください。")
-    
-    @classmethod
-    def from_raw(cls, raw_value: Any) -> 'QuestDescription':
-        """生の値からQuestDescriptionを作成する"""
-        if raw_value is None or isinstance(raw_value, str):
-            return cls(raw_value)
-        else:
-            raise ValueError("QuestDescriptionの生データは文字列またはNoneである必要があります。")
     
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, QuestDescription):

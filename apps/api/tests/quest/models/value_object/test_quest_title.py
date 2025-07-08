@@ -69,21 +69,3 @@ class TestQuestTitle:
         
         # Assert
         assert result == test_title
-    
-    def test_from_rawで文字列からQuestTitleが作成できること(self):
-        # Arrange
-        title_str = "from_rawテスト"
-        
-        # Act
-        quest_title = QuestTitle.from_raw(title_str)
-        
-        # Assert
-        assert quest_title.value == title_str
-    
-    def test_from_rawで不正な型の場合ValueError例外が発生すること(self):
-        # Arrange
-        invalid_data = 123
-        
-        # Act & Assert
-        with pytest.raises(ValueError, match="QuestTitleの生データは文字列である必要があります。"):
-            QuestTitle.from_raw(invalid_data)

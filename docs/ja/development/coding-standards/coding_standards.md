@@ -12,6 +12,8 @@
 - YAGNI(You Aren't Gonna need It): 必要になるまで追加するな
 - CoC(Convention over Configuration): まずは公式コーディング規約に従え
 - SLAP原則: メソッドを高低でレイヤー分割せよ
+- **デメテルの法則(Law of Demeter)**: オブジェクトが直接知っている相手とのみ通信する
+  - 例: `model._id.value` → `model.id().value` (ゲッターメソッド経由でアクセス)
 
 ## インポート
 - インポート文は特に理由がない限り、ファイルの一番上にまとめる

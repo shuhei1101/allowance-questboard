@@ -14,10 +14,6 @@ class ConcreteValueObject(BaseValueObject):
     def _validate(self) -> None:
         if self.value is None:
             raise ValueError("値は必須です。")
-    
-    @classmethod
-    def from_raw(cls, raw_value: Any) -> 'ConcreteValueObject':
-        return cls(raw_value)
 
 
 class InvalidValueObject(BaseValueObject):
@@ -29,10 +25,6 @@ class InvalidValueObject(BaseValueObject):
     
     def _validate(self) -> None:
         raise ValueError("常に無効です。")
-    
-    @classmethod
-    def from_raw(cls, raw_value: Any) -> 'InvalidValueObject':
-        return cls(raw_value)
 
 
 class TestBaseValueObject:
@@ -55,16 +47,8 @@ class TestBaseValueObject:
         with pytest.raises(ValueError, match="常に無効です。"):
             InvalidValueObject("any_value")
     
-    def test_from_rawでオブジェクトが作成できること(self):
-        # Arrange & Act
-        value_object = ConcreteValueObject.from_raw("raw_value")
-        
-        # Assert
-        assert value_object.value == "raw_value"
-    
     def test_BaseValueObjectは抽象クラスであること(self):
         # Assert
         assert issubclass(BaseValueObject, ABC)
         assert hasattr(BaseValueObject, '__abstractmethods__')
         assert '_validate' in BaseValueObject.__abstractmethods__
-        assert 'from_raw' in BaseValueObject.__abstractmethods__
