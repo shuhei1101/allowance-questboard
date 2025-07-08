@@ -21,7 +21,7 @@ class SharedQuestsEntity(BaseEntity):
     source_family_quest_id = Column(Integer, ForeignKey("family_quests.id", ondelete="CASCADE"), nullable=False, comment="共有元の家族クエストID")
     shared_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="共有元の家族ID")
     pinned_comment_id = Column(Integer, ForeignKey("comments.id", ondelete="SET NULL"), nullable=True, comment="ピン留めコメントID")
-    is_public = Column(Boolean, nullable=False, default=False, comment="公開フラグ")
+    is_shared = Column(Boolean, nullable=False, default=False, comment="公開フラグ")
     shared_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="共有日時")
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])

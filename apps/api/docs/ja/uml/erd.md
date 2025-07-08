@@ -463,7 +463,7 @@ erDiagram
         Integer source_family_quest_id FK "family_quests.id"
         Integer shared_by FK "families.id"
         Integer pinned_comment_id FK "comments.id"
-        Boolean is_public "公開フラグ"
+        Boolean is_shared "公開フラグ"
         DateTime shared_at "共有日時"
     }
 
