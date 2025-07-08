@@ -6,7 +6,7 @@ from aqapi.child.entity.children_entity import ChildrenEntity
 from aqapi.core.pagination.pagination_meta import PaginationMeta
 from aqapi.core.pagination.paginator import Paginator
 from aqapi.quest.api.v1.family_quest_summaries_route import FamilyQuestItems
-from aqapi.quest.entity.child_quests_entity import MemberQuestsEntity
+from aqapi.quest.entity.child_quests_entity import ChildQuestsEntity
 from aqapi.quest.entity.family_quests_entity import FamilyQuestsEntity
 from aqapi.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEntity
 
@@ -44,8 +44,8 @@ class FamilyQuestQueryService:
                 QuestsTranslationEntity,
                 QuestsEntity.id == QuestsTranslationEntity.quest_id,
             )
-            .join(MemberQuestsEntity, QuestsEntity.id == MemberQuestsEntity.quest_id)
-            .join(ChildrenEntity, MemberQuestsEntity.child_id == ChildrenEntity.id)
+            .join(ChildQuestsEntity, QuestsEntity.id == ChildQuestsEntity.quest_id)
+            .join(ChildrenEntity, ChildQuestsEntity.child_id == ChildrenEntity.id)
             .filter(QuestsTranslationEntity.language_id == language_id)
             .filter(FamilyQuestsEntity.family_id == family_id)
             .order_by(FamilyQuestsEntity.id)
