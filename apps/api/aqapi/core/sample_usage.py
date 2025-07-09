@@ -63,7 +63,18 @@ class SampleRepository(BaseRepository):
     """サンプルリポジトリクラス - BaseRepositoryの使用例"""
 
     def __init__(self, dao: SampleDao):
-        super().__init__(dao)
+        self._dao = dao
+
+    def _is_latest_version(self, entity: BaseModel) -> bool:
+        """現在のエンティティが最新バージョンかどうかを確認する"""
+        if not hasattr(entity, 'id') or entity.id is None:
+            raise ValueError("エンティティにIDが設定されていません")
+        
+        # DAOから現在のバージョンを取得
+        current_version = self._dao.get_version(entity.id)
+        
+        # エンティティのバージョンと比較
+        return entity.version().value == current_version
 
     def update_with_version_check(self, model: SampleModel) -> None:
         """バージョンチェック付きの更新処理
