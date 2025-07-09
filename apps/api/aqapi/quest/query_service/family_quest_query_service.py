@@ -34,6 +34,9 @@ class FamilyQuestQueryService:
         ページネーション機能
         ソート機能
         """
+        # クエスト基本情報を取得するメインクエリ
+        # family_quests -> quests -> quests_translation の結合でクエスト情報を取得
+        # child_quests -> children -> family_members の結合で受注している子供の情報を取得
         query = (
             self.session.query(
                 FamilyQuestsEntity.id.label("id"),
@@ -45,17 +48,26 @@ class FamilyQuestQueryService:
                 ChildrenEntity.id.label("child_id"),
                 FamilyMembersEntity.icon_id.label("child_icon_id"),
             )
+            # 家族クエスト -> クエスト基本情報
             .join(QuestsEntity, FamilyQuestsEntity.quest_id == QuestsEntity.id)
+            # クエスト基本情報 -> クエスト翻訳情報
             .join(
                 QuestsTranslationEntity,
                 QuestsEntity.id == QuestsTranslationEntity.quest_id,
             )
+            # クエスト基本情報 -> 子供クエスト（どの子供がこのクエストを受注しているか）
             .join(ChildQuestsEntity, QuestsEntity.id == ChildQuestsEntity.quest_id)
+            # 子供クエスト -> 子供情報
             .join(ChildrenEntity, ChildQuestsEntity.child_id == ChildrenEntity.id)
+            # 子供情報 -> 家族メンバー情報（アイコン取得用）
             .join(FamilyMembersEntity, ChildrenEntity.family_member_id == FamilyMembersEntity.id)
+            # 家族クエスト -> 共有クエスト（公開情報取得用、LEFT JOIN）
             .outerjoin(SharedQuestsEntity, FamilyQuestsEntity.shared_quest_id == SharedQuestsEntity.id)
+            # フィルタ条件
             .filter(QuestsTranslationEntity.language_id == language_id)
             .filter(FamilyQuestsEntity.family_id == family_id)
+            # 同一家族内の子供のみをフィルタ
+            .filter(ChildrenEntity.family_id == family_id)
             .order_by(FamilyQuestsEntity.id)
         )
 
