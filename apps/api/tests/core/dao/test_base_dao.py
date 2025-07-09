@@ -6,53 +6,49 @@ from aqapi.core.dao.base_dao import BaseDao
 class TestBaseDao:
     """BaseDaoクラスのテスト"""
 
-    def test_base_dao_is_abstract_class(self):
-        """BaseDaoが抽象クラスであることを確認"""
-        with pytest.raises(TypeError):
-            BaseDao(Mock())
+    class Test_抽象クラス:
+        def test_BaseDaoが抽象クラスであること(self):
+            with pytest.raises(TypeError):
+                BaseDao(Mock())
 
-    def test_get_version_is_abstract_method(self):
-        """get_versionが抽象メソッドであることを確認"""
-        
-        class ConcretDao(BaseDao):
-            def fetch_all(self):
-                return []
+    class Test_get_version:
+        def test_get_versionが抽象メソッドであること(self):
+            class ConcretDao(BaseDao):
+                def fetch_all(self):
+                    return []
+                
+                def fetch_by_id(self, id: int):
+                    return None
+                
+                def update(self, entity):
+                    pass
+                
+                def delete(self, id: int):
+                    pass
+                # get_versionメソッドを実装しない
             
-            def fetch_by_id(self, id: int):
-                return None
-            
-            def update(self, entity):
-                pass
-            
-            def delete(self, id: int):
-                pass
-            # get_versionメソッドを実装しない
-        
-        with pytest.raises(TypeError):
-            ConcretDao(Mock())
+            with pytest.raises(TypeError):
+                ConcretDao(Mock())
 
-    def test_concrete_dao_implementation(self):
-        """具象クラスが正常に動作することを確認"""
-        
-        class ConcretDao(BaseDao):
-            def fetch_all(self):
-                return []
+        def test_具象クラスが正常に動作すること(self):
+            class ConcretDao(BaseDao):
+                def fetch_all(self):
+                    return []
+                
+                def fetch_by_id(self, id: int):
+                    return None
+                
+                def update(self, entity):
+                    pass
+                
+                def delete(self, id: int):
+                    pass
+                
+                def get_version(self, id: int) -> int:
+                    return 1
             
-            def fetch_by_id(self, id: int):
-                return None
+            mock_session = Mock()
+            dao = ConcretDao(mock_session)
             
-            def update(self, entity):
-                pass
-            
-            def delete(self, id: int):
-                pass
-            
-            def get_version(self, id: int) -> int:
-                return 1
-        
-        mock_session = Mock()
-        dao = ConcretDao(mock_session)
-        
-        # get_versionメソッドが呼び出せることを確認
-        version = dao.get_version(1)
-        assert version == 1
+            version = dao.get_version(1)
+            assert version == 1
