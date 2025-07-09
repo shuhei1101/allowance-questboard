@@ -171,11 +171,8 @@ erDiagram
 %% child
 erDiagram
     children {
-        %% 履歴あり
-        Integer family_member_id UK,FK "family_members.id"
-        Integer level "レベル"
-        Integer exp "経験値"
-        Integer balance "お小遣い残高"
+        Integer family_member_id FK "family_members.id"
+        Integer family_id FK "families.id"
     }
 
     child_settings {
@@ -197,13 +194,10 @@ erDiagram
     }
 
     child_statuses {
-        %% 履歴あり
         Integer child_id FK "children.id"
-        Integer total_quests_completed "完了クエスト総数"
-        Integer total_allowance_earned "獲得お小遣い総額"
-        Integer current_streak "連続完了日数"
-        Integer max_streak "最大連続完了日数"
-        DateTime last_quest_completed_at "最後のクエスト完了日時"
+        Integer current_level "現在のレベル"
+        Integer total_exp "累計獲得経験値"
+        Integer current_savings "現在の貯金額"
     }
 
     education_periods {
@@ -215,6 +209,7 @@ erDiagram
 
     %% Relationships
     children }|--|| family_members: ""
+    children }|--|| families: ""
     child_settings }|--|| children: ""
     child_settings }|--|| allowance_tables: ""
     child_grades }|--|| children: ""
@@ -248,12 +243,12 @@ erDiagram
 
     withdrawal_requests {
         Integer requested_by FK "children.id"
-        Integer amount "引き落とし額"
+        Integer approved_by FK "families.id"
         Integer status_id FK "withdrawal_request_statuses.id"
+        Integer amount "引き落とし金額"
         String reason "引き落とし理由"
-        DateTime requested_at "引き落とし申請日時"
-        DateTime processed_at "処理日時"
-        Integer processed_by FK "family_members.id"
+        DateTime requested_at "申請日時"
+        DateTime approved_at "承認日時"
     }
 
     withdrawal_request_statuses {
@@ -271,8 +266,8 @@ erDiagram
     allowance_records }|--|| allowanceable_types: ""
     savings_records }|--|| children: ""
     withdrawal_requests }|--|| children: ""
+    withdrawal_requests }|--|| families: "approved_by"
     withdrawal_requests }|--|| withdrawal_request_statuses: ""
-    withdrawal_requests }|--|| family_members: "processed_by"
     withdrawal_request_statuses_translation }|--|| withdrawal_request_statuses: ""
     withdrawal_request_statuses_translation }|--|| languages: ""
 ```
@@ -375,18 +370,22 @@ erDiagram
 %% quest/definition
 erDiagram
     quests {
-        String title "クエストタイトル"
-        String description "クエスト説明"
+        Integer subclass_type FK "quest_types.id"
         Integer category_id FK "quest_categories.id"
         Integer icon_id FK "icons.id"
-        Integer subclass_id "サブクラスID"
+        Integer age_from "対象年齢下限"
+        Integer age_to "対象年齢上限"
+        Boolean has_published_month "季節限定フラグ"
+        Integer month_from "公開開始月"
+        Integer month_to "公開終了月"
     }
 
     quests_translation {
         Integer quest_id FK "quests.id"
         String language_id FK "languages.id"
-        String title "タイトルの翻訳"
-        String description "説明の翻訳"
+        String title "クエストタイトルの翻訳"
+        String client "クライアント名の翻訳"
+        String request_detail "依頼詳細の翻訳"
     }
 
     quest_categories {
@@ -455,15 +454,17 @@ erDiagram
     }
 
     family_quests {
-        Integer superclass_id UK,FK "quests.id"
+        Integer quest_id FK "quests.id"
         Integer family_id FK "families.id"
-        Integer difficulty_level "難易度レベル"
-        Boolean is_public "公開フラグ"
     }
 
     shared_quests {
-        Integer family_quest_id FK "family_quests.id"
+        Integer quest_id FK "quests.id"
+        Integer source_family_quest_id FK "family_quests.id"
         Integer shared_by FK "families.id"
+        Integer pinned_comment_id FK "comments.id"
+        Boolean is_shared "公開フラグ"
+        DateTime shared_at "共有日時"
     }
 
     %% Relationships
@@ -471,8 +472,10 @@ erDiagram
     template_quests }|--|| template_quest_categories: ""
     family_quests }|--|| quests: ""
     family_quests }|--|| families: ""
-    shared_quests }|--|| family_quests: ""
+    shared_quests }|--|| quests: ""
+    shared_quests }|--|| family_quests: "source_family_quest"
     shared_quests }|--|| families: ""
+    shared_quests }|--|| comments: "pinned_comment"
 ```
 
 ## quest/execution
@@ -480,14 +483,12 @@ erDiagram
 %% quest/execution
 erDiagram
     quest_members {
-        Integer quest_id FK "quests.id"
-        Integer child_id FK "children.id"
+        Integer family_quest_id FK "family_quests.id"
+        Integer member_id FK "children.id"
+        Integer current_level "現在のレベル"
         Integer status_id FK "quest_member_statuses.id"
-        DateTime assigned_at "割り当て日時"
-        DateTime completed_at "完了日時"
-        Integer progress "進捗"
-        Integer exp_earned "獲得経験値"
-        Integer allowance_earned "獲得お小遣い"
+        DateTime published_at "クエスト公開日時"
+        DateTime achieved_at "クエスト達成日時"
     }
 
     quest_member_statuses {
@@ -562,7 +563,7 @@ erDiagram
     }
 
     saved_quests {
-        Integer quest_id FK "shared_quests.id"
+        Integer shared_quest_id FK "shared_quests.id"
         Integer saved_by FK "families.id"
     }
 
@@ -572,8 +573,8 @@ erDiagram
     quest_details_by_level_translation }|--|| quest_details_by_level: ""
     quest_details_by_level_translation }|--|| languages: ""
     quest_exp_by_level }|--|| quests: ""
-    saved_quests }|--|| quests: ""
-    saved_quests }|--|| family_members: ""
+    saved_quests }|--|| shared_quests: ""
+    saved_quests }|--|| families: ""
 ```
 
 ## comment
@@ -581,7 +582,7 @@ erDiagram
 %% comment
 erDiagram
     comments {
-        Integer commented_by "ユーザID(ポリモーフィック)"
+        Integer commented_by FK "family_members.id"
         Integer commentable_type FK "commentable_types.id"
         Integer parent_comment_id FK "comments.id"
         String body "コメント本文"
@@ -607,6 +608,7 @@ erDiagram
 
     %% Relationships
     comments }|--|| commentable_types: ""
+    comments }|--|| family_members: ""
     comments }|--o| comments: "parent_comment"
     comments_translation }|--|| comments: ""
     comments_translation }|--|| languages: ""
@@ -619,13 +621,12 @@ erDiagram
 %% notification
 erDiagram
     notifications {
-        Integer notifiable_type FK "notifiable_types.id"
         Integer recipient_id FK "family_members.id"
-        String title "通知タイトル"
-        String message "通知メッセージ"
+        Integer notifiable_type FK "notifiable_types.id"
+        Integer push_to FK "screens.id"
         Boolean is_read "既読フラグ"
-        DateTime notified_at "通知日時"
         DateTime read_at "既読日時"
+        DateTime received_at "通知受信日時"
     }
 
     notifiable_types {
@@ -636,6 +637,7 @@ erDiagram
     %% Relationships
     notifications }|--|| notifiable_types: ""
     notifications }|--|| family_members: ""
+    notifications }|--|| screens: ""
 ```
 
 ## report
