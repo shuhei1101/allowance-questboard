@@ -8,11 +8,16 @@ class TestBaseDao:
 
     class Test_抽象クラス:
         def test_BaseDaoが抽象クラスであること(self):
+            # 準備
+            mock_session = Mock()
+            
+            # 実行・検証
             with pytest.raises(TypeError):
-                BaseDao(Mock())
+                BaseDao(mock_session)
 
     class Test_get_version:
         def test_get_versionが抽象メソッドであること(self):
+            # 準備
             class ConcretDao(BaseDao):
                 def fetch_all(self):
                     return []
@@ -27,10 +32,14 @@ class TestBaseDao:
                     pass
                 # get_versionメソッドを実装しない
             
+            mock_session = Mock()
+            
+            # 実行・検証
             with pytest.raises(TypeError):
-                ConcretDao(Mock())
+                ConcretDao(mock_session)
 
         def test_具象クラスが正常に動作すること(self):
+            # 準備
             class ConcretDao(BaseDao):
                 def fetch_all(self):
                     return []
@@ -50,5 +59,8 @@ class TestBaseDao:
             mock_session = Mock()
             dao = ConcretDao(mock_session)
             
+            # 実行
             version = dao.get_version(1)
+            
+            # 検証
             assert version == 1

@@ -12,6 +12,7 @@ class TestIntegration:
     def test_version_control_integration(self):
         """排他制御の統合テスト"""
         
+        # 準備
         # Mock DAO
         class TestDao(BaseDao):
             def __init__(self, session):
@@ -66,11 +67,11 @@ class TestIntegration:
                 entity = {"id": model.id, "version": model.version().value}
                 self._dao.update(entity)
         
-        # テスト実行
         mock_session = Mock()
         dao = TestDao(mock_session)
         repository = TestRepository(dao)
         
+        # 実行・検証
         # ケース1: 最新バージョンでの更新（成功）
         model1 = TestModel(id=1, version=Version(2))  # DB上のバージョンと同じ
         repository.update_with_version_check(model1)
@@ -84,6 +85,7 @@ class TestIntegration:
     def test_dao_get_version_not_found(self):
         """存在しないIDでget_versionを呼んだ場合のテスト"""
         
+        # 準備
         class TestDao(BaseDao):
             def fetch_all(self):
                 return []
@@ -127,5 +129,6 @@ class TestIntegration:
         mock_entity.id = 999
         mock_entity.version.return_value.value = 1
         
+        # 実行・検証
         with pytest.raises(ValueError, match="ID 999 のエンティティが見つかりません"):
             repository._is_latest_version(mock_entity)
