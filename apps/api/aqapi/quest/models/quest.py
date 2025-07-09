@@ -44,20 +44,44 @@ class Quest(BaseModel):
         """クエストレベルを取得する"""
         return self._level
     
-    def update_title(self, title: QuestTitle) -> None:
-        """クエストタイトルを更新する"""
-        self._title = title
-        self._update_version()
+    def update_title(self, title: QuestTitle) -> 'Quest':
+        """クエストタイトルを更新した新しいインスタンスを返す"""
+        new_version = Version(self._version.value + 1)
+        return Quest(
+            id=self._id,
+            title=title,
+            description=self._description,
+            level=self._level,
+            created_at=self._created_at,
+            updated_at=None,  # DB側で更新
+            version=new_version
+        )
     
-    def update_description(self, description: QuestDescription) -> None:
-        """クエスト詳細を更新する"""
-        self._description = description
-        self._update_version()
+    def update_description(self, description: QuestDescription) -> 'Quest':
+        """クエスト詳細を更新した新しいインスタンスを返す"""
+        new_version = Version(self._version.value + 1)
+        return Quest(
+            id=self._id,
+            title=self._title,
+            description=description,
+            level=self._level,
+            created_at=self._created_at,
+            updated_at=None,  # DB側で更新
+            version=new_version
+        )
     
-    def update_level(self, level: QuestLevel) -> None:
-        """クエストレベルを更新する"""
-        self._level = level
-        self._update_version()
+    def update_level(self, level: QuestLevel) -> 'Quest':
+        """クエストレベルを更新した新しいインスタンスを返す"""
+        new_version = Version(self._version.value + 1)
+        return Quest(
+            id=self._id,
+            title=self._title,
+            description=self._description,
+            level=level,
+            created_at=self._created_at,
+            updated_at=None,  # DB側で更新
+            version=new_version
+        )
     
     @classmethod
     def create_new(cls, title: QuestTitle, description: QuestDescription, level: QuestLevel) -> 'Quest':

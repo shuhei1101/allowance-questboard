@@ -62,57 +62,94 @@ class TestQuest:
         
         def test_update_titleでタイトルが更新されること(self):
             # 準備
-            quest = Quest.create_new(
+            original_quest = Quest.create_new(
                 QuestTitle("元のタイトル"),
                 QuestDescription("詳細"),
                 QuestLevel(1)
             )
-            original_version = quest.version().value
+            original_version = original_quest.version().value
             new_title = QuestTitle("新しいタイトル")
             
             # 実行
-            quest.update_title(new_title)
+            updated_quest = original_quest.update_title(new_title)
             
             # 検証
-            assert quest._title == new_title
-            assert quest.version().value == original_version + 1
+            assert updated_quest._title == new_title
+            assert updated_quest.version().value == original_version + 1
+            # 元のインスタンスは変更されていないことを確認
+            assert original_quest._title.value == "元のタイトル"
+            assert original_quest.version().value == original_version
     
     class Test_update_description:
         """update_descriptionメソッドのテスト"""
         
         def test_update_descriptionで詳細が更新されること(self):
             # 準備
-            quest = Quest.create_new(
+            original_quest = Quest.create_new(
                 QuestTitle("タイトル"),
                 QuestDescription("元の詳細"),
                 QuestLevel(1)
             )
-            original_version = quest.version().value
+            original_version = original_quest.version().value
             new_description = QuestDescription("新しい詳細")
             
             # 実行
-            quest.update_description(new_description)
+            updated_quest = original_quest.update_description(new_description)
             
             # 検証
-            assert quest._description == new_description
-            assert quest.version().value == original_version + 1
+            assert updated_quest._description == new_description
+            assert updated_quest.version().value == original_version + 1
+            # 元のインスタンスは変更されていないことを確認
+            assert original_quest._description.value == "元の詳細"
+            assert original_quest.version().value == original_version
     
     class Test_update_level:
         """update_levelメソッドのテスト"""
         
         def test_update_levelでレベルが更新されること(self):
             # 準備
-            quest = Quest.create_new(
+            original_quest = Quest.create_new(
                 QuestTitle("タイトル"),
                 QuestDescription("詳細"),
                 QuestLevel(1)
             )
-            original_version = quest.version().value
+            original_version = original_quest.version().value
             new_level = QuestLevel(8)
             
             # 実行
-            quest.update_level(new_level)
+            updated_quest = original_quest.update_level(new_level)
             
             # 検証
-            assert quest._level == new_level
-            assert quest.version().value == original_version + 1
+            assert updated_quest._level == new_level
+            assert updated_quest.version().value == original_version + 1
+            # 元のインスタンスは変更されていないことを確認
+            assert original_quest._level.value == 1
+            assert original_quest.version().value == original_version
+    
+    class Test_method_chaining:
+        """メソッドチェーンのテスト"""
+        
+        def test_update方法がチェーンできること(self):
+            # 準備
+            original_quest = Quest.create_new(
+                QuestTitle("元のタイトル"),
+                QuestDescription("元の詳細"),
+                QuestLevel(1)
+            )
+            new_title = QuestTitle("新しいタイトル")
+            new_description = QuestDescription("新しい詳細")
+            new_level = QuestLevel(5)
+            
+            # 実行
+            final_quest = original_quest.update_title(new_title).update_description(new_description).update_level(new_level)
+            
+            # 検証
+            assert final_quest._title == new_title
+            assert final_quest._description == new_description
+            assert final_quest._level == new_level
+            assert final_quest.version().value == 4  # 1 + 3回の更新
+            # 元のインスタンスは変更されていないことを確認
+            assert original_quest._title.value == "元のタイトル"
+            assert original_quest._description.value == "元の詳細"
+            assert original_quest._level.value == 1
+            assert original_quest.version().value == 1
