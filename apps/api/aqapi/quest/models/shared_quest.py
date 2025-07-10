@@ -14,7 +14,7 @@ class SharedQuest(Quest):
     _is_public: bool = field()
     _shared_at: Optional[datetime] = field()
     
-    def __init__(self, id: QuestId, subclass_type: int, subclass_id: int,
+    def __init__(self, id: Optional[QuestId], subclass_type: int, subclass_id: int,
                  category_id: int, icon_id: int, age_from: int, age_to: int,
                  has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
                  created_at: Optional[datetime], updated_at: Optional[datetime], version: Version,
@@ -26,29 +26,13 @@ class SharedQuest(Quest):
         self._is_public = is_public
         self._shared_at = shared_at
     
-    def shared_by(self) -> int:
-        """共有元家族IDを取得する"""
-        return self._shared_by
-    
-    def pinned_comment_id(self) -> Optional[int]:
-        """ピン留めコメントIDを取得する"""
-        return self._pinned_comment_id
-    
-    def is_public(self) -> bool:
-        """公開フラグを取得する"""
-        return self._is_public
-    
-    def shared_at(self) -> Optional[datetime]:
-        """共有日時を取得する"""
-        return self._shared_at
-    
     @classmethod
     def create_new(cls, category_id: int, icon_id: int, age_from: int, age_to: int,
                    has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
                    shared_by: int) -> 'SharedQuest':
         """新しい共有クエストを作成する"""
         return cls(
-            id=QuestId(None),  # DB側で自動採番
+            id=None,  # DB側で自動採番
             subclass_type=2,  # 共有クエストのサブクラスタイプ
             subclass_id=1,  # 仮の値、DB側で設定
             category_id=category_id,
@@ -66,3 +50,9 @@ class SharedQuest(Quest):
             is_public=True,
             shared_at=None  # DB側で設定
         )
+    
+    @classmethod
+    def from_raw(cls, raw_data: dict):
+        """生データからドメインモデルを生成する"""
+        # TODO: 実装が必要になったら追加
+        pass

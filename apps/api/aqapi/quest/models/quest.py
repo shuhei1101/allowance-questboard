@@ -10,7 +10,7 @@ from aqapi.quest.models.value_object.quest_id import QuestId
 @dataclass
 class Quest(BaseModel, ABC):
     """クエストドメインモデル基底クラス（抽象クラス）"""
-    _id: QuestId = field()
+    _id: Optional[QuestId] = field()
     _subclass_type: int = field()
     _subclass_id: int = field()
     _category_id: int = field()
@@ -23,7 +23,7 @@ class Quest(BaseModel, ABC):
     _created_at: Optional[datetime] = field()
     _updated_at: Optional[datetime] = field()
     
-    def __init__(self, id: QuestId, subclass_type: int, subclass_id: int, 
+    def __init__(self, id: Optional[QuestId], subclass_type: int, subclass_id: int, 
                  category_id: int, icon_id: int, age_from: int, age_to: int,
                  has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
                  created_at: Optional[datetime], updated_at: Optional[datetime], version: Version):
@@ -41,42 +41,8 @@ class Quest(BaseModel, ABC):
         self._created_at = created_at
         self._updated_at = updated_at
     
-    def id(self) -> QuestId:
-        """クエストIDを取得する"""
-        return self._id
-    
-    def subclass_type(self) -> int:
-        """サブクラスタイプを取得する"""
-        return self._subclass_type
-    
-    def subclass_id(self) -> int:
-        """サブクラスIDを取得する"""
-        return self._subclass_id
-    
-    def category_id(self) -> int:
-        """カテゴリIDを取得する"""
-        return self._category_id
-    
-    def icon_id(self) -> int:
-        """アイコンIDを取得する"""
-        return self._icon_id
-    
-    def age_from(self) -> int:
-        """対象年齢下限を取得する"""
-        return self._age_from
-    
-    def age_to(self) -> int:
-        """対象年齢上限を取得する"""
-        return self._age_to
-    
-    def has_published_month(self) -> bool:
-        """季節限定フラグを取得する"""
-        return self._has_published_month
-    
-    def month_from(self) -> Optional[int]:
-        """公開開始月を取得する"""
-        return self._month_from
-    
-    def month_to(self) -> Optional[int]:
-        """公開終了月を取得する"""
-        return self._month_to
+    @classmethod
+    @abstractmethod
+    def from_raw(cls, raw_data: dict):
+        """生データからドメインモデルを生成する"""
+        pass

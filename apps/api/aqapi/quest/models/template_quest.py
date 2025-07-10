@@ -10,7 +10,7 @@ from aqapi.quest.models.value_object.quest_id import QuestId
 class TemplateQuest(Quest):
     """テンプレートクエストドメインモデル"""
     
-    def __init__(self, id: QuestId, subclass_type: int, subclass_id: int,
+    def __init__(self, id: Optional[QuestId], subclass_type: int, subclass_id: int,
                  category_id: int, icon_id: int, age_from: int, age_to: int,
                  has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
                  created_at: Optional[datetime], updated_at: Optional[datetime], version: Version):
@@ -22,7 +22,7 @@ class TemplateQuest(Quest):
                    has_published_month: bool, month_from: Optional[int], month_to: Optional[int]) -> 'TemplateQuest':
         """新しいテンプレートクエストを作成する"""
         return cls(
-            id=QuestId(None),  # DB側で自動採番
+            id=None,  # DB側で自動採番
             subclass_type=3,  # テンプレートクエストのサブクラスタイプ
             subclass_id=1,  # 仮の値、DB側で設定
             category_id=category_id,
@@ -36,3 +36,9 @@ class TemplateQuest(Quest):
             updated_at=None,  # DB側で設定
             version=Version(1)
         )
+    
+    @classmethod
+    def from_raw(cls, raw_data: dict):
+        """生データからドメインモデルを生成する"""
+        # TODO: 実装が必要になったら追加
+        pass

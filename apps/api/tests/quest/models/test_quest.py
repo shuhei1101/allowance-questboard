@@ -38,20 +38,20 @@ class TestFamilyQuest:
                                created_at, updated_at, version, family_id, is_shared, shared_quest_id)
             
             # 検証
-            assert quest.id() == quest_id
-            assert quest.subclass_type() == subclass_type
-            assert quest.subclass_id() == subclass_id
-            assert quest.category_id() == category_id
-            assert quest.icon_id() == icon_id
-            assert quest.age_from() == age_from
-            assert quest.age_to() == age_to
-            assert quest.has_published_month() == has_published_month
-            assert quest.month_from() == month_from
-            assert quest.month_to() == month_to
+            assert quest._id == quest_id
+            assert quest._subclass_type == subclass_type
+            assert quest._subclass_id == subclass_id
+            assert quest._category_id == category_id
+            assert quest._icon_id == icon_id
+            assert quest._age_from == age_from
+            assert quest._age_to == age_to
+            assert quest._has_published_month == has_published_month
+            assert quest._month_from == month_from
+            assert quest._month_to == month_to
             assert quest.version() == version
-            assert quest.family_id() == family_id
-            assert quest.is_shared() == is_shared
-            assert quest.shared_quest_id() == shared_quest_id
+            assert quest._family_id == family_id
+            assert quest._is_shared == is_shared
+            assert quest._shared_quest_id == shared_quest_id
     
     class Test_create_new:
         """create_newメソッドのテスト"""
@@ -72,19 +72,19 @@ class TestFamilyQuest:
                                           has_published_month, month_from, month_to, family_id)
             
             # 検証
-            assert quest.id().value is None  # DB側で自動採番
-            assert quest.subclass_type() == 1  # 家族クエスト
-            assert quest.category_id() == category_id
-            assert quest.icon_id() == icon_id
-            assert quest.age_from() == age_from
-            assert quest.age_to() == age_to
-            assert quest.has_published_month() == has_published_month
-            assert quest.month_from() == month_from
-            assert quest.month_to() == month_to
+            assert quest._id is None  # DB側で自動採番
+            assert quest._subclass_type == 1  # 家族クエスト
+            assert quest._category_id == category_id
+            assert quest._icon_id == icon_id
+            assert quest._age_from == age_from
+            assert quest._age_to == age_to
+            assert quest._has_published_month == has_published_month
+            assert quest._month_from == month_from
+            assert quest._month_to == month_to
             assert quest.version().value == 1
-            assert quest.family_id() == family_id
-            assert quest.is_shared() == False
-            assert quest.shared_quest_id() is None
+            assert quest._family_id == family_id
+            assert quest._is_shared == False
+            assert quest._shared_quest_id is None
 
 
 class TestSharedQuest:
@@ -120,12 +120,12 @@ class TestSharedQuest:
                                is_public, shared_at)
             
             # 検証
-            assert quest.id() == quest_id
-            assert quest.subclass_type() == subclass_type
-            assert quest.shared_by() == shared_by
-            assert quest.pinned_comment_id() == pinned_comment_id
-            assert quest.is_public() == is_public
-            assert quest.shared_at() == shared_at
+            assert quest._id == quest_id
+            assert quest._subclass_type == subclass_type
+            assert quest._shared_by == shared_by
+            assert quest._pinned_comment_id == pinned_comment_id
+            assert quest._is_public == is_public
+            assert quest._shared_at == shared_at
     
     class Test_create_new:
         """create_newメソッドのテスト"""
@@ -146,11 +146,11 @@ class TestSharedQuest:
                                           has_published_month, month_from, month_to, shared_by)
             
             # 検証
-            assert quest.id().value is None  # DB側で自動採番
-            assert quest.subclass_type() == 2  # 共有クエスト
-            assert quest.shared_by() == shared_by
-            assert quest.is_public() == True
-            assert quest.pinned_comment_id() is None
+            assert quest._id is None  # DB側で自動採番
+            assert quest._subclass_type == 2  # 共有クエスト
+            assert quest._shared_by == shared_by
+            assert quest._is_public == True
+            assert quest._pinned_comment_id is None
 
 
 class TestTemplateQuest:
@@ -181,9 +181,9 @@ class TestTemplateQuest:
                                  created_at, updated_at, version)
             
             # 検証
-            assert quest.id() == quest_id
-            assert quest.subclass_type() == subclass_type
-            assert quest.category_id() == category_id
+            assert quest._id == quest_id
+            assert quest._subclass_type == subclass_type
+            assert quest._category_id == category_id
     
     class Test_create_new:
         """create_newメソッドのテスト"""
@@ -203,5 +203,5 @@ class TestTemplateQuest:
                                            has_published_month, month_from, month_to)
             
             # 検証
-            assert quest.id().value is None  # DB側で自動採番
-            assert quest.subclass_type() == 3  # テンプレートクエスト
+            assert quest._id is None  # DB側で自動採番
+            assert quest._subclass_type == 3  # テンプレートクエスト

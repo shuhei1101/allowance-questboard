@@ -13,7 +13,7 @@ class FamilyQuest(Quest):
     _is_shared: bool = field()
     _shared_quest_id: Optional[int] = field()
     
-    def __init__(self, id: QuestId, subclass_type: int, subclass_id: int,
+    def __init__(self, id: Optional[QuestId], subclass_type: int, subclass_id: int,
                  category_id: int, icon_id: int, age_from: int, age_to: int,
                  has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
                  created_at: Optional[datetime], updated_at: Optional[datetime], version: Version,
@@ -24,25 +24,13 @@ class FamilyQuest(Quest):
         self._is_shared = is_shared
         self._shared_quest_id = shared_quest_id
     
-    def family_id(self) -> int:
-        """家族IDを取得する"""
-        return self._family_id
-    
-    def is_shared(self) -> bool:
-        """共有フラグを取得する"""
-        return self._is_shared
-    
-    def shared_quest_id(self) -> Optional[int]:
-        """共有クエストIDを取得する"""
-        return self._shared_quest_id
-    
     @classmethod
     def create_new(cls, category_id: int, icon_id: int, age_from: int, age_to: int,
                    has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
                    family_id: int) -> 'FamilyQuest':
         """新しい家族クエストを作成する"""
         return cls(
-            id=QuestId(None),  # DB側で自動採番
+            id=None,  # DB側で自動採番
             subclass_type=1,  # 家族クエストのサブクラスタイプ
             subclass_id=1,  # 仮の値、DB側で設定
             category_id=category_id,
@@ -59,3 +47,9 @@ class FamilyQuest(Quest):
             is_shared=False,
             shared_quest_id=None
         )
+    
+    @classmethod
+    def from_raw(cls, raw_data: dict):
+        """生データからドメインモデルを生成する"""
+        # TODO: 実装が必要になったら追加
+        pass
