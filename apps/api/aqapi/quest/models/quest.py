@@ -1,30 +1,43 @@
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Optional
 from aqapi.core.domain.base_model import BaseModel
 from aqapi.core.domain.value_object.version import Version
 from aqapi.quest.models.value_object.quest_id import QuestId
-from aqapi.quest.models.value_object.quest_title import QuestTitle
-from aqapi.quest.models.value_object.quest_description import QuestDescription
-from aqapi.quest.models.value_object.quest_level import QuestLevel
 
 
 @dataclass
-class Quest(BaseModel):
-    """クエストドメインモデル"""
+class Quest(BaseModel, ABC):
+    """クエストドメインモデル基底クラス（抽象クラス）"""
     _id: QuestId = field()
-    _title: QuestTitle = field()
-    _description: QuestDescription = field()
-    _level: QuestLevel = field()
+    _subclass_type: int = field()
+    _subclass_id: int = field()
+    _category_id: int = field()
+    _icon_id: int = field()
+    _age_from: int = field()
+    _age_to: int = field()
+    _has_published_month: bool = field()
+    _month_from: Optional[int] = field()
+    _month_to: Optional[int] = field()
     _created_at: Optional[datetime] = field()
     _updated_at: Optional[datetime] = field()
     
-    def __init__(self, id: QuestId, title: QuestTitle, description: QuestDescription, level: QuestLevel, created_at: Optional[datetime], updated_at: Optional[datetime], version: Version):
+    def __init__(self, id: QuestId, subclass_type: int, subclass_id: int, 
+                 category_id: int, icon_id: int, age_from: int, age_to: int,
+                 has_published_month: bool, month_from: Optional[int], month_to: Optional[int],
+                 created_at: Optional[datetime], updated_at: Optional[datetime], version: Version):
         super().__init__(version)
         self._id = id
-        self._title = title
-        self._description = description
-        self._level = level
+        self._subclass_type = subclass_type
+        self._subclass_id = subclass_id
+        self._category_id = category_id
+        self._icon_id = icon_id
+        self._age_from = age_from
+        self._age_to = age_to
+        self._has_published_month = has_published_month
+        self._month_from = month_from
+        self._month_to = month_to
         self._created_at = created_at
         self._updated_at = updated_at
     
@@ -32,66 +45,38 @@ class Quest(BaseModel):
         """クエストIDを取得する"""
         return self._id
     
-    def title(self) -> QuestTitle:
-        """クエストタイトルを取得する"""
-        return self._title
+    def subclass_type(self) -> int:
+        """サブクラスタイプを取得する"""
+        return self._subclass_type
     
-    def description(self) -> QuestDescription:
-        """クエスト詳細を取得する"""
-        return self._description
+    def subclass_id(self) -> int:
+        """サブクラスIDを取得する"""
+        return self._subclass_id
     
-    def level(self) -> QuestLevel:
-        """クエストレベルを取得する"""
-        return self._level
+    def category_id(self) -> int:
+        """カテゴリIDを取得する"""
+        return self._category_id
     
-    def update_title(self, title: QuestTitle) -> 'Quest':
-        """クエストタイトルを更新した新しいインスタンスを返す"""
-        new_version = Version(self._version.value + 1)
-        return Quest(
-            id=self._id,
-            title=title,
-            description=self._description,
-            level=self._level,
-            created_at=self._created_at,
-            updated_at=None,  # DB側で更新
-            version=new_version
-        )
+    def icon_id(self) -> int:
+        """アイコンIDを取得する"""
+        return self._icon_id
     
-    def update_description(self, description: QuestDescription) -> 'Quest':
-        """クエスト詳細を更新した新しいインスタンスを返す"""
-        new_version = Version(self._version.value + 1)
-        return Quest(
-            id=self._id,
-            title=self._title,
-            description=description,
-            level=self._level,
-            created_at=self._created_at,
-            updated_at=None,  # DB側で更新
-            version=new_version
-        )
+    def age_from(self) -> int:
+        """対象年齢下限を取得する"""
+        return self._age_from
     
-    def update_level(self, level: QuestLevel) -> 'Quest':
-        """クエストレベルを更新した新しいインスタンスを返す"""
-        new_version = Version(self._version.value + 1)
-        return Quest(
-            id=self._id,
-            title=self._title,
-            description=self._description,
-            level=level,
-            created_at=self._created_at,
-            updated_at=None,  # DB側で更新
-            version=new_version
-        )
+    def age_to(self) -> int:
+        """対象年齢上限を取得する"""
+        return self._age_to
     
-    @classmethod
-    def create_new(cls, title: QuestTitle, description: QuestDescription, level: QuestLevel) -> 'Quest':
-        """新しいクエストを作成する"""
-        return cls(
-            id=QuestId(None),  # DB側で自動採番
-            title=title,
-            description=description,
-            level=level,
-            created_at=None,  # DB側で設定
-            updated_at=None,  # DB側で設定
-            version=Version(1)
-        )
+    def has_published_month(self) -> bool:
+        """季節限定フラグを取得する"""
+        return self._has_published_month
+    
+    def month_from(self) -> Optional[int]:
+        """公開開始月を取得する"""
+        return self._month_from
+    
+    def month_to(self) -> Optional[int]:
+        """公開終了月を取得する"""
+        return self._month_to

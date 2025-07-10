@@ -1,155 +1,207 @@
 import pytest
 from datetime import datetime, UTC
-from aqapi.quest.models.quest import Quest
+from aqapi.quest.models.family_quest import FamilyQuest
+from aqapi.quest.models.shared_quest import SharedQuest
+from aqapi.quest.models.template_quest import TemplateQuest
 from aqapi.quest.models.value_object.quest_id import QuestId
-from aqapi.quest.models.value_object.quest_title import QuestTitle
-from aqapi.quest.models.value_object.quest_description import QuestDescription
-from aqapi.quest.models.value_object.quest_level import QuestLevel
 from aqapi.core.domain.value_object.version import Version
 
 
-class TestQuest:
-    """Questドメインモデルの単体テスト"""
+class TestFamilyQuest:
+    """FamilyQuestドメインモデルの単体テスト"""
     
     class Test___init__:
         """__init__メソッドのテスト"""
         
-        def test_正常な値でQuestが作成できること(self):
+        def test_正常な値でFamilyQuestが作成できること(self):
             # 準備
             quest_id = QuestId(123)
-            title = QuestTitle("テストクエスト")
-            description = QuestDescription("テスト用のクエスト詳細")
-            level = QuestLevel(5)
+            subclass_type = 1
+            subclass_id = 1
+            category_id = 1
+            icon_id = 1
+            age_from = 5
+            age_to = 10
+            has_published_month = False
+            month_from = None
+            month_to = None
+            created_at = datetime.now(UTC)
+            updated_at = datetime.now(UTC)
+            version = Version(1)
+            family_id = 1
+            is_shared = False
+            shared_quest_id = None
+            
+            # 実行
+            quest = FamilyQuest(quest_id, subclass_type, subclass_id, category_id, icon_id, 
+                               age_from, age_to, has_published_month, month_from, month_to, 
+                               created_at, updated_at, version, family_id, is_shared, shared_quest_id)
+            
+            # 検証
+            assert quest.id() == quest_id
+            assert quest.subclass_type() == subclass_type
+            assert quest.subclass_id() == subclass_id
+            assert quest.category_id() == category_id
+            assert quest.icon_id() == icon_id
+            assert quest.age_from() == age_from
+            assert quest.age_to() == age_to
+            assert quest.has_published_month() == has_published_month
+            assert quest.month_from() == month_from
+            assert quest.month_to() == month_to
+            assert quest.version() == version
+            assert quest.family_id() == family_id
+            assert quest.is_shared() == is_shared
+            assert quest.shared_quest_id() == shared_quest_id
+    
+    class Test_create_new:
+        """create_newメソッドのテスト"""
+        
+        def test_create_newで新しいFamilyQuestが作成できること(self):
+            # 準備
+            category_id = 1
+            icon_id = 1
+            age_from = 5
+            age_to = 10
+            has_published_month = False
+            month_from = None
+            month_to = None
+            family_id = 1
+            
+            # 実行
+            quest = FamilyQuest.create_new(category_id, icon_id, age_from, age_to, 
+                                          has_published_month, month_from, month_to, family_id)
+            
+            # 検証
+            assert quest.id().value is None  # DB側で自動採番
+            assert quest.subclass_type() == 1  # 家族クエスト
+            assert quest.category_id() == category_id
+            assert quest.icon_id() == icon_id
+            assert quest.age_from() == age_from
+            assert quest.age_to() == age_to
+            assert quest.has_published_month() == has_published_month
+            assert quest.month_from() == month_from
+            assert quest.month_to() == month_to
+            assert quest.version().value == 1
+            assert quest.family_id() == family_id
+            assert quest.is_shared() == False
+            assert quest.shared_quest_id() is None
+
+
+class TestSharedQuest:
+    """SharedQuestドメインモデルの単体テスト"""
+    
+    class Test___init__:
+        """__init__メソッドのテスト"""
+        
+        def test_正常な値でSharedQuestが作成できること(self):
+            # 準備
+            quest_id = QuestId(123)
+            subclass_type = 2
+            subclass_id = 1
+            category_id = 1
+            icon_id = 1
+            age_from = 5
+            age_to = 10
+            has_published_month = False
+            month_from = None
+            month_to = None
+            created_at = datetime.now(UTC)
+            updated_at = datetime.now(UTC)
+            version = Version(1)
+            shared_by = 1
+            pinned_comment_id = None
+            is_public = True
+            shared_at = datetime.now(UTC)
+            
+            # 実行
+            quest = SharedQuest(quest_id, subclass_type, subclass_id, category_id, icon_id, 
+                               age_from, age_to, has_published_month, month_from, month_to, 
+                               created_at, updated_at, version, shared_by, pinned_comment_id, 
+                               is_public, shared_at)
+            
+            # 検証
+            assert quest.id() == quest_id
+            assert quest.subclass_type() == subclass_type
+            assert quest.shared_by() == shared_by
+            assert quest.pinned_comment_id() == pinned_comment_id
+            assert quest.is_public() == is_public
+            assert quest.shared_at() == shared_at
+    
+    class Test_create_new:
+        """create_newメソッドのテスト"""
+        
+        def test_create_newで新しいSharedQuestが作成できること(self):
+            # 準備
+            category_id = 1
+            icon_id = 1
+            age_from = 5
+            age_to = 10
+            has_published_month = False
+            month_from = None
+            month_to = None
+            shared_by = 1
+            
+            # 実行
+            quest = SharedQuest.create_new(category_id, icon_id, age_from, age_to, 
+                                          has_published_month, month_from, month_to, shared_by)
+            
+            # 検証
+            assert quest.id().value is None  # DB側で自動採番
+            assert quest.subclass_type() == 2  # 共有クエスト
+            assert quest.shared_by() == shared_by
+            assert quest.is_public() == True
+            assert quest.pinned_comment_id() is None
+
+
+class TestTemplateQuest:
+    """TemplateQuestドメインモデルの単体テスト"""
+    
+    class Test___init__:
+        """__init__メソッドのテスト"""
+        
+        def test_正常な値でTemplateQuestが作成できること(self):
+            # 準備
+            quest_id = QuestId(123)
+            subclass_type = 3
+            subclass_id = 1
+            category_id = 1
+            icon_id = 1
+            age_from = 5
+            age_to = 10
+            has_published_month = False
+            month_from = None
+            month_to = None
             created_at = datetime.now(UTC)
             updated_at = datetime.now(UTC)
             version = Version(1)
             
             # 実行
-            quest = Quest(quest_id, title, description, level, created_at, updated_at, version)
+            quest = TemplateQuest(quest_id, subclass_type, subclass_id, category_id, icon_id, 
+                                 age_from, age_to, has_published_month, month_from, month_to, 
+                                 created_at, updated_at, version)
             
             # 検証
-            assert quest._id == quest_id
-            assert quest._title == title
-            assert quest._description == description
-            assert quest._level == level
-            assert quest._created_at == created_at
-            assert quest._updated_at == updated_at
-            assert quest.version() == version
+            assert quest.id() == quest_id
+            assert quest.subclass_type() == subclass_type
+            assert quest.category_id() == category_id
     
     class Test_create_new:
         """create_newメソッドのテスト"""
         
-        def test_create_newで新しいクエストが作成できること(self):
+        def test_create_newで新しいTemplateQuestが作成できること(self):
             # 準備
-            title = QuestTitle("新しいクエスト")
-            description = QuestDescription("新しいクエストの詳細")
-            level = QuestLevel(3)
+            category_id = 1
+            icon_id = 1
+            age_from = 5
+            age_to = 10
+            has_published_month = False
+            month_from = None
+            month_to = None
             
             # 実行
-            quest = Quest.create_new(title, description, level)
+            quest = TemplateQuest.create_new(category_id, icon_id, age_from, age_to, 
+                                           has_published_month, month_from, month_to)
             
             # 検証
-            assert quest._title == title
-            assert quest._description == description
-            assert quest._level == level
-            assert quest.version().value == 1
-            assert quest._id.value is None  # DB側で自動採番
-            assert quest._created_at is None  # DB側で設定
-            assert quest._updated_at is None  # DB側で設定
-    
-    class Test_update_title:
-        """update_titleメソッドのテスト"""
-        
-        def test_update_titleでタイトルが更新されること(self):
-            # 準備
-            original_quest = Quest.create_new(
-                QuestTitle("元のタイトル"),
-                QuestDescription("詳細"),
-                QuestLevel(1)
-            )
-            original_version = original_quest.version().value
-            new_title = QuestTitle("新しいタイトル")
-            
-            # 実行
-            updated_quest = original_quest.update_title(new_title)
-            
-            # 検証
-            assert updated_quest._title == new_title
-            assert updated_quest.version().value == original_version + 1
-            # 元のインスタンスは変更されていないことを確認
-            assert original_quest._title.value == "元のタイトル"
-            assert original_quest.version().value == original_version
-    
-    class Test_update_description:
-        """update_descriptionメソッドのテスト"""
-        
-        def test_update_descriptionで詳細が更新されること(self):
-            # 準備
-            original_quest = Quest.create_new(
-                QuestTitle("タイトル"),
-                QuestDescription("元の詳細"),
-                QuestLevel(1)
-            )
-            original_version = original_quest.version().value
-            new_description = QuestDescription("新しい詳細")
-            
-            # 実行
-            updated_quest = original_quest.update_description(new_description)
-            
-            # 検証
-            assert updated_quest._description == new_description
-            assert updated_quest.version().value == original_version + 1
-            # 元のインスタンスは変更されていないことを確認
-            assert original_quest._description.value == "元の詳細"
-            assert original_quest.version().value == original_version
-    
-    class Test_update_level:
-        """update_levelメソッドのテスト"""
-        
-        def test_update_levelでレベルが更新されること(self):
-            # 準備
-            original_quest = Quest.create_new(
-                QuestTitle("タイトル"),
-                QuestDescription("詳細"),
-                QuestLevel(1)
-            )
-            original_version = original_quest.version().value
-            new_level = QuestLevel(8)
-            
-            # 実行
-            updated_quest = original_quest.update_level(new_level)
-            
-            # 検証
-            assert updated_quest._level == new_level
-            assert updated_quest.version().value == original_version + 1
-            # 元のインスタンスは変更されていないことを確認
-            assert original_quest._level.value == 1
-            assert original_quest.version().value == original_version
-    
-    class Test_method_chaining:
-        """メソッドチェーンのテスト"""
-        
-        def test_update方法がチェーンできること(self):
-            # 準備
-            original_quest = Quest.create_new(
-                QuestTitle("元のタイトル"),
-                QuestDescription("元の詳細"),
-                QuestLevel(1)
-            )
-            new_title = QuestTitle("新しいタイトル")
-            new_description = QuestDescription("新しい詳細")
-            new_level = QuestLevel(5)
-            
-            # 実行
-            final_quest = original_quest.update_title(new_title).update_description(new_description).update_level(new_level)
-            
-            # 検証
-            assert final_quest._title == new_title
-            assert final_quest._description == new_description
-            assert final_quest._level == new_level
-            assert final_quest.version().value == 4  # 1 + 3回の更新
-            # 元のインスタンスは変更されていないことを確認
-            assert original_quest._title.value == "元のタイトル"
-            assert original_quest._description.value == "元の詳細"
-            assert original_quest._level.value == 1
-            assert original_quest.version().value == 1
+            assert quest.id().value is None  # DB側で自動採番
+            assert quest.subclass_type() == 3  # テンプレートクエスト
