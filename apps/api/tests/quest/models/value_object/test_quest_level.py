@@ -1,5 +1,5 @@
 import pytest
-from aqapi.quest.models.value_object.quest_level import QuestLevel
+from aqapi.quest.model.value_object.quest_level import QuestLevel
 
 
 class TestQuestLevel:

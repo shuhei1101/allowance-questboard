@@ -1,5 +1,5 @@
 import pytest
-from aqapi.quest.models.value_object.quest_id import QuestId
+from aqapi.quest.model.value_object.quest_id import QuestId
 
 
 class TestQuestId:
