@@ -41,6 +41,15 @@ class QuestsEntity(BaseEntity):
             QuestsEntity(subclass_type=1, category_id=3, icon_id=3, age_from=5, age_to=15),
         ]
 
+    @classmethod
+    def from_model(cls, model):
+        # 基本的なフィールドのみを設定（DB側で管理される項目は除く）
+        return cls(
+            id=model.id().value if model.id().value else None,
+            version=model.version().value,
+            # DB側で管理される項目（created_at, updated_at など）は含めない
+        )
+
 class QuestsTranslationEntity(BaseTranslationEntity):
     """クエスト翻訳エンティティ"""
 

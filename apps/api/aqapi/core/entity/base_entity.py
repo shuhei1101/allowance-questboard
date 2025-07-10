@@ -61,6 +61,12 @@ class BaseEntity(DB_CONF.Base):
         return []
 
     @classmethod
+    @abstractmethod
+    def from_model(cls, model):
+        """ドメインモデルからエンティティを作成する"""
+        pass
+
+    @classmethod
     def seed(cls, session):
         if session.query(cls).count() != 0:
             print(f"{cls.__tablename__}データはすでに存在します")
