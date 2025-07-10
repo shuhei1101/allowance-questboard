@@ -11,67 +11,95 @@ from aqapi.quest.query_service.family_quest_query_service import FamilyQuestQuer
 
 router = APIRouter()
 
-class QuestMember(BaseModel):
-    id: int
-    icon_id: Optional[int] = None
+class QuestMember:
+    """クエストメンバーDTO"""
+    def __init__(self, id: int, icon_id: Optional[int] = None):
+        self.id = id
+        self.icon_id = icon_id
+
+    def dict(self):
+        return {
+            "id": self.id,
+            "icon_id": self.icon_id
+        }
 
     @classmethod
-    def from_row(cls, row: Any) -> "QuestMember":
+    def from_query_model(cls, query_model: Any) -> "QuestMember":
         return cls(
-            id=row.child_id,
-            icon_id=row.child_icon_id
+            id=query_model.child_id,
+            icon_id=query_model.child_icon_id
         )
 
-class FamilyQuestItem(BaseModel):
-    id: int
-    title: str
-    category_id: int
-    icon_id: int
-    is_shared: bool
-    is_public: Optional[bool] = None
-    children: List[QuestMember]
+class FamilyQuestItem:
+    """家族クエストアイテムDTO"""
+    def __init__(self, id: int, title: str, category_id: int, icon_id: int, 
+                 is_shared: bool, is_public: Optional[bool] = None, children: List[QuestMember] = None):
+        self.id = id
+        self.title = title
+        self.category_id = category_id
+        self.icon_id = icon_id
+        self.is_shared = is_shared
+        self.is_public = is_public
+        self.children = children or []
+
+    def dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "category_id": self.category_id,
+            "icon_id": self.icon_id,
+            "is_shared": self.is_shared,
+            "is_public": self.is_public,
+            "children": [child.dict() for child in self.children]
+        }
 
     @classmethod
-    def from_data(cls, id: int, data: Any):
+    def from_query_model(cls, id: int, query_models: List[Any]) -> "FamilyQuestItem":
+        """QueryModelから FamilyQuestItem を作成"""
+        if not query_models:
+            raise ValueError("QueryModel list cannot be empty")
+        
+        # 最初のクエリモデルから基本情報を取得
+        first_model = query_models[0]
+        children = [QuestMember.from_query_model(model) for model in query_models]
+        
         return cls(
             id=id,
-            title=data["title"],
-            category_id=data["category_id"],
-            icon_id=data["icon_id"],
-            is_shared=data["is_shared"],
-            is_public=data.get("is_public"),
-            children=data["children"],
+            title=first_model.title,
+            category_id=first_model.category_id,
+            icon_id=first_model.icon_id,
+            is_shared=first_model.is_shared,
+            is_public=first_model.is_public,
+            children=children
         )
 
-class FamilyQuestItems(BaseModel):
-    items: List[FamilyQuestItem]
+class FamilyQuestItems:
+    """家族クエストアイテムリストDTO"""
+    def __init__(self, items: List[FamilyQuestItem]):
+        self.items = items
+
+    def dict(self):
+        return {
+            "items": [item.dict() for item in self.items]
+        }
 
     @classmethod
-    def from_rows(cls, rows: Any) -> "FamilyQuestItems":
-        grouped = defaultdict(lambda: {
-            "title": "", 
-            "category_id": 0,
-            "icon_id": 0,
-            "is_shared": False,
-            "is_public": None,
-            "children": []
-        })
-        for row in rows:
-            id = row.id
-            grouped[id]["title"] = row.title
-            grouped[id]["category_id"] = row.category_id
-            grouped[id]["icon_id"] = row.icon_id
-            grouped[id]["is_shared"] = row.is_shared
-            grouped[id]["is_public"] = row.is_public
-            grouped[id]["children"].append(QuestMember.from_row(row))  # type: ignore
+    def from_query_models(cls, query_models: List[Any]) -> "FamilyQuestItems":
+        """QueryModelのリストから FamilyQuestItems を作成"""
+        grouped = defaultdict(list)
+        for model in query_models:
+            grouped[model.id].append(model)
 
-        return FamilyQuestItems(
-            items=[FamilyQuestItem.from_data(id, data) for id, data in grouped.items()]
-        )
+        items = [
+            FamilyQuestItem.from_query_model(quest_id, models) 
+            for quest_id, models in grouped.items()
+        ]
+        
+        return cls(items=items)
 
 class FamilyQuestSummariesResponse(BaseModel):
     meta: Optional[PaginationMeta]
-    items: FamilyQuestItems
+    items: dict  # FamilyQuestItems.dict() の結果を格納
 
 @router.get("/summaries", response_model=FamilyQuestSummariesResponse)
 async def get_family_quest_summaries(
@@ -85,8 +113,11 @@ async def get_family_quest_summaries(
 
     paginator = Paginator(page=page, size=size) if page and size else None
 
-    meta, items = service.fetch_quest_summary(
+    meta, query_models = service.fetch_quest_summary(
         family_id=family_id, language_id=language_id, paginator=paginator
     )
 
-    return FamilyQuestSummariesResponse(meta=meta, items=items)
+    # QueryModelからDTOに変換
+    items = FamilyQuestItems.from_query_models(query_models)
+
+    return FamilyQuestSummariesResponse(meta=meta, items=items.dict())
