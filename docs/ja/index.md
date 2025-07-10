@@ -5,7 +5,6 @@
 ## 1. アプリ毎のドキュメント
 - [お小遣いクエストボード - APIサーバ](../../apps/api/docs/ja/index.md)
 - [お小遣いクエストボード - Flutterアプリ](../../apps/flutter/docs/ja/index.md)
-- [お小遣いクエストボード - Edge Functions](../../apps/edge-functions/docs/ja/index.md)
 
 ## 3. 開発関連
 - ⚠️ [例外ハンドリング](development/exception-handling.md)

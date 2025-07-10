@@ -10,7 +10,7 @@
 # from aqapi.api.v1.quest.entity.quest_categories_entity import QuestCategoriesEntity
 # from aqapi.api.v1.quest.entity.quests_entity import QuestsEntity
 # from aqapi.api.v1.quest.entity.quests_translation_entity import QuestsTranslationEntity
-# from aqapi.api.v1.quest.entity.child_quests_entity import MemberQuestsEntity
+# from aqapi.api.v1.quest.entity.quest_members_entity import QuestMembersEntity
 # from aqapi.api.v1.allowance_tables.allowance_tables_entity import AllowanceTablesEntity
 # from aqapi.api.v1.allowance_tables.family_allowance_tables_entity import (
 #     FamilyAllowanceTablesEntity,
@@ -42,7 +42,7 @@
 #             QuestCategoriesEntity.seed(session)
 #             QuestsEntity.seed(session)
 #             QuestsTranslationEntity.seed(session)
-#             MemberQuestsEntity.seed(session)
+#             QuestMembersEntity.seed(session)
 #             AllowanceTablesEntity.seed(session)
 #             FamilyAllowanceTablesEntity.seed(session)
 #             ChildAllowanceTablesEntity.seed(session)

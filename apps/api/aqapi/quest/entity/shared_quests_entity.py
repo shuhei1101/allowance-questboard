@@ -6,7 +6,10 @@ from aqapi.core.config.db_config import DB_CONF
 
 
 class SharedQuestsEntity(BaseEntity):
-    """共有クエストエンティティ"""
+    """共有クエストエンティティ
+    
+    家族クエストを作成した際に自動で生成される(公開フラグはFalse)
+    """
 
     __tablename__ = "shared_quests"
     __table_args__ = (
@@ -15,11 +18,13 @@ class SharedQuestsEntity(BaseEntity):
     )
 
     quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID(外部キー)")
+    source_family_quest_id = Column(Integer, ForeignKey("family_quests.id", ondelete="CASCADE"), nullable=False, comment="共有元の家族クエストID")
     shared_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="共有元の家族ID")
     pinned_comment_id = Column(Integer, ForeignKey("comments.id", ondelete="SET NULL"), nullable=True, comment="ピン留めコメントID")
-    is_public = Column(Boolean, nullable=False, default=True, comment="公開フラグ")
+    is_shared = Column(Boolean, nullable=False, default=False, comment="共有フラグ")
     shared_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="共有日時")
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+    source_family_quest = relationship("FamilyQuestsEntity", foreign_keys=[source_family_quest_id])
     family = relationship("FamiliesEntity", foreign_keys=[shared_by])
     pinned_comment = relationship("CommentsEntity", foreign_keys=[pinned_comment_id], uselist=False, lazy="joined")

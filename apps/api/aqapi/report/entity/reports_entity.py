@@ -12,7 +12,6 @@ class ReportsEntity(BaseEntity):
 
     reported_by = Column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="レポートしたユーザID")
     reportable_type = Column(Integer, ForeignKey("reportable_types.id", ondelete="RESTRICT"), nullable=False, comment="レポート対象タイプID")
-    reportable_id = Column(Integer, nullable=False, comment="レポート対象ID")
     status_id = Column(Integer, ForeignKey("report_statuses.id", ondelete="RESTRICT"), nullable=False, comment="ステータスID")
     reported_at = Column(DateTime(timezone=True), nullable=False, default=func.now(), comment="レポート作成日時")
     resolved_at = Column(DateTime(timezone=True), nullable=True, comment="レポート解決日時")
@@ -30,7 +29,6 @@ class ReportsHistoryEntity(BaseHistoryEntity):
 
     reported_by = Column(Integer)
     reportable_type = Column(Integer)
-    reportable_id = Column(Integer)
     status_id = Column(Integer)
     reported_at = Column(DateTime(timezone=True))
     resolved_at = Column(DateTime(timezone=True))
@@ -42,7 +40,6 @@ class ReportsHistoryEntity(BaseHistoryEntity):
             source_id=source.id,
             reported_by=source.reported_by,
             reportable_type=source.reportable_type,
-            reportable_id=source.reportable_id,
             status_id=source.status_id,
             reported_at=source.reported_at,
             resolved_at=source.resolved_at,

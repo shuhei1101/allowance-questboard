@@ -10,8 +10,6 @@ class QuestsEntity(BaseEntity):
 
     __tablename__ = "quests"
     __table_args__ = (
-        # 一意制約
-        UniqueConstraint("subclass_type", "subclass_id", name="uq_quests_subclass_type_id"),
         # 年齢下限は0以上
         CheckConstraint("age_from >= 0", name="chk_quests_age_from_non_negative"),
         # 年齢上限は下限以上
@@ -23,7 +21,6 @@ class QuestsEntity(BaseEntity):
     )
 
     subclass_type = Column(Integer, ForeignKey("quest_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
-    subclass_id = Column(Integer, nullable=False, comment="サブクラスID")
     category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="RESTRICT"), nullable=False, comment="クエストカテゴリID")
     icon_id = Column(Integer, ForeignKey("icons.id", ondelete="RESTRICT"), nullable=False, comment="アイコンID")
     age_from = Column(Integer, nullable=False, comment="対象年齢下限")
@@ -39,9 +36,9 @@ class QuestsEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [
-            QuestsEntity(subclass_type=1, subclass_id=1, category_id=1, icon_id=1, age_from=6, age_to=12),
-            QuestsEntity(subclass_type=2, subclass_id=1, category_id=2, icon_id=2, age_from=3, age_to=10),
-            QuestsEntity(subclass_type=3, subclass_id=1, category_id=3, icon_id=3, age_from=5, age_to=15),
+            QuestsEntity(subclass_type=1, category_id=1, icon_id=1, age_from=6, age_to=12),
+            QuestsEntity(subclass_type=1, category_id=2, icon_id=2, age_from=3, age_to=10),
+            QuestsEntity(subclass_type=1, category_id=3, icon_id=3, age_from=5, age_to=15),
         ]
 
 class QuestsTranslationEntity(BaseTranslationEntity):
@@ -60,3 +57,11 @@ class QuestsTranslationEntity(BaseTranslationEntity):
     request_detail = Column(Text, nullable=True, comment="依頼詳細の翻訳")
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])
+
+    @classmethod
+    def _seed_data(cls) -> List['BaseEntity']:
+        return [
+            QuestsTranslationEntity(quest_id=1, language_id=1, title="クエスト1", client="クライアントA", request_detail="依頼内容A"),
+            QuestsTranslationEntity(quest_id=2, language_id=1, title="クエスト2", client="クライアントB", request_detail="依頼内容B"),
+            QuestsTranslationEntity(quest_id=3, language_id=1, title="クエスト3", client="クライアントC", request_detail="依頼内容C"),
+        ]
