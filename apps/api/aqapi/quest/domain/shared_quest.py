@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 from aqapi.core.domain.value_object.version import Version
-from aqapi.quest.model.quest import Quest
-from aqapi.quest.model.value_object.quest_id import QuestId
+from aqapi.quest.domain.quest import Quest
+from aqapi.quest.domain.value_object.quest_id import QuestId
 
 
 @dataclass

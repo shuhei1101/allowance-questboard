@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from datetime import datetime
+from aqapi.auth.entity.user import User
 from aqapi.core.domain.value_object.version import Version
 
 @dataclass

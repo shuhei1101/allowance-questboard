@@ -1,9 +1,9 @@
 import pytest
 from datetime import datetime, UTC
-from aqapi.quest.model.family_quest import FamilyQuest
-from aqapi.quest.model.shared_quest import SharedQuest
-from aqapi.quest.model.template_quest import TemplateQuest
-from aqapi.quest.model.value_object.quest_id import QuestId
+from aqapi.quest.domain.family_quest import FamilyQuest
+from aqapi.quest.domain.shared_quest import SharedQuest
+from aqapi.quest.domain.template_quest import TemplateQuest
+from aqapi.quest.domain.value_object.quest_id import QuestId
 from aqapi.core.domain.value_object.version import Version
 
 

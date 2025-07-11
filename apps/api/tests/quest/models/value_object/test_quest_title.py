@@ -1,5 +1,5 @@
 import pytest
-from aqapi.quest.model.value_object.quest_title import QuestTitle
+from aqapi.quest.domain.value_object.quest_title import QuestTitle
 
 
 class TestQuestTitle:
