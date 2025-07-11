@@ -1,12 +1,19 @@
 from abc import ABC, abstractmethod
 from aqapi.core.domain.value_object.version import Version
 
-
+@dataclass
 class BaseModel(ABC):
+    _created_at: datetime = field()
+    _created_by: datetime = field()
+    
+    _updated_at: datetime = field()
+    _version: Version = field()
+    _is_updated: bool = False
+    
     """ドメインモデルの基底クラス"""
     def __init__(self, version: Version):
         self._version = version
-        self._is_updated = False
+        
 
     def version(self) -> Version:
         return self._version
