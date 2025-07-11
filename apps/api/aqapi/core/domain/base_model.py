@@ -4,9 +4,11 @@ from aqapi.core.domain.value_object.version import Version
 @dataclass
 class BaseModel(ABC):
     _created_at: datetime = field()
-    _created_by: datetime = field()
-    
+    _created_by: User = field()
+    _created_from: Screen = field()
     _updated_at: datetime = field()
+    _updated_by: User = field()
+    _updated_from: Screen = field()
     _version: Version = field()
     _is_updated: bool = False
     
