@@ -16,7 +16,6 @@ class BaseModel(ABC):
     def __init__(self, version: Version):
         self._version = version
         
-
     def version(self) -> Version:
         return self._version
 
