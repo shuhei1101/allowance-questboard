@@ -1,8 +1,9 @@
 from datetime import datetime
 from typing import List
 from sqlalchemy import CheckConstraint, Column, Integer, DateTime, ForeignKey, String, func, UniqueConstraint
-from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -11,7 +12,7 @@ class QuestCategoriesEntity(BaseEntity):
 
     __tablename__ = "quest_categories"
 
-    subclass_type = Column(Integer, ForeignKey("quest_category_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
+    subclass_type: Mapped[int] = mapped_column(Integer, ForeignKey("quest_category_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
 
     subclass_type_ref = relationship("QuestCategoryTypesEntity", foreign_keys=[subclass_type])
 
@@ -32,8 +33,8 @@ class QuestCategoriesTranslationEntity(BaseTranslationEntity):
         CheckConstraint("length(name) > 0", name="chk_quest_categories_translation_name_not_empty"),
     )
 
-    quest_category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, comment="クエストカテゴリID")
-    name = Column(String(100), nullable=False, comment="カテゴリ名の翻訳")
+    quest_category_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, comment="クエストカテゴリID")
+    name: Mapped[str] = mapped_column(String(100), nullable=False, comment="カテゴリ名の翻訳")
 
     quest_categories = relationship("QuestCategoriesEntity", foreign_keys=[quest_category_id])
 

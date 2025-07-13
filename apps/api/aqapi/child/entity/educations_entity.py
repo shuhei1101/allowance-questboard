@@ -1,7 +1,8 @@
 from typing import List
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
-from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -10,7 +11,7 @@ class EducationsEntity(BaseEntity):
 
     __tablename__ = "educations"
 
-    code = Column(String(20), nullable=False, unique=True, comment="学歴コード")
+    code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="学歴コード")
 
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
@@ -30,8 +31,8 @@ class EducationsTranslationEntity(BaseTranslationEntity):
         UniqueConstraint("education_id", "language_id", name="uq_educations_translation_education_language"),
     )
 
-    education_id = Column(Integer, ForeignKey("educations.id", ondelete="CASCADE"), nullable=False, comment="学歴ID(外部キー)")
-    name = Column(String(100), nullable=False, comment="学歴名の翻訳")
+    education_id: Mapped[int] = mapped_column(Integer, ForeignKey("educations.id", ondelete="CASCADE"), nullable=False, comment="学歴ID(外部キー)")
+    name: Mapped[str] = mapped_column(String(100), nullable=False, comment="学歴名の翻訳")
 
     educations = relationship("EducationsEntity", foreign_keys=[education_id])
 

@@ -1,7 +1,8 @@
 from typing import List
 from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey, String, Text, func, UniqueConstraint, CheckConstraint
-from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -20,14 +21,14 @@ class QuestsEntity(BaseEntity):
         CheckConstraint("month_to IS NULL OR (month_to >= 1 AND month_to <= 12)", name="chk_quests_month_to_valid"),
     )
 
-    subclass_type = Column(Integer, ForeignKey("quest_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
-    category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="RESTRICT"), nullable=False, comment="クエストカテゴリID")
-    icon_id = Column(Integer, ForeignKey("icons.id", ondelete="RESTRICT"), nullable=False, comment="アイコンID")
-    age_from = Column(Integer, nullable=False, comment="対象年齢下限")
-    age_to = Column(Integer, nullable=False, comment="対象年齢上限")
-    has_published_month = Column(Boolean, nullable=False, default=False, comment="季節限定フラグ")
-    month_from = Column(Integer, nullable=True, comment="公開開始月")
-    month_to = Column(Integer, nullable=True, comment="公開終了月")
+    subclass_type: Mapped[int] = mapped_column(Integer, ForeignKey("quest_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ")
+    category_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_categories.id", ondelete="RESTRICT"), nullable=False, comment="クエストカテゴリID")
+    icon_id: Mapped[int] = mapped_column(Integer, ForeignKey("icons.id", ondelete="RESTRICT"), nullable=False, comment="アイコンID")
+    age_from: Mapped[int] = mapped_column(Integer, nullable=False, comment="対象年齢下限")
+    age_to: Mapped[int] = mapped_column(Integer, nullable=False, comment="対象年齢上限")
+    has_published_month: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, comment="季節限定フラグ")
+    month_from: Mapped[int] = mapped_column(Integer, nullable=True, comment="公開開始月")
+    month_to: Mapped[int] = mapped_column(Integer, nullable=True, comment="公開終了月")
 
     subclass_type_ref = relationship("QuestTypesEntity", foreign_keys=[subclass_type])
     category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
@@ -60,10 +61,10 @@ class QuestsTranslationEntity(BaseTranslationEntity):
         CheckConstraint("length(client) > 0", name="chk_quests_translation_client_not_empty"),
     )
 
-    quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID")
-    title = Column(String(200), nullable=False, comment="クエストタイトルの翻訳")
-    client = Column(String(100), nullable=False, comment="クライアント名の翻訳")
-    request_detail = Column(Text, nullable=True, comment="依頼詳細の翻訳")
+    quest_id: Mapped[int] = mapped_column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID")
+    title: Mapped[str] = mapped_column(String(200), nullable=False, comment="クエストタイトルの翻訳")
+    client: Mapped[str] = mapped_column(String(100), nullable=False, comment="クライアント名の翻訳")
+    request_detail: Mapped[str] = mapped_column(Text, nullable=True, comment="依頼詳細の翻訳")
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])
 

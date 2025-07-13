@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -21,12 +23,12 @@ class QuestMembersEntity(BaseEntity):
         UniqueConstraint("family_quest_id", "member_id"),
     )
 
-    family_quest_id = Column(Integer, ForeignKey("family_quests.id", ondelete="CASCADE"), nullable=False, comment="家族クエストID")
-    member_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
-    current_level = Column(Integer, nullable=False, default=1, comment="現在のレベル")
-    status_id = Column(Integer, ForeignKey("quest_member_statuses.id", ondelete="RESTRICT"), nullable=False, comment="クエストステータスID")
-    published_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="クエスト公開日時")
-    achieved_at = Column(DateTime(timezone=True), nullable=True, comment="クエスト達成日時")
+    family_quest_id: Mapped[int] = mapped_column(Integer, ForeignKey("family_quests.id", ondelete="CASCADE"), nullable=False, comment="家族クエストID")
+    member_id: Mapped[int] = mapped_column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
+    current_level: Mapped[int] = mapped_column(Integer, nullable=False, default=1, comment="現在のレベル")
+    status_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_member_statuses.id", ondelete="RESTRICT"), nullable=False, comment="クエストステータスID")
+    published_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="クエスト公開日時")
+    achieved_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=True, comment="クエスト達成日時")
 
     family_quest = relationship("FamilyQuestsEntity", foreign_keys=[family_quest_id])
     member = relationship("ChildrenEntity", foreign_keys=[member_id])
@@ -37,12 +39,12 @@ class QuestMembersHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "quest_members_history"
 
-    family_quest_id = Column(Integer)
-    member_id = Column(Integer)
-    current_level = Column(Integer)
-    status_id = Column(Integer)
-    published_at = Column(DateTime(timezone=True))
-    achieved_at = Column(DateTime(timezone=True))
+    family_quest_id: Mapped[int] = mapped_column(Integer)
+    member_id: Mapped[int] = mapped_column(Integer)
+    current_level: Mapped[int] = mapped_column(Integer)
+    status_id: Mapped[int] = mapped_column(Integer)
+    published_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
+    achieved_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
     @classmethod
     def from_source(cls, source: "QuestMembersEntity"):

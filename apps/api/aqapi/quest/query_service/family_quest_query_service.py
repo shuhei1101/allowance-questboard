@@ -8,7 +8,7 @@ from aqapi.quest.entity.child_quests_entity import ChildQuestsEntity
 from aqapi.quest.entity.family_quests_entity import FamilyQuestsEntity
 from aqapi.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEntity
 from aqapi.quest.entity.shared_quests_entity import SharedQuestsEntity
-from aqapi.family.entity.family_members import FamilyMembersEntity
+from aqapi.family.entity.family_members_entity import FamilyMembersEntity
 
 
 class FamilyQuestQueryModel:

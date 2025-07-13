@@ -5,7 +5,7 @@ from aqapi.bank.entity.allowanceable_types_entity import AllowanceableTypesEntit
 from aqapi.bank.entity.withdrawal_request_statuses_entity import WithdrawalRequestStatusesEntity, WithdrawalRequestStatusesTranslationEntity
 from aqapi.child.entity.educations_entity import EducationsEntity, EducationsTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.family.entity.family_member_types import FamilyMemberTypesEntity
+from aqapi.family.entity.family_member_types_entity import FamilyMemberTypesEntity
 from aqapi.notification.entity.notifiable_types_entity import NotifiableTypesEntity
 from aqapi.quest.entity.quest_categories_entity import QuestCategoriesEntity
 from aqapi.quest.entity.quest_member_statuses_entity import QuestMemberStatusesEntity, MemberQuestStatusesTranslationEntity

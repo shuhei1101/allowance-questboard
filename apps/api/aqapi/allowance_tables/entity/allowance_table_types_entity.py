@@ -1,12 +1,13 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 
 class AllowanceTableTypesEntity(BaseEntity):
     """お小遣いテーブルサブタイプエンティティ"""
 
     __tablename__ = "allowance_table_types"
 
-    table_name = Column(String, nullable=False, unique=True, comment="テーブル名")
+    table_name: Mapped[str] = mapped_column(String, nullable=False, unique=True, comment="テーブル名")
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

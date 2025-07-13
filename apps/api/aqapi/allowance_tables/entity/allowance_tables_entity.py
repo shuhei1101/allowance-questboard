@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 
 
 class AllowanceTablesEntity(BaseEntity):
@@ -10,7 +12,7 @@ class AllowanceTablesEntity(BaseEntity):
 
     __tablename__ = "allowance_tables"
 
-    subclass_type = Column(Integer, ForeignKey("allowance_table_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ",)
+    subclass_type: Mapped[int] = mapped_column(Integer, ForeignKey("allowance_table_types.id", ondelete="RESTRICT"), nullable=False, comment="サブクラスタイプ",)
 
     allowance_tables_sub_table_type = relationship("AllowanceTableTypesEntity", foreign_keys=[subclass_type])
 
@@ -19,7 +21,7 @@ class AllowanceTablesHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "allowance_tables_history"
 
-    subclass_type = Column(Integer)
+    subclass_type: Mapped[int] = mapped_column(Integer)
 
     @classmethod
     def from_source(cls, source: "AllowanceTablesEntity"):

@@ -1,7 +1,8 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, func, UniqueConstraint, CheckConstraint
-from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -26,14 +27,14 @@ class QuestDetailsByLevelEntity(BaseEntity):
         CheckConstraint("quest_exp >= 0", name="chk_quest_details_by_level_quest_exp_non_negative"),
     )
 
-    quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID")
-    level = Column(Integer, nullable=False, comment="レベル")
-    success_criteria = Column(Text, nullable=False, comment="成功条件")
-    target_count = Column(Integer, nullable=False, comment="目標回数")
-    reward = Column(Integer, nullable=False, comment="報酬金額")
-    currency_id = Column(Integer, ForeignKey("currencies.id", ondelete="RESTRICT"), nullable=False, comment="通貨ID")
-    child_exp = Column(Integer, nullable=False, comment="子供獲得経験値")
-    quest_exp = Column(Integer, nullable=False, comment="クエスト獲得経験値")
+    quest_id: Mapped[int] = mapped_column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID")
+    level: Mapped[int] = mapped_column(Integer, nullable=False, comment="レベル")
+    success_criteria: Mapped[str] = mapped_column(Text, nullable=False, comment="成功条件")
+    target_count: Mapped[int] = mapped_column(Integer, nullable=False, comment="目標回数")
+    reward: Mapped[int] = mapped_column(Integer, nullable=False, comment="報酬金額")
+    currency_id: Mapped[int] = mapped_column(Integer, ForeignKey("currencies.id", ondelete="RESTRICT"), nullable=False, comment="通貨ID")
+    child_exp: Mapped[int] = mapped_column(Integer, nullable=False, comment="子供獲得経験値")
+    quest_exp: Mapped[int] = mapped_column(Integer, nullable=False, comment="クエスト獲得経験値")
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])
     currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
@@ -46,7 +47,7 @@ class QuestDetailsByLevelTranslationEntity(BaseTranslationEntity):
         UniqueConstraint("quest_details_by_level_id", "language_id", name="uq_quest_details_by_level_translation_details_language"),
     )
 
-    quest_details_by_level_id = Column(Integer, ForeignKey("quest_details_by_level.id", ondelete="CASCADE"), nullable=False, comment="クエスト詳細ID")
-    success_criteria = Column(Text, nullable=False, comment="成功条件の翻訳")
+    quest_details_by_level_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_details_by_level.id", ondelete="CASCADE"), nullable=False, comment="クエスト詳細ID")
+    success_criteria: Mapped[str] = mapped_column(Text, nullable=False, comment="成功条件の翻訳")
 
     quest_details_by_level = relationship("QuestDetailsByLevelEntity", foreign_keys=[quest_details_by_level_id])

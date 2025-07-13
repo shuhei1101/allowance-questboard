@@ -1,7 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
-from sqlalchemy.orm import relationship
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -10,8 +11,8 @@ class QuestMemberStatusesEntity(BaseEntity):
 
     __tablename__ = "quest_member_statuses"
 
-    code = Column(String(20), nullable=False, unique=True, comment="ステータスコード")
-    description = Column(String(255), nullable=True, comment="ステータスの説明")
+    code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="ステータスコード")
+    description: Mapped[str] = mapped_column(String(255), nullable=True, comment="ステータスの説明")
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
@@ -27,8 +28,8 @@ class MemberQuestStatusesTranslationEntity(BaseTranslationEntity):
     __tablename__ = "quest_member_statuses_translation"
     __table_args__ = (UniqueConstraint("child_quest_status_id", "language_id"),)
 
-    child_quest_status_id = Column(Integer, ForeignKey("quest_member_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
-    name = Column(String(100), nullable=False, comment="ステータス名の翻訳")
+    child_quest_status_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_member_statuses.id", ondelete="CASCADE"), nullable=False, comment="ステータスID(外部キー)")
+    name: Mapped[str] = mapped_column(String(100), nullable=False, comment="ステータス名の翻訳")
 
     child_quest_status = relationship("QuestMemberStatusesEntity", foreign_keys=[child_quest_status_id])
 

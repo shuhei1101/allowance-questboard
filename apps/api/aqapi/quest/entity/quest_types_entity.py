@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -8,8 +9,8 @@ class QuestTypesEntity(BaseEntity):
 
     __tablename__ = "quest_types"
 
-    table_name = Column(String(20), nullable=False, unique=True, comment="サブクラスタイプテーブル名")
-    description = Column(Text, nullable=False, comment="タイプの説明")
+    table_name: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="サブクラスタイプテーブル名")
+    description: Mapped[str] = mapped_column(Text, nullable=False, comment="タイプの説明")
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:

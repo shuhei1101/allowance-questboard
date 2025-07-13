@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean, UUID
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 
 
 class SavingsRecordsEntity(BaseEntity):
@@ -16,9 +18,9 @@ class SavingsRecordsEntity(BaseEntity):
         CheckConstraint("balance >= 0", name="chk_savings_records_balance_positive")
     )
 
-    saved_by = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
-    amount = Column(Integer, nullable=False, default=0, comment="貯金額")
-    balance = Column(Integer, nullable=False, default=0, comment="貯金残高")
-    recorded_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="貯金記録日時")
+    saved_by: Mapped[int] = mapped_column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
+    amount: Mapped[int] = mapped_column(Integer, nullable=False, default=0, comment="貯金額")
+    balance: Mapped[int] = mapped_column(Integer, nullable=False, default=0, comment="貯金残高")
+    recorded_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="貯金記録日時")
 
     saver = relationship("ChildrenEntity", foreign_keys=[saved_by])

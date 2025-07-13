@@ -1,6 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func, CheckConstraint
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -9,7 +10,7 @@ class ReportStatusesEntity(BaseEntity):
 
     __tablename__ = "report_statuses"
 
-    code = Column(String(20), nullable=False, unique=True, comment="ステータスコード")
+    code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="ステータスコード")
 
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
@@ -25,8 +26,8 @@ class ReportStatusesTranslationEntity(BaseTranslationEntity):
 
     __tablename__ = "report_statuses_translation"
 
-    report_status_id = Column(Integer, ForeignKey("report_statuses.id", ondelete="CASCADE"), nullable=False, comment="レポートステータスID")
-    status = Column(String(50), nullable=False, comment="翻訳されたステータス名")
+    report_status_id: Mapped[int] = mapped_column(Integer, ForeignKey("report_statuses.id", ondelete="CASCADE"), nullable=False, comment="レポートステータスID")
+    status: Mapped[str] = mapped_column(String(50), nullable=False, comment="翻訳されたステータス名")
 
 
     @classmethod

@@ -1,7 +1,8 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, UniqueConstraint, func
-from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -10,9 +11,9 @@ class TemplateQuestCategoriesEntity(BaseEntity):
 
     __tablename__ = "template_quest_categories"
 
-    category_id = Column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, unique=True, comment="クエストカテゴリID")
-    sort_order = Column(Integer, default=0, comment="表示順序")
-    is_active = Column(Boolean, nullable=False, default=True, comment="有効フラグ")
+    category_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_categories.id", ondelete="CASCADE"), nullable=False, unique=True, comment="クエストカテゴリID")
+    sort_order: Mapped[int] = mapped_column(Integer, default=0, comment="表示順序")
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True, comment="有効フラグ")
 
     category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
 

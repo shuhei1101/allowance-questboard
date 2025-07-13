@@ -42,7 +42,7 @@ def update_title(self, title: QuestTitle) -> None:
 
 ### BaseEntity
 - データベースレイヤーの`BaseEntity`でサロゲートキーとタイムスタンプを定義
-- `id = Column(Integer, primary_key=True)`：自動採番される整数主キー
+- `id: Mapped[int] = mapped_column(Integer, primary_key=True)`：自動採番される整数主キー
 - `created_at`、`updated_at`：`server_default=func.now()`で自動設定
 
 ### ドメインモデル

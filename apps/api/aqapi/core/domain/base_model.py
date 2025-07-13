@@ -1,24 +1,42 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
 from datetime import datetime
-from aqapi.auth.entity.user import User
+from typing import Generic, Optional, TYPE_CHECKING, TypeVar
+from aqapi.auth.domain.user import User
 from aqapi.core.domain.value_object.version import Version
+from aqapi.core.domain.value_object.base_id import BaseId
+from aqapi.core.entity.base_entity import BaseEntity
+if TYPE_CHECKING:
+    from aqapi.shared.domain.screen import Screen
 
-@dataclass
-class BaseModel(ABC):
-    _created_at: datetime = field()
-    _created_by: User = field()
-    _created_from: Screen = field()
-    _updated_at: datetime = field()
-    _updated_by: User = field()
-    _updated_from: Screen = field()
-    _version: Version = field()
-    _is_updated: bool = False
-    
+EntityType = TypeVar("EntityType", bound='BaseEntity')
+IdType = TypeVar("IdType", bound=BaseId)
+
+class BaseModel(ABC, Generic[IdType, EntityType]):
     """ドメインモデルの基底クラス"""
-    def __init__(self, version: Version):
+    
+    def __init__(self, 
+                 id: IdType, version: Version, 
+                 created_at: Optional[datetime] = None, created_by: Optional[User] = None, created_from: Optional['Screen'] = None,
+                 updated_at: Optional[datetime] = None, updated_by: Optional[User] = None, updated_from: Optional['Screen'] = None):
+        self._id = id
         self._version = version
-        
+        self._created_at = created_at
+        self._created_by = created_by
+        self._created_from = created_from
+        self._updated_at = updated_at
+        self._updated_by = updated_by
+        self._updated_from = updated_from
+        self._is_updated = False
+
+    @abstractmethod
+    @classmethod
+    def from_entity(cls, entity: EntityType) -> 'BaseModel':
+        raise NotImplementedError("Subclasses must implement this method")
+
+    @property
+    def id(self) -> IdType:
+        return self._id
+
     def version(self) -> Version:
         return self._version
 

@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -10,7 +11,7 @@ class TemplateQuestsEntity(BaseEntity):
 
     __tablename__ = "template_quests"
 
-    quest_id = Column(
+    quest_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("quests.id", ondelete="CASCADE"),
         nullable=False,

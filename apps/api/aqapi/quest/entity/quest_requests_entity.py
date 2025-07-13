@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, Text, Boolean, DateTime, CheckConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -16,16 +18,16 @@ class QuestRequestsEntity(BaseEntity):
         CheckConstraint("length(description) > 0", name="chk_quest_requests_description_not_empty"),
     )
 
-    requested_by = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="リクエスト者の子供ID")
-    approved_by = Column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID")
-    quest_id = Column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=True, comment="既存クエストID")
-    title = Column(String(200), nullable=False, comment="リクエストタイトル")
-    description = Column(Text, nullable=False, comment="リクエスト説明")
-    is_new_request = Column(Boolean, nullable=False, default=True, comment="新規クエストリクエストフラグ")
-    status_id = Column(Integer, ForeignKey("quest_request_statuses.id", ondelete="RESTRICT"), nullable=False, comment="ステータスID")
-    answer = Column(Text, nullable=True, comment="回答内容")
-    answered_at = Column(DateTime(timezone=True), nullable=True, comment="回答日時")
-    requested_at = Column(DateTime(timezone=True), nullable=True, comment="リクエスト日時")
+    requested_by: Mapped[int] = mapped_column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="リクエスト者の子供ID")
+    approved_by: Mapped[int] = mapped_column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID")
+    quest_id: Mapped[int] = mapped_column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=True, comment="既存クエストID")
+    title: Mapped[str] = mapped_column(String(200), nullable=False, comment="リクエストタイトル")
+    description: Mapped[str] = mapped_column(Text, nullable=False, comment="リクエスト説明")
+    is_new_request: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True, comment="新規クエストリクエストフラグ")
+    status_id: Mapped[int] = mapped_column(Integer, ForeignKey("quest_request_statuses.id", ondelete="RESTRICT"), nullable=False, comment="ステータスID")
+    answer: Mapped[str] = mapped_column(Text, nullable=True, comment="回答内容")
+    answered_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=True, comment="回答日時")
+    requested_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=True, comment="リクエスト日時")
 
     family = relationship("FamiliesEntity", foreign_keys=[approved_by])
     child = relationship("ChildrenEntity", foreign_keys=[requested_by])
@@ -38,16 +40,16 @@ class QuestRequestsHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "quest_requests_history"
 
-    requested_by = Column(Integer)
-    approved_by = Column(Integer)
-    quest_id = Column(Integer)
-    title = Column(String(200))
-    description = Column(Text)
-    is_new_request = Column(Boolean)
-    status_id = Column(Integer)
-    answer = Column(Text)
-    answered_at = Column(DateTime(timezone=True))
-    requested_at = Column(DateTime(timezone=True))
+    requested_by: Mapped[int] = mapped_column(Integer)
+    approved_by: Mapped[int] = mapped_column(Integer)
+    quest_id: Mapped[int] = mapped_column(Integer)
+    title: Mapped[str] = mapped_column(String(200))
+    description: Mapped[str] = mapped_column(Text)
+    is_new_request: Mapped[bool] = mapped_column(Boolean)
+    status_id: Mapped[int] = mapped_column(Integer)
+    answer: Mapped[str] = mapped_column(Text)
+    answered_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
+    requested_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
     @classmethod
     def from_source(cls, source: "QuestRequestsEntity"):

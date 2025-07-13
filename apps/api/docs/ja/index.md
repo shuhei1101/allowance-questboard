@@ -10,6 +10,7 @@
 - 🔧 [DIコンテナ](modules/di-container.md)
 - 📄 [ページネーション](modules/pagination.md)
 - 🌱 [Seedシステム](modules/seedr.md)
+- 🎛️ [Domain Enum System](modules/domain-enum-system.md)
 
 ## 3. コーディング規約
 - コーディング規約は共通Wikiに移転しました。

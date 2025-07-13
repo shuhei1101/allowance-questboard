@@ -1,7 +1,7 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 
-class BaseValueObject(ABC):
+class BaseValueObject():
     """値オブジェクトの基底クラス"""
     
     def __init__(self):
@@ -10,4 +10,4 @@ class BaseValueObject(ABC):
     @abstractmethod
     def _validate(self) -> None:
         """値オブジェクトの値を検証する"""
-        pass
+        raise NotImplementedError("Subclasses must implement this method.")

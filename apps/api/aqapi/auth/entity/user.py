@@ -1,3 +1,0 @@
-@dataclass
-class User():
-    pass

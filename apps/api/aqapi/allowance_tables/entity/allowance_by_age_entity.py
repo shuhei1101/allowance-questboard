@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
-from sqlalchemy.orm import relationship
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+
 
 class AllowanceByAgeEntity(BaseEntity):
     """年齢別お小遣いテーブルエンティティ"""
@@ -15,9 +17,9 @@ class AllowanceByAgeEntity(BaseEntity):
         UniqueConstraint("age", "allowance_table_id", name="uq_allowance_by_age_age_allowance_table"),
     )
 
-    allowance_table_id = Column(Integer,ForeignKey("allowance_tables.id", ondelete="CASCADE"), nullable=False)
-    age = Column(Integer, nullable=False, comment="年齢")
-    amount = Column(Integer, nullable=False, default=0, comment="お小遣い額")
+    allowance_table_id: Mapped[int] = mapped_column(Integer,ForeignKey("allowance_tables.id", ondelete="CASCADE"), nullable=False)
+    age: Mapped[int] = mapped_column(Integer, nullable=False, comment="年齢")
+    amount: Mapped[int] = mapped_column(Integer, nullable=False, default=0, comment="お小遣い額")
 
     allowance_tables = relationship("AllowanceTablesEntity", foreign_keys=[allowance_table_id])
 
@@ -26,9 +28,9 @@ class AllowanceByAgeHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "allowance_by_age_history"
 
-    allowance_table_id = Column(Integer)
-    age = Column(Integer)
-    amount = Column(Integer)
+    allowance_table_id: Mapped[int] = mapped_column(Integer)
+    age: Mapped[int] = mapped_column(Integer)
+    amount: Mapped[int] = mapped_column(Integer)
 
     @classmethod
     def from_source(cls, source: "AllowanceByAgeEntity"):

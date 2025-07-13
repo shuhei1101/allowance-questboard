@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean, UUID, Date
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 
 
 class EducationPeriodsEntity(BaseEntity):
@@ -21,9 +23,9 @@ class EducationPeriodsEntity(BaseEntity):
         UniqueConstraint("child_id", "education_id", name="uq_education_periods_child_education"),
     )
 
-    child_id = Column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
-    education_id = Column(Integer, ForeignKey("educations.id", ondelete="RESTRICT"), nullable=False, comment="学歴ID")
-    period = Column(Integer, nullable=False, comment="教育期間")
+    child_id: Mapped[int] = mapped_column(Integer, ForeignKey("children.id", ondelete="CASCADE"), nullable=False, comment="子供ID")
+    education_id: Mapped[int] = mapped_column(Integer, ForeignKey("educations.id", ondelete="RESTRICT"), nullable=False, comment="学歴ID")
+    period: Mapped[int] = mapped_column(Integer, nullable=False, comment="教育期間")
 
     child = relationship("ChildrenEntity", foreign_keys=[child_id])
     educations = relationship("EducationsEntity", foreign_keys=[education_id])

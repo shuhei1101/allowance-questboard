@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Index, Integer, Boolean, DateTime, ForeignKey, String, Text, func, UniqueConstraint, CheckConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 
-from aqapi.core.entity.base_entity import BaseEntity, BaseTranslationEntity, BaseHistoryEntity
+from aqapi.core.entity.base_entity import BaseEntity
+from aqapi.core.entity.base_history_entity import BaseHistoryEntity
+from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
 
 
@@ -10,11 +12,11 @@ class ReportsEntity(BaseEntity):
 
     __tablename__ = "reports"
 
-    reported_by = Column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="レポートしたユーザID")
-    reportable_type = Column(Integer, ForeignKey("reportable_types.id", ondelete="RESTRICT"), nullable=False, comment="レポート対象タイプID")
-    status_id = Column(Integer, ForeignKey("report_statuses.id", ondelete="RESTRICT"), nullable=False, comment="ステータスID")
-    reported_at = Column(DateTime(timezone=True), nullable=False, default=func.now(), comment="レポート作成日時")
-    resolved_at = Column(DateTime(timezone=True), nullable=True, comment="レポート解決日時")
+    reported_by: Mapped[int] = mapped_column(Integer, ForeignKey("family_members.id", ondelete="CASCADE"), nullable=False, comment="レポートしたユーザID")
+    reportable_type: Mapped[int] = mapped_column(Integer, ForeignKey("reportable_types.id", ondelete="RESTRICT"), nullable=False, comment="レポート対象タイプID")
+    status_id: Mapped[int] = mapped_column(Integer, ForeignKey("report_statuses.id", ondelete="RESTRICT"), nullable=False, comment="ステータスID")
+    reported_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, default=func.now(), comment="レポート作成日時")
+    resolved_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=True, comment="レポート解決日時")
 
     # Relationships
     reporter = relationship("FamilyMembersEntity", foreign_keys=[reported_by])
@@ -27,11 +29,11 @@ class ReportsHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "reports_history"
 
-    reported_by = Column(Integer)
-    reportable_type = Column(Integer)
-    status_id = Column(Integer)
-    reported_at = Column(DateTime(timezone=True))
-    resolved_at = Column(DateTime(timezone=True))
+    reported_by: Mapped[int] = mapped_column(Integer)
+    reportable_type: Mapped[int] = mapped_column(Integer)
+    status_id: Mapped[int] = mapped_column(Integer)
+    reported_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
+    resolved_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
     @classmethod
     def from_source(cls, source: "ReportsEntity"):

@@ -21,3 +21,22 @@
 ## Pythonメソッドアクセス制御
 - **パブリック**: 接頭語なし（例: `validate()`）
 - **プライベート**: 接頭語にアンダーバー（例: `_validate()`）
+
+## コメント・ドキュメント
+- **コメントは日本語で記述する**
+  - docstring、インラインコメント、エラーメッセージなど全て日本語で統一
+  - 例：
+    ```python
+    def get(self, source_id: int, language_id: int) -> TranslationType | None:
+        """source_idとlanguage_idでアイテムを取得"""
+        if not isinstance(source_id, int):
+            raise TypeError(f"source_idはintである必要があります。実際: {type(source_id)}")
+        if not isinstance(language_id, int):
+            raise TypeError(f"language_idはintである必要があります。実際: {type(language_id)}")
+    ```
+- **docstringは必須**
+  - メソッド、クラス、モジュールには説明的なdocstringを記述する
+  - 引数、戻り値、例外について明記する
+- **エラーメッセージは分かりやすく**
+  - 期待される型と実際の型を明示する
+  - 日本語で何が問題かを具体的に説明する
