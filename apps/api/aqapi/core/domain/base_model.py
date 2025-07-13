@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Generic, Optional, TYPE_CHECKING, TypeVar
-from aqapi.auth.domain.user import User
+from typing import Generic, Optional, TypeVar
 from aqapi.core.domain.value_object.version import Version
 from aqapi.core.domain.value_object.base_id import BaseId
 from aqapi.core.entity.base_entity import BaseEntity
-if TYPE_CHECKING:
-    from aqapi.shared.domain.screen import Screen
+from aqapi.family_member.domain.value_object.family_member_id import FamilyMemberId
+from aqapi.shared.domain.value_object.screen_id import ScreenId
 
 EntityType = TypeVar("EntityType", bound='BaseEntity')
 IdType = TypeVar("IdType", bound=BaseId)
@@ -16,8 +15,8 @@ class BaseModel(ABC, Generic[IdType, EntityType]):
     
     def __init__(self, 
                  id: IdType, version: Version, 
-                 created_at: Optional[datetime] = None, created_by: Optional[User] = None, created_from: Optional['Screen'] = None,
-                 updated_at: Optional[datetime] = None, updated_by: Optional[User] = None, updated_from: Optional['Screen'] = None):
+                 created_at: Optional[datetime] = None, created_by: Optional[FamilyMemberId] = None, created_from: Optional['ScreenId'] = None,
+                 updated_at: Optional[datetime] = None, updated_by: Optional[FamilyMemberId] = None, updated_from: Optional['ScreenId'] = None):
         self._id = id
         self._version = version
         self._created_at = created_at

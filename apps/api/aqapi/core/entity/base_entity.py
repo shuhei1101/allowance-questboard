@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from datetime import datetime
 from typing import List
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
@@ -13,7 +14,7 @@ class BaseEntity(DB_CONF.Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     version: Mapped[int] = mapped_column(Integer, nullable=False, default=1, comment="バージョン")
-    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="作成日時")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now(), comment="作成日時")
     created_by: Mapped[int] = mapped_column(
         ForeignKey("family_members.id", ondelete="SET NULL", use_alter=True, name="fk_created_by"),
         nullable=True,
@@ -24,7 +25,7 @@ class BaseEntity(DB_CONF.Base):
         nullable=True,
         comment="作成元スクリーンID(外部キー)"
     )
-    updated_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now(), comment="更新日時")
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now(), comment="更新日時")
     updated_by: Mapped[int] = mapped_column(
         ForeignKey("family_members.id", ondelete="SET NULL", use_alter=True, name="fk_updated_by"),
         nullable=True,
