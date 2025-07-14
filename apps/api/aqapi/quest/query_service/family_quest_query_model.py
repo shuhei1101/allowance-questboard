@@ -4,7 +4,6 @@ from sqlalchemy.engine import Row
 from dataclasses import dataclass
 from typing import Optional, List, Dict
 from sqlalchemy.engine import Row
-from collections import defaultdict
 
 @dataclass(frozen=True)
 class QuestMemberSummary:
@@ -37,7 +36,7 @@ class FamilyQuestSummary:
     members: QuestMemberSummaries
 
     @classmethod
-    def from_group(cls, row: Row, members: List[QuestMemberSummary]) -> "FamilyQuestSummary":
+    def from_group(cls, row: Row, members: QuestMemberSummaries) -> "FamilyQuestSummary":
         return cls(
             id=row.quest_id,
             title=row.title,

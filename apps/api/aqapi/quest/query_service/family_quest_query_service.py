@@ -4,11 +4,15 @@ from sqlalchemy.orm import Session
 from aqapi.child.entity.children_entity import ChildrenEntity
 from aqapi.core.pagination.pagination_meta import PaginationMeta
 from aqapi.core.pagination.paginator import Paginator
-from aqapi.quest.entity.child_quests_entity import ChildQuestsEntity
 from aqapi.quest.entity.family_quests_entity import FamilyQuestsEntity
 from aqapi.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEntity
 from aqapi.quest.entity.shared_quests_entity import SharedQuestsEntity
-from aqapi.family.entity.family_members_entity import FamilyMembersEntity
+
+from aqapi.quest.query_service.family_quest_query_model import FamilyQuestSummaries
+
+from aqapi.family_member.entity.family_members_entity import FamilyMembersEntity
+
+from aqapi.quest.entity.quest_members_entity import QuestMembersEntity
 
 class FamilyQuestQueryService:
     def __init__(self, session: Session):
@@ -16,7 +20,7 @@ class FamilyQuestQueryService:
 
     def fetch_quest_summary(
         self, family_id: int, language_id: int, paginator: Optional[Paginator] = None
-    ) -> tuple["Optional[PaginationMeta]", "List[FamilyQuestQueryModel]"]:
+    ) -> tuple["Optional[PaginationMeta]", "FamilyQuestSummaries"]:
         """家族IDでクエストを取得してQueryModelとして返す
 
         取得情報:
@@ -45,8 +49,8 @@ class FamilyQuestQueryService:
             )
             .join(QuestsEntity, FamilyQuestsEntity.quest_id == QuestsEntity.id)
             .join(QuestsTranslationEntity, QuestsEntity.id == QuestsTranslationEntity.quest_id)
-            .join(ChildQuestsEntity, QuestsEntity.id == ChildQuestsEntity.quest_id)
-            .join(ChildrenEntity, ChildQuestsEntity.child_id == ChildrenEntity.id)
+            .join(QuestMembersEntity, QuestsEntity.id == QuestMembersEntity.quest_id)
+            .join(ChildrenEntity, QuestMembersEntity.member_id == ChildrenEntity.id)
             .join(FamilyMembersEntity, ChildrenEntity.family_member_id == FamilyMembersEntity.id)
             .outerjoin(SharedQuestsEntity, FamilyQuestsEntity.shared_quest_id == SharedQuestsEntity.id)
             .filter(QuestsTranslationEntity.language_id == language_id)
