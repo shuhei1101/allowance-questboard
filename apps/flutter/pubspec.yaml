@@ -43,5 +43,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+flutter_gen:
+  output: lib/core/generated/
+
 flutter_intl:
   enabled: true
+  arb_dir: lib/core/l10n # ARBファイルの配置場所
+  output_dir: lib/core/generated/l10n # 生成されるDartファイルの出力先
