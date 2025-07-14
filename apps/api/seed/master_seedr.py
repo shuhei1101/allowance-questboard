@@ -5,7 +5,6 @@ from aqapi.bank.entity.allowanceable_types_entity import AllowanceableTypesEntit
 from aqapi.bank.entity.withdrawal_request_statuses_entity import WithdrawalRequestStatusesEntity, WithdrawalRequestStatusesTranslationEntity
 from aqapi.child.entity.educations_entity import EducationsEntity, EducationsTranslationEntity
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.family.entity.family_member_types_entity import FamilyMemberTypesEntity
 from aqapi.notification.entity.notifiable_types_entity import NotifiableTypesEntity
 from aqapi.quest.entity.quest_categories_entity import QuestCategoriesEntity
 from aqapi.quest.entity.quest_member_statuses_entity import QuestMemberStatusesEntity, MemberQuestStatusesTranslationEntity
@@ -20,12 +19,13 @@ from aqapi.report.entity.reportable_types_entity import ReportableTypesEntity
 from aqapi.shared.entity.currencies_entity import CurrenciesEntity
 from aqapi.shared.entity.currency_by_language_entity import CurrencyByLanguageEntity
 from aqapi.shared.entity.exchange_rates_entity import ExchangeRatesEntity
-from aqapi.shared.entity.icon_categories_entity import IconCategoriesEntity, IconCategoriesTranslationEntity
-from aqapi.shared.entity.icon_platform_keys import IconNameByPlatormEntity
-from aqapi.shared.entity.icon_platforms import IconPlatforms
-from aqapi.shared.entity.icons_entity import IconsEntity
-from aqapi.shared.entity.languages_entity import LanguagesEntity
 from aqapi.shared.entity.screens_entity import ScreensEntity
+from aqapi.language.entity.languages_entity import LanguagesEntity
+from aqapi.icon_category.entity.icon_categories_entity import IconCategoriesEntity, IconCategoriesTranslationEntity
+from aqapi.icon.entity.icons_entity import IconsEntity
+from aqapi.icon.entity.icon_platforms import IconPlatforms
+from aqapi.icon.entity.icon_platform_keys import IconNameByPlatormEntity
+from aqapi.family_member.entity.family_member_types_entity import FamilyMemberTypesEntity
 
 class MasterSeedr:
 
@@ -65,7 +65,6 @@ class MasterSeedr:
             self._seed_and_commit(session, TemplateQuestCategoriesEntity)
             self._seed_and_commit(session, QuestsEntity)
             self._seed_and_commit(session, TemplateQuestsEntity)
-            self._seed_and_commit(session, TemplateQuestCategoriesEntity)
 
             print("マスタデータの投入が完了しました")
 
@@ -79,6 +78,7 @@ class MasterSeedr:
             raise
         finally:
             session.close()
+
 
     def _seed_and_commit(self, session, entity_class):
         """エンティティのシードデータを投入しコミット"""

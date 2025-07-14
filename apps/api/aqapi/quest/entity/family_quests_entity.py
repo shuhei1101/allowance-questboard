@@ -17,6 +17,7 @@ class FamilyQuestsEntity(BaseEntity):
 
     quest_id: Mapped[int] = mapped_column(Integer, ForeignKey("quests.id", ondelete="CASCADE"), nullable=False, comment="クエストID")
     family_id: Mapped[int] = mapped_column(Integer, ForeignKey("families.id", ondelete="CASCADE"), nullable=False, comment="家族ID")
+    is_public: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, comment="公開フラグ")
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])
     family = relationship("FamiliesEntity", foreign_keys=[family_id])

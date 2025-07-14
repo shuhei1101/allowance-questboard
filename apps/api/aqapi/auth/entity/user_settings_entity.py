@@ -12,7 +12,7 @@ class UserSettingsEntity(BaseEntity):
 
     __tablename__ = "user_settings"
 
-    user_id: Mapped[Uuid] = mapped_column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), primary_key=True, comment="ユーザID")
+    user_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), primary_key=True, comment="ユーザID")
     language_id: Mapped[int] = mapped_column(Integer, ForeignKey("languages.id", ondelete="RESTRICT"), nullable=False, comment="言語コード")
 
     language = relationship("LanguagesEntity", foreign_keys=[language_id])
@@ -22,7 +22,7 @@ class UserSettingsHistoryEntity(BaseHistoryEntity):
 
     __tablename__ = "user_settings_history"
 
-    user_id: Mapped[Uuid] = mapped_column(UUID(as_uuid=True))
+    user_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True))
     language_id: Mapped[int] = mapped_column(Integer)
 
     @classmethod

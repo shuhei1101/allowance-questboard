@@ -8,7 +8,9 @@ from aqapi.core.entity.base_entity import BaseEntity
 TranslationType = TypeVar('TranslationType', bound='BaseTranslationEntity')
 
 class TranslatableEntity(BaseEntity, Generic[TranslationType]):
-    """翻訳可能なエンティティに付与するMixinクラス"""
+    """翻訳可能なエンティティに付与するクラス"""
+    
+    __abstract__ = True
 
     def set_translation_entity(self, translation_entities: list['TranslationType']) -> None:
         """翻訳エンティティを設定する"""

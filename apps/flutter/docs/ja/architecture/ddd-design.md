@@ -10,7 +10,7 @@
 - **UI表示・操作**  
 - **API通信**  
 
-詳細な処理の流れについては、[アーキテクチャ図](../../../../docs/ja/shared/uml/flutter_supabase_clsd.md)を参照してください。
+詳細な処理の流れについては、[アーキテクチャ図](../../../../../docs/ja/shared/uml/flutter_supabase_clsd.md)を参照してください。
 
 ## フロントエンドの設計パターン
 

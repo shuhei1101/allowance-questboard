@@ -9,6 +9,7 @@ load_dotenv()
 class DBConfig:
     def __init__(self):
         """DB_CONFIGの初期化"""
+        print("DBConfigの初期化を開始します...")
 
         DB_USER = os.getenv("DB_USER")
         DB_PASSWORD = os.getenv("DB_PASSWORD")
@@ -44,7 +45,7 @@ class DBConfig:
             db.close()
 
     def import_all_entities(self):
-        """すべてのEntityクラスをインポートして初期化(シーダー用)"""
+        """すべてのEntityクラスをインポートして初期化"""
         import importlib
         import glob
         import os

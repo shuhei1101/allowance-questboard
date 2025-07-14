@@ -43,7 +43,7 @@ class QuestsEntity(BaseEntity):
         ]
 
     @classmethod
-    def from_model(cls, model):
+    def from_model(cls, model) -> 'QuestsEntity':
         # 基本的なフィールドのみを設定（DB側で管理される項目は除く）
         return cls(
             id=model.id().value if model.id().value else None,

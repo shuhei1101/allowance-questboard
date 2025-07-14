@@ -7,6 +7,7 @@ from aqapi.core.pagination.paginator import Paginator
 from aqapi.quest.entity.family_quests_entity import FamilyQuestsEntity
 from aqapi.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEntity
 from aqapi.quest.entity.shared_quests_entity import SharedQuestsEntity
+from aqapi.family.entity.families_entity import FamiliesEntity
 
 from aqapi.quest.query_service.family_quest_query_model import FamilyQuestSummaries
 
@@ -42,17 +43,17 @@ class FamilyQuestQueryService:
                 QuestsTranslationEntity.title.label("title"),
                 QuestsEntity.category_id.label("category_id"),
                 QuestsEntity.icon_id.label("icon_id"),
-                FamilyQuestsEntity.is_shared.label("is_shared"),
-                SharedQuestsEntity.is_public.label("is_public"),
+                SharedQuestsEntity.is_shared.label("is_shared"),
+                FamilyQuestsEntity.is_public.label("is_public"),  # 一旦コメントアウト
                 ChildrenEntity.id.label("child_id"),
                 FamilyMembersEntity.icon_id.label("child_icon_id"),
             )
             .join(QuestsEntity, FamilyQuestsEntity.quest_id == QuestsEntity.id)
             .join(QuestsTranslationEntity, QuestsEntity.id == QuestsTranslationEntity.quest_id)
-            .join(QuestMembersEntity, QuestsEntity.id == QuestMembersEntity.quest_id)
+            .join(QuestMembersEntity, FamilyQuestsEntity.id == QuestMembersEntity.family_quest_id)
             .join(ChildrenEntity, QuestMembersEntity.member_id == ChildrenEntity.id)
             .join(FamilyMembersEntity, ChildrenEntity.family_member_id == FamilyMembersEntity.id)
-            .outerjoin(SharedQuestsEntity, FamilyQuestsEntity.shared_quest_id == SharedQuestsEntity.id)
+            .outerjoin(SharedQuestsEntity, FamilyQuestsEntity.id == SharedQuestsEntity.source_family_quest_id)
             .filter(QuestsTranslationEntity.language_id == language_id)
             .filter(FamilyQuestsEntity.family_id == family_id)
             .filter(ChildrenEntity.family_id == family_id)
