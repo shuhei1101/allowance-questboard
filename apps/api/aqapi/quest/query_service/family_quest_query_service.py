@@ -10,10 +10,6 @@ from aqapi.quest.entity.quests_entity import QuestsEntity, QuestsTranslationEnti
 from aqapi.quest.entity.shared_quests_entity import SharedQuestsEntity
 from aqapi.family.entity.family_members_entity import FamilyMembersEntity
 
-
-
-
-
 class FamilyQuestQueryService:
     def __init__(self, session: Session):
         self.session = session
@@ -23,7 +19,7 @@ class FamilyQuestQueryService:
     ) -> tuple["Optional[PaginationMeta]", "List[FamilyQuestQueryModel]"]:
         """家族IDでクエストを取得してQueryModelとして返す
 
-        必要な情報:
+        取得情報:
             - クエストID
             - クエスト名: 翻訳テーブルから取得(言語ごと)
             - クエストカテゴリID
@@ -36,9 +32,6 @@ class FamilyQuestQueryService:
             tuple[Optional[PaginationMeta], List[FamilyQuestQueryModel]]: 
                 ページネーション情報とQueryModelのリスト
         """
-        # クエスト基本情報を取得するメインクエリ
-        # family_quests -> quests -> quests_translation の結合でクエスト情報を取得
-        # child_quests -> children -> family_members の結合で受注している子供の情報を取得
         query = (
             self.session.query(
                 FamilyQuestsEntity.id.label("id"),
