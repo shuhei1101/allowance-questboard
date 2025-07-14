@@ -41,7 +41,7 @@ class FamilyQuestSummary:
         )
 
 @dataclass(frozen=True)
-class FamilyQuestSummarys:
+class FamilyQuestSummaries:
     items: List[FamilyQuestSummary]
 
     @classmethod
