@@ -34,7 +34,7 @@ class FamilyQuestQueryService:
         """
         query = (
             self.session.query(
-                FamilyQuestsEntity.id.label("id"),
+                FamilyQuestsEntity.id.label("quest_id"),
                 QuestsTranslationEntity.title.label("title"),
                 QuestsEntity.category_id.label("category_id"),
                 QuestsEntity.icon_id.label("icon_id"),
@@ -43,25 +43,14 @@ class FamilyQuestQueryService:
                 ChildrenEntity.id.label("child_id"),
                 FamilyMembersEntity.icon_id.label("child_icon_id"),
             )
-            # 家族クエスト -> クエスト基本情報
             .join(QuestsEntity, FamilyQuestsEntity.quest_id == QuestsEntity.id)
-            # クエスト基本情報 -> クエスト翻訳情報
-            .join(
-                QuestsTranslationEntity,
-                QuestsEntity.id == QuestsTranslationEntity.quest_id,
-            )
-            # クエスト基本情報 -> 子供クエスト（どの子供がこのクエストを受注しているか）
+            .join(QuestsTranslationEntity, QuestsEntity.id == QuestsTranslationEntity.quest_id)
             .join(ChildQuestsEntity, QuestsEntity.id == ChildQuestsEntity.quest_id)
-            # 子供クエスト -> 子供情報
             .join(ChildrenEntity, ChildQuestsEntity.child_id == ChildrenEntity.id)
-            # 子供情報 -> 家族メンバー情報（アイコン取得用）
             .join(FamilyMembersEntity, ChildrenEntity.family_member_id == FamilyMembersEntity.id)
-            # 家族クエスト -> 共有クエスト（公開情報取得用、LEFT JOIN）
             .outerjoin(SharedQuestsEntity, FamilyQuestsEntity.shared_quest_id == SharedQuestsEntity.id)
-            # フィルタ条件
             .filter(QuestsTranslationEntity.language_id == language_id)
             .filter(FamilyQuestsEntity.family_id == family_id)
-            # 同一家族内の子供のみをフィルタ
             .filter(ChildrenEntity.family_id == family_id)
             .order_by(FamilyQuestsEntity.id)
         )
@@ -72,7 +61,7 @@ class FamilyQuestQueryService:
             meta = None
             rows = query.all()
 
-        # SQLクエリ結果をQueryModelに変換
-        query_models = [FamilyQuestQueryModel.from_row(row) for row in rows]
+        summarys = FamilyQuestSummarys.from_rows(rows)
 
-        return meta, query_models  # type: ignore
+        return meta, summarys
+        
