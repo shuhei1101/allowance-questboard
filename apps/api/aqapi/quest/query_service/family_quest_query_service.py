@@ -61,7 +61,7 @@ class FamilyQuestQueryService:
             meta = None
             rows = query.all()
 
-        summarys = FamilyQuestSummarys.from_rows(rows)
+        summaries = FamilyQuestSummaries.from_rows(rows)
 
-        return meta, summarys
+        return meta, summaries
         
