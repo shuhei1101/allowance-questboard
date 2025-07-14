@@ -2,17 +2,14 @@ from sqlalchemy.engine import Row
 
 
 @dataclass(frozen=True)
-class FamilyQuestQueryModel:
-    """家族クエスト情報のQueryModel"""
-
+class FamilyQuestSummary:
     id: int
     title: str
     category_id: int
     icon_id: int
     is_shared: bool
     is_public: Optional[bool]
-    child_id: int
-    child_icon_id: Optional[int]
+    members: List[’QuestMemberSummary’]
 
     @classmethod
     def from_row(cls, row: Row) -> "FamilyQuestQueryModel":
@@ -27,3 +24,8 @@ class FamilyQuestQueryModel:
             child_id=row.child_id,
             child_icon_id=row.child_icon_id
         )
+
+@dataclass(frozen=True)
+class QuestMemberSummary:
+    child_id: int
+    child_icon_id: Optional[int]
