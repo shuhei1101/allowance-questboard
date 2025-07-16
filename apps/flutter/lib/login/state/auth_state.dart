@@ -6,7 +6,7 @@ part 'auth_state.freezed.dart';
 abstract class AuthState with _$AuthState {
   const factory AuthState({
     @Default(null) String? userId,
-    @Default(null) int? familyId,
+    @Default(null) int? parentId,
     @Default(null) int? memberId,
   }) = _AuthState;
 }
