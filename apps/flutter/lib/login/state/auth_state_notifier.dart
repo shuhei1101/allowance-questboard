@@ -3,6 +3,9 @@ import 'package:state_notifier/state_notifier.dart';
 
 /// 認証状態を管理するProvider
 class AuthStateNotifier extends StateNotifier<AuthState> {
+  final GetFamilyIdUsecase getFamilyIdUsecase = GetIt.I<GetFamilyIdUsecase>();
+  final GetMemberIdUsecase getMemberIdUsecase = GetIt.I<GetMemberIdUsecase>();
+
   AuthStateNotifier(super.state);
 
   void login(String? userId) {
