@@ -8,7 +8,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   AuthStateNotifier(super.state);
 
-  void login(String? userId) {
+  await void login(String? userId) {
     await getFamilyIdUsecase.execute(userId);
     await getMemberIdUsecase.execute(userId);
   }
