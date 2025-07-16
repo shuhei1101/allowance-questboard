@@ -5,6 +5,10 @@ import 'package:state_notifier/state_notifier.dart';
 class AuthStateNotifier extends StateNotifier<AuthState> {
   AuthStateNotifier(super.state);
 
+  void login(String? userId) {
+    
+  }
+
   void updateUserId(String? userId) {
     state = state.copyWith(userId: userId);
   }
