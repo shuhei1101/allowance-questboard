@@ -81,7 +81,7 @@ class LoginPage extends HookConsumerWidget {
                   return;
                 }
 
-                await notifier.login(userId);
+                await notifier.login(userId, authType.value);
                 if (authType.value == AuthType.family) {
                   // 家族としてログイン
                   // もし、家族IDが取得できていない場合はエラーメッセージを表示
