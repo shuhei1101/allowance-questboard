@@ -75,7 +75,37 @@ classDiagram
 
 ## リスト形式のオブジェクトの場合
 ```mermaid
+classDiagram
+    class FamilyQuestSummariesResponse {
+        +meta: PaginationMeta
+        +items: List~QuestDTO~
+        +fromJson(Map): FamilyQuestSummariesResponse
+    }
 
+    class QuestDTO {
+        +id: int
+        +title: String
+        +categoryId: int
+        +iconId: int
+        +isShared: bool
+        +isPublic: bool?
+        +members: List~QuestMemberDTO~
+    }
+
+    class QuestMemberDTO {
+        +childId: int
+        +childIconId: int?
+    }
+
+    class PaginationMeta {
+        +page: int
+        +size: int
+        +total: int
+    }
+
+    FamilyQuestSummariesResponse o-- QuestDTO
+    QuestDTO o-- QuestMemberDTO
+    FamilyQuestSummariesResponse o-- PaginationMeta
 
 ```
 
