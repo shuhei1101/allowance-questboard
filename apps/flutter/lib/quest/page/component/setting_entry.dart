@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/shared/theme/app_themes.dart';
+import 'package:allowance_questboard/core/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 
 class SettingEntry extends StatelessWidget {
@@ -41,11 +41,7 @@ class SettingSubEntry extends StatelessWidget {
   /// 設定画面のサブエントリ用ウィジェット
   ///
   /// [SettingEntry]のbodyに指定して使用するサブエントリ
-  SettingSubEntry(
-      {this.title = "",
-      required this.body,
-      this.onTap,
-      required this.hasArrow});
+  SettingSubEntry({this.title = "", required this.body, this.onTap, required this.hasArrow});
 
   /// 設定項目のタイトル
   final String title;

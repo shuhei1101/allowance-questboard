@@ -1,6 +1,6 @@
 import 'package:allowance_questboard/core/router/app_route.dart';
 import 'package:allowance_questboard/presentation/member/screen/member_profile_screen.dart';
-import 'package:allowance_questboard/shared/page/error_page.dart';
+import 'package:allowance_questboard/core/page/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -29,8 +29,7 @@ class MemberPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null)
-            return ErrorPage(error: snapshot.error);
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final member = snapshot.data;
 
           // メンバー情報を取得できた場合、詳細画面を表示
@@ -55,10 +54,8 @@ class MemberPage extends StatelessWidget {
 
 // 動作確認用コード
 void main() {
-  GetIt.I.registerSingleton<MemberApplicationService>(
-      MockMemberApplicationService());
-  final router =
-      GoRouter(initialLocation: '/members/123/member/456', routes: $appRoutes);
+  GetIt.I.registerSingleton<MemberApplicationService>(MockMemberApplicationService());
+  final router = GoRouter(initialLocation: '/members/123/member/456', routes: $appRoutes);
   runApp(MaterialApp.router(
     routerConfig: router,
   ));

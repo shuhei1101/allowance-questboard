@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/shared/api/rpc_handler.dart';
+import 'package:allowance_questboard/core/api/rpc_handler.dart';
 import 'package:test/test.dart';
 
 void main() {

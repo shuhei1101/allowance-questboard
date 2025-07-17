@@ -4,7 +4,7 @@ import 'package:allowance_questboard/application/quest/family_quest_application_
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/presentation/quest/screen/quest_editing_screen.dart';
 import 'package:allowance_questboard/presentation/quest/state/edit_family_quest_state_provider.dart';
-import 'package:allowance_questboard/shared/page/error_page.dart';
+import 'package:allowance_questboard/core/page/error_page.dart';
 import 'package:allowance_questboard/core/router/app_route.dart';
 import 'package:allowance_questboard/core/setup/l10n_provider.dart';
 import 'package:flutter/material.dart';
@@ -85,18 +85,15 @@ class EditFamilyQuestTab extends StatelessWidget {
 
 // 動作確認用コード
 void main() {
-  GetIt.I.registerSingleton<FamilyQuestApplicationService>(
-      MockFamilyQuestApplicationService());
-  final router =
-      GoRouter(initialLocation: '/quest/123/edit', routes: $appRoutes);
+  GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
+  final router = GoRouter(initialLocation: '/quest/123/edit', routes: $appRoutes);
   runApp(ProviderScope(
       child: MaterialApp.router(
     routerConfig: router,
   )));
 }
 
-class MockFamilyQuestApplicationService
-    implements FamilyQuestApplicationService {
+class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
   @override
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     throw UnimplementedError();
@@ -108,8 +105,7 @@ class MockFamilyQuestApplicationService
   }
 
   @override
-  Future<UpdateFamilyQuestResponse?> getEditFamilyQuestData(
-      String questId) async {
+  Future<UpdateFamilyQuestResponse?> getEditFamilyQuestData(String questId) async {
     return UpdateFamilyQuestResponse(
       id: "123",
       title: "Test Quest",

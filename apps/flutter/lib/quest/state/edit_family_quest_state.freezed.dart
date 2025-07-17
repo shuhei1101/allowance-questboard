@@ -31,13 +31,14 @@ mixin _$EditFamilyQuestState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is EditFamilyQuestState &&
-            (identical(other.questTitleState, questTitleState) ||
-                other.questTitleState == questTitleState) &&
+            const DeepCollectionEquality()
+                .equals(other.questTitleState, questTitleState) &&
             (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, questTitleState, isValid);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(questTitleState), isValid);
 
   @override
   String toString() {
@@ -108,13 +109,14 @@ class _EditFamilyQuestState implements EditFamilyQuestState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _EditFamilyQuestState &&
-            (identical(other.questTitleState, questTitleState) ||
-                other.questTitleState == questTitleState) &&
+            const DeepCollectionEquality()
+                .equals(other.questTitleState, questTitleState) &&
             (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, questTitleState, isValid);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(questTitleState), isValid);
 
   @override
   String toString() {

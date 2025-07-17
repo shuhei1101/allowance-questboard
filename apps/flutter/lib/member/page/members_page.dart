@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/shared/page/error_page.dart';
+import 'package:allowance_questboard/core/page/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -9,8 +9,7 @@ import '../../../core/router/app_route.dart';
 
 class MembersPage extends StatelessWidget {
   /// 家族メンバー一覧画面
-  MembersPage({required this.familyId, super.key})
-      : _service = GetIt.I<MemberApplicationService>();
+  MembersPage({required this.familyId, super.key}) : _service = GetIt.I<MemberApplicationService>();
 
   final MemberApplicationService _service;
 
@@ -25,8 +24,7 @@ class MembersPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null)
-            return ErrorPage(error: snapshot.error);
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final members = snapshot.data;
 
           // メンバー情報を取得できた場合、一覧画面を表示
@@ -42,8 +40,7 @@ class MembersPage extends StatelessWidget {
                 child: MembersScreen(
                   members: members!,
                   onTap: (memberId) {
-                    MemberRoute(familyId: familyId, memberId: memberId)
-                        .push(context);
+                    MemberRoute(familyId: familyId, memberId: memberId).push(context);
                   },
                 ),
               ));

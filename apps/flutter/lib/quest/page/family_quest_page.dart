@@ -3,7 +3,7 @@ import 'package:allowance_questboard/application/quest/family_quest_application_
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/presentation/quest/screen/quest_detail_screen.dart';
-import 'package:allowance_questboard/shared/page/error_page.dart';
+import 'package:allowance_questboard/core/page/error_page.dart';
 import 'package:allowance_questboard/core/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -11,8 +11,7 @@ import 'package:go_router/go_router.dart';
 
 class FamilyQuestPage extends StatelessWidget {
   /// 家族クエストの詳細画面
-  FamilyQuestPage({required this.questId})
-      : _service = GetIt.I<FamilyQuestApplicationService>();
+  FamilyQuestPage({required this.questId}) : _service = GetIt.I<FamilyQuestApplicationService>();
 
   /// 表示対象のクエストID
   final String questId;
@@ -28,8 +27,7 @@ class FamilyQuestPage extends StatelessWidget {
           Center(
             child: CircularProgressIndicator(),
           );
-        if (snapshot.hasError || snapshot.data == null)
-          return ErrorPage(error: snapshot.error);
+        if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
         final familyQuest = snapshot.data!;
 
         // クエスト情報を取得できた場合、詳細画面を表示
@@ -54,16 +52,14 @@ class FamilyQuestPage extends StatelessWidget {
 
 // 動作確認用コード
 void main() {
-  GetIt.I.registerSingleton<FamilyQuestApplicationService>(
-      MockFamilyQuestApplicationService());
+  GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
   final router = GoRouter(initialLocation: '/quest/123', routes: $appRoutes);
   runApp(MaterialApp.router(
     routerConfig: router,
   ));
 }
 
-class MockFamilyQuestApplicationService
-    implements FamilyQuestApplicationService {
+class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
   @override
   Future<FamilyQuestData?> getFamilyQuest(String questId) async {
     return FamilyQuestData(

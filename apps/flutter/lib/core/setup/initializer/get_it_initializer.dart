@@ -2,7 +2,7 @@ import 'package:allowance_questboard/family/query_service/family_query_service.d
 import 'package:allowance_questboard/member/query_service/member_query_service.dart';
 import 'package:allowance_questboard/login/service/get_family_id_usecase.dart';
 import 'package:allowance_questboard/login/service/get_member_id_usecase.dart';
-import 'package:allowance_questboard/shared/api/api_client.dart';
+import 'package:allowance_questboard/core/api/api_client.dart';
 import 'package:allowance_questboard/core/constants/api_endpoints.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;

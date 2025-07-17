@@ -3,7 +3,7 @@ import 'package:allowance_questboard/application/quest/family_quest_application_
 import 'package:allowance_questboard/application/quest/family_quest_data.dart';
 import 'package:allowance_questboard/application/quest/quest_detail_data.dart';
 import 'package:allowance_questboard/presentation/quest/screen/family_quests_screen.dart';
-import 'package:allowance_questboard/shared/page/error_page.dart';
+import 'package:allowance_questboard/core/page/error_page.dart';
 import 'package:allowance_questboard/core/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -11,8 +11,7 @@ import 'package:go_router/go_router.dart';
 
 class FamilyQuestsPage extends StatelessWidget {
   /// 家族クエスト一覧画面
-  FamilyQuestsPage({required this.familyId})
-      : _service = GetIt.I<FamilyQuestApplicationService>();
+  FamilyQuestsPage({required this.familyId}) : _service = GetIt.I<FamilyQuestApplicationService>();
 
   /// 対象の家族ID
   final String familyId;
@@ -26,8 +25,7 @@ class FamilyQuestsPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || snapshot.data == null)
-            return ErrorPage(error: snapshot.error);
+          if (snapshot.hasError || snapshot.data == null) return ErrorPage(error: snapshot.error);
           final quests = snapshot.data;
 
           // 家族クエスト一覧を取得できた場合、一覧画面を表示
@@ -53,16 +51,14 @@ class FamilyQuestsPage extends StatelessWidget {
 
 // 動作確認用コード
 void main() {
-  GetIt.I.registerSingleton<FamilyQuestApplicationService>(
-      MockFamilyQuestApplicationService());
+  GetIt.I.registerSingleton<FamilyQuestApplicationService>(MockFamilyQuestApplicationService());
   final router = GoRouter(initialLocation: '/quests/123', routes: $appRoutes);
   runApp(MaterialApp.router(
     routerConfig: router,
   ));
 }
 
-class MockFamilyQuestApplicationService
-    implements FamilyQuestApplicationService {
+class MockFamilyQuestApplicationService implements FamilyQuestApplicationService {
   @override
   Future<List<FamilyQuestData>> getFamilyQuests(String familyId) async {
     return [

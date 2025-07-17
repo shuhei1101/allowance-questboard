@@ -39,3 +39,12 @@
 ├── docker-compose.yml                     // Docker Compose設定
 └── .env.sample                            // 環境変数サンプル
 ```
+
+## 各層の責務
+- [Router層の責務](layer-responsibilities/router.md)
+- [Service層の責務](layer-responsibilities/service.md)
+- [QueryService層の責務](layer-responsibilities/query-service.md)
+- [Models層の責務](layer-responsibilities/models.md)
+- [Repository層の責務](layer-responsibilities/repository.md)
+- [DAO層の責務](layer-responsibilities/dao.md)
+- [Entity層の責務](layer-responsibilities/entity.md)

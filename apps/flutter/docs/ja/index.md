@@ -12,9 +12,9 @@
 - 🎨 [テーマシステム](components/theme.md)
 
 ## 3. モジュール
-- 🔄 [状態管理 (Riverpod)](modules/state-management.md)
-- 🗺️ [ルーティング (go_router)](modules/routing.md)
-- 🌐 [API通信](modules/api-communication.md)
+- 🔄 [状態管理 (Riverpod)](modules/state.md)
+- 🗺️ [ルーティング (go_router)](modules/api.md)
+- 🌐 [API通信](modules/state.md)
 - 🏗️ [セットアップ・初期化](modules/setup.md)
 
 ## 4. コーディング規約
