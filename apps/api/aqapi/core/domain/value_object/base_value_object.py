@@ -1,10 +1,13 @@
 from abc import abstractmethod
+from typing import Generic, TypeVar
 
+ValueType = TypeVar('ValueType')
 
-class BaseValueObject():
+class BaseValueObject(Generic[ValueType]):
     """値オブジェクトの基底クラス"""
     
-    def __init__(self):
+    def __init__(self, value: ValueType):
+        self._value = value
         self._validate()
     
     @abstractmethod

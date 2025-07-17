@@ -98,6 +98,12 @@ abstract class AppLocalizations {
     Locale('ja')
   ];
 
+  /// No description provided for @userIdRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID is required'**
+  String get userIdRequired;
+
   /// No description provided for @emailRequired.
   ///
   /// In en, this message translates to:

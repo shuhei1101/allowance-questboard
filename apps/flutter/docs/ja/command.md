@@ -9,3 +9,8 @@ flutter pub run build_runner build
 ```bash
 flutter pub get
 ```
+
+- ローカライズの生成コマンド
+```bash
+flutter gen-l10n
+```

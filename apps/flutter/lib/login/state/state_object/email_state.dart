@@ -1,8 +1,8 @@
 import 'package:allowance_questboard/core/setup/l10n_provider.dart';
-import 'package:allowance_questboard/shared/state/state_object.dart';
+import 'package:allowance_questboard/core/state/base_state_object.dart';
 import 'package:allowance_questboard/shared/util/validator.dart';
 
-class EmailState extends StateObject<String> {
+class EmailState extends BaseStateObject<String> {
   EmailState(super.value);
 
   @override

@@ -1,8 +1,6 @@
 import 'package:allowance_questboard/core/router/app_route.dart';
 import 'package:allowance_questboard/login/state/auth_state_provider.dart';
 import 'package:allowance_questboard/core/setup/l10n_provider.dart';
-import 'package:allowance_questboard/login/service/get_family_id_usecase.dart';
-import 'package:allowance_questboard/login/service/get_member_id_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +20,6 @@ enum AuthType { family, member }
 /// - 両方のフィールドのバリデーションを確認
 /// - バリデーションが問題なければ、ログインボタンを有効化
 class LoginPage extends HookConsumerWidget {
-  final GetFamilyIdUsecase getFamilyIdUsecase = GetIt.I<GetFamilyIdUsecase>();
-  final GetMemberIdUsecase getMemberIdUsecase = GetIt.I<GetMemberIdUsecase>();
-
   LoginPage({super.key});
 
   @override

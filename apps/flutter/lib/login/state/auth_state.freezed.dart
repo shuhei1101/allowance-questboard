@@ -15,9 +15,9 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$AuthState {
-  String? get userId;
-  int? get familyId;
-  int? get memberId;
+  UserIdState? get userId;
+  ParentIdState? get parentId;
+  MemberIdState? get memberId;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,19 +31,21 @@ mixin _$AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AuthState &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.familyId, familyId) ||
-                other.familyId == familyId) &&
-            (identical(other.memberId, memberId) ||
-                other.memberId == memberId));
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.parentId, parentId) &&
+            const DeepCollectionEquality().equals(other.memberId, memberId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, familyId, memberId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(parentId),
+      const DeepCollectionEquality().hash(memberId));
 
   @override
   String toString() {
-    return 'AuthState(userId: $userId, familyId: $familyId, memberId: $memberId)';
+    return 'AuthState(userId: $userId, parentId: $parentId, memberId: $memberId)';
   }
 }
 
@@ -52,7 +54,8 @@ abstract mixin class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) _then) =
       _$AuthStateCopyWithImpl;
   @useResult
-  $Res call({String? userId, int? familyId, int? memberId});
+  $Res call(
+      {UserIdState? userId, ParentIdState? parentId, MemberIdState? memberId});
 }
 
 /// @nodoc
@@ -68,22 +71,22 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
   @override
   $Res call({
     Object? userId = freezed,
-    Object? familyId = freezed,
+    Object? parentId = freezed,
     Object? memberId = freezed,
   }) {
     return _then(_self.copyWith(
       userId: freezed == userId
           ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      familyId: freezed == familyId
-          ? _self.familyId
-          : familyId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as UserIdState?,
+      parentId: freezed == parentId
+          ? _self.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as ParentIdState?,
       memberId: freezed == memberId
           ? _self.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as MemberIdState?,
     ));
   }
 }
@@ -92,17 +95,17 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
 
 class _AuthState implements AuthState {
   const _AuthState(
-      {this.userId = null, this.familyId = null, this.memberId = null});
+      {this.userId = null, this.parentId = null, this.memberId = null});
 
   @override
   @JsonKey()
-  final String? userId;
+  final UserIdState? userId;
   @override
   @JsonKey()
-  final int? familyId;
+  final ParentIdState? parentId;
   @override
   @JsonKey()
-  final int? memberId;
+  final MemberIdState? memberId;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -117,19 +120,21 @@ class _AuthState implements AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AuthState &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.familyId, familyId) ||
-                other.familyId == familyId) &&
-            (identical(other.memberId, memberId) ||
-                other.memberId == memberId));
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.parentId, parentId) &&
+            const DeepCollectionEquality().equals(other.memberId, memberId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, familyId, memberId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(parentId),
+      const DeepCollectionEquality().hash(memberId));
 
   @override
   String toString() {
-    return 'AuthState(userId: $userId, familyId: $familyId, memberId: $memberId)';
+    return 'AuthState(userId: $userId, parentId: $parentId, memberId: $memberId)';
   }
 }
 
@@ -141,7 +146,8 @@ abstract mixin class _$AuthStateCopyWith<$Res>
       __$AuthStateCopyWithImpl;
   @override
   @useResult
-  $Res call({String? userId, int? familyId, int? memberId});
+  $Res call(
+      {UserIdState? userId, ParentIdState? parentId, MemberIdState? memberId});
 }
 
 /// @nodoc
@@ -157,22 +163,22 @@ class __$AuthStateCopyWithImpl<$Res> implements _$AuthStateCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? userId = freezed,
-    Object? familyId = freezed,
+    Object? parentId = freezed,
     Object? memberId = freezed,
   }) {
     return _then(_AuthState(
       userId: freezed == userId
           ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      familyId: freezed == familyId
-          ? _self.familyId
-          : familyId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as UserIdState?,
+      parentId: freezed == parentId
+          ? _self.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as ParentIdState?,
       memberId: freezed == memberId
           ? _self.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as MemberIdState?,
     ));
   }
 }

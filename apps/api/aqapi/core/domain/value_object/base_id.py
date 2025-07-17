@@ -2,12 +2,11 @@ from typing import Hashable
 from aqapi.core.domain.value_object.base_value_object import BaseValueObject
 
 
-class BaseId(BaseValueObject, Hashable):
+class BaseId(BaseValueObject[int], Hashable):
     """ドメインモデルのIDを表す基底クラス"""
 
     def __init__(self, value: int):
-        self._value = value
-        super().__init__()
+        super().__init__(value)
 
     def _validate(self) -> None:
         if not isinstance(self._value, int) or self._value <= 0:

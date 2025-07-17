@@ -31,6 +31,7 @@ dependencies:
   supabase_auth_ui: ^0.5.5
   logger: ^2.6.0
   shared_preferences: ^2.5.3
+  flutter_secure_storage: ^9.2.2
 
 dev_dependencies:
   flutter_test:
@@ -46,8 +47,3 @@ flutter:
 
 flutter_gen:
   output: lib/core/generated/
-
-flutter_intl:
-  enabled: true
-  arb_dir: lib/core/l10n # ARBファイルの配置場所
-  output_dir: lib/core/generated/l10n # 生成されるDartファイルの出力先

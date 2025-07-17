@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/family/query_service/family_query_service.dart';
+import 'package:allowancae_questboard/family/query_service/family_query_service.dart';
 import 'package:allowance_questboard/login/api/login_api.dart';
 import 'package:get_it/get_it.dart';
 

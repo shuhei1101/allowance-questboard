@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "userIdRequired": "User ID is required",
   "emailRequired": "Email address is required",
   "emailInvalid": "Invalid email address format",
   "passwordRequired": "Password is required",

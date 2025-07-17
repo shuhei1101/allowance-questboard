@@ -1,13 +1,13 @@
 import 'package:allowance_questboard/core/setup/l10n_provider.dart';
-import 'package:allowance_questboard/shared/state/state_object.dart';
+import 'package:allowance_questboard/core/state/base_state_object.dart';
 
 class QuestTitleState extends StateObject<String> {
   QuestTitleState(super.value);
 
   @override
-  String? validate(String value) {
+  String? validate() {
     // クエスト名は空であってはいけない
-    if (value.isEmpty) {
+    if (value().isEmpty) {
       return L10nProvider.I.questRequired;
     }
     // クエスト名は50文字以内でなければならない
