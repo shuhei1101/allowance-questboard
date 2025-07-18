@@ -76,6 +76,12 @@ class LoginPage extends HookConsumerWidget {
                   return;
                 }
 
+final tokens = AuthTokens(
+    accessToken: session.accessToken,
+    refreshToken: session.refreshToken,
+  );
+  await TokenStorage().save(tokens);
+
                 await notifier.login(userId, authType.value);
                 if (authType.value == AuthType.family) {
                   // 家族としてログイン
