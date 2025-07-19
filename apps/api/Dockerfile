@@ -5,4 +5,4 @@ COPY . .
 RUN rm -rf build dist *.egg-info aqapi/*.egg-info
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD uvicorn aqapi.main:app --bind 0.0.0.0:$PORT --workers 2 --threads 4
+CMD uvicorn aqapi.main:app --bind 0.0.0.0 --port $PORT --workers 2

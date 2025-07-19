@@ -9,23 +9,30 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get userIdRequired => 'User ID is required';
+  String get userIdRequired => 'User ID is required.';
 
   @override
-  String get emailRequired => 'Email address is required';
+  String get parentIdIsInvalid => ' Invalid parent ID specified.';
 
   @override
-  String get emailInvalid => 'Invalid email address format';
+  String get memberIdIsInvalid => 'Invalid member ID specified.';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get emailInvalid => 'Email address format is invalid.';
 
   @override
-  String get passwordInvalid => 'Password is incorrectly formatted';
+  String maxLength(Object max) {
+    return 'Must be at most $max characters long.';
+  }
 
   @override
-  String get questRequired => 'Quest is required';
+  String minLength(Object min) {
+    return 'Must be at least $min characters long.';
+  }
 
   @override
-  String get questInvalid => 'The quest is incorrectly formatted';
+  String get required => 'Value is required.';
+
+  @override
+  String get positiveInteger => 'Must be a positive integer.';
 }

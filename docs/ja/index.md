@@ -1,19 +1,18 @@
 # 開発者向け共通Wikiトップページ
-- 本ページには、各アプリケーションの共通の開発に関するドキュメントをまとめます。
-- 各アプリケーションの詳細なドキュメントは、以下のリンクからアクセスできます。
 
-## 1. アプリ毎のドキュメント
-- [お小遣いクエストボード - APIサーバ](../../apps/api/docs/ja/index.md)
-- [お小遣いクエストボード - Flutterアプリ](../../apps/flutter/docs/ja/index.md)
+## 実装する前に
+- 何を実装するにしても、まずは**設計書を確認**すること
+- 設計書を確認して、「さぁ実装」とする前に**一度似たような実装を確認**しそれに習うこと
+- 同じディレクトリに`{モジュール名}.md`がある場合は読むこと
 
-## 3. 開発関連
-- ⚠️ [例外ハンドリング](development/exception-handling.md)
-- 🧪 [テスト](development/testing.md)
-- 🤖 [Copilotガイドライン](development/copilot-guidelines.md)
-- 
-### 3.1. コーディング規約
-- ✍️ [命名ルール](development/coding-standards/naming-rules.md)
-- 🏗️ [クラス・メソッド・変数ガイドライン](development/coding-standards/class-guidelines.md)
-- 📝 [コーディング規約](development/coding-standards/coding_standards.md)
-- 💬 [コメントルール](development/coding-standards/comment-rules.md)
-- 📊 [図表・ダイアグラム作成ルール](development/coding-standards/diagram-rules.md)
+## コードを実装するときの必読ドキュメント
+- [よくある命名規則パターン](./common/よくある命名規則パターン.md)
+- [実装後にやるクラス図更新](./common/クラス図更新)
+
+## 何をしたい？
+- [APIサーバでPythonをテスト実行したい](./api/環境構築.md)
+- [APIのエンドポイント(route.py)を作成したい](./api/エンドポイント関連.md)
+- [QueryServiceを作成したい](./api/クエリサービス関連.md)
+
+## 実装が終わったら？
+- 関連する設計書を更新すること

@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/core/generated/l10n.dart';
+import 'package:allowance_questboard/core/l10n/app_localizations.dart';
 import 'package:allowance_questboard/core/setup/setup_app.dart';
 import 'package:allowance_questboard/login/page/login_page.dart';
 import 'package:allowance_questboard/core/theme/app_themes.dart';
@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
         theme: AppThemes.commonTheme,
         darkTheme: ThemeData(),
         localizationsDelegates: const [
-          S.delegate,
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: S.delegate.supportedLocales,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: LoginPage(),
       ),
     );

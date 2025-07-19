@@ -9,23 +9,30 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get userIdRequired => 'ユーザーIDは必須です';
+  String get userIdRequired => 'ユーザーIDは必須です。';
 
   @override
-  String get emailRequired => 'メールアドレスは必須です';
+  String get parentIdIsInvalid => '不正な親IDが指定されました。';
 
   @override
-  String get emailInvalid => 'メールアドレスの形式が正しくありません';
+  String get memberIdIsInvalid => '不正なメンバーIDが指定されました。';
 
   @override
-  String get passwordRequired => 'パスワードは必須です';
+  String get emailInvalid => 'メールアドレスの形式が正しくありません。';
 
   @override
-  String get passwordInvalid => 'パスワードの形式が正しくありません';
+  String maxLength(Object max) {
+    return '$max文字以内でなければなりません。';
+  }
 
   @override
-  String get questRequired => 'クエストは必須です';
+  String minLength(Object min) {
+    return '$min文字以上でなければなりません。';
+  }
 
   @override
-  String get questInvalid => 'クエストの形式が正しくありません';
+  String get required => '値は必須です。';
+
+  @override
+  String get positiveInteger => '正の整数でなければなりません。';
 }

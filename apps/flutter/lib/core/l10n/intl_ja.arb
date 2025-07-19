@@ -1,10 +1,11 @@
 {
   "@@locale": "ja",
-  "userIdRequired": "ユーザーIDは必須です",
-  "emailRequired": "メールアドレスは必須です",
-  "emailInvalid": "メールアドレスの形式が正しくありません",
-  "passwordRequired": "パスワードは必須です",
-  "passwordInvalid": "パスワードの形式が正しくありません",
-  "questRequired": "クエストは必須です",
-  "questInvalid": "クエストの形式が正しくありません"
+  "userIdRequired": "ユーザーIDは必須です。",
+  "parentIdIsInvalid": "不正な親IDが指定されました。",
+  "memberIdIsInvalid": "不正なメンバーIDが指定されました。",
+  "emailInvalid": "メールアドレスの形式が正しくありません。",
+  "maxLength": "{max}文字以内でなければなりません。",
+  "minLength": "{min}文字以上でなければなりません。",
+  "required": "値は必須です。",
+  "positiveInteger": "正の整数でなければなりません。"
 }

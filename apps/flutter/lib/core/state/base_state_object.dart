@@ -1,27 +1,38 @@
 import 'package:allowance_questboard/core/state/error_message.dart';
+import 'package:allowance_questboard/core/state/validation_mixin.dart';
 
-abstract class BaseStateObject<ValueType> {
-  final ValueType _value;
-  late ErrorMessage? _errorMessage;
+abstract class BaseStateObject<ValueType> with ValidationMixin {
+  final ValueType value;
+  late ErrorMessage? errorMessage;
 
-  BaseStateObject(ValueType value): _value = value {
-    _errorMessage = validate();
+  BaseStateObject(this.value) {
+    try {
+      validate();
+      errorMessage = null;
+    } on ValidationException catch (e) {
+      errorMessage = e.errorMessage;
+    }
   }
 
-  ValueType get value => _value;
-  bool get isValid => _errorMessage == null;
-  ErrorMessage? get errorMessage => _errorMessage;
+  /// 有効な値かどうかを示す
+  bool get isValid => errorMessage == null;
 
-  /// 値を検証して、エラーメッセージを返す
-  /// エラーがない場合は `null` を返す
-  ErrorMessage? validate();
+  /// デバッグ用の文字列表現を返す
+  /// ログ出力時に使用する
+  String toDebugString() {
+    return 'value: $value, errorMessage: $errorMessage';
+  }
+
+  /// 値を検証する
+  /// エラーがある場合は `ValidationException` をthrowする
+  void validate();
 
   @override
-  int get hashCode => _value.hashCode;
+  int get hashCode => value.hashCode;
 
   @override
   bool operator ==(Object other) {
     if (other is! BaseStateObject<ValueType>) return false;
-    return _value == other._value;
+    return value == other.value;
   }
 }

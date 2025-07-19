@@ -1,3 +1,6 @@
+import 'package:allowance_questboard/login/state/state_object/member_id_state.dart';
+import 'package:allowance_questboard/login/state/state_object/parent_id_state.dart';
+import 'package:allowance_questboard/login/state/state_object/user_id_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_state.freezed.dart';

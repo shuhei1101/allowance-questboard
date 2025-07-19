@@ -1,42 +1,46 @@
+import 'package:allowance_questboard/core/constants/api_endpoints.dart';
+import 'package:allowance_questboard/login/api/login_api_client.dart';
 import 'package:allowance_questboard/login/state/auth_state.dart';
-import 'package:get_it/get_it.dart';
+import 'package:allowance_questboard/login/state/state_object/member_id_state.dart';
+import 'package:allowance_questboard/login/state/state_object/parent_id_state.dart';
+import 'package:allowance_questboard/login/state/state_object/user_id_state.dart';
 import 'package:state_notifier/state_notifier.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// 認証状態を管理するProvider
 class AuthStateNotifier extends StateNotifier<AuthState> {
-  final GetMemberIdUsecase getMemberIdUsecase = GetIt.I<GetMemberIdUsecase>();
 
   AuthStateNotifier(super.state);
 
-  Future<void> login(SupaSignInResponse response) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      state = state.copyWith(errorMessage: 'ユーザーIDの取得に失敗しました');
-      return;
+  void updateFromResponse(
+    LoginApiResponse loginApiResponse,
+  ) {
+    // ユーザーIDを更新
+    updateUserId(UserIdState(loginApiResponse.userId));
+    
+    // 親IDを更新
+    if (loginApiResponse.parentId != null) {
+      updateParentId(ParentIdState(loginApiResponse.parentId!));
+    } else {
+      updateParentId(null);
     }
 
-    final (familyId, memberId) = await (
-      _getFamilyIdUsecase.execute(userId),
-      _getMemberIdUsecase.execute(userId),
-    ).wait;
-
-    state = state.copyWith(
-      userId: userId,
-      familyId: familyId,
-      memberId: memberId,
-    );
+    // メンバーIDを更新
+    if (loginApiResponse.memberId != null) {
+      updateMemberId(MemberIdState(loginApiResponse.memberId!));
+    } else {
+      updateMemberId(null);
+    }
   }
 
-  void updateUserId(String? userId) {
+  void updateUserId(UserIdState? userId) {
     state = state.copyWith(userId: userId);
   }
 
-  void updateFamilyId(int? familyId) {
-    state = state.copyWith(familyId: familyId);
+  void updateParentId(ParentIdState? parentId) {
+    state = state.copyWith(parentId: parentId);
   }
 
-  void updateMemberId(int? memberId) {
+  void updateMemberId(MemberIdState? memberId) {
     state = state.copyWith(memberId: memberId);
   }
 }

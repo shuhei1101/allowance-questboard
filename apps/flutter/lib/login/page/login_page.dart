@@ -1,6 +1,8 @@
 import 'package:allowance_questboard/core/router/app_route.dart';
 import 'package:allowance_questboard/login/state/auth_state_provider.dart';
 import 'package:allowance_questboard/core/setup/l10n_provider.dart';
+import 'package:allowance_questboard/login/usecase/login_usecase.dart';
+import 'package:allowance_questboard/core/widget/ui_helper_mixin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,21 +14,15 @@ import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 /// ログインページで使用する認証タイプを定義します。
 enum AuthType { family, member }
 
-/// ログインページのウィジェット
-///
-/// このウィジェットには以下の機能があります。
-/// - ユーザー名とパスワードの入力フィールド
-/// - ログインボタン
-/// - 両方のフィールドのバリデーションを確認
-/// - バリデーションが問題なければ、ログインボタンを有効化
-class LoginPage extends HookConsumerWidget {
+class LoginPage extends HookConsumerWidget with UiHelperMixin {
+  final LoginUsecase loginUsecase = GetIt.I<LoginUsecase>();
+
   LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useMemoized(() => L10nProvider.update(context));
     final notifier = ref.read(authStateProvider.notifier);
-    final authState = ref.watch(authStateProvider);
     final authType = useState(AuthType.family);
     return Scaffold(
       appBar: AppBar(
@@ -37,73 +33,41 @@ class LoginPage extends HookConsumerWidget {
         children: [
           // `家族`か`メンバー`どちらでログインするかを選択するためのラジオボタン
           const Text('ユーザータイプの選択'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Radio<AuthType>(
-                value: AuthType.family,
-                groupValue: authType.value,
-                onChanged: (value) {
-                  if (value != null) {
-                    authType.value = value;
-                  }
-                },
-              ),
-              const Text('親'),
-              Radio<AuthType>(
-                value: AuthType.member,
-                groupValue: authType.value,
-                onChanged: (value) {
-                  if (value != null) {
-                    authType.value = value;
-                  }
-                },
-              ),
-              const Text('子供'),
-            ],
+          RadioGroup<AuthType>(
+            groupValue: authType.value,
+            onChanged: (value) {
+              if (value != null) {authType.value = value;}
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Radio<AuthType>(value: AuthType.family), const Text('親'),
+                Radio<AuthType>(value: AuthType.member), const Text('子供'),
+              ],
+            ),
           ),
           // 電子メールサインイン/サインアップフォームを作成します
           SupaEmailAuth(
               redirectTo: kIsWeb ? null : 'io.mydomain.myapp://callback',
               onSignInComplete: (response) async {
-                final supabaseUser = Supabase.instance.client.auth.currentUser;
-                final userId = supabaseUser?.id;
-
-                if (userId == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('ユーザーIDの取得に失敗しました')),
-                  );
-                  return;
-                }
-
-final tokens = AuthTokens(
-    accessToken: session.accessToken,
-    refreshToken: session.refreshToken,
-  );
-  await TokenStorage().save(tokens);
-
-                await notifier.login(userId, authType.value);
-                if (authType.value == AuthType.family) {
-                  // 家族としてログイン
-                  // もし、家族IDが取得できていない場合はエラーメッセージを表示
-                  final familyId = authState.familyId;
-                  if (familyId == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('家族IDの取得に失敗しました')),
-                    );
-                    return;
-                  }
-                  FamilyHomeRoute().push(context);
-                } else {
-                  // メンバーとしてログイン
-                  final memberId = authState.memberId;
-                  if (memberId == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('メンバーIDの取得に失敗しました')),
-                    );
-                    return;
-                  }
-                  print('メンバーとしてログイン: $userId');
+                loginUsecase.execute(command: LoginUsecaseCommand(
+                  authNotifier: notifier,
+                  authResponse: response,
+                  onSuccess: () {
+                    successSnackBar(context, 'ログイン成功');
+                  },
+                  onError: (message){
+                    errorSnackBar(context, 'ログインエラー: $message');
+                  }, 
+                ));
+                switch (authType.value) {
+                  case AuthType.family:
+                    // 画面遷移: TypedGoRouterを使用
+                    FamilyHomeRoute().go(context);
+                    break;
+                  case AuthType.member:
+                    // 画面遷移
+                    break;
                 }
               },
               onSignUpComplete: (response) {
@@ -112,9 +76,7 @@ final tokens = AuthTokens(
               },
               onError: (error) {
                 print('ログインエラー: $error');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('ログインエラー: ${error.toString()}')),
-                );
+                errorSnackBar(context, 'ログインエラー: ${error.toString()}');
               },
               metadataFields: [
                 // たとえば、文字列メタデータ用の追加のテキストフィールドを作成します:

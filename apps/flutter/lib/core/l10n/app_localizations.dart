@@ -101,44 +101,50 @@ abstract class AppLocalizations {
   /// No description provided for @userIdRequired.
   ///
   /// In en, this message translates to:
-  /// **'User ID is required'**
+  /// **'User ID is required.'**
   String get userIdRequired;
 
-  /// No description provided for @emailRequired.
+  /// No description provided for @parentIdIsInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Email address is required'**
-  String get emailRequired;
+  /// **' Invalid parent ID specified.'**
+  String get parentIdIsInvalid;
+
+  /// No description provided for @memberIdIsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid member ID specified.'**
+  String get memberIdIsInvalid;
 
   /// No description provided for @emailInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Invalid email address format'**
+  /// **'Email address format is invalid.'**
   String get emailInvalid;
 
-  /// No description provided for @passwordRequired.
+  /// No description provided for @maxLength.
   ///
   /// In en, this message translates to:
-  /// **'Password is required'**
-  String get passwordRequired;
+  /// **'Must be at most {max} characters long.'**
+  String maxLength(Object max);
 
-  /// No description provided for @passwordInvalid.
+  /// No description provided for @minLength.
   ///
   /// In en, this message translates to:
-  /// **'Password is incorrectly formatted'**
-  String get passwordInvalid;
+  /// **'Must be at least {min} characters long.'**
+  String minLength(Object min);
 
-  /// No description provided for @questRequired.
+  /// No description provided for @required.
   ///
   /// In en, this message translates to:
-  /// **'Quest is required'**
-  String get questRequired;
+  /// **'Value is required.'**
+  String get required;
 
-  /// No description provided for @questInvalid.
+  /// No description provided for @positiveInteger.
   ///
   /// In en, this message translates to:
-  /// **'The quest is incorrectly formatted'**
-  String get questInvalid;
+  /// **'Must be a positive integer.'**
+  String get positiveInteger;
 }
 
 class _AppLocalizationsDelegate

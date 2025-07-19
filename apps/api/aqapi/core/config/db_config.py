@@ -37,12 +37,12 @@ class DBConfig:
             print(f"auth.usersテーブルの反映でエラー: {e}")
             return
 
-    def get_db(self):
-        db = self.SessionLocal()
+    def get_session(self):
+        session = self.SessionLocal()
         try:
-            yield db
+            yield session
         finally:
-            db.close()
+            session.close()
 
     def import_all_entities(self):
         """すべてのEntityクラスをインポートして初期化"""
