@@ -32,6 +32,7 @@ dependencies:
   logger: ^2.6.0
   shared_preferences: ^2.5.3
   flutter_secure_storage: ^9.2.2
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +45,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - .env
 
 flutter_gen:
   output: lib/core/generated/

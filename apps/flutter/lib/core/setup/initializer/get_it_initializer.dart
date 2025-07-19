@@ -8,5 +8,5 @@ import 'package:http/http.dart' as http;
 void initGetIt() {
   GetIt.I.registerLazySingleton<LoginUsecase>(() => LoginUsecase());
   GetIt.I.registerLazySingleton<TokenStorage>(() => TokenStorage());
-  GetIt.I.registerLazySingleton<LoginApiClient>(() => LoginApiClient(ApiEndpoints.baseUrl, http.Client()));
+  GetIt.I.registerLazySingleton<LoginApi>(() => LoginApi(ApiEndpoints.baseUrl, http.Client()));
 }

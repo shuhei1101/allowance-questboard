@@ -3,7 +3,7 @@
 ## `GetFamilyQuestSummaries`関連
 ```mermaid
 classDiagram
-    class get_family_quest_summaries.py {
+    class get_family_quest_summaries_route.py {
         +get_family_quest_summaries(family_id, language_id, page, size, db)
     }
 
@@ -40,8 +40,8 @@ classDiagram
         +from_models(quest_summaries) QuestSummariesDto
     }
 
-    get_family_quest_summaries.py --> GetFamilyQuestSummariesRequest : 使用
-    get_family_quest_summaries.py --> GetFamilyQuestSummariesResponse : 返却
+    get_family_quest_summaries_route.py --> GetFamilyQuestSummariesRequest : 使用
+    get_family_quest_summaries_route.py --> GetFamilyQuestSummariesResponse : 返却
     GetFamilyQuestSummariesResponse --> QuestDto : 保持
     QuestDto --> QuestMemberDto : 保持
     GetFamilyQuestSummariesResponse --> QuestSummariesDto : 利用

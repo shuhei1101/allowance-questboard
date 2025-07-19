@@ -23,7 +23,7 @@ class LoginUsecaseCommand {
 
 class LoginUsecase {
   final TokenStorage tokenStorage = GetIt.I<TokenStorage>();
-  final LoginApiClient loginApiClient = GetIt.I<LoginApiClient>();
+  final LoginApi loginApiClient = GetIt.I<LoginApi>();
 
   Future<void> execute({
     required LoginUsecaseCommand command,

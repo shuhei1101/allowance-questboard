@@ -4,12 +4,11 @@ import 'package:allowance_questboard/core/api/base_api_response.dart';
 import 'package:allowance_questboard/core/constants/api_endpoints.dart';
 
 /// ログインAPIクライアント
-class LoginApiClient extends BaseApiClient {
+class LoginApi extends BaseApiClient {
   /// LoginApiClientのコンストラクタ
   /// 
-  /// [baseUrl] APIのベースURL
   /// [httpClient] HTTPクライアント
-  LoginApiClient(super.baseUrl, super.httpClient);
+  LoginApi(super.httpClient);
 
   /// ログイン処理を実行
   /// 
