@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/core/constants/api_endpoints.dart';
-import 'package:allowance_questboard/login/api/login_api_client.dart';
+import 'package:allowance_questboard/login/api/v1/login_api.dart';
 import 'package:allowance_questboard/login/state/auth_state.dart';
 import 'package:allowance_questboard/login/state/state_object/member_id_state.dart';
 import 'package:allowance_questboard/login/state/state_object/parent_id_state.dart';

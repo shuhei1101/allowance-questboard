@@ -1,139 +1,97 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:allowance_questboard/core/security/auth_tokens.dart';
+import 'package:allowance_questboard/core/constants/api_endpoints.dart';
+import 'package:allowance_questboard/core/api/base_api_request.dart';
+import 'package:allowance_questboard/core/api/base_api_response.dart';
 
 /// APIクライアントの基底クラス
 /// 
 /// 全てのAPIクライアントはこのクラスを継承して実装します。
 /// HTTP通信の共通処理や認証ヘッダーの設定を担当します。
-abstract class BaseApiClient {
+abstract class BaseApiClient<TRequest extends BaseApiRequest, TResponse extends BaseApiResponse> {
   /// HTTPクライアント
-  final http.Client _httpClient;
-  
-  /// APIのベースURL
-  final String _baseUrl;
-  
-  /// 認証トークン
-  AuthTokens? _authTokens;
+  final http.Client _httpClient = GetIt.I<http.Client>();
 
   /// BaseApiClientのコンストラクタ
   /// 
-  /// [baseUrl] APIのベースURL
   /// [httpClient] HTTPクライアント
-  BaseApiClient(this._baseUrl, this._httpClient);
+  BaseApiClient();
 
-  /// 認証トークンを設定
+  /// エンドポイントを取得する抽象メソッド
+  /// 各具象クラスで実装すること
+  ApiEndpoint get endpoint;
+
+  /// URIを取得
   /// 
-  /// [tokens] 認証トークン
-  void setAuthTokens(AuthTokens tokens) {
-    _authTokens = tokens;
-  }
+  /// Returns: エンドポイントのURI
+  Uri get uri => Uri.parse(endpoint.url);
 
-  /// 認証ヘッダーを取得
+  /// APIリクエストを実行する抽象メソッド
+  /// 各具象クラスで実装すること
   /// 
-  /// Returns: 認証ヘッダーのMap
-  Map<String, String> _getAuthHeaders() {
-    final headers = <String, String>{
-      'Content-Type': 'application/json',
-    };
-    
-    if (_authTokens != null) {
-      headers['Authorization'] = 'Bearer ${_authTokens!.accessToken}';
-    }
-    
-    return headers;
-  }
+  /// [request] リクエストデータ
+  /// Returns: レスポンスデータ
+  Future<TResponse> execute(TRequest request);
 
-  /// GETリクエストを送信
+  /// GETリクエストを送信（継承先で使用可能）
   /// 
-  /// [path] リクエストパス
-  /// [queryParameters] クエリパラメータ
-  /// Returns: レスポンスのMap
-  /// Throws: [HttpException] HTTPエラーが発生した場合
-  Future<Map<String, dynamic>> get(
-    String path, {
-    Map<String, String>? queryParameters,
-  }) async {
-    final uri = Uri.parse('$_baseUrl$path');
-    final uriWithQuery = queryParameters != null
-        ? uri.replace(queryParameters: queryParameters)
-        : uri;
-
-    final response = await _httpClient.get(
-      uriWithQuery,
-      headers: _getAuthHeaders(),
-    );
-
-    return _handleResponse(response);
-  }
-
-  /// POSTリクエストを送信
-  /// 
-  /// [path] リクエストパス
-  /// [body] リクエストボディ
-  /// Returns: レスポンスのMap
-  /// Throws: [HttpException] HTTPエラーが発生した場合
-  Future<Map<String, dynamic>> post(
-    String path, {
-    Map<String, dynamic>? body,
-  }) async {
-    final uri = Uri.parse('$_baseUrl$path');
-    final response = await _httpClient.post(
+  /// [request] リクエストデータ
+  /// Returns: HTTPレスポンス
+  Future<http.Response> get(BaseApiRequest request) async {
+    return await _httpClient.get(
       uri,
-      headers: _getAuthHeaders(),
-      body: body != null ? jsonEncode(body) : null,
+      headers: request.headers,
     );
-
-    return _handleResponse(response);
   }
 
-  /// PUTリクエストを送信
+  /// POSTリクエストを送信（継承先で使用可能）
   /// 
-  /// [path] リクエストパス
-  /// [body] リクエストボディ
-  /// Returns: レスポンスのMap
-  /// Throws: [HttpException] HTTPエラーが発生した場合
-  Future<Map<String, dynamic>> put(
-    String path, {
-    Map<String, dynamic>? body,
-  }) async {
-    final uri = Uri.parse('$_baseUrl$path');
-    final response = await _httpClient.put(
+  /// [request] リクエストデータ
+  /// Returns: HTTPレスポンス
+  Future<http.Response> post(BaseApiRequest request) async {
+    return await _httpClient.post(
       uri,
-      headers: _getAuthHeaders(),
-      body: body != null ? jsonEncode(body) : null,
+      headers: request.headers,
+      body: request.toJson(),
     );
-
-    return _handleResponse(response);
   }
 
-  /// DELETEリクエストを送信
+  /// PUTリクエストを送信（継承先で使用可能）
   /// 
-  /// [path] リクエストパス
-  /// Returns: レスポンスのMap
-  /// Throws: [HttpException] HTTPエラーが発生した場合
-  Future<Map<String, dynamic>> delete(String path) async {
-    final uri = Uri.parse('$_baseUrl$path');
-    final response = await _httpClient.delete(
+  /// [request] リクエストデータ
+  /// Returns: HTTPレスポンス
+  Future<http.Response> put(BaseApiRequest request) async {
+    return await _httpClient.put(
       uri,
-      headers: _getAuthHeaders(),
+      headers: request.headers,
+      body: request.toJson(),
     );
-
-    return _handleResponse(response);
   }
 
-  /// HTTPレスポンスを処理
+  /// DELETEリクエストを送信（継承先で使用可能）
+  /// 
+  /// [request] リクエストデータ
+  /// Returns: HTTPレスポンス
+  Future<http.Response> delete(BaseApiRequest request) async {
+    return await _httpClient.delete(
+      uri,
+      headers: request.headers,
+    );
+  }
+
+  /// HTTPレスポンスを処理（継承先で使用可能）
   /// 
   /// [response] HTTPレスポンス
   /// Returns: レスポンスのMap
   /// Throws: [HttpException] HTTPエラーが発生した場合
-  Map<String, dynamic> _handleResponse(http.Response response) {
+  dynamic handleResponse(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       if (response.body.isEmpty) {
         return <String, dynamic>{};
       }
-      return jsonDecode(response.body) as Map<String, dynamic>;
+      return jsonDecode(response.body);
     } else {
       throw HttpException(
         'HTTP Error: ${response.statusCode} - ${response.reasonPhrase}',

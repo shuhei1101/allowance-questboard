@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:allowance_questboard/core/security/auth_tokens.dart';
 import 'package:allowance_questboard/core/security/token_storage.dart';
-import 'package:allowance_questboard/login/api/login_api_client.dart';
+import 'package:allowance_questboard/login/api/v1/login_api.dart';
 import 'package:allowance_questboard/login/state/auth_state_notifier.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';

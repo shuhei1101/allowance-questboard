@@ -6,14 +6,23 @@ class ApiInfo {
 
 final apiInfo = ApiInfo();
 
+class ApiEndpoint {
+  final String endpoint;
+  final String baseUrl = apiInfo.url;
+  
+  ApiEndpoint(this.endpoint);
+  
+  String get url => '$baseUrl$endpoint';
+}
+
 class ApiEndpoints {
-  String get login => '${apiInfo.url}/login';
-  String get family => '${apiInfo.url}/family';
-  String get families => '${apiInfo.url}/families';
-  String get member => '${apiInfo.url}/member';
-  String get members => '${apiInfo.url}/members';
-  String get quest => '${apiInfo.url}/quest';
-  String get quests => '${apiInfo.url}/quests';
+  ApiEndpoint get login => ApiEndpoint('/login');
+  ApiEndpoint get family => ApiEndpoint('/family');
+  ApiEndpoint get families => ApiEndpoint('/families');
+  ApiEndpoint get member => ApiEndpoint('/member');
+  ApiEndpoint get members => ApiEndpoint('/members');
+  ApiEndpoint get quest => ApiEndpoint('/quest');
+  ApiEndpoint get quests => ApiEndpoint('/quests');
 }
 
 final apiEndpoints = ApiEndpoints();
