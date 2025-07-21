@@ -1,5 +1,7 @@
 {
   "@@locale": "en",
+  "appTitle": "Allowance Quest Board",
+
   "userIdRequired": "User ID is required.",
   "parentIdIsInvalid": " Invalid parent ID specified.",
   "memberIdIsInvalid": "Invalid member ID specified.",
@@ -7,5 +9,37 @@
   "maxLength": "Must be at most {max} characters long.",
   "minLength": "Must be at least {min} characters long.",
   "required": "Value is required.",
-  "positiveInteger": "Must be a positive integer."
+  "positiveInteger": "Must be a positive integer.",
+
+  "loginSuccess": "Login successful",
+  "loginError": "Login error: {message}",
+  "signUpComplete": "Sign up complete",
+  "familyName": "Family Name",
+  "loginAsParent": "Login as Parent",
+  "loginAsChild": "Login as Child",
+  "cancel": "Cancel",
+
+  "enterYourEmail": "Enter your email",
+  "enterYourPassword": "Enter your password",
+  "signIn": "Sign in",
+  "signUp": "Sign up",
+  "forgotYourPassword": "Forgot your password?",
+  "dontHaveAnAccount": "Don't have an account?",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "createNewFamily": "Create new family",
+  "email": "Email",
+  "password": "Password",
+
+  "validEmailError": "Please enter a valid email address",
+  "passwordLengthError": "Please enter a password that is at least 6 characters long",
+  "forgotPassword": "Forgot your password?",
+  "dontHaveAccount": "Don't have an account? Sign up",
+  "haveAccount": "Already have an account? Sign in",
+  "sendPasswordReset": "Send password reset email",
+  "passwordResetSent": "Password reset email has been sent",
+  "backToSignIn": "Back to sign in",
+  "unexpectedError": "An unexpected error occurred",
+  "requiredFieldError": "This field is required",
+  "confirmPasswordError": "Passwords do not match",
+  "confirmPassword": "Confirm Password"
 }

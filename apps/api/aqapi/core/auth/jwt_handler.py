@@ -7,6 +7,8 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends
 from dotenv import load_dotenv
 
+from aqapi.core.app_logger import logger
+
 load_dotenv()
 
 class JWTHandler:
@@ -21,7 +23,10 @@ class JWTHandler:
         self.jwt_secret: str = jwt_secret
         
         # JWTの発行者（Supabase）を設定
-        self.issuer = "supabase"
+        self.issuer = "https://esoxujkmlwzotpgwbyxq.supabase.co/auth/v1"
+        
+        # JWTのオーディエンス（Supabase）を設定
+        self.audience = "authenticated"
         
         # Bearerトークンスキーマ
         self.security = HTTPBearer()
@@ -34,21 +39,29 @@ class JWTHandler:
         :raises HTTPException: トークンが無効な場合
         """
         try:
+            logger.d(f"JWT検証開始: issuer={self.issuer}, audience={self.audience}")
+            logger.d(f"Token preview: {token[:50]}...")
+            
             # JWTトークンをデコード・検証
             payload = jwt.decode(
                 token,
                 self.jwt_secret,
                 algorithms=["HS256"],
                 issuer=self.issuer,
+                audience=self.audience,
                 options={"verify_exp": True}  # 有効期限をチェック
             )
+            
+            logger.d(f"JWT検証成功: user_id={payload.get('sub')}")
             return payload
         except jwt.ExpiredSignatureError:
+            logger.d("JWT検証失敗: トークンの有効期限が切れています")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="トークンの有効期限が切れています"
             )
-        except jwt.InvalidTokenError:
+        except jwt.InvalidTokenError as e:
+            logger.d(f"JWT検証失敗: 無効なトークンです - {e}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="無効なトークンです"

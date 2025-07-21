@@ -1,30 +1,36 @@
 import logging
-from logging.handlers import TimedRotatingFileHandler
 
 from aqapi.core.config.log_config import LOG_CONF
 
-def build_logger():
-    logger = logging.getLogger(LOG_CONF.LOGGER_NAME)
-    logger.setLevel(LOG_CONF.LOG_LEVEL)
+class AppLogger:
+    """アプリケーション全体で使用するロガー"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(LOG_CONF.LOGGER_NAME)
+        self.logger.setLevel(LOG_CONF.LOG_LEVEL)
+        formatter = logging.Formatter(
+            LOG_CONF.FORMAT,
+            datefmt=LOG_CONF.DATE_FORMAT
+        )
 
-    formatter = logging.Formatter(
-        LOG_CONF.FORMAT,
-        datefmt=LOG_CONF.DATE_FORMAT
-    )
+        # StreamHandler
+        sh = logging.StreamHandler()
+        sh.setFormatter(formatter)
+        self.logger.addHandler(sh)
 
-    # StreamHandler
-    sh = logging.StreamHandler()
-    sh.setFormatter(formatter)
-    logger.addHandler(sh)
+    def d(self, message: str):
+        self.logger.debug(message)
 
-    # TimedRotatingFileHandler
-    trfh = TimedRotatingFileHandler(
-        filename=LOG_CONF.OUTPUT_PATH, 
-        when=LOG_CONF.WHEN, 
-        interval=LOG_CONF.INTERVAL, 
-        backupCount=LOG_CONF.BACKUP_COUNT
-    )
-    trfh.setFormatter(formatter)
-    logger.addHandler(trfh)
+    def i(self, message: str):
+        self.logger.info(message)
 
-LOGGER = build_logger()
+    def w(self, message: str):
+        self.logger.warning(message)
+
+    def e(self, message: str):
+        self.logger.error(message)
+
+    def c(self, message: str):
+        self.logger.critical(message)
+
+logger = AppLogger()

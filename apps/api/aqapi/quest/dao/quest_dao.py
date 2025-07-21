@@ -1,10 +1,10 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
-from aqapi.core.dao.dao import Dao
 from aqapi.quest.entity.quests_entity import QuestsEntity
+from aqapi.core.dao.base_dao import BaseDao
 
 
-class QuestDao(Dao):
+class QuestDao(BaseDao):
     """クエストDAOクラス"""
 
     def __init__(self, session: Session):
@@ -28,6 +28,11 @@ class QuestDao(Dao):
         :return Optional[QuestsEntity]: クエストエンティティ（見つからない場合はNone）
         """
         return self.session.query(QuestsEntity).filter(QuestsEntity.id == id).first()
+
+    def insert(self, entity) -> int:
+        self.session.add(entity)
+        self.session.flush()  # ←ここでDBに一度送って、ID発行される
+        return entity.id
 
     def update(self, entity: QuestsEntity) -> None:
         """クエストエンティティを更新する

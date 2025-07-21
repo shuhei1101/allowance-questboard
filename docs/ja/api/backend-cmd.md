@@ -1,6 +1,4 @@
-# README
-
-## よく使うコマンド
+# バックエンドのコマンド
 #### venvの起動
 ```bash
 source venv/bin/activate

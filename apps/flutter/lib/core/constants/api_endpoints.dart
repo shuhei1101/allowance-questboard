@@ -16,13 +16,13 @@ class ApiEndpoint {
 }
 
 class ApiEndpoints {
-  ApiEndpoint get login => ApiEndpoint('/login');
-  ApiEndpoint get family => ApiEndpoint('/family');
-  ApiEndpoint get families => ApiEndpoint('/families');
-  ApiEndpoint get member => ApiEndpoint('/member');
-  ApiEndpoint get members => ApiEndpoint('/members');
-  ApiEndpoint get quest => ApiEndpoint('/quest');
-  ApiEndpoint get quests => ApiEndpoint('/quests');
+  ApiEndpoint get login => ApiEndpoint('/api/v1/login');
+  ApiEndpoint get family => ApiEndpoint('/api/v1/family');
+  ApiEndpoint get families => ApiEndpoint('/api/v1/families');
+  ApiEndpoint get member => ApiEndpoint('/api/v1/member');
+  ApiEndpoint get members => ApiEndpoint('/api/v1/members');
+  ApiEndpoint get quest => ApiEndpoint('/api/v1/quest');
+  ApiEndpoint get quests => ApiEndpoint('/api/v1/quests');
 }
 
 final apiEndpoints = ApiEndpoints();

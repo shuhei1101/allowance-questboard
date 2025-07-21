@@ -1,13 +1,9 @@
 import 'package:allowance_questboard/family/home/page/family_home_page.dart';
-import 'package:allowance_questboard/login/page/login_page.dart';
-import 'package:allowance_questboard/member/page/member_page.dart';
-import 'package:allowance_questboard/member/page/members_page.dart';
+import 'package:allowance_questboard/login/page/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 part 'app_route.g.dart';
-
-// buildコマンド: flutter pub run build_runner build
 
 /// ログイン画面へのルーティング
 @TypedGoRoute<LoginRoute>(path: '/login')

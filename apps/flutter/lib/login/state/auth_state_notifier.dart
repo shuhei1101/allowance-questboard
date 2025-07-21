@@ -1,10 +1,13 @@
-import 'package:allowance_questboard/core/constants/api_endpoints.dart';
-import 'package:allowance_questboard/login/api/v1/login_api.dart';
+import 'package:allowance_questboard/login/api/v1/login_api_response.dart';
 import 'package:allowance_questboard/login/state/auth_state.dart';
 import 'package:allowance_questboard/login/state/state_object/member_id_state.dart';
 import 'package:allowance_questboard/login/state/state_object/parent_id_state.dart';
 import 'package:allowance_questboard/login/state/state_object/user_id_state.dart';
-import 'package:state_notifier/state_notifier.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final authStateNotifierProvider = StateNotifierProvider<AuthStateNotifier, AuthState>(
+  (ref) => AuthStateNotifier(AuthState()),
+);
 
 /// 認証状態を管理するProvider
 class AuthStateNotifier extends StateNotifier<AuthState> {
@@ -15,18 +18,18 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     LoginApiResponse loginApiResponse,
   ) {
     // ユーザーIDを更新
-    updateUserId(UserIdState(loginApiResponse.userId));
+    updateUserId(UserIdState(loginApiResponse.item.userId));
     
     // 親IDを更新
-    if (loginApiResponse.parentId != null) {
-      updateParentId(ParentIdState(loginApiResponse.parentId!));
+    if (loginApiResponse.item.parentId != null) {
+      updateParentId(ParentIdState(loginApiResponse.item.parentId!));
     } else {
       updateParentId(null);
     }
 
     // メンバーIDを更新
-    if (loginApiResponse.memberId != null) {
-      updateMemberId(MemberIdState(loginApiResponse.memberId!));
+    if (loginApiResponse.item.memberId != null) {
+      updateMemberId(MemberIdState(loginApiResponse.item.memberId!));
     } else {
       updateMemberId(null);
     }

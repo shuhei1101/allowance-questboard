@@ -21,23 +21,10 @@ class SampleSeedr:
         print("サンプルデータを投入中...")
         session = DB_CONF.SessionLocal()
         try:
-            # 固定UUIDを使用（auth.usersテーブルに存在するユーザー）
-            parent_uuid = uuid.UUID('a1b2c3d4-e5f6-1234-5678-90abcdef1234')
-            child1_uuid = uuid.UUID('b2c3d4e5-f6a1-2345-6789-0abcdef12345')
-            child2_uuid = uuid.UUID('c3d4e5f6-a1b2-3456-7890-abcdef123456')
-
-            session.execute(text("""
-                INSERT INTO auth.users (id, email, created_at, updated_at) 
-                VALUES 
-                (:parent_id, 'parent@test.com', NOW(), NOW()),
-                (:child1_id, 'child1@test.com', NOW(), NOW()),
-                (:child2_id, 'child2@test.com', NOW(), NOW())
-                ON CONFLICT (id) DO NOTHING
-            """), {
-                'parent_id': str(parent_uuid),
-                'child1_id': str(child1_uuid), 
-                'child2_id': str(child2_uuid)
-            })
+            # 以下ユーザはアプリ画面で登録しておくこと
+            parent_uuid = uuid.UUID('70fea579-0870-4738-b3b4-ef3ecc471d9a')  # 私
+            child1_uuid = uuid.UUID('70fea579-0870-4738-b3b4-ef3ecc471d9a')  # 私
+            child2_uuid = uuid.UUID('4c0a0b33-11b2-4c2d-a1c5-e071b8bb4120')
             
             # 家族のサンプルデータ
             session.add_all([FamiliesEntity(id=1, name="テスト家族", icon_id=1)])

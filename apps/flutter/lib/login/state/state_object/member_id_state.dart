@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/core/setup/l10n_provider.dart';
+import 'package:allowance_questboard/core/l10n/l10n_provider.dart';
 import 'package:allowance_questboard/core/state/base_state_object.dart';
 
 class MemberIdState extends BaseStateObject<int> {
@@ -7,6 +7,6 @@ class MemberIdState extends BaseStateObject<int> {
   @override
   void validate() {
     // メンバーIDは空であってはいけない
-    validateRequired(value, L10nProvider.I.memberIdIsInvalid);
+    validateRequired(value, l10n.I.memberIdIsInvalid);
   }
 }

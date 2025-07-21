@@ -5,12 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:allowance_questboard/core/constants/api_endpoints.dart';
 import 'package:allowance_questboard/core/api/base_api_request.dart';
 import 'package:allowance_questboard/core/api/base_api_response.dart';
+import 'package:allowance_questboard/core/logger/app_logger.dart' show logger;
 
 /// APIクライアントの基底クラス
 /// 
 /// 全てのAPIクライアントはこのクラスを継承して実装します。
 /// HTTP通信の共通処理や認証ヘッダーの設定を担当します。
-abstract class BaseApiClient<TRequest extends BaseApiRequest, TResponse extends BaseApiResponse> {
+abstract class BaseApiClient<RequestType extends BaseApiRequest, ResponseType extends BaseApiResponse> {
   /// HTTPクライアント
   final http.Client _httpClient = GetIt.I<http.Client>();
 
@@ -33,7 +34,7 @@ abstract class BaseApiClient<TRequest extends BaseApiRequest, TResponse extends 
   /// 
   /// [request] リクエストデータ
   /// Returns: レスポンスデータ
-  Future<TResponse> execute(TRequest request);
+  Future<ResponseType> execute(RequestType request);
 
   /// GETリクエストを送信（継承先で使用可能）
   /// 
@@ -51,11 +52,21 @@ abstract class BaseApiClient<TRequest extends BaseApiRequest, TResponse extends 
   /// [request] リクエストデータ
   /// Returns: HTTPレスポンス
   Future<http.Response> post(BaseApiRequest request) async {
-    return await _httpClient.post(
+    // デバッグ用ログ
+    logger.d('POST Request: $uri');
+    logger.d('Headers: ${request.headers}');
+    logger.d('Body: ${request.toJson()}');
+    
+    final response = await _httpClient.post(
       uri,
       headers: request.headers,
       body: request.toJson(),
     );
+    
+    logger.d('Response Status: ${response.statusCode}');
+    logger.d('Response Body: ${response.body}');
+    
+    return response;
   }
 
   /// PUTリクエストを送信（継承先で使用可能）

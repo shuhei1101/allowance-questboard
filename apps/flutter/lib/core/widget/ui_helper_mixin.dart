@@ -1,3 +1,4 @@
+import 'package:allowance_questboard/core/logger/app_logger.dart' show logger;
 import 'package:flutter/material.dart';
 
 /// よく使用するUIコンポーネントを簡単に呼び出すためのmixin
@@ -18,12 +19,14 @@ import 'package:flutter/material.dart';
 /// }
 /// ```
 mixin UiHelperMixin {
+  /// 
+
   /// SnackBarを表示
   ///
-  /// [context] BuildContext
-  /// [message] 表示するメッセージ
-  /// [isError] エラー系の表示かどうか（背景色が変わる）
-  /// [duration] 表示時間（デフォルト4秒）
+  /// - :param BuildContext [context]: BuildContext
+  /// - :param String [message]: 表示するメッセージ
+  /// - :param bool [isError]: エラー系の表示かどうか（背景色が変わる）
+  /// - :param Duration [duration]: 表示時間（デフォルト4秒）
   void snackBar(
     BuildContext context,
     String message, {
@@ -41,8 +44,8 @@ mixin UiHelperMixin {
 
   /// 成功メッセージのSnackBar
   ///
-  /// [context] BuildContext
-  /// [message] 表示するメッセージ
+  /// - [context] BuildContext
+  /// - [message] 表示するメッセージ
   void successSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -51,14 +54,16 @@ mixin UiHelperMixin {
         duration: const Duration(seconds: 3),
       ),
     );
+    logger.i(message);
   }
 
   /// エラーメッセージのSnackBar
   ///
-  /// [context] BuildContext
-  /// [message] 表示するメッセージ
+  /// - [context] BuildContext
+  /// - [message] 表示するメッセージ
   void errorSnackBar(BuildContext context, String message) {
     snackBar(context, message, isError: true);
+    logger.e(message);
   }
 
   /// 確認ダイアログを表示

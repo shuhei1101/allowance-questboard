@@ -4,6 +4,29 @@ import 'package:allowance_questboard/core/api/base_api_response.dart';
 /// 
 /// ログイン処理の結果データを表現します。
 class LoginApiResponse extends BaseApiResponse {
+  /// 認証情報
+  final AuthInfoDto item;
+
+  /// LoginApiResponseのコンストラクタ
+  /// 
+  /// [item] 認証情報
+  const LoginApiResponse({
+    required this.item,
+  });
+
+  /// JSONからオブジェクトを作成
+  /// 
+  /// [json] JSON形式のMap
+  /// Returns: LoginApiResponseオブジェクト
+  factory LoginApiResponse.fromJson(Map<String, dynamic> json) {
+    return LoginApiResponse(
+      item: AuthInfoDto.fromJson(json['item'] as Map<String, dynamic>),
+    );
+  }
+}
+
+/// 認証情報アイテム
+class AuthInfoDto {
   /// ユーザーID
   final String userId;
   
@@ -13,12 +36,12 @@ class LoginApiResponse extends BaseApiResponse {
   /// メンバーID
   final int? memberId;
 
-  /// LoginApiResponseのコンストラクタ
+  /// AuthInfoItemのコンストラクタ
   /// 
   /// [userId] ユーザーID
   /// [parentId] 親ID
   /// [memberId] メンバーID
-  const LoginApiResponse({
+  const AuthInfoDto({
     required this.userId,
     this.parentId,
     this.memberId,
@@ -27,9 +50,9 @@ class LoginApiResponse extends BaseApiResponse {
   /// JSONからオブジェクトを作成
   /// 
   /// [json] JSON形式のMap
-  /// Returns: LoginApiResponseオブジェクト
-  factory LoginApiResponse.fromJson(Map<String, dynamic> json) {
-    return LoginApiResponse(
+  /// Returns: AuthInfoItemオブジェクト
+  factory AuthInfoDto.fromJson(Map<String, dynamic> json) {
+    return AuthInfoDto(
       userId: json['user_id'] as String,
       parentId: json['parent_id'] as int?,
       memberId: json['member_id'] as int?,

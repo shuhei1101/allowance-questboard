@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:allowance_questboard/core/security/auth_tokens.dart';
+import 'package:allowance_questboard/core/auth/auth_tokens.dart';
 
 /// JWTトークン情報をセキュアに保存・取得するクラス
 class TokenStorage {

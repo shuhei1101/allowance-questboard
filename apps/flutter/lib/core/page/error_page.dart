@@ -1,40 +1,40 @@
+import 'package:allowance_questboard/core/page/base_page.dart' show BasePage;
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart' show WidgetRef;
 
-class ErrorPage extends StatelessWidget {
-  /// エラーページ
-  ///
-  /// [error]には発生したエラーを指定する
-  /// [snapshot.error]は[Object]型なので、初期化時にエラーの型に応じてキャストする
-  ErrorPage({required error}) {
-    if (error is Error) {
-      _message = error.toString();
-      _traceback = error.stackTrace;
-    }
-  }
-
-  late final String _message;
-  late final StackTrace? _traceback;
+class ErrorPage extends BasePage {
+  /// エラーメッセージ
+  final String message;
+  
+  ErrorPage({required this.message});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("エラー"),
-        ),
-        body: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("存在しないページです"),
-                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text("戻る")),
-                Text("error: $_message"),
-                Text("traceback: $_traceback"),
-              ],
+  PreferredSizeWidget? buildAppBar(BuildContext context, WidgetRef ref) {
+    return AppBar(
+      title: const Text('エラー'),
+    );
+  }
+
+  @override
+  Widget buildBody(BuildContext context, WidgetRef ref) {
+    return Center(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('エラーが発生しました'),
+            SizedBox(height: 16),
+            Text('メッセージ: $message'),
+            SizedBox(height: 16),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('ログインページに戻る'),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -42,7 +42,7 @@ class ErrorPage extends StatelessWidget {
 void main() {
   runApp(MaterialApp(
     home: ErrorPage(
-      error: TypeError(),
+      message: "ページが見つかりません",
     ),
   ));
 }

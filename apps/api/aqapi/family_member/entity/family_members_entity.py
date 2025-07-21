@@ -15,7 +15,7 @@ class FamilyMembersEntity(BaseEntity):
         CheckConstraint("birthday <= CURRENT_DATE", name="chk_parents_birthday_not_future"),
     )
     
-    user_id: Mapped[Uuid] = mapped_column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), nullable=False, unique=True, comment="ユーザID(外部キー：auth.users.id、一意制約)")
+    user_id: Mapped[Uuid] = mapped_column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"), nullable=False, comment="ユーザID(外部キー：auth.users.id")
     name: Mapped[str] = mapped_column(String(100), nullable=False, comment="名前")
     icon_id: Mapped[int] = mapped_column(Integer, ForeignKey("icons.id", ondelete="SET NULL"), nullable=True, comment="アイコンID(外部キー、NULL許可)")
     birthday: Mapped[date] = mapped_column(Date, nullable=False, comment="誕生日(未来日不可)")

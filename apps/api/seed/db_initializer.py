@@ -44,6 +44,8 @@ class DBInitializer:
         self.db_manager.create_tables()
         print("\n3. 初期データ投入")
         self.master_seedr.seed()
+        print("\n4. サンプルデータ投入")
+        self.sample_seedr.seed()
 
     def force_drop_all(self):
         """すべてのpublicテーブルを強制削除"""
@@ -61,5 +63,5 @@ class DBInitializer:
         self.master_seedr.seed()
 
 if __name__ == "__main__":
-    # DBInitializer().reset_db()
-    DBInitializer().insert_sample_seed()
+    DBInitializer().reset_db()
+    # DBInitializer().insert_sample_seed()

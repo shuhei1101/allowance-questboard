@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/core/security/auth_tokens.dart';
+import 'package:allowance_questboard/core/auth/auth_tokens.dart';
 
 /// APIリクエストの基底クラス
 /// 

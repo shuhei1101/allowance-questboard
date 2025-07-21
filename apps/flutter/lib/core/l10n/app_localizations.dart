@@ -98,6 +98,12 @@ abstract class AppLocalizations {
     Locale('ja')
   ];
 
+  /// No description provided for @appTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowance Quest Board'**
+  String get appTitle;
+
   /// No description provided for @userIdRequired.
   ///
   /// In en, this message translates to:
@@ -145,6 +151,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Must be a positive integer.'**
   String get positiveInteger;
+
+  /// No description provided for @loginSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful'**
+  String get loginSuccess;
+
+  /// No description provided for @loginError.
+  ///
+  /// In en, this message translates to:
+  /// **'Login error: {message}'**
+  String loginError(Object message);
+
+  /// No description provided for @signUpComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up complete'**
+  String get signUpComplete;
+
+  /// No description provided for @familyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Name'**
+  String get familyName;
+
+  /// No description provided for @loginAsParent.
+  ///
+  /// In en, this message translates to:
+  /// **'Login as Parent'**
+  String get loginAsParent;
+
+  /// No description provided for @loginAsChild.
+  ///
+  /// In en, this message translates to:
+  /// **'Login as Child'**
+  String get loginAsChild;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @enterYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get enterYourEmail;
+
+  /// No description provided for @enterYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get enterYourPassword;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
+
+  /// No description provided for @forgotYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get forgotYourPassword;
+
+  /// No description provided for @dontHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAnAccount;
+
+  /// No description provided for @alreadyHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAnAccount;
+
+  /// No description provided for @createNewFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new family'**
+  String get createNewFamily;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @validEmailError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get validEmailError;
+
+  /// No description provided for @passwordLengthError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password that is at least 6 characters long'**
+  String get passwordLengthError;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get forgotPassword;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? Sign up'**
+  String get dontHaveAccount;
+
+  /// No description provided for @haveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign in'**
+  String get haveAccount;
+
+  /// No description provided for @sendPasswordReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Send password reset email'**
+  String get sendPasswordReset;
+
+  /// No description provided for @passwordResetSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email has been sent'**
+  String get passwordResetSent;
+
+  /// No description provided for @backToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get backToSignIn;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get unexpectedError;
+
+  /// No description provided for @requiredFieldError.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get requiredFieldError;
+
+  /// No description provided for @confirmPasswordError.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get confirmPasswordError;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
 }
 
 class _AppLocalizationsDelegate

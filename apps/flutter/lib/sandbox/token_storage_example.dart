@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:allowance_questboard/core/security/auth_tokens.dart';
-import 'package:allowance_questboard/core/security/token_storage.dart';
+import 'package:allowance_questboard/core/auth/auth_tokens.dart';
+import 'package:allowance_questboard/core/auth/token_storage.dart';
 
 /// TokenStorageの使用例を示すサンプル画面
 class TokenStorageExample extends StatefulWidget {

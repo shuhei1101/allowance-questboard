@@ -39,6 +39,16 @@ class BaseDao():
         pass
 
     @abstractmethod
+    def create(self, entity) -> int:
+        """新しいエンティティを作成する
+
+        :param entity: 作成するエンティティオブジェクト
+        :return int: 作成されたエンティティのID
+        :raises ValueError: エンティティの作成に失敗した場合
+        """
+        pass
+
+    @abstractmethod
     def update(self, entity) -> None:
         """エンティティを更新する
 

@@ -26,6 +26,6 @@ class AppThemes {
       textTheme: TextTheme(bodyLarge: TextStyle(color: const Color.fromARGB(255, 77, 62, 0)), bodySmall: TextStyle(color: Colors.blue.shade500)),
       // アプリバーのテーマ設定
       appBarTheme: AppBarTheme(
-        color: Colors.lightGreenAccent,
+        backgroundColor: Colors.lightGreenAccent,
       ));
 }

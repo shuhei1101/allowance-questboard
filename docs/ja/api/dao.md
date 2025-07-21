@@ -1,28 +1,46 @@
-# 💾 DAO層の責務
+[indexへ戻る](../index.md)
+# 🔍 DAO
 
 ## 概要
-`dao/`はデータアクセスオブジェクトを定義する場所です。
-
-## 基本原則
 - DAOは`SQLAlchemy`のORMを使用して、データベースとのやり取りを行う
 - また、後述のキャッシュ機能を使用して、データのキャッシュ操作も行う
-- DAO名は関心事名に`Dao`を付ける
-  - 例: `quest_dao.py`, `user_dao.py`
 
-## 主要メソッド
-主に以下のメソッドを定義します:
+## オブジェクト図
+```mermaid
+classDiagram
+    class BaseDao {
+      __init__(session: Session)
+      get_version(id: int): str
+      fetch_all() -> List[Entity]
+      fetch_by_id(id: int) -> Optional[Entity]
+      create(entity: Entity) -> int
+      update(entity: Entity) -> None
+      delete(id: int) -> None
+      commit() -> None
+      rollback() -> None
+    }
+```
 
-### 基本的なCRUD操作
-- `fetch_all()`: 全てのエンティティを取得する
-- `fetch_by_id(id: int)`: IDでエンティティを取得する
-- `update(entity: Entity)`: エンティティを更新する
-- `delete(id: int)`: IDでエンティティを削除する
+## `BaseDao`クラス
+### 概要
+- 
 
-## キャッシュ機能
+### 配置場所
+- 
+
+### 命名規則
+
+
+## `XxxDao`クラス
+### 概要
+- 
+
+### 配置場所
+- 
+
+### 命名規則
+- 
+
+### キャッシュ機能
 - `find_by_id()`や`find_all()`などのメソッドには、キャッシュ保存のデコレータを付与する
 - `update()`や`delete()`などのメソッドには、キャッシュ削除のデコレータを付与する
-
-## 役割
-- データベースとの直接的なやり取りを担当
-- エンティティの永続化・取得
-- キャッシュの管理
