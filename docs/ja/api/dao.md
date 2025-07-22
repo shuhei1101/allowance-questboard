@@ -3,7 +3,8 @@
 
 ## 概要
 - DAOは`SQLAlchemy`のORMを使用して、データベースとのやり取りを行う
-- また、後述のキャッシュ機能を使用して、データのキャッシュ操作も行う
+- キャッシュ機能を使用して、データのキャッシュ操作も行う
+  - [キャッシュ管理](キャッシュ管理.md)
 
 ## オブジェクト図
 ```mermaid
@@ -19,12 +20,14 @@ classDiagram
       commit() -> None
       rollback() -> None
     }
+
+    class XxxDao
+    class BaseId
 ```
 
 ## `BaseDao`クラス
 ### 概要
 - 
-
 ### 配置場所
 - 
 
