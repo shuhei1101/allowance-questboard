@@ -27,11 +27,15 @@ classDiagram
 
 ## `BaseDao`クラス
 ### 概要
-- 
-### 配置場所
-- 
+- DAOクラスの基底クラス
 
-### 命名規則
+- ジェネリクスでエンティティタイプを受け取る
+  - 例: `class XxxDao(BaseDao[XxxEntity]):`
+
+- 各DAOで使用する共通の具象メソッドを提供する
+
+### 配置場所
+- `core/dao/base_dao.py`
 
 
 ## `XxxDao`クラス
