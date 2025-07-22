@@ -14,15 +14,16 @@ class BaseRepository(ABC):
     def _is_latest_version(self, model: BaseModel, dao: BaseDao) -> bool:
         """現在のエンティティが最新バージョンかどうかを確認する
 
-        :param any model: 確認対象のモデル
+        :param BaseModel model: 確認対象のモデル
+        :param BaseDao dao: 
         :return bool: 最新バージョンの場合True、古いバージョンの場合False
         :raises ValueError: エンティティにIDが設定されていない場合、またはDBに該当エンティティが存在しない場合
         """
         if not model.id:
             raise ValueError("Model ID is not set.")
         
-        current_version = dao.get_version(model.id)
+        current_version = dao.get_version(BaseId(model.id))
         if current_version is None:
             raise ValueError(f"Entity with id {model.id} does not exist in the database.")
         
-        return model.version == current_version
+        return model.version == Version(current_version)
