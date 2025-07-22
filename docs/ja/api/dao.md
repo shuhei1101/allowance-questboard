@@ -9,8 +9,15 @@
 ## オブジェクト図
 ```mermaid
 classDiagram
+    class CacheKeys {
+      single_key: str
+      multi_str: str
+    }
+
     class BaseDao {
-      __init__(session: Session)
+      session: Session
+      cache_keys: CacheKeys
+
       get_version(id: int): str
       fetch_all() -> List[Entity]
       fetch_by_id(id: int) -> Optional[Entity]
