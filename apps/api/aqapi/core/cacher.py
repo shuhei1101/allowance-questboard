@@ -18,7 +18,7 @@ def _make_cache_key(key_template: str, func, args, kwargs):
         return hashlib.sha256(raw_key.encode()).hexdigest()
 
 # 🌟 キャッシュ読み書きデコレーター
-def cache(key: str = None, ttl: int = 300):
+def cacheable(key: str = None, ttl: int = 300):
     def decorator(func):
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
@@ -34,7 +34,7 @@ def cache(key: str = None, ttl: int = 300):
     return decorator
 
 # 🚫 キャッシュ削除用デコレーター（更新系関数に）
-def invalidate_cache(key: str):
+def cache_evict(key: str):
     def decorator(func):
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
