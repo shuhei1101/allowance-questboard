@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
-from sqlalchemy import Column, DateTime, create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import Column, DateTime
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 
 load_dotenv()
@@ -18,31 +19,35 @@ class DBConfig:
         DB_NAME = os.getenv("DB_NAME")
 
         DATABASE_URL = (
-            f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+            f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
         )
 
-        self.engine = create_engine(DATABASE_URL)
-        self.SessionLocal = sessionmaker(
-            bind=self.engine, autocommit=False, autoflush=False
+        self.engine = create_async_engine(DATABASE_URL)
+        self.SessionLocal = async_sessionmaker(
+            bind=self.engine,
+            autocommit=False, 
+            autoflush=False
         )
         self.Base = declarative_base()
-        self._reflect_auth_schema(self.Base, self.engine)
+        # 非同期初期化は別メソッドで行う
 
-    def _reflect_auth_schema(self, base, engine):
+    async def initialize_async(self):
+        """非同期初期化（アプリケーション起動時に呼び出す）"""
+        await self._reflect_auth_schema(self.Base, self.engine)
+
+    async def _reflect_auth_schema(self, base, engine):
         """auth.usersテーブルのメタデータを反映(外部キー参照のため)"""
         try:
             # 記事の方法: MetaData.reflect()を使用して既存のauth.usersテーブルを認識させる
-            base.metadata.reflect(bind=engine, schema="auth", only=["users"])
+            async with engine.begin() as conn:
+                await conn.run_sync(base.metadata.reflect, schema="auth", only=["users"])
         except Exception as e:
             print(f"auth.usersテーブルの反映でエラー: {e}")
             return
 
-    def get_session(self):
-        session = self.SessionLocal()
-        try:
+    async def get_session(self):
+        async with self.SessionLocal() as session:
             yield session
-        finally:
-            session.close()
 
     def import_all_entities(self):
         """すべてのEntityクラスをインポートして初期化"""

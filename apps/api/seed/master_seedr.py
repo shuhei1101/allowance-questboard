@@ -29,58 +29,56 @@ from aqapi.family_member.entity.family_member_types_entity import FamilyMemberTy
 
 class MasterSeedr:
 
-    def seed(self):
+    async def seed(self):
         """マスタデータを投入"""
         print("マスタデータを投入中...")
-        session = DB_CONF.SessionLocal()
-        try:
-            self._seed_and_commit(session, LanguagesEntity)
-            self._seed_and_commit(session, CurrenciesEntity)
-            self._seed_and_commit(session, CurrencyByLanguageEntity)
-            self._seed_and_commit(session, IconCategoriesEntity)
-            self._seed_and_commit(session, IconCategoriesTranslationEntity)
-            self._seed_and_commit(session, IconsEntity)
-            self._seed_and_commit(session, IconPlatforms)
-            self._seed_and_commit(session, IconNameByPlatormEntity)
-            self._seed_and_commit(session, FamilyMemberTypesEntity)
-            self._seed_and_commit(session, QuestTypesEntity)
-            self._seed_and_commit(session, QuestCategoryTypesEntity)
-            self._seed_and_commit(session, AllowanceTableTypesEntity)
-            self._seed_and_commit(session, AllowanceableTypesEntity)
-            self._seed_and_commit(session, ReportStatusesEntity)
-            self._seed_and_commit(session, ReportStatusesTranslationEntity)
-            self._seed_and_commit(session, WithdrawalRequestStatusesEntity)
-            self._seed_and_commit(session, WithdrawalRequestStatusesTranslationEntity)
-            self._seed_and_commit(session, NotifiableTypesEntity)
-            self._seed_and_commit(session, ReportableTypesEntity)
-            self._seed_and_commit(session, EducationsEntity)
-            self._seed_and_commit(session, EducationsTranslationEntity)
-            self._seed_and_commit(session, ExchangeRatesEntity)
-            self._seed_and_commit(session, QuestRequestStatusesEntity)
-            self._seed_and_commit(session, QuestRequestStatusesTranslationEntity)
-            self._seed_and_commit(session, QuestMemberStatusesEntity)
-            self._seed_and_commit(session, MemberQuestStatusesTranslationEntity)
-            self._seed_and_commit(session, ScreensEntity)
-            self._seed_and_commit(session, QuestCategoriesEntity)
-            self._seed_and_commit(session, TemplateQuestCategoriesEntity)
-            self._seed_and_commit(session, QuestsEntity)
-            self._seed_and_commit(session, TemplateQuestsEntity)
+        async with DB_CONF.SessionLocal() as session:
+            try:
+                await self._seed_and_commit(session, LanguagesEntity)
+                await self._seed_and_commit(session, CurrenciesEntity)
+                await self._seed_and_commit(session, CurrencyByLanguageEntity)
+                await self._seed_and_commit(session, IconCategoriesEntity)
+                await self._seed_and_commit(session, IconCategoriesTranslationEntity)
+                await self._seed_and_commit(session, IconsEntity)
+                await self._seed_and_commit(session, IconPlatforms)
+                await self._seed_and_commit(session, IconNameByPlatormEntity)
+                await self._seed_and_commit(session, FamilyMemberTypesEntity)
+                await self._seed_and_commit(session, QuestTypesEntity)
+                await self._seed_and_commit(session, QuestCategoryTypesEntity)
+                await self._seed_and_commit(session, AllowanceTableTypesEntity)
+                await self._seed_and_commit(session, AllowanceableTypesEntity)
+                await self._seed_and_commit(session, ReportStatusesEntity)
+                await self._seed_and_commit(session, ReportStatusesTranslationEntity)
+                await self._seed_and_commit(session, WithdrawalRequestStatusesEntity)
+                await self._seed_and_commit(session, WithdrawalRequestStatusesTranslationEntity)
+                await self._seed_and_commit(session, NotifiableTypesEntity)
+                await self._seed_and_commit(session, ReportableTypesEntity)
+                await self._seed_and_commit(session, EducationsEntity)
+                await self._seed_and_commit(session, EducationsTranslationEntity)
+                await self._seed_and_commit(session, ExchangeRatesEntity)
+                await self._seed_and_commit(session, QuestRequestStatusesEntity)
+                await self._seed_and_commit(session, QuestRequestStatusesTranslationEntity)
+                await self._seed_and_commit(session, QuestMemberStatusesEntity)
+                await self._seed_and_commit(session, MemberQuestStatusesTranslationEntity)
+                await self._seed_and_commit(session, ScreensEntity)
+                await self._seed_and_commit(session, QuestCategoriesEntity)
+                await self._seed_and_commit(session, TemplateQuestCategoriesEntity)
+                await self._seed_and_commit(session, QuestsEntity)
+                await self._seed_and_commit(session, TemplateQuestsEntity)
 
-            print("マスタデータの投入が完了しました")
+                print("マスタデータの投入が完了しました")
 
-        except IntegrityError as e:
-            session.rollback()
-            print(f"重複エラーでロールバックされました: {e}")
-            raise
-        except Exception as e:
-            session.rollback()
-            print(f"マスタデータ投入でエラーが発生しました: {e}")
-            raise
-        finally:
-            session.close()
+            except IntegrityError as e:
+                await session.rollback()
+                print(f"重複エラーでロールバックされました: {e}")
+                raise
+            except Exception as e:
+                await session.rollback()
+                print(f"マスタデータ投入でエラーが発生しました: {e}")
+                raise
 
 
-    def _seed_and_commit(self, session, entity_class):
+    async def _seed_and_commit(self, session, entity_class):
         """エンティティのシードデータを投入しコミット"""
-        entity_class.seed(session)
-        session.commit()
+        await entity_class.seed(session)
+        await session.commit()

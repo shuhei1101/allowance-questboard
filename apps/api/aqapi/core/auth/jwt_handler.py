@@ -7,7 +7,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends
 from dotenv import load_dotenv
 
-from aqapi.core.app_logger import logger
+from aqapi.core.log.app_logger import logger
 
 load_dotenv()
 

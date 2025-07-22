@@ -1,73 +1,85 @@
 from abc import abstractmethod
-from typing import List
+from typing import Generic, List, Optional, Type, TypeVar
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
+from aqapi.core.entity.base_entity import BaseEntity
 
-class BaseDao():
+EntityType = TypeVar('EntityType', bound='BaseEntity')
+
+class BaseDao(Generic[EntityType]):
     """データアクセスオブジェクトの基底クラス（排他制御対応）"""
-    def __init__(self, session):
-        """コンストラクタ
-
-        :param session: SQLAlchemyのセッション
-        """
+    def __init__(self, session: AsyncSession):
         self.session = session
 
+    @property
     @abstractmethod
-    def get_version(self, id: int) -> int:
+    def entity_class(self) -> Type[EntityType]:
+        """エンティティクラスを返す"""
+        raise NotImplementedError("Subclasses must implement this method.")
+
+    async def get_version(self, id: int) -> int:
         """指定したIDの現在のバージョンを取得する
 
         :param int id: エンティティのID
         :return int: 現在のバージョン
         :raises ValueError: 指定したIDのエンティティが存在しない場合
         """
-        pass
+        entity = await self.fetch_by_id(id)
+        if not entity:
+            raise ValueError(f"Entity with id {id} does not exist.")
+        return entity.version
 
-    @abstractmethod
-    def fetch_all(self) -> List:
+    async def fetch_all(self) -> List[EntityType]:
         """全てのエンティティを取得する
 
         :return List: エンティティのリスト
         """
-        pass
+        stmt = select(self.entity_class)
+        result = await self.session.execute(stmt)
+        return list(result.scalars().all())
 
-    @abstractmethod
-    def fetch_by_id(self, id: int):
+    async def fetch_by_id(self, id: int) -> Optional[EntityType]:
         """IDでエンティティを取得する
 
         :param int id: エンティティのID
         :return: エンティティオブジェクト（見つからない場合はNone）
         """
-        pass
+        stmt = select(self.entity_class).where(self.entity_class.id == id)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
-    @abstractmethod
-    def create(self, entity) -> int:
+    async def insert(self, entity: EntityType) -> int:
         """新しいエンティティを作成する
 
         :param entity: 作成するエンティティオブジェクト
         :return int: 作成されたエンティティのID
         :raises ValueError: エンティティの作成に失敗した場合
         """
-        pass
+        self.session.add(entity)
+        await self.session.flush()
+        return entity.id
 
-    @abstractmethod
-    def update(self, entity) -> None:
+    async def update(self, entity: EntityType) -> None:
         """エンティティを更新する
 
         :param entity: 更新するエンティティ
         """
-        pass
+        await self.session.merge(entity)
 
-    @abstractmethod
-    def delete(self, id: int) -> None:
+    async def delete(self, id: int) -> None:
         """IDでエンティティを削除する
 
         :param int id: 削除するエンティティのID
         """
-        pass
+        entity = await self.fetch_by_id(id)
+        if entity:
+            await self.session.delete(entity)
 
-    def commit(self) -> None:
+    async def commit(self) -> None:
         """セッションをコミット"""
-        self.session.commit()
+        await self.session.commit()
 
-    def rollback(self) -> None:
+    async def rollback(self) -> None:
         """セッションをロールバック"""
-        self.session.rollback()
+        await self.session.rollback()

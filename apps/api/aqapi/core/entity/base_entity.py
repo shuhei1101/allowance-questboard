@@ -68,8 +68,12 @@ class BaseEntity(DB_CONF.Base):
         pass
 
     @classmethod
-    def seed(cls, session):
-        if session.query(cls).count() != 0:
+    async def seed(cls, session):
+        from sqlalchemy import select, func
+        result = await session.execute(select(func.count(cls.id)))
+        count = result.scalar()
+        
+        if count != 0:
             print(f"{cls.__tablename__}データはすでに存在します")
             return
 

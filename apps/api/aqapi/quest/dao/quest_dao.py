@@ -1,51 +1,37 @@
 from typing import List, Optional
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from aqapi.quest.entity.quests_entity import QuestsEntity
 from aqapi.core.dao.base_dao import BaseDao
-
+from aqapi.core.config.redis_config import redis_client
+from aqapi.core.cache.redis_cacher import RedisCacher
+cacher = RedisCacher(redis_client)
 
 class QuestDao(BaseDao):
     """クエストDAOクラス"""
 
-    def __init__(self, session: Session):
-        """コンストラクタ
-
-        :param Session session: SQLAlchemyのセッション
-        """
+    def __init__(self, session: AsyncSession):
         super().__init__(session)
 
-    def fetch_all(self) -> List[QuestsEntity]:
-        """全てのクエストエンティティを取得する
+    @property
+    def entity_class(self) -> type[QuestsEntity]:
+        return QuestsEntity
+    
+    @cacher.cache("quests:all")
+    async def fetch_all(self) -> List[QuestsEntity]:
+        return await super().fetch_all()
 
-        :return List[QuestsEntity]: クエストエンティティのリスト
-        """
-        return self.session.query(QuestsEntity).all()
+    @cacher.cache("quests:{id}")
+    async def fetch_by_id(self, id: int) -> Optional[QuestsEntity]:
+        return await super().fetch_by_id(id)
 
-    def fetch_by_id(self, id: int) -> Optional[QuestsEntity]:
-        """IDでクエストエンティティを取得する
+    @cacher.evict("quests:all")
+    async def insert(self, entity: QuestsEntity) -> int:
+        return await super().insert(entity)
 
-        :param int id: クエストのID
-        :return Optional[QuestsEntity]: クエストエンティティ（見つからない場合はNone）
-        """
-        return self.session.query(QuestsEntity).filter(QuestsEntity.id == id).first()
+    @cacher.evict("quests:all", "quests:{entity.id}")
+    async def update(self, entity: QuestsEntity) -> None:
+        await super().update(entity)
 
-    def insert(self, entity) -> int:
-        self.session.add(entity)
-        self.session.flush()  # ←ここでDBに一度送って、ID発行される
-        return entity.id
-
-    def update(self, entity: QuestsEntity) -> None:
-        """クエストエンティティを更新する
-
-        :param QuestsEntity entity: 更新するクエストエンティティ
-        """
-        self.session.merge(entity)
-
-    def delete(self, id: int) -> None:
-        """IDでクエストエンティティを削除する
-
-        :param int id: 削除するクエストのID
-        """
-        entity = self.fetch_by_id(id)
-        if entity:
-            self.session.delete(entity)
+    @cacher.evict("quests:all", "quests:{id}")
+    async def delete(self, id: int) -> None:
+        await super().delete(id)

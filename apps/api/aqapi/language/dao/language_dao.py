@@ -1,0 +1,37 @@
+from typing import List, Optional
+from sqlalchemy.ext.asyncio import AsyncSession
+from aqapi.language.entity.languages_entity import LanguagesEntity
+from aqapi.core.dao.base_dao import BaseDao
+from aqapi.core.config.redis_config import redis_client
+from aqapi.core.cache.redis_cacher import RedisCacher
+cacher = RedisCacher(redis_client)
+
+class LanguageDao(BaseDao):
+    """言語DAOクラス"""
+
+    def __init__(self, session: AsyncSession):
+        super().__init__(session)
+
+    @property
+    def entity_class(self) -> type[LanguagesEntity]:
+        return LanguagesEntity
+    
+    @cacher.cache("languages:all")
+    async def fetch_all(self) -> List[LanguagesEntity]:
+        return await super().fetch_all()
+
+    @cacher.cache("languages:{id}")
+    async def fetch_by_id(self, id: int) -> Optional[LanguagesEntity]:
+        return await super().fetch_by_id(id)
+
+    @cacher.evict("languages:all")
+    async def insert(self, entity: LanguagesEntity) -> int:
+        return await super().insert(entity)
+
+    @cacher.evict("languages:all", "languages:{entity.id}")
+    async def update(self, entity: LanguagesEntity) -> None:
+        await super().update(entity)
+
+    @cacher.evict("languages:all", "languages:{id}")
+    async def delete(self, id: int) -> None:
+        await super().delete(id)
