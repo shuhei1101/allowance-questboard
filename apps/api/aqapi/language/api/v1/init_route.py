@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from aqapi.core.config.db_config import DB_CONF
-from aqapi.language.query_service.fetch_init_data_query import FetchInitDataQuery
-from aqapi.language.query_service.fetch_init_data_query_command import FetchInitDataQueryCommand
+from aqapi.language.dao.language_dao import LanguageDao
+from aqapi.language.repository.language_repository import LanguageRepository
+from aqapi.language.repository.language_repository_dependencies import LanguageRepositoryDependencies
+from aqapi.language.usecase.get_init_data_usecase import GetInitDataUsecase
+from aqapi.language.usecase.get_init_data_command import GetInitDataCommand
 from aqapi.language.api.v1.init_response import InitResponse
 
 router = APIRouter()
@@ -11,17 +14,23 @@ router = APIRouter()
 
 @router.get("/init", response_model=InitResponse)
 async def init(
-    session: Session = Depends(DB_CONF.get_session)
+    session: AsyncSession = Depends(DB_CONF.get_session)
 ):
     """アプリ初期化時に必要なデータを取得する
     
     現在は言語情報のみを返します。
     
-    :param Session session: データベースセッション
+    :param AsyncSession session: データベースセッション
     :return InitResponse: アプリ初期化レスポンス
     """
-    query_service = FetchInitDataQuery(session)
-    command = FetchInitDataQueryCommand()
-    query_result = query_service.execute(command)
+    usecase = GetInitDataUsecase()
+    command = GetInitDataCommand(
+        language_repo=LanguageRepository(
+            deps=LanguageRepositoryDependencies(
+                language_dao=LanguageDao(session)
+            )
+        )
+    )
+    result = await usecase.execute(command)
     
-    return InitResponse.from_query_result(query_result)
+    return InitResponse.from_result(result)

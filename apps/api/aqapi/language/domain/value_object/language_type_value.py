@@ -38,4 +38,22 @@ class LanguageTypeValue(BaseEnumValue, EnumValueProtocol):
         """値オブジェクトのIDを返す"""
         return self._id
     
-        
+    @property
+    def code(self) -> LanguageCode:
+        """言語コードを返す"""
+        return self._code
+    
+    @property
+    def name(self) -> LanguageName:
+        """言語名を返す"""
+        return self._name
+    
+    @property
+    def is_active(self) -> bool:
+        """有効フラグを返す"""
+        return self._is_active
+    
+    @property
+    def sort_order(self) -> SortOrder:
+        """表示順序を返す"""
+        return self._sort_order

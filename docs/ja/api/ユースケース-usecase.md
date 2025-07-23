@@ -2,27 +2,30 @@
 # 🔍 ユースケース
 
 ## 概要
-- ユースケースクラスはFlutterの画面が使用するビジネスロジックのファサードクラス
+- ユースケースクラスはAPサーバの画面が使用するビジネスロジックのファサードクラス
   - ビジネスロジッククラスの例:
-    - [ApiClient](APIクライアント.md)
-    - [StateNotifier](状態管理.md)
+    - [リポジトリクラス](リポジトリクラス_repository.md)
+    - [クエリサービスクラス](クエリサービス-queryservice.md)
 
 ## オブジェクト図
 ```mermaid
 classDiagram
     class XxxUsecase {
-        +execute(command: XxxUsecaseCommand): XxxUsecaseResult
+        +execute(cmd: XxxUsecaseCommand): XxxUsecaseResult
     }
-    class XxxUsecaseCommand
+    class XxxUsecaseCommand {
+      xxx_repo: XxxRepository
+      xxx_query_service: XxxQueryService
+    }
     class XxxUsecaseResult
 
     XxxPage --> XxxUsecase : executeメソッドを実行
     XxxUsecase --> XxxUsecaseCommand : 引数
     XxxUsecase --> XxxUsecaseResult : 戻り値
 
-    XxxUsecase --> XxxStateNotifier : 情報更新
-    XxxUsecase --> XxxApi: 情報取得
-    XxxUsecase --> XxxSupabaseClient: 情報取得
+    XxxUsecase --> XxxRepository: 情報取得: 
+    XxxUsecase --> XxxQueryService: 情報取得
+    XxxUsecase --> ドメインモデル: ビジネスロジック
 ```
 
 ## `XxxUsecase`クラス
@@ -33,34 +36,43 @@ classDiagram
 - 画面は`XxxUsecase`からのみ状態の更新やビジネスロジックを行うこと
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.dart`
+- `{関心事名}/usecase/xxx_usecase.py`
 
 ### 命名規則
 - `XxxUsecase`の形式で命名すること
 - `Xxx`は動詞を使用すること
-  - 例: `FetchQuestSummaryUsecase`, `UpdateFamilyMemberUsecase`
+  - 例: `UpdateQuestsUsecase`, `LoginUsecase`
 
+- `Command`クラスのインスタンス名は`cmd`とすること
+  - 例: `cmd: UpdateQuestsUsecaseCommand`
 
 ## `XxxUsecaseCommand`クラス
 ### 概要
 - `XxxUsecase`の引数を定義するクラス
+- DIコンテナは使用しないため、以下クラスはCommandクラス経由で依存性注入を行う
+  - `Repository`
+  - `QueryService`
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.dart`
+- `{関心事名}/usecase/xxx_usecase.py`
     - `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Command`の形式で命名すること
-  - 例: `FetchQuestSummaryUsecaseCommand`, `UpdateFamilyMemberUsecaseCommand`
+  - 例: `UpdateQuestsUsecaseCommand`, `LoginUsecaseCommand`
+
+- メンバの命名は以下のようにすること
+  - `xxx_repo`: リポジトリクラス
+  - `xxx_query_service`: クエリサービスクラス
 
 ## `XxxUsecaseResult`クラス
 ### 概要
 - `XxxUsecase`の戻り値を定義するクラス
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.dart`
+- `{関心事名}/usecase/xxx_usecase.py`
     - `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Result`の形式で命名すること
-  - 例: `FetchQuestSummaryUsecaseResult`, `UpdateFamilyMemberUsecaseResult` 
+  - 例: `UpdateQuestsUsecaseResult`, `LoginUsecaseResult` 

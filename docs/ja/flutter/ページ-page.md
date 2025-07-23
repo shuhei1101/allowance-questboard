@@ -88,7 +88,7 @@ classDiagram
 - エラー処理を含むPageの基底クラス
 - `ErrorPage`以外のアプリで使用するPageクラスはこのクラスを継承すること
 - 実装クラスで発生したエラーをキャッチして、`ErrorPage`に遷移したり、ログを出力する
-  - [ロガー設計](ロガー.md)を参照
+  - [ロガー設計](ロガー-logger.md)を参照
 
 ### 配置場所
 - `/core/page/base_safed_page.dart`
@@ -107,14 +107,14 @@ classDiagram
   - 例: `onPressed: _onButtonPressed`
 
 - 状態の取り出しは、stateを用いて行う
-  - [状態管理設計](状態管理.md)を参照
+  - [状態管理設計](状態管理-state.md)を参照
 
 - ビジネスロジックは`XxxUsecase`から呼び出すこと
-  - [ユースケース設計](ユースケース.md)を参照
+  - [ユースケース設計](ユースケース-usecase.md)を参照
   - `StateNotifier`や`ApiClient`を直接使用しないこと
 
 - 画面内で表示するメッセージは、`L10nProvider`を使用してローカライズされたメッセージを取得すること
-  - [多言語設計](多言語対応.md)を参照
+  - [多言語設計](多言語対応-l10n.md)を参照
   - 例: `l10n.I.userIdRequired`
 
 ### 配置場所

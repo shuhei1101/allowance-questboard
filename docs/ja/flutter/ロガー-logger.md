@@ -20,7 +20,7 @@ classDiagram
 ### 概要
 - アプリケーション全体で使用するロガークラス
 - エラー情報を出力する際は`ErrorParser`を使用して解析した後に出力する
-  - [例外解析](例外解析.md)を参照
+  - [例外解析](例外解析-eparser.md)を参照
 
 ### 配置場所
 - `/core/logger/app_logger.dart`

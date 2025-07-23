@@ -1,15 +1,12 @@
 from abc import ABC, abstractmethod
 from sqlalchemy.ext.asyncio import AsyncSession
-from aqapi.core.domain.value_object.base_id import BaseId
+from aqapi.core.domain.base_model import BaseModel
 
 from aqapi.core.dao.base_dao import BaseDao
 
 
 class BaseRepository(ABC):
     """リポジトリの基底クラス"""
-
-    def __init__(self, session: AsyncSession):
-        self.session = session
 
     def _is_latest_version(self, model: BaseModel, dao: BaseDao) -> bool:
         """現在のエンティティが最新バージョンかどうかを確認する
@@ -21,8 +18,8 @@ class BaseRepository(ABC):
         if not model.id:
             raise ValueError("Model ID is not set.")
         
-        current_version = dao.get_version(model.id)
+        current_version = dao.get_version(int(model.id))
         if current_version is None:
-            raise ValueError(f"Entity with id {model.id} does not exist in the database.")
+            raise ValueError(f"{model.id}のエンティティが存在しません。")
         
         return model.version == current_version

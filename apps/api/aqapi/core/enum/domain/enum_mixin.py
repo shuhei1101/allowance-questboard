@@ -1,13 +1,15 @@
-from typing import cast
+from typing import Generic, TypeVar, cast
 from aqapi.core.entity.base_entity import BaseEntity
 
 from aqapi.core.enum.domain.value_object.enum_value_protocol import EnumValueProtocol
 
-class EnumMixin:
+EntityType = TypeVar('EntityType', bound=BaseEntity)
+
+class EnumMixin(Generic[EntityType]):
     """翻訳テーブルなしのシンプルなエンティティから更新可能なMixin"""
 
     @classmethod
-    def update_from_entities(cls, entities: list[BaseEntity]) -> None:
+    def update_from_entities(cls, entities: list[EntityType]) -> None:
         """エンティティリストから列挙型の値を更新する（翻訳テーブルなし）
         
         :param entities: 更新に使用するエンティティのリスト

@@ -22,6 +22,10 @@ class BaseId(BaseValueObject[int], Hashable):
         """ハッシュ値の計算（辞書のキーとして使用可能にする）"""
         return hash(self._value)
     
+    def __int__(self) -> int:
+        """IDを整数として返す"""
+        return self._value
+    
     @property
     def value(self) -> int:
         """IDの値を取得"""

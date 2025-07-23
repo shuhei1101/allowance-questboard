@@ -56,7 +56,7 @@ classDiagram
 - 値の検証には`ValidationMixin`を使用すること
 - `ValidationMixin`メソッドの引数`message`には、L10nProviderを使用して、ローカライズされたエラーメッセージを指定すること
   - 例: `validateRequired(value, l10n.I.userIdRequired);`
-  - [多言語設計](多言語対応.md)を参照
+  - [多言語設計](多言語対応-l10n.md)を参照
 
 ### 配置場所
 - `{関心事名}/state/state_object/XxxStateObject`

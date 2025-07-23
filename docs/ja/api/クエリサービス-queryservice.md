@@ -63,6 +63,9 @@ classDiagram
   - `Fetch{関心事名}Query`
   - 例: `FetchSummaryQuestQuery`
 
+- `QueryCommand`クラスのインスタンス名は`cmd`とすること
+  - 例: `cmd: FetchQuestSummaryQueryCommand`
+
 ## `BaseQueryCommand`抽象クラス
 ### 概要
 - `BaseQueryCommand`は、全ての`QueryCommand`の基底クラス
@@ -101,7 +104,7 @@ classDiagram
   
 - 結果にページネーションmetaが含まれる場合:
   - Resultの中に`PaginationMeta`を定義する
-- [参考: ページネーションについて](ページネーション.md)
+- [参考: ページネーションについて](ページネーション-pagination.md)
 
 ### 配置場所
 - `{関心事名}/query_service/fetch_Xxx_query_result.py`に配置すること

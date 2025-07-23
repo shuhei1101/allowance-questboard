@@ -1,6 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 from aqapi.language.entity.languages_entity import LanguagesEntity
+from aqapi.language.domain.language_type import LanguageType
 
 
 class LanguageDto(BaseModel):
@@ -22,6 +23,18 @@ class LanguageDto(BaseModel):
             sort_order=entity.sort_order
         )
 
+    @classmethod
+    def from_enum(cls, enum_value: LanguageType) -> 'LanguageDto':
+        """LanguageTypeからLanguageDtoを生成"""
+        value = enum_value.value
+        return cls(
+            id=value.id.value,
+            code=value.code.value,
+            name=value.name.value,
+            is_active=value.is_active,
+            sort_order=value.sort_order.value
+        )
+
 
 class LanguagesDto(BaseModel):
     """言語情報一覧DTO"""
@@ -34,6 +47,13 @@ class LanguagesDto(BaseModel):
             list=[LanguageDto.from_entity(entity) for entity in entities]
         )
 
+    @classmethod
+    def from_enums(cls, enums: List[LanguageType]) -> 'LanguagesDto':
+        """LanguageTypeのリストからLanguagesDtoを生成"""
+        return cls(
+            list=[LanguageDto.from_enum(enum_value) for enum_value in enums]
+        )
+
 
 class InitResponse(BaseModel):
     """アプリ初期化レスポンス"""
@@ -44,4 +64,11 @@ class InitResponse(BaseModel):
         """クエリ結果からレスポンスを生成"""
         return cls(
             languages=LanguagesDto.from_entities(query_result.languages)
+        )
+
+    @classmethod
+    def from_result(cls, result) -> 'InitResponse':
+        """ユースケース結果からレスポンスを生成"""
+        return cls(
+            languages=LanguagesDto.from_enums(result.languages)
         )
