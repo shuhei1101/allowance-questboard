@@ -35,6 +35,60 @@
 
 ## 簡易全体クラス図
 ```mermaid
+classDiagram
+direction LR
+
+class State {
+  <<Freesed Riverpod>>
+  xxx: Stateオブジェクト
+  yyy: Stateオブジェクト
+}
+class ページ
+class ユースケース {
+  excute(コマンド): リザルト
+}
+
+class Supabaseクライアント {
+  execute(リクエスト): レスポンス
+}
+
+class APIクライアント {
+  execute(リクエスト): レスポンス
+}
+
+ページ --> ユースケース: ユースケース実行
+ページ --> State: 状態取得
+
+ユースケース --> StateNotifier: 状態更新
+ユースケース --> Supabaseクライアント: リアルタイムデータ同期
+ユースケース --> APIクライアント: APIデータ更新等
+
+StateNotifier --> State: 状態更新
+
+Supabaseクライアント --> Supabase: データ取得
+
+APIクライアント --> APサーバ: API実行
+
+class ルーター {
+  エンドポイントメソッド(リクエスト): レスポンス
+}
+
+class APユースケース {
+  execute(コマンド): リザルト
+}
+
+class クエリサービス {
+  execute(リクエスト)
+}
+
+
+APサーバ --> ルーター: エンドポイントメソッド実行
+
+ルーター --> APユースケース: ユースケース実行
+ルーター --> クエリサービス: クエリサービス実行
+
+
+
 
 
 ```
