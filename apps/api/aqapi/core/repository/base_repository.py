@@ -15,7 +15,7 @@ class BaseRepository(ABC):
         """現在のエンティティが最新バージョンかどうかを確認する
 
         :param BaseModel model: 確認対象のモデル
-        :param BaseDao dao: 
+        :param BaseDao dao: モデルのIDが属するDAO
         :return bool: 最新バージョンの場合True、古いバージョンの場合False
         :raises ValueError: エンティティにIDが設定されていない場合、またはDBに該当エンティティが存在しない場合
         """
