@@ -78,7 +78,7 @@ class APユースケース {
 }
 
 class クエリサービス {
-  execute(リクエスト)
+  execute(クエリコマンド): リザルト
 }
 
 
