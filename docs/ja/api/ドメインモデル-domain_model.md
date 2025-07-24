@@ -16,11 +16,7 @@ classDiagram
     }
 
     class BaseModel {
-      
-    }
 
-    class BaseCollectionItem {
-      
     }
 
     class BaseCollection {
@@ -38,17 +34,17 @@ classDiagram
     }
 
     BaseValueObject <|-- BaseId
+
     BaseModel --> BaseId
     BaseModel --> BaseValueObject
 
-    BaseCollection --> BaseCollectionItem: 保持
+    BaseCollection --> BaseModel: 保持、管理
     
-
     BaseModel <|-- ドメインモデル
     ドメインモデル --> 値オブジェクト: 保持、管理
 
     BaseCollection <|-- ドメインモデルs: 保持
-
+    ドメインモデルs --> ドメインモデル: 保持、管理
 ```
 
 ## ドメインモデル
