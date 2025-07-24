@@ -7,7 +7,23 @@
 ## オブジェクト図
 ```mermaid
 classDiagram
+    class BaseValueObject {
+      
+    }
+
+    class BaseId {
+      
+    }
+
     class BaseModel {
+      
+    }
+
+    class BaseCollectionItem {
+      
+    }
+
+    class BaseCollection {
       
     }
 
@@ -17,7 +33,22 @@ classDiagram
       ...
     }
 
+    class ドメインモデルs {
+      
+    }
+
+    BaseValueObject <|-- BaseId
+    BaseModel --> BaseId
+    BaseModel --> BaseValueObject
+
+    BaseCollection --> BaseCollectionItem: 保持
+    
+
+    BaseModel <|-- ドメインモデル
     ドメインモデル --> 値オブジェクト: 保持、管理
+
+    BaseCollection <|-- ドメインモデルs: 保持
+
 ```
 
 ## ドメインモデル
