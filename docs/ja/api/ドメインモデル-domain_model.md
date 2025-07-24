@@ -7,7 +7,9 @@
 ## オブジェクト図
 ```mermaid
 classDiagram
-    
+    class BaseModel {
+      
+    }
 
     class ドメインモデル {
       値オブジェクト1
