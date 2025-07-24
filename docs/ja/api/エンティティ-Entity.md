@@ -7,7 +7,9 @@
 ## オブジェクト図
 ```mermaid
 classDiagram
-    class XXX
+    class BaseEntity {
+
+    }
 ```
 
 ## `XXX`クラス
