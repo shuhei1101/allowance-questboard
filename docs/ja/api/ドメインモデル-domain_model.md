@@ -2,36 +2,61 @@
 # 🔍 ドメインモデル
 
 ## 概要
-- 
+- ドメインモデルはいわゆる関心事をクラスと表現したもの
 
 ## オブジェクト図
 ```mermaid
 classDiagram
-    class XXX
+    class BaseValueObject {
+      
+    }
+
+    class BaseId {
+      
+    }
+
+    class BaseModel {
+
+    }
+
+    class BaseCollection {
+      
+    }
+
+    class ドメインモデル {
+      値オブジェクト1
+      値オブジェクト2
+      ...
+    }
+
+    class ドメインモデルs {
+      
+    }
+
+    BaseValueObject <|-- BaseId
+
+    BaseModel --> BaseId
+    BaseModel --> BaseValueObject
+
+    BaseCollection --> BaseModel: 保持、管理
+    
+    BaseModel <|-- ドメインモデル
+    ドメインモデル --> 値オブジェクト: 保持、管理
+
+    BaseCollection <|-- ドメインモデルs: 保持
+    ドメインモデルs --> ドメインモデル: 保持、管理
 ```
 
-## `XXX`クラス
+## ドメインモデル
 ### 概要
+- 値オブジェクトを保持する関心事の集約クラス
 - 
 
 ### 配置場所
 - 
 
 ### 命名規則
-- 
-
-
-
-# 🏗️ Models層の責務
-
-## 概要
-`models/`はドメインモデルや値オブジェクトを定義する場所です。`@dataclass`を使用して、ドメインモデルや値オブジェクトを定義します。
-
-## ドメインモデル
-
-### 基本原則
-- `models/`はドメインモデルを定義する場所
-- ドメインモデル名は関心事名と同じにする
+- ドメインモデル名は関心事名とする
   - 例: `quest.py`, `user.py`
 
 ### 関連エンティティの扱い
@@ -39,6 +64,7 @@ classDiagram
   - 例: `Quest`モデルと`User`モデル
 - 同コンテキストのエンティティを参照する場合は、オブジェクトを保持する
   - 例: `Quest`モデルと`QuestStatus`モデルなど
+
 
 ### ドメインモデルの構成要素
 
