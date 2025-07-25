@@ -8,7 +8,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 
 
 class CurrenciesEntity(BaseEntity):

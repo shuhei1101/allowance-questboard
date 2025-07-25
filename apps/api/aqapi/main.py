@@ -3,11 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
 from contextlib import asynccontextmanager
 
+from aqapi.core.di_container import di_container
 from aqapi.quest.api.v1 import get_family_quest_summaries_route
 from aqapi.auth.api.v1 import login_route
 from aqapi.language.api.v1 import init_route
 
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,7 +33,7 @@ app.add_middleware(
     expose_headers=["*"],
 )
 
-DB_CONF.import_all_entities()
+db_config.import_all_entities()
 
 BASE_URL = "/api/v1"
 QUEST_URL = f"{BASE_URL}/quest"

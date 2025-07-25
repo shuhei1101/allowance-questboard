@@ -4,7 +4,7 @@ from aqapi.allowance_tables.entity.allowance_table_types_entity import Allowance
 from aqapi.bank.entity.allowanceable_types_entity import AllowanceableTypesEntity
 from aqapi.bank.entity.withdrawal_request_statuses_entity import WithdrawalRequestStatusesEntity, WithdrawalRequestStatusesTranslationEntity
 from aqapi.child.entity.educations_entity import EducationsEntity, EducationsTranslationEntity
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 from aqapi.notification.entity.notifiable_types_entity import NotifiableTypesEntity
 from aqapi.quest.entity.quest_categories_entity import QuestCategoriesEntity
 from aqapi.quest.entity.quest_member_statuses_entity import QuestMemberStatusesEntity, MemberQuestStatusesTranslationEntity
@@ -32,7 +32,7 @@ class MasterSeedr:
     async def seed(self):
         """マスタデータを投入"""
         print("マスタデータを投入中...")
-        async with DB_CONF.SessionLocal() as session:
+        async with db_config.SessionLocal() as session:
             try:
                 await self._seed_and_commit(session, LanguagesEntity)
                 await self._seed_and_commit(session, CurrenciesEntity)

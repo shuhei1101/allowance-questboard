@@ -1,6 +1,6 @@
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 import uuid
 from datetime import date
 
@@ -19,7 +19,7 @@ class SampleSeedr:
     async def seed(self):
         """サンプルデータを投入"""
         print("サンプルデータを投入中...")
-        async with DB_CONF.SessionLocal() as session:
+        async with db_config.SessionLocal() as session:
             try:
                 # 以下ユーザはアプリ画面で登録しておくこと
                 parent_uuid = uuid.UUID('70fea579-0870-4738-b3b4-ef3ecc471d9a')  # 私

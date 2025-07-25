@@ -4,10 +4,10 @@ from typing import List
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 
 
-class BaseEntity(DB_CONF.Base):
+class BaseEntity(db_config.Base):
     """全エンティティの基底クラス"""
 
     __abstract__ = True
@@ -41,7 +41,7 @@ class BaseEntity(DB_CONF.Base):
     def create_table(cls):
         table = cls.__table__
         try:
-            DB_CONF.Base.metadata.create_all(DB_CONF.engine, tables=[table])
+            db_config.Base.metadata.create_all(db_config.engine, tables=[table])
             print(f"{table.name}テーブルを作成しました")
         except Exception as e:
             print(f"{table.name}テーブルの作成でエラー: {e}")

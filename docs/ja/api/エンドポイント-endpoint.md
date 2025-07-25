@@ -10,25 +10,27 @@ classDiagram
     class main.py {
         app: FastAPI
     }
-    class get_xx_route.py {
-        router: APIRouter
-        get_xx(GetXxRequest): GetXxResponse
+    class CommonDependencies {
+        session: Session
+        user_id: UUID
+        raw_language_id: int
     }
-    class login_route.py {
+    class xxx_route.py {
         router: APIRouter
-        login(): LoginResponse
+        xxx(XxxRequest): XxxResponse
     }
-    class GetXxResponse {
+    class XxxResponse {
         item: 関心事名Dto
     }
     class 関心事名Dto
-    class GetXxRequest
+    class XxxRequest
 
-    main.py --> get_xx_route.py : ルーティング定義
+    main.py --> xxx_route.py : ルーティング定義
     main.py --> login_route.py : ルーティング定義
 
-    get_xx_route.py --> GetXxRequest : 引数
-    get_xx_route.py --> GetXxResponse : 戻り値
+    xxx_route.py --> CommonDependencies : 依存
+    xxx_route.py --> XxxRequest : 引数
+    xxx_route.py --> XxxResponse : 戻り値
 ```
 
 ## `main.py`ファイル
@@ -64,6 +66,16 @@ classDiagram
     - 例: `/quests`, `/quests/{quest_id}`, `/users/{user_id}/quests`
   - ただし、RESTfulとは違い動詞も使って良い
     - `/quests/create`, `/quests/{quest_id}/update`, `login`
+
+## `CommonDependencies`クラス
+### 概要
+- エンドポイント関数で共通して使用する依存関係を定義
+- FastAPIの`Depends`を使用して依存性注入を行う
+
+- __init__ではアプリで使用するコンフィグ周りの設定を行う
+
+### 配置場所
+- `./{関心事名}/core/api/common_dependencies.py`
 
 ## `Request`クラス
 ### 概要

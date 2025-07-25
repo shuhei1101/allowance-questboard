@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import asyncio
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 from db_manager import DBManager
 from master_seedr import MasterSeedr
 from sample_seedr import SampleSeedr
@@ -16,10 +16,10 @@ class DBInitializer:
     async def initialize(self):
         """非同期初期化"""
         # エンティティを明示的にインポート
-        DB_CONF.import_all_entities()
+        db_config.import_all_entities()
         
         # 非同期初期化
-        await DB_CONF.initialize_async()
+        await db_config.initialize_async()
 
     async def show_info(self):
         """情報表示を実行"""

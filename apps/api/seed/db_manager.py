@@ -1,6 +1,6 @@
 from sqlalchemy import text
 
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 
 
 class DBManager:
@@ -11,11 +11,11 @@ class DBManager:
         print("テーブルを作成中...")
         try:
             # 非同期エンジンを使ってテーブル作成
-            async with DB_CONF.engine.begin() as conn:
-                await conn.run_sync(DB_CONF.Base.metadata.create_all)
+            async with db_config.engine.begin() as conn:
+                await conn.run_sync(db_config.Base.metadata.create_all)
             print("テーブルの作成が完了しました")
 
-            async with DB_CONF.SessionLocal() as db:
+            async with db_config.SessionLocal() as db:
                 # 作成されたテーブルを確認
                 result = await db.execute(
                     text(
@@ -40,7 +40,7 @@ class DBManager:
     async def drop_tables(self):
         """すべてのテーブルを削除"""
         print("テーブルを削除中... (CASCADE削除を使用)")
-        async with DB_CONF.SessionLocal() as db:
+        async with db_config.SessionLocal() as db:
             try:
                 # 削除前に既存のテーブルを確認
                 print("\n=== 削除前の状態確認 ===")
@@ -62,7 +62,7 @@ class DBManager:
                         print(f"  {i:2d}. {table}")
 
                 # メタデータから取得したテーブル名を確認
-                table_names = list(DB_CONF.Base.metadata.tables.keys())
+                table_names = list(db_config.Base.metadata.tables.keys())
                 print(f"\n=== メタデータから取得したテーブル: {len(table_names)}個 ===")
                 for i, table_name in enumerate(table_names, 1):
                     print(f"  {i:2d}. {table_name}")
@@ -124,14 +124,14 @@ class DBManager:
 
     def _show_table_info(self):
         """テーブル情報を表示"""
-        print(f"発見されたEntityクラス: {len(DB_CONF.Base.metadata.tables)} 個")
+        print(f"発見されたEntityクラス: {len(db_config.Base.metadata.tables)} 個")
         print(
-            f"定義されているテーブル名: {sorted(DB_CONF.Base.metadata.tables.keys())}"
+            f"定義されているテーブル名: {sorted(db_config.Base.metadata.tables.keys())}"
         )
 
     async def _show_database_info(self):
         """データベースの現在の状態を表示"""
-        async with DB_CONF.SessionLocal() as db:
+        async with db_config.SessionLocal() as db:
             try:
                 result = await db.execute(
                     text(
@@ -159,7 +159,7 @@ class DBManager:
     async def force_drop_all_public_tables(self):
         """publicスキーマのすべてのテーブルを強制削除"""
         print("=== publicスキーマのすべてのテーブルを強制削除 ===")
-        async with DB_CONF.SessionLocal() as db:
+        async with db_config.SessionLocal() as db:
             try:
                 # publicスキーマのすべてのテーブルを取得
                 result = await db.execute(

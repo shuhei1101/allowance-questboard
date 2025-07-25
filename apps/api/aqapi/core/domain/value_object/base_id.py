@@ -13,11 +13,6 @@ class BaseId(BaseValueObject[int], Hashable):
         self._validator.validate_required()
         self._validator.validate_integer()
         self._validator.validate_min_value(1)
-
-    @property
-    @override
-    def _value_name(self) -> str:
-        return "ID"
     
     def __hash__(self) -> int:
         """ハッシュ値の計算（辞書のキーとして使用可能にする）"""

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 from aqapi.language.dao.language_dao import LanguageDao
 from aqapi.language.repository.language_repository import LanguageRepository
 from aqapi.language.repository.language_repository_dependencies import LanguageRepositoryDependencies
@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.get("/init", response_model=InitResponse)
 async def init(
-    session: AsyncSession = Depends(DB_CONF.get_session)
+    session: AsyncSession = Depends(db_config.get_session)
 ):
     """アプリ初期化時に必要なデータを取得する
     

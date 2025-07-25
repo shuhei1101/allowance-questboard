@@ -88,4 +88,4 @@ class DBConfig:
         )
         return True
     
-DB_CONF = DBConfig()
+db_config = DBConfig()

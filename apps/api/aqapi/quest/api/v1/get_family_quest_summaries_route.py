@@ -2,7 +2,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 from aqapi.core.pagination.paginator import Paginator
 from aqapi.quest.query_service.fetch_family_quest_query import FetchFamilyQuestSummaryQuery
 from aqapi.quest.query_service.fetch_family_quest_query_command import FetchFamilyQuestSummaryQueryCommand
@@ -17,7 +17,7 @@ async def get_family_quest_summaries(
     language_id: int,
     page: Optional[int] = Query(None, ge=1),
     size: Optional[int] = Query(None, ge=1),
-    db: Session = Depends(DB_CONF.get_session),
+    db: Session = Depends(db_config.get_session),
 ):
     """ファミリークエスト一覧を取得する"""
     service = FetchFamilyQuestSummaryQuery(session=db)

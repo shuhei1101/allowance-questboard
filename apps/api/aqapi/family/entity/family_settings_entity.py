@@ -5,10 +5,10 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from aqapi.core.config.db_config import DB_CONF
+from aqapi.core.config.db_config import db_config
 
 
-class FamilySettingsEntity(DB_CONF.Base):
+class FamilySettingsEntity(db_config.Base):
     """家族設定エンティティ"""
 
     __tablename__ = "families_settings"
