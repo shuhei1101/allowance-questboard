@@ -22,7 +22,6 @@ classDiagram
     BaseEntity <|-- XxxEntity
     BaseHistoryEntity <|-- XxxHistoryEntity
     BaseTranslationEntity <|-- XxxTranslationEntity
-
 ```
 
 ## `BaseEntity`クラス
@@ -56,7 +55,6 @@ classDiagram
 ## `XxxHistoryEntity`クラス
 ### 概要
 - 特定のエンティティの履歴Entity
-
 
 ### 配置場所
 - 
