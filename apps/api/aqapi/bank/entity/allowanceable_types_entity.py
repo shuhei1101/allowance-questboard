@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import List, override
 from sqlalchemy import Column, Integer, String, Text, DateTime, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -15,6 +15,7 @@ class AllowanceableTypesEntity(BaseEntity):
     table_name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True, comment="お小遣い支給対象テーブル名")
     description: Mapped[str] = mapped_column(Text, nullable=False, comment="説明")
 
+    @override
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [

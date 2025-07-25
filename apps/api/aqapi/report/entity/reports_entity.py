@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Index, Integer, Boolean, DateTime, ForeignKey, String, Text, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
@@ -35,16 +36,11 @@ class ReportsHistoryEntity(BaseHistoryEntity):
     reported_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
     resolved_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
+    @override
     @classmethod
-    def from_source(cls, source: "ReportsEntity"):
-        """元のレコードから履歴エンティティを生成"""
-        return cls(
-            source_id=source.id,
-            reported_by=source.reported_by,
-            reportable_type=source.reportable_type,
-            status_id=source.status_id,
-            reported_at=source.reported_at,
-            resolved_at=source.resolved_at,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'ReportsHistoryEntity', source: ReportsEntity) -> None:
+        instance.reported_by = source.reported_by
+        instance.reportable_type = source.reportable_type
+        instance.status_id = source.status_id
+        instance.reported_at = source.reported_at
+        instance.resolved_at = source.resolved_at

@@ -2,17 +2,49 @@
 # 🔍 エンティティ
 
 ## 概要
-- 
+- SQLAlchemyのORMを使用して、DBのテーブルとマッピングする
 
 ## オブジェクト図
 ```mermaid
 classDiagram
     class BaseEntity {
-      
+      id: Mapped[int]
+      version: Mapped[int]
+      created_at: Mapped[datetime]
+      created_by: Mapped[int]
+      created_from: Mapped[int]
+      updated_at: Mapped[datetime]
+      updated_by: Mapped[int]
+      updated_from: Mapped[int]
+      create_table()
+      drop_table()
+      *from_model()*
+      seed()
+      *_seed_data()*
     }
-    class BaseHistoryEntity {}
-    class BaseTranslationEntity {}
-    class BaseTranslationCollection {}
+    class BaseHistoryEntity {
+      source_id: Mapped[int]
+      source_version: Mapped[int]
+      source_created_at: Mapped[datetime]
+      source_created_by: Mapped[int]
+      source_created_from: Mapped[int]
+      source_updated_at: Mapped[datetime]
+      source_updated_by: Mapped[int]
+      source_updated_from: Mapped[int]
+      from_source() -> 'BaseHistoryEntity'
+      *_set_specific_attrs(instance: 'BaseHistoryEntity', source: 'BaseEntity')*
+    }
+    class BaseTranslationEntity {
+      language_id: Mapped[int]
+      *source_id()*: int
+    }
+    class BaseTranslationCollection {
+      _items: list[TranslationType]
+      _items_by_source_id: dict[int, dict[int, TranslationType]]
+      update_items_by_source_id()
+      get(source_id, language_id): TranslationType
+      get_by_source_id(source_id): dict[int, TranslationType]
+    }
 
     BaseEntity <|-- BaseHistoryEntity
     BaseEntity <|-- BaseTranslationEntity
@@ -26,7 +58,7 @@ classDiagram
 
 ## `BaseEntity`クラス
 ### 概要
-- sqlalchemyのdeclarative_baseを継承した基底クラス
+- SQLAlchemyのdeclarative_baseを継承した基底クラス
 - 初期データ投入やドメインモデルから生成するメソッドを持つ
 
 ### 配置場所
@@ -36,7 +68,10 @@ classDiagram
 ### 概要
 - 各関心事のEntity
 - `BaseEntity`を継承する
-- 
+
+- `_seed_data`メソッドをオーバーライドし、初期データを定義する
+
+- 対応するドメインモデルを作成した場合は、`from_model`メソッドをオーバーライドして、ドメインモデルからEntityを生成するロジックを実装する
 
 ### 配置場所
 - `{関心事名}/entity/XxxEntity`
@@ -48,54 +83,50 @@ classDiagram
 ## `BaseHistoryEntity`クラス
 ### 概要
 - 履歴エンティティが継承する基底クラス
+- ユーザ側で更新ができるエンティティは基本的に履歴エンティティを持つようにする
+
+- 元のエンティティから自身を生成するメソッドを持つ
+  - 具象側で_set_specific_attrsを実装することで、自身を生成する際に必要な属性を設定する
 
 ### 配置場所
 - `core/entity/base_history_entity.py`
 
 ## `XxxHistoryEntity`クラス
 ### 概要
-- 特定のエンティティの履歴Entity
+- 特定エンティティの履歴Entity
+- `BaseHistoryEntity`を継承すること
 
 ### 配置場所
-- 
+- `{関心事名}/entity/{関心事名の複数形}_entity`
+  - オリジナルのエンティティと同じファイル内に配置すること
+  - オリジナルのエンティティの下に定義すること
 
 ### 命名規則
-- 
+- オリジナルのエンティティ名の`Entity`の前に`History`を付ける
+  - 例: `QuestsEntity` → `QuestsHistoryEntity`
 
 ## `BaseTranslationEntity`クラス
 ### 概要
-- 
+- 翻訳エンティティの基底クラス
+- 言語IDと翻訳元のIDを持つ
+- 具象側では他言語化したい属性を定義する
+  - 例: `name`, `description`など
 
 ### 配置場所
-- 
+- `core/entity/base_translation_entity.py`
 
-### 命名## `BaseEntity`クラス
+## `XxxTranslationEntity`クラス
 ### 概要
-- 
+- 特定エンティティの翻訳Entity
+- `BaseTranslationEntity`を継承すること
+  - `source_id`プロパティをオーバーライドし、翻訳対象のエンティティのIDを返すようにする
 
 ### 配置場所
-- 
+- `{関心事名}/entity/{関心事名の複数形}_entity`
+  - オリジナルのエンティティと同じファイル内に配置すること
+  - オリジナルのエンティティの下に定義すること
+  - 履歴エンティティが存在する場合は、その下に定義すること
 
 ### 命名規則
-- 
-
-
-## `BaseTranslationCollection`クラス
-### 概要
-- 
-
-### 配置場所
-- 
-
-### 命名規則
-- 
-
-## `BaseEntity`クラス
-### 概要
-- 
-
-### 配置場所
-- 
-
-### 命名規則
-- 
+- オリジナルのエンティティ名の`Entity`の前に`Translation`を付ける
+  - 例: `QuestsEntity` → `QuestsTranslationEntity`

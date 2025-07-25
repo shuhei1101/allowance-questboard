@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
@@ -12,6 +13,7 @@ class WithdrawalRequestStatusesEntity(BaseEntity):
 
     code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="ステータスコード")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
@@ -31,6 +33,7 @@ class WithdrawalRequestStatusesTranslationEntity(BaseTranslationEntity):
 
     withdrawal_request_status = relationship("WithdrawalRequestStatusesEntity", foreign_keys=[withdrawal_request_status_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

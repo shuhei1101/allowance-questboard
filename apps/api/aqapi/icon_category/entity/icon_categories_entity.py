@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime, UniqueConstraint, func
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
@@ -15,6 +16,7 @@ class IconCategoriesEntity(BaseEntity):
     sort_order: Mapped[int] = mapped_column(Integer, default=0, comment="表示順序")
     is_active = Column(Boolean, nullable=False, default=True, comment="有効フラグ")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
@@ -36,6 +38,7 @@ class IconCategoriesTranslationEntity(BaseTranslationEntity):
 
     category = relationship("IconCategoriesEntity", foreign_keys=[category_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
@@ -48,6 +51,7 @@ class IconCategoriesTranslationEntity(BaseTranslationEntity):
         ]
     
     @property
+    @override
     def source_id(self) -> int:
         return self.category_id
 

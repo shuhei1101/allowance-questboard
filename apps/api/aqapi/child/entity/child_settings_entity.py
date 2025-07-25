@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean, UUID
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -18,7 +19,7 @@ class ChildSettingsEntity(BaseEntity):
     child = relationship("ChildrenEntity", foreign_keys=[child_id])
 
 
-class ChildSettingsHistoryEntity(BaseHistoryEntity):
+class ChildSettingsHistoryEntity(BaseHistoryEntity[ChildSettingsEntity]):
     """子供設定履歴エンティティ"""
 
     __tablename__ = "child_settings_history"
@@ -26,12 +27,8 @@ class ChildSettingsHistoryEntity(BaseHistoryEntity):
     child_id: Mapped[int] = mapped_column(Integer)
     min_savings: Mapped[int] = mapped_column(Integer)
 
+    @override
     @classmethod
-    def from_source(cls, source: "ChildSettingsEntity"):
-        return cls(
-            source_id=source.id,
-            child_id=source.child_id,
-            min_savings=source.min_savings,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'ChildSettingsHistoryEntity', source: ChildSettingsEntity) -> None:
+        instance.child_id = source.child_id
+        instance.min_savings = source.min_savings

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import List, override
 from sqlalchemy import CheckConstraint, Column, Integer, DateTime, ForeignKey, String, func, UniqueConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -16,6 +16,7 @@ class QuestCategoriesEntity(BaseEntity):
 
     subclass_type_ref = relationship("QuestCategoryTypesEntity", foreign_keys=[subclass_type])
 
+    @override
     @classmethod
     def _seed_data(cls) -> List['BaseEntity']:
         return [
@@ -38,6 +39,7 @@ class QuestCategoriesTranslationEntity(BaseTranslationEntity):
 
     quest_categories = relationship("QuestCategoriesEntity", foreign_keys=[quest_category_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

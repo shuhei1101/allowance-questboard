@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.config.db_config import DB_CONF
@@ -16,6 +17,7 @@ class LanguagesEntity(BaseEntity):
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True, comment="有効フラグ")
     sort_order: Mapped[int] = mapped_column(Integer, nullable=False, default=0, comment="表示順序")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

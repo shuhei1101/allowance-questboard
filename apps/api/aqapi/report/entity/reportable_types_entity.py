@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, Integer, String, Text, DateTime, func, CheckConstraint
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
@@ -14,6 +15,7 @@ class ReportableTypesEntity(BaseEntity):
     table_name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True, comment="レポート対象テーブル名")
     description: Mapped[str] = mapped_column(Text, nullable=False, comment="レポート対象タイプの説明")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

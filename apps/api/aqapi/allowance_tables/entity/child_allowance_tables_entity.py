@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -18,7 +19,7 @@ class ChildAllowanceTablesEntity(BaseEntity):
     allowance_table = relationship("AllowanceTablesEntity", foreign_keys=[superclass_id])
     child = relationship("ChildrenEntity", foreign_keys=[child_id])
 
-class ChildAllowanceTablesHistoryEntity(BaseHistoryEntity):
+class ChildAllowanceTablesHistoryEntity(BaseHistoryEntity[ChildAllowanceTablesEntity]):
     """子供お小遣いテーブル履歴エンティティ"""
 
     __tablename__ = "child_allowance_tables_history"
@@ -26,12 +27,8 @@ class ChildAllowanceTablesHistoryEntity(BaseHistoryEntity):
     superclass_id: Mapped[int] = mapped_column(Integer)
     child_id: Mapped[int] = mapped_column(Integer)
 
+    @override
     @classmethod
-    def from_source(cls, source: "ChildAllowanceTablesEntity"):
-        return cls(
-            source_id=source.id,
-            superclass_id=source.superclass_id,
-            child_id=source.child_id,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'ChildAllowanceTablesHistoryEntity', source: ChildAllowanceTablesEntity) -> None:
+        instance.superclass_id = source.superclass_id
+        instance.child_id = source.child_id

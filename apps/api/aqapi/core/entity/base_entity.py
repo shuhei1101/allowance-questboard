@@ -57,12 +57,6 @@ class BaseEntity(DB_CONF.Base):
 
     @classmethod
     @abstractmethod
-    def _seed_data(cls) -> List['BaseEntity']:
-        """シードデータを返す抽象メソッド"""
-        return []
-
-    @classmethod
-    @abstractmethod
     def from_model(cls, model) -> 'BaseEntity':
         """ドメインモデルからエンティティを作成する"""
         pass
@@ -80,3 +74,9 @@ class BaseEntity(DB_CONF.Base):
         seed_data = cls._seed_data()
         session.add_all(seed_data)
         print(f"{cls.__tablename__}の初期データを投入しました")
+        
+    @classmethod
+    @abstractmethod
+    def _seed_data(cls) -> List['BaseEntity']:
+        """シードデータを返す抽象メソッド"""
+        return []

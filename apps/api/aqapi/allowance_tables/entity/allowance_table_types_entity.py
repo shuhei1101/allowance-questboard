@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -10,6 +11,7 @@ class AllowanceTableTypesEntity(BaseEntity):
 
     table_name: Mapped[str] = mapped_column(String, nullable=False, unique=True, comment="テーブル名")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

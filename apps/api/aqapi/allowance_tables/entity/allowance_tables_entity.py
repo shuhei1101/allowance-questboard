@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -16,19 +17,14 @@ class AllowanceTablesEntity(BaseEntity):
 
     allowance_tables_sub_table_type = relationship("AllowanceTableTypesEntity", foreign_keys=[subclass_type])
 
-class AllowanceTablesHistoryEntity(BaseHistoryEntity):
+class AllowanceTablesHistoryEntity(BaseHistoryEntity[AllowanceTablesEntity]):
     """お小遣いテーブル履歴エンティティ"""
 
     __tablename__ = "allowance_tables_history"
 
     subclass_type: Mapped[int] = mapped_column(Integer)
 
+    @override
     @classmethod
-    def from_source(cls, source: "AllowanceTablesEntity"):
-        return cls(
-            source_id=source.id,
-            subclass_type=source.subclass_type,
-            subclass_id=source.subclass_id,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'AllowanceTablesHistoryEntity', source: AllowanceTablesEntity) -> None:
+        instance.subclass_type = source.subclass_type

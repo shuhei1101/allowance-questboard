@@ -1,4 +1,4 @@
-from typing import Hashable
+from typing import Hashable, override
 from aqapi.core.domain.value_object.base_value_object import BaseValueObject
 
 
@@ -8,15 +8,16 @@ class BaseId(BaseValueObject[int], Hashable):
     def __init__(self, value: int):
         super().__init__(value)
 
+    @override
     def _validate(self) -> None:
-        if not isinstance(self._value, int) or self._value <= 0:
-            raise ValueError("IDは正の整数でなければなりません。")
-    
-    def __eq__(self, other) -> bool:
-        """等価性の比較"""
-        if not isinstance(other, BaseId):
-            return False
-        return self._value == other._value
+        self._validator.validate_required()
+        self._validator.validate_integer()
+        self._validator.validate_min_value(1)
+
+    @property
+    @override
+    def _value_name(self) -> str:
+        return "ID"
     
     def __hash__(self) -> int:
         """ハッシュ値の計算（辞書のキーとして使用可能にする）"""
@@ -26,7 +27,3 @@ class BaseId(BaseValueObject[int], Hashable):
         """IDを整数として返す"""
         return self._value
     
-    @property
-    def value(self) -> int:
-        """IDの値を取得"""
-        return self._value

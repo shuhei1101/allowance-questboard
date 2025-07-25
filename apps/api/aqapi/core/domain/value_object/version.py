@@ -1,21 +1,18 @@
 from dataclasses import dataclass
-from aqapi.core.constants.error_messages import ERR_MSGS
+from typing import override
+from aqapi.core.constants.error_messages import error_messages
+from aqapi.core.domain.value_object.base_value_object import BaseValueObject
 
-@dataclass
-class Version:
+class Version(BaseValueObject[int]):
 
-    value: int
+    @override
+    def _validate(self) -> None:
+        """バージョンの値が1以上であることを確認"""
+        self._validator.validate_required()
+        self._validator.validate_integer()
+        self._validator.validate_min_value(1)
 
-    def __init__(self, value: int):
-        if value < 1:
-            raise ValueError(ERR_MSGS.VERSION_TOO_LOW)
-        self.value = value
-
-    def next(self) -> None:
+    def get_next_version(self) -> 'Version':
         """バージョンを1つ進める"""
-        self.value += 1
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Version):
-            return NotImplemented
-        return self.value == other.value
+        return Version(self._value + 1)
+        

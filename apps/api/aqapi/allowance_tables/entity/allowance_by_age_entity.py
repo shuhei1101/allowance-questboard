@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -23,7 +24,7 @@ class AllowanceByAgeEntity(BaseEntity):
 
     allowance_tables = relationship("AllowanceTablesEntity", foreign_keys=[allowance_table_id])
 
-class AllowanceByAgeHistoryEntity(BaseHistoryEntity):
+class AllowanceByAgeHistoryEntity(BaseHistoryEntity[AllowanceByAgeEntity]):
     """年齢別お小遣い履歴テーブルエンティティ"""
 
     __tablename__ = "allowance_by_age_history"
@@ -32,13 +33,9 @@ class AllowanceByAgeHistoryEntity(BaseHistoryEntity):
     age: Mapped[int] = mapped_column(Integer)
     amount: Mapped[int] = mapped_column(Integer)
 
+    @override
     @classmethod
-    def from_source(cls, source: "AllowanceByAgeEntity"):
-        return cls(
-            source_id=source.id,
-            allowance_table_id=source.allowance_table_id,
-            age=source.age,
-            amount=source.amount,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'AllowanceByAgeHistoryEntity', source: AllowanceByAgeEntity) -> None:
+        instance.allowance_table_id = source.allowance_table_id
+        instance.age = source.age
+        instance.amount = source.amount

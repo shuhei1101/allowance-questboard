@@ -3,6 +3,7 @@
 """
 
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
@@ -21,6 +22,7 @@ class CurrenciesEntity(BaseEntity):
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True, comment="有効フラグ")
     sort_order: Mapped[int] = mapped_column(Integer, nullable=False, default=0, comment="表示順序")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         """初期データを投入するメソッド"""

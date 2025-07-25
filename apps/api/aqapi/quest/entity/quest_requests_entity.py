@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, String, Text, Boolean, DateTime, CheckConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -35,7 +36,7 @@ class QuestRequestsEntity(BaseEntity):
     status = relationship("QuestRequestStatusesEntity", foreign_keys=[status_id], lazy="joined")
 
 
-class QuestRequestsHistoryEntity(BaseHistoryEntity):
+class QuestRequestsHistoryEntity(BaseHistoryEntity[QuestRequestsEntity]):
     """クエストリクエスト履歴エンティティ"""
 
     __tablename__ = "quest_requests_history"
@@ -51,21 +52,16 @@ class QuestRequestsHistoryEntity(BaseHistoryEntity):
     answered_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
     requested_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
+    @override
     @classmethod
-    def from_source(cls, source: "QuestRequestsEntity"):
-        """元のレコードから履歴エンティティを生成"""
-        return cls(
-            source_id=source.id,
-            requested_by=source.requested_by,
-            approved_by=source.approved_by,
-            quest_id=source.quest_id,
-            title=source.title,
-            description=source.description,
-            is_new_request=source.is_new_request,
-            status_id=source.status_id,
-            answer=source.answer,
-            answered_at=source.answered_at,
-            requested_at=source.requested_at,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'QuestRequestsHistoryEntity', source: QuestRequestsEntity) -> None:
+        instance.requested_by = source.requested_by
+        instance.approved_by = source.approved_by
+        instance.quest_id = source.quest_id
+        instance.title = source.title
+        instance.description = source.description
+        instance.is_new_request = source.is_new_request
+        instance.status_id = source.status_id
+        instance.answer = source.answer
+        instance.answered_at = source.answered_at
+        instance.requested_at = source.requested_at

@@ -1,7 +1,7 @@
 import 'package:allowance_questboard/core/state/error_message.dart';
-import 'package:allowance_questboard/core/state/validation_mixin.dart';
+import 'package:allowance_questboard/core/state/value_validation_mixin.dart';
 
-abstract class BaseStateObject<ValueType> with ValidationMixin {
+abstract class BaseStateObject<ValueType> with ValueValidationMixin {
   final ValueType value;
   late ErrorMessage? errorMessage;
 

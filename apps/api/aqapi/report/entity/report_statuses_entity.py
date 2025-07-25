@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func, CheckConstraint
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
@@ -13,6 +14,7 @@ class ReportStatusesEntity(BaseEntity):
 
     code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="ステータスコード")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
@@ -30,7 +32,7 @@ class ReportStatusesTranslationEntity(BaseTranslationEntity):
     report_status_id: Mapped[int] = mapped_column(Integer, ForeignKey("report_statuses.id", ondelete="CASCADE"), nullable=False, comment="レポートステータスID")
     status: Mapped[str] = mapped_column(String(50), nullable=False, comment="翻訳されたステータス名")
 
-
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

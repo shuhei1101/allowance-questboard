@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -17,6 +18,7 @@ class IconsEntity(BaseEntity):
 
     category = relationship("IconCategoriesEntity", foreign_keys=[category_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

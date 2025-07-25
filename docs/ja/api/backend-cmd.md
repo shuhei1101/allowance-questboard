@@ -7,6 +7,9 @@ source venv/bin/activate
 ```bash
 deactivate
 ```
+
+```result
+```
 #### 依存関係のインストール
 ```bash
 pip install -r requirements.txt

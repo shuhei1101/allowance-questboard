@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, String, Text, DateTime, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -27,7 +28,7 @@ class CommentsEntity(BaseEntity):
     parent_comment = relationship("CommentsEntity", foreign_keys=[parent_comment_id])
 
 
-class CommentsHistoryEntity(BaseHistoryEntity):
+class CommentsHistoryEntity(BaseHistoryEntity[CommentsEntity]):
     """コメント履歴エンティティ"""
 
     __tablename__ = "comments_history"
@@ -38,19 +39,14 @@ class CommentsHistoryEntity(BaseHistoryEntity):
     body: Mapped[str] = mapped_column(Text)
     commented_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
+    @override
     @classmethod
-    def from_source(cls, source: "CommentsEntity"):
-        """元のレコードから履歴エンティティを生成"""
-        return cls(
-            source_id=source.id,
-            commented_by=source.commented_by,
-            commentable_type=source.commentable_type,
-            parent_comment_id=source.parent_comment_id,
-            body=source.body,
-            commented_at=source.commented_at,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'CommentsHistoryEntity', source: CommentsEntity) -> None:
+        instance.commented_by = source.commented_by
+        instance.commentable_type = source.commentable_type
+        instance.parent_comment_id = source.parent_comment_id
+        instance.body = source.body
+        instance.commented_at = source.commented_at
 
 
 class CommentsTranslationEntity(BaseTranslationEntity):

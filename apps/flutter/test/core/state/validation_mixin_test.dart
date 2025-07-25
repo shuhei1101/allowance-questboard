@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:allowance_questboard/core/state/validation_mixin.dart';
+import 'package:allowance_questboard/core/state/value_validation_mixin.dart';
 
-class TestValidationMixin with ValidationMixin {}
+class TestValidationMixin with ValueValidationMixin {}
 
 void main() {
   group('TestValidationMixin', () {

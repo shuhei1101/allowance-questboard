@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -22,20 +23,16 @@ class SharedAllowanceTablesEntity(BaseEntity):
     family_allowance_table = relationship("FamilyAllowanceTablesEntity", foreign_keys=[family_allowance_table_id])
     family = relationship("FamiliesEntity", foreign_keys=[shared_by])
 
-class SharedAllowanceTablesHistoryEntity(BaseHistoryEntity):
+class SharedAllowanceTablesHistoryEntity(BaseHistoryEntity[SharedAllowanceTablesEntity]):
     """保存された共有お小遣いテーブル履歴エンティティ"""
 
     __tablename__ = "shared_allowance_tables_history"
 
     family_allowance_table_id: Mapped[int] = mapped_column(Integer)
-    family_id: Mapped[int] = mapped_column(Integer)
+    shared_by: Mapped[int] = mapped_column(Integer)
 
+    @override
     @classmethod
-    def from_source(cls, source: "SharedAllowanceTablesEntity"):
-        return cls(
-            source_id=source.id,
-            family_allowance_table_id=source.family_allowance_table_id,
-            family_id=source.shared_by,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'SharedAllowanceTablesHistoryEntity', source: SharedAllowanceTablesEntity) -> None:
+        instance.family_allowance_table_id = source.family_allowance_table_id
+        instance.shared_by = source.shared_by

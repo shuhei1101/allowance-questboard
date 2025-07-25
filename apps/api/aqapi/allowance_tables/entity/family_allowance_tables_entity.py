@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -19,7 +20,7 @@ class FamilyAllowanceTablesEntity(BaseEntity):
     allowance_table = relationship("AllowanceTablesEntity", foreign_keys=[superclass_id])
     family = relationship("FamiliesEntity", foreign_keys=[family_id])
 
-class FamilyAllowanceTablesHistoryEntity(BaseHistoryEntity):
+class FamilyAllowanceTablesHistoryEntity(BaseHistoryEntity[FamilyAllowanceTablesEntity]):
     """家族お小遣いテーブル履歴エンティティ"""
 
     __tablename__ = "family_allowance_tables_history"
@@ -28,15 +29,9 @@ class FamilyAllowanceTablesHistoryEntity(BaseHistoryEntity):
     family_id: Mapped[int] = mapped_column(Integer)
     is_public: Mapped[bool] = mapped_column(Boolean)
 
+    @override
     @classmethod
-    def from_source(cls, source: "FamilyAllowanceTablesEntity"):
-        """元のレコードから履歴エンティティを生成"""
-        
-        return cls(
-            source_id=source.id,
-            superclass_id=source.superclass_id,
-            family_id=source.family_id,
-            is_public=source.is_public,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'FamilyAllowanceTablesHistoryEntity', source: FamilyAllowanceTablesEntity) -> None:
+        instance.superclass_id = source.superclass_id
+        instance.family_id = source.family_id
+        instance.is_public = source.is_public

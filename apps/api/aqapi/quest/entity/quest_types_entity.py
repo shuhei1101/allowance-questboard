@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, String, Text
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_entity import BaseTranslationEntity
@@ -13,6 +14,7 @@ class QuestTypesEntity(BaseEntity):
     table_name: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="サブクラスタイプテーブル名")
     description: Mapped[str] = mapped_column(Text, nullable=False, comment="タイプの説明")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

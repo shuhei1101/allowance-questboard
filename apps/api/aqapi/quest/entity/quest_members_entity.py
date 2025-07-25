@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -34,7 +35,7 @@ class QuestMembersEntity(BaseEntity):
     member = relationship("ChildrenEntity", foreign_keys=[member_id])
     status = relationship("QuestMemberStatusesEntity", foreign_keys=[status_id])
 
-class QuestMembersHistoryEntity(BaseHistoryEntity):
+class QuestMembersHistoryEntity(BaseHistoryEntity[QuestMembersEntity]):
     """クエストメンバー履歴エンティティ"""
 
     __tablename__ = "quest_members_history"
@@ -46,17 +47,12 @@ class QuestMembersHistoryEntity(BaseHistoryEntity):
     published_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
     achieved_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True))
 
+    @override
     @classmethod
-    def from_source(cls, source: "QuestMembersEntity"):
-        """元のレコードから履歴エンティティを生成"""
-        return cls(
-            source_id=source.id,
-            family_quest_id=source.family_quest_id,
-            member_id=source.member_id,
-            current_level=source.current_level,
-            status_id=source.status_id,
-            published_at=source.published_at,
-            achieved_at=source.achieved_at,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'QuestMembersHistoryEntity', source: QuestMembersEntity) -> None:
+        instance.family_quest_id = source.family_quest_id
+        instance.member_id = source.member_id
+        instance.current_level = source.current_level
+        instance.status_id = source.status_id
+        instance.published_at = source.published_at
+        instance.achieved_at = source.achieved_at

@@ -1,4 +1,5 @@
 from datetime import date
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean, UUID, Date, Uuid
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -22,7 +23,7 @@ class FamilyMembersEntity(BaseEntity):
 
     icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
-class FamilyMembersHistoryEntity(BaseHistoryEntity):
+class FamilyMembersHistoryEntity(BaseHistoryEntity[FamilyMembersEntity]):
     """家族メンバー履歴エンティティ"""
 
     __tablename__ = "family_members_history"
@@ -32,15 +33,10 @@ class FamilyMembersHistoryEntity(BaseHistoryEntity):
     icon_id: Mapped[int] = mapped_column(Integer)
     birthday: Mapped[date] = mapped_column(Date)
 
+    @override
     @classmethod
-    def from_source(cls, source: "FamilyMembersEntity"):
-        """元のレコードから履歴エンティティを生成"""
-        return cls(
-            source_id=source.id,
-            user_id=source.user_id,
-            name=source.name,
-            icon_id=source.icon_id,
-            birthday=source.birthday,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'FamilyMembersHistoryEntity', source: FamilyMembersEntity) -> None:
+        instance.user_id = source.user_id
+        instance.name = source.name
+        instance.icon_id = source.icon_id
+        instance.birthday = source.birthday

@@ -1,3 +1,4 @@
+from typing import override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean, UUID
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -17,7 +18,7 @@ class UserSettingsEntity(BaseEntity):
 
     language = relationship("LanguagesEntity", foreign_keys=[language_id])
 
-class UserSettingsHistoryEntity(BaseHistoryEntity):
+class UserSettingsHistoryEntity(BaseHistoryEntity[UserSettingsEntity]):
     """ユーザ設定履歴エンティティ"""
 
     __tablename__ = "user_settings_history"
@@ -25,11 +26,8 @@ class UserSettingsHistoryEntity(BaseHistoryEntity):
     user_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True))
     language_id: Mapped[int] = mapped_column(Integer)
 
+    @override
     @classmethod
-    def from_source(cls, source: "UserSettingsEntity"):
-        return cls(
-            source_user_id=source.user_id,
-            language_id=source.language_id,
-            source_created_at=source.created_at,
-            source_updated_at=source.updated_at,
-        )
+    def _set_specific_attrs(cls, instance: 'UserSettingsHistoryEntity', source: UserSettingsEntity) -> None:
+        instance.user_id = source.user_id
+        instance.language_id = source.language_id

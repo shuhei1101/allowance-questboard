@@ -9,7 +9,7 @@ class ValidationException implements Exception {
 
 /// バリデーション機能を提供するmixin
 /// BaseStateObjectと組み合わせて使用し、様々な入力検証を行う
-mixin ValidationMixin {
+mixin ValueValidationMixin {
   /// 必須入力チェック
   /// 
   /// :param dynamic value: チェック対象の値

@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from decimal import Decimal
-from typing import List
+from typing import List, override
 from sqlalchemy import Column, Integer, Numeric, Date, DateTime, ForeignKey, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -29,6 +29,7 @@ class ExchangeRatesEntity(BaseEntity):
     base_currency_id_ref = relationship("CurrenciesEntity", foreign_keys=[base_currency_id])
     target_currency_id_ref = relationship("CurrenciesEntity", foreign_keys=[target_currency_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [

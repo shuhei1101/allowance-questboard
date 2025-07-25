@@ -5,16 +5,8 @@ from typing import Generic, TypeVar, Hashable
 from aqapi.core.domain.base_model import BaseModel
 from aqapi.core.domain.value_object.base_id import BaseId
 
-IdType = TypeVar("IdType", bound=Hashable)
-
-class BaseCollectionItem(ABC, Generic[IdType]):
-    """コレクション内のアイテムのベースクラス、共通のインターフェイス"""
-
-    @property
-    def id(self) -> IdType:
-        raise NotImplementedError("Subclasses must implement this method")
-
-ItemType = TypeVar("ItemType", bound=BaseCollectionItem)
+IdType = TypeVar("IdType", bound=BaseId)
+ItemType = TypeVar("ItemType", bound=BaseModel)
 
 class BaseCollection(ABC, Generic[ItemType, IdType]):
 

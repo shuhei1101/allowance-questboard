@@ -7,16 +7,48 @@
 ## オブジェクト図
 ```mermaid
 classDiagram
+    class ErrorMessages
+    class ValueValidateException
+    class ValueValidator
+    class RelationValidateException
+    class RelationValidator
+
+    ValueValidator --> ErrorMessages: 使用
+    ValueValidator --> ValueValidateException: 使用
+
+    RelationValidator --> ErrorMessages: 使用
+    RelationValidator --> RelationValidateException: 使用
+
     class BaseValueObject {
-      
+      _value: ValueType
+      value()
+      *_validate()*
+      *_value_name()*: str
     }
 
     class BaseId {
-      
+      _validate()
+      _value_name(): str
+      __hash__()
+      __int__()
     }
 
     class BaseModel {
-
+      _id
+      _version
+      _created_at
+      _created_by
+      _created_from
+      _updated_at
+      _updated_by
+      _updated_from
+      _is_updated
+      *_validate()*
+      *from_entity()*
+      id()
+      version()
+      _update_version()
+      is_same_version()
     }
 
     class BaseCollection {
@@ -34,9 +66,11 @@ classDiagram
     }
 
     BaseValueObject <|-- BaseId
+    BaseValueObject --> ValueValidator: 使用
 
     BaseModel --> BaseId
     BaseModel --> BaseValueObject
+    BaseModel --> RelationValidator: 使用
 
     BaseCollection --> BaseModel: 保持、管理
     
@@ -47,10 +81,25 @@ classDiagram
     ドメインモデルs --> ドメインモデル: 保持、管理
 ```
 
+## `ErrorMessages`クラス
+### 概要
+- エラーメッセージを定義するクラス
+
+### 配置場所
+- `core/constants/error_messages.py`
+
+### 命名規則
+- メソッド名は自由に決めて良い
+- メッセージは日本語で定義すること
+
+
+
+
+
 ## ドメインモデル
 ### 概要
 - 値オブジェクトを保持する関心事の集約クラス
-- 
+- ゲッターは原則定義せず、必要がきた場合にのみ定義する
 
 ### 配置場所
 - 

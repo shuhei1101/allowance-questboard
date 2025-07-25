@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, override
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, UniqueConstraint, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -13,6 +13,7 @@ class EducationsEntity(BaseEntity):
 
     code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, comment="学歴コード")
 
+    @override
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [
@@ -36,6 +37,7 @@ class EducationsTranslationEntity(BaseTranslationEntity):
 
     educations = relationship("EducationsEntity", foreign_keys=[education_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [

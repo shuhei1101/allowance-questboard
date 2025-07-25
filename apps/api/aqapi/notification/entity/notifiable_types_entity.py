@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, Integer, String, Text, DateTime, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -14,6 +15,7 @@ class NotifiableTypesEntity(BaseEntity):
     table_name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True, comment="通知対象タイプコード")
     description: Mapped[str] = mapped_column(Text, nullable=False, comment="通知対象タイプの説明")
 
+    @override
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [

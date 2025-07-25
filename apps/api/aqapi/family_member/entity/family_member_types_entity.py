@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, override
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, CheckConstraint, UniqueConstraint, String, Text, Boolean, UUID, Date
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -13,6 +13,7 @@ class FamilyMemberTypesEntity(BaseEntity):
     table_name: Mapped[str] = mapped_column(String, nullable=False, unique=True, comment="family_memberテーブル名")
     description: Mapped[str] = mapped_column(Text, nullable=False, comment="タイプの説明")
 
+    @override
     @classmethod
     def _seed_data(cls) -> List['BaseEntity']:
         return [

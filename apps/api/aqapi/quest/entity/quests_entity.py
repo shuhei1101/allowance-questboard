@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, override
 from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey, String, Text, func, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -34,6 +34,7 @@ class QuestsEntity(BaseEntity):
     category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])
     icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> List[BaseEntity]:
         return [
@@ -68,6 +69,7 @@ class QuestsTranslationEntity(BaseTranslationEntity):
 
     quest = relationship("QuestsEntity", foreign_keys=[quest_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> List['BaseEntity']:
         return [

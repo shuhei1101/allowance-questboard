@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import override
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from aqapi.core.entity.base_entity import BaseEntity
@@ -18,6 +19,7 @@ class CurrencyByLanguageEntity(BaseEntity):
     currency = relationship("CurrenciesEntity", foreign_keys=[currency_id])
     language = relationship("LanguagesEntity", foreign_keys=[language_id])
 
+    @override
     @classmethod
     def _seed_data(cls) -> list[BaseEntity]:
         return [
