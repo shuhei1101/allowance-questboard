@@ -4,9 +4,9 @@ from fastapi_pagination import add_pagination
 from contextlib import asynccontextmanager
 
 from aqapi.core.di_container import di_container
-from aqapi.quest.api.v1 import get_family_quest_summaries_route
-from aqapi.auth.api.v1 import login_route
-from aqapi.language.api.v1 import init_route
+from aqapi.quest.api.v1.get_family_quest_summaries import get_family_quest_summaries_route
+from aqapi.auth.api.v1.login import login_route
+from aqapi.language.api.v1.init import init_route
 
 from aqapi.core.config.db_config import db_config
 

@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/login/api/v1/login_api_response.dart';
+import 'package:allowance_questboard/login/api/v1/login/login_api_response.dart';
 import 'package:allowance_questboard/login/state/auth_state.dart';
 import 'package:allowance_questboard/login/state/state_object/member_id_state.dart';
 import 'package:allowance_questboard/login/state/state_object/parent_id_state.dart';

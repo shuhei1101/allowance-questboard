@@ -1,11 +1,16 @@
+from dataclasses import dataclass
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from aqapi.core.repository.base_repository import BaseRepository
 from aqapi.language.domain.language_type import LanguageType
 from aqapi.language.dao.language_dao import LanguageDao
 from aqapi.language.entity.languages_entity import LanguagesEntity
-from aqapi.language.repository.language_repository_dependencies import LanguageRepositoryDependencies
 
+@dataclass(frozen=True)
+class LanguageRepositoryDependencies:
+    """言語リポジトリの依存関係クラス"""
+    
+    language_dao: 'LanguageDao'
 
 class LanguageRepository(BaseRepository):
     """言語リポジトリクラス

@@ -126,9 +126,11 @@ class TestQuestRepository:
 - 外部通信があるモジュールでDIされていないモジュールについて
   - `patch`や`patch.object`を使用してモック化する
   - なお、可能であれば`patch.object`を使用し型ヒントを明示すること
+  - RedisClientやDAOなど
 
 ### テストの実行方法
 - `api`ディレクトリで`venv`を起動してからpytestを実行すること
 ```bash
-source venv/bin/activate
+source venv/bin/activate  # venvの起動
+pip freeze  # pytestがインストールされていることを確認
 ```

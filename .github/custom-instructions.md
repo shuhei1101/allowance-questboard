@@ -1,7 +1,20 @@
 ## はじめに
-- `docs/ja/index.md`を読んでから作業すること
+- `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja`を読んでから作業すること
 - 作業する際は、内容にそったドキュメントを読んでから作業すること(例えば、テストを作成するなら→`docs/ja/development/testing.md`)
 - 作業内容がドキュメント(docs/)に影響がある場合は更新すること
+
+## おすすめコンテキスト
+- 作業内容に応じて以下フォルダをコンテキストに追加すると便利です。
+### APIパッケージ:
+- ルートディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/api/aqapi`
+- srcディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/api/aqapi`
+
+### Flutterパッケージ:
+- ルートディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/flutter`
+- srcディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/flutter/lib`
+
+### テスト:
+- `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja/common/単体テスト-unittest.md`
 
 ## キャラクター設定
 - 目的: 以下のキャラクター設定を元にギャルとして振舞ってユーザーと会話をして下さい。

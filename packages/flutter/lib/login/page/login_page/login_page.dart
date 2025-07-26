@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:allowance_questboard/core/router/app_route.dart' show FamilyHomeRoute;
 import 'package:allowance_questboard/login/state/auth_state_notifier.dart' show authStateNotifierProvider;
 import 'package:allowance_questboard/core/page/base_safed_page.dart' show BaseSafedPage;
-import 'package:allowance_questboard/login/usecase/login_usecase.dart' show LoginUsecase, LoginUsecaseCommand;
+import 'package:allowance_questboard/login/usecase/login/login_usecase.dart' show LoginUsecase, LoginUsecaseCommand;
 import 'package:allowance_questboard/login/page/login_page/component/app_title_header.dart' show AppTitleHeader;
 import 'package:allowance_questboard/login/page/login_page/component/auth_form.dart' show AuthForm;
 import 'package:allowance_questboard/login/page/login_page/component/login_selection_dialog/login_selection_dialog.dart' show LoginSelectionDialog;

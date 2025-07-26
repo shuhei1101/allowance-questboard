@@ -37,13 +37,18 @@ classDiagram
 - 画面は`XxxUsecase`からのみ状態の更新やビジネスロジックを行うこと
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.dart`
+- `{関心事名}/usecase/xxx/xxx_usecase.dart`
+- ユースケースごとに一つのフォルダを作成し、中に以下を配置すること
+  - `xxx_usecase.dart`
+  - `xxx_usecase_command.dart`
+  - `xxx_usecase_result.dart`
+  - `xxx_usecase.md` (クラス図)
+- 例: `quest/usecase/get_quest/get_quest_usecase.dart`
 
 ### 命名規則
 - `XxxUsecase`の形式で命名すること
 - `Xxx`は動詞を使用すること
   - 例: `FetchQuestSummaryUsecase`, `UpdateFamilyMemberUsecase`
-
 
 - `Command`クラスのインスタンス名は`cmd`とすること
   - 例: `FetchQuestSummaryUsecaseCommand cmd`
@@ -57,8 +62,7 @@ classDiagram
   - `StateNotifier`
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.dart`
-    - `XxxUsecase`と同じファイルに配置すること
+- `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Command`の形式で命名すること
@@ -69,8 +73,7 @@ classDiagram
 - `XxxUsecase`の戻り値を定義するクラス
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.dart`
-    - `XxxUsecase`と同じファイルに配置すること
+- `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Result`の形式で命名すること

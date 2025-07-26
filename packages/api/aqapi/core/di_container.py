@@ -1,4 +1,3 @@
-import inspect
 from typing import TypeVar, Type, Dict, Any, Callable, Optional, cast, List
 
 T = TypeVar('T')
@@ -22,15 +21,6 @@ class DIContainer:
         :param T obj: 登録するインスタンス
         """
         self._container[type] = obj
-
-    def register_multiple(self, type: Type[T], objs: List[T]) -> None:
-        """
-        複数のインスタンスを登録する
-        
-        :param Type[T] type: 登録する型
-        :param List[T] objs: 登録するインスタンスのリスト
-        """
-        self._container[type] = objs
 
     def get(self, type: Type[T]) -> T:
         """

@@ -1,4 +1,4 @@
-from typing import Mapping
+from typing import Mapping, override
 from aqapi.core.enum.domain.value_object.base_enum_value import BaseEnumValue
 from aqapi.core.enum.domain.value_object.translation_enum_value_protocol import TranslationEnumValueProtocol
 from aqapi.icon_category.domain.value_object.icon_category_id import IconCategoryId
@@ -7,7 +7,7 @@ from aqapi.icon_category.entity.icon_categories_entity import IconCategoriesEnti
 from aqapi.shared.entity.sort_order import SortOrder
 
 
-class IconCategoryValue(BaseEnumValue, TranslationEnumValueProtocol):
+class IconCategoryValue(BaseEnumValue[IconCategoryId], TranslationEnumValueProtocol):
     '''アイコンカテゴリが持つ値オブジェクト集約'''
 
     def __init__(self, id: IconCategoryId, 
@@ -19,6 +19,7 @@ class IconCategoryValue(BaseEnumValue, TranslationEnumValueProtocol):
         self._sort_order = sort_order
         self._is_active = is_active
 
+    @override
     def set_from_entity(self, entity: IconCategoriesEntity, translation_dict: Mapping[int, IconCategoriesTranslationEntity]) -> None:
         """エンティティから値を設定する
         
@@ -31,6 +32,7 @@ class IconCategoryValue(BaseEnumValue, TranslationEnumValueProtocol):
         self._is_active = entity.is_active
 
     @property
+    @override
     def id(self) -> IconCategoryId:
         """値オブジェクトのIDを返す"""
         return self._id

@@ -3,8 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from aqapi.quest.entity.quests_entity import QuestsEntity
 from aqapi.core.dao.base_dao import BaseDao
 from aqapi.core.config.redis_config import redis_client
-from aqapi.core.cache.redis_cacher import RedisCacher
-cacher = RedisCacher(redis_client)
+from aqapi.core.cache.redis_client import RedisClient
+cacher = RedisClient(redis_client)
 
 class QuestDao(BaseDao):
     """クエストDAOクラス"""

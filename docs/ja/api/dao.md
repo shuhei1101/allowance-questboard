@@ -9,9 +9,9 @@
 ## オブジェクト図
 ```mermaid
 classDiagram
-    class redis_cacher {
-      cacheable(key: str, ttl: int)
-      cache_evict(key: str)
+    class redis_client {
+      cache(key: str, ttl: int)
+      evict(key: str)
     }
 
     class BaseDao {
@@ -39,7 +39,7 @@ classDiagram
     }
 
     BaseDao <|-- XxxDao
-    XxxDao --> redis_cacher : アノテーション使用
+    XxxDao --> redis_client : アノテーション使用
 ```
 
 ## `BaseDao`クラス
@@ -70,17 +70,26 @@ classDiagram
   - 次回fetch時: 最新データでキャッシュ再構築
   - put(削除時にキャッシュの貼り直し)は不要
 
-
 - メソッドのドキュメンテーションは書かないこと
   - 基底クラスのドキュメンテーションを参照する
 
+- マスタデータのDAOは参照系のみで、更新系のメソッドは実装しない
+  - 例: `LanguageDao`, `IconCategoryDao`は以下のようにする
+```python
+class LanguageDao(BaseDao[LanguageEntity]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(session)
+
+    @redis.cache("languages:all")
+    async def fetch_all(self) -> List[LanguageEntity]:
+        return await super().fetch_all()
+```
 
 ### クラスの実装例
-
 ```python
 from aqapi.core.config.redis_config import redis_client
-from aqapi.core.cache.redis_cacher import RedisCacher
-cacher = RedisCacher(redis_client)
+from aqapi.core.di_container import di_container
+redis = di_container.get(RedisClient)  # DIコンテナからRedisClientを取得
 
 class QuestDao(BaseDao):
     """クエストDAOクラス"""
@@ -92,27 +101,27 @@ class QuestDao(BaseDao):
     def entity_class(self) -> type[QuestsEntity]:
         return QuestsEntity
     
-    @cacheable("quests:all")
+    @redis.cache("quests:all")
     async def fetch_all(self) -> List[QuestsEntity]:
         return await super().fetch_all()
 
-    @cacheable("quests:{id}")
+    @redis.cache("quests:{id}")
     async def fetch_by_id(self, id: int) -> Optional[QuestsEntity]:
         return await super().fetch_by_id(id)
 
-    @cache_evict("quests:all")
+    @redis.evict("quests:all")
     async def insert(self, entity: QuestsEntity) -> int:
         return await super().insert(entity)
 
-    @cache_evict("quests:all", "quests:{entity.id}")
+    @redis.evict("quests:all", "quests:{entity.id}")
     async def update(self, entity: QuestsEntity) -> None:
         await super().update(entity)
 
-    @cache_evict("quests:all", "quests:{id}")
+    @redis.evict("quests:all", "quests:{id}")
     async def delete(self, id: int) -> None:
         await super().delete(id)
 ```
-
+- 参考: [DIコンテナ](./DIコンテナ-di_container.md)
 ### 配置場所
 - `{関心事名}/dao/xxx_dao.py`
 

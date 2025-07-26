@@ -1,18 +1,20 @@
 [indexへ戻る](../index.md)
-# 🔍 タイトル
+# 🔍 共通メッセージ管理
 
 ## 概要
-- 
+- エラーメッセージやクライアントに返すメッセージの定義方法
 
 ## オブジェクト図
 ```mermaid
 classDiagram
-    class XXX
+    class ErrorMessages {
+        set_language_type(LanguageType)
+    }
 ```
 
-## `XXX`クラス
+## `ErrorMessages`クラス
 ### 概要
-- 
+- エラーメッセージを管理するクラス
 
 ### 配置場所
 - 

@@ -41,6 +41,16 @@ classDiagram
 - 各リポジトリで使用する共通の具象メソッドを提供する
   - ただし、findやsaveなどのメソッドは定義せず、必要なときに実装側で定義する
 
+- 複数のDAOからデータを取得するときは、非同期で実行すること
+- 例:
+```python
+async def find_all(self) -> List[XxxModel]:
+    entities = await asyncio.gather(
+        self.xxx_dao.fetch_all(),
+        self.yyy_dao.fetch_all()
+    )
+```
+
 ### 配置場所
 - `core/repository/base_repository.py`
 
@@ -77,7 +87,8 @@ classDiagram
 - DAOのインスタンスを保持し、リポジトリ内で使用する
 
 ### 配置場所
-- `{関心事名}/repository/{関心事名}_repository_dependencies.py`
+- リポジトリと同じファイルに配置すること
+- リポジトリクラスの直前に配置すること
 
 ### 命名規則
 - クラス名は`{関心事名}RepositoryDependencies`とする

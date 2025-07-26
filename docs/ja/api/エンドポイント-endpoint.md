@@ -51,8 +51,14 @@ classDiagram
   - 基本的には具体的な処理はusecaseやquery_serviceに委譲すること
 
 ### 配置場所
-- `./{関心事名}/api/v{バージョン番号}/{エンドポイント関数名}_route.py`
-  - 例: `quest/api/v1/get_quest_route.py`
+- `./{関心事名}/api/v{バージョン番号}/{エンドポイント関数名}/{エンドポイント関数名}_route.py`
+  - 例: `quest/api/v1/get_quest/get_quest_route.py`
+
+- 一つのエンドポイント関数につき一つのフォルダを作成し、その中に以下を配置すること
+  - `{エンドポイント関数名}_route.py`
+  - `{エンドポイント関数名}_request.py`
+  - `{エンドポイント関数名}_response.py`
+  - `{エンドポイント関数名}.md` (クラス図)
 
 ### 命名規則
 - ファイル名は`{エンドポイントの関数名}_route`とする

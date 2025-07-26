@@ -1,3 +1,4 @@
+from typing import override
 from aqapi.language.domain.value_object.language_id import LanguageId
 from aqapi.language.domain.value_object.language_code import LanguageCode
 from aqapi.language.domain.value_object.language_name import LanguageName
@@ -7,7 +8,7 @@ from aqapi.core.enum.domain.value_object.base_enum_value import BaseEnumValue
 from aqapi.core.enum.domain.value_object.enum_value_protocol import EnumValueProtocol
 
 
-class LanguageTypeValue(BaseEnumValue, EnumValueProtocol):
+class LanguageTypeValue(BaseEnumValue[LanguageId], EnumValueProtocol):
     """言語タイプの値オブジェクト集約"""
     
     def __init__(self, 
@@ -23,6 +24,7 @@ class LanguageTypeValue(BaseEnumValue, EnumValueProtocol):
         self._is_active = is_active
         self._sort_order = sort_order
 
+    @override
     def set_from_entity(self, entity: LanguagesEntity) -> None:
         """エンティティから値を設定する
         
@@ -34,6 +36,7 @@ class LanguageTypeValue(BaseEnumValue, EnumValueProtocol):
         self._sort_order = SortOrder(entity.sort_order)
 
     @property
+    @override
     def id(self) -> LanguageId:
         """値オブジェクトのIDを返す"""
         return self._id

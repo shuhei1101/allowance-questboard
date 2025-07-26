@@ -70,10 +70,14 @@ classDiagram
 - 全てのAPIクライアントは`BaseApiClient`を継承すること
 
 ### 配置場所
-- `{関心事名}/api/v{バージョン番号}/{エンドポイント関数名}_api.dart`
-  - 例: `quest/api/v1/get_quest_api`
+- `{関心事名}/api/v{バージョン番号}/{エンドポイント関数名}/{エンドポイント関数名}_api.dart`
+  - 例: `quest/api/v1/get_quest/get_quest_api`
   - `v1`はバージョン番号で、必要に応じて変更すること
-- 
+  - エンドポイントの関数毎に一つのフォルダを作成し、その中に以下配置すること
+    - `{エンドポイント関数名}_api.dart`
+    - `{エンドポイント関数名}_request.dart`
+    - `{エンドポイント関数名}_response.dart`
+    - `{エンドポイント関数名}.md` (クラス図)
 
 ### 命名規則
 - ファイル名は`{エンドポイント関数名}_api`とする
@@ -100,8 +104,7 @@ classDiagram
   - [APIサーバの設計書](../api/エンドポイント-endpoint.md)を参照すること
 
 ### 配置場所
-- `./{関心事名}/api/v{バージョン番号}/{エンドポイント関数名}_request.dart`
-  - 例: `quest/api/v1/get_quest_request.dart`
+- APIクライアントのファイルと同じフォルダに配置すること
 
 ### 命名規則
 - APIサーバ側の`Response`クラスと同じ命名規則に従うこと
@@ -124,9 +127,7 @@ classDiagram
   - [APIサーバの設計書](../api/エンドポイント-endpoint.md)を参照すること
 
 ### 配置場所
-- `./{関心事名}/api/v{バージョン番号}/{エンドポイント関数名}_response.dart`
-  - 例: `quest/api/v1/get_quest_response.dart`
-  - `v1`はバージョン番号で、必要に応じて変更すること
+- APIクライアントのファイルと同じフォルダに配置すること
 
 ### 命名規則
 - APIサーバ側の`Response`クラスと同じ命名規則に従うこと

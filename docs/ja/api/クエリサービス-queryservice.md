@@ -56,12 +56,21 @@ classDiagram
 * `query_service`は読み込み専用のため、ドメインモデルを使用せず、ただのデータクラスを使用すること
 
 ### 配置場所
-- `{関心事名}/query_service/fetch_Xxx_query.py`に配置すること
+- `{関心事名}/query_service/xxx/xxx_query.py`に配置すること
+- xxxは行いたい処理の動詞を使用すること
+  - 例: `fetch_quest_summary_query.py`, `fetch_family_members_query.py`
+
+- 一つの`query_service`につき一つのフォルダを作成し、その中に以下を配置すること
+  - `xxx_query.py`
+  - `xxx_query_command.py`
+  - `xxx_query_result.py`
+  - `xxx_query.md` (クラス図)
 
 ### 命名規則
-- クラスの名前は`Fetch`から始まる動詞にする
+- クラスの名前は動詞にすること
   - `Fetch{関心事名}Query`
-  - 例: `FetchSummaryQuestQuery`
+    - 例: `FetchSummaryQuestQuery`
+  - `LoginQuery`
 
 - `QueryCommand`クラスのインスタンス名は`cmd`とすること
   - 例: `cmd: FetchQuestSummaryQueryCommand`
@@ -82,7 +91,8 @@ classDiagram
 - `@dataclass`を付与すること
 
 ### 配置場所
-- `{関心事名}/query_service/fetch_Xxx_query_command.py`に配置すること
+- クエリサービスと同じフォルダに配置すること
+- `{関心事名}/query_service/xxx/xxx_query_command.py`に配置
 
 ### 命名規則
 - クラス名: `FetchXxxQueryCommand`とする
@@ -107,7 +117,8 @@ classDiagram
 - [参考: ページネーションについて](ページネーション-pagination.md)
 
 ### 配置場所
-- `{関心事名}/query_service/fetch_Xxx_query_result.py`に配置すること
+- クエリサービスと同じフォルダに配置すること
+- `{関心事名}/query_service/xxx/xxx_query_result.py`に配置
 
 ### 命名規則
 - クラス名: `FetchXxxQueryResult`とする

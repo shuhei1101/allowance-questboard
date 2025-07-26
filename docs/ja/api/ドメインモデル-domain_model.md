@@ -6,6 +6,8 @@
 - ビジネスロジックを保持する
 
 ## オブジェクト図
+
+### バリデーション
 ```mermaid
 classDiagram
     class ErrorMessages
@@ -20,6 +22,11 @@ classDiagram
     RelationValidator --> ErrorMessages: 使用
     RelationValidator --> RelationValidateException: 使用
 
+```
+
+### ドメインモデル
+```mermaid
+classDiagram
     class BaseValueObject {
       _value: ValueType
       value()
@@ -52,6 +59,10 @@ classDiagram
       is_same_version()
     }
 
+    class CollectionItemProtocol {
+      *id()*
+    }
+
     class BaseCollection {
       _items: list[ItemType]
       _item_by_ids: dict[IdType, ItemType]
@@ -75,11 +86,12 @@ classDiagram
     BaseValueObject <|-- BaseId
     BaseValueObject --> ValueValidator: 使用
 
+    CollectionItemProtocol <|-- BaseModel
     BaseModel --> BaseId
     BaseModel --> BaseValueObject
     BaseModel --> RelationValidator: 使用
 
-    BaseCollection --> BaseModel: 保持、管理
+    BaseCollection --> CollectionItemProtocol: 保持、管理
     
     BaseModel <|-- ドメインモデル
     ドメインモデル --> 値オブジェクト: 保持、管理
@@ -154,6 +166,8 @@ classDiagram
     - 具象クラスの辞書の更新は`_update_custom_index(self)`メソッドをオーバーライドして実装する
 - ドメインモデルの集合は`list`ではなく、**必ず**ファーストクラスコレクションとして定義する
 
+- アイテムクラスは`CollectionItemProtocol`を継承すること
+  - アイテムのIDを取得するためのメソッドを定義するため
 
 ## ドメインモデル
 ### 概要
@@ -175,12 +189,14 @@ classDiagram
   - 例: `Quest`モデルと`QuestStatus`モデルなど
 
 ## ファーストクラスコレクション
-
 ### 概要
 - `BaseCollection`を継承したクラス
 - 任意でカスタムインデックスを保持することができる
 - 自身のリストに対するビジネスロジックを提供する
   - 例: `get_total_points`, `get_completed_quests`など
+
+- アイテムクラスは`CollectionItemProtocol`を継承すること
+  - アイテムのIDを取得するためのメソッドを定義するため
 
 ### 配置場所
 - `{関心事名}/domain/{関心事名の複数形}.py`

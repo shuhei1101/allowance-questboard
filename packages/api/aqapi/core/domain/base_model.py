@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Generic, Optional, TypeVar
+from aqapi.core.domain.base_collection import CollectionItemProtocol
 from aqapi.core.domain.value_object.version import Version
 from aqapi.core.domain.value_object.base_id import BaseId
 from aqapi.core.entity.base_entity import BaseEntity
@@ -11,7 +12,7 @@ from aqapi.core.domain.value_object.relation_validator import RelationValidator
 EntityType = TypeVar("EntityType", bound='BaseEntity')
 IdType = TypeVar("IdType", bound=BaseId)
 
-class BaseModel(ABC, Generic[IdType, EntityType], ):
+class BaseModel(ABC, Generic[IdType, EntityType], CollectionItemProtocol[IdType]):
     """ドメインモデルの基底クラス"""
     
     def __init__(self, 

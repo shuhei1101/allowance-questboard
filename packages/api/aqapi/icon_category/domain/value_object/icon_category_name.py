@@ -2,18 +2,16 @@ from dataclasses import dataclass
 
 from aqapi.core.domain.value_object.base_value_object import BaseValueObject
 from aqapi.language.domain.language_type import LanguageType
-from aqapi.core.domain.base_collection import BaseCollectionItem
-
+from aqapi.core.domain.base_collection import CollectionItemProtocol
 
 @dataclass
-class IconCategoryName(BaseValueObject, BaseCollectionItem[LanguageType]):
+class IconCategoryName(BaseValueObject, CollectionItemProtocol[LanguageType]):
     _language: LanguageType
     _value: str
 
     def __init__(self, language: LanguageType, value: str,):
         self._language = language
-        self._value = value
-        super().__init__()
+        super().__init__(value)
 
     def _validate(self) -> None:
         if not isinstance(self._value, str) or not self._value.strip():

@@ -6,6 +6,16 @@ from aqapi.core.domain.base_model import BaseModel
 from aqapi.core.domain.value_object.base_id import BaseId
 
 IdType = TypeVar("IdType", bound=BaseId)
+
+class CollectionItemProtocol(Generic[IdType]):
+    """コレクションアイテムのプロトコル"""
+    
+    @property
+    def id(self) -> IdType:
+        """アイテムのIDを返す"""
+        raise NotImplementedError("Subclasses must implement this method to return the item ID.")
+
+
 ItemType = TypeVar("ItemType", bound=BaseModel)
 
 class BaseCollection(ABC, Generic[ItemType, IdType]):

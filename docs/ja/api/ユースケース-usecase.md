@@ -36,7 +36,13 @@ classDiagram
 - 画面は`XxxUsecase`からのみ状態の更新やビジネスロジックを行うこと
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.py`
+- `{関心事名}/usecase/{xxx}/xxx_usecase.py`
+  - 例: `quest/usecase/get_quest/get_quest_usecase.py`
+- ユースケースごとに一つのフォルダを作成し、中に以下を配置すること
+  - `xxx_usecase.py`
+  - `xxx_usecase_command.py`
+  - `xxx_usecase_result.py`
+  - `xxx_usecase.md` (クラス図)
 
 ### 命名規則
 - `XxxUsecase`の形式で命名すること
@@ -54,8 +60,7 @@ classDiagram
   - `QueryService`
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.py`
-    - `XxxUsecase`と同じファイルに配置すること
+- `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Command`の形式で命名すること
@@ -70,8 +75,7 @@ classDiagram
 - `XxxUsecase`の戻り値を定義するクラス
 
 ### 配置場所
-- `{関心事名}/usecase/xxx_usecase.py`
-    - `XxxUsecase`と同じファイルに配置すること
+- `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Result`の形式で命名すること
