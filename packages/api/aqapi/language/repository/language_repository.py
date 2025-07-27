@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from typing import List
-from sqlalchemy.ext.asyncio import AsyncSession
+from typing import TYPE_CHECKING
 from aqapi.core.repository.base_repository import BaseRepository
+if TYPE_CHECKING:
+    from aqapi.language.dao.language_dao import LanguageDao
+    from aqapi.language.entity.languages_entity import LanguagesEntity
 from aqapi.language.domain.language_type import LanguageType
-from aqapi.language.dao.language_dao import LanguageDao
-from aqapi.language.entity.languages_entity import LanguagesEntity
 
 @dataclass(frozen=True)
 class LanguageRepositoryDependencies:

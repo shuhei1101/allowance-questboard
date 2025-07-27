@@ -1,15 +1,17 @@
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 from sqlalchemy.ext.asyncio import AsyncSession
-from aqapi.core.domain.base_model import BaseModel
 
-from aqapi.core.dao.base_dao import BaseDao
 from aqapi.core.domain.value_object.version import Version
+if TYPE_CHECKING:
+    from aqapi.core.domain.base_model import BaseModel
+    from aqapi.core.dao.base_dao import BaseDao
 
 
 class BaseRepository(ABC):
     """リポジトリの基底クラス"""
 
-    async def _is_latest_version(self, model: BaseModel, dao: BaseDao) -> bool:
+    async def _is_latest_version(self, model: 'BaseModel', dao: 'BaseDao') -> bool:
         """現在のエンティティが最新バージョンかどうかを確認する
 
         :param BaseModel model: 確認対象のモデル

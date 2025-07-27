@@ -11,7 +11,7 @@ from aqapi.quest.api.v1.get_family_quest_summaries.get_family_quest_summaries_re
 
 router = APIRouter()
 
-@router.get("quest/{family_id}/summaries", response_model=GetFamilyQuestSummariesResponse)
+@router.get("/quest/{family_id}/summaries", response_model=GetFamilyQuestSummariesResponse)
 async def get_family_quest_summaries(
     family_id: int,
     language_id: int,

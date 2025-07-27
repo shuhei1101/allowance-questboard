@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from typing import Generic, TypeVar
 from aqapi.core.domain.value_object.value_validator import ValueValidator
+from aqapi.core.messages.locale_string import LocaleString
 
 ValueType = TypeVar('ValueType')
 
@@ -19,7 +20,7 @@ class BaseValueObject(Generic[ValueType]):
 
     @property
     @abstractmethod
-    def _value_name(self) -> str:
+    def _value_name(self) -> LocaleString:
         """値オブジェクトの名前を取得"""
         raise NotImplementedError("Subclasses must implement this method.")
 

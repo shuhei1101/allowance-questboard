@@ -10,9 +10,9 @@ class BaseId(BaseValueObject[int], Hashable):
 
     @override
     def _validate(self) -> None:
-        self._validator.validate_required()
-        self._validator.validate_integer()
-        self._validator.validate_min_value(1)
+        self._validator.required()
+        self._validator.integer()
+        self._validator.min_value(1)
     
     def __hash__(self) -> int:
         """ハッシュ値の計算（辞書のキーとして使用可能にする）"""

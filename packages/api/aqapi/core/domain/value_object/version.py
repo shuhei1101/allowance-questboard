@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import override
-from aqapi.core.constants.error_messages import error_messages
+from aqapi.core.messages.error_messages import error_messages
 from aqapi.core.domain.value_object.base_value_object import BaseValueObject
 
 class Version(BaseValueObject[int]):

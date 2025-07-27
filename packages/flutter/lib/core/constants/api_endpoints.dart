@@ -16,6 +16,7 @@ class ApiEndpoint {
 }
 
 class ApiEndpoints {
+  ApiEndpoint get init => ApiEndpoint('/api/v1/init');
   ApiEndpoint get login => ApiEndpoint('/api/v1/login');
   ApiEndpoint get family => ApiEndpoint('/api/v1/family');
   ApiEndpoint get families => ApiEndpoint('/api/v1/families');

@@ -1,9 +1,9 @@
 from typing import override
+from aqapi.language.entity.languages_entity import LanguagesEntity
 from aqapi.language.domain.value_object.language_id import LanguageId
 from aqapi.language.domain.value_object.language_code import LanguageCode
 from aqapi.language.domain.value_object.language_name import LanguageName
 from aqapi.shared.entity.sort_order import SortOrder
-from aqapi.language.entity.languages_entity import LanguagesEntity
 from aqapi.core.enum.domain.value_object.base_enum_value import BaseEnumValue
 from aqapi.core.enum.domain.value_object.enum_value_protocol import EnumValueProtocol
 
@@ -13,16 +13,16 @@ class LanguageTypeValue(BaseEnumValue[LanguageId], EnumValueProtocol):
     
     def __init__(self, 
         id: LanguageId,
-        code: LanguageCode = LanguageCode(""),
-        name: LanguageName = LanguageName(""),
+        code: LanguageCode | None = None,
+        name: LanguageName | None = None,
         is_active: bool = False,
-        sort_order: SortOrder = SortOrder(0)
+        sort_order: SortOrder | None = None
     ):
         self._id = id
-        self._code = code
-        self._name = name
+        self._code = code if code is not None else LanguageCode("0")  # デフォルトで有効な値を設定
+        self._name = name if name is not None else LanguageName("Unknown")  # デフォルトで有効な値を設定
         self._is_active = is_active
-        self._sort_order = sort_order
+        self._sort_order = sort_order if sort_order is not None else SortOrder(0)
 
     @override
     def set_from_entity(self, entity: LanguagesEntity) -> None:

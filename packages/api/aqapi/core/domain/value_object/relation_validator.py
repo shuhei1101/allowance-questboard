@@ -1,6 +1,6 @@
 from typing import Any, Union, Optional
 from datetime import datetime, date
-from aqapi.core.constants.error_messages import error_messages
+from aqapi.core.messages.error_messages import error_messages
 
 class RelationValidateException(Exception):
     """カスタム例外クラス"""

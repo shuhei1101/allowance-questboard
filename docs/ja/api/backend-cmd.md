@@ -1,4 +1,9 @@
 # バックエンドのコマンド
+#### venvの作成
+```bash
+python3 -m venv venv
+```
+
 #### venvの起動
 ```bash
 source venv/bin/activate

@@ -3,12 +3,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from aqapi.core.di_container import di_container
 from aqapi.language.entity.languages_entity import LanguagesEntity
 from aqapi.core.dao.base_dao import BaseDao
-from aqapi.core.config.redis_config import redis_client
-from aqapi.core.cache.redis_client import RedisClient
-redis = di_container.get(RedisClient)
+from aqapi.core.cache.redis_cacher import RedisCacher
 
 class LanguageDao(BaseDao):
     """言語DAOクラス"""
+    redis = di_container.get(RedisCacher)
 
     def __init__(self, session: AsyncSession):
         super().__init__(session)

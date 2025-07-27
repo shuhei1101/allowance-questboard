@@ -1,6 +1,9 @@
 # 🧪 テスト
 
 ## 共通
+### 概要
+- 定義したテストが全て正しく動作するまで修正を繰り返すこと
+
 ### 命名規則
 - メソッド名は日本語で記述し、最後は‘〜すること‘で終わるようにすること
 
@@ -85,6 +88,8 @@ void main() {
 
 ### 配置場所
 - テストコードは`tests/`ディレクトリに配置する
+- テストファイルを作成するときは、`__init__.py`がフォルダ内に存在することを確認すること
+  - `__init__.py`がないと、フォルダがパッケージとして認識されないため
 
 - testファイルはaqapiと同じ構造の対象ファイルの場所をtests配下に作成し、そこに配置すること
   - 例: `aqapi/core/di_container.py`→`tests/core/di_container.py`
@@ -124,9 +129,18 @@ class TestQuestRepository:
 	- fixtureなどを活用する
 
 - 外部通信があるモジュールでDIされていないモジュールについて
-  - `patch`や`patch.object`を使用してモック化する
-  - なお、可能であれば`patch.object`を使用し型ヒントを明示すること
+  - `patch.object`を使用してモック化する
   - RedisClientやDAOなど
+
+- 必ず引数には型ヒントをつけること
+  - 例: `def test_クエストを取得できること(self, quest_repository: QuestRepository):`
+
+- ファイルの最後に実行用のコードを追加すること
+  - 例:
+```python
+if __name__ == "__main__":
+    pytest.main([__file__])
+```
 
 ### テストの実行方法
 - `api`ディレクトリで`venv`を起動してからpytestを実行すること

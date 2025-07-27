@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Generic, Optional, TypeVar
+from typing import Generic, Optional, TypeVar, override
 from aqapi.core.domain.base_collection import CollectionItemProtocol
 from aqapi.core.domain.value_object.version import Version
 from aqapi.core.domain.value_object.base_id import BaseId
@@ -10,7 +10,7 @@ from aqapi.shared.domain.value_object.screen_id import ScreenId
 from aqapi.core.domain.value_object.relation_validator import RelationValidator
 
 EntityType = TypeVar("EntityType", bound='BaseEntity')
-IdType = TypeVar("IdType", bound=BaseId)
+IdType = TypeVar("IdType", bound='BaseId')
 
 class BaseModel(ABC, Generic[IdType, EntityType], CollectionItemProtocol[IdType]):
     """ドメインモデルの基底クラス"""
@@ -42,6 +42,7 @@ class BaseModel(ABC, Generic[IdType, EntityType], CollectionItemProtocol[IdType]
         raise NotImplementedError("Subclasses must implement this method")
 
     @property
+    @override
     def id(self) -> IdType:
         return self._id
 

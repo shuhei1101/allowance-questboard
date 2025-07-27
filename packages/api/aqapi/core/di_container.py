@@ -1,5 +1,9 @@
 from typing import TypeVar, Type, Dict, Any, Callable, Optional, cast, List
 
+from aqapi.core.cache.mock_redis_cacher import MockRedisCacher
+from aqapi.core.config.redis_config import redis_client
+from aqapi.core.cache.redis_cacher import RedisCacher
+
 T = TypeVar('T')
 
 
@@ -41,4 +45,8 @@ class DIContainer:
         """
         self._container.clear()
 
+
+
 di_container = DIContainer()
+# DIコンテナの初期化(モック)
+di_container.register(RedisCacher, MockRedisCacher(redis=redis_client))

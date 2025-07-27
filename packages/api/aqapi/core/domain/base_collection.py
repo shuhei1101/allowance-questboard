@@ -1,11 +1,12 @@
 
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Hashable
+from typing import TYPE_CHECKING, Generic, TypeVar, Hashable
 
-from aqapi.core.domain.base_model import BaseModel
-from aqapi.core.domain.value_object.base_id import BaseId
+if TYPE_CHECKING:
+    from aqapi.core.domain.base_model import BaseModel
+    from aqapi.core.domain.value_object.base_id import BaseId
 
-IdType = TypeVar("IdType", bound=BaseId)
+IdType = TypeVar("IdType", bound='BaseId')
 
 class CollectionItemProtocol(Generic[IdType]):
     """コレクションアイテムのプロトコル"""
@@ -16,7 +17,7 @@ class CollectionItemProtocol(Generic[IdType]):
         raise NotImplementedError("Subclasses must implement this method to return the item ID.")
 
 
-ItemType = TypeVar("ItemType", bound=BaseModel)
+ItemType = TypeVar("ItemType", bound='BaseModel')
 
 class BaseCollection(ABC, Generic[ItemType, IdType]):
 
@@ -36,7 +37,7 @@ class BaseCollection(ABC, Generic[ItemType, IdType]):
 
     def append(self, item: ItemType) -> None:
         """アイテムを追加"""
-        if not isinstance(item, BaseModel):
+        if not isinstance(item, 'BaseModel'):
             raise TypeError(f"Expected item of type {ItemType}, got {type(item)}")
         self._items.append(item)
         self.update_index()
