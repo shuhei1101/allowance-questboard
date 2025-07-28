@@ -1,6 +1,6 @@
 from typing import Mapping, override
-from aqapi.core.enum.domain.value_object.base_enum_value import BaseEnumValue
-from aqapi.core.enum.domain.value_object.translation_enum_value_protocol import TranslationEnumValueProtocol
+from aqapi.core.enum.enum_value.base_enum_value import BaseEnumValue
+from aqapi.core.enum.enum_value.translation_enum_value_protocol import TranslationEnumValueProtocol
 from aqapi.icon_category.domain.value_object.icon_category_id import IconCategoryId
 from aqapi.icon_category.domain.value_object.icon_category_names import IconCategoryNames
 from aqapi.icon_category.entity.icon_categories_entity import IconCategoriesEntity, IconCategoriesTranslationEntity

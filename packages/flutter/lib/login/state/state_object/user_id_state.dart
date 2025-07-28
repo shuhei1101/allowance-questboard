@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/core/l10n/l10n_provider.dart';
+import 'package:allowance_questboard/core/messages/locale_string.dart';
 import 'package:allowance_questboard/core/state/base_state_object.dart';
 
 class UserIdState  extends BaseStateObject<String>{
@@ -6,7 +6,14 @@ class UserIdState  extends BaseStateObject<String>{
 
   @override
   void validate() {
-    // ユーザーIDは空であってはいけない
-    validateRequired(value, l10n.I.required);
+    // 必須
+    validator.required();
   }
+
+  @override
+  LocaleString get valueName => LocaleString(
+    ja: 'ユーザーID',
+    en: 'User ID',
+  );
+
 }

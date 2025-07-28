@@ -13,14 +13,14 @@ class ErrorMessages {
 
   LocaleString maxLength(LocaleString valueName, int maxLength) {
     return LocaleString(
-      ja: "${valueName.ja}は${maxLength}文字以下で入力してください",
+      ja: "${valueName.ja}は$maxLength文字以下で入力してください",
       en: "${valueName.en} must be at most $maxLength characters long",
     );
   }
 
   LocaleString minLength(LocaleString valueName, int minLength) {
     return LocaleString(
-      ja: "${valueName.ja}は${minLength}文字以上で入力してください",
+      ja: "${valueName.ja}は$minLength文字以上で入力してください",
       en: "${valueName.en} must be at least $minLength characters long",
     );
   }
@@ -69,21 +69,21 @@ class ErrorMessages {
 
   LocaleString minValue(LocaleString valueName, num minValue) {
     return LocaleString(
-      ja: "${valueName.ja}は${minValue}以上で入力してください",
+      ja: "${valueName.ja}は$minValue以上で入力してください",
       en: "${valueName.en} must be at least $minValue",
     );
   }
 
   LocaleString maxValue(LocaleString valueName, num maxValue) {
     return LocaleString(
-      ja: "${valueName.ja}は${maxValue}以下で入力してください",
+      ja: "${valueName.ja}は$maxValue以下で入力してください",
       en: "${valueName.en} must be at most $maxValue",
     );
   }
 
   LocaleString rangeValue(LocaleString valueName, num minValue, num maxValue) {
     return LocaleString(
-      ja: "${valueName.ja}は${minValue}から${maxValue}の範囲で入力してください",
+      ja: "${valueName.ja}は$minValueから$maxValueの範囲で入力してください",
       en: "${valueName.en} must be between $minValue and $maxValue",
     );
   }
@@ -118,7 +118,7 @@ class ErrorMessages {
 
   LocaleString containsOnly(LocaleString valueName, String allowedChars) {
     return LocaleString(
-      ja: "${valueName.ja}には${allowedChars}の文字のみ使用してください",
+      ja: "${valueName.ja}には$allowedCharsの文字のみ使用してください",
       en: "${valueName.en} must contain only $allowedChars characters",
     );
   }
@@ -141,7 +141,7 @@ class ErrorMessages {
   /// 数値範囲エラー
   LocaleString range(LocaleString valueName, num minValue, num maxValue) {
     return LocaleString(
-      ja: "${valueName.ja}は${minValue}以上${maxValue}以下で入力してください",
+      ja: "${valueName.ja}は$minValue以上$maxValue以下で入力してください",
       en: "${valueName.en} must be between $minValue and $maxValue",
     );
   }
@@ -157,7 +157,7 @@ class ErrorMessages {
   /// 文字数範囲エラー
   LocaleString lengthRange(LocaleString valueName, int minLength, int maxLength) {
     return LocaleString(
-      ja: "${valueName.ja}は${minLength}文字以上${maxLength}文字以下で入力してください",
+      ja: "${valueName.ja}は$minLength文字以上$maxLength文字以下で入力してください",
       en: "${valueName.en} must be between $minLength and $maxLength characters",
     );
   }
@@ -183,6 +183,87 @@ class ErrorMessages {
     return LocaleString(
       ja: "${valueName.ja}は許可された値ではありません",
       en: "${valueName.en} is not in the allowed values",
+    );
+  }
+
+  // RelationValidator用メッセージ
+  /// 日時範囲エラー
+  LocaleString dateTimeRangeInvalid(LocaleString startFieldName, LocaleString endFieldName) {
+    return LocaleString(
+      ja: "${startFieldName.ja}は${endFieldName.ja}より前の日時で入力してください",
+      en: "${startFieldName.en} must be earlier than ${endFieldName.en}",
+    );
+  }
+
+  /// より大きい値エラー
+  LocaleString greaterThanInvalid(LocaleString valueFieldName, LocaleString compareFieldName) {
+    return LocaleString(
+      ja: "${valueFieldName.ja}は${compareFieldName.ja}より大きい値で入力してください",
+      en: "${valueFieldName.en} must be greater than ${compareFieldName.en}",
+    );
+  }
+
+  /// 以上エラー
+  LocaleString greaterThanOrEqualInvalid(LocaleString valueFieldName, LocaleString compareFieldName) {
+    return LocaleString(
+      ja: "${valueFieldName.ja}は${compareFieldName.ja}以上で入力してください",
+      en: "${valueFieldName.en} must be greater than or equal to ${compareFieldName.en}",
+    );
+  }
+
+  /// より小さい値エラー
+  LocaleString lessThanInvalid(LocaleString valueFieldName, LocaleString compareFieldName) {
+    return LocaleString(
+      ja: "${valueFieldName.ja}は${compareFieldName.ja}より小さい値で入力してください",
+      en: "${valueFieldName.en} must be less than ${compareFieldName.en}",
+    );
+  }
+
+  /// 以下エラー
+  LocaleString lessThanOrEqualInvalid(LocaleString valueFieldName, LocaleString compareFieldName) {
+    return LocaleString(
+      ja: "${valueFieldName.ja}は${compareFieldName.ja}以下で入力してください",
+      en: "${valueFieldName.en} must be less than or equal to ${compareFieldName.en}",
+    );
+  }
+
+  /// 不一致エラー
+  LocaleString notEqualInvalid(LocaleString valueFieldName, LocaleString compareFieldName) {
+    return LocaleString(
+      ja: "${valueFieldName.ja}と${compareFieldName.ja}は異なる値で入力してください",
+      en: "${valueFieldName.en} and ${compareFieldName.en} must be different values",
+    );
+  }
+
+  /// 年齢整合性エラー
+  LocaleString ageConsistencyInvalid(LocaleString fieldName) {
+    return LocaleString(
+      ja: "${fieldName.ja}と生年月日が一致しません",
+      en: "${fieldName.en} and birth date are inconsistent",
+    );
+  }
+
+  /// 依存関係エラー
+  LocaleString dependencyInvalid(LocaleString dependentFieldName, LocaleString requiredFieldName) {
+    return LocaleString(
+      ja: "${dependentFieldName.ja}が設定されている場合、${requiredFieldName.ja}も必須です",
+      en: "When ${dependentFieldName.en} is set, ${requiredFieldName.en} is also required",
+    );
+  }
+
+  /// 相互排他エラー
+  LocaleString mutualExclusionInvalid(LocaleString field1Name, LocaleString field2Name) {
+    return LocaleString(
+      ja: "${field1Name.ja}と${field2Name.ja}は同時に設定できません",
+      en: "${field1Name.en} and ${field2Name.en} cannot be set at the same time",
+    );
+  }
+
+  /// 数量整合性エラー
+  LocaleString quantityConsistencyInvalid(LocaleString totalFieldName, LocaleString partFieldNames) {
+    return LocaleString(
+      ja: "${totalFieldName.ja}と${partFieldNames.ja}の合計が一致しません",
+      en: "${totalFieldName.en} and the sum of ${partFieldNames.en} do not match",
     );
   }
 }

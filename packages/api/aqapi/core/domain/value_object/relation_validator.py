@@ -1,18 +1,14 @@
 from typing import Any, Union, Optional
 from datetime import datetime, date
+from aqapi.core.domain.value_object.validation_exception import RelationValidateException
 from aqapi.core.messages.error_messages import error_messages
+from aqapi.core.messages.locale_string import LocaleString
 
-class RelationValidateException(Exception):
-    """カスタム例外クラス"""
-    def __init__(self, error_type: str, message: str):
-        super().__init__(message)
-        self.error_type = error_type
-        self.message = message
 
 class RelationValidator:
     """関連バリデーションを提供するクラス（BaseModelで使用）"""
     
-    def validate_confirmation(self, value: str, confirmation_value: str, field_name: str = "値", option_message: Optional[str] = None) -> None:
+    def validate_confirmation(self, value: str, confirmation_value: str, field_name: LocaleString, option_message: Optional[LocaleString] = None) -> None:
         """確認一致チェック（パスワード確認など）"""
         if value != confirmation_value:
             raise RelationValidateException(
@@ -21,8 +17,8 @@ class RelationValidator:
             )
 
     def validate_date_range(self, start_date: Union[datetime, date], end_date: Union[datetime, date], 
-                           start_field_name: str = "開始日", end_field_name: str = "終了日", 
-                           option_message: Optional[str] = None) -> None:
+                           start_field_name: LocaleString, end_field_name: LocaleString, 
+                           option_message: Optional[LocaleString] = None) -> None:
         """日付範囲チェック（開始日 <= 終了日）"""
         if start_date > end_date:
             raise RelationValidateException(
@@ -31,8 +27,8 @@ class RelationValidator:
             )
     
     def validate_datetime_range(self, start_datetime: datetime, end_datetime: datetime,
-                               start_field_name: str = "開始日時", end_field_name: str = "終了日時", 
-                               option_message: Optional[str] = None) -> None:
+                               start_field_name: LocaleString, end_field_name: LocaleString, 
+                               option_message: Optional[LocaleString] = None) -> None:
         """日時範囲チェック（開始日時 <= 終了日時）"""
         if start_datetime > end_datetime:
             raise RelationValidateException(
@@ -41,8 +37,8 @@ class RelationValidator:
             )
     
     def validate_greater_than(self, value: Union[int, float], compare_value: Union[int, float],
-                             value_field_name: str = "値", compare_field_name: str = "比較値", 
-                             option_message: Optional[str] = None) -> None:
+                             value_field_name: LocaleString, compare_field_name: LocaleString, 
+                             option_message: Optional[LocaleString] = None) -> None:
         """より大きい値チェック"""
         if value <= compare_value:
             raise RelationValidateException(
@@ -51,8 +47,8 @@ class RelationValidator:
             )
     
     def validate_greater_than_or_equal(self, value: Union[int, float], compare_value: Union[int, float],
-                                      value_field_name: str = "値", compare_field_name: str = "比較値", 
-                                      option_message: Optional[str] = None) -> None:
+                                      value_field_name: LocaleString, compare_field_name: LocaleString, 
+                                      option_message: Optional[LocaleString] = None) -> None:
         """以上チェック"""
         if value < compare_value:
             raise RelationValidateException(
@@ -61,8 +57,8 @@ class RelationValidator:
             )
     
     def validate_less_than(self, value: Union[int, float], compare_value: Union[int, float],
-                          value_field_name: str = "値", compare_field_name: str = "比較値", 
-                          option_message: Optional[str] = None) -> None:
+                          value_field_name: LocaleString, compare_field_name: LocaleString, 
+                          option_message: Optional[LocaleString] = None) -> None:
         """より小さい値チェック"""
         if value >= compare_value:
             raise RelationValidateException(
@@ -71,8 +67,8 @@ class RelationValidator:
             )
     
     def validate_less_than_or_equal(self, value: Union[int, float], compare_value: Union[int, float],
-                                   value_field_name: str = "値", compare_field_name: str = "比較値", 
-                                   option_message: Optional[str] = None) -> None:
+                                   value_field_name: LocaleString, compare_field_name: LocaleString, 
+                                   option_message: Optional[LocaleString] = None) -> None:
         """以下チェック"""
         if value > compare_value:
             raise RelationValidateException(
@@ -81,8 +77,8 @@ class RelationValidator:
             )
     
     def validate_not_equal(self, value: Any, compare_value: Any,
-                          value_field_name: str = "値", compare_field_name: str = "比較値", 
-                          option_message: Optional[str] = None) -> None:
+                          value_field_name: LocaleString, compare_field_name: LocaleString, 
+                          option_message: Optional[LocaleString] = None) -> None:
         """不一致チェック"""
         if value == compare_value:
             raise RelationValidateException(
@@ -91,8 +87,8 @@ class RelationValidator:
             )
     
     def validate_age_consistency(self, birth_date: Union[datetime, date], 
-                                age: int, field_name: str = "年齢", 
-                                option_message: Optional[str] = None) -> None:
+                                age: int, field_name: LocaleString, 
+                                option_message: Optional[LocaleString] = None) -> None:
         """年齢と生年月日の整合性チェック"""
         today = datetime.now().date() if isinstance(birth_date, datetime) else date.today()
         if isinstance(birth_date, datetime):
@@ -109,9 +105,9 @@ class RelationValidator:
             )
     
     def validate_dependency(self, dependent_value: Any, required_value: Any,
-                           dependent_field_name: str = "依存フィールド", 
-                           required_field_name: str = "必須フィールド", 
-                           option_message: Optional[str] = None) -> None:
+                           dependent_field_name: LocaleString, 
+                           required_field_name: LocaleString, 
+                           option_message: Optional[LocaleString] = None) -> None:
         """依存関係チェック（Aが設定されている場合、Bも必須）"""
         if dependent_value is not None and required_value is None:
             raise RelationValidateException(
@@ -120,8 +116,8 @@ class RelationValidator:
             )
     
     def validate_mutual_exclusion(self, value1: Any, value2: Any,
-                                 field1_name: str = "フィールド1", field2_name: str = "フィールド2", 
-                                 option_message: Optional[str] = None) -> None:
+                                 field1_name: LocaleString, field2_name: LocaleString, 
+                                 option_message: Optional[LocaleString] = None) -> None:
         """相互排他チェック（どちらか一方のみ設定可能）"""
         if value1 is not None and value2 is not None:
             raise RelationValidateException(
@@ -130,8 +126,8 @@ class RelationValidator:
             )
     
     def validate_quantity_consistency(self, total: Union[int, float], *parts: Union[int, float],
-                                     total_field_name: str = "合計", part_field_names: str = "内訳", 
-                                     option_message: Optional[str] = None) -> None:
+                                     total_field_name: LocaleString, part_field_names: LocaleString, 
+                                     option_message: Optional[LocaleString] = None) -> None:
         """数量の整合性チェック（合計と内訳の一致）"""
         calculated_total = sum(parts)
         if abs(total - calculated_total) > 0.01:  # 浮動小数点の誤差を考慮

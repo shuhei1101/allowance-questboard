@@ -1,4 +1,6 @@
 import 'package:allowance_questboard/core/api/base_api_response.dart';
+import 'package:allowance_questboard/core/enum/enumuratable.dart' show Enumuratable, Enumuratables;
+import 'package:allowance_questboard/core/l10n/language_id.dart' show LanguageId;
 
 /// アプリ初期化APIレスポンス
 /// 
@@ -50,9 +52,9 @@ class LanguagesDto {
 }
 
 /// 言語情報DTO
-class LanguageDto {
+class LanguageDto implements Enumuratable<LanguageId> {
   /// 言語ID
-  final int id;
+  final int _id;
   
   /// 言語コード
   final String code;
@@ -74,12 +76,12 @@ class LanguageDto {
   /// [isActive] アクティブフラグ
   /// [sortOrder] ソート順
   const LanguageDto({
-    required this.id,
+    required int id,
     required this.code,
     required this.name,
     required this.isActive,
     required this.sortOrder,
-  });
+  }) : _id = id;
 
   /// JSONからオブジェクトを作成
   /// 
@@ -94,4 +96,7 @@ class LanguageDto {
       sortOrder: json['sort_order'] as int,
     );
   }
+  
+  @override
+  LanguageId get id => LanguageId(_id);
 }

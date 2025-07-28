@@ -3,40 +3,45 @@
 
 ## 概要
 - Flutterの状態管理を行う方法
+- ほとんどAPサーバ側のDomain構成と同様
 
 ## オブジェクト図
 ```mermaid
 classDiagram
-    class ValidationMixin
-    class BaseStateObject
+    class ValueValidator
+    class BaseStateObject {
+        +value: dynamic
+        +validate(): void
+        +errorMessage: String
+    }
+    class RelationValidator
+    class BaseStateNotifier {
+        +validator: RelationValidator
+        +updateFromResponse(response: ResType)
+        +updateState()
+    }
     class XxxStateObject
     class XxxState
     class XxxStateNotifier
     class xxxStateNotifierProvider
 
-    BaseStateObject <|-- XxxStateObject : 継承
+    BaseStateObject --> ValueValidator : 保持
+    BaseStateNotifier --> RelationValidator : 保持
 
-    ValidationMixin <|-- BaseStateObject : mixin
+    BaseStateObject <|-- XxxStateObject : 継承
+    BaseStateNotifier <|-- XxxStateNotifier : 継承
+
     XxxState --> XxxStateObject : 保持
-    XxxStateNotifier --> XxxState : 更新
+    XxxStateNotifier --> XxxState : 更新、関連バリデーションチェック
     xxxStateNotifierProvider --> XxxStateNotifier : 生成
 ```
 
-## `ValidationMixin`クラス
+## `ValueValidator`クラス
 ### 概要
-- StateObjectの値を検証するロジックを提供するミックスイン
+- BaseStateObjectがもつvalueの値を検証するロジックを提供する
 
 ### 配置場所
-- `core/state/validation_mixin.dart`
-
-### メソッド
-- validateRequired(value, message): 必須入力チェック
-- validateMinLength(value, minLength, message): 文字数制限チェック（最小文字数）
-- validateMaxLength(value, maxLength, message): 文字数制限チェック（最大文字数）
-- validatePositiveInteger(value, message): 正の整数チェック
-- validateNumberRange(value, min, max, message): 数値範囲チェック
-
-* 必要があれば上記以外の検証メソッドを追加すること
+- `core/state/value_validator.dart`
 
 ## `BaseStateObject`クラス
 ### 概要
@@ -52,11 +57,6 @@ classDiagram
 ### 概要
 - Stateクラスが保持する値オブジェクト
 - `BaseStateObject`を継承すること
-- `validate`メソッドをオーバーライドして、値の検証を行う
-- 値の検証には`ValidationMixin`を使用すること
-- `ValidationMixin`メソッドの引数`message`には、L10nProviderを使用して、ローカライズされたエラーメッセージを指定すること
-  - 例: `validateRequired(value, l10n.I.userIdRequired);`
-  - [多言語設計](多言語対応-l10n.md)を参照
 
 ### 配置場所
 - `{関心事名}/state/state_object/XxxStateObject`
@@ -78,6 +78,24 @@ classDiagram
 ### 命名規則
 - `{集約名}State`
   , 例: `AuthState`, `QuestSummaryState`
+
+## `BaseStateNotifier`クラス
+### 概要
+- `StateNotifier`を継承し、状態管理の基底クラス
+- `RelationValidator`を保持し、関連チェックを行う
+- `updateFromResponse`メソッドを実装し、レスポンスから状態を更新する
+- `updateState`メソッドを実装し、状態を更新する
+
+### 配置場所
+- `core/state/base_state_notifier.dart`
+
+## 'RelationValidator`クラス
+### 概要
+- 関連チェックを行うクラス
+- `BaseStateNotifier`で使用する
+
+### 配置場所
+- `core/state/relation_validator.dart`
 
 ## `XxxStateNotifier`クラス
 ### 概要

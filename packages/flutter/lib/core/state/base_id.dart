@@ -1,8 +1,8 @@
-import 'package:allowance_questboard/core/domain/value_object/base_value_object.dart';
+import 'package:allowance_questboard/core/state/base_state_object.dart' show BaseStateObject;
 
 /// ドメインモデルのIDを表す基底クラス
 /// APサーバ側のBaseIdと同じ構造を持つ
-abstract class BaseId extends BaseValueObject<int> {
+abstract class BaseId extends BaseStateObject<int> {
   BaseId(super.value);
   
   @override

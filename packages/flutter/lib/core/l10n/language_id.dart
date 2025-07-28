@@ -1,14 +1,9 @@
-/// 言語IDクラス
-/// 
-/// APIサーバの言語エンティティのIDと一致させる
-class LanguageId {
-  /// 言語ID（APIサーバのIDと一致）
-  final int value;
+import 'package:allowance_questboard/core/messages/locale_string.dart';
+import 'package:allowance_questboard/core/state/base_id.dart' show BaseId;
 
-  /// LanguageIdのコンストラクタ
-  /// 
-  /// [value] 言語ID
-  const LanguageId(this.value);
+/// 言語IDクラス
+class LanguageId extends BaseId {
+  LanguageId(super.value);
 
   @override
   bool operator ==(Object other) =>
@@ -22,4 +17,10 @@ class LanguageId {
 
   @override
   String toString() => 'LanguageId($value)';
+
+  @override
+  LocaleString get valueName => LocaleString(
+    en: 'Language ID',
+    ja: '言語ID',
+  );
 }

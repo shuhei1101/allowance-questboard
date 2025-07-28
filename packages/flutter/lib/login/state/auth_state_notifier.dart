@@ -3,6 +3,7 @@ import 'package:allowance_questboard/login/state/auth_state.dart';
 import 'package:allowance_questboard/login/state/state_object/member_id_state.dart';
 import 'package:allowance_questboard/login/state/state_object/parent_id_state.dart';
 import 'package:allowance_questboard/login/state/state_object/user_id_state.dart';
+import 'package:allowance_questboard/core/state/base_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authStateNotifierProvider = StateNotifierProvider<AuthStateNotifier, AuthState>(
@@ -10,40 +11,37 @@ final authStateNotifierProvider = StateNotifierProvider<AuthStateNotifier, AuthS
 );
 
 /// 認証状態を管理するProvider
-class AuthStateNotifier extends StateNotifier<AuthState> {
+class AuthStateNotifier extends BaseStateNotifier<AuthState, LoginApiResponse> {
 
   AuthStateNotifier(super.state);
 
+  @override
   void updateFromResponse(
     LoginApiResponse loginApiResponse,
   ) {
-    // ユーザーIDを更新
-    updateUserId(UserIdState(loginApiResponse.item.userId));
-    
-    // 親IDを更新
-    if (loginApiResponse.item.parentId != null) {
-      updateParentId(ParentIdState(loginApiResponse.item.parentId!));
-    } else {
-      updateParentId(null);
-    }
+    final userId = loginApiResponse.item.userId;
+    final parentId = loginApiResponse.item.parentId;
+    final memberId = loginApiResponse.item.memberId;
 
-    // メンバーIDを更新
-    if (loginApiResponse.item.memberId != null) {
-      updateMemberId(MemberIdState(loginApiResponse.item.memberId!));
-    } else {
-      updateMemberId(null);
-    }
+    // 状態を更新
+    state = AuthState(
+      userId: UserIdState(userId),
+      parentId: parentId != null ? ParentIdState(parentId) : null,
+      memberId: memberId != null ? MemberIdState(memberId) : null,
+    );
   }
 
-  void updateUserId(UserIdState? userId) {
-    state = state.copyWith(userId: userId);
-  }
-
-  void updateParentId(ParentIdState? parentId) {
-    state = state.copyWith(parentId: parentId);
-  }
-
-  void updateMemberId(MemberIdState? memberId) {
-    state = state.copyWith(memberId: memberId);
+  // 全ての状態を更新
+  @override
+  void updateState({
+    UserIdState? userId,
+    ParentIdState? parentId,
+    MemberIdState? memberId,
+  }) {
+    state = AuthState(
+      userId: userId ?? state.userId,
+      parentId: parentId ?? state.parentId,
+      memberId: memberId ?? state.memberId,
+    );
   }
 }

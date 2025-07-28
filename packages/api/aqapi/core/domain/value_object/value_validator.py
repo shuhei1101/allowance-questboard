@@ -2,19 +2,13 @@ import re
 from typing import Any, TypeVar, Union, Optional
 from datetime import datetime
 
+from aqapi.core.domain.value_object.validation_exception import ValueValidateException
 from aqapi.core.messages.locale_string import LocaleString
 from aqapi.core.messages.error_messages import error_messages
 
-class ValueValidateException(Exception):
-    """カスタム例外クラス"""
-    def __init__(self, value_name: LocaleString, error_type: str, message: LocaleString):
-        super().__init__(message.en)
-        self.value_name = value_name
-        self.error_type = error_type
-        self.message = message
 
 class ValueValidator:
-    """値オブジェクトのバリデーションを提供するクラス"""
+    """値オブジェクトのバリデーションを提供する"""
 
     def __init__(self, value_name: LocaleString, value: Any = None):
         self._value_name = value_name  # 値の名前

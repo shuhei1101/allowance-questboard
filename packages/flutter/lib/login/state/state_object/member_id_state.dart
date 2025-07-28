@@ -1,12 +1,12 @@
-import 'package:allowance_questboard/core/l10n/l10n_provider.dart';
-import 'package:allowance_questboard/core/state/base_state_object.dart';
+import 'package:allowance_questboard/core/messages/locale_string.dart';
+import 'package:allowance_questboard/core/state/base_id.dart' show BaseId;
 
-class MemberIdState extends BaseStateObject<int> {
+class MemberIdState extends BaseId {
   MemberIdState(super.value);
 
   @override
-  void validate() {
-    // メンバーIDは空であってはいけない
-    validateRequired(value, l10n.I.memberIdIsInvalid);
-  }
+  LocaleString get valueName => LocaleString(
+    ja: 'メンバーID',
+    en: 'Member ID',
+  );
 }

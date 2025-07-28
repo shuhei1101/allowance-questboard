@@ -1,19 +1,16 @@
-import 'package:allowance_questboard/core/domain/value_object/base_id.dart';
+import 'package:allowance_questboard/core/state/base_id.dart';
 
 /// 列挙型の値を表す基底クラス
 /// 
 /// 全てのEnum値オブジェクトはこのクラスを継承して実装します。
-abstract class BaseEnumValue<T extends BaseId> {
+abstract class BaseEnumValue<IdType extends BaseId> {
   /// 値オブジェクトのIDを返す
-  T get id;
-
-  /// BaseEnumValueのコンストラクタ
-  const BaseEnumValue();
+  IdType get id;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is BaseEnumValue<T> && other.id == id;
+    return other is BaseEnumValue<IdType> && other.id == id;
   }
 
   @override

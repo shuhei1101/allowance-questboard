@@ -1,6 +1,6 @@
-import 'package:allowance_questboard/core/domain/validation/value_validator.dart' show ValueValidator;
+import 'package:allowance_questboard/core/state/validation/validation_exceptions.dart' show ValidationException;
+import 'package:allowance_questboard/core/state/validation/value_validator.dart' show ValueValidator;
 import 'package:allowance_questboard/core/messages/locale_string.dart' show LocaleString;
-import 'package:allowance_questboard/core/state/value_validation_mixin.dart';
 
 abstract class BaseStateObject<ValueType> {
   final ValueType value;
@@ -9,11 +9,14 @@ abstract class BaseStateObject<ValueType> {
 
   BaseStateObject(this.value) {
     try {
-      validator = ValueValidator(valueName, value);
+      validator = ValueValidator(
+        valueName: valueName,
+        value: value,
+      );
       validate();
       errorMessage = null;
     } on ValidationException catch (e) {
-      errorMessage = e.errorMessage;
+      errorMessage = e.message;
     }
   }
 

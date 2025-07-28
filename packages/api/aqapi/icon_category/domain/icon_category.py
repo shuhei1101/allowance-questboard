@@ -1,5 +1,5 @@
-from aqapi.core.enum.domain.base_enum import BaseEnum
-from aqapi.core.enum.domain.translation_enum_mixin import TranslationEnumMixin
+from aqapi.core.enum.base_enum import BaseEnum
+from aqapi.core.enum.translation_enum_mixin import TranslationEnumMixin
 from aqapi.icon_category.domain.value_object.icon_category_id import IconCategoryId
 from aqapi.icon_category.domain.value_object.icon_category_value import IconCategoryValue
 from aqapi.icon_category.entity.icon_categories_entity import IconCategoriesEntity
