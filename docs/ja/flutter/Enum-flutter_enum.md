@@ -44,3 +44,9 @@ classDiagram
 
     Enum具象 --> EnumValue具象 : 保持
 ```
+
+## 配置場所
+- BaseEnumValue: `core/enum/enum_value/base_enum_value.dart`
+- EnumValueProtocol: `core/enum/enum_value/enum_value_protocol.dart`
+- BaseEnum: `core/enum/base_enum.dart`
+- EnumMixin: `core/enum/enum_mixin.dart`

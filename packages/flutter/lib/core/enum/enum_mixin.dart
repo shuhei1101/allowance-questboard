@@ -1,7 +1,7 @@
 import 'package:allowance_questboard/core/enum/enumuratable.dart' show Enumuratable;
 import 'package:allowance_questboard/core/enum/value_object/enum_value_protocol.dart';
 import 'package:allowance_questboard/core/enum/base_enum.dart';
-import 'package:allowance_questboard/core/state/base_id.dart';
+import 'package:allowance_questboard/core/value_object/base_id.dart';
 
 /// 翻訳テーブルなしのシンプルなDTOから更新可能なMixin
 /// 

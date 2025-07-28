@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/core/state/base_id.dart';
+import 'package:allowance_questboard/core/value_object/base_id.dart';
 
 /// 列挙型の値を表す基底クラス
 /// 

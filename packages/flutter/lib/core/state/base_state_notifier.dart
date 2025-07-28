@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/core/domain/validation/relation_validator.dart' show RelationValidator;
+import 'package:allowance_questboard/core/validator/relation_validator.dart' show RelationValidator;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// StateNotifierの基底クラス

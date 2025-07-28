@@ -1,7 +1,7 @@
 from typing import Generic, cast, TypeVar
 from aqapi.core.entity.base_entity import BaseEntity
 from aqapi.core.entity.base_translation_collection import BaseTranslationCollection
-from aqapi.core.enum.enum_value.translation_enum_value_protocol import TranslationEnumValueProtocol
+from aqapi.core.enum.value_object.translation_enum_value_protocol import TranslationEnumValueProtocol
 
 EntityType = TypeVar('EntityType', bound=BaseEntity)
 

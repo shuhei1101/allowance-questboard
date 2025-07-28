@@ -1,5 +1,5 @@
 import 'package:allowance_questboard/core/messages/locale_string.dart';
-import 'package:allowance_questboard/core/state/validation/validation_exceptions.dart';
+import 'package:allowance_questboard/core/validator/validation_exceptions.dart';
 import 'package:allowance_questboard/core/messages/error_messages.dart';
 
 /// バリューオブジェクトの値を検証するためのバリデータクラス

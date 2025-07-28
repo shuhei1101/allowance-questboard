@@ -1,13 +1,13 @@
-import 'package:allowance_questboard/core/state/validation/validation_exceptions.dart' show ValidationException;
-import 'package:allowance_questboard/core/state/validation/value_validator.dart' show ValueValidator;
+import 'package:allowance_questboard/core/validator/validation_exceptions.dart' show ValidationException;
+import 'package:allowance_questboard/core/validator/value_validator.dart' show ValueValidator;
 import 'package:allowance_questboard/core/messages/locale_string.dart' show LocaleString;
 
-abstract class BaseStateObject<ValueType> {
+abstract class BaseValueObject<ValueType> {
   final ValueType value;
   late LocaleString? errorMessage;
   late final ValueValidator validator;
 
-  BaseStateObject(this.value) {
+  BaseValueObject(this.value) {
     try {
       validator = ValueValidator(
         valueName: valueName,
@@ -41,7 +41,7 @@ abstract class BaseStateObject<ValueType> {
 
   @override
   bool operator ==(Object other) {
-    if (other is! BaseStateObject<ValueType>) return false;
+    if (other is! BaseValueObject<ValueType>) return false;
     return value == other.value;
   }
 }

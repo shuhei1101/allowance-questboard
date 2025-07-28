@@ -1,6 +1,6 @@
 import 'package:allowance_questboard/core/api/base_api_response.dart';
 import 'package:allowance_questboard/core/enum/enumuratable.dart' show Enumuratable, Enumuratables;
-import 'package:allowance_questboard/core/l10n/language_id.dart' show LanguageId;
+import 'package:allowance_questboard/language/enum/value_object/language_id.dart' show LanguageId;
 
 /// アプリ初期化APIレスポンス
 /// 

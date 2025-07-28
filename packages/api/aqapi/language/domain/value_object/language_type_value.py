@@ -4,8 +4,8 @@ from aqapi.language.domain.value_object.language_id import LanguageId
 from aqapi.language.domain.value_object.language_code import LanguageCode
 from aqapi.language.domain.value_object.language_name import LanguageName
 from aqapi.shared.entity.sort_order import SortOrder
-from aqapi.core.enum.enum_value.base_enum_value import BaseEnumValue
-from aqapi.core.enum.enum_value.enum_value_protocol import EnumValueProtocol
+from aqapi.core.enum.value_object.base_enum_value import BaseEnumValue
+from aqapi.core.enum.value_object.enum_value_protocol import EnumValueProtocol
 
 
 class LanguageTypeValue(BaseEnumValue[LanguageId], EnumValueProtocol):

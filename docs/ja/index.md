@@ -29,7 +29,7 @@
 - [環境構築を行う](./api/環境構築.md)
 - [APIサーバでPythonをテスト実行する](./api/環境構築.md)
 - [APIのエンドポイント(route.py)を作成する](./api/エンドポイント-endpoint.md)
-- [APIのユースケースを作成する](./api/ユースケース-usecase.md)
+- [APIのユースケースを作成する](api/APユースケース-usecase.md)
 - [QueryServiceを作成する](./api/クエリサービス-queryservice.md)
 - [ページネーションを実装する](./api/ページネーション-pagination.md)
 - [ドメインモデルを作成する](./api/ドメインモデル-domain_model.md)

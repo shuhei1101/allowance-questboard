@@ -59,9 +59,6 @@ classDiagram
   - `Repository`
   - `QueryService`
 
-### 配置場所
-- `XxxUsecase`と同じファイルに配置すること
-
 ### 命名規則
 - `{ユースケースクラス名}Command`の形式で命名すること
   - 例: `UpdateQuestsUsecaseCommand`, `LoginUsecaseCommand`
@@ -73,9 +70,6 @@ classDiagram
 ## `XxxUsecaseResult`クラス
 ### 概要
 - `XxxUsecase`の戻り値を定義するクラス
-
-### 配置場所
-- `XxxUsecase`と同じファイルに配置すること
 
 ### 命名規則
 - `{ユースケースクラス名}Result`の形式で命名すること
