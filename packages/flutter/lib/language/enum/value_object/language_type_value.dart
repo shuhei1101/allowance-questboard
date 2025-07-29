@@ -4,7 +4,7 @@ import 'package:allowance_questboard/language/enum/value_object/language_id.dart
 import 'package:allowance_questboard/language/enum/value_object/language_code.dart';
 import 'package:allowance_questboard/language/enum/value_object/language_name.dart';
 import 'package:allowance_questboard/login/api/v1/init/init_api_response.dart' show LanguageDto;
-import 'package:allowance_questboard/shared/domain/value_object/sort_order.dart';
+import 'package:allowance_questboard/shared/value_object/sort_order.dart';
 
 /// 言語タイプの値オブジェクト集約
 class LanguageTypeValue extends BaseEnumValue<LanguageId> implements EnumValueProtocol<LanguageDto> {
