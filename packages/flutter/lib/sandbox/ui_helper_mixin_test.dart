@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:allowance_questboard/core/widget/ui_helper_mixin.dart';
+import 'package:allowance_questboard/core/page/ui_helper_mixin.dart';
 
 /// UiHelperMixinの動作確認用sandbox
 /// 

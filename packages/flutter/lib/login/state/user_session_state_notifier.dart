@@ -8,7 +8,6 @@ final userSessionStateNotifierProvider = StateNotifierProvider<UserSessionStateN
   (ref) => UserSessionStateNotifier(const UserSessionState()),
 );
 
-/// 初回ロード時のマスタデータ状態を管理するProvider
 class UserSessionStateNotifier extends BaseStateNotifier<UserSessionState, InitApiResponse> {
 
   UserSessionStateNotifier(super.state);

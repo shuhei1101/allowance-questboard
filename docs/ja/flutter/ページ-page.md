@@ -14,6 +14,13 @@ classDiagram
         +showError(message: String)
     }
     
+    class BaseWidget {
+      <<abstract>>
+      +render(context: BuildContext, ref: WidgetRef): Widget
+    }
+
+    BaseWidget <|-- BasePage : 継承
+
     class BasePage {
       <<HookConsumerWidget>>
       +build(context: BuildContext, ref: WidgetRef): Widget
@@ -44,33 +51,62 @@ classDiagram
       message: String
     }
 
-    class スクリーン
-    class コンポーネント
+    class BaseComponent {
+      <<abstract>>
+      +render(context: BuildContext, ref: WidgetRef): Widget
+      *buildComponent*(context: BuildContext, ref: WidgetRef): Widget
+    }
+
+    class BaseScreen {
+      <<abstract>>
+      +render(context: BuildContext, ref: WidgetRef): Widget
+      *buildScreen*(context: BuildContext, ref: WidgetRef): Widget
+    }
+
+    BaseComponent <|-- XxxComponent : 継承
+    BaseScreen <|-- XxxScreen : 継承
+    UiHelperMixin <|-- BaseScreen : mixin
+    XxxScreen --> XxxComponent : build
+    
+
+    class XxxScreen
+    class XxxComponent
 
     class XxxUsecase
 
     UiHelperMixin <|-- BasePage : mixin
     BasePage <|-- BaseSafedPage : 継承
     BaseSafedPage <|-- XxxPage : 継承
-    XxxPage --> スクリーン : 使用
-    XxxPage --> コンポーネント : 使用
+    XxxPage --> XxxScreen : build
+    XxxPage --> XxxComponent : build
     XxxPage --> XxxUsecase : 使用
+    XxxScreen --> XxxUsecase : 使用
     BasePage <|-- ErrorPage : 継承
+    
 ```
 
 ## フォルダ構成
 - `Page`とスクリーンは専用のフォルダを持つこと
 ```plaintext
 {関心事名}/
-  ├─ page/
-  │   ├─ {画面名}_page/
-  │   │   ├─ {画面名}_page.dart
-  │   │   ├─ component
-  │   │   │   ├─ {コンポーネント名}.dart
-  │   │   │   ├─{スクリーン名}/
-  │   │   │   │   ├─ {スクリーン名}.dart
-  │   │   │   │   ├─ component
+  ├─ {画面名}_page/
+  │   ├─ {画面名}_page.dart
+  │   ├─ component/
+  │   │   ├─ {コンポーネント名}.dart
+  │   │   ├─{スクリーン名}/
+  │   │   │   ├─ {スクリーン名}.dart
+  │   │   │   ├─ component
   │   │   │   │   │   └─ {コンポーネント名}.dart
+  │   ├─ state/
+  │   │   ├─ value_object/
+  │   │   │   ├─ {値オブジェクト名}.dart
+  │   │   ├─ xxx_state.dart
+  │   │   ├─ xxx_state_notifier.dart
+  │   ├─ usecase/
+  │   │   ├─ {usecase名}/
+  │   ├─ api
+  │   │   ├─ {api名}/
+  ├─ state  // 共通の値オブジェクトや状態管理クラス
 ```
 
 ## `UiHelperMixin`クラス
@@ -106,8 +142,10 @@ classDiagram
 - ページ内のコールバック処理は、引数にそのまま書かず、プライベートメソッドとして切り出すこと
   - 例: `onPressed: _onButtonPressed`
 
-- 状態の取り出しは、stateを用いて行う
-  - [状態管理設計](状態管理-state.md)を参照
+- 編集・詳細画面では、`{画面名}FormState`を定義すること
+  - Formは`FreezedRiverpod`を使用して実装すること
+  - Formが管理する各項目は`BaseValueObject`を継承すること
+    - [状態管理設計](状態管理-state.md)を参照
 
 - ビジネスロジックは`XxxUsecase`から呼び出すこと
   - [ユースケース設計](ユースケース-usecase.md)を参照
@@ -177,3 +215,42 @@ classDiagram
   - 例: `QuestSummaryCard`, `QuestTitleEntry`
 
 - 末尾に`Component`とつけないこと
+
+
+## その他規約
+### 動作確認用コードの記載
+- ページやコンポーネントを作成した場合、一番下に動作確認用のコードを記載すること
+  - 例: `login_page.dart`に以下のように記載
+```dart
+// login_page.dart
+
+...
+
+// 動作確認用コード
+void main() {
+  runApp(
+    ProviderScope(
+      child: MaterialApp(
+        home: LoginPage(),
+      ),
+    ),
+  );
+}
+```
+
+### importの書き方
+- import文には`show`を使用して、必要なクラスのみをインポートすること
+  - ただし、`package:flutter/material.dart`は全てのWidgetを使用するため、`show`は不要
+- 例:
+```dart
+import 'package:flutter/material.dart';
+import 'package:allowance_questboard/core/page/login_page/login_page.dart' show LoginPage;
+import 'package:allowance_questboard/core/page/login_page/component/login_form.dart' show LoginForm;
+```
+
+### 画面遷移
+- 画面遷移には`TypeGoRouter`を使用すること
+  - 配置場所: `/core/router/app_route.dart`
+
+### 画面の状態
+- 

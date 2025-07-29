@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart' show HookConsumerWidget, WidgetRef;
-import 'package:allowance_questboard/core/widget/ui_helper_mixin.dart' show UiHelperMixin;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:allowance_questboard/core/page/ui_helper_mixin.dart' show UiHelperMixin;
+import 'package:allowance_questboard/core/page/base_widget.dart';
 
-abstract class BasePage extends HookConsumerWidget with UiHelperMixin {
+abstract class BasePage extends BaseWidget with UiHelperMixin {
   const BasePage({super.key});
 
   /// AppBarの構築
@@ -19,8 +20,8 @@ abstract class BasePage extends HookConsumerWidget with UiHelperMixin {
   Color? get backgroundColor => null;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // 共通ビルド処理
+  Widget render(BuildContext context, WidgetRef ref) {
+    // ページ共通ビルド処理
     return Scaffold(
       appBar: buildAppBar(context, ref),
       body: buildBody(context, ref),

@@ -1,13 +1,15 @@
 import 'package:allowance_questboard/core/l10n/l10n_provider.dart' show l10n;
 import 'package:allowance_questboard/core/logger/app_logger.dart' show logger;
 import 'package:allowance_questboard/core/page/base_page.dart' show BasePage;
-import 'package:allowance_questboard/core/page/error_page.dart' show ErrorPage;
+import 'package:allowance_questboard/core/page/error_page/error_page.dart' show ErrorPage;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart' show useMemoized;
 import 'package:hooks_riverpod/hooks_riverpod.dart' show WidgetRef;
 
 /// エラー処理を含むPageの基底クラス
 abstract class BaseSafedPage extends BasePage {
+  const BaseSafedPage({super.key});
+
 
   /// AppBarの構築
   PreferredSizeWidget? buildSafedAppBar(BuildContext context, WidgetRef ref);

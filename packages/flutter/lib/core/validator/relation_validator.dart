@@ -1,6 +1,6 @@
 import 'package:allowance_questboard/core/messages/locale_string.dart';
 import 'package:allowance_questboard/core/messages/error_messages.dart';
-import 'package:allowance_questboard/core/state/validation/validation_exceptions.dart' show RelationValidationException;
+import 'package:allowance_questboard/core/validator/validation_exceptions.dart' show RelationValidationException;
 
 /// 関連バリデーションを提供するクラス（BaseModelで使用）
 /// 

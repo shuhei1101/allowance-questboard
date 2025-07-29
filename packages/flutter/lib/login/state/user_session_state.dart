@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_session_state.freezed.dart';
 
-/// 初回ロード時のマスタデータを格納するState
+/// ユーザーセッションの状態を管理するクラス
 @freezed
 abstract class UserSessionState with _$UserSessionState {
   const factory UserSessionState({

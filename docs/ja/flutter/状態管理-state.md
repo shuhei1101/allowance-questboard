@@ -9,7 +9,7 @@
 ```mermaid
 classDiagram
     class ValueValidator
-    class BaseStateObject {
+    class BaseValueObject {
         +value: dynamic
         +validate(): void
         +errorMessage: String
@@ -21,29 +21,29 @@ classDiagram
         +updateState()
     }
     class XxxStateObject
-    class XxxState
+    class 値オブジェクト
     class XxxStateNotifier
     class xxxStateNotifierProvider
 
-    BaseStateObject --> ValueValidator : 保持
+    BaseValueObject --> ValueValidator : 保持
     BaseStateNotifier --> RelationValidator : 保持
 
-    BaseStateObject <|-- XxxStateObject : 継承
+    BaseValueObject <|-- XxxStateObject : 継承
     BaseStateNotifier <|-- XxxStateNotifier : 継承
 
-    XxxState --> XxxStateObject : 保持
-    XxxStateNotifier --> XxxState : 更新、関連バリデーションチェック
+    値オブジェクト --> XxxStateObject : 保持
+    XxxStateNotifier --> 値オブジェクト : 更新、関連バリデーションチェック
     xxxStateNotifierProvider --> XxxStateNotifier : 生成
 ```
 
 ## `ValueValidator`クラス
 ### 概要
-- BaseStateObjectがもつvalueの値を検証するロジックを提供する
+- BaseValueObjectがもつvalueの値を検証するロジックを提供する
 
 ### 配置場所
 - `core/state/value_validator.dart`
 
-## `BaseStateObject`クラス
+## `BaseValueObject`クラス
 ### 概要
 - Stateオブジェクトの基盤となるクラス
 - 初期化時に値の検証を行う
@@ -51,25 +51,25 @@ classDiagram
 - バリデーション例外をキャッチし、例外メッセージをエラーメッセージとして保持する
 
 ### 配置場所
-- `core/state/base_state_object.dart`
+- `core/state/base_value_object.dart`
 
-## `XxxStateObject`クラス
+## `値オブジェクト`クラス
 ### 概要
 - Stateクラスが保持する値オブジェクト
-- `BaseStateObject`を継承すること
+- `BaseValueObject`を継承すること
 
 ### 配置場所
-- `{関心事名}/state/state_object/XxxStateObject`
+- `{関心事名}/state/value_object/{値オブジェクト名}.dart`
 
 ### 命名規則
-- `{オブジェクト名}State`
-  - 例: `QuestTitleState`, `FamilyIdState`
+- `{値オブジェクト名}`
+  - 例: `QuestTitle`, `FamilyId`
 
 ## `XxxState`クラス
 ### 概要
 - FreezedRiverpodを使用し状態を管理する
 - Stateオブジェクトを束ねる**状態の集約**
-- 保持する状態は`boolean`型以外は全て`XxxStateObject`を定義し使用すること
+- 保持する状態は`boolean`型以外は全て`値オブジェクト`を定義し使用すること
   - 組み込みのプリミティブをそのまま使用しないこと
 
 ### 配置場所
