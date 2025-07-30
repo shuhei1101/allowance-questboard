@@ -104,7 +104,7 @@ classDiagram
   │   │   ├─ xxx_state_notifier.dart
   │   ├─ usecase/
   │   │   ├─ {usecase名}/
-  │   ├─ api
+  │   ├─ api/
   │   │   ├─ {api名}/
   ├─ state  // 共通の値オブジェクトや状態管理クラス
 ```
