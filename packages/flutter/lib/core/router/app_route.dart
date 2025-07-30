@@ -1,4 +1,4 @@
-import 'package:allowance_questboard/family/old/home/page/family_home_page.dart';
+import 'package:allowance_questboard/old/family/home/page/family_home_page.dart';
 import 'package:allowance_questboard/login/page/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

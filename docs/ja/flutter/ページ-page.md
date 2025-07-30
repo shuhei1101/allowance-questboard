@@ -90,29 +90,71 @@ classDiagram
 ```plaintext
 {関心事名}/
   ├─ {画面名}_page/
-  │   ├─ {画面名}_page.dart
-  │   ├─ component/
-  │   │   ├─ {コンポーネント名}.dart
-  │   │   ├─{スクリーン名}/
-  │   │   │   ├─ {スクリーン名}.dart
-  │   │   │   ├─ component
-  │   │   │   │   │   └─ {コンポーネント名}.dart
-  │   ├─ state/
-  │   │   ├─ value_object/
-  │   │   │   ├─ {値オブジェクト名}.dart
-  │   │   ├─ xxx_state.dart
-  │   │   ├─ xxx_state_notifier.dart
-  │   ├─ usecase/
-  │   │   ├─ {usecase名}/
-  │   ├─ api
-  │   │   ├─ {api名}/
-  ├─ state  // 共通の値オブジェクトや状態管理クラス
+  │   ├─ shared/  // 共通の部品や基底ページ
+  │   │   ├─ base_{画面名}_page.dart  // ページが複数の種類に分かれる場合、基底ページを準備する
+  │   │   ├─ component/  // 共通のコンポーネント
+  │   │   │   ├─ {スクリーン名}  // スクリーン(タブ内の画面やダイアログなど)はフォルダを分ける
+  │   │   ├─ state/  // 共通の状態管理クラス
+  │   │   ├─ value_object/  // 共通の値オブジェクト
+  │   │   ├─ usecase/  // 共通のユースケース
+  │   │   ├─ api/  // 共通のAPIクライアント
+  │   ├─ {画面名}_page/  // 基底クラスを継承した画面ごとのフォルダ（一ページにつき一つのフォルダを作成）
+  │   │   ├─ {画面名}_page.dart  // 画面の実体
+  │   │   ├─ component/, state/, usecase/, api/  // 画面で使用するコンポーネントや状態管理クラス、ユースケース、APIクライアント
+  │   ├─ {画面名}_page1/, {画面名}_page2/  // 他の画面も同様に配置 
+  ├─ {その他の画面名}_page/  // 他の関心事の画面も同様に配置
+...
 ```
 
-## `UiHelperMixin`クラス
+### 例:
+```plaintext
+quest/
+  ├─ quest_list_page/                        # クエスト一覧ページのフォルダ
+  │   ├─ shared/                                     # 共通の部品や基底ページを配置する
+  │   │   ├─ base_quest_list_page.dart               # ページが複数の種類に分かれる場合、基底ページを準備する
+  │   │   ├─ component/                                     # 共通のコンポーネントや基底となるコンポーネントを配置する
+  │   │   │   ├─ base_quest_title_text.dart           # 基底のコンポーネントを定義
+  │   │   │   ├─ base_quest_list_tab.dart            # 〃
+  │   │   │   ├─ base_quest_list_tab_screen/          # 〃
+  │   │   │   │   ├─ base_quest_list_tab_screen.dart # 〃
+  │   │   │   │   ├─ component/                    # 〃
+  │   │   │   │   │   ├─ base_quest_list_item.dart    # 〃
+  │   │   ├─ state/                                     # 共通、基底の状態に関するフォルダ
+  │   │   │   ├─ quest_list_state_notifier.dart       # クエスト一覧の状態を管理するクラス
+  │   │   ├─ value_object/                          # 値オブジェクト(ただし、読み取り専用ページでは不要)
+  │   │   │   ├─ quest_title.dart                  # クエストタイトルの値オブジェクト
+  │   │   │   ├─ quest_description.dart          # クエスト説明の値オブジェクト
+  │   │   ├─ usecase/                                   # 共通のユースケース
+  │   │   ├─ api/                                    # 共通のAPIクライアント
+  │   ├─ family_quest_list_page/                # 基底クラスを継承した家族クエスト一覧ページのフォルダ
+  │   │   ├─ family_quest_list_page.dart          # 家族クエスト一覧ページの実体
+  │   │   ├─ component/                              # ページで使用するコンポーネント
+  │   │   │   ├─ familiy_quest_title_text.dart      # 家族クエスト一覧アイテムコンポーネント
+  │   │   ├─ state/                                     # 状態管理クラス
+  │   ├─ usecase/                                    # ユースケース
+  │   │   ├─ family_quest_list_usecase.dart         # 家族クエスト一覧のユースケース
+  │   ├─ api/                                        # APIクライアント
+  │   │   ├─ family_quest_list_api.dart             # 家族クエスト一覧のAPIクライアント
+  │   ├─ xxx_quest_list_page/                # その他の種類のクエスト一覧ページのフォルダ
+  ├─ quest_xxx_page/                        # クエストに関する他のページのフォルダ
+...
+```
+
+## `UiHelperMixin`ミックスイン
 ### 概要
 - よく使うUI関連のメソッドをまとめたMixinクラス
 - ローディングやエラーメッセージの表示を行う
+
+### 配置場所
+- `/core/page/ui_helper_mixin.dart`
+
+## `BaseWidget`抽象クラス
+### 概要
+- ページやコンポーネントの基底クラス
+- `render`メソッドを実装することで、Widgetを描画する
+
+### 配置場所
+- `/core/page/base_widget.dart`
 
 ## `BasePage`基底クラス
 ### 概要
@@ -163,6 +205,14 @@ classDiagram
 
 ### 命名規則
 - `{ページでやりたいこと}Page`
+
+## `BaseComponent`抽象クラス
+### 概要
+- ページやスクリーンを構成するコンポーネントの基底クラス
+- `buildComponent`メソッドを実装することで、コンポーネントを描画する
+
+### 配置場所
+- `/core/page/base_component.dart`
 
 ## `{スクリーン名}`
 ### 概要
