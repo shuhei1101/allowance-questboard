@@ -106,8 +106,10 @@ classDiagram
   │   │   ├─ {usecase名}/
   │   ├─ api/
   │   │   ├─ {api名}/
-  ├─ state  // 共通の値オブジェクトや状態管理クラス
+  ├─ shared  // 共通のcomponentやstateなど
 ```
+- 基本的に親クラスには子クラスの共通部品を配置
+- 自身のフォルダには自身が使用する部品を配置
 
 ## `UiHelperMixin`クラス
 ### 概要
