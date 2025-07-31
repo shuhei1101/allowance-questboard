@@ -2,72 +2,73 @@
 
 ## 目次
 - [目次](#目次)
-- [TestTitle](#testtitle)
+- [QuestTitle](#questtitle)
   - [メンバ](#メンバ)
   - [バリデーション](#バリデーション)
-- [TestName](#testname)
+  - [メソッド](#メソッド)
+- [QuestReward](#questreward)
   - [メンバ](#メンバ-1)
   - [バリデーション](#バリデーション-1)
-- [TestMoney](#testmoney)
+  - [メソッド](#メソッド-1)
+- [QuestRequestDetail](#questrequestdetail)
   - [メンバ](#メンバ-2)
   - [バリデーション](#バリデーション-2)
-- [TestMailaddress](#testmailaddress)
+  - [メソッド](#メソッド-2)
+- [QuestAgeRange](#questagerange)
   - [メンバ](#メンバ-3)
   - [バリデーション](#バリデーション-3)
-- [TestDate](#testdate)
-  - [メンバ](#メンバ-4)
-  - [バリデーション](#バリデーション-4)
-- [TestUrl](#testurl)
-  - [メンバ](#メンバ-5)
-  - [バリデーション](#バリデーション-5)
+  - [メソッド](#メソッド-3)
 
-## TestTitle
+
+## QuestTitle
 ### メンバ
-- int value: タイトル
+- String value: クエストタイトル
 
 ### バリデーション
 - 必須
-- 最大文字数: 100文字
+- 最大文字数: 200文字
+- 最小文字数: 1文字（空文字不可）
 
-## TestName
+### メソッド
+- String get displayTitle: タイトルを表示用に整形して返す
+
+## QuestReward
 ### メンバ
-- String value: 名前
+- int value: 報酬額（円）
 
 ### バリデーション
 - 必須
-- 最大文字数: 50文字
-
-## TestMoney
-### メンバ
-- int value: 金額
-
-### バリデーション
-- 必須
-- 最小値: 0
-- 最大値: 1000000
+- 最小値: 0円
+- 最大値: 10000円
 - 数値
 
-## TestMailaddress
+### メソッド
+- String get displayReward: 「報酬: {報酬額}円」形式で返す
+- bool get isFree: 報酬額が0円かどうかを返す
+
+## QuestRequestDetail
 ### メンバ
-- String value: メールアドレス
+- String value: 依頼詳細
+
+### バリデーション
+- オプション（null許可）
+- 最大文字数: 1000文字
+
+### メソッド
+- String get displayDetail: 詳細を表示用に整形（null時は空文字）
+- bool get hasDetail: 詳細が設定されているかどうかを返す
+
+## QuestAgeRange
+### メンバ
+- int ageFrom: 対象年齢下限
+- int ageTo: 対象年齢上限
 
 ### バリデーション
 - 必須
-- メールアドレス形式
+- ageFrom: 0以上の整数
+- ageTo: ageFrom以上の整数
+- 最大値: 18歳
 
-## TestDate
-### メンバ
-- DateTime value: 日付
-
-### バリデーション
-- 必須
-- 日付形式: YYYY-MM-DD
-
-## TestUrl
-### メンバ
-- String value: URL
-
-### バリデーション
-- 必須
-- URL形式
-- 半角英数字
+### メソッド
+- String get displayAgeRange: 「{下限}歳〜{上限}歳」形式で返す
+- bool isInRange(int age): 指定年齢が範囲内かどうかを返す
