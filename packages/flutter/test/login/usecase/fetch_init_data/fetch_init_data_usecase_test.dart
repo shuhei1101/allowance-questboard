@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_request.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_response.dart';
+import 'package:allowance_questboard/init/api/v1/init_api_request.dart';
+import 'package:allowance_questboard/init/api/v1/init_api_response.dart';
 import 'package:allowance_questboard/language/enum/language_type.dart';
 
 // Manual Mock - executeメソッドのみ実装

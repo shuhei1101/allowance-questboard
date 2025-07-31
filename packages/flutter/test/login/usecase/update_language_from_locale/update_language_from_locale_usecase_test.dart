@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart' show Locale;
-import 'package:allowance_questboard/login/usecase/update_language_from_locale/update_language_from_locale_usecase.dart';
-import 'package:allowance_questboard/login/usecase/update_language_from_locale/update_language_from_locale_usecase_command.dart';
-import 'package:allowance_questboard/login/usecase/update_language_from_locale/update_language_from_locale_usecase_result.dart';
-import 'package:allowance_questboard/login/state/user_session_state_notifier.dart';
-import 'package:allowance_questboard/login/state/user_session_state.dart';
+import 'package:allowance_questboard/init/usecase/update_language_from_locale/update_language_from_locale_usecase.dart';
+import 'package:allowance_questboard/init/usecase/update_language_from_locale/update_language_from_locale_usecase_command.dart';
+import 'package:allowance_questboard/init/usecase/update_language_from_locale/update_language_from_locale_usecase_result.dart';
+import 'package:allowance_questboard/init/state/user_session_state_notifier.dart';
+import 'package:allowance_questboard/init/state/user_session_state.dart';
 import 'package:allowance_questboard/language/enum/language_type.dart';
 
 void main() {

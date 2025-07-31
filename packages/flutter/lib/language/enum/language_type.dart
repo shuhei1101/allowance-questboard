@@ -2,7 +2,7 @@ import 'package:allowance_questboard/core/enum/base_enum.dart';
 import 'package:allowance_questboard/core/enum/enum_mixin.dart';
 import 'package:allowance_questboard/language/enum/value_object/language_id.dart';
 import 'package:allowance_questboard/language/enum/value_object/language_type_value.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_response.dart' show LanguageDto;
+import 'package:allowance_questboard/init/api/v1/init_api_response.dart' show LanguageDto;
 import 'package:flutter/material.dart' show Locale;
 
 /// 言語の種類を表すEnum

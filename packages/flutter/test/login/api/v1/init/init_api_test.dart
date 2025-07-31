@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_request.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_response.dart';
+import 'package:allowance_questboard/init/api/v1/init_api.dart';
+import 'package:allowance_questboard/init/api/v1/init_api_request.dart';
+import 'package:allowance_questboard/init/api/v1/init_api_response.dart';
 
 // テスト用のモッククライアント
 class MockHttpClient extends http.BaseClient {

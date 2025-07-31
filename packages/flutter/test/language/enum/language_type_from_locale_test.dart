@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:allowance_questboard/language/enum/language_type.dart';
 import 'package:allowance_questboard/language/enum/value_object/language_id.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_response.dart' show LanguageDto;
+import 'package:allowance_questboard/init/api/v1/init_api_response.dart' show LanguageDto;
 import 'package:flutter/material.dart' show Locale;
 
 void main() {

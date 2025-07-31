@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart' show StateNotifier, StateNotifierProvider;
-import 'package:allowance_questboard/login/api/v1/init/init_api.dart' show InitApi;
-import 'package:allowance_questboard/login/usecase/fetch_init_data/fetch_init_data_usecase.dart' show FetchInitDataUsecase;
-import 'package:allowance_questboard/login/usecase/fetch_init_data/fetch_init_data_usecase_command.dart' show FetchInitDataUsecaseCommand;
+import 'package:allowance_questboard/init/api/v1/init_api.dart' show InitApi;
+import 'package:allowance_questboard/init/usecase/fetch_init_data/fetch_init_data_usecase.dart' show FetchInitDataUsecase;
+import 'package:allowance_questboard/init/usecase/fetch_init_data/fetch_init_data_usecase_command.dart' show FetchInitDataUsecaseCommand;
 
 /// アプリの初期化状態
 enum AppInitState {

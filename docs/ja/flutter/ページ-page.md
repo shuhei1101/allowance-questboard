@@ -86,7 +86,26 @@ classDiagram
 ```
 
 ## フォルダ構成
+### 基底クラスがないページ（一つの画面のみで、特に共通の部品がない場合）
+```plaintext
+{関心事名}/
+  ├─ {画面名}_page/
+  │   │   ├─ {画面名}_page.dart  // ページの実体
+  │   │   ├─ component/  // ページで使用するコンポーネント
+  │   │   │   ├─ {コンポーネント名}.dart
+  │   │   ├─ state/  // 状態管理クラス
+  │   │   ├─ usecase/  // ユースケース
+  │   │   ├─ api/  // APIクライアント
+  │   ├─ {値オブジェクト名}.dart
+  ├─ shared/  // 共通の部品や基底ページ
+  │   ├─ value_object/  // 共通の値オブジェクト
+  │   │   ├─ {値オブジェクト名}.dart
+```
 - `Page`とスクリーンは専用のフォルダを持つこと
+- 基本的に親クラスには子クラスの共通部品を配置
+- 自身のフォルダには自身が使用する部品を配置
+
+### 基底クラスがあるページ（共通の画面があり、複数の種類に分かれる場合）
 ```plaintext
 {関心事名}/
   ├─ {画面名}_page/
@@ -95,26 +114,27 @@ classDiagram
   │   │   ├─ component/  // 共通のコンポーネント
   │   │   │   ├─ {スクリーン名}  // スクリーン(タブ内の画面やダイアログなど)はフォルダを分ける
   │   │   ├─ state/  // 共通の状態管理クラス
-  │   │   ├─ value_object/  // 共通の値オブジェクト
+  │   │   ├─ structure/  // 共通の構造体
   │   │   ├─ usecase/  // 共通のユースケース
   │   │   ├─ api/  // 共通のAPIクライアント
   │   ├─ {画面名}_page/  // 基底クラスを継承した画面ごとのフォルダ（一ページにつき一つのフォルダを作成）
   │   │   ├─ {画面名}_page.dart  // 画面の実体
-  │   │   ├─ component/, state/, usecase/, api/  // 画面で使用するコンポーネントや状態管理クラス、ユースケース、APIクライアント
+  │   │   ├─ component/, state/, structure/, usecase/, api/  // 画面で使用するコンポーネントや状態管理クラス、ユースケース、APIクライアント
   │   ├─ {画面名}_page1/, {画面名}_page2/  // 他の画面も同様に配置 
   ├─ {その他の画面名}_page/  // 他の関心事の画面も同様に配置
+  ├─ shared/  // 共通の部品や基底ページ
+  │   ├─ value_object/  // 共通の値オブジェクト
+  │   │   ├─ {値オブジェクト名}.dart
 ...
 ```
-- 基本的に親クラスには子クラスの共通部品を配置
-- 自身のフォルダには自身が使用する部品を配置
 
-### 例:
+#### 例:
 ```plaintext
 quest/
   ├─ quest_list_page/                        # クエスト一覧ページのフォルダ
   │   ├─ shared/                                     # 共通の部品や基底ページを配置する
   │   │   ├─ base_quest_list_page.dart               # ページが複数の種類に分かれる場合、基底ページを準備する
-  │   │   ├─ component/                                     # 共通のコンポーネントや基底となるコンポーネントを配置する
+  │   │   ├─ component/                               # 共通のコンポーネントや基底となるコンポーネントを配置する
   │   │   │   ├─ base_quest_title_text.dart           # 基底のコンポーネントを定義
   │   │   │   ├─ base_quest_list_tab.dart            # 〃
   │   │   │   ├─ base_quest_list_tab_screen/          # 〃
@@ -123,9 +143,9 @@ quest/
   │   │   │   │   │   ├─ base_quest_list_item.dart    # 〃
   │   │   ├─ state/                                     # 共通、基底の状態に関するフォルダ
   │   │   │   ├─ quest_list_state_notifier.dart       # クエスト一覧の状態を管理するクラス
-  │   │   ├─ value_object/                          # 値オブジェクト(ただし、読み取り専用ページでは不要)
-  │   │   │   ├─ quest_title.dart                  # クエストタイトルの値オブジェクト
-  │   │   │   ├─ quest_description.dart          # クエスト説明の値オブジェクト
+  │   │   ├─ structure/                                  # 共通の構造体
+  │   │   │   ├─ quest_list_item.dart                          # クエストの構造体
+  │   │   │   ├─ quest_category.dart                          # クエストの分類の構造体
   │   │   ├─ usecase/                                   # 共通のユースケース
   │   │   ├─ api/                                    # 共通のAPIクライアント
   │   ├─ family_quest_list_page/                # 基底クラスを継承した家族クエスト一覧ページのフォルダ
@@ -139,7 +159,21 @@ quest/
   │   │   ├─ family_quest_list_api.dart             # 家族クエスト一覧のAPIクライアント
   │   ├─ xxx_quest_list_page/                # その他の種類のクエスト一覧ページのフォルダ
   ├─ quest_xxx_page/                        # クエストに関する他のページのフォルダ
+  ├─ shared/                                     # 共通の部品や基底ページ
+  │   ├─ value_object/                               # 共通の値オブジェクト
+  │   │   ├─ quest_id.dart                           # クエストIDの値オブジェクト
+  │   │   ├─ quest_title.dart                          # クエストタイトルの値オブジェクト
+  │   │   ├─ quest_description.dart                     # クエストの説明の値オブジェクト
 ...
+```
+
+### ページが存在しない場合のフォルダ構成
+```
+{関心事名}/
+  ├─ api/  // APIクライアント
+  ├─ usecase/  // ユースケース
+  ├─ state/  // 状態管理クラス
+  ├─ value_object/  // 値オブジェクト
 ```
 
 ## `UiHelperMixin`ミックスイン
@@ -304,5 +338,36 @@ import 'package:allowance_questboard/core/page/login_page/component/login_form.d
 - 画面遷移には`TypeGoRouter`を使用すること
   - 配置場所: `/core/router/app_route.dart`
 
-### 画面の状態
-- 
+### 状態管理
+- 状態管理には`Riverpod`を使用すること
+- 状態管理やその他オブジェクトの種類
+  - `SessionState`: セッション内で共有される状態(例: ユーザー情報, マスタデータ, 設定情報など)
+  - `PageState`: ページ単位で管理される状態(一画面につき一つ、命名: XxxPageState)
+  - `Structure`: PageStateが保持する構造体。値オブジェクトを保持する(命名にStructureはつけない)
+    - 例: `QuestSummaries`, `QuestForm`, `QuestDetail`
+  - `ValueObject`: アプリ全体で共有される値オブジェクト
+    - `BaseValueObject`を継承すること
+    - 例: `QuestId`, `QuestTitle`, `QuestDescription`
+
+```mermaid
+classDiagram
+
+class SessionStateA
+class SessionStateB
+
+PageA --> PageStateA: 状態管理
+PageStateA --> ストラクチャA : 保持
+PageStateA --> ストラクチャB : 保持
+
+
+ストラクチャA --> 値オブジェクトA1: 保持
+ストラクチャA --> 値オブジェクトA2 : 保持
+ストラクチャB --> 値オブジェクトB1: 保持
+ストラクチャB --> 値オブジェクトB2: 保持
+
+PageB --> PageStateB: 状態管理
+PageStateB --> ストラクチャC : 保持
+ストラクチャC --> 値オブジェクトC1: 保持
+ストラクチャC --> 値オブジェクトA1: 保持
+    
+```

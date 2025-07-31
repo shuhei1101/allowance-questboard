@@ -3,7 +3,7 @@ import 'package:allowance_questboard/core/enum/value_object/base_enum_value.dart
 import 'package:allowance_questboard/language/enum/value_object/language_id.dart';
 import 'package:allowance_questboard/language/enum/value_object/language_code.dart';
 import 'package:allowance_questboard/language/enum/value_object/language_name.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api_response.dart' show LanguageDto;
+import 'package:allowance_questboard/init/api/v1/init_api_response.dart' show LanguageDto;
 import 'package:allowance_questboard/shared/value_object/sort_order.dart';
 
 /// 言語タイプの値オブジェクト集約

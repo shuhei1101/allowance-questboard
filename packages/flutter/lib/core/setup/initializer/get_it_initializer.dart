@@ -1,7 +1,7 @@
 import 'package:allowance_questboard/core/auth/token_storage.dart';
-import 'package:allowance_questboard/login/api/v1/init/init_api.dart';
-import 'package:allowance_questboard/login/api/v1/login/login_api.dart';
-import 'package:allowance_questboard/login/usecase/login/login_usecase.dart';
+import 'package:allowance_questboard/init/api/v1/init_api.dart';
+import 'package:allowance_questboard/login/login_page/api/login_api.dart';
+import 'package:allowance_questboard/login/login_page/usecase/login_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
