@@ -3,7 +3,9 @@
 
 ## 概要
 - Flutterの状態管理を行う方法
-- ほとんどAPサーバ側のDomain構成と同様
+- 状態には以下２つがある
+  - SessionState: セッション全体で保持される状態
+  - XxxPageState: 画面単位の状態
 
 ## オブジェクト図
 ```mermaid
