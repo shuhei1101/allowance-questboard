@@ -33,8 +33,8 @@ QuestListPageStateNotifier --> QuestListPageState
 
 ## QuestFilterNotifiable
 ### 概要
-- クエストフィルターの更新を通知するためのインターフェース
+- クエストフィルター構造体の更新を行うためインターフェース
 
 ## QuestSummariesNotifiable
 ### 概要
-- クエストサマリーの更新を通知するためのインターフェース
+- クエストサマリー構造体の更新を行うためのインターフェース
