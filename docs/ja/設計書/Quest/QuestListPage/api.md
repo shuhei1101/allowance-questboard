@@ -8,8 +8,15 @@
 
 ### 結合条件
 - FamiliesEntity 左結合 FamilyQuestsEntity
-  - FamilyId
+  - FamiliesEntity.id = FamilyQuestsEntity.family_id
 - FamilyQuestsEntity 左結合 QuestsEntity
-  - QuestId
+  - FamilyQuestsEntity.quest_id = QuestsEntity.id
+- 
 
-### 取得情報
+
+### 取得データ
+```json
+
+
+```
+
