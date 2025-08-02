@@ -5,19 +5,20 @@
 - [QuestTitle](#questtitle)
   - [メンバ](#メンバ)
   - [バリデーション](#バリデーション)
-  - [メソッド](#メソッド)
 - [QuestReward](#questreward)
   - [メンバ](#メンバ-1)
   - [バリデーション](#バリデーション-1)
-  - [メソッド](#メソッド-1)
+  - [メソッド](#メソッド)
 - [QuestRequestDetail](#questrequestdetail)
   - [メンバ](#メンバ-2)
   - [バリデーション](#バリデーション-2)
-  - [メソッド](#メソッド-2)
+  - [メソッド](#メソッド-1)
 - [QuestAgeRange](#questagerange)
   - [メンバ](#メンバ-3)
   - [バリデーション](#バリデーション-3)
-  - [メソッド](#メソッド-3)
+  - [メソッド](#メソッド-2)
+- [QuestMemberStatus(Enum)](#questmemberstatusenum)
+  - [値](#値)
 
 
 ## QuestTitle
@@ -26,11 +27,8 @@
 
 ### バリデーション
 - 必須
-- 最大文字数: 200文字
+- 最大文字数: 20文字
 - 最小文字数: 1文字（空文字不可）
-
-### メソッド
-- String get displayTitle: タイトルを表示用に整形して返す
 
 ## QuestReward
 ### メンバ
@@ -71,3 +69,9 @@
 ### メソッド
 - String get displayAgeRange: 「{下限}歳〜{上限}歳」形式で返す
 - bool isInRange(int age): 指定年齢が範囲内かどうかを返す
+
+## QuestMemberStatus(Enum)
+### 値
+- assigned: 割り当て済み
+- inProgress: 進行中
+- completed: 完了
