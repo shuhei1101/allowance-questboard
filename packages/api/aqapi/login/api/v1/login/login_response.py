@@ -16,19 +16,6 @@ class AuthInfoDto:
     member_id: Optional[int] = None
 
     @classmethod
-    def from_auth_info(cls, auth_info: AuthInfo) -> "AuthInfoDto":
-        """認証情報ドメインモデルからDtoを作成
-
-        :param AuthInfo auth_info: 認証情報ドメインモデル
-        :return AuthInfoDto: Dto
-        """
-        return cls(
-            user_id=str(auth_info.user_id),
-            parent_id=auth_info.parent_id,
-            member_id=auth_info.family_member_id
-        )
-
-    @classmethod
     def from_auth_info_model(cls, auth_info_model) -> "AuthInfoDto":
         """認証情報モデルからDtoを作成
 
@@ -41,7 +28,6 @@ class AuthInfoDto:
             member_id=auth_info_model.family_member_id
         )
 
-
 @dataclass
 class LoginResponse:
     """ログインレスポンス
@@ -49,17 +35,6 @@ class LoginResponse:
     :param AuthInfoDto item: 認証情報
     """
     item: AuthInfoDto
-
-    @classmethod
-    def from_auth_info(cls, auth_info: AuthInfo) -> "LoginResponse":
-        """認証情報ドメインモデルからレスポンスモデルを作成
-
-        :param AuthInfo auth_info: 認証情報ドメインモデル
-        :return LoginResponse: レスポンスモデル
-        """
-        return cls(
-            item=AuthInfoDto.from_auth_info(auth_info)
-        )
 
     @classmethod
     def from_query_result(cls, query_result) -> "LoginResponse":

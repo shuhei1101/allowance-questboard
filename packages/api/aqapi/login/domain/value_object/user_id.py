@@ -7,7 +7,7 @@ class UserId(BaseValueObject):
 
     def __init__(self, value: UUID):
         self._value = value
-        super().__init__()
+        super().__init__(value)
 
     def _validate(self) -> None:
         if not isinstance(self._value, UUID):
