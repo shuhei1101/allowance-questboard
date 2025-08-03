@@ -47,6 +47,7 @@ flutter:
   generate: true
   assets:
     - .env
+    - assets/images/
 
 flutter_gen:
   output: lib/core/generated/

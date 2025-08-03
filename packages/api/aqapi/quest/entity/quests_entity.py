@@ -27,8 +27,8 @@ class QuestsEntity(BaseEntity):
     age_from: Mapped[int] = mapped_column(Integer, nullable=False, comment="対象年齢下限")
     age_to: Mapped[int] = mapped_column(Integer, nullable=False, comment="対象年齢上限")
     has_published_month: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, comment="季節限定フラグ")
-    month_from: Mapped[int] = mapped_column(Integer, nullable=True, comment="公開開始月")
-    month_to: Mapped[int] = mapped_column(Integer, nullable=True, comment="公開終了月")
+    month_from: Mapped[int] = mapped_column(Integer, nullable=True, comment="掲載開始月")
+    month_to: Mapped[int] = mapped_column(Integer, nullable=True, comment="掲載終了月")
 
     subclass_type_ref = relationship("QuestTypesEntity", foreign_keys=[subclass_type])
     category = relationship("QuestCategoriesEntity", foreign_keys=[category_id])

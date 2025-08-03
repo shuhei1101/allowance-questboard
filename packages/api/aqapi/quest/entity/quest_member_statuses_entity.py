@@ -19,9 +19,10 @@ class QuestMemberStatusesEntity(BaseEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-                QuestMemberStatusesEntity(code="assigned", description="割り当て済み"),
+                QuestMemberStatusesEntity(code="not_accepted", description="未受注"),
                 QuestMemberStatusesEntity(code="in_progress", description="進行中"),
-                QuestMemberStatusesEntity(code="completed", description="完了"),
+                QuestMemberStatusesEntity(code="reporting", description="報告中"),
+                QuestMemberStatusesEntity(code="completed", description="達成済み"),
             ]
 
 class MemberQuestStatusesTranslationEntity(BaseTranslationEntity):
@@ -39,10 +40,12 @@ class MemberQuestStatusesTranslationEntity(BaseTranslationEntity):
     @classmethod
     def _seed_data(cls) -> list['BaseEntity']:
         return [
-            MemberQuestStatusesTranslationEntity(child_quest_status_id=1, language_id=1, name="割り当て済み"),
-            MemberQuestStatusesTranslationEntity(child_quest_status_id=1, language_id=2, name="Assigned"),
+            MemberQuestStatusesTranslationEntity(child_quest_status_id=1, language_id=1, name="未受注"),
+            MemberQuestStatusesTranslationEntity(child_quest_status_id=1, language_id=2, name="Not Accepted"),
             MemberQuestStatusesTranslationEntity(child_quest_status_id=2, language_id=1, name="進行中"),
             MemberQuestStatusesTranslationEntity(child_quest_status_id=2, language_id=2, name="In Progress"),
-            MemberQuestStatusesTranslationEntity(child_quest_status_id=3, language_id=1, name="完了"),
-            MemberQuestStatusesTranslationEntity(child_quest_status_id=3, language_id=2, name="Completed"),
+            MemberQuestStatusesTranslationEntity(child_quest_status_id=3, language_id=1, name="報告中"),
+            MemberQuestStatusesTranslationEntity(child_quest_status_id=3, language_id=2, name="Reporting"),
+            MemberQuestStatusesTranslationEntity(child_quest_status_id=4, language_id=1, name="達成済み"),
+            MemberQuestStatusesTranslationEntity(child_quest_status_id=4, language_id=2, name="Completed"),
         ]

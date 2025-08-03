@@ -18,6 +18,13 @@ class FamiliesEntity(BaseEntity):
 
     icon = relationship("IconsEntity", foreign_keys=[icon_id])
 
+    @classmethod
+    def _seed_data(cls) -> list['BaseEntity']:
+        return [
+            # テンプレートクエスト用の家族データ
+            FamiliesEntity(name="Template", icon_id=1, introduction="")
+        ]
+
 class FamiliesHistoryEntity(BaseHistoryEntity):
     """家族履歴エンティティ"""
 
