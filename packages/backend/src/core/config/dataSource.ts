@@ -1,13 +1,16 @@
 import { DataSource } from "typeorm";
+import * as dotenv from "dotenv";
+
+// .envファイルを読み込み
+dotenv.config();
 
 export const AppDataSource = new DataSource({
-  type: "postgres", // ← DBの種類に合わせて変えてね
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "password",
-  database: "testdb",
-  synchronize: false, // ← 開発中だけtrueにする（本番はダメ🙅‍♀️）
+  type: "postgres",
+  url: process.env.DATABASE_URL, // ← Supabaseの接続URLを使用
+  synchronize: true, // ← 開発中だけtrueにする（本番はダメ🙅‍♀️）
   logging: true,
-  entities: [__dirname + "/../../feature/**/entity/*.ts"],
+  entities: [__dirname + "/../../features/**/entity/*.ts"],
+  ssl: {
+    rejectUnauthorized: false, // ← Supabaseで必要
+  },
 });

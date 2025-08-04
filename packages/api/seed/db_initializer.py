@@ -71,9 +71,9 @@ class DBInitializer:
 async def main():
     """メイン関数"""
     initializer = DBInitializer()
-    await initializer.initialize()
-    await initializer.reset_db()
-    # await initializer.insert_sample_seed()
+    # await initializer.initialize()
+    # await initializer.reset_db()
+    await initializer.force_drop_all()
 
 if __name__ == "__main__":
     asyncio.run(main())

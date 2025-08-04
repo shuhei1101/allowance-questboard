@@ -4,7 +4,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { AppBaseEntity } from "./appBaseEntity";
-import { Language } from "@backend/features/language/entity/language";
+import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
 
 /**
  * 翻訳テーブル用の基底クラス
@@ -13,9 +13,9 @@ export abstract class BaseTranslationEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "言語ID" })
   language_id!: number;
 
-  @ManyToOne(() => Language, { nullable: false, onDelete: "SET NULL" })
+  @ManyToOne(() => LanguageEntity, { nullable: false, onDelete: "SET NULL" })
   @JoinColumn({ name: "language_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_language_id" })
-  language!: Language;
+  language!: LanguageEntity;
 
   /**
    * 翻訳元レコードのIDを返す（抽象プロパティ）

@@ -46,7 +46,7 @@ export class FamilyMemberEntity extends AppBaseEntity {
  * 家族メンバー履歴エンティティ
  */
 @Entity("family_members_history")
-export class FamilyMemberHistoryEntity extends BaseHistoryEntity<FamilyMemberEntity> {
+export class FamilyMemberHistoryEntity extends BaseHistoryEntity {
   @Column({ type: "uuid", comment: "ユーザID" })
   user_id!: string;
 

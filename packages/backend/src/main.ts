@@ -3,9 +3,17 @@
 import Fastify from 'fastify'
 import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify'
 import { appRouter } from './router'          // tRPCのルーターまとめたやつ
-import { createTRPCContext } from './context' // 認証とか共通情報作る関数
+import { createContext } from './core/trpc/trpcContext' // 認証とか共通情報作る関数
+import { AppDataSource } from './core/config/dataSource' // TypeORM DataSource
 
 async function main() {
+  try {
+    await AppDataSource.initialize()
+    console.log('🗄️ データベース接続完了！')
+  } catch (error) {
+    console.log('⚠️ データベース接続失敗（開発中はOK）:', (error as Error).message)
+  }
+
   const fastify = Fastify()
 
   // tRPCのルーターをFastifyに登録✨
@@ -13,7 +21,7 @@ async function main() {
     prefix: '/trpc',         // APIのルートパス
     trpcOptions: {
       router: appRouter,
-      createContext: createTRPCContext,
+      createContext: createContext,
     },
   })
 

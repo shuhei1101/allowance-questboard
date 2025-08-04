@@ -44,7 +44,7 @@ export class FamilyEntity extends AppBaseEntity {
  * 家族履歴エンティティ
  */
 @Entity("families_history")
-export class FamilyHistoryEntity extends BaseHistoryEntity<FamilyEntity> {
+export class FamilyHistoryEntity extends BaseHistoryEntity {
   @Column({ type: "int", nullable: false, comment: "家族ID" })
   family_id!: number;
 

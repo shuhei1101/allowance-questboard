@@ -7,7 +7,7 @@ import { AppBaseEntity } from "./appBaseEntity";
  * 履歴テーブル用の基底クラス
  * @template T 元のエンティティの型
  */
-export abstract class BaseHistoryEntity<T extends AppBaseEntity = AppBaseEntity> extends AppBaseEntity {
+export abstract class BaseHistoryEntity extends AppBaseEntity {
   @Column({ type: "int", comment: "元のレコードID" })
   source_id!: number;
 
@@ -37,7 +37,7 @@ export abstract class BaseHistoryEntity<T extends AppBaseEntity = AppBaseEntity>
    * @param source 元のエンティティ
    * @returns 履歴エンティティのインスタンス
    */
-  static fromSource<T extends AppBaseEntity>(source: T): BaseHistoryEntity<T> {
+  static fromSource<T extends AppBaseEntity>(source: T): BaseHistoryEntity {
     // TypeScriptではnewを使ってインスタンス生成
     const instance = new (this as any)();
     

@@ -1,3 +1,5 @@
+// import { FamilyMemberEntity } from "../../features/family-member/entity/familyMemberEntity";
+// import { ScreenEntity } from "../../features/shared/entity/screenEntity";
 import {
   BaseEntity,
   PrimaryGeneratedColumn,
@@ -6,9 +8,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  DataSource,
 } from "typeorm";
-import { FamilyMember } from "@backend/features/family-member/entity/familyMember";
-import { Screen } from "@backend/shared/entity/screen";
 
 export abstract class AppBaseEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -20,24 +21,37 @@ export abstract class AppBaseEntity extends BaseEntity {
   @CreateDateColumn({ type: "timestamp with time zone", comment: "作成日時" })
   created_at!: Date;
 
-  @ManyToOne(() => FamilyMember, { nullable: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "created_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_created_by" })
-  created_by?: FamilyMember;
+  @Column({ type: "int", nullable: true, comment: "作成者ID" })
+  created_by?: number;
 
-  @ManyToOne(() => Screen, { nullable: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "created_from", referencedColumnName: "id", foreignKeyConstraintName: "fk_created_from" })
-  created_from?: Screen;
+  @Column({ type: "int", nullable: true, comment: "作成元スクリーンID" })
+  created_from?: number;
 
   @UpdateDateColumn({ type: "timestamp with time zone", comment: "更新日時" })
   updated_at!: Date;
 
-  @ManyToOne(() => FamilyMember, { nullable: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "updated_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_updated_by" })
-  updated_by?: FamilyMember;
+  @Column({ type: "int", nullable: true, comment: "更新者ID" })
+  updated_by?: number;
 
-  @ManyToOne(() => Screen, { nullable: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "updated_from", referencedColumnName: "id", foreignKeyConstraintName: "fk_updated_from" })
-  updated_from?: Screen;
+  @Column({ type: "int", nullable: true, comment: "更新元スクリーンID" })
+  updated_from?: number;
+
+  // リレーションは一旦コメントアウト（循環参照解決のため）
+  // @ManyToOne(() => FamilyMemberEntity, { nullable: true, onDelete: "SET NULL" })
+  // @JoinColumn({ name: "created_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_app_base_entity_created_by" })
+  // created_member?: FamilyMemberEntity;
+
+  // @ManyToOne(() => ScreenEntity, { nullable: true, onDelete: "SET NULL" })
+  // @JoinColumn({ name: "created_from", referencedColumnName: "id", foreignKeyConstraintName: "fk_app_base_entity_created_from" })
+  // created_screen?: ScreenEntity;
+
+  // @ManyToOne(() => FamilyMemberEntity, { nullable: true, onDelete: "SET NULL" })
+  // @JoinColumn({ name: "updated_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_app_base_entity_updated_by" })
+  // updated_member?: FamilyMemberEntity;
+
+  // @ManyToOne(() => ScreenEntity, { nullable: true, onDelete: "SET NULL" })
+  // @JoinColumn({ name: "updated_from", referencedColumnName: "id", foreignKeyConstraintName: "fk_app_base_entity_updated_from" })
+  // updated_screen?: ScreenEntity;
 
   // ドメインモデルからエンティティ生成（抽象）
   static fromModel(model: any): BaseEntity {
@@ -49,11 +63,8 @@ export abstract class AppBaseEntity extends BaseEntity {
     throw new Error("seedData must be implemented in subclass");
   }
 
-  // シード処理
-  static async seed(): Promise<void> {
-    const dataSource = await import("@backend/core/config/dataSource").then(mod => mod.AppDataSource);
-    await dataSource.initialize();
-
+  // シード処理（DataSourceを外から受け取る）
+  static async seed(dataSource: DataSource): Promise<void> {
     const repo = dataSource.getRepository(this as any);
     const count = await repo.count();
     if (count > 0) {
