@@ -12,3 +12,10 @@ npm install fastify
 
 #### tRPCのインストール
 ```bash
+npm install @trpc/server @trpc/client
+```
+
+#### ts-nodeのインストール
+```bash
+npm install -g ts-node
+```

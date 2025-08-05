@@ -19,7 +19,7 @@ export class CommentLikeEntity extends AppBaseEntity {
   comment_id!: number;
   @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
   family_member_id!: number;
-  @Column({ type: "datetime", nullable: true, comment: "いいね日時" })
+  @Column({ type: "timestamp", nullable: true, comment: "いいね日時" })
   liked_at?: Date;
 
   @ManyToOne(() => CommentEntity)

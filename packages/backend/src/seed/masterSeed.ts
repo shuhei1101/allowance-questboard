@@ -1,41 +1,31 @@
 import { DataSource } from 'typeorm';
 import { LanguageEntity } from '../features/language/entity/languageEntity';
-import { CurrencyEntity } from '../features/shared/entity/currencyEntity';
-import { IconCategoryEntity } from '../features/icon-category/entity/iconCategoryEntity';
+import { IconCategoryEntity, IconCategoryTranslationEntity } from '../features/icon-category/entity/iconCategoryEntity';
 import { IconEntity } from '../features/icon/entity/iconEntity';
 import { FamilyMemberTypeEntity } from '../features/family-member/entity/familyMemberTypeEntity';
 import { ReportableTypeEntity } from '../features/report/entity/reportableTypeEntity';
 import { ScreenEntity } from '../features/shared/entity/screenEntity';
 
 // 追加のエンティティをimport (FastAPIのmaster_seedr.pyと同じ31個)
-import { AllowanceTableTypeEntity } from '../features/allowance-tables/entity/allowanceTableTypeEntity';
 import { AllowanceableTypeEntity } from '../features/bank/entity/allowanceableTypeEntity';
-import { WithdrawalRequestStatusEntity } from '../features/bank/entity/withdrawalRequestStatusEntity';
-import { EducationEntity } from '../features/child/entity/educationEntity';
+import { WithdrawalRequestStatusEntity, WithdrawalRequestStatusTranslationEntity } from '../features/bank/entity/withdrawalRequestStatusEntity';
+import { EducationEntity, EducationTranslationEntity } from '../features/child/entity/educationEntity';
 import { QuestCategoryEntity } from '../features/quest/entity/questCategoryEntity';
-import { QuestMemberStatusEntity } from '../features/quest/entity/questMemberStatusEntity';
+import { QuestMemberStatusEntity, QuestMemberStatusTranslationEntity } from '../features/quest/entity/questMemberStatusEntity';
 import { QuestCategoryTypeEntity } from '../features/quest/entity/questCategoryTypeEntity';
-import { QuestRequestStatusEntity } from '../features/quest/entity/questRequestStatusEntity';
+import { QuestRequestStatusEntity, QuestRequestStatusTranslationEntity } from '../features/quest/entity/questRequestStatusEntity';
 import { QuestTypeEntity } from '../features/quest/entity/questTypeEntity';
 import { QuestEntity } from '../features/quest/entity/questEntity';
 import { TemplateQuestCategoryEntity } from '../features/quest/entity/templateQuestCategoryEntity';
 import { TemplateQuestEntity } from '../features/quest/entity/templateQuestEntity';
-import { ReportStatusEntity } from '../features/report/entity/reportStatusEntity';
-
-// FastAPIにある残りのエンティティを追加
-// TODO: 以下のエンティティの正しいパスを確認して追加する必要がある
-// import { CurrencyByLanguageEntity } from '../features/shared/entity/currencyByLanguageEntity';
-// import { IconCategoriesTranslationEntity } from '../features/icon-category/entity/iconCategoriesTranslationEntity';
-// import { IconPlatforms } from '../features/icon/entity/iconPlatforms';
-// import { IconNameByPlatormEntity } from '../features/icon/entity/iconNameByPlatormEntity';
-// import { ReportStatusesTranslationEntity } from '../features/report/entity/reportStatusesTranslationEntity';
-// import { WithdrawalRequestStatusesTranslationEntity } from '../features/bank/entity/withdrawalRequestStatusesTranslationEntity';
-// import { NotifiableTypesEntity } from '../features/notification/entity/notifiableTypesEntity';
-// import { EducationsTranslationEntity } from '../features/child/entity/educationsTranslationEntity';
-// import { ExchangeRatesEntity } from '../features/shared/entity/exchangeRatesEntity';
-// import { QuestRequestStatusesTranslationEntity } from '../features/quest/entity/questRequestStatusesTranslationEntity';
-// import { MemberQuestStatusesTranslationEntity } from '../features/quest/entity/memberQuestStatusesTranslationEntity';
-
+import { ReportStatusEntity, ReportStatusTranslationEntity } from '../features/report/entity/reportStatusEntity';
+import { AllowanceTableTypeEntity } from '@backend/features/allowance-table/entity/allowanceTableTypeEntity';
+import { IconLibraryEntity } from '@backend/features/icon/entity/iconLibraryEntity';
+import { IconKeyByLibraryEntity } from '@backend/features/icon/entity/iconKeyByLibraryEntity';
+import { NotifiableTypeEntity } from '@backend/features/notification/entity/notifiableTypeEntity';
+import { CurrencyByLanguageEntity } from '@backend/features/shared/entity/currencyByLanguageEntity';
+import { CurrencyEntity } from '@backend/features/shared/entity/currencyEntity';
+import { ExchangeRateEntity } from '@backend/features/shared/entity/exchangeRateEntity';
 /**
  * マスタデータを投入する関数
  * 各エンティティのseed()メソッドを呼び出す
@@ -46,8 +36,12 @@ export async function seedMasterData(dataSource: DataSource): Promise<void> {
   try {
     await LanguageEntity.seed(dataSource);
     await CurrencyEntity.seed(dataSource);
+    await CurrencyByLanguageEntity.seed(dataSource);
     await IconCategoryEntity.seed(dataSource);
+    await IconCategoryTranslationEntity.seed(dataSource);
     await IconEntity.seed(dataSource);
+    await IconLibraryEntity.seed(dataSource)
+    await IconKeyByLibraryEntity.seed(dataSource)
     await FamilyMemberTypeEntity.seed(dataSource);
     await ReportableTypeEntity.seed(dataSource);
     await ScreenEntity.seed(dataSource);
@@ -56,15 +50,21 @@ export async function seedMasterData(dataSource: DataSource): Promise<void> {
     await AllowanceTableTypeEntity.seed(dataSource);
     await AllowanceableTypeEntity.seed(dataSource);
     await ReportStatusEntity.seed(dataSource);
+    await ReportStatusTranslationEntity.seed(dataSource);
     await WithdrawalRequestStatusEntity.seed(dataSource);
+    await WithdrawalRequestStatusTranslationEntity.seed(dataSource);
+    await NotifiableTypeEntity.seed(dataSource);
     await EducationEntity.seed(dataSource);
+    await EducationTranslationEntity.seed(dataSource);
+    await ExchangeRateEntity.seed(dataSource);
     await QuestRequestStatusEntity.seed(dataSource);
+    await QuestRequestStatusTranslationEntity.seed(dataSource);
     await QuestMemberStatusEntity.seed(dataSource);
+    await QuestMemberStatusTranslationEntity.seed(dataSource);
     await QuestCategoryEntity.seed(dataSource);
     await TemplateQuestCategoryEntity.seed(dataSource);
     await QuestEntity.seed(dataSource);
     await TemplateQuestEntity.seed(dataSource);
-    
     console.log('マスタデータの投入が完了しました ✨');
     
   } catch (error) {

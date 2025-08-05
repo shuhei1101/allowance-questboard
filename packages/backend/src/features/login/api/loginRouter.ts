@@ -2,6 +2,9 @@ import { TRPCError } from '@trpc/server';
 import { t, authenticatedProcedure } from '@backend/core/trpc/trpcContext';
 import { loginQuery, LoginQueryResult } from '@backend/features/login/query_service/loginQuery';
 
+/**
+ * ログインレスポンス
+ */
 export class LoginResponse {
   constructor(
     public readonly userId: string,
@@ -11,6 +14,12 @@ export class LoginResponse {
     public readonlychildId?: number | null
   ) {}
 
+  /**
+   * クエリ結果からレスポンスオブジェクトを生成
+   * 
+   * @param queryResult - ログインクエリの結果
+   * @returns LoginResponse インスタンス
+   */
   public static fromQueryResult(queryResult: LoginQueryResult): LoginResponse {
     return new LoginResponse(
       queryResult.userId,

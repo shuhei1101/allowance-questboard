@@ -51,7 +51,7 @@ export class QuestEntity extends AppBaseEntity {
   /**
    * シードデータ
    */
-  protected static _seedData(): QuestEntity[] {
+  protected static seedData(): QuestEntity[] {
     return [
       Object.assign(new QuestEntity(), { subclass_type: 1, category_id: 1, icon_id: 1, age_from: 6, age_to: 12 }),
       Object.assign(new QuestEntity(), { subclass_type: 1, category_id: 2, icon_id: 2, age_from: 3, age_to: 10 }),
@@ -91,7 +91,7 @@ export class QuestTranslationEntity extends BaseTranslationEntity {
   /**
    * シードデータ
    */
-  protected static _seedData(): QuestTranslationEntity[] {
+  protected static seedData(): QuestTranslationEntity[] {
     return [
       Object.assign(new QuestTranslationEntity(), { quest_id: 1, language_id: 1, title: "クエスト1", client: "クライアントA", request_detail: "依頼内容A" }),
       Object.assign(new QuestTranslationEntity(), { quest_id: 2, language_id: 1, title: "クエスト2", client: "クライアントB", request_detail: "依頼内容B" }),

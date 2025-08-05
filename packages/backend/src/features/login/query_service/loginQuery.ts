@@ -3,10 +3,15 @@ import { ParentEntity } from "@backend/features/parent/entity/parentEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { BaseQueryParams } from "@backend/core/query_service/baseQueryParams";
 
+/**
+ * ログインクエリパラメータ
+ */
 export interface LoginQueryParams extends BaseQueryParams {
   userId: string;
 }
-
+/**
+ * ログインクエリ結果
+ */
 export interface LoginQueryResult {
   userId: string;
   familyMemberId: number;

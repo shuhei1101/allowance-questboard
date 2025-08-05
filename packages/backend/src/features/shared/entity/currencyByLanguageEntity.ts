@@ -16,7 +16,6 @@ import { LanguageEntity } from "../../language/entity/languageEntity";
 export class CurrencyByLanguageEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "通貨ID(外部キー：currencies.id)" })
   currency_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "言語ID" })
   language_id!: number;
 
@@ -24,7 +23,6 @@ export class CurrencyByLanguageEntity extends AppBaseEntity {
   @ManyToOne(() => CurrencyEntity)
   @JoinColumn({ name: "currency_id" })
   currency?: CurrencyEntity;
-
   @ManyToOne(() => LanguageEntity)
   @JoinColumn({ name: "language_id" })
   language?: LanguageEntity;

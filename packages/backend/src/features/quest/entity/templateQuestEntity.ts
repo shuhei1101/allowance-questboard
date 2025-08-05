@@ -20,18 +20,15 @@ export class TemplateQuestEntity extends AppBaseEntity {
   @ManyToOne(() => QuestEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_template_quests_quest_id" })
   quest!: QuestEntity;
-  @ManyToOne(() => TemplateQuestCategoryEntity, { nullable: false, onDelete: "RESTRICT" })
-  @JoinColumn({ name: "template_category_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_template_quests_template_category_id" })
-  template_category!: TemplateQuestCategoryEntity;
 
   /**
    * シードデータ
    */
-  static getSeedData(): Partial<TemplateQuestEntity>[] {
+  protected static seedData(): TemplateQuestEntity[] {
     return [
-      { quest_id: 1 },
-      { quest_id: 2 },
-      { quest_id: 3 },
+      Object.assign(new TemplateQuestEntity(), { quest_id: 1, template_category_id: 1 }),
+      Object.assign(new TemplateQuestEntity(), { quest_id: 2, template_category_id: 2 }),
+      Object.assign(new TemplateQuestEntity(), { quest_id: 3, template_category_id: 3 }),
     ];
   }
 }
