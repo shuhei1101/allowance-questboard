@@ -43,38 +43,27 @@
 - 基底クラスと同様のプロパティをもつ
 
 ### メソッド_元のエンティティから生成する
-- 
+- 基底クラスの属性を元にインスタンスを生成する
+- [抽象メソッド_独自の属性を設定する](#抽象メソッド_独自の属性を設定する)
+
+### 抽象メソッド_独自の属性を設定する
+- 具象エンティティで実装する
+- 元のエンティティの独自の属性を履歴エンティティに設定する
+
+## 基底翻訳エンティティ
+- 物理名: `BaseTranslationEntity`
+
+### 継承
+- `AppBaseEntity`を継承
+
+### プロパティ
+- 言語ID: 数値
+- 元のエンティティID: 数値
+  - 外部参照
 
 ## オブジェクト図
 ```mermaid
 classDiagram
-    class BaseEntity {
-      id: Mapped[int]
-      version: Mapped[int]
-      created_at: Mapped[datetime]
-      created_by: Mapped[int]
-      created_from: Mapped[int]
-      updated_at: Mapped[datetime]
-      updated_by: Mapped[int]
-      updated_from: Mapped[int]
-      create_table()
-      drop_table()
-      *from_model()*
-      seed()
-      *_seed_data()*
-    }
-    class BaseHistoryEntity {
-      source_id: Mapped[int]
-      source_version: Mapped[int]
-      source_created_at: Mapped[datetime]
-      source_created_by: Mapped[int]
-      source_created_from: Mapped[int]
-      source_updated_at: Mapped[datetime]
-      source_updated_by: Mapped[int]
-      source_updated_from: Mapped[int]
-      from_source() -> 'BaseHistoryEntity'
-      *_set_specific_attrs(instance: 'BaseHistoryEntity', source: 'BaseEntity')*
-    }
     class BaseTranslationEntity {
       language_id: Mapped[int]
       *source_id()*: int
