@@ -17,14 +17,12 @@ import { FamilyMemberEntity } from "@backend/features/family-member/entity/famil
 export class ChildEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
   family_member_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "家族ID" })
   family_id!: number;
 
   @ManyToOne(() => FamilyEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_family_id" })
   family!: FamilyEntity;
-
   @ManyToOne(() => FamilyMemberEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_member_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_family_member_id" })
   family_member!: FamilyMemberEntity;

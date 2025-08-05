@@ -43,13 +43,12 @@ export class QuestCategoryEntity extends AppBaseEntity {
 export class QuestCategoryTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "クエストカテゴリID" })
   quest_category_id!: number;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "カテゴリ名の翻訳" })
   name!: string;
 
   @ManyToOne(() => QuestCategoryEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_category_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_category_translation_category_id" })
-  quest_categories!: QuestCategoryEntity;
+  quest_category!: QuestCategoryEntity;
 
   /**
    * 翻訳元レコードのIDを返す
@@ -63,36 +62,12 @@ export class QuestCategoryTranslationEntity extends BaseTranslationEntity {
    */
   protected static seedData(): QuestCategoryTranslationEntity[] {
     return [
-      Object.assign(new QuestCategoryTranslationEntity(), {
-        quest_category_id: 1,
-        name: "家事",
-        language_id: 1,
-      }),
-      Object.assign(new QuestCategoryTranslationEntity(), {
-        quest_category_id: 1,
-        name: "Housework",
-        language_id: 2,
-      }),
-      Object.assign(new QuestCategoryTranslationEntity(), {
-        quest_category_id: 2,
-        name: "勉強",
-        language_id: 1,
-      }),
-      Object.assign(new QuestCategoryTranslationEntity(), {
-        quest_category_id: 2,
-        name: "Study",
-        language_id: 2,
-      }),
-      Object.assign(new QuestCategoryTranslationEntity(), {
-        quest_category_id: 3,
-        name: "運動",
-        language_id: 1,
-      }),
-      Object.assign(new QuestCategoryTranslationEntity(), {
-        quest_category_id: 3,
-        name: "Exercise",
-        language_id: 2,
-      }),
+      Object.assign(new QuestCategoryTranslationEntity(), { quest_category_id: 1, name: "家事", language_id: 1 }),
+      Object.assign(new QuestCategoryTranslationEntity(), { quest_category_id: 1, name: "Housework", language_id: 2 }),
+      Object.assign(new QuestCategoryTranslationEntity(), { quest_category_id: 2, name: "勉強", language_id: 1 }),
+      Object.assign(new QuestCategoryTranslationEntity(), { quest_category_id: 2, name: "Study", language_id: 2 }),
+      Object.assign(new QuestCategoryTranslationEntity(), { quest_category_id: 3, name: "運動", language_id: 1 }),
+      Object.assign(new QuestCategoryTranslationEntity(), { quest_category_id: 3, name: "Exercise", language_id: 2 }),
     ];
   }
 }

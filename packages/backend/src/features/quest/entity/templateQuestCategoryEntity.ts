@@ -16,10 +16,8 @@ import { QuestCategoryEntity } from "./questCategoryEntity";
 export class TemplateQuestCategoryEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, unique: true, comment: "クエストカテゴリID" })
   category_id!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "表示順序" })
   sort_order!: number;
-
   @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
   is_active!: boolean;
 

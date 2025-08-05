@@ -15,14 +15,12 @@ import { ChildEntity } from "@backend/features/child/entity/childEntity";
 export class ChildLevelTableEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "親レベルテーブルID" })
   superclass_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "子供ID" })
   child_id!: number;
 
   @ManyToOne(() => LevelTableEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "superclass_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_level_tables_superclass_id" })
   level_table!: LevelTableEntity;
-
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "child_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_level_tables_child_id" })
   child!: ChildEntity;

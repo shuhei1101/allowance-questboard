@@ -20,13 +20,10 @@ import { ChildEntity } from "./childEntity";
 export class ChildStatusEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, unique: true, comment: "子供ID" })
   child_id!: number;
-
   @Column({ type: "int", nullable: false, default: 1, comment: "現在のレベル" })
   current_level!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "累計獲得経験値" })
   total_exp!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "現在の貯金額" })
   current_savings!: number;
 

@@ -15,7 +15,6 @@ import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntit
 export class QuestRequestStatusEntity extends AppBaseEntity {
   @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
   code!: string;
-
   @Column({ type: "varchar", length: 255, nullable: true, comment: "ステータスの説明" })
   description?: string;
 
@@ -39,7 +38,6 @@ export class QuestRequestStatusEntity extends AppBaseEntity {
 export class QuestRequestStatusTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "ステータスID" })
   quest_request_status_id!: number;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "ステータス名の翻訳" })
   name!: string;
 
@@ -49,7 +47,7 @@ export class QuestRequestStatusTranslationEntity extends BaseTranslationEntity {
     referencedColumnName: "id", 
     foreignKeyConstraintName: "fk_quest_request_status_translation_status_id" 
   })
-  quest_request_statuses!: QuestRequestStatusEntity;
+  quest_request_status!: QuestRequestStatusEntity;
 
   /**
    * 翻訳元レコードのIDを返す
@@ -63,36 +61,12 @@ export class QuestRequestStatusTranslationEntity extends BaseTranslationEntity {
    */
   protected static seedData(): QuestRequestStatusTranslationEntity[] {
     return [
-      Object.assign(new QuestRequestStatusTranslationEntity(), {
-        quest_request_status_id: 1,
-        name: "審査待ち",
-        language_id: 1,
-      }),
-      Object.assign(new QuestRequestStatusTranslationEntity(), {
-        quest_request_status_id: 1,
-        name: "pending",
-        language_id: 2,
-      }),
-      Object.assign(new QuestRequestStatusTranslationEntity(), {
-        quest_request_status_id: 2,
-        name: "承認済み",
-        language_id: 1,
-      }),
-      Object.assign(new QuestRequestStatusTranslationEntity(), {
-        quest_request_status_id: 2,
-        name: "approved",
-        language_id: 2,
-      }),
-      Object.assign(new QuestRequestStatusTranslationEntity(), {
-        quest_request_status_id: 3,
-        name: "却下",
-        language_id: 1,
-      }),
-      Object.assign(new QuestRequestStatusTranslationEntity(), {
-        quest_request_status_id: 3,
-        name: "rejected",
-        language_id: 2,
-      }),
+      Object.assign(new QuestRequestStatusTranslationEntity(), { quest_request_status_id: 1, name: "審査待ち", language_id: 1 }),
+      Object.assign(new QuestRequestStatusTranslationEntity(), { quest_request_status_id: 1, name: "pending", language_id: 2 }),
+      Object.assign(new QuestRequestStatusTranslationEntity(), { quest_request_status_id: 2, name: "承認済み", language_id: 1 }),
+      Object.assign(new QuestRequestStatusTranslationEntity(), { quest_request_status_id: 2, name: "approved", language_id: 2 }),
+      Object.assign(new QuestRequestStatusTranslationEntity(), { quest_request_status_id: 3, name: "却下", language_id: 1 }),
+      Object.assign(new QuestRequestStatusTranslationEntity(), { quest_request_status_id: 3, name: "rejected", language_id: 2 }),
     ];
   }
 }

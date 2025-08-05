@@ -23,17 +23,14 @@ import { EducationEntity } from "@backend/features/child/entity/educationEntity"
 export class EducationPeriodEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID" })
   child_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "学歴ID" })
   education_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "教育期間" })
   period!: number;
 
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "child_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_education_period_child_id" })
   child!: ChildEntity;
-
   @ManyToOne(() => EducationEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "education_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_education_period_education_id" })
   education!: EducationEntity;

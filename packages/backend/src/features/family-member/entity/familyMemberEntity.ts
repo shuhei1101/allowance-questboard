@@ -18,13 +18,10 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 export class FamilyMemberEntity extends AppBaseEntity {
   @Column({ type: "uuid", nullable: false, comment: "ユーザID(外部キー：auth.users.id)" })
   user_id!: string;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "名前" })
   name!: string;
-
   @Column({ type: "int", nullable: true, comment: "アイコンID(外部キー、NULL許可)" })
   icon_id?: number;
-
   @Column({ type: "date", nullable: false, comment: "誕生日(未来日不可)" })
   birthday!: Date;
 
@@ -36,9 +33,7 @@ export class FamilyMemberEntity extends AppBaseEntity {
    * シード用データ取得
    */
   protected static seedData(): FamilyMemberEntity[] {
-    return [
-      // シードデータがある場合はここに追加
-    ];
+    return [];
   }
 }
 
@@ -47,16 +42,13 @@ export class FamilyMemberEntity extends AppBaseEntity {
  */
 @Entity("family_members_history")
 export class FamilyMemberHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "uuid", comment: "ユーザID" })
+  @Column({ type: "uuid" })
   user_id!: string;
-
-  @Column({ type: "varchar", length: 100, comment: "名前" })
+  @Column({ type: "varchar", length: 100 })
   name!: string;
-
-  @Column({ type: "int", nullable: true, comment: "アイコンID" })
+  @Column({ type: "int", nullable: true })
   icon_id?: number;
-
-  @Column({ type: "date", comment: "誕生日" })
+  @Column({ type: "date" })
   birthday!: Date;
 
   /**

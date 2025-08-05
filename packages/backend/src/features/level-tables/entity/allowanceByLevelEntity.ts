@@ -7,6 +7,7 @@ import {
   Unique,
 } from "typeorm";
 import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { AllowanceTableEntity } from "@backend/features/allowance-table/entity/allowanceTableEntity";
 
 /**
  * レベル別お小遣いテーブルエンティティ
@@ -18,15 +19,12 @@ import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
 export class AllowanceByLevelEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "お小遣いテーブルID" })
   allowance_table_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "レベル" })
   level!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "お小遣い金額" })
   amount!: number;
-
-  // TODO: AllowanceTablesEntity作成後にリレーション追加
-  // @ManyToOne(() => AllowanceTableEntity, { nullable: false, onDelete: "CASCADE" })
-  // @JoinColumn({ name: "allowance_table_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_allowance_by_level_allowance_table_id" })
-  // allowance_table!: AllowanceTableEntity;
+  
+  @ManyToOne(() => AllowanceTableEntity, { nullable: false, onDelete: "CASCADE" })
+  @JoinColumn({ name: "allowance_table_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_allowance_by_level_allowance_table_id" })
+  allowance_table!: AllowanceTableEntity;
 }

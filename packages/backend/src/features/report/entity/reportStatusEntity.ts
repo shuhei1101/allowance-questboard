@@ -37,7 +37,6 @@ export class ReportStatusEntity extends AppBaseEntity {
 export class ReportStatusTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "レポートステータスID" })
   report_status_id!: number;
-
   @Column({ type: "varchar", length: 50, nullable: false, comment: "翻訳されたステータス名" })
   status!: string;
 
@@ -57,46 +56,14 @@ export class ReportStatusTranslationEntity extends BaseTranslationEntity {
    */
   protected static seedData(): ReportStatusTranslationEntity[] {
     return [
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 1,
-        language_id: 1,
-        status: "審査待ち",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 1,
-        language_id: 2,
-        status: "pending",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 2,
-        language_id: 1,
-        status: "承認済み",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 2,
-        language_id: 2,
-        status: "approved",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 3,
-        language_id: 1,
-        status: "却下",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 3,
-        language_id: 2,
-        status: "rejected",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 4,
-        language_id: 1,
-        status: "解決済み",
-      }),
-      Object.assign(new ReportStatusTranslationEntity(), {
-        report_status_id: 4,
-        language_id: 2,
-        status: "resolved",
-      }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 1, language_id: 1, status: "審査待ち" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 1, language_id: 2, status: "pending" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 2, language_id: 1, status: "承認済み" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 2, language_id: 2, status: "approved" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 3, language_id: 1, status: "却下" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 3, language_id: 2, status: "rejected" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 4, language_id: 1, status: "解決済み" }),
+      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 4, language_id: 2, status: "resolved" }),
     ];
   }
 }

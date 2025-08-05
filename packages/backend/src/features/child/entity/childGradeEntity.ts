@@ -17,17 +17,14 @@ import { EducationEntity } from "@backend/features/child/entity/educationEntity"
 export class ChildGradeEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID(外部キー)" })
   child_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "学歴ID" })
   education_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "学年" })
   grade!: number;
 
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "child_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_grades_child_id" })
   child!: ChildEntity;
-
   @ManyToOne(() => EducationEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "education_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_grades_education_id" })
   education!: EducationEntity;

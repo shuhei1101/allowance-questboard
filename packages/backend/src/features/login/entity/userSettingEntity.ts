@@ -16,7 +16,6 @@ import { LanguageEntity } from "@backend/features/language/entity/languageEntity
 export class UserSettingEntity extends AppBaseEntity {
   @PrimaryColumn({ type: "uuid", comment: "ユーザID" })
   user_id!: string;
-
   @Column({ type: "int", nullable: false, comment: "言語コード" })
   language_id!: number;
 
@@ -30,19 +29,15 @@ export class UserSettingEntity extends AppBaseEntity {
  */
 @Entity("user_settings_history")
 export class UserSettingHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "uuid", comment: "ユーザID" })
+  @Column({ type: "uuid" })
   user_id!: string;
-
-  @Column({ type: "int", nullable: false, comment: "言語コード" })
+  @Column({ type: "int", nullable: false })
   language_id!: number;
 
   /**
    * サブクラス固有の属性をセット
    */
-  protected static setSpecificAttrs(
-    instance: UserSettingHistoryEntity, 
-    source: UserSettingEntity
-  ): void {
+  protected static setSpecificAttrs(instance: UserSettingHistoryEntity, source: UserSettingEntity): void {
     instance.user_id = source.user_id;
     instance.language_id = source.language_id;
   }

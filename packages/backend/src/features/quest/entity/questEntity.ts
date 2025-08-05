@@ -23,36 +23,27 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 export class QuestEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "サブクラスタイプ" })
   subclass_type!: number;
-
   @Column({ type: "int", nullable: false, comment: "クエストカテゴリID" })
   category_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "アイコンID" })
   icon_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "対象年齢下限" })
   age_from!: number;
-
   @Column({ type: "int", nullable: false, comment: "対象年齢上限" })
   age_to!: number;
-
   @Column({ type: "boolean", nullable: false, default: false, comment: "季節限定フラグ" })
   has_published_month!: boolean;
-
   @Column({ type: "int", nullable: true, comment: "掲載開始月" })
   month_from?: number;
-
   @Column({ type: "int", nullable: true, comment: "掲載終了月" })
   month_to?: number;
 
   @ManyToOne(() => QuestTypeEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "subclass_type", referencedColumnName: "id", foreignKeyConstraintName: "fk_quests_subclass_type" })
   subclass_type_ref!: QuestTypeEntity;
-
   @ManyToOne(() => QuestCategoryEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "category_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quests_category_id" })
   category!: QuestCategoryEntity;
-
   @ManyToOne(() => IconEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "icon_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quests_icon_id" })
   icon!: IconEntity;
@@ -79,13 +70,10 @@ export class QuestEntity extends AppBaseEntity {
 export class QuestTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "クエストID" })
   quest_id!: number;
-
   @Column({ type: "varchar", length: 200, nullable: false, comment: "クエストタイトルの翻訳" })
   title!: string;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "クライアント名の翻訳" })
   client!: string;
-
   @Column({ type: "text", nullable: true, comment: "依頼詳細の翻訳" })
   request_detail?: string;
 
@@ -105,27 +93,9 @@ export class QuestTranslationEntity extends BaseTranslationEntity {
    */
   protected static _seedData(): QuestTranslationEntity[] {
     return [
-      Object.assign(new QuestTranslationEntity(), {
-        quest_id: 1,
-        language_id: 1,
-        title: "クエスト1",
-        client: "クライアントA",
-        request_detail: "依頼内容A",
-      }),
-      Object.assign(new QuestTranslationEntity(), {
-        quest_id: 2,
-        language_id: 1,
-        title: "クエスト2",
-        client: "クライアントB",
-        request_detail: "依頼内容B",
-      }),
-      Object.assign(new QuestTranslationEntity(), {
-        quest_id: 3,
-        language_id: 1,
-        title: "クエスト3",
-        client: "クライアントC",
-        request_detail: "依頼内容C",
-      }),
+      Object.assign(new QuestTranslationEntity(), { quest_id: 1, language_id: 1, title: "クエスト1", client: "クライアントA", request_detail: "依頼内容A" }),
+      Object.assign(new QuestTranslationEntity(), { quest_id: 2, language_id: 1, title: "クエスト2", client: "クライアントB", request_detail: "依頼内容B" }),
+      Object.assign(new QuestTranslationEntity(), { quest_id: 3, language_id: 1, title: "クエスト3", client: "クライアントC", request_detail: "依頼内容C" }),
     ];
   }
 }

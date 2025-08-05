@@ -15,7 +15,6 @@ import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntit
 export class QuestMemberStatusEntity extends AppBaseEntity {
   @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
   code!: string;
-
   @Column({ type: "varchar", length: 255, nullable: true, comment: "ステータスの説明" })
   description?: string;
 
@@ -40,7 +39,6 @@ export class QuestMemberStatusEntity extends AppBaseEntity {
 export class MemberQuestStatusTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "ステータスID(外部キー)" })
   child_quest_status_id!: number;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "ステータス名の翻訳" })
   name!: string;
 
@@ -64,46 +62,14 @@ export class MemberQuestStatusTranslationEntity extends BaseTranslationEntity {
    */
   protected static seedData(): MemberQuestStatusTranslationEntity[] {
     return [
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 1,
-        language_id: 1,
-        name: "未受注",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 1,
-        language_id: 2,
-        name: "Not Accepted",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 2,
-        language_id: 1,
-        name: "進行中",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 2,
-        language_id: 2,
-        name: "In Progress",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 3,
-        language_id: 1,
-        name: "報告中",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 3,
-        language_id: 2,
-        name: "Reporting",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 4,
-        language_id: 1,
-        name: "達成済み",
-      }),
-      Object.assign(new MemberQuestStatusTranslationEntity(), {
-        child_quest_status_id: 4,
-        language_id: 2,
-        name: "Completed",
-      }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 1, language_id: 1, name: "未受注" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 1, language_id: 2, name: "Not Accepted" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 2, language_id: 1, name: "進行中" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 2, language_id: 2, name: "In Progress" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 3, language_id: 1, name: "報告中" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 3, language_id: 2, name: "Reporting" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 4, language_id: 1, name: "達成済み" }),
+      Object.assign(new MemberQuestStatusTranslationEntity(), { child_quest_status_id: 4, language_id: 2, name: "Completed" }),
     ];
   }
 }

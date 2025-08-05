@@ -16,7 +16,6 @@ import { LanguageEntity } from "@backend/features/language/entity/languageEntity
 export class IconCategoryEntity extends AppBaseEntity {
   @Column({ type: "int", default: 0, comment: "表示順序" })
   sort_order!: number;
-
   @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
   is_active!: boolean;
 
@@ -25,18 +24,9 @@ export class IconCategoryEntity extends AppBaseEntity {
    */
   protected static seedData(): IconCategoryEntity[] {
     return [
-      Object.assign(new IconCategoryEntity(), {
-        sort_order: 1,
-        is_active: true,
-      }),
-      Object.assign(new IconCategoryEntity(), {
-        sort_order: 2,
-        is_active: true,
-      }),
-      Object.assign(new IconCategoryEntity(), {
-        sort_order: 3,
-        is_active: true,
-      }),
+      Object.assign(new IconCategoryEntity(), { sort_order: 1, is_active: true }),
+      Object.assign(new IconCategoryEntity(), { sort_order: 2, is_active: true }),
+      Object.assign(new IconCategoryEntity(), { sort_order: 3, is_active: true }),
     ];
   }
 }
@@ -49,7 +39,6 @@ export class IconCategoryEntity extends AppBaseEntity {
 export class IconCategoryTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "アイコンカテゴリID" })
   category_id!: number;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "カテゴリ名の翻訳" })
   name!: string;
 
@@ -69,36 +58,12 @@ export class IconCategoryTranslationEntity extends BaseTranslationEntity {
    */
   protected static seedData(): IconCategoryTranslationEntity[] {
     return [
-      Object.assign(new IconCategoryTranslationEntity(), {
-        category_id: 1,
-        language_id: 1,
-        name: "アクション",
-      }),
-      Object.assign(new IconCategoryTranslationEntity(), {
-        category_id: 1,
-        language_id: 2,
-        name: "Action",
-      }),
-      Object.assign(new IconCategoryTranslationEntity(), {
-        category_id: 2,
-        language_id: 1,
-        name: "ナビゲーション",
-      }),
-      Object.assign(new IconCategoryTranslationEntity(), {
-        category_id: 2,
-        language_id: 2,
-        name: "Navigation",
-      }),
-      Object.assign(new IconCategoryTranslationEntity(), {
-        category_id: 3,
-        language_id: 1,
-        name: "コミュニケーション",
-      }),
-      Object.assign(new IconCategoryTranslationEntity(), {
-        category_id: 3,
-        language_id: 2,
-        name: "Communication",
-      }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 1, name: "アクション" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 2, name: "Action" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 1, name: "ナビゲーション" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 2, name: "Navigation" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 1, name: "コミュニケーション" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 2, name: "Communication" }),
     ];
   }
 }

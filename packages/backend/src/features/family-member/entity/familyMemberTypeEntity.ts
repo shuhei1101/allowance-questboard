@@ -11,7 +11,6 @@ import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
 export class FamilyMemberTypeEntity extends AppBaseEntity {
   @Column({ type: "varchar", nullable: false, unique: true, comment: "family_memberテーブル名" })
   table_name!: string;
-
   @Column({ type: "text", nullable: false, comment: "タイプの説明" })
   description!: string;
 
@@ -20,14 +19,8 @@ export class FamilyMemberTypeEntity extends AppBaseEntity {
    */
   protected static seedData(): FamilyMemberTypeEntity[] {
     return [
-      Object.assign(new FamilyMemberTypeEntity(), {
-        table_name: "parents",
-        description: "親",
-      }),
-      Object.assign(new FamilyMemberTypeEntity(), {
-        table_name: "children", 
-        description: "子供",
-      }),
+      Object.assign(new FamilyMemberTypeEntity(), { table_name: "parents", description: "親" }),
+      Object.assign(new FamilyMemberTypeEntity(), { table_name: "children",  description: "子供" }),
     ];
   }
 }

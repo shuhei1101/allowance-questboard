@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
+import { AllowanceTableEntity } from "./allowanceTableEntity";
 
 /**
  * 年齢別お小遣いテーブルエンティティ
@@ -19,45 +20,25 @@ import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 export class AllowanceByAgeEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "お小遣いテーブルID" })
   allowance_table_id!: number;
-
   @Column({ type: "int", nullable: false, comment: "年齢" })
   age!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "お小遣い額" })
   amount!: number;
 
-  // TODO: AllowanceTablesEntity が作成されたら追加
-  // @ManyToOne(() => AllowanceTablesEntity, { nullable: false, onDelete: "CASCADE" })
-  // @JoinColumn({ name: "allowance_table_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_allowance_by_age_table_id" })
-  // allowance_tables!: AllowanceTablesEntity;
-
-  /**
-   * シード用データ取得
-   */
-  protected static seedData(): AllowanceByAgeEntity[] {
-    return [
-      // シードデータがある場合はここに追加
-    ];
-  }
+  @ManyToOne(() => AllowanceTableEntity, { nullable: false, onDelete: "CASCADE" })
+  @JoinColumn({ name: "allowance_table_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_allowance_by_age_table_id" })
+  allowance_table!: AllowanceTableEntity;
 }
 
-/**
- * 年齢別お小遣い履歴テーブルエンティティ
- */
 @Entity("allowance_by_age_history")
 export class AllowanceByAgeHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "int", comment: "お小遣いテーブルID" })
+  @Column({ type: "int" })
   allowance_table_id!: number;
-
-  @Column({ type: "int", comment: "年齢" })
+  @Column({ type: "int" })
   age!: number;
-
-  @Column({ type: "int", comment: "お小遣い額" })
+  @Column({ type: "int" })
   amount!: number;
 
-  /**
-   * サブクラス固有の属性をセット
-   */
   protected static setSpecificAttrs(instance: AllowanceByAgeHistoryEntity, source: AllowanceByAgeEntity): void {
     instance.allowance_table_id = source.allowance_table_id;
     instance.age = source.age;

@@ -17,13 +17,10 @@ import { ChildEntity } from "@backend/features/child/entity/childEntity";
 export class SavingsRecordEntity extends AppBaseEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID" })
   saved_by!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "貯金額" })
   amount!: number;
-
   @Column({ type: "int", nullable: false, default: 0, comment: "貯金残高" })
   balance!: number;
-
   @Column({ type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "貯金記録日時" })
   recorded_at!: Date;
 

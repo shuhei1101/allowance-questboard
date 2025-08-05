@@ -15,10 +15,8 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 export class FamilyEntity extends AppBaseEntity {
   @Column({ type: "varchar", length: 100, nullable: false, comment: "家名" })
   name!: string;
-
   @Column({ type: "int", nullable: true, comment: "アイコンID" })
   icon_id?: number;
-
   @Column({ type: "text", nullable: true, comment: "説明文" })
   introduction?: string;
 
@@ -31,11 +29,8 @@ export class FamilyEntity extends AppBaseEntity {
    */
   protected static seedData(): FamilyEntity[] {
     return [
-      Object.assign(new FamilyEntity(), {
-        name: "Template",
-        icon_id: 1,
-        introduction: "",
-      }),
+      // テンプレートクエスト用の家族データ
+      Object.assign(new FamilyEntity(), { name: "Template", icon_id: 1, introduction: "" }),
     ];
   }
 }
@@ -45,21 +40,14 @@ export class FamilyEntity extends AppBaseEntity {
  */
 @Entity("families_history")
 export class FamilyHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
+  @Column({ type: "int" })
   family_id!: number;
-
-  @Column({ type: "varchar", length: 100, nullable: false, comment: "家名" })
+  @Column({ type: "varchar" })
   name!: string;
-
-  @Column({ type: "int", nullable: true, comment: "アイコンID" })
+  @Column({ type: "int" })
   icon_id?: number;
-
-  @Column({ type: "text", nullable: true, comment: "説明文" })
+  @Column({ type: "text" })
   introduction?: string;
-
-  @ManyToOne(() => IconEntity, { nullable: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "icon_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_family_history_icon_id" })
-  icon?: IconEntity;
 
   /**
    * サブクラス固有の属性をセット

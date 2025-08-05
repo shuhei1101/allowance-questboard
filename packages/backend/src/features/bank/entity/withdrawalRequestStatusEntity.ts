@@ -37,16 +37,11 @@ export class WithdrawalRequestStatusEntity extends AppBaseEntity {
 export class WithdrawalRequestStatusTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "ステータスID" })
   withdrawal_request_status_id!: number;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "ステータス名の翻訳" })
   name!: string;
 
   @ManyToOne(() => WithdrawalRequestStatusEntity, { nullable: false, onDelete: "CASCADE" })
-  @JoinColumn({ 
-    name: "withdrawal_request_status_id", 
-    referencedColumnName: "id", 
-    foreignKeyConstraintName: "fk_withdrawal_request_status_translation_status_id" 
-  })
+  @JoinColumn({ name: "withdrawal_request_status_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_withdrawal_request_status_translation_status_id" })
   withdrawal_request_status!: WithdrawalRequestStatusEntity;
 
   /**
@@ -61,36 +56,12 @@ export class WithdrawalRequestStatusTranslationEntity extends BaseTranslationEnt
    */
   protected static seedData(): WithdrawalRequestStatusTranslationEntity[] {
     return [
-      Object.assign(new WithdrawalRequestStatusTranslationEntity(), {
-        withdrawal_request_status_id: 1,
-        language_id: 1,
-        name: "審査中",
-      }),
-      Object.assign(new WithdrawalRequestStatusTranslationEntity(), {
-        withdrawal_request_status_id: 1,
-        language_id: 2,
-        name: "Pending",
-      }),
-      Object.assign(new WithdrawalRequestStatusTranslationEntity(), {
-        withdrawal_request_status_id: 2,
-        language_id: 1,
-        name: "承認済",
-      }),
-      Object.assign(new WithdrawalRequestStatusTranslationEntity(), {
-        withdrawal_request_status_id: 2,
-        language_id: 2,
-        name: "Approved",
-      }),
-      Object.assign(new WithdrawalRequestStatusTranslationEntity(), {
-        withdrawal_request_status_id: 3,
-        language_id: 1,
-        name: "却下",
-      }),
-      Object.assign(new WithdrawalRequestStatusTranslationEntity(), {
-        withdrawal_request_status_id: 3,
-        language_id: 2,
-        name: "Rejected",
-      }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 1, language_id: 1, name: "審査中", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 1, language_id: 2, name: "Pending", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 2, language_id: 1, name: "承認済", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 2, language_id: 2, name: "Approved", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 3, language_id: 1, name: "却下", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 3, language_id: 2, name: "Rejected", }),
     ];
   }
 }

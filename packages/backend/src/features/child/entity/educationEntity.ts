@@ -38,7 +38,6 @@ export class EducationEntity extends AppBaseEntity {
 export class EducationTranslationEntity extends BaseTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "学歴ID(外部キー)" })
   education_id!: number;
-
   @Column({ type: "varchar", length: 100, nullable: false, comment: "学歴名の翻訳" })
   name!: string;
 
@@ -58,56 +57,16 @@ export class EducationTranslationEntity extends BaseTranslationEntity {
    */
   protected static seedData(): EducationTranslationEntity[] {
     return [
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 1,
-        language_id: 1,
-        name: "小学校",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 1,
-        language_id: 2,
-        name: "Elementary School",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 2,
-        language_id: 1,
-        name: "中学校",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 2,
-        language_id: 2,
-        name: "Junior High School",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 3,
-        language_id: 1,
-        name: "高等学校",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 3,
-        language_id: 2,
-        name: "High School",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 4,
-        language_id: 1,
-        name: "大学",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 4,
-        language_id: 2,
-        name: "University",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 5,
-        language_id: 1,
-        name: "大学院",
-      }),
-      Object.assign(new EducationTranslationEntity(), {
-        education_id: 5,
-        language_id: 2,
-        name: "Graduate School",
-      }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 1, language_id: 1, name: "小学校" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 1, language_id: 2, name: "Elementary School" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 2, language_id: 1, name: "中学校" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 2, language_id: 2, name: "Junior High School" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 3, language_id: 1, name: "高等学校" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 3, language_id: 2, name: "High School" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 4, language_id: 1, name: "大学" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 4, language_id: 2, name: "University" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 5, language_id: 1, name: "大学院" }),
+      Object.assign(new EducationTranslationEntity(), { education_id: 5, language_id: 2, name: "Graduate School" }),
     ];
   }
 }
