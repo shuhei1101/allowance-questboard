@@ -42,7 +42,7 @@ export const loginRouter = t.router({
    * 認証情報を返します。
    */
   login: authenticatedProcedure
-    .mutation(async ({ ctx }) => {
+    .query(async ({ ctx }) => {
       try {
         const queryResult = await loginQuery({ 
           session: ctx.session,

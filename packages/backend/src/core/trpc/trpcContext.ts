@@ -33,8 +33,12 @@ export const createContext = async ({ req }: CreateFastifyContextOptions): Promi
   const token = authorization.replace('Bearer ', '');
   
   try {
-    // JWTトークンをデコード（実際のJWT_SECRETに置き換えてください）
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
+    if (!process.env.SUPABASE_JWT_SECRET) {
+      throw new Error("SUPABASE_JWT_SECRET is not defined");
+}
+
+    // JWTトークンをデコード
+    const decoded = jwt.verify(token, process.env.SUPABASE_JWT_SECRET) as any;
     const userId = decoded.sub || decoded.userId;
     
     return {
@@ -70,3 +74,8 @@ export const authenticatedProcedure = t.procedure.use(async ({ ctx, next }) => {
     },
   });
 });
+
+/**
+ * 認証が不要なプロシージャ
+ */
+export const publicProcedure = t.procedure;
