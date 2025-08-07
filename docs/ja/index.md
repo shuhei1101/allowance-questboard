@@ -5,9 +5,12 @@
   - どれを参考にする予定か、実装前に必ず教えてください
 - 設計書を確認して、「さぁ実装」とする前に**一度似たような実装を確認**すること
 - 同じディレクトリに`{モジュール名}.md`がある場合は読むこと
+<<<<<<< HEAD
 - クラスを作成、更新した場合は、`mermaid`でクラス図を作成すること
   - `{モジュール名}.md`を作成
   - [クラス図更新のルール](old/クラス図更新.md)
+=======
+>>>>>>> origin/HEAD
 - コーディング規約を確認すること
   - [コーディング規約](old/コーディング規約.md)
 - フォルダ構成や書き方がドキュメントと異なる場合は、修正するかユーザに確認すること
@@ -46,14 +49,17 @@
 classDiagram
 direction LR
 
+class 構造体
+
 class State {
-  <<Freesed Riverpod>>
-  xxx: Stateオブジェクト
-  yyy: Stateオブジェクト
+  <<Zustandストア>>
+  xxx: 構造体x
+  yyy: 構造体y
 }
 class ページ
 class ユースケース {
-  excute(コマンド): リザルト
+  ユースケースA(params): result
+  ユースケースB(params): result
 }
 
 class Supabaseクライアント {
