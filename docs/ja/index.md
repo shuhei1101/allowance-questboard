@@ -43,14 +43,17 @@
 classDiagram
 direction LR
 
+class 構造体
+
 class State {
-  <<Freesed Riverpod>>
-  xxx: Stateオブジェクト
-  yyy: Stateオブジェクト
+  <<Zustandストア>>
+  xxx: 構造体x
+  yyy: 構造体y
 }
 class ページ
 class ユースケース {
-  excute(コマンド): リザルト
+  ユースケースA(params): result
+  ユースケースB(params): result
 }
 
 class Supabaseクライアント {
