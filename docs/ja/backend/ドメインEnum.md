@@ -3,6 +3,7 @@
 
 ## 概要
 - Enumの値を定義するためのモジュール
+- フロントエンドとバックエンドでEnumの値を共有するために使用
 
 ## オブジェクト図
 ### 翻訳なし
@@ -20,8 +21,6 @@ classDiagram
     Enum具象クラス --> EnumValue具象クラス: Enumの値として定義
     
     EnumMixin --> EnumValueProtocol: 使用
-
-
 ```
 ### 翻訳あり
 
@@ -49,16 +48,17 @@ classDiagram
 - Enumの値はこのクラスを継承して定義する
 
 - 例: 
-```python
-class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: ignore
-    """言語の種類"""
+```typescript
+export class LanguageType extends BaseEnum<LanguageId> {
+  /** 言語の種類 */
 
-    JAPANESE = LanguageTypeValue(LanguageId(1))  # ←LanguageTypeValueクラスが`BaseEnumValue`を継承
-    ENGLISH = LanguageTypeValue(LanguageId(2))
+  static readonly JAPANESE = new LanguageTypeValue(new LanguageId(1));  // ←LanguageTypeValueクラスが`BaseEnumValue`を継承
+  static readonly ENGLISH = new LanguageTypeValue(new LanguageId(2));
+}
 ```
 
 ### 配置場所
-- `/core/domain/enum/base_enum_value.py`
+- `@shared/core/enum/baseEnumValue.ts`
 
 ### 命名規則
 - `BaseEnumValue`を継承したクラス名は、`<Enumの値>Value`とする
@@ -70,7 +70,7 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
 - `BaseEnumValue`を継承したクラスはこのインターフェースを実装する必要がある
 
 ### 配置場所
-- `/core/domain/enum/enum_value_protocol.py`
+- `@shared/core/enum/enumValueProtocol.ts`
 
 ## `EnumValue具象クラス`
 ### 概要
@@ -78,7 +78,7 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
 - `EnumValueProtocol`を実装することで、Enumの値としての機能を持つ
 
 ### 配置場所
-- `{関心事名}/domain/value_object/{Enum名}_value.py`
+- `@shared/features/{関心事名}/value-object/{Enum名}Value.ts`
 
 ### 命名規則
 - `BaseEnumValue`を継承したクラス名は、`<Enumの値>Value`とする
@@ -90,7 +90,7 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
 - Enumの値はこのクラスを継承して定義する
 
 ### 配置場所
-- `/core/domain/enum/base_enum.py`
+- `@shared/core/enum/baseEnum.ts`
 
 ## `EnumMixin`クラス
 ### 概要
@@ -99,7 +99,7 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
 - Enumの値を定義する際に、`EnumValueProtocol`を実装
 
 ### 配置場所
-- `/core/domain/enum/enum_mixin.py`
+- `@shared/core/enum/enumMixin.ts`
 
 ## `Enum具象クラス`
 ### 概要
@@ -107,8 +107,8 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
 - `EnumMixin`を使用して、Enumの値としての機能を持つ
 
 ### 配置場所
-- `{関心事名}/domain/enum/{Enum名}.py`
-  - 例: `language/domain/enum/language_type.py`
+- `@shared/features/{関心事名}/domain/{Enum名}.ts`
+  - 例: `@shared/features/language/domain/languageType.ts`
 
 ### 命名規則
 - Entity名に`Status`や`Category`などの接尾語がつく場合は、Enum名もそれに合わせる
@@ -125,7 +125,7 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
   - Entity側に`BaseTranslationEntity`を継承したエンティティが必要
 
 ### 配置場所
-- `/core/domain/enum/translation_enum_value_protocol.py`
+- `@shared/core/enum/translationEnumValueProtocol.ts`
 
 ## `翻訳ありEnumValue具象クラス`
 ### 概要
@@ -142,7 +142,7 @@ class LanguageType(BaseEnum[LanguageId], EnumMixin[LanguagesEntity]):  # type: i
 - 翻訳対応のEnumの値を定義するためのミックスインクラス
 
 ### 配置場所
-- `/core/domain/enum/translation_enum_mixin.py`
+- `@shared/core/enum/translationEnumMixin.ts`
 
 ## `翻訳ありEnum具象クラス`
 ### 概要

@@ -16,13 +16,13 @@ classDiagram
 
     class BaseDao {
       session: EntityManager
-      entityClass(): new () => TEntity*
+      entityClass(): new () => EntityType*
 
       getVersion(id: number): Promise<number>
-      fetchAll() -> Promise<TEntity[]>
-      fetchById(id: number) -> Promise<TEntity | null>
-      insert(entity: TEntity) -> Promise<number>
-      update(entity: TEntity) -> Promise<void>
+      fetchAll() -> Promise<EntityType[]>
+      fetchById(id: number) -> Promise<EntityType | null>
+      insert(entity: EntityType) -> Promise<number>
+      update(entity: EntityType) -> Promise<void>
       delete(id: number) -> Promise<void>
     }
 

@@ -9,8 +9,8 @@ import { BaseId } from '../../../../shared/core/value-object/base_id';
  */
 export abstract class BaseRepository<
   IdType extends BaseId, 
-  TModel extends BaseModel<IdType, TEntity>,
-  TEntity extends AppBaseEntity
+  ModelType extends BaseModel<IdType, EntityType>,
+  EntityType extends AppBaseEntity
 > {
   /**
    * 現在のエンティティが最新バージョンかどうかを確認する
@@ -21,8 +21,8 @@ export abstract class BaseRepository<
    * @throws エラー エンティティにIDが設定されていない場合、またはDBに該当エンティティが存在しない場合
    */
   protected async isLatestVersion(
-    model: TModel, 
-    dao: BaseDao<TEntity>
+    model: ModelType, 
+    dao: BaseDao<EntityType>
   ): Promise<boolean> {
     const modelId = model.id.toNumber();
 

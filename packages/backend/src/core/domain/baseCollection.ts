@@ -4,24 +4,24 @@ import { BaseId } from '../../../../shared/core/value-object/base_id';
 /**
  * コレクションアイテムのプロトコル（インターフェース）
  */
-export interface CollectionItemProtocol<TId extends BaseId> {
+export interface CollectionItemProtocol<IdType extends BaseId> {
   /**
    * アイテムのIDを返す
    */
-  readonly id: TId;
+  readonly id: IdType;
 }
 
 /**
  * ドメインモデルのコレクションを表現する基底抽象クラス（ファーストコレクション）
  */
 export abstract class BaseCollection<
-  TItem extends BaseModel<TId, any> & CollectionItemProtocol<TId>,
-  TId extends BaseId
+  ItemType extends BaseModel<IdType, any> & CollectionItemProtocol<IdType>,
+  IdType extends BaseId
 > {
-  protected _items: TItem[];
-  protected _itemByIds: Map<string, TItem> = new Map();
+  protected _items: ItemType[];
+  protected _itemByIds: Map<string, ItemType> = new Map();
 
-  constructor(items: TItem[]) {
+  constructor(items: ItemType[]) {
     this._items = items;
     this.updateIndex();
   }
@@ -51,7 +51,7 @@ export abstract class BaseCollection<
   /**
    * アイテムを追加
    */
-  append(item: TItem): void {
+  append(item: ItemType): void {
     if (!item || typeof item !== 'object') {
       throw new TypeError(`Expected item of valid type, got ${typeof item}`);
     }
@@ -62,7 +62,7 @@ export abstract class BaseCollection<
   /**
    * IDでアイテムを取得
    */
-  get(itemId: TId): TItem | null {
+  get(itemId: IdType): ItemType | null {
     const key = itemId.hash().toString();
     return this._itemByIds.get(key) || null;
   }
@@ -77,7 +77,7 @@ export abstract class BaseCollection<
   /**
    * すべてのアイテムを取得（読み取り専用）
    */
-  get items(): readonly TItem[] {
+  get items(): readonly ItemType[] {
     return [...this._items];
   }
 

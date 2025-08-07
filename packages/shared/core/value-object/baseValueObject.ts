@@ -4,12 +4,12 @@ import { ValueValidator } from '../validator/valueValidator';
 /**
  * 値オブジェクトの基底クラス
  */
-export abstract class BaseValueObject<TValue> {
-  protected readonly _value: TValue;
-  protected _validator: ValueValidator<TValue> | null = null;
+export abstract class BaseValueObject<ValueType> {
+  protected readonly _value: ValueType;
+  protected _validator: ValueValidator<ValueType> | null = null;
 
   constructor(params: {
-    value: TValue;
+    value: ValueType;
   }) {
     this._value = params.value;
     // 初期化後にバリデーターを作成してバリデーション実行
@@ -40,14 +40,14 @@ export abstract class BaseValueObject<TValue> {
   /**
    * 値を取得
    */
-  get value(): TValue {
+  get value(): ValueType {
     return this._value;
   }
 
   /**
    * バリデーターを取得
    */
-  protected get validator(): ValueValidator<TValue> {
+  protected get validator(): ValueValidator<ValueType> {
     if (!this._validator) {
       throw new Error('Validator not initialized');
     }

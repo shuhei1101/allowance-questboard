@@ -5,9 +5,9 @@ import { AppBaseEntity } from '../entity/appBaseEntity';
  * データアクセスオブジェクトの基底クラス（排他制御対応）
  * PythonのBaseDAOクラスのTypeScript版
  */
-export abstract class BaseDao<TEntity extends AppBaseEntity> {
+export abstract class BaseDao<EntityType extends AppBaseEntity> {
   protected session: EntityManager;
-  private _repository: Repository<TEntity> | null = null;
+  private _repository: Repository<EntityType> | null = null;
 
   constructor(session: EntityManager) {
     this.session = session;
@@ -16,12 +16,12 @@ export abstract class BaseDao<TEntity extends AppBaseEntity> {
   /**
    * エンティティクラスを返す（サブクラスで実装必須）
    */
-  protected abstract get entityClass(): new () => TEntity;
+  protected abstract get entityClass(): new () => EntityType;
 
   /**
    * Repositoryを取得する（遅延初期化）
    */
-  protected get repository(): Repository<TEntity> {
+  protected get repository(): Repository<EntityType> {
     if (!this._repository) {
       this._repository = this.session.getRepository(this.entityClass);
     }
@@ -46,7 +46,7 @@ export abstract class BaseDao<TEntity extends AppBaseEntity> {
    * 全てのエンティティを取得する
    * @returns エンティティのリスト
    */
-  async fetchAll(): Promise<TEntity[]> {
+  async fetchAll(): Promise<EntityType[]> {
     return await this.repository.find();
   }
 
@@ -55,7 +55,7 @@ export abstract class BaseDao<TEntity extends AppBaseEntity> {
    * @param id エンティティのID
    * @returns エンティティオブジェクト（見つからない場合はnull）
    */
-  async fetchById(id: number): Promise<TEntity | null> {
+  async fetchById(id: number): Promise<EntityType | null> {
     return await this.repository.findOne({ 
       where: { id } as any 
     });
@@ -66,7 +66,7 @@ export abstract class BaseDao<TEntity extends AppBaseEntity> {
    * @param entity 作成するエンティティオブジェクト
    * @returns 作成されたエンティティのID
    */
-  async insert(entity: TEntity): Promise<number> {
+  async insert(entity: EntityType): Promise<number> {
     const result = await this.repository.save(entity);
     return result.id;
   }
@@ -75,7 +75,7 @@ export abstract class BaseDao<TEntity extends AppBaseEntity> {
    * エンティティを更新する
    * @param entity 更新するエンティティ
    */
-  async update(entity: TEntity): Promise<void> {
+  async update(entity: EntityType): Promise<void> {
     await this.repository.save(entity);
   }
 

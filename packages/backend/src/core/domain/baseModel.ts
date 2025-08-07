@@ -9,8 +9,8 @@ import { ScreenId } from '../../../../shared/features/shared/screenId';
  * ドメインモデルの基底抽象クラス
  * PythonのBaseModelクラスのTypeScript版
  */
-export abstract class BaseModel<TId extends BaseId, TEntity extends AppBaseEntity> {
-  protected _id: TId;
+export abstract class BaseModel<IdType extends BaseId, EntityType extends AppBaseEntity> {
+  protected _id: IdType;
   protected _version: Version;
   protected _createdAt?: Date;
   protected _createdBy?: FamilyMemberId;
@@ -22,7 +22,7 @@ export abstract class BaseModel<TId extends BaseId, TEntity extends AppBaseEntit
   protected _relationValidator: RelationValidator;
 
   constructor(
-    id: TId,
+    id: IdType,
     version: Version,
     createdAt?: Date,
     createdBy?: FamilyMemberId,
@@ -51,7 +51,7 @@ export abstract class BaseModel<TId extends BaseId, TEntity extends AppBaseEntit
   /**
    * IDを取得する
    */
-  get id(): TId {
+  get id(): IdType {
     return this._id;
   }
 
@@ -127,5 +127,5 @@ export abstract class BaseModel<TId extends BaseId, TEntity extends AppBaseEntit
   /**
    * ドメインモデルをエンティティに変換する（サブクラスで実装）
    */
-  abstract toEntity(): TEntity;
+  abstract toEntity(): EntityType;
 }
