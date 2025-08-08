@@ -7,7 +7,7 @@ import { LanguageEntity } from '@backend/features/language/entity/languageEntity
 
 /**
  * 言語タイプの値オブジェクト集約
- * PythonのLanguageTypeValueクラスのTypeScript版
+ * PythonのLanguageTypeValueクラスのTypeScript
  */
 export class LanguageTypeValue extends BaseEnumValue<LanguageId> implements EnumValueProtocol<LanguageId, LanguageEntity> {
   private _code: LanguageCode;
