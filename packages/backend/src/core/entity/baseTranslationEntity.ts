@@ -5,15 +5,14 @@ import {
   PrimaryGeneratedColumn,
   DataSource,
 } from "typeorm";
-import { AppBaseEntity } from "./appBaseEntity";
+import { AppBaseEntity, BaseEntityProtocol } from "./appBaseEntity";
 import { BaseTransactionEntity } from "./baseTransactionEntity";
 import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
-import { seed } from "./seedMixin";
 
 /**
  * 翻訳可能エンティティのインターフェース
  */
-export interface TranslationableEntity {
+export interface TranslationEntityProtocol extends BaseEntityProtocol {
   language_id: number;
   language: LanguageEntity;
   get sourceId(): number;
@@ -23,7 +22,7 @@ export interface TranslationableEntity {
  * マスタテーブル翻訳用の基底クラス
  * IDは自動採番、seedDataで管理
  */
-export abstract class BaseMasterTranslationEntity extends AppBaseEntity implements TranslationableEntity {
+export abstract class BaseMasterTranslationEntity extends AppBaseEntity implements TranslationEntityProtocol {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -40,21 +39,12 @@ export abstract class BaseMasterTranslationEntity extends AppBaseEntity implemen
    */
   abstract get sourceId(): number;
 
-  // シード用データ取得（抽象）
-  protected static seedData(): BaseMasterTranslationEntity[] {
-    throw new Error("seedData must be implemented in subclass");
-  }
-
-  // シード処理（ヘルパー関数を使用）
-  static async seed(dataSource: DataSource): Promise<void> {
-    await seed(this as any, dataSource);
-  }
 }
 
 /**
  * トランザクションテーブル翻訳用の基底クラス
  */
-export abstract class BaseTransactionTranslationEntity extends BaseTransactionEntity implements TranslationableEntity {
+export abstract class BaseTransactionTranslationEntity extends BaseTransactionEntity implements TranslationEntityProtocol {
   @Column({ type: "int", nullable: false, comment: "言語ID" })
   language_id!: number;
 

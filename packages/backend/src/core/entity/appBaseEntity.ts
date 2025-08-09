@@ -1,17 +1,24 @@
 import {
   BaseEntity,
+  Column,
   DataSource,
   Repository,
 } from "typeorm";
+
+export interface BaseEntityProtocol {
+  id: number;
+  version: number;
+}
 
 /**
  * アプリケーション全体の基底エンティティクラス
  * 共通的なメソッドのみを提供
  */
-export abstract class AppBaseEntity extends BaseEntity {
+export abstract class AppBaseEntity extends BaseEntity implements BaseEntityProtocol {
   // 抽象的なIDプロパティ（継承先で具体的に実装）
   abstract id: number;
-
+  @Column({ type: "int", default: 1, nullable: false, comment: "バージョン" })
+  version!: number;
   // ドメインモデルからエンティティ生成（抽象）
   static fromModel(model: any): BaseEntity {
     throw new Error("fromModel must be implemented in subclass");

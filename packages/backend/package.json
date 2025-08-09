@@ -6,7 +6,9 @@
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "dev": "nodemon --exec \"ts-node -r tsconfig-paths/register src/main.ts\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -31,8 +33,11 @@
   },
   "devDependencies": {
     "@types/ioredis": "^5.0.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.1.0",
     "drizzle-kit": "^0.31.4",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.2"

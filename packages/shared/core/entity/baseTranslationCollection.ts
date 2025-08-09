@@ -1,14 +1,14 @@
-import { BaseTranslationEntity } from '../../../backend/src/core/entity/baseTranslationEntity';
+import { TranslationEntityProtocol } from '../../../backend/src/core/entity/baseTranslationEntity';
 
 /**
  * 翻訳コレクションの基底クラス
  * PythonのBaseTranslationCollectionクラスのTypeScript版
  */
-export class BaseTranslationCollection<TranslationType extends BaseTranslationEntity> {
-  private _items: TranslationType[];
-  private _itemsBySourceId: { [sourceId: number]: { [languageId: number]: TranslationType } } = {};
+export class BaseTranslationCollection<TEntity extends TranslationEntityProtocol> {
+  private _items: TEntity[];
+  private _itemsBySourceId: { [sourceId: number]: { [languageId: number]: TEntity } } = {};
 
-  constructor(items: TranslationType[]) {
+  constructor(items: TEntity[]) {
     this._items = items;
     this.updateItemsBySourceId();
   }
@@ -32,7 +32,7 @@ export class BaseTranslationCollection<TranslationType extends BaseTranslationEn
    * @param languageId 言語ID
    * @returns 該当する翻訳エンティティまたはnull
    */
-  get(sourceId: number, languageId: number): TranslationType | null {
+  get(sourceId: number, languageId: number): TEntity | null {
     if (typeof sourceId !== 'number') {
       throw new TypeError(`source_idはnumberである必要があります。実際: ${typeof sourceId}`);
     }
@@ -53,7 +53,7 @@ export class BaseTranslationCollection<TranslationType extends BaseTranslationEn
    * @param sourceId 翻訳元レコードのID
    * @returns 言語IDをキーとした翻訳エンティティの辞書
    */
-  getBySourceId(sourceId: number): { [languageId: number]: TranslationType } {
+  getBySourceId(sourceId: number): { [languageId: number]: TEntity } {
     if (typeof sourceId !== 'number') {
       throw new TypeError(`source_idはnumberである必要があります。実際: ${typeof sourceId}`);
     }
@@ -71,7 +71,7 @@ export class BaseTranslationCollection<TranslationType extends BaseTranslationEn
    * 全てのアイテムを取得
    * @returns 翻訳エンティティの配列
    */
-  get items(): TranslationType[] {
+  get items(): TEntity[] {
     return [...this._items]; // 元の配列を保護するためにコピーを返す
   }
 

@@ -7,9 +7,9 @@ import {
   Check,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTransactionTranslationEntity";
 import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
 import { QuestEntity } from "./questEntity";
+import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * クエスト詳細(レベル別)エンティティ

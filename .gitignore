@@ -1,0 +1,48 @@
+# 基本のNodeモジュール
+node_modules/
+
+# ビルド生成物（TSの出力先とか）
+dist/
+build/
+
+# 環境変数ファイル（超重要🔥）
+.env
+.env.*  # .env.devとかも含めて全部無視！
+
+# キャッシュ系
+.cache/
+.next/
+out/
+tmp/
+temp/
+
+# ログ系
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OSごとのゴミファイル
+.DS_Store
+Thumbs.db
+
+# IDE関連（VSCodeとか）
+.vscode/
+.idea/
+
+# TypeScriptのビルド成果物
+*.tsbuildinfo
+
+# テストのカバレッジ結果
+coverage/
+
+# PrismaのDBファイル（SQLiteなら）
+*.db
+*.sqlite
+*.sqlite3
+
+# Supabase（CLI使ってるなら）
+supabase/.output/
+
+/../generated/prisma

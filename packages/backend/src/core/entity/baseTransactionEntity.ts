@@ -13,8 +13,6 @@ import { AppBaseEntity } from "./appBaseEntity";
 export abstract class BaseTransactionEntity extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column({ type: "int", default: 1, nullable: false, comment: "バージョン" })
-  version!: number;
   @CreateDateColumn({ type: "timestamp with time zone", comment: "作成日時" })
   created_at!: Date;
   @Column({ type: "int", nullable: true, comment: "作成者ID" })

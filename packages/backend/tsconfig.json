@@ -9,6 +9,8 @@
   },
   "include": [
     "src/**/*",
+    "__tests__/**/*",
     "../shared/**/*"
-  ]
+  ],
+  "types": ["jest", "node"]
 }
