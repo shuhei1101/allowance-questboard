@@ -1,34 +1,27 @@
 import {
   Column,
 } from "typeorm";
-import { AppBaseEntity } from "./appBaseEntity";
+import { BaseTransactionEntity } from "./baseTransactionEntity";
 
 /**
  * 履歴テーブル用の基底クラス
  * @template T 元のエンティティの型
  */
-export abstract class BaseHistoryEntity extends AppBaseEntity {
+export abstract class BaseHistoryEntity extends BaseTransactionEntity {
   @Column({ type: "int", comment: "元のレコードID" })
   source_id!: number;
-
   @Column({ type: "int", comment: "元のレコードのバージョン" })
   source_version!: number;
-
   @Column({ type: "timestamp with time zone", comment: "元レコードの作成日時" })
   source_created_at!: Date;
-
   @Column({ type: "int", nullable: true, comment: "元レコードの作成者ID" })
   source_created_by?: number;
-
   @Column({ type: "int", nullable: true, comment: "元レコードの作成元スクリーンID" })
   source_created_from?: number;
-
   @Column({ type: "timestamp with time zone", comment: "元レコードの更新日時" })
   source_updated_at!: Date;
-
   @Column({ type: "int", nullable: true, comment: "元レコードの更新者ID" })
   source_updated_by?: number;
-
   @Column({ type: "int", nullable: true, comment: "元レコードの更新元スクリーンID" })
   source_updated_from?: number;
 
@@ -37,7 +30,7 @@ export abstract class BaseHistoryEntity extends AppBaseEntity {
    * @param source 元のエンティティ
    * @returns 履歴エンティティのインスタンス
    */
-  static fromSource<T extends AppBaseEntity>(source: T): BaseHistoryEntity {
+  static fromSource<T extends BaseTransactionEntity>(source: T): BaseHistoryEntity {
     // TypeScriptではnewを使ってインスタンス生成
     const instance = new (this as any)();
     

@@ -6,9 +6,9 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 import { CommentableTypeEntity } from "./commentableTypeEntity";
 
@@ -17,7 +17,7 @@ import { CommentableTypeEntity } from "./commentableTypeEntity";
  */
 @Entity("comments")
 @Check("chk_comments_body_not_empty", "LENGTH(body) > 0")
-export class CommentEntity extends AppBaseEntity {
+export class CommentEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "コメント投稿者ID" })
   commented_by!: number;
   @Column({ type: "int", nullable: false, comment: "コメント対象タイプID" })
@@ -81,7 +81,7 @@ export class CommentHistoryEntity extends BaseHistoryEntity {
 @Entity("comments_translation")
 @Check("chk_comments_translation_body_not_empty", "LENGTH(body) > 0")
 @Unique("uq_comments_translation_comment_language", ["comment_id", "language_id"])
-export class CommentTranslationEntity extends BaseTranslationEntity {
+export class CommentTranslationEntity extends BaseTransactionTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "コメントID" })
   comment_id!: number;
   @Column({ type: "text", nullable: false, comment: "コメント本文の翻訳" })

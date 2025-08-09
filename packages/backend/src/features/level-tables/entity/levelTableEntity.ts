@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { LevelTableTypeEntity } from "./levelTableTypeEntity";
 
 /**
@@ -13,7 +13,7 @@ import { LevelTableTypeEntity } from "./levelTableTypeEntity";
  */
 @Entity("level_tables")
 @Check("chk_level_tables_subclass_type_positive", "subclass_type >= 0")
-export class LevelTableEntity extends AppBaseEntity {
+export class LevelTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "サブクラスタイプ" })
   subclass_type!: number;
 

@@ -4,15 +4,18 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * 引き落とし申請ステータスエンティティ
  */
 @Entity("withdrawal_request_statuses")
-export class WithdrawalRequestStatusEntity extends AppBaseEntity {
+export class WithdrawalRequestStatusEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
   code!: string;
 
@@ -21,10 +24,10 @@ export class WithdrawalRequestStatusEntity extends AppBaseEntity {
    */
   protected static seedData(): WithdrawalRequestStatusEntity[] {
     return [
-      Object.assign(new WithdrawalRequestStatusEntity(), { code: "pending" }),
-      Object.assign(new WithdrawalRequestStatusEntity(), { code: "approved" }),
-      Object.assign(new WithdrawalRequestStatusEntity(), { code: "rejected" }),
-      Object.assign(new WithdrawalRequestStatusEntity(), { code: "completed" }),
+      Object.assign(new WithdrawalRequestStatusEntity(), { id: 1, code: "pending" }),
+      Object.assign(new WithdrawalRequestStatusEntity(), { id: 2, code: "approved" }),
+      Object.assign(new WithdrawalRequestStatusEntity(), { id: 3, code: "rejected" }),
+      Object.assign(new WithdrawalRequestStatusEntity(), { id: 4, code: "completed" }),
     ];
   }
 }
@@ -34,7 +37,7 @@ export class WithdrawalRequestStatusEntity extends AppBaseEntity {
  */
 @Entity("withdrawal_request_statuses_translation")
 @Unique("uq_withdrawal_request_statuses_translation_status_language", ["withdrawal_request_status_id", "language_id"])
-export class WithdrawalRequestStatusTranslationEntity extends BaseTranslationEntity {
+export class WithdrawalRequestStatusTranslationEntity extends BaseMasterTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "ステータスID" })
   withdrawal_request_status_id!: number;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "ステータス名の翻訳" })
@@ -62,6 +65,8 @@ export class WithdrawalRequestStatusTranslationEntity extends BaseTranslationEnt
       Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 2, language_id: 2, name: "Approved", }),
       Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 3, language_id: 1, name: "却下", }),
       Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 3, language_id: 2, name: "Rejected", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 4, language_id: 1, name: "完了", }),
+      Object.assign(new WithdrawalRequestStatusTranslationEntity(), { withdrawal_request_status_id: 4, language_id: 2, name: "Completed", }),
     ];
   }
 }

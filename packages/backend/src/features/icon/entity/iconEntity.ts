@@ -3,15 +3,18 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 import { IconCategoryEntity } from "@backend/features/icon-category/entity/iconCategoryEntity";
 
 /**
  * アイコンエンティティ
  */
 @Entity("icons")
-export class IconEntity extends AppBaseEntity {
+export class IconEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", nullable: true, comment: "アイコンカテゴリID" })
   category_id?: number;
   @Column({ type: "int", default: 0, comment: "表示順序" })
@@ -28,9 +31,9 @@ export class IconEntity extends AppBaseEntity {
    */
   protected static seedData(): IconEntity[] {
     return [
-      Object.assign(new IconEntity(), { category_id: 1, sort_order: 10, is_active: true }),
-      Object.assign(new IconEntity(), { category_id: 2, sort_order: 10, is_active: true }),
-      Object.assign(new IconEntity(), { category_id: 3, sort_order: 10, is_active: true }),
+      Object.assign(new IconEntity(), { id: 1, category_id: 1, sort_order: 10, is_active: true }),
+      Object.assign(new IconEntity(), { id: 2, category_id: 2, sort_order: 10, is_active: true }),
+      Object.assign(new IconEntity(), { id: 3, category_id: 3, sort_order: 10, is_active: true }),
     ];
   }
 }

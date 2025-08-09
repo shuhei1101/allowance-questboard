@@ -6,7 +6,7 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "../../../core/entity/baseHistoryEntity";
 import { ChildEntity } from "../../child/entity/childEntity";
 import { FamilyEntity } from "../../family/entity/familyEntity";
@@ -19,7 +19,7 @@ import { QuestRequestStatusEntity } from "./questRequestStatusEntity";
 @Entity("quest_requests")
 @Check("chk_quest_requests_title_not_empty", "length(title) > 0")
 @Check("chk_quest_requests_description_not_empty", "length(description) > 0")
-export class QuestRequestsEntity extends AppBaseEntity {
+export class QuestRequestsEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "リクエスト者の子供ID" })
   requested_by!: number;
   @Column({ type: "int", nullable: false, comment: "家族ID" })

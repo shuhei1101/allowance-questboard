@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { AllowanceableTypeEntity } from "./allowanceableTypeEntity";
 
@@ -14,7 +14,7 @@ import { AllowanceableTypeEntity } from "./allowanceableTypeEntity";
  */
 @Entity("allowance_records")
 @Check("chk_allowance_records_amount_positive", "amount >= 0")
-export class AllowanceRecordEntity extends AppBaseEntity {
+export class AllowanceRecordEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID" })
   child_id!: number;
   @Column({ type: "int", nullable: true, comment: "お小遣いの種類ID" })

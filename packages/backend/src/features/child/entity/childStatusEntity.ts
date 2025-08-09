@@ -6,7 +6,7 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "./childEntity";
 
 /**
@@ -17,7 +17,7 @@ import { ChildEntity } from "./childEntity";
 @Check("chk_child_statuses_total_exp_non_negative", "total_exp >= 0")
 @Check("chk_child_statuses_current_savings_non_negative", "current_savings >= 0")
 @Unique("uq_child_statuses_child_id", ["child_id"])
-export class ChildStatusEntity extends AppBaseEntity {
+export class ChildStatusEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, unique: true, comment: "子供ID" })
   child_id!: number;
   @Column({ type: "int", nullable: false, default: 1, comment: "現在のレベル" })

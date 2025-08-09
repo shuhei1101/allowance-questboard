@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 
@@ -15,7 +15,7 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 @Entity("family_members")
 @Check("chk_family_members_name_not_empty", "LENGTH(name) > 0")
 @Check("chk_family_members_birthday_not_future", "birthday <= CURRENT_DATE")
-export class FamilyMemberEntity extends AppBaseEntity {
+export class FamilyMemberEntity extends BaseTransactionEntity {
   @Column({ type: "uuid", nullable: false, comment: "ユーザID(外部キー：auth.users.id)" })
   user_id!: string;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "名前" })

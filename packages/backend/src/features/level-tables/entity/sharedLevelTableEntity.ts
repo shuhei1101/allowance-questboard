@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyLevelTableEntity } from "./familyLevelTableEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 
@@ -14,7 +14,7 @@ import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
  */
 @Entity("shared_level_tables")
 @Unique("uq_shared_level_tables_family_level_table_shared_by", ["family_level_table_id", "shared_by"])
-export class SharedLevelTableEntity extends AppBaseEntity {
+export class SharedLevelTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "共有レベルテーブルID(外部キー)" })
   family_level_table_id!: number;
   @Column({ type: "int", nullable: false, comment: "家族ID" })

@@ -4,15 +4,18 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * 子供クエストステータスエンティティ
  */
 @Entity("quest_member_statuses")
-export class QuestMemberStatusEntity extends AppBaseEntity {
+export class QuestMemberStatusEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
   code!: string;
   @Column({ type: "varchar", length: 255, nullable: true, comment: "ステータスの説明" })
@@ -23,10 +26,10 @@ export class QuestMemberStatusEntity extends AppBaseEntity {
    */
   protected static seedData(): QuestMemberStatusEntity[] {
     return [
-      Object.assign(new QuestMemberStatusEntity(), { code: "not_accepted", description: "未受注" }),
-      Object.assign(new QuestMemberStatusEntity(), { code: "in_progress", description: "進行中" }),
-      Object.assign(new QuestMemberStatusEntity(), { code: "reporting", description: "報告中" }),
-      Object.assign(new QuestMemberStatusEntity(), { code: "completed", description: "達成済み" }),
+      Object.assign(new QuestMemberStatusEntity(), { id: 1, code: "not_accepted", description: "未受注" }),
+      Object.assign(new QuestMemberStatusEntity(), { id: 2, code: "in_progress", description: "進行中" }),
+      Object.assign(new QuestMemberStatusEntity(), { id: 3, code: "reporting", description: "報告中" }),
+      Object.assign(new QuestMemberStatusEntity(), { id: 4, code: "completed", description: "達成済み" }),
     ];
   }
 }
@@ -36,7 +39,7 @@ export class QuestMemberStatusEntity extends AppBaseEntity {
  */
 @Entity("quest_member_statuses_translation")
 @Unique("uq_quest_member_statuses_translation_status_language", ["child_quest_status_id", "language_id"])
-export class QuestMemberStatusTranslationEntity extends BaseTranslationEntity {
+export class QuestMemberStatusTranslationEntity extends BaseMasterTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "ステータスID(外部キー)" })
   child_quest_status_id!: number;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "ステータス名の翻訳" })

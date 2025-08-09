@@ -4,7 +4,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 
@@ -12,7 +12,7 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
  * 家族エンティティ
  */
 @Entity("families")
-export class FamilyEntity extends AppBaseEntity {
+export class FamilyEntity extends BaseTransactionEntity {
   @Column({ type: "varchar", length: 100, nullable: false, comment: "家名" })
   name!: string;
   @Column({ type: "int", nullable: true, comment: "アイコンID" })

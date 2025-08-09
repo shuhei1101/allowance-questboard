@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { t, authenticatedProcedure } from '@backend/core/trpc/trpcContext';
-import { loginQuery, LoginQueryResult } from '@backend/features/login/query_service/loginQuery';
+import { loginQuery, LoginQueryResult } from '@backend/features/auth/query_service/loginQuery';
 
 /**
  * ログインレスポンス

@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 
@@ -14,7 +14,7 @@ import { FamilyMemberEntity } from "@backend/features/family-member/entity/famil
  */
 @Entity("parents")
 @Unique("uq_parents_family_user", ["family_id", "family_member_id"])
-export class ParentEntity extends AppBaseEntity {
+export class ParentEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
   family_member_id!: number;
   @Column({ type: "int", nullable: false, comment: "家族ID" })

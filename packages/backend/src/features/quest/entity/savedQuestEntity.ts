@@ -6,7 +6,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { SharedQuestEntity } from "./sharedQuestEntity";
 import { FamilyEntity } from "../../family/entity/familyEntity";
 
@@ -17,7 +17,7 @@ import { FamilyEntity } from "../../family/entity/familyEntity";
  */
 @Entity("saved_quests")
 @Unique("uq_saved_quests", ["shared_quest_id", "saved_by"])
-export class SavedQuestEntity extends AppBaseEntity {
+export class SavedQuestEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "クエストID(外部キー)" })
   shared_quest_id!: number;
   @Column({ type: "int", nullable: false, comment: "保存した家族ID" })

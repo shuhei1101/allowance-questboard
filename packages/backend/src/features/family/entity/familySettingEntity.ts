@@ -4,12 +4,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyEntity } from "./familyEntity";
 import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
 
 @Entity("family_settings")
-export class FamilySettingEntity extends AppBaseEntity {
+export class FamilySettingEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "家族ID" })
   family_id!: number;
   // 通貨ID

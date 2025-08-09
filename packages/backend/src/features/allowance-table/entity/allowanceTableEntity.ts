@@ -4,11 +4,11 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
 import { AllowanceTableTypeEntity } from "./allowanceTableTypeEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 
 @Entity("allowance_tables")
-export class AllowanceTableEntity extends AppBaseEntity {
+export class AllowanceTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "サブクラスタイプ" })
   subclass_type!: number;
 

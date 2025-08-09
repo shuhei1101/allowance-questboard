@@ -6,7 +6,7 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { EducationEntity } from "@backend/features/child/entity/educationEntity";
 
@@ -20,7 +20,7 @@ import { EducationEntity } from "@backend/features/child/entity/educationEntity"
 @Entity("education_periods")
 @Check("chk_education_periods_period_positive", "period > 0")
 @Unique("uq_education_periods_child_education", ["child_id", "education_id"])
-export class EducationPeriodEntity extends AppBaseEntity {
+export class EducationPeriodEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID" })
   child_id!: number;
   @Column({ type: "int", nullable: false, comment: "学歴ID" })
@@ -34,13 +34,4 @@ export class EducationPeriodEntity extends AppBaseEntity {
   @ManyToOne(() => EducationEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "education_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_education_period_education_id" })
   education!: EducationEntity;
-
-  /**
-   * シード用データ取得
-   */
-  protected static seedData(): EducationPeriodEntity[] {
-    return [
-      // シードデータがある場合はここに追加
-    ];
-  }
 }

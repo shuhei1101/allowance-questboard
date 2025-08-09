@@ -1,4 +1,4 @@
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import {
   Entity,
   Column,
@@ -8,7 +8,7 @@ import {
 import { FamilyEntity } from "./familyEntity";
 
 @Entity("exp_by_level")
-export class ExpByLevelEntity extends AppBaseEntity {
+export class ExpByLevelEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "家族ID" })
   family_id!: number;
   @Column({ type: "int", nullable: false, comment: "レベル" })

@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { QuestCategoryEntity } from "./questCategoryEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 
@@ -14,7 +14,7 @@ import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
  */
 @Entity("custom_quest_categories")
 @Unique("uq_custom_quest_categories_category_id", ["category_id"])
-export class CustomQuestCategoryEntity extends AppBaseEntity {
+export class CustomQuestCategoryEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, unique: true, comment: "クエストカテゴリID" })
   category_id!: number;
   @Column({ type: "int", nullable: false, comment: "作成者の家族ID" })

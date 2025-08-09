@@ -5,14 +5,17 @@ import {
   JoinColumn,
   Unique,
   Check,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 /**
  * 通貨マスタエンティティ
  */
 @Entity("currencies")
-export class CurrencyEntity extends AppBaseEntity {
+export class CurrencyEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", nullable: false, unique: true, comment: "通貨コード" })
   code!: string;
   @Column({ type: "varchar", nullable: false, comment: "通貨名" })
@@ -29,8 +32,8 @@ export class CurrencyEntity extends AppBaseEntity {
    */
   protected static seedData(): CurrencyEntity[] {
     return [
-      Object.assign(new CurrencyEntity(), { code: "JPY", name: "Japanese Yen", symbol: "¥", is_active: true, sort_order: 1 }),
-      Object.assign(new CurrencyEntity(), { code: "USD", name: "US Dollar", symbol: "$", is_active: true, sort_order: 2 }),
+      Object.assign(new CurrencyEntity(), { id: 1, code: "JPY", name: "Japanese Yen", symbol: "¥", is_active: true, sort_order: 1 }),
+      Object.assign(new CurrencyEntity(), { id: 2, code: "USD", name: "US Dollar", symbol: "$", is_active: true, sort_order: 2 }),
     ];
   }
 }

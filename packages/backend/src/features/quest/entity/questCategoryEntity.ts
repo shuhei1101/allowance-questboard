@@ -5,16 +5,19 @@ import {
   JoinColumn,
   Unique,
   Check,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 import { QuestCategoryTypeEntity } from "./questCategoryTypeEntity";
 
 /**
  * クエストカテゴリエンティティ
  */
 @Entity("quest_categories")
-export class QuestCategoryEntity extends AppBaseEntity {
+export class QuestCategoryEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", nullable: false, comment: "サブクラスタイプ" })
   subclass_type!: number;
 
@@ -27,9 +30,9 @@ export class QuestCategoryEntity extends AppBaseEntity {
    */
   protected static seedData(): QuestCategoryEntity[] {
     return [
-      Object.assign(new QuestCategoryEntity(), { subclass_type: 1 }), // 1 家事
-      Object.assign(new QuestCategoryEntity(), { subclass_type: 1 }), // 2 勉強
-      Object.assign(new QuestCategoryEntity(), { subclass_type: 1 }), // 3 運動
+      Object.assign(new QuestCategoryEntity(), { id: 1, subclass_type: 1 }), // 1 家事
+      Object.assign(new QuestCategoryEntity(), { id: 2, subclass_type: 1 }), // 2 勉強
+      Object.assign(new QuestCategoryEntity(), { id: 3, subclass_type: 1 }), // 3 運動
     ];
   }
 }
@@ -40,7 +43,7 @@ export class QuestCategoryEntity extends AppBaseEntity {
 @Entity("quest_categories_translation")
 @Unique("uq_quest_categories_translation_category_language", ["quest_category_id", "language_id"])
 @Check("chk_quest_categories_translation_name_not_empty", "length(name) > 0")
-export class QuestCategoryTranslationEntity extends BaseTranslationEntity {
+export class QuestCategoryTranslationEntity extends BaseMasterTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "クエストカテゴリID" })
   quest_category_id!: number;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "カテゴリ名の翻訳" })

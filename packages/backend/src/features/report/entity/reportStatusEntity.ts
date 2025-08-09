@@ -4,15 +4,18 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * レポートステータスエンティティ
  */
 @Entity("report_statuses")
-export class ReportStatusEntity extends AppBaseEntity {
+export class ReportStatusEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
   code!: string;
 
@@ -21,10 +24,10 @@ export class ReportStatusEntity extends AppBaseEntity {
    */
   protected static seedData(): ReportStatusEntity[] {
     return [
-      Object.assign(new ReportStatusEntity(), { code: "pending" }),
-      Object.assign(new ReportStatusEntity(), { code: "approved" }),
-      Object.assign(new ReportStatusEntity(), { code: "rejected" }),
-      Object.assign(new ReportStatusEntity(), { code: "resolved" }),
+      Object.assign(new ReportStatusEntity(), { id: 1, code: "pending" }),
+      Object.assign(new ReportStatusEntity(), { id: 2, code: "approved" }),
+      Object.assign(new ReportStatusEntity(), { id: 3, code: "rejected" }),
+      Object.assign(new ReportStatusEntity(), { id: 4, code: "resolved" }),
     ];
   }
 }
@@ -34,7 +37,7 @@ export class ReportStatusEntity extends AppBaseEntity {
  */
 @Entity("report_statuses_translation")
 @Unique("uq_report_statuses_translation_status_language", ["report_status_id", "language_id"])
-export class ReportStatusTranslationEntity extends BaseTranslationEntity {
+export class ReportStatusTranslationEntity extends BaseMasterTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "レポートステータスID" })
   report_status_id!: number;
   @Column({ type: "varchar", length: 50, nullable: false, comment: "翻訳されたステータス名" })

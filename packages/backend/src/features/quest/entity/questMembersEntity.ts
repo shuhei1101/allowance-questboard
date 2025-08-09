@@ -7,7 +7,7 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "../../../core/entity/baseHistoryEntity";
 import { ChildEntity } from "../../child/entity/childEntity";
 import { QuestMemberStatusEntity } from "./questMemberStatusEntity";
@@ -21,7 +21,7 @@ import { QuestMemberStatusEntity } from "./questMemberStatusEntity";
 @Unique("uq_quest_members", ["family_quest_id", "member_id"])
 @Check("chk_quest_members_current_level_positive", "current_level > 0")
 @Check("chk_quest_members_achieved_after_published", "(achieved_at IS NULL) OR (achieved_at IS NOT NULL AND achieved_at >= published_at)")
-export class QuestMembersEntity extends AppBaseEntity {
+export class QuestMembersEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "家族クエストID" })
   family_quest_id!: number;
   @Column({ type: "int", nullable: false, comment: "子供ID" })

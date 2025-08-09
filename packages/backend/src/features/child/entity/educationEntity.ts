@@ -4,15 +4,18 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * 学歴マスタエンティティ
  */
 @Entity("educations")
-export class EducationEntity extends AppBaseEntity {
+export class EducationEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "学歴コード" })
   code!: string;
 
@@ -21,11 +24,11 @@ export class EducationEntity extends AppBaseEntity {
    */
   protected static seedData(): EducationEntity[] {
     return [
-      Object.assign(new EducationEntity(), { code: "elementary" }),
-      Object.assign(new EducationEntity(), { code: "junior_high" }),
-      Object.assign(new EducationEntity(), { code: "high_school" }),
-      Object.assign(new EducationEntity(), { code: "university" }),
-      Object.assign(new EducationEntity(), { code: "graduate_school" }),
+      Object.assign(new EducationEntity(), { id: 1, code: "elementary" }),
+      Object.assign(new EducationEntity(), { id: 2, code: "junior_high" }),
+      Object.assign(new EducationEntity(), { id: 3, code: "high_school" }),
+      Object.assign(new EducationEntity(), { id: 4, code: "university" }),
+      Object.assign(new EducationEntity(), { id: 5, code: "graduate_school" }),
     ];
   }
 }
@@ -35,7 +38,7 @@ export class EducationEntity extends AppBaseEntity {
  */
 @Entity("educations_translation")
 @Unique("uq_educations_translation_education_language", ["education_id", "language_id"])
-export class EducationTranslationEntity extends BaseTranslationEntity {
+export class EducationTranslationEntity extends BaseMasterTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "学歴ID(外部キー)" })
   education_id!: number;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "学歴名の翻訳" })

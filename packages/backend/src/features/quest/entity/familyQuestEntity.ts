@@ -6,7 +6,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { QuestEntity } from "./questEntity";
 import { FamilyEntity } from "../../family/entity/familyEntity";
 
@@ -15,9 +15,9 @@ import { FamilyEntity } from "../../family/entity/familyEntity";
  */
 @Entity("family_quests")
 @Unique("uq_family_quests", ["family_id", "quest_id"])
-export class FamilyQuestEntity extends AppBaseEntity {
+export class FamilyQuestEntity extends BaseTransactionEntity {
   @PrimaryGeneratedColumn({ comment: "ID" })
-  id!: number;
+  declare id: number;  // BaseTransactionEntityのidを再宣言（既に@PrimaryGeneratedColumnが定義されているため）
 
   @Column({ type: "int", nullable: false, comment: "クエストID" })
   quest_id!: number;

@@ -7,13 +7,16 @@ import {
   Unique,
   DataSource,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { CurrencyEntity } from "./currencyEntity";
 import { LanguageEntity } from "../../language/entity/languageEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 @Entity("currencies_by_language")
 @Unique("uq_currency_by_language", ["currency_id", "language_id"])
-export class CurrencyByLanguageEntity extends AppBaseEntity {
+export class CurrencyByLanguageEntity extends BaseMasterEntity {
+  @PrimaryGeneratedColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", nullable: false, comment: "通貨ID(外部キー：currencies.id)" })
   currency_id!: number;
   @Column({ type: "int", nullable: false, comment: "言語ID" })

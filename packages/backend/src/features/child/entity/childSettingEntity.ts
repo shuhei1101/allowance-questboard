@@ -6,7 +6,7 @@ import {
   Unique,
   OneToOne,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { ChildEntity } from "./childEntity";
 
@@ -15,7 +15,7 @@ import { ChildEntity } from "./childEntity";
  */
 @Entity("child_settings")
 @Unique("uq_child_settings_child_id", ["child_id"])
-export class ChildSettingEntity extends AppBaseEntity {
+export class ChildSettingEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, unique: true, comment: "子供ID" })
   child_id!: number;
   @Column({ type: "int", nullable: false, default: 0, comment: "最低貯金額" })

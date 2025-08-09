@@ -4,7 +4,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { LevelTableEntity } from "./levelTableEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 
@@ -12,7 +12,7 @@ import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
  * 家族用レベルテーブルエンティティ
  */
 @Entity("family_level_tables")
-export class FamilyLevelTableEntity extends AppBaseEntity {
+export class FamilyLevelTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "親レベルテーブルID" })
   superclass_id!: number;
   @Column({ type: "int", nullable: false, comment: "家族ID" })

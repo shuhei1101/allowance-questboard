@@ -4,16 +4,19 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
 
 /**
  * アイコンカテゴリエンティティ
  */
 @Entity("icon_categories")
-export class IconCategoryEntity extends AppBaseEntity {
+export class IconCategoryEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", default: 0, comment: "表示順序" })
   sort_order!: number;
   @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
@@ -24,9 +27,9 @@ export class IconCategoryEntity extends AppBaseEntity {
    */
   protected static seedData(): IconCategoryEntity[] {
     return [
-      Object.assign(new IconCategoryEntity(), { sort_order: 1, is_active: true }),
-      Object.assign(new IconCategoryEntity(), { sort_order: 2, is_active: true }),
-      Object.assign(new IconCategoryEntity(), { sort_order: 3, is_active: true }),
+      Object.assign(new IconCategoryEntity(), { id: 1, sort_order: 1, is_active: true }),
+      Object.assign(new IconCategoryEntity(), { id: 2, sort_order: 2, is_active: true }),
+      Object.assign(new IconCategoryEntity(), { id: 3, sort_order: 3, is_active: true }),
     ];
   }
 }
@@ -36,7 +39,7 @@ export class IconCategoryEntity extends AppBaseEntity {
  */
 @Entity("icon_categories_translation")
 @Unique("uq_icon_categories_translation_category_language", ["category_id", "language_id"])
-export class IconCategoryTranslationEntity extends BaseTranslationEntity {
+export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "アイコンカテゴリID" })
   category_id!: number;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "カテゴリ名の翻訳" })

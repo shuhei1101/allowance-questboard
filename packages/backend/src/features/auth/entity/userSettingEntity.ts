@@ -5,15 +5,16 @@ import {
   JoinColumn,
   PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
 
 /**
  * ユーザ設定エンティティ
+ * 注意：このエンティティはUUIDを主キーに使用するため、AppBaseEntityを継承
  */
 @Entity("user_settings")
-export class UserSettingEntity extends AppBaseEntity {
+export class UserSettingEntity extends BaseTransactionEntity {
   @PrimaryColumn({ type: "uuid", comment: "ユーザID" })
   user_id!: string;
   @Column({ type: "int", nullable: false, comment: "言語コード" })

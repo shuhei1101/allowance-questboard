@@ -4,10 +4,12 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { IconEntity } from "./iconEntity";
 import { IconLibraryEntity as IconLibraryEntity } from "./iconLibraryEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 /**
  * アイコンとライブラリのキーエンティティ
@@ -16,7 +18,9 @@ import { IconLibraryEntity as IconLibraryEntity } from "./iconLibraryEntity";
  */
 @Entity("icon_key_by_library")
 @Unique("uq_icon_library_mapping", ["icon_id", "library_id"])
-export class IconKeyByLibraryEntity extends AppBaseEntity {
+export class IconKeyByLibraryEntity extends BaseMasterEntity {
+  @PrimaryGeneratedColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", nullable: false, comment: "アイコンID(外部キー)" })
   icon_id!: number;
   @Column({ type: "int", nullable: false, comment: "ライブラリID" })

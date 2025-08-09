@@ -4,7 +4,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 import { ReportableTypeEntity } from "./reportableTypeEntity";
@@ -14,7 +14,7 @@ import { ReportStatusEntity } from "./reportStatusEntity";
  * レポート(通報)エンティティ
  */
 @Entity("reports")
-export class ReportEntity extends AppBaseEntity {
+export class ReportEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "レポートしたユーザID" })
   reported_by!: number;
   @Column({ type: "int", nullable: false, comment: "レポート対象タイプID" })

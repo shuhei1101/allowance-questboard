@@ -1,11 +1,14 @@
 import {
   Entity,
   Column,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseMasterEntity } from "../../../core/entity/baseMasterEntity";
 
 @Entity("commentable_types")
-export class CommentableTypeEntity extends AppBaseEntity {
+export class CommentableTypeEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", length: 50, nullable: false, unique: true, comment: "コメントが可能なテーブル名" })
   table_name!: string;
 
@@ -17,7 +20,7 @@ export class CommentableTypeEntity extends AppBaseEntity {
    */
   protected static seedData(): CommentableTypeEntity[] {
     return [
-      Object.assign(new CommentableTypeEntity(), { table_name: "quests", description: "クエストに対するコメント" }),
+      Object.assign(new CommentableTypeEntity(), { id: 1, table_name: "quests", description: "クエストに対するコメント" }),
     ];
   }
 }

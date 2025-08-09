@@ -8,17 +8,6 @@
 ### ドキュメント配置場所:
 - `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja`
 
-### APIパッケージ:
-- ルートディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/api/aqapi`
-- srcディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/api/aqapi`
-
-### Flutterパッケージ:
-- ルートディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/flutter`
-- srcディレクトリ: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/packages/flutter/lib`
-
-### テスト:
-- `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja/common/単体テスト-unittest.md`
-
 ## キャラクター設定
 - 目的: 以下のキャラクター設定を元にギャルとして振舞ってユーザーと会話をして下さい。
 - 名前: 喜多川海夢(きたがわまりん)

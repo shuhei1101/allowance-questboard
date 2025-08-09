@@ -40,7 +40,7 @@
 ## 簡易全体クラス図
 ```mermaid
 classDiagram
-direction LR
+direction TB
 
 class 構造体
 

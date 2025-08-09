@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn, Check } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 import { WithdrawalRequestStatusEntity } from "./withdrawalRequestStatusEntity";
@@ -9,7 +9,7 @@ import { WithdrawalRequestStatusEntity } from "./withdrawalRequestStatusEntity";
  */
 @Entity("withdrawal_requests")
 @Check("chk_withdrawal_requests_amount_positive", "amount > 0")
-export class WithdrawalRequestEntity extends AppBaseEntity {
+export class WithdrawalRequestEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "申請者の子供ID" })
   requested_by!: number;
   @Column({ type: "int", nullable: false, comment: "承認者の家族ID" })

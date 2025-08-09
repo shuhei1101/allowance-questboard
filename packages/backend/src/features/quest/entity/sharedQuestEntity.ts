@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { QuestEntity } from "./questEntity";
 import { FamilyQuestEntity } from "./familyQuestEntity";
 import { FamilyEntity } from "../../family/entity/familyEntity";
@@ -15,7 +15,7 @@ import { CommentEntity } from "../../comment/entity/commentEntity";
  * 共有クエストエンティティ
  */
 @Entity("shared_quests")
-export class SharedQuestEntity extends AppBaseEntity {
+export class SharedQuestEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "クエストID" })
   quest_id!: number;
   @Column({ type: "int", nullable: false, comment: "共有元の家族クエストID" })

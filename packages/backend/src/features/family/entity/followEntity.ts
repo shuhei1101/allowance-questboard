@@ -4,11 +4,11 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyEntity } from "./familyEntity";
 
 @Entity("follows")
-export class FollowEntity extends AppBaseEntity {
+export class FollowEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "フォロー元の家族メンバーID" })
   follow_from: number;
   @Column({ type: "int", nullable: false, comment: "フォロー先の家族メンバーID" })

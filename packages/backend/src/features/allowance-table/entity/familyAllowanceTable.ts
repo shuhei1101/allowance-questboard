@@ -1,4 +1,4 @@
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { AllowanceTableEntity } from "./allowanceTableEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
@@ -7,7 +7,7 @@ import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
  * 家族お小遣いテーブルエンティティ
  */
 @Entity("family_allowance_tables")
-export class FamilyAllowanceTableEntity extends AppBaseEntity {
+export class FamilyAllowanceTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "お小遣いテーブルID" })
   superclass_id!: number;
   @Column({ type: "int", nullable: false, comment: "家族ID" })
@@ -27,7 +27,7 @@ export class FamilyAllowanceTableEntity extends AppBaseEntity {
  * 家族お小遣いテーブル履歴エンティティ
  */
 @Entity("family_allowance_tables_history")
-export class FamilyAllowanceTableHistoryEntity extends AppBaseEntity {
+export class FamilyAllowanceTableHistoryEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false })
   superclass_id!: number;
   @Column({ type: "int", nullable: false })

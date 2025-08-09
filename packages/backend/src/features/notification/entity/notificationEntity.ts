@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Index,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 import { NotifiableTypeEntity } from "./notifiableTypeEntity";
 import { ScreenEntity } from "@backend/features/shared/entity/screenEntity";
@@ -16,7 +16,7 @@ import { ScreenEntity } from "@backend/features/shared/entity/screenEntity";
 @Entity("notifications")
 @Index("idx_notifications_unread", ["recipient_id", "is_read"], { where: "is_read = false" })
 @Index("idx_notifications_received_at", ["received_at"])
-export class NotificationEntity extends AppBaseEntity {
+export class NotificationEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: true, comment: "家族メンバーID" })
   recipient_id?: number;
   @Column({ type: "int", nullable: false, comment: "通知対象タイプID" })

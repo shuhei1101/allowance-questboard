@@ -6,7 +6,7 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { AllowanceTableEntity } from "@backend/features/allowance-table/entity/allowanceTableEntity";
 
 /**
@@ -16,7 +16,7 @@ import { AllowanceTableEntity } from "@backend/features/allowance-table/entity/a
 @Check("chk_allowance_by_level_level_positive", "level >= 0")
 @Check("chk_allowance_by_level_amount_positive", "amount >= 0")
 @Unique("uq_allowance_by_level", ["level", "allowance_table_id"])
-export class AllowanceByLevelEntity extends AppBaseEntity {
+export class AllowanceByLevelEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "お小遣いテーブルID" })
   allowance_table_id!: number;
   @Column({ type: "int", nullable: false, comment: "レベル" })

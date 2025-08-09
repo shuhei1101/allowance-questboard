@@ -1,14 +1,17 @@
 import {
   Entity,
   Column,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 /**
  * 言語マスタエンティティ
  */
 @Entity("languages")
-export class LanguageEntity extends AppBaseEntity {
+export class LanguageEntity extends BaseMasterEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "varchar", length: 10, nullable: false, unique: true, comment: "言語コード(選択肢表示用)" })
   code!: string;
   @Column({ type: "varchar", length: 100, nullable: false, comment: "言語名(説明用)" })

@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 
 /**
@@ -14,7 +14,7 @@ import { ChildEntity } from "@backend/features/child/entity/childEntity";
 @Entity("savings_records")
 @Check("chk_savings_records_amount_not_zero", "amount != 0")
 @Check("chk_savings_records_balance_positive", "balance >= 0")
-export class SavingsRecordEntity extends AppBaseEntity {
+export class SavingsRecordEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID" })
   saved_by!: number;
   @Column({ type: "int", nullable: false, default: 0, comment: "貯金額" })

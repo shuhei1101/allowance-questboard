@@ -1,12 +1,12 @@
 // class ChildAllowanceTablesEntity(BaseEntity):
 //     """子供お小遣いテーブルエンティティ"""
 
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { AllowanceTableEntity } from "./allowanceTableEntity";
 
-export class ChildAllowanceTableEntity extends AppBaseEntity {
+export class ChildAllowanceTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "お小遣いテーブルID" })
   superclass_id!: number;
   @Column({ type: "int", nullable: false, comment: "子供ID" })
@@ -20,7 +20,7 @@ export class ChildAllowanceTableEntity extends AppBaseEntity {
   child?: ChildEntity;
 }
 
-export class ChildAllowanceTableHistoryEntity extends AppBaseEntity {
+export class ChildAllowanceTableHistoryEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false })
   superclass_id!: number;
   @Column({ type: "int", nullable: false })

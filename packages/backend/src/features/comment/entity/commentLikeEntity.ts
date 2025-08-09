@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { AppBaseEntity } from "../../../core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { CommentEntity } from "./commentEntity";
 import { FamilyMemberEntity } from "../../family-member/entity/familyMemberEntity";
 
@@ -14,7 +14,7 @@ import { FamilyMemberEntity } from "../../family-member/entity/familyMemberEntit
  */
 @Entity("comment_likes")
 @Unique("uq_comment_likes_comment_member", ["comment_id", "family_member_id"])
-export class CommentLikeEntity extends AppBaseEntity {
+export class CommentLikeEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "コメントID" })
   comment_id!: number;
   @Column({ type: "int", nullable: false, comment: "家族メンバーID" })

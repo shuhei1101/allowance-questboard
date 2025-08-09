@@ -6,7 +6,7 @@ import {
   Unique,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { AllowanceTableEntity } from "./allowanceTableEntity";
 
@@ -17,7 +17,7 @@ import { AllowanceTableEntity } from "./allowanceTableEntity";
 @Check("chk_allowance_by_age_age_positive", "age >= 0")
 @Check("chk_allowance_by_age_amount_positive", "amount >= 0")
 @Unique("uq_allowance_by_age_age_allowance_table", ["age", "allowance_table_id"])
-export class AllowanceByAgeEntity extends AppBaseEntity {
+export class AllowanceByAgeEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "お小遣いテーブルID" })
   allowance_table_id!: number;
   @Column({ type: "int", nullable: false, comment: "年齢" })

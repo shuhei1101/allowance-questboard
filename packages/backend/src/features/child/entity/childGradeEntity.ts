@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "./childEntity";
 import { EducationEntity } from "@backend/features/child/entity/educationEntity";
 
@@ -14,7 +14,7 @@ import { EducationEntity } from "@backend/features/child/entity/educationEntity"
  */
 @Entity("child_grades")
 @Check("chk_child_grade_grade_positive", "grade > 0")
-export class ChildGradeEntity extends AppBaseEntity {
+export class ChildGradeEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "子供ID(外部キー)" })
   child_id!: number;
   @Column({ type: "int", nullable: false, comment: "学歴ID" })

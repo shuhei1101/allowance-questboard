@@ -5,12 +5,13 @@ import {
   JoinColumn,
   Unique,
   Check,
+  PrimaryColumn,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 import { QuestTypeEntity } from "./questTypeEntity";
 import { QuestCategoryEntity } from "./questCategoryEntity";
 import { IconEntity } from "@backend/features/icon/entity/iconEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * クエストエンティティ
@@ -20,7 +21,9 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 @Check("chk_quests_age_to_greater_equal_age_from", "age_to >= age_from")
 @Check("chk_quests_month_from_valid", "month_from IS NULL OR (month_from >= 1 AND month_from <= 12)")
 @Check("chk_quests_month_to_valid", "month_to IS NULL OR (month_to >= 1 AND month_to <= 12)")
-export class QuestEntity extends AppBaseEntity {
+export class QuestEntity extends BaseTransactionEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", nullable: false, comment: "サブクラスタイプ" })
   subclass_type!: number;
   @Column({ type: "int", nullable: false, comment: "クエストカテゴリID" })
@@ -53,9 +56,9 @@ export class QuestEntity extends AppBaseEntity {
    */
   protected static seedData(): QuestEntity[] {
     return [
-      Object.assign(new QuestEntity(), { subclass_type: 1, category_id: 1, icon_id: 1, age_from: 6, age_to: 12 }),
-      Object.assign(new QuestEntity(), { subclass_type: 1, category_id: 2, icon_id: 2, age_from: 3, age_to: 10 }),
-      Object.assign(new QuestEntity(), { subclass_type: 1, category_id: 3, icon_id: 3, age_from: 5, age_to: 15 }),
+      Object.assign(new QuestEntity(), { id: 1, subclass_type: 1, category_id: 1, icon_id: 1, age_from: 6, age_to: 12 }),
+      Object.assign(new QuestEntity(), { id: 2, subclass_type: 1, category_id: 2, icon_id: 2, age_from: 3, age_to: 10 }),
+      Object.assign(new QuestEntity(), { id: 3, subclass_type: 1, category_id: 3, icon_id: 3, age_from: 5, age_to: 15 }),
     ];
   }
 }
@@ -67,7 +70,9 @@ export class QuestEntity extends AppBaseEntity {
 @Unique("uq_quests_translation_quest_language", ["quest_id", "language_id"])
 @Check("chk_quests_translation_title_not_empty", "length(title) > 0")
 @Check("chk_quests_translation_client_not_empty", "length(client) > 0")
-export class QuestTranslationEntity extends BaseTranslationEntity {
+export class QuestTranslationEntity extends BaseTransactionTranslationEntity {
+  @PrimaryColumn({ type: "int", comment: "ID" })
+  id!: number;
   @Column({ type: "int", nullable: false, comment: "クエストID" })
   quest_id!: number;
   @Column({ type: "varchar", length: 200, nullable: false, comment: "クエストタイトルの翻訳" })

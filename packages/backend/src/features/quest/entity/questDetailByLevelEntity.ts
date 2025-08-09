@@ -6,8 +6,8 @@ import {
   Unique,
   Check,
 } from "typeorm";
-import { AppBaseEntity } from "@backend/core/entity/appBaseEntity";
-import { BaseTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTransactionTranslationEntity";
 import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
 import { QuestEntity } from "./questEntity";
 
@@ -22,7 +22,7 @@ import { QuestEntity } from "./questEntity";
 @Check("chk_quest_detail_by_level_reward_non_negative", "reward >= 0")
 @Check("chk_quest_detail_by_level_child_exp_non_negative", "child_exp >= 0")
 @Check("chk_quest_detail_by_level_quest_exp_non_negative", "quest_exp >= 0")
-export class QuestDetailByLevelEntity extends AppBaseEntity {
+export class QuestDetailByLevelEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "クエストID" })
   quest_id!: number;
   @Column({ type: "int", nullable: false, comment: "レベル" })
@@ -53,7 +53,7 @@ export class QuestDetailByLevelEntity extends AppBaseEntity {
  */
 @Entity("quest_detail_by_level_translation")
 @Unique("uq_quest_detail_by_level_translation_detail_language", ["quest_detail_by_level_id", "language_id"])
-export class QuestDetailByLevelTranslationEntity extends BaseTranslationEntity {
+export class QuestDetailByLevelTranslationEntity extends BaseTransactionTranslationEntity {
   @Column({ type: "int", nullable: false, comment: "クエスト詳細ID" })
   quest_detail_by_level_id!: number;
   @Column({ type: "text", nullable: false, comment: "成功条件の翻訳" })
