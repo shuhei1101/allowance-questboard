@@ -1,17 +1,20 @@
+const baseConfig = require('../../jest.config.base');
+
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  ...baseConfig,
+  displayName: 'backend',
   roots: ['<rootDir>/src', '<rootDir>/__tests__'],
   testMatch: [
-    '**/__tests__/**/*.test.ts',
-    '**/?(*.)+(spec|test).ts'
+    '<rootDir>/**/__tests__/**/*.test.ts',
+    '<rootDir>/**/?(*.)+(spec|test).ts'
   ],
   transform: {
     '^.+\\.ts$': ['ts-jest', {
-      tsconfig: 'tsconfig.json'
+      tsconfig: './tsconfig.json'
     }],
   },
   moduleNameMapper: {
+    ...baseConfig.moduleNameMapper,
     '^@shared/(.*)$': '<rootDir>/../shared/$1',
     '^@backend/(.*)$': '<rootDir>/src/$1',
   },
@@ -21,6 +24,5 @@ module.exports = {
     '!src/main.ts'
   ],
   coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html'],
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts']
 };

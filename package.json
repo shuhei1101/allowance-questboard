@@ -1,5 +1,21 @@
 {
   "dependencies": {
     "zod": "^4.0.16"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:frontend": "cd packages/frontend && jest",
+    "test:backend": "cd packages/backend && jest",
+    "test:watch": "jest --watch",
+    "test:watch:frontend": "cd packages/frontend && jest --watch",
+    "test:watch:backend": "cd packages/backend && jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:coverage:frontend": "cd packages/frontend && jest --coverage",
+    "test:coverage:backend": "cd packages/backend && jest --coverage"
   }
 }
