@@ -1,13 +1,12 @@
-import { EntityManager, Repository, ObjectLiteral } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { AppBaseEntity } from '../entity/appBaseEntity';
 
 /**
  * データアクセスオブジェクトの基底クラス（排他制御対応）
- * PythonのBaseDAOクラスのTypeScript版
  */
-export abstract class BaseDao<EntityType extends AppBaseEntity> {
+export abstract class BaseDao<TEntity extends AppBaseEntity> {
   protected session: EntityManager;
-  private _repository: Repository<EntityType> | null = null;
+  private _repository: Repository<TEntity> | null = null;
 
   constructor(session: EntityManager) {
     this.session = session;
@@ -16,12 +15,12 @@ export abstract class BaseDao<EntityType extends AppBaseEntity> {
   /**
    * エンティティクラスを返す（サブクラスで実装必須）
    */
-  protected abstract get entityClass(): new () => EntityType;
+  protected abstract get entityClass(): new () => TEntity;
 
   /**
    * Repositoryを取得する（遅延初期化）
    */
-  protected get repository(): Repository<EntityType> {
+  protected get repository(): Repository<TEntity> {
     if (!this._repository) {
       this._repository = this.session.getRepository(this.entityClass);
     }
@@ -46,7 +45,7 @@ export abstract class BaseDao<EntityType extends AppBaseEntity> {
    * 全てのエンティティを取得する
    * @returns エンティティのリスト
    */
-  async fetchAll(): Promise<EntityType[]> {
+  async fetchAll(): Promise<TEntity[]> {
     return await this.repository.find();
   }
 
@@ -55,7 +54,7 @@ export abstract class BaseDao<EntityType extends AppBaseEntity> {
    * @param id エンティティのID
    * @returns エンティティオブジェクト（見つからない場合はnull）
    */
-  async fetchById(id: number): Promise<EntityType | null> {
+  async fetchById(id: number): Promise<TEntity | null> {
     return await this.repository.findOne({ 
       where: { id } as any 
     });
@@ -66,7 +65,7 @@ export abstract class BaseDao<EntityType extends AppBaseEntity> {
    * @param entity 作成するエンティティオブジェクト
    * @returns 作成されたエンティティのID
    */
-  async insert(entity: EntityType): Promise<number> {
+  async insert(entity: TEntity): Promise<number> {
     const result = await this.repository.save(entity);
     return result.id;
   }
@@ -75,7 +74,7 @@ export abstract class BaseDao<EntityType extends AppBaseEntity> {
    * エンティティを更新する
    * @param entity 更新するエンティティ
    */
-  async update(entity: EntityType): Promise<void> {
+  async update(entity: TEntity): Promise<void> {
     await this.repository.save(entity);
   }
 

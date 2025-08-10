@@ -8,9 +8,9 @@ import { BaseId } from '../../../../shared/core/value-object/base_id';
  * PythonのBaseRepositoryクラスのTypeScript版
  */
 export abstract class BaseRepository<
-  IdType extends BaseId, 
-  ModelType extends BaseModel<IdType, EntityType>,
-  EntityType extends AppBaseEntity
+  TId extends BaseId, 
+  TModel extends BaseModel<TId, TEntity>,
+  TEntity extends AppBaseEntity
 > {
   /**
    * 現在のエンティティが最新バージョンかどうかを確認する
@@ -21,8 +21,8 @@ export abstract class BaseRepository<
    * @throws エラー エンティティにIDが設定されていない場合、またはDBに該当エンティティが存在しない場合
    */
   protected async isLatestVersion(
-    model: ModelType, 
-    dao: BaseDao<EntityType>
+    model: TModel, 
+    dao: BaseDao<TEntity>
   ): Promise<boolean> {
     const modelId = model.id.toNumber();
 
