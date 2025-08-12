@@ -1,4 +1,9 @@
 {
+  "name": "allowance-questboard",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "zod": "^4.0.16"
   },

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Alert } from 'react-native';
 import { LoginScreen } from '../components/LoginScreen';
 import { useTheme } from '@frontend/core/theme';
@@ -162,8 +162,8 @@ export const LoginPage: React.FC = () => {
     setDialogVisible(false);
   }, [setDialogVisible]);
 
-  // ページ固有のメソッド群
-  const pageHandlers = {
+  // ページ固有のメソッド群（メモ化で無限ループを防ぐ）
+  const pageHandlers = useMemo(() => ({
     handleLogin,
     handleCreateFamily,
     handleForgotPassword,
@@ -171,7 +171,15 @@ export const LoginPage: React.FC = () => {
     handleChildLogin,
     handleTermsOfService,
     handleCloseDialog,
-  };
+  }), [
+    handleLogin,
+    handleCreateFamily,
+    handleForgotPassword,
+    handleParentLogin,
+    handleChildLogin,
+    handleTermsOfService,
+    handleCloseDialog,
+  ]);
 
   return (
     <LoginScreen 
