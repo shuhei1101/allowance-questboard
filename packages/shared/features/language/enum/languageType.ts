@@ -1,4 +1,4 @@
-import { BaseSimpleEnum } from '@shared/core/enum/baseEnum';
+import { BaseSimpleEnum } from '../../../core/enum/baseEnum';
 import { LanguageId } from '../value-object/languageId';
 import { LanguageTypeValue, LanguageTypeValueSchema } from '../value-object/languageTypeValue';
 import { LanguageEntity } from '@backend/features/language/entity/languageEntity';

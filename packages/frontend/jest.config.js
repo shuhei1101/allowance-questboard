@@ -1,7 +1,6 @@
-const baseConfig = require('../../jest.config.base');
-
 module.exports = {
-  ...baseConfig,
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   displayName: 'frontend',
   roots: ['<rootDir>/src', '<rootDir>/__tests__'],
   testMatch: [
@@ -16,7 +15,6 @@ module.exports = {
     }],
   },
   moduleNameMapper: {
-    ...baseConfig.moduleNameMapper,
     '^@shared/(.*)$': '<rootDir>/../shared/$1',
     '^@frontend/(.*)$': '<rootDir>/src/$1',
   },
@@ -26,5 +24,6 @@ module.exports = {
     '!src/index.ts'
   ],
   coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts']
 };

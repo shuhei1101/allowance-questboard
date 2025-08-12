@@ -1,4 +1,4 @@
-import { BaseSimpleEnum } from '@shared/core/enum/baseEnum';
+import { BaseSimpleEnum } from '../../../core/enum/baseEnum';
 import { FamilyMemberTypeId } from '../value-object/familyMemberTypeId';
 import { FamilyMemberTypeValue, FamilyMemberTypeValueSchema } from '../value-object/familyMemberTypeValue';
 import { FamilyMemberTypeEntity } from '@backend/features/family-member/entity/familyMemberTypeEntity';

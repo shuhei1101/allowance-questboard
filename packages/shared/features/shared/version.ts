@@ -1,6 +1,6 @@
-import { LocaleString } from "@shared/core/messages/localeString";
-import { ValueValidateException } from "@shared/core/validator/validationException";
-import { BaseValueObject } from "@shared/core/value-object/baseValueObject";
+import { LocaleString } from "../../../core/messages/localeString";
+import { ValueValidateException } from "../../../core/validator/validationException";
+import { BaseValueObject } from "../../../core/value-object/baseValueObject";
 
 export class Version extends BaseValueObject<number> {
   constructor(value: number) {

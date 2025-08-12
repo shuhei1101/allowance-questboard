@@ -1,0 +1,44 @@
+{
+  "app": {
+    "title": "Allowance Quest Board",
+    "description": "Family allowance management app"
+  },
+  "login": {
+    "title": "Login",
+    "emailPlaceholder": "Enter email address",
+    "passwordPlaceholder": "Enter password",
+    "loginButton": "Login",
+    "createFamilyButton": "Create New Family",
+    "forgotPassword": "Forgot your password?",
+    "termsOfService": "View Terms of Service",
+    "selectLoginType": "Select Login Type",
+    "parentLogin": "Login as Parent",
+    "childLogin": "Login as Child",
+    "cancel": "Cancel",
+    "familyLabel": "Family: {{familyName}}",
+    "errors": {
+      "invalidCredentials": "Please enter a valid email address and password.",
+      "loginFailed": "Login failed. Please try again.",
+      "parentLoginFailed": "Failed to login as parent.",
+      "childLoginFailed": "Failed to login as child."
+    },
+    "success": {
+      "parentLogin": "Logged in as parent.",
+      "childLogin": "Logged in as child."
+    },
+    "navigation": {
+      "createFamily": "Navigate to create family screen.",
+      "forgotPassword": "Navigate to password reset screen.",
+      "termsOfService": "Navigate to terms of service screen."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No"
+  }
+}

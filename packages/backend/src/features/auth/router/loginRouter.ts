@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { t, authenticatedProcedure } from '@backend/core/trpc/trpcContext';
-import { loginQuery, LoginQueryResult } from '@backend/features/auth/query_service/loginQuery';
+import { loginQuery, LoginQueryResult } from '@backend/features/auth/query/loginQuery';
 
 /**
  * ログインレスポンス
@@ -10,6 +10,7 @@ export class LoginResponse {
     public readonly userId: string,
     public readonlyfamilyMemberId: number,
     public readonlyfamilyId: number,
+    public readonly familyName: string,
     public readonlyparentId?: number | null,
     public readonlychildId?: number | null
   ) {}
@@ -25,6 +26,7 @@ export class LoginResponse {
       queryResult.userId,
       queryResult.familyMemberId,
       queryResult.familyId,
+      queryResult.familyName,
       queryResult.parentId,
       queryResult.childId
     );

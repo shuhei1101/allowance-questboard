@@ -1,0 +1,44 @@
+{
+  "app": {
+    "title": "お小遣いクエストボード",
+    "description": "家族のお小遣い管理アプリ"
+  },
+  "login": {
+    "title": "ログイン",
+    "emailPlaceholder": "メールアドレスを入力",
+    "passwordPlaceholder": "パスワードを入力",
+    "loginButton": "ログイン",
+    "createFamilyButton": "新規家族を作成",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "termsOfService": "利用規約を確認する",
+    "selectLoginType": "ログインタイプを選択",
+    "parentLogin": "親としてログイン",
+    "childLogin": "子供としてログイン",
+    "cancel": "キャンセル",
+    "familyLabel": "家族：{{familyName}}",
+    "errors": {
+      "invalidCredentials": "メールアドレスとパスワードを正しく入力してください。",
+      "loginFailed": "ログインに失敗しました。もう一度お試しください。",
+      "parentLoginFailed": "親としてのログインに失敗しました。",
+      "childLoginFailed": "子供としてのログインに失敗しました。"
+    },
+    "success": {
+      "parentLogin": "親としてログインしました。",
+      "childLogin": "子供としてログインしました。"
+    },
+    "navigation": {
+      "createFamily": "新規家族作成画面へ遷移します。",
+      "forgotPassword": "パスワードリセット画面へ遷移します。",
+      "termsOfService": "利用規約画面へ遷移します。"
+    }
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "confirm": "確認",
+    "ok": "OK",
+    "yes": "はい",
+    "no": "いいえ"
+  }
+}

@@ -55,6 +55,32 @@ module.exports = {
       ],
       coverageDirectory: 'packages/backend/coverage',
       setupFilesAfterEnv: ['<rootDir>/packages/backend/__tests__/setup.ts']
+    },
+    {
+      displayName: 'shared',
+      preset: 'ts-jest',
+      testEnvironment: 'node',
+      roots: ['<rootDir>/packages/shared/core', '<rootDir>/packages/shared/features', '<rootDir>/packages/shared/__tests__'],
+      testMatch: [
+        '<rootDir>/packages/shared/**/__tests__/**/*.test.ts',
+        '<rootDir>/packages/shared/**/__tests__/**/*.test.tsx',
+        '<rootDir>/packages/shared/**/?(*.)+(spec|test).ts',
+        '<rootDir>/packages/shared/**/?(*.)+(spec|test).tsx'
+      ],
+      transform: {
+        '^.+\\.tsx?$': ['ts-jest', {
+          tsconfig: 'packages/shared/tsconfig.json'
+        }],
+      },
+      moduleNameMapper: {
+        '^@shared/(.*)$': '<rootDir>/packages/shared/$1',
+      },
+      collectCoverageFrom: [
+        'packages/shared/core/**/*.{ts,tsx}',
+        'packages/shared/features/**/*.{ts,tsx}',
+        '!packages/shared/**/*.d.ts'
+      ],
+      coverageDirectory: 'packages/shared/coverage'
     }
   ],
   collectCoverageFrom: [

@@ -1,5 +1,5 @@
-import { LocaleString } from "@shared/core/messages/localeString";
-import { BaseId } from "@shared/core/value-object/base_id";
+import { LocaleString } from "../../../core/messages/localeString";
+import { BaseId } from "../../../core/value-object/base_id";
 
 /**
  * 言語IDを表す値オブジェクト
