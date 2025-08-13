@@ -4,9 +4,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
 import { FamilyEntity } from "./familyEntity";
-import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
+import { CurrencyEntity } from "src/features/shared/entity/currencyEntity";
 
 @Entity("family_settings")
 export class FamilySettingEntity extends BaseTransactionEntity {

@@ -1,11 +1,11 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { FamilyMemberTypeRepository, FamilyMemberTypeRepositoryParams } from '@backend/features/family-member/repository/familyMemberTypeRepository';
-import { FamilyMemberTypeDao } from '@backend/features/family-member/dao/familyMemberTypeDao';
-import { FamilyMemberType } from '@shared/features/family-member/enum/familyMemberType';
-import { FamilyMemberTypeEntity } from '@backend/features/family-member/entity/familyMemberTypeEntity';
+import { FamilyMemberTypeRepository, FamilyMemberTypeRepositoryParams } from 'src/features/family-member/repository/familyMemberTypeRepository';
+import { FamilyMemberTypeDao } from 'src/features/family-member/dao/familyMemberTypeDao';
+import { FamilyMemberTypeEntity } from 'src/features/family-member/entity/familyMemberTypeEntity';
+import { FamilyMemberType } from '@shared/utils/features/family-member/enum/familyMemberType';
 
 // モックの作成
-jest.mock('@backend/features/family-member/dao/familyMemberTypeDao');
+jest.mock('src/features/family-member/dao/familyMemberTypeDao');
 jest.mock('@shared/features/family-member/enum/familyMemberType');
 
 describe('FamilyMemberTypeRepository', () => {

@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { Email } from '@shared/features/auth/value-object/email';
+import { Email } from '@backend/features/auth/value-object/email';
 
 describe('Email', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {

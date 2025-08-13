@@ -1,11 +1,11 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { initMasterData, InitMasterDataParams } from '@backend/features/auth/usecase/initMasterData';
-import { LanguageRepository } from '@backend/features/language/repository/languageRepository';
-import { FamilyMemberTypeRepository } from '@backend/features/family-member/repository/familyMemberTypeRepository';
+import { initMasterData, InitMasterDataParams } from 'src/features/auth/usecase/initMasterData';
+import { LanguageRepository } from 'src/features/language/repository/languageRepository';
+import { FamilyMemberTypeRepository } from 'src/features/family-member/repository/familyMemberTypeRepository';
 
 // モックの作成
-jest.mock('@backend/features/language/repository/languageRepository');
-jest.mock('@backend/features/family-member/repository/familyMemberTypeRepository');
+jest.mock('src/features/language/repository/languageRepository');
+jest.mock('src/features/family-member/repository/familyMemberTypeRepository');
 
 const MockedLanguageRepository = LanguageRepository as jest.MockedClass<typeof LanguageRepository>;
 const MockedFamilyMemberTypeRepository = FamilyMemberTypeRepository as jest.MockedClass<typeof FamilyMemberTypeRepository>;

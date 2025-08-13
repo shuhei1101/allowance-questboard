@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { FamilyMemberTypeId } from '@shared/features/family-member/value-object/familyMemberTypeId';
+import { FamilyMemberTypeId } from '@shared/utils/features/family-member/value-object/familyMemberTypeId';
 
 describe('FamilyMemberTypeId', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {

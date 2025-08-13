@@ -1,4 +1,4 @@
-import { FamilyMemberTypeValue } from 'shared/features/family-member/value-object/familyMemberTypeValue';
+import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 
 /**
  * セッション認証情報の構造体

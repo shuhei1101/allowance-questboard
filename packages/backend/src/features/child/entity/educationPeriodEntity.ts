@@ -6,9 +6,9 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { ChildEntity } from "@backend/features/child/entity/childEntity";
-import { EducationEntity } from "@backend/features/child/entity/educationEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { ChildEntity } from "src/features/child/entity/childEntity";
+import { EducationEntity } from "src/features/child/entity/educationEntity";
 
 /**
  * 子供の教育期間を定義するエンティティ

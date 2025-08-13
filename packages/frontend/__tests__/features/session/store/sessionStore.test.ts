@@ -1,7 +1,8 @@
 import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import { renderHook, act } from '@testing-library/react';
 import { useSessionStore } from '@frontend/features/session/store/sessionStore';
-import { FamilyMemberTypeValue } from 'shared/features/family-member/value-object/familyMemberTypeValue';
-import { FamilyMemberTypeId } from 'shared/features/family-member/value-object/familyMemberTypeId';
+import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
+import { FamilyMemberTypeId } from '@backend/features/family-member/value-object/familyMemberTypeId';
 
 // localStorageのモック
 const localStorageMock = (() => {

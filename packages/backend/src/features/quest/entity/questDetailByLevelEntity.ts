@@ -6,10 +6,10 @@ import {
   Unique,
   Check,
 } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { CurrencyEntity } from "src/features/shared/entity/currencyEntity";
 import { QuestEntity } from "./questEntity";
-import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseTransactionTranslationEntity } from "src/core/entity/baseTranslationEntity";
 
 /**
  * クエスト詳細(レベル別)エンティティ

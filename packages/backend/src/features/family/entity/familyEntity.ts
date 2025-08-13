@@ -4,9 +4,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
-import { IconEntity } from "@backend/features/icon/entity/iconEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { BaseHistoryEntity } from "src/core/entity/baseHistoryEntity";
+import { IconEntity } from "src/features/icon/entity/iconEntity";
 
 /**
  * 家族エンティティ

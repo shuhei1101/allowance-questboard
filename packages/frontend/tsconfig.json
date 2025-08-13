@@ -7,6 +7,15 @@
       "@shared/*": ["../shared/*"],
       "@frontend/*": ["./src/*"],
       "@backend/*": ["../backend/src/*"]
-    }
-  }
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "app/**/*",
+    "__tests__/**/*"
+  ]
 }

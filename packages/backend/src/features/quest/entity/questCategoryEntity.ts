@@ -7,8 +7,8 @@ import {
   Check,
   PrimaryColumn,
 } from "typeorm";
-import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
-import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "src/core/entity/baseTranslationEntity";
 import { QuestCategoryTypeEntity } from "./questCategoryTypeEntity";
 
 /**

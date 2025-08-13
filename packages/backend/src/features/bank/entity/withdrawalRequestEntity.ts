@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne, JoinColumn, Check } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { ChildEntity } from "@backend/features/child/entity/childEntity";
-import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { ChildEntity } from "src/features/child/entity/childEntity";
+import { FamilyEntity } from "src/features/family/entity/familyEntity";
 import { WithdrawalRequestStatusEntity } from "./withdrawalRequestStatusEntity";
 
 /**

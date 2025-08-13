@@ -6,7 +6,7 @@ import {
   Unique,
   PrimaryColumn,
 } from "typeorm";
-import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
 import { QuestCategoryEntity } from "./questCategoryEntity";
 
 /**

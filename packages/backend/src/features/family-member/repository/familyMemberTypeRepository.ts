@@ -1,5 +1,5 @@
+import { FamilyMemberType } from '@shared/utils/features/family-member/enum/familyMemberType';
 import { FamilyMemberTypeDao } from '../dao/familyMemberTypeDao';
-import { FamilyMemberType } from '@shared/features/family-member/enum/familyMemberType';
 
 /**
  * 家族メンバータイプリポジトリの依存関係

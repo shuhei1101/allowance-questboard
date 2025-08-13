@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { BaseDao } from '@backend/core/dao/baseDao';
+import { BaseDao } from 'src/core/dao/baseDao';
 import { LanguageEntity } from '../entity/languageEntity';
 
 /**

@@ -9,7 +9,7 @@ import {
   Check,
 } from "typeorm";
 import { CurrencyEntity } from "./currencyEntity";
-import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
 
 @Entity("exchange_rates")
 @Unique("uq_exchange_rates_currencies_date", ["base_currency_id", "target_currency_id", "effective_date"])

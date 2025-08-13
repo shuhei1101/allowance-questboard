@@ -1,4 +1,4 @@
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
 import {
   Entity,
   Column,

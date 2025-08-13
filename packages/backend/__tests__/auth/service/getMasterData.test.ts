@@ -1,7 +1,7 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { getMasterData } from '@backend/features/auth/usecase/getMasterData';
-import { LanguageType } from '@shared/features/language/enum/languageType';
-import { FamilyMemberType } from '@shared/features/family-member/enum/familyMemberType';
+import { FamilyMemberType } from '@shared/utils/features/family-member/enum/familyMemberType';
+import { LanguageType } from '@shared/utils/features/language/enum/languageType';
+import { getMasterData } from 'src/features/auth/usecase/getMasterData';
 
 // モックの作成
 jest.mock('@shared/features/language/enum/languageType');

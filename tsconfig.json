@@ -4,7 +4,6 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["packages/shared/*"],
       "@backend/*": ["packages/backend/src/*"],
       "@frontend/*": ["packages/frontend/src/*"]
     },
@@ -13,6 +12,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   }
 }

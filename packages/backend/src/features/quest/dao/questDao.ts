@@ -1,7 +1,7 @@
 import { EntityManager } from 'typeorm';
-import { BaseDao } from '@backend/core/dao/baseDao';
+import { BaseDao } from 'src/core/dao/baseDao';
 import { QuestEntity } from '../entity/questEntity';
-import { cache, evict } from '@backend/core/cache/redisCache';
+import { cache, evict } from 'src/core/cache/redisCache';
 
 /**
  * クエストDAOクラス

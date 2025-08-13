@@ -1,9 +1,9 @@
 import { describe, test, expect } from '@jest/globals';
-import { LanguageTypeValue, LanguageTypeValueSchema } from '@shared/features/language/value-object/languageTypeValue';
-import { LanguageId } from '@shared/features/language/value-object/languageId';
-import { LanguageCode } from '@shared/features/language/value-object/languageCode';
-import { LanguageName } from '@shared/features/language/value-object/languageName';
-import { LanguageEntity } from '@backend/features/language/entity/languageEntity';
+import { LanguageCode } from '@shared/utils/features/language/value-object/languageCode';
+import { LanguageId } from '@shared/utils/features/language/value-object/languageId';
+import { LanguageName } from '@shared/utils/features/language/value-object/languageName';
+import { LanguageTypeValue, LanguageTypeValueSchema } from '@shared/utils/features/language/value-object/languageTypeValue';
+import { LanguageEntity } from 'src/features/language/entity/languageEntity';
 
 describe('LanguageTypeValue', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {

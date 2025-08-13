@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { AuthInfo } from '../structure/session';
-import { FamilyMemberTypeValue } from 'shared/features/family-member/value-object/familyMemberTypeValue';
+import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 
 /**
  * セッションストアのアクション定義

@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { Password } from '@shared/features/auth/value-object/password';
+import { Password } from '@backend/features/auth/value-object/password';
 
 describe('Password', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {

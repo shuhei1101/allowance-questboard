@@ -1,4 +1,4 @@
-import { FamilyName } from '@shared/features/family/value-object/familyName';
+import { FamilyName } from '@backend/features/family/entity/value-object/familyName';
 
 /**
  * 家族選択ダイアログデータ（生の値）

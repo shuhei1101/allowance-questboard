@@ -6,9 +6,9 @@ import {
   Unique,
   PrimaryColumn,
 } from "typeorm";
-import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
-import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
-import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
+import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "src/core/entity/baseTranslationEntity";
+import { LanguageEntity } from "src/features/language/entity/languageEntity";
 
 /**
  * アイコンカテゴリエンティティ

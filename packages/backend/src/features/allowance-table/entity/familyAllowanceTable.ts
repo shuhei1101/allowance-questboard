@@ -1,7 +1,7 @@
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { AllowanceTableEntity } from "./allowanceTableEntity";
-import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
+import { FamilyEntity } from "src/features/family/entity/familyEntity";
 
 /**
  * 家族お小遣いテーブルエンティティ

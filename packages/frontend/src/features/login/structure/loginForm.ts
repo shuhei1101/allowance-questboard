@@ -1,5 +1,5 @@
-import { Email } from '@shared/features/auth/value-object/email';
-import { Password } from '@shared/features/auth/value-object/password';
+import { Email } from '@backend/features/auth/value-object/email';
+import { Password } from '@backend/features/auth/value-object/password';
 
 /**
  * ログインフォームデータ（生の値）

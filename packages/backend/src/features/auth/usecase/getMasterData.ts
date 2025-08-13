@@ -1,5 +1,5 @@
-import { LanguageType } from '@shared/features/language/enum/languageType';
-import { FamilyMemberType } from '@shared/features/family-member/enum/familyMemberType';
+import { FamilyMemberType } from "@shared/utils/features/family-member/enum/familyMemberType";
+import { LanguageType } from "@shared/utils/features/language/enum/languageType";
 
 /**
  * マスタデータを取得する

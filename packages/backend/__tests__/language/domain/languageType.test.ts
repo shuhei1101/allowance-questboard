@@ -1,7 +1,7 @@
 import { describe, test, expect } from '@jest/globals';
-import { LanguageType, LanguageTypeSchema } from '@shared/features/language/enum/languageType';
-import { LanguageId } from '@shared/features/language/value-object/languageId';
-import { LanguageEntity } from '@backend/features/language/entity/languageEntity';
+import { LanguageType, LanguageTypeSchema } from '@shared/utils/features/language/enum/languageType';
+import { LanguageId } from '@shared/utils/features/language/value-object/languageId';
+import { LanguageEntity } from 'src/features/language/entity/languageEntity';
 
 describe('LanguageType', () => {
   describe('デフォルト値でEnumが初期化されること', () => {

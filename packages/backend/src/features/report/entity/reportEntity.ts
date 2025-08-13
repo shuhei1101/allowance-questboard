@@ -4,9 +4,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
-import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { BaseHistoryEntity } from "src/core/entity/baseHistoryEntity";
+import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemberEntity";
 import { ReportableTypeEntity } from "./reportableTypeEntity";
 import { ReportStatusEntity } from "./reportStatusEntity";
 

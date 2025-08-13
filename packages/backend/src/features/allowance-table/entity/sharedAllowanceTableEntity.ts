@@ -1,7 +1,7 @@
 import { Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { FamilyAllowanceTableEntity } from "./familyAllowanceTable";
-import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { FamilyEntity } from "src/features/family/entity/familyEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
 
 export class SharedAllowanceTableEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "共有お小遣いテーブルID" })

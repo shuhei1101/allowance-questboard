@@ -19,3 +19,8 @@ npm install @trpc/server @trpc/client
 ```bash
 npm install -g ts-node
 ```
+
+#### lintのインストール
+```bash
+npx eslint .
+```

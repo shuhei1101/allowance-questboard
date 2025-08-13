@@ -5,7 +5,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { AllowanceTableTypeEntity } from "./allowanceTableTypeEntity";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
 
 @Entity("allowance_tables")
 export class AllowanceTableEntity extends BaseTransactionEntity {

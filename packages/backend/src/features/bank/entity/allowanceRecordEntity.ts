@@ -5,8 +5,8 @@ import {
   JoinColumn,
   Check,
 } from "typeorm";
-import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { ChildEntity } from "@backend/features/child/entity/childEntity";
+import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { ChildEntity } from "src/features/child/entity/childEntity";
 import { AllowanceableTypeEntity } from "./allowanceableTypeEntity";
 
 /**

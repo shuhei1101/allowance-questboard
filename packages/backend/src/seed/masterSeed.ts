@@ -19,13 +19,13 @@ import { QuestEntity } from '../features/quest/entity/questEntity';
 import { TemplateQuestCategoryEntity } from '../features/quest/entity/templateQuestCategoryEntity';
 import { TemplateQuestEntity } from '../features/quest/entity/templateQuestEntity';
 import { ReportStatusEntity, ReportStatusTranslationEntity } from '../features/report/entity/reportStatusEntity';
-import { AllowanceTableTypeEntity } from '@backend/features/allowance-table/entity/allowanceTableTypeEntity';
-import { IconLibraryEntity } from '@backend/features/icon/entity/iconLibraryEntity';
-import { IconKeyByLibraryEntity } from '@backend/features/icon/entity/iconKeyByLibraryEntity';
-import { NotifiableTypeEntity } from '@backend/features/notification/entity/notifiableTypeEntity';
-import { CurrencyByLanguageEntity } from '@backend/features/shared/entity/currencyByLanguageEntity';
-import { CurrencyEntity } from '@backend/features/shared/entity/currencyEntity';
-import { ExchangeRateEntity } from '@backend/features/shared/entity/exchangeRateEntity';
+import { AllowanceTableTypeEntity } from 'src/features/allowance-table/entity/allowanceTableTypeEntity';
+import { IconLibraryEntity } from 'src/features/icon/entity/iconLibraryEntity';
+import { IconKeyByLibraryEntity } from 'src/features/icon/entity/iconKeyByLibraryEntity';
+import { NotifiableTypeEntity } from 'src/features/notification/entity/notifiableTypeEntity';
+import { CurrencyByLanguageEntity } from 'src/features/shared/entity/currencyByLanguageEntity';
+import { CurrencyEntity } from 'src/features/shared/entity/currencyEntity';
+import { ExchangeRateEntity } from 'src/features/shared/entity/exchangeRateEntity';
 /**
  * マスタデータを投入する関数
  * 各エンティティのseed()メソッドを呼び出す

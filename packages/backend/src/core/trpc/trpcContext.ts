@@ -2,7 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import { CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import jwt from 'jsonwebtoken';
 import { EntityManager } from 'typeorm';
-import { AppDataSource } from '@backend/core/config/dataSource';
+import { AppDataSource } from '../config/dataSource';
 
 /**
  * tRPCのコンテキスト

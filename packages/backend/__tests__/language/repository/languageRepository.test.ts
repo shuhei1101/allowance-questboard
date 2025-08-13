@@ -1,11 +1,11 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { LanguageRepository, LanguageRepositoryParams } from '@backend/features/language/repository/languageRepository';
-import { LanguageDao } from '@backend/features/language/dao/languageDao';
-import { LanguageType } from '@shared/features/language/enum/languageType';
-import { LanguageEntity } from '@backend/features/language/entity/languageEntity';
+import { LanguageRepository, LanguageRepositoryParams } from 'src/features/language/repository/languageRepository';
+import { LanguageDao } from 'src/features/language/dao/languageDao';
+import { LanguageEntity } from 'src/features/language/entity/languageEntity';
+import { LanguageType } from '@shared/utils/features/language/enum/languageType';
 
 // モックの作成
-jest.mock('@backend/features/language/dao/languageDao');
+jest.mock('src/features/language/dao/languageDao');
 jest.mock('@shared/features/language/enum/languageType');
 
 describe('LanguageRepository', () => {

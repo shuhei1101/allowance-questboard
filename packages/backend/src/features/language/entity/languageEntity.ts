@@ -1,9 +1,9 @@
+import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
 import {
   Entity,
   Column,
   PrimaryColumn,
 } from "typeorm";
-import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 /**
  * 言語マスタエンティティ

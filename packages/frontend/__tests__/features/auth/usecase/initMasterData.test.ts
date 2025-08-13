@@ -2,7 +2,7 @@ import { describe, test, expect, jest, beforeEach, afterEach } from '@jest/globa
 import { initMasterData } from '@frontend/features/auth/usecase/initMasterData';
 import { trpc } from '@frontend/core/api/trpcClient';
 import { LanguageType, LanguageTypeSchema } from '@shared/features/language/enum/languageType';
-import { FamilyMemberType, FamilyMemberTypeSchema } from '@shared/features/family-member/enum/familyMemberType';
+import { FamilyMemberType, FamilyMemberTypeSchema } from '@backend/features/family-member/enum/familyMemberType';
 import { z } from 'zod';
 
 // tRPCクライアントをモック化

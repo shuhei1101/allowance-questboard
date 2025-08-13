@@ -1,9 +1,9 @@
-import { BaseId } from '../../../../shared/core/value-object/base_id';
-import { Version } from '../../../../shared/features/shared/version';
-import { RelationValidator } from '../../../../shared/core/validator/relationValidator';
+import { BaseId } from '@shared/utils/core/value-object/base_id';
 import { AppBaseEntity } from '../entity/appBaseEntity';
-import { FamilyMemberId } from '../../../../shared/features/family-member/value-object/familyMemberId';
-import { ScreenId } from '../../../../shared/features/shared/screenId';
+import { Version } from '@shared/utils/features/shared/version';
+import { FamilyMemberId } from '@shared/utils/features/family-member/value-object/familyMemberId';
+import { ScreenId } from '@shared/utils/features/shared/screenId';
+import { RelationValidator } from '@shared/utils/core/validator/relationValidator';
 
 /**
  * ドメインモデルの基底抽象クラス
