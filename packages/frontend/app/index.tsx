@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoginPage } from '@frontend/features/login/pages/LoginPage';
+import { LoginPage } from '@/features/login/pages/LoginPage';
 
 /**
  * ホーム画面 (/)

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@frontend/core/theme';
+import { useTheme } from '@/core/theme';
 
 /**
  * アプリアイコン

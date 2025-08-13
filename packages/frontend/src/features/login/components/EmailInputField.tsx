@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput, Text, StyleSheet } from 'react-native';
-import { useTheme } from '@frontend/core/theme';
-import { useTranslation } from '@frontend/core/i18n/useTranslation';
+import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface EmailInputFieldProps {
   /** メールアドレスの値 */

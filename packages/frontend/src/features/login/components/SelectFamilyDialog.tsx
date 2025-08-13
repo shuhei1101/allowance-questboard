@@ -3,8 +3,8 @@ import { View, Text, Modal, StyleSheet } from 'react-native';
 import { ParentLoginButton } from './ParentLoginButton';
 import { ChildLoginButton } from './ChildLoginButton';
 import { CancelButton } from './CancelButton';
-import { useTheme } from '@frontend/core/theme';
-import { useTranslation } from '@frontend/core/i18n/useTranslation';
+import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface SelectFamilyDialogProps {
   /** ダイアログ表示状態 */

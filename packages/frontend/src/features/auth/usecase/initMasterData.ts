@@ -1,19 +1,16 @@
-// TODO: パスエイリアス問題解決後に有効化
-import { trpc } from '@frontend/core/api/trpcClient';
+import { trpc } from "@/core/api/trpcClient";
+import { LanguageType } from "@backend/features/language/enum/languageType";
+import { FamilyMemberType } from "@backend/features/family-member/enum/familyMemberType";
 
 /**
  * マスタデータを初期化する
  * tRPC経由でバックエンドからマスタデータのEnum値を取得し、
  * フロントエンドのEnum値を更新する
  * @returns Promise<void>
- * 
- * 注意: 現在はパスエイリアス問題のため一時的に無効化中
  */
 export async function initMasterData(): Promise<void> {
   try {
     console.log('🚧 マスタデータ初期化は一時的に無効化されています');
-    // TODO: パスエイリアス問題解決後に以下のコードを有効化
-    /*
     // tRPC経由でマスタデータを取得
     const masterData = await trpc.init.getMasterData.query();
     
@@ -30,7 +27,6 @@ export async function initMasterData(): Promise<void> {
     }
     
     console.log('🌟 マスタデータ初期化完了！');
-    */
     
   } catch (error) {
     console.error('❌ マスタデータ初期化エラー:', error);

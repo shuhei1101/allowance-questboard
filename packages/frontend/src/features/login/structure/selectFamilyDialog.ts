@@ -30,7 +30,7 @@ export class SelectFamilyDialog {
    * @returns 家族名の文字列、未選択の場合は空文字
    */
   public getFamilyNameString(): string {
-    return this.familyName ? this.familyName.value : '';
+    return this.familyName ? this.familyName.toString() : '';
   }
 
   /**

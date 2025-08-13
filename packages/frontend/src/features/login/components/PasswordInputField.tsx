@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@frontend/core/theme';
-import { useTranslation } from '@frontend/core/i18n/useTranslation';
+import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface PasswordInputFieldProps {
   /** パスワードの値 */

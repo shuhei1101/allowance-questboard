@@ -14,10 +14,10 @@ import {
   useSetDialogVisible,
   useResetLoginState,
   useLoginFormState
-} from '@frontend/features/login/hooks/loginPageHooks';
-import { useLoginPageStore } from '@frontend/features/login/store/loginPageStore';
-import { LoginFormData } from '@frontend/features/login/structure/loginForm';
-import { SelectFamilyDialogData } from '@frontend/features/login/structure/selectFamilyDialog';
+} from '@/features/login/hooks/loginPageHooks';
+import { useLoginPageStore } from '@/features/login/store/loginPageStore';
+import { LoginFormData } from '@/features/login/structure/loginForm';
+import { SelectFamilyDialogData } from '@/features/login/structure/selectFamilyDialog';
 
 // localStorageのモック
 const localStorageMock = (() => {

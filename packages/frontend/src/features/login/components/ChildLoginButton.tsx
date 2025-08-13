@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@frontend/core/theme';
-import { useTranslation } from '@frontend/core/i18n/useTranslation';
+import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface ChildLoginButtonProps {
   /** タップ時のコールバック */

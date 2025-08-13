@@ -1,8 +1,7 @@
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from '@backend/router';
-import { trpcClient } from '@frontend/core/api/trpcClient';
-import { useSessionStore } from '@frontend/features/session/store/sessionStore';
 import { useLoginPageStore } from '../store/loginPageStore';
+import { useSessionStore } from '@/features/session/store/sessionStore';
 
 /**
  * ログインユースケースのパラメータ
@@ -56,7 +55,8 @@ export const login = async (params: LoginParams): Promise<LoginResult> => {
       ],
     });
 
-    const response = await (clientWithAuth as any).login.login.query();
+    // anyキャストを避け、適切に型付けされたクライアントを使用
+    const response = await clientWithAuth.login.login.query();
     
     // JWTトークンをセッションに保存
     // ※ familyMemberTypeは後でログインタイプ選択時に設定される

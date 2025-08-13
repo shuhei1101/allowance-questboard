@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { LoginForm, LoginFormData } from '@frontend/features/login/structure/loginForm';
+import { LoginForm, LoginFormData } from '@/features/login/structure/loginForm';
 
 describe('LoginForm', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {

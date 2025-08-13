@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useTheme, spacing, typography } from '@frontend/core/theme';
-import { useTranslation } from '@frontend/core/i18n/useTranslation';
+import { useTheme, spacing, typography } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface TermsOfServiceLinkProps {
   /** タップ時のコールバック */

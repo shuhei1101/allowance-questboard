@@ -10,7 +10,6 @@ config.resolver.nodeModulesPaths = [
 ];
 
 config.watchFolders = [
-  path.resolve(__dirname, "../../packages/shared"),
   path.resolve(__dirname, "../backend/src") // backend を watch
 ];
 

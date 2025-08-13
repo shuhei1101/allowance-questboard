@@ -5,7 +5,7 @@ import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { Stack } from 'expo-router';
 
 // i18n初期化
-import '@frontend/core/i18n';
+import '@/core/i18n';
 
 /**
  * ルートレイアウト

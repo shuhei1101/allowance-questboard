@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useTheme } from '@frontend/core/theme';
 import { useTranslation } from './useTranslation';
 import { supportedLanguages, languageNames, SupportedLanguage } from './index';
+import { useTheme } from '../theme';
 
 interface LanguageSelectorProps {
   /** コンパクト表示（アイコンのみ） */
@@ -95,7 +95,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
  */
 export const LanguageIndicator: React.FC = () => {
   const { colors } = useTheme();
-  const { currentLanguageName, currentLanguage } = useTranslation();
+  const { currentLanguage } = useTranslation();
   
   const styles = StyleSheet.create({
     container: {

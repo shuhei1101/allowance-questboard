@@ -11,7 +11,7 @@ import { SelectFamilyDialog } from './SelectFamilyDialog';
 import { TermsOfServiceLink } from './TermsOfServiceLink';
 import { useLoginFormState, useIsLoading, useIsDialogVisible } from '../hooks/loginPageHooks';
 import { useLoginPageStore } from '../store/loginPageStore';
-import { useTheme } from '@frontend/core/theme';
+import { useTheme } from '@/core/theme';
 
 interface LoginScreenProps {
   /** ログイン処理ハンドラー */

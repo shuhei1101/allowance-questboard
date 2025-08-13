@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { SelectFamilyDialog, SelectFamilyDialogData } from '@frontend/features/login/structure/selectFamilyDialog';
+import { SelectFamilyDialog, SelectFamilyDialogData } from '@/features/login/structure/selectFamilyDialog';
 
 describe('SelectFamilyDialog', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {

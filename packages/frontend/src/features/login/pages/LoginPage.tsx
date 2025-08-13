@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { Alert } from 'react-native';
 import { LoginScreen } from '../components/LoginScreen';
-import { useTheme } from '@frontend/core/theme';
-import { useTranslation } from '@frontend/core/i18n/useTranslation';
+import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 import { login } from '../usecase/login';
 import { 
   useIsFormValid,
@@ -11,7 +11,7 @@ import {
   useResetLoginState
 } from '../hooks/loginPageHooks';
 import { useLoginPageStore } from '../store/loginPageStore';
-import { useSessionStore } from '@frontend/features/session';
+import { useSessionStore } from '@/features/session/store/sessionStore';
 
 /**
  * ログインページ
