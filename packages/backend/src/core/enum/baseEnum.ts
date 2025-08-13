@@ -1,7 +1,7 @@
 import z from 'zod';
-import { BaseId } from '@shared/utils/core/value-object/base_id';
 import { TranslationEntityProtocol } from 'src/core/entity/baseTranslationEntity';
 import { BaseEntityProtocol } from '../entity/appBaseEntity';
+import { BaseId } from '../value-object/base_id';
 
 
 /**

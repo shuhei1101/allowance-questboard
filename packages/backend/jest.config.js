@@ -13,7 +13,6 @@ module.exports = {
     }],
   },
   moduleNameMapper: {
-    '^@shared/(.*)$': '<rootDir>/../shared/$1',
     '^@backend/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverageFrom: [

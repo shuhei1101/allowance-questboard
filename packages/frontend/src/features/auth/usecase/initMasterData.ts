@@ -1,6 +1,4 @@
 // TODO: パスエイリアス問題解決後に有効化
-// import { LanguageType } from '@shared/features/language/enum/languageType';
-// import { FamilyMemberType } from '@shared/features/family-member/enum/familyMemberType';
 import { trpc } from '@frontend/core/api/trpcClient';
 
 /**

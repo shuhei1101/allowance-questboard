@@ -1,7 +1,7 @@
-import { FamilyMemberTypeId } from './familyMemberTypeId';
 import z from 'zod';
 import { BaseSimpleEnumValue } from '../../../core/enum/baseEnum';
-import { FamilyMemberTypeEntity } from '@backend/features/family-member/entity/familyMemberTypeEntity';
+import { FamilyMemberTypeEntity } from '../entity/familyMemberTypeEntity';
+import { FamilyMemberTypeId } from './familyMemberTypeId';
 
 export const FamilyMemberTypeValueSchema = z.object({
   id: z.number(),

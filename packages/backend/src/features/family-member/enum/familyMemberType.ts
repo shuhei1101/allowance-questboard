@@ -1,4 +1,5 @@
 import { BaseSimpleEnum } from '../../../core/enum/baseEnum';
+import { FamilyMemberTypeEntity } from '../entity/familyMemberTypeEntity';
 import { FamilyMemberTypeId } from '../value-object/familyMemberTypeId';
 import { FamilyMemberTypeValue, FamilyMemberTypeValueSchema } from '../value-object/familyMemberTypeValue';
 import { z } from "zod";
@@ -16,7 +17,7 @@ export const FamilyMemberTypeSchema = z.object({
  * 家族メンバータイプの種類
  * 疑似Enumクラス
  */
-class FamilyMemberTypeEnum extends BaseSimpleEnum<FamilyMemberTypeValue, FamilyMemberTypeId, FamilyMemberTypeEnum, typeof FamilyMemberTypeSchema> {
+class FamilyMemberTypeEnum extends BaseSimpleEnum<FamilyMemberTypeValue, FamilyMemberTypeId, FamilyMemberTypeEntity, typeof FamilyMemberTypeSchema> {
   readonly PARENT = new FamilyMemberTypeValue(new FamilyMemberTypeId(1));
   readonly CHILD = new FamilyMemberTypeValue(new FamilyMemberTypeId(2));
 

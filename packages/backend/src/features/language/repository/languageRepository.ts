@@ -1,5 +1,5 @@
-import { LanguageType } from '@shared/utils/features/language/enum/languageType';
 import { LanguageDao } from '../dao/languageDao';
+import { LanguageType } from '../enum/languageType';
 
 /**
  * 言語リポジトリの依存関係

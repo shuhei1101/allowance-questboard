@@ -1,7 +1,7 @@
 import { describe, test, expect } from '@jest/globals';
-import { FamilyMemberType, FamilyMemberTypeSchema } from '@shared/utils/features/family-member/enum/familyMemberType';
-import { FamilyMemberTypeId } from '@shared/utils/features/family-member/value-object/familyMemberTypeId';
 import { FamilyMemberTypeEntity } from 'src/features/family-member/entity/familyMemberTypeEntity';
+import { FamilyMemberType, FamilyMemberTypeSchema } from 'src/features/family-member/enum/familyMemberType';
+import { FamilyMemberTypeId } from 'src/features/family-member/value-object/familyMemberTypeId';
 
 describe('FamilyMemberType', () => {
   describe('定数値が正しく定義されていること', () => {

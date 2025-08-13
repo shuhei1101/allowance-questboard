@@ -15,7 +15,6 @@ module.exports = {
     }],
   },
   moduleNameMapper: {
-    '^@shared/(.*)$': '<rootDir>/../shared/$1',
     '^@frontend/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverageFrom: [

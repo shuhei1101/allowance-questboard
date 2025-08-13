@@ -1,6 +1,6 @@
-import { LocaleString } from '../../../backend/src/core/messages/localeString';
-import { ValueValidator } from '../../../backend/src/core/validator/valueValidator';
-import { ValueValidateException } from '../../../backend/src/core/validator/validationException';
+import { LocaleString } from "../messages/localeString";
+import { ValueValidateException } from "../validator/validationException";
+import { ValueValidator } from "../validator/valueValidator";
 
 /**
  * 値オブジェクトの基底クラス

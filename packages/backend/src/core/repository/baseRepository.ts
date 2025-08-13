@@ -1,7 +1,7 @@
 import { BaseModel } from '../domain/baseModel';
 import { BaseDao } from '../dao/baseDao';
 import { AppBaseEntity } from '../entity/appBaseEntity';
-import { BaseId } from '../../../../shared/core/value-object/base_id';
+import { BaseId } from '../value-object/base_id';
 
 /**
  * リポジトリの基底クラス

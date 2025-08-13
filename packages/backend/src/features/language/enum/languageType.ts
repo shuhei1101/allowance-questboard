@@ -1,8 +1,8 @@
-import { BaseSimpleEnum } from '../../../../backend/src/core/enum/baseEnum';
+import { BaseSimpleEnum } from 'src/core/enum/baseEnum';
 import { LanguageId } from '../value-object/languageId';
 import { LanguageTypeValue, LanguageTypeValueSchema } from '../value-object/languageTypeValue';
-import { LanguageEntity } from '@backend/features/language/entity/languageEntity';
 import { z } from "zod";
+import { LanguageEntity } from '../entity/languageEntity';
 
 /**
  * 言語の種類

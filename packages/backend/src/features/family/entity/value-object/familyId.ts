@@ -1,4 +1,4 @@
-import { BaseId } from "../../../core/value-object/base_id";
+import { BaseId } from "src/core/value-object/base_id";
 
 export class FamilyId extends BaseId {
   constructor(value: number) {

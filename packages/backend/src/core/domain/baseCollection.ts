@@ -1,5 +1,5 @@
+import { BaseId } from '../value-object/base_id';
 import { BaseModel } from './baseModel';
-import { BaseId } from '../../../../shared/core/value-object/base_id';
 
 /**
  * コレクションアイテムのプロトコル（インターフェース）

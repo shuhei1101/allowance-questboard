@@ -1,5 +1,5 @@
-import { LocaleString } from "../../../../core/messages/localeString";
-import { BaseValueObject } from "../../../core/value-object/baseValueObject";
+import { LocaleString } from "src/core/messages/localeString";
+import { BaseValueObject } from "src/core/value-object/baseValueObject";
 
 /**
  * 家族名を表す値オブジェクト

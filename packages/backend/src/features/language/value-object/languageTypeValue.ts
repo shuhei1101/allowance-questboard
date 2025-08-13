@@ -1,9 +1,9 @@
 import { LanguageId } from './languageId';
 import { LanguageCode } from './languageCode';
 import { LanguageName } from './languageName';
-import { LanguageEntity } from '@backend/features/language/entity/languageEntity';
 import z from 'zod';
-import { BaseSimpleEnumValue } from '../../../../backend/src/core/enum/baseEnum';
+import { LanguageEntity } from '../entity/languageEntity';
+import { BaseSimpleEnumValue } from 'src/core/enum/baseEnum';
 
 export const LanguageTypeValueSchema = z.object({
   id: z.number(),
