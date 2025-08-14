@@ -1,17 +1,23 @@
-import React, { useCallback, useMemo } from 'react';
-import { Alert } from 'react-native';
-import { LoginScreen } from '../components/LoginScreen';
+import React, { useCallback } from 'react';
+import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet, Alert } from 'react-native';
+import { AppIcon } from '../components/AppIcon';
+import { AppTitleLabel } from '../components/AppTitleLabel';
+import { EmailInputField } from '../components/EmailInputField';
+import { PasswordInputField } from '../components/PasswordInputField';
+import { LoginButton } from '../components/LoginButton';
+import { CreateFamilyButton } from '../components/CreateFamilyButton';
+import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
+import { SelectFamilyDialog as SelectFamilyDialogComponent } from '../components/SelectFamilyDialog';
+import { TermsOfServiceLink } from '../components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { login } from '../usecase/login';
-import { 
-  useIsFormValid,
-  useSetLoading,
-  useSetDialogVisible,
-  useResetLoginState
-} from '../hooks/loginPageHooks';
 import { useLoginPageStore } from '../store/loginPageStore';
 import { useSessionStore } from '@/features/session/store/sessionStore';
+import { LoginForm } from '../models/loginForm';
+import { SelectFamilyDialog } from '../models/selectFamilyDialog';
+import { Email } from '@backend/features/auth/value-object/email';
+import { Password } from '@backend/features/auth/value-object/password';
 
 /**
  * ログインページ
@@ -25,34 +31,83 @@ import { useSessionStore } from '@/features/session/store/sessionStore';
  * - 利用規約への遷移
  */
 export const LoginPage: React.FC = () => {
+  // Hooks
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const isFormValid = useIsFormValid();
-  const setLoading = useSetLoading();
-  const setDialogVisible = useSetDialogVisible();
-  const resetLoginState = useResetLoginState();
-  const { loginForm, selectFamilyDialog } = useLoginPageStore();
   
-  // セッション管理
-  const { updateJwt } = useSessionStore();
+  // Store
+  const pageStore = useLoginPageStore();
+  const sessionStore = useSessionStore();
+
+  // ダイアログの表示状態
+  const isDialogVisible = pageStore.isDialogVisible;
+
+  // フォームの有効性を計算
+  const isFormValid = pageStore.loginForm.isValid();
+  // フォームが入力済みかどうか
+  const isFormFilled = pageStore.loginForm.isFilled();
+  
+  // メール変更時のハンドラー
+  const handleEmailChange = (value: string) => {
+    const updatedForm = new LoginForm({ 
+      email: new Email(value), 
+      password: pageStore.loginForm.password 
+    });
+    pageStore.updateLoginForm(updatedForm);
+    // エラーをクリア
+    if (pageStore.emailError) {
+      pageStore.setEmailError(null);
+    }
+  };
+
+  // パスワード変更時のハンドラー
+  const handlePasswordChange = (value: string) => {
+    const updatedForm = new LoginForm({ 
+      email: pageStore.loginForm.email, 
+      password: new Password(value) 
+    });
+    pageStore.updateLoginForm(updatedForm);
+    // エラーをクリア
+    if (pageStore.passwordError) {
+      pageStore.setPasswordError(null);
+    }
+  };
 
   /**
    * ログイン処理
    * Supabaseの認証を実行し、成功時は家族選択ダイアログを表示
    */
   const handleLogin = useCallback(async () => {
-    if (!isFormValid) {
-      Alert.alert(t('common.error'), t('login.errors.invalidCredentials'));
+    // エラーをクリア
+    pageStore.clearErrors();
+
+    // バリデーションチェック
+    let hasValidationError = false;
+
+    // メールアドレスのバリデーション
+    if (!pageStore.loginForm.email.isValid) {
+      pageStore.setEmailError(pageStore.loginForm.email.errorMessage?.ja || 'バリデーションエラー');
+      hasValidationError = true;
+    }
+
+    // パスワードのバリデーション
+    if (!pageStore.loginForm.password.isValid) {
+      pageStore.setPasswordError(pageStore.loginForm.password.errorMessage?.ja || 'バリデーションエラー');
+      hasValidationError = true;
+    }
+
+    // バリデーションエラーがある場合は処理を終了
+    if (hasValidationError) {
       return;
     }
 
-    setLoading(true);
+    pageStore.setLoading(true);
 
     try {
       // TODO: Supabaseの実装に置き換える
       // const { data, error } = await supabase.auth.signInWithPassword({
-      //   email: loginForm.email,
-      //   password: loginForm.password,
+      //   email: store.loginForm.email,
+      //   password: store.loginForm.password,
       // });
 
       // if (error) throw error;
@@ -64,7 +119,10 @@ export const LoginPage: React.FC = () => {
       
       if (result.success) {
         // 家族選択ダイアログを表示
-        setDialogVisible(true);
+        pageStore.updateSelectFamilyDialog(
+          new SelectFamilyDialog({ familyName: pageStore.selectFamilyDialog.familyName })
+        );
+        pageStore.showDialog();
       } else {
         Alert.alert(t('common.error'), result.errorMessage || t('login.errors.loginFailed'));
       }
@@ -72,9 +130,9 @@ export const LoginPage: React.FC = () => {
       console.error('ログインエラー:', error);
       Alert.alert(t('common.error'), t('login.errors.loginFailed'));
     } finally {
-      setLoading(false);
+      pageStore.setLoading(false);
     }
-  }, [isFormValid, loginForm, setLoading, setDialogVisible, t]);
+  }, [pageStore, t]);
 
   /**
    * 新規家族作成画面への遷移
@@ -100,16 +158,17 @@ export const LoginPage: React.FC = () => {
   const handleParentLogin = useCallback(() => {
     try {
       // セッションにJWTトークンを設定
-      updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
+      sessionStore.updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
       
       // TODO: 家族メンバータイプの設定（後で実装）
       // updateFamilyMemberType(parentType);
 
       // ダイアログを閉じる
-      setDialogVisible(false);
+      pageStore.hideDialog();
       
       // ログイン状態をリセット
-      resetLoginState();
+      pageStore.updateLoginForm(LoginForm.initialize());
+      pageStore.setLoading(false);
 
       // TODO: 親用ホーム画面への遷移
       console.log('親用ホーム画面への遷移');
@@ -118,7 +177,7 @@ export const LoginPage: React.FC = () => {
       console.error('親ログインエラー:', error);
       Alert.alert(t('common.error'), t('login.errors.parentLoginFailed'));
     }
-  }, [updateJwt, setDialogVisible, resetLoginState, t]);
+  }, [sessionStore, pageStore, t]);
 
   /**
    * 子供としてログイン
@@ -126,16 +185,17 @@ export const LoginPage: React.FC = () => {
   const handleChildLogin = useCallback(() => {
     try {
       // セッションにJWTトークンを設定
-      updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
+      sessionStore.updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
       
       // TODO: 家族メンバータイプの設定（後で実装）
       // updateFamilyMemberType(childType);
 
       // ダイアログを閉じる
-      setDialogVisible(false);
+      pageStore.hideDialog();
       
       // ログイン状態をリセット
-      resetLoginState();
+      pageStore.updateLoginForm(LoginForm.initialize());
+      pageStore.setLoading(false);
 
       // TODO: 子供用ホーム画面への遷移
       console.log('子供用ホーム画面への遷移');
@@ -144,7 +204,7 @@ export const LoginPage: React.FC = () => {
       console.error('子供ログインエラー:', error);
       Alert.alert(t('common.error'), t('login.errors.childLoginFailed'));
     }
-  }, [updateJwt, setDialogVisible, resetLoginState, t]);
+  }, [sessionStore, pageStore, t]);
 
   /**
    * 利用規約画面への遷移
@@ -159,32 +219,82 @@ export const LoginPage: React.FC = () => {
    * ダイアログを閉じる
    */
   const handleCloseDialog = useCallback(() => {
-    setDialogVisible(false);
-  }, [setDialogVisible]);
-
-  // ページ固有のメソッド群（メモ化で無限ループを防ぐ）
-  const pageHandlers = useMemo(() => ({
-    handleLogin,
-    handleCreateFamily,
-    handleForgotPassword,
-    handleParentLogin,
-    handleChildLogin,
-    handleTermsOfService,
-    handleCloseDialog,
-  }), [
-    handleLogin,
-    handleCreateFamily,
-    handleForgotPassword,
-    handleParentLogin,
-    handleChildLogin,
-    handleTermsOfService,
-    handleCloseDialog,
-  ]);
+    pageStore.hideDialog();
+  }, [pageStore]);
 
   return (
-    <LoginScreen 
-      {...pageHandlers}
-      familyName={selectFamilyDialog.familyName}
-    />
+    <KeyboardAvoidingView 
+      style={[styles.container, { backgroundColor: colors.background.primary }]} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView 
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.headerContainer}>
+          <AppIcon />
+          <AppTitleLabel />
+        </View>
+
+        <View style={styles.formContainer}>
+          <EmailInputField
+            value={pageStore.loginForm.email.value}
+            onChange={handleEmailChange}
+            error={pageStore.emailError || undefined}
+          />
+          
+          <PasswordInputField
+            value={pageStore.loginForm.password.value}
+            onChange={handlePasswordChange}
+            error={pageStore.passwordError || undefined}
+          />
+          
+          <LoginButton
+            disabled={!isFormFilled}
+            loading={pageStore.isLoading}
+            onPress={handleLogin}
+          />
+          
+          <CreateFamilyButton
+            onPress={handleCreateFamily}
+          />
+          
+          <ForgotPasswordLink
+            onPress={handleForgotPassword}
+          />
+        </View>
+
+        <TermsOfServiceLink
+          onPress={handleTermsOfService}
+        />
+      </ScrollView>
+
+      <SelectFamilyDialogComponent
+        isVisible={isDialogVisible}
+        familyName={pageStore.selectFamilyDialog.getFamilyNameString() || undefined}
+        onParentLogin={handleParentLogin}
+        onChildLogin={handleChildLogin}
+        onClose={handleCloseDialog}
+      />
+    </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 40,
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  formContainer: {
+    marginBottom: 40,
+  },
+});
