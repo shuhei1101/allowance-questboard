@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { LoginForm, LoginFormData } from '../structure/loginForm';
-import { SelectFamilyDialog, SelectFamilyDialogData } from '../structure/selectFamilyDialog';
+import { LoginForm } from '../structure/loginForm';
+import { SelectFamilyDialog } from '../structure/selectFamilyDialog';
 
 /**
  * ログイン画面の状態インターフェース
@@ -11,19 +11,15 @@ interface LoginPageState {
   isLoading: boolean;
   isDialogVisible: boolean;
   isValid: boolean;
-  loginForm: LoginFormData;
-  selectFamilyDialog: SelectFamilyDialogData;
+  loginForm: LoginForm;
+  selectFamilyDialog: SelectFamilyDialog;
 
   // アクション
-  updateLoginForm: (form: LoginFormData) => void;
-  updateSelectFamilyDialog: (dialog: SelectFamilyDialogData) => void;
+  updateLoginForm: (form: LoginForm) => void;
+  updateSelectFamilyDialog: (dialog: SelectFamilyDialog) => void;
   setLoading: (loading: boolean) => void;
   setDialogVisible: (visible: boolean) => void;
   resetState: () => void;
-
-  // 計算済み値の取得
-  getLoginFormObject: () => LoginForm | null;
-  getSelectFamilyDialogObject: () => SelectFamilyDialog | null;
 }
 
 /**
@@ -33,8 +29,8 @@ const createInitialState = () => ({
   isLoading: false,
   isDialogVisible: false,
   isValid: false,
-  loginForm: LoginForm.createInitialData(),
-  selectFamilyDialog: SelectFamilyDialog.createInitialData()
+  loginForm: LoginForm.createDefault(),
+  selectFamilyDialog: SelectFamilyDialog.createDefault()
 });
 
 /**
@@ -53,7 +49,7 @@ export const useLoginPageStore = create<LoginPageState>()(
     (set, get) => ({
       ...createInitialState(),
 
-      updateLoginForm: (form: LoginFormData) => {
+      updateLoginForm: (form: LoginForm) => {
         const isValid = calculateIsValid(form);
         set(
           { loginForm: form, isValid },
@@ -62,7 +58,7 @@ export const useLoginPageStore = create<LoginPageState>()(
         );
       },
 
-      updateSelectFamilyDialog: (dialog: SelectFamilyDialogData) => {
+      updateSelectFamilyDialog: (dialog: SelectFamilyDialog) => {
         set(
           { selectFamilyDialog: dialog },
           false,
@@ -94,15 +90,6 @@ export const useLoginPageStore = create<LoginPageState>()(
         );
       },
 
-      getLoginFormObject: () => {
-        const state = get();
-        return LoginForm.createSafely(state.loginForm);
-      },
-
-      getSelectFamilyDialogObject: () => {
-        const state = get();
-        return SelectFamilyDialog.createSafely(state.selectFamilyDialog);
-      }
     }),
     {
       name: 'login-page-store',
