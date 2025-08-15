@@ -10,7 +10,7 @@ import {
 import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { CurrencyEntity } from "./currencyEntity";
 import { LanguageEntity } from "../../language/entity/languageEntity";
-import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 @Entity("currencies_by_language")
 @Unique("uq_currency_by_language", ["currency_id", "language_id"])

@@ -6,7 +6,7 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "./childEntity";
 
 /**

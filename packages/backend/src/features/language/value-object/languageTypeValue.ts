@@ -3,7 +3,7 @@ import { LanguageCode } from './languageCode';
 import { LanguageName } from './languageName';
 import z from 'zod';
 import { LanguageEntity } from '../entity/languageEntity';
-import { BaseSimpleEnumValue } from 'src/core/enum/baseEnum';
+import { BaseSimpleEnumValue } from '@backend/core/enum/baseEnum';
 
 export const LanguageTypeValueSchema = z.object({
   id: z.number(),

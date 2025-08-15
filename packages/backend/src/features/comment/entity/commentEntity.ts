@@ -6,9 +6,9 @@ import {
   Check,
   Unique,
 } from "typeorm";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
-import { BaseHistoryEntity } from "src/core/entity/baseHistoryEntity";
-import { BaseTransactionTranslationEntity } from "src/core/entity/baseTranslationEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
+import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemberEntity";
 import { CommentableTypeEntity } from "./commentableTypeEntity";
 

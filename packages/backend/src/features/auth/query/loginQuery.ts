@@ -2,7 +2,7 @@ import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemb
 import { ParentEntity } from "src/features/parent/entity/parentEntity";
 import { ChildEntity } from "src/features/child/entity/childEntity";
 import { FamilyEntity } from "src/features/family/entity/familyEntity";
-import { BaseQueryParams } from "src/core/query-service/baseQueryParams";
+import { BaseQueryParams } from "@backend/core/query-service/baseQueryParams";
 
 /**
  * ログインクエリパラメータ

@@ -1,4 +1,4 @@
-import { LocaleString } from "src/core/messages/localeString";
+import { LocaleString } from "@backend/core/messages/localeString";
 import { BaseId } from "../../../core/value-object/base_id";
 
 /**

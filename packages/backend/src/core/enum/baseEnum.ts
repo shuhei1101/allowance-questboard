@@ -1,5 +1,5 @@
 import z from 'zod';
-import { TranslationEntityProtocol } from 'src/core/entity/baseTranslationEntity';
+import { TranslationEntityProtocol } from '@backend/core/entity/baseTranslationEntity';
 import { BaseEntityProtocol } from '../entity/appBaseEntity';
 import { BaseId } from '../value-object/base_id';
 

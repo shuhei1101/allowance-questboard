@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { t, authenticatedProcedure } from 'src/core/trpc/trpcContext';
+import { t, authenticatedProcedure } from '@backend/core/trpc/trpcContext';
 import { loginQuery, LoginQueryResult } from 'src/features/auth/query/loginQuery';
 
 /**

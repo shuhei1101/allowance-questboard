@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn } from "typeorm";
-import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 /**
  * クエストサブクラスタイプエンティティ

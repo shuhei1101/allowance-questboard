@@ -7,7 +7,7 @@ import {
   Check,
   PrimaryColumn,
 } from "typeorm";
-import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
 /**
  * 通貨マスタエンティティ

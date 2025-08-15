@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { t } from 'src/core/trpc/trpcContext';
+import { t } from '@backend/core/trpc/trpcContext';
 import { getMasterData } from '../usecase/getMasterData';
 
 /**

@@ -2,7 +2,7 @@ import { LanguageId } from '../value-object/languageId';
 import { LanguageTypeValue, LanguageTypeValueSchema } from '../value-object/languageTypeValue';
 import { z } from "zod";
 import { LanguageEntity } from '../entity/languageEntity';
-import { BaseSimpleEnum } from 'src/core/enum/baseEnum';
+import { BaseSimpleEnum } from '@backend/core/enum/baseEnum';
 
 /**
  * 言語の種類

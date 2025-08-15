@@ -5,8 +5,8 @@ import {
   JoinColumn,
   PrimaryColumn,
 } from "typeorm";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
-import { BaseHistoryEntity } from "src/core/entity/baseHistoryEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { LanguageEntity } from "src/features/language/entity/languageEntity";
 
 /**

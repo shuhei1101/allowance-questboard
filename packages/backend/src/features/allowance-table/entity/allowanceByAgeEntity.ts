@@ -7,8 +7,8 @@ import {
   Check,
 } from "typeorm";
 import { AllowanceTableEntity } from "./allowanceTableEntity";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
-import { BaseHistoryEntity } from "src/core/entity/baseHistoryEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
+import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 
 /**
  * 年齢別お小遣いテーブルエンティティ

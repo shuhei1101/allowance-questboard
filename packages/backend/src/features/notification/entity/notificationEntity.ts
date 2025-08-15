@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Index,
 } from "typeorm";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemberEntity";
 import { NotifiableTypeEntity } from "./notifiableTypeEntity";
 import { ScreenEntity } from "src/features/shared/entity/screenEntity";

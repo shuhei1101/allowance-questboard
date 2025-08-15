@@ -4,7 +4,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyEntity } from "./familyEntity";
 import { CurrencyEntity } from "src/features/shared/entity/currencyEntity";
 

@@ -1,4 +1,4 @@
-import { BaseValueObject } from "src/core/value-object/baseValueObject";
+import { BaseValueObject } from "@backend/core/value-object/baseValueObject";
 import { LocaleString } from "../../../core/messages/localeString";
 import { ValueValidateException } from "../../../core/validator/validationException";
 

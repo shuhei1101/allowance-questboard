@@ -1,4 +1,4 @@
-import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 import {
   Entity,
   Column,

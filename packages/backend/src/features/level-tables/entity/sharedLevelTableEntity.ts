@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Unique,
 } from "typeorm";
-import { BaseTransactionEntity } from "src/core/entity/baseTransactionEntity";
+import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyLevelTableEntity } from "./familyLevelTableEntity";
 import { FamilyEntity } from "src/features/family/entity/familyEntity";
 
