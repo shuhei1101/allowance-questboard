@@ -87,6 +87,8 @@ function HomePage() {
         const languageType = localeToLanguageType(locale);
         sessionStore.setLanguageType(languageType);
         console.log('📱 初回言語設定:', locale);
+        console.log('languageType.name:', languageType.name.value);
+        console.log(' languageType.sortOrder:', languageType.sortOrder);
 
         // 3. 初期化完了
         setLoadingMessage("初期化が完了しました! ✨");
@@ -114,23 +116,7 @@ function HomePage() {
 
     initializeApp();
 
-    // 画面に戻ったとき
-    const subscription = AppState.addEventListener(
-      'change',
-      (nextState: AppStateStatus) => {
-        if (nextState === 'active') {
-          const locale = Localization.getLocales()[0]?.languageCode || 'ja';
-          const languageType = localeToLanguageType(locale);
-          sessionStore.setLanguageType(languageType);
-          console.log('📱 言語更新:', locale);
-        }
-      }
-    );
-
-    return () => {
-      subscription.remove();
-    };
-  }, [sessionStore]);
+  }, []); // 依存配列を空にして1回だけ実行
 
   // 初期化中はローディング画面を表示
   if (isInitializing) {

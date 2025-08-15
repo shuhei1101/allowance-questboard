@@ -1,4 +1,4 @@
-import { trpc } from "@/core/api/trpcClient";
+import { trpcClient } from "@/core/api/trpcClient";
 import { LanguageType } from "@backend/features/language/enum/languageType";
 import { FamilyMemberType } from "@backend/features/family-member/enum/familyMemberType";
 
@@ -12,17 +12,17 @@ export async function initMasterData(): Promise<void> {
   try {
     console.log('🚧 マスタデータ初期化は一時的に無効化されています');
     // tRPC経由でマスタデータを取得
-    const masterData = await trpc.init.getMasterData.query();
+    const masterData = await trpcClient.init.getMasterData.query();
     
     // LanguageType Enumの値を更新
-    if (masterData.language) {
-      LanguageType.setFromZodData(masterData.language);
+    if (masterData.languages) {
+      LanguageType.setFromZodData(masterData.languages);
       console.log('✨ LanguageType Enum更新完了！');
     }
     
     // FamilyMemberType Enumの値を更新
-    if (masterData.familyMemberType) {
-      FamilyMemberType.setFromZodData(masterData.familyMemberType);
+    if (masterData.familyMemberTypes) {
+      FamilyMemberType.setFromZodData(masterData.familyMemberTypes);
       console.log('✨ FamilyMemberType Enum更新完了！');
     }
     

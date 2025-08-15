@@ -6,8 +6,8 @@ import {
   Unique,
   PrimaryColumn,
 } from "typeorm";
-import { BaseMasterEntity } from "@backend/core/core/entity/baseMasterEntity";
-import { BaseMasterTranslationEntity } from "@backend/core/core/entity/baseTranslationEntity";
+import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
+import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 
 /**
  * 学歴マスタエンティティ
