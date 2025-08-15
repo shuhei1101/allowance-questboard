@@ -1,7 +1,7 @@
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from '@backend/router';
 import { useLoginPageStore } from '../store/loginPageStore';
-import { useSessionStore } from '@/features/session/store/sessionStore';
+import { useSessionStore } from '@/features/auth/shared/store/sessionStore';
 
 /**
  * ログインユースケースのパラメータ

@@ -7,7 +7,7 @@ dotenv.config();
 export const AppDataSource = new DataSource({
   type: "postgres",
   url: process.env.DATABASE_URL, // ← Supabaseの接続URLを使用
-  synchronize: true, // ← 開発中だけtrueにする（本番はダメ🙅‍♀️）
+  synchronize: false, // ← 開発中だけtrueにする（本番はダメ🙅‍♀️）
   logging: true,
   entities: [__dirname + "/../../features/**/entity/*.ts"],
   ssl: {

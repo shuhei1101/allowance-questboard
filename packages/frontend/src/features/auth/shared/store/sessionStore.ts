@@ -1,13 +1,16 @@
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
+import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface SessionState {
   jwt?: string;
   familyMemberType?: FamilyMemberTypeValue;
+  languageType?: LanguageTypeValue;
   updateJwt: (jwt: string) => void;
   updateFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => void;
+  setLanguageType: (languageType: LanguageTypeValue) => void;
 }
 
 const getStorage = () => {
@@ -28,6 +31,7 @@ export const useSessionStore = create<SessionState>()(
       (set, get) => ({
         jwt: undefined,
         familyMemberType: undefined,
+        languageType: undefined,
 
         updateJwt: (jwt: string) => {
           set((_) => ({ jwt }), false, 'updateJwt');
@@ -35,8 +39,11 @@ export const useSessionStore = create<SessionState>()(
         updateFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => {
           set((_) => ({ familyMemberType }), false, 'updateFamilyMemberType');
         },
+        setLanguageType: (languageType: LanguageTypeValue) => {
+          set((_) => ({ languageType }), false, 'setLanguageType');
+        },
         clear: () => {
-          set(() => ({ jwt: undefined, familyMemberType: undefined }), false, 'clear');
+          set(() => ({ jwt: undefined, familyMemberType: undefined, languageType: undefined }), false, 'clear');
         },
         isAuthenticated: () => {
           const state = get();

@@ -26,8 +26,8 @@ export class LanguageEntity extends BaseMasterEntity {
    */
   protected static seedData(): LanguageEntity[] {
     return [
-      Object.assign(new LanguageEntity(), { code: "ja", name: "Japanese", is_active: true, sort_order: 1 }),
-      Object.assign(new LanguageEntity(), { code: "en", name: "English", is_active: true, sort_order: 2 }),
+      Object.assign(new LanguageEntity(), { id: 1, code: "ja", name: "Japanese", is_active: true, sort_order: 1 }),
+      Object.assign(new LanguageEntity(), { id: 2, code: "en", name: "English", is_active: true, sort_order: 2 }),
     ];
   }
 }

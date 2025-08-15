@@ -12,7 +12,7 @@ import { CurrencyEntity } from "./currencyEntity";
 import { BaseMasterEntity } from "src/core/entity/baseMasterEntity";
 
 @Entity("exchange_rates")
-@Unique("uq_exchange_rates_currencies_date", ["base_currency_id", "target_currency_id", "effective_date"])
+@Unique("uq_exchange_rates_currencies_date", ["base_currency_id", "target_currency_id"])
 @Check("chk_exchange_rates_different_currencies", "base_currency_id != target_currency_id")
 @Check("chk_exchange_rates_rate_positive", "rate > 0")
 export class ExchangeRateEntity extends BaseMasterEntity {
@@ -38,8 +38,8 @@ export class ExchangeRateEntity extends BaseMasterEntity {
    */
   protected static seedData(): ExchangeRateEntity[] {
     return [
-      Object.assign(new ExchangeRateEntity(), { base_currency_id: 1, target_currency_id: 2, rate: 0.007, effective_date: new Date() }), // JPY to USD
-      Object.assign(new ExchangeRateEntity(), { base_currency_id: 2, target_currency_id: 1, rate: 143.0, effective_date: new Date() }), // USD to JPY
+      Object.assign(new ExchangeRateEntity(), { base_currency_id: 1, target_currency_id: 2, rate: 0.007 }), // JPY to USD
+      Object.assign(new ExchangeRateEntity(), { base_currency_id: 2, target_currency_id: 1, rate: 143.0 }), // USD to JPY
     ];
   }
 }
