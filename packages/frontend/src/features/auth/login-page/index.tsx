@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet, Alert } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { AppIcon } from './components/AppIcon';
 import { AppTitleLabel } from './components/AppTitleLabel';
 import { EmailInputField } from './components/EmailInputField';
@@ -11,13 +11,17 @@ import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
-import { login } from './usecase/login';
-import { useLoginPageStore } from './store/loginPageStore';
-import { useSessionStore } from '@/features/auth/shared/store/sessionStore';
-import { LoginForm } from './models/loginForm';
-import { SelectFamilyDialog } from './models/selectFamilyDialog';
-import { Email } from '@backend/features/auth/value-object/email';
-import { Password } from '@backend/features/auth/value-object/password';
+import { useLoginPageStore } from './stores/loginPageStore';
+import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
+import { handleEmailChange } from './services/handleEmailChange';
+import { handlePasswordChange } from './services/handlePasswordChange';
+import { handleLogin } from './services/handleLogin';
+import { handleCreateFamily } from './services/handleCreateFamily';
+import { handleForgotPassword } from './services/handleForgotPassword';
+import { handleParentLogin } from './services/handleParentLogin';
+import { handleChildLogin } from './services/handleChildLogin';
+import { handleTermsOfService } from './services/handleTermsOfService';
+import { handleCloseDialog } from './services/handleCloseDialog';
 
 /**
  * ログインページ
@@ -48,179 +52,63 @@ export const LoginPage: React.FC = () => {
   const isFormFilled = pageStore.loginForm.isFilled();
   
   // メール変更時のハンドラー
-  const handleEmailChange = (value: string) => {
-    const updatedForm = new LoginForm({ 
-      email: new Email(value), 
-      password: pageStore.loginForm.password 
-    });
-    pageStore.updateLoginForm(updatedForm);
-    // エラーをクリア
-    if (pageStore.emailError) {
-      pageStore.setEmailError(null);
-    }
+  const onEmailChange = (value: string) => {
+    handleEmailChange({ value });
   };
 
   // パスワード変更時のハンドラー
-  const handlePasswordChange = (value: string) => {
-    const updatedForm = new LoginForm({ 
-      email: pageStore.loginForm.email, 
-      password: new Password(value) 
-    });
-    pageStore.updateLoginForm(updatedForm);
-    // エラーをクリア
-    if (pageStore.passwordError) {
-      pageStore.setPasswordError(null);
-    }
+  const onPasswordChange = (value: string) => {
+    handlePasswordChange({ value });
   };
 
   /**
    * ログイン処理
-   * Supabaseの認証を実行し、成功時は家族選択ダイアログを表示
    */
-  const handleLogin = useCallback(async () => {
-    // エラーをクリア
-    pageStore.clearErrors();
-
-    // バリデーションチェック
-    let hasValidationError = false;
-
-    // メールアドレスのバリデーション
-    if (!pageStore.loginForm.email.isValid) {
-      pageStore.setEmailError(pageStore.loginForm.email.errorMessage?.ja || 'バリデーションエラー');
-      hasValidationError = true;
-    }
-
-    // パスワードのバリデーション
-    if (!pageStore.loginForm.password.isValid) {
-      pageStore.setPasswordError(pageStore.loginForm.password.errorMessage?.ja || 'バリデーションエラー');
-      hasValidationError = true;
-    }
-
-    // バリデーションエラーがある場合は処理を終了
-    if (hasValidationError) {
-      return;
-    }
-
-    pageStore.setLoading(true);
-
-    try {
-      // TODO: Supabaseの実装に置き換える
-      // const { data, error } = await supabase.auth.signInWithPassword({
-      //   email: store.loginForm.email,
-      //   password: store.loginForm.password,
-      // });
-
-      // if (error) throw error;
-
-      // 仮のJWTトークン（実際はSupabaseから取得）
-      const mockJwtToken = 'mock-jwt-token';
-      
-      const result = await login({ jwtToken: mockJwtToken });
-      
-      if (result.success) {
-        // 家族選択ダイアログを表示
-        pageStore.updateSelectFamilyDialog(
-          new SelectFamilyDialog({ familyName: pageStore.selectFamilyDialog.familyName })
-        );
-        pageStore.showDialog();
-      } else {
-        Alert.alert(t('common.error'), result.errorMessage || t('login.errors.loginFailed'));
-      }
-    } catch (error) {
-      console.error('ログインエラー:', error);
-      Alert.alert(t('common.error'), t('login.errors.loginFailed'));
-    } finally {
-      pageStore.setLoading(false);
-    }
-  }, [pageStore, t]);
+  const onLogin = useCallback(async () => {
+    await handleLogin();
+  }, []);
 
   /**
    * 新規家族作成画面への遷移
    */
-  const handleCreateFamily = useCallback(() => {
-    // TODO: React Navigationの実装
-    console.log('新規家族作成画面への遷移');
-    Alert.alert(t('common.confirm'), t('login.navigation.createFamily'));
-  }, [t]);
+  const onCreateFamily = useCallback(() => {
+    handleCreateFamily();
+  }, []);
 
   /**
    * パスワードリセット画面への遷移
    */
-  const handleForgotPassword = useCallback(() => {
-    // TODO: React Navigationの実装
-    console.log('パスワードリセット画面への遷移');
-    Alert.alert(t('common.confirm'), t('login.navigation.forgotPassword'));
-  }, [t]);
+  const onForgotPassword = useCallback(() => {
+    handleForgotPassword();
+  }, []);
 
   /**
    * 親としてログイン
    */
-  const handleParentLogin = useCallback(() => {
-    try {
-      // セッションにJWTトークンを設定
-      sessionStore.updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
-      
-      // TODO: 家族メンバータイプの設定（後で実装）
-      // updateFamilyMemberType(parentType);
-
-      // ダイアログを閉じる
-      pageStore.hideDialog();
-      
-      // ログイン状態をリセット
-      pageStore.updateLoginForm(LoginForm.initialize());
-      pageStore.setLoading(false);
-
-      // TODO: 親用ホーム画面への遷移
-      console.log('親用ホーム画面への遷移');
-      Alert.alert(t('common.success'), t('login.success.parentLogin'));
-    } catch (error) {
-      console.error('親ログインエラー:', error);
-      Alert.alert(t('common.error'), t('login.errors.parentLoginFailed'));
-    }
-  }, [sessionStore, pageStore, t]);
+  const onParentLogin = useCallback(() => {
+    handleParentLogin();
+  }, []);
 
   /**
    * 子供としてログイン
    */
-  const handleChildLogin = useCallback(() => {
-    try {
-      // セッションにJWTトークンを設定
-      sessionStore.updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
-      
-      // TODO: 家族メンバータイプの設定（後で実装）
-      // updateFamilyMemberType(childType);
-
-      // ダイアログを閉じる
-      pageStore.hideDialog();
-      
-      // ログイン状態をリセット
-      pageStore.updateLoginForm(LoginForm.initialize());
-      pageStore.setLoading(false);
-
-      // TODO: 子供用ホーム画面への遷移
-      console.log('子供用ホーム画面への遷移');
-      Alert.alert(t('common.success'), t('login.success.childLogin'));
-    } catch (error) {
-      console.error('子供ログインエラー:', error);
-      Alert.alert(t('common.error'), t('login.errors.childLoginFailed'));
-    }
-  }, [sessionStore, pageStore, t]);
+  const onChildLogin = useCallback(() => {
+    handleChildLogin();
+  }, []);
 
   /**
    * 利用規約画面への遷移
    */
-  const handleTermsOfService = useCallback(() => {
-    // TODO: React Navigationの実装
-    console.log('利用規約画面への遷移');
-    Alert.alert(t('common.confirm'), t('login.navigation.termsOfService'));
-  }, [t]);
+  const onTermsOfService = useCallback(() => {
+    handleTermsOfService();
+  }, []);
 
   /**
    * ダイアログを閉じる
    */
-  const handleCloseDialog = useCallback(() => {
-    pageStore.hideDialog();
-  }, [pageStore]);
+  const onCloseDialog = useCallback(() => {
+    handleCloseDialog();
+  }, []);
 
   return (
     <KeyboardAvoidingView 
@@ -239,42 +127,42 @@ export const LoginPage: React.FC = () => {
         <View style={styles.formContainer}>
           <EmailInputField
             value={pageStore.loginForm.email.value}
-            onChange={handleEmailChange}
+            onChange={onEmailChange}
             error={pageStore.emailError || undefined}
           />
           
           <PasswordInputField
             value={pageStore.loginForm.password.value}
-            onChange={handlePasswordChange}
+            onChange={onPasswordChange}
             error={pageStore.passwordError || undefined}
           />
           
           <LoginButton
             disabled={!isFormFilled}
             loading={pageStore.isLoading}
-            onPress={handleLogin}
+            onPress={onLogin}
           />
           
           <CreateFamilyButton
-            onPress={handleCreateFamily}
+            onPress={onCreateFamily}
           />
           
           <ForgotPasswordLink
-            onPress={handleForgotPassword}
+            onPress={onForgotPassword}
           />
         </View>
 
         <TermsOfServiceLink
-          onPress={handleTermsOfService}
+          onPress={onTermsOfService}
         />
       </ScrollView>
 
       <SelectFamilyDialogComponent
         isVisible={isDialogVisible}
         familyName={pageStore.selectFamilyDialog.getFamilyNameString() || undefined}
-        onParentLogin={handleParentLogin}
-        onChildLogin={handleChildLogin}
-        onClose={handleCloseDialog}
+        onParentLogin={onParentLogin}
+        onChildLogin={onChildLogin}
+        onClose={onCloseDialog}
       />
     </KeyboardAvoidingView>
   );
