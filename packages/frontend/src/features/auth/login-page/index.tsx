@@ -51,65 +51,6 @@ export const LoginPage: React.FC = () => {
   // フォームが入力済みかどうか
   const isFormFilled = pageStore.loginForm.isFilled();
   
-  // メール変更時のハンドラー
-  const onEmailChange = (value: string) => {
-    handleEmailChange({ value });
-  };
-
-  // パスワード変更時のハンドラー
-  const onPasswordChange = (value: string) => {
-    handlePasswordChange({ value });
-  };
-
-  /**
-   * ログイン処理
-   */
-  const onLogin = useCallback(async () => {
-    await handleLogin();
-  }, []);
-
-  /**
-   * 新規家族作成画面への遷移
-   */
-  const onCreateFamily = useCallback(() => {
-    handleCreateFamily();
-  }, []);
-
-  /**
-   * パスワードリセット画面への遷移
-   */
-  const onForgotPassword = useCallback(() => {
-    handleForgotPassword();
-  }, []);
-
-  /**
-   * 親としてログイン
-   */
-  const onParentLogin = useCallback(() => {
-    handleParentLogin();
-  }, []);
-
-  /**
-   * 子供としてログイン
-   */
-  const onChildLogin = useCallback(() => {
-    handleChildLogin();
-  }, []);
-
-  /**
-   * 利用規約画面への遷移
-   */
-  const onTermsOfService = useCallback(() => {
-    handleTermsOfService();
-  }, []);
-
-  /**
-   * ダイアログを閉じる
-   */
-  const onCloseDialog = useCallback(() => {
-    handleCloseDialog();
-  }, []);
-
   return (
     <KeyboardAvoidingView 
       style={[styles.container, { backgroundColor: colors.background.primary }]} 
@@ -127,42 +68,42 @@ export const LoginPage: React.FC = () => {
         <View style={styles.formContainer}>
           <EmailInputField
             value={pageStore.loginForm.email.value}
-            onChange={onEmailChange}
+            onChange={handleEmailChange}
             error={pageStore.emailError || undefined}
           />
           
           <PasswordInputField
             value={pageStore.loginForm.password.value}
-            onChange={onPasswordChange}
+            onChange={handlePasswordChange}
             error={pageStore.passwordError || undefined}
           />
           
           <LoginButton
             disabled={!isFormFilled}
             loading={pageStore.isLoading}
-            onPress={onLogin}
+            onPress={handleLogin}
           />
           
           <CreateFamilyButton
-            onPress={onCreateFamily}
+            onPress={handleCreateFamily}
           />
           
           <ForgotPasswordLink
-            onPress={onForgotPassword}
+            onPress={handleForgotPassword}
           />
         </View>
 
         <TermsOfServiceLink
-          onPress={onTermsOfService}
+          onPress={handleTermsOfService}
         />
       </ScrollView>
 
       <SelectFamilyDialogComponent
         isVisible={isDialogVisible}
         familyName={pageStore.selectFamilyDialog.getFamilyNameString() || undefined}
-        onParentLogin={onParentLogin}
-        onChildLogin={onChildLogin}
-        onClose={onCloseDialog}
+        onParentLogin={handleParentLogin}
+        onChildLogin={handleChildLogin}
+        onClose={handleCloseDialog}
       />
     </KeyboardAvoidingView>
   );

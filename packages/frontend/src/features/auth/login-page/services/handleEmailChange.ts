@@ -3,22 +3,13 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { useLoginPageStore } from '../stores/loginPageStore';
 
 /**
- * メール変更ハンドラーのパラメータ
- */
-export interface HandleEmailChangeParams {
-  /** 新しいメールアドレス */
-  value: string;
-}
-
-/**
  * メール変更ハンドラー
  * 
  * メールアドレスの値を更新し、エラーをクリアする
  * 
- * @param params メール変更パラメータ
+ * @param value 新しいメールアドレス
  */
-export const handleEmailChange = (params: HandleEmailChangeParams): void => {
-  const { value } = params;
+export const handleEmailChange = (value: string): void => {
   const pageStore = useLoginPageStore();
   
   const updatedForm = new LoginForm({ 
