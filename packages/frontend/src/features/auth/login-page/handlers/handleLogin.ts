@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import { useLoginPageStore } from '../stores/loginPageStore';
 import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
-import { login } from './login';
+import { login } from '../services/login';
 
 /**
  * ログインハンドラー

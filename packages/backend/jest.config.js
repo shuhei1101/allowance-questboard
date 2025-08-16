@@ -14,6 +14,7 @@ module.exports = {
   },
   moduleNameMapper: {
     '^@backend/(.*)$': '<rootDir>/src/$1',
+    '^src/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverageFrom: [
     'src/**/*.ts',

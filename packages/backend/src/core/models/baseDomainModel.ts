@@ -3,13 +3,12 @@ import { AppBaseEntity } from '../entity/appBaseEntity';
 import { BaseId } from '../value-object/base_id';
 import { FamilyMemberId } from 'src/features/family-member/value-object/familyMemberId';
 import { ScreenId } from 'src/features/shared/value-object/screenId';
-import { RelationValidator } from '../validator/relationValidator';
+import { BaseModel } from './baseModel';
 
 /**
  * ドメインモデルの基底抽象クラス
- * PythonのBaseModelクラスのTypeScript版
  */
-export abstract class BaseModel<IdType extends BaseId, EntityType extends AppBaseEntity> {
+export abstract class BaseDomainModel<IdType extends BaseId, EntityType extends AppBaseEntity> extends BaseModel {
   protected _id: IdType;
   protected _version: Version;
   protected _createdAt?: Date;
@@ -19,7 +18,6 @@ export abstract class BaseModel<IdType extends BaseId, EntityType extends AppBas
   protected _updatedBy?: FamilyMemberId;
   protected _updatedFrom?: ScreenId;
   protected _isUpdated: boolean = false;
-  protected _relationValidator: RelationValidator;
 
   constructor(
     id: IdType,
@@ -31,6 +29,7 @@ export abstract class BaseModel<IdType extends BaseId, EntityType extends AppBas
     updatedBy?: FamilyMemberId,
     updatedFrom?: ScreenId
   ) {
+    super();
     this._id = id;
     this._version = version;
     this._createdAt = createdAt;
@@ -39,14 +38,7 @@ export abstract class BaseModel<IdType extends BaseId, EntityType extends AppBas
     this._updatedAt = updatedAt;
     this._updatedBy = updatedBy;
     this._updatedFrom = updatedFrom;
-    this._relationValidator = new RelationValidator();
-    this._validate();
   }
-
-  /**
-   * モデルの値を検証する（サブクラスで実装必須）
-   */
-  protected abstract _validate(): void;
 
   /**
    * IDを取得する
@@ -117,8 +109,8 @@ export abstract class BaseModel<IdType extends BaseId, EntityType extends AppBas
   /**
    * 他のモデルと同じバージョンかどうかを比較
    */
-  isSameVersion(other: BaseModel<any, any>): boolean {
-    if (!(other instanceof BaseModel)) {
+  isSameVersion(other: BaseDomainModel<any, any>): boolean {
+    if (!(other instanceof BaseDomainModel)) {
       return false;
     }
     return this._version.equals(other.version);

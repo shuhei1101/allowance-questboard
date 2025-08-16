@@ -1,4 +1,3 @@
-import { LanguageType } from "@backend/features/language/enum/languageType";
 import { LanguageTypeValue } from "@backend/features/language/value-object/languageTypeValue";
 
 export class LocaleString {
@@ -21,13 +20,13 @@ export class LocaleString {
   }
   
   getMessage(languageType: LanguageTypeValue): string {
-    switch (languageType) {
-      case LanguageType.JAPANESE:
-        return this.ja;
-      case LanguageType.ENGLISH:
-        return this.en;
-      default:
-        throw new Error(`Unsupported language type: ${languageType}`);
+    // 値で比較する（LanguageTypeのenum値を直接使用）
+    if (languageType.id.value === 1) { // JAPANESE
+      return this.ja;
+    } else if (languageType.id.value === 2) { // ENGLISH
+      return this.en;
+    } else {
+      throw new Error(`Unsupported language type: ${languageType}`);
     }
   }
 }

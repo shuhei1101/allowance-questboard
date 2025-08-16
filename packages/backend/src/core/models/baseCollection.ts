@@ -1,5 +1,5 @@
 import { BaseId } from '../value-object/base_id';
-import { BaseModel } from './baseModel';
+import { BaseDomainModel } from './baseDomainModel';
 
 /**
  * コレクションアイテムのプロトコル（インターフェース）
@@ -15,7 +15,7 @@ export interface CollectionItemProtocol<IdType extends BaseId> {
  * ドメインモデルのコレクションを表現する基底抽象クラス（ファーストコレクション）
  */
 export abstract class BaseCollection<
-  ItemType extends BaseModel<IdType, any> & CollectionItemProtocol<IdType>,
+  ItemType extends BaseDomainModel<IdType, any> & CollectionItemProtocol<IdType>,
   IdType extends BaseId
 > {
   protected _items: ItemType[];

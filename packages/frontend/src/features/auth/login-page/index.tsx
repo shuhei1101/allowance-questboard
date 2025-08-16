@@ -1,4 +1,3 @@
-import React, { useCallback } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { AppIcon } from './components/AppIcon';
 import { AppTitleLabel } from './components/AppTitleLabel';
@@ -10,18 +9,16 @@ import { ForgotPasswordLink } from './components/ForgotPasswordLink';
 import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/SelectFamilyDialog';
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
-import { useTranslation } from '@/core/i18n/useTranslation';
 import { useLoginPageStore } from './stores/loginPageStore';
-import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
-import { handleEmailChange } from './services/handleEmailChange';
-import { handlePasswordChange } from './services/handlePasswordChange';
-import { handleLogin } from './services/handleLogin';
-import { handleCreateFamily } from './services/handleCreateFamily';
-import { handleForgotPassword } from './services/handleForgotPassword';
-import { handleParentLogin } from './services/handleParentLogin';
-import { handleChildLogin } from './services/handleChildLogin';
-import { handleTermsOfService } from './services/handleTermsOfService';
-import { handleCloseDialog } from './services/handleCloseDialog';
+import { handleEmailChange } from './handlers/handleEmailChange';
+import { handlePasswordChange } from './handlers/handlePasswordChange';
+import { handleLogin } from './handlers/handleLogin';
+import { handleCreateFamily } from './handlers/handleCreateFamily';
+import { handleForgotPassword } from './handlers/handleForgotPassword';
+import { handleParentLogin } from './handlers/handleParentLogin';
+import { handleChildLogin } from './handlers/handleChildLogin';
+import { handleTermsOfService } from './handlers/handleTermsOfService';
+import { handleCloseDialog } from './handlers/handleCloseDialog';
 
 /**
  * ログインページ
@@ -35,71 +32,71 @@ import { handleCloseDialog } from './services/handleCloseDialog';
  * - 利用規約への遷移
  */
 export const LoginPage: React.FC = () => {
-  // Hooks
   const { colors } = useTheme();
-  const { t } = useTranslation();
-  
-  // Store
   const pageStore = useLoginPageStore();
-  const sessionStore = useSessionStore();
-
-  // ダイアログの表示状態
-  const isDialogVisible = pageStore.isDialogVisible;
-
-  // フォームの有効性を計算
-  const isFormValid = pageStore.loginForm.isValid();
-  // フォームが入力済みかどうか
-  const isFormFilled = pageStore.loginForm.isFilled();
   
   return (
     <KeyboardAvoidingView 
       style={[styles.container, { backgroundColor: colors.background.primary }]} 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
+
+      {/* スクロールビュー */}
       <ScrollView 
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
       >
+        {/* ヘッダーコンテナ */}
         <View style={styles.headerContainer}>
+          {/* アプリアイコン */}
           <AppIcon />
+          {/* アプリタイトルラベル */}
           <AppTitleLabel />
         </View>
 
+        {/* フォームコンテナ */}
         <View style={styles.formContainer}>
+          {/* Email入力フィールド */}
           <EmailInputField
             value={pageStore.loginForm.email.value}
             onChange={handleEmailChange}
             error={pageStore.emailError || undefined}
           />
           
+          {/* Password入力フィールド */}
           <PasswordInputField
             value={pageStore.loginForm.password.value}
             onChange={handlePasswordChange}
             error={pageStore.passwordError || undefined}
           />
           
+          {/* ログインボタン */}
           <LoginButton
-            disabled={!isFormFilled}
+            disabled={!pageStore.loginForm.isFilled()}
             loading={pageStore.isLoading}
             onPress={handleLogin}
           />
           
+          {/* 新規家族作成ボタン */}
           <CreateFamilyButton
             onPress={handleCreateFamily}
           />
           
+          {/* パスワードリセットリンク */}
           <ForgotPasswordLink
             onPress={handleForgotPassword}
           />
         </View>
 
+        {/* 利用規約リンク */}
         <TermsOfServiceLink
           onPress={handleTermsOfService}
         />
       </ScrollView>
 
+      {/* 家族選択ダイアログ */}
       <SelectFamilyDialogComponent
-        isVisible={isDialogVisible}
+        isVisible={pageStore.isDialogVisible}
         familyName={pageStore.selectFamilyDialog.getFamilyNameString() || undefined}
         onParentLogin={handleParentLogin}
         onChildLogin={handleChildLogin}

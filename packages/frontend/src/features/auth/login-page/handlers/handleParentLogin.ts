@@ -3,6 +3,7 @@ import { useLoginPageStore } from '../stores/loginPageStore';
 import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
+import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 
 /**
  * 親ログインハンドラー
@@ -15,11 +16,8 @@ export const handleParentLogin = (): void => {
   const { t } = useTranslation();
   
   try {
-    // セッションにJWTトークンを設定
-    sessionStore.updateJwt('mock-jwt-token'); // 実際はログイン時に取得したトークン
-    
     // TODO: 家族メンバータイプの設定（後で実装）
-    // updateFamilyMemberType(parentType);
+    sessionStore.updateFamilyMemberType(FamilyMemberType.PARENT);
 
     // ダイアログを閉じる
     pageStore.hideDialog();

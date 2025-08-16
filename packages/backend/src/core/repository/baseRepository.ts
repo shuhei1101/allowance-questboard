@@ -1,4 +1,4 @@
-import { BaseModel } from '../domain/baseModel';
+import { BaseDomainModel } from '../models/baseDomainModel';
 import { BaseDao } from '../dao/baseDao';
 import { AppBaseEntity } from '../entity/appBaseEntity';
 import { BaseId } from '../value-object/base_id';
@@ -9,7 +9,7 @@ import { BaseId } from '../value-object/base_id';
  */
 export abstract class BaseRepository<
   TId extends BaseId, 
-  TModel extends BaseModel<TId, TEntity>,
+  TModel extends BaseDomainModel<TId, TEntity>,
   TEntity extends AppBaseEntity
 > {
   /**

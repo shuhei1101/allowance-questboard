@@ -6,22 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Localization from 'expo-localization';
 import { useEffect, useState } from 'react';
-
-// i18n初期化
 import '@/core/i18n';
-
-// Session store
-import { useSessionStore } from './src/features/auth/shared/store/sessionStore';
 import { localeToLanguageType } from './src/features/auth/shared/utils/localeToLanguageType';
-
-// Usecase
-import { initMasterData } from './src/features/auth/shared/usecase/initMasterData';
-
-// Components
 import { LoadingScreen } from './src/shared/components/LoadingScreen';
-
-// Pages
 import { LoginPage } from './src/features/auth/login-page';
+import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
+import { initMasterData } from '@/features/auth/shared/services/initMasterData';
 
 // Navigation types
 export type RootStackParamList = {

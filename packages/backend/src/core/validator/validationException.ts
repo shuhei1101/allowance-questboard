@@ -1,21 +1,7 @@
+import { BaseAppException } from '../errors/baseAppException';
 import { LocaleString } from '../messages/localeString';
 
-export class ValidationException extends Error {
-  public readonly errorType: string;
-  public readonly localeMessage: LocaleString;
-
-  constructor(params: {
-    errorType: string;
-    message: LocaleString;
-  }) {
-    super(params.message.en);
-    this.errorType = params.errorType;
-    this.localeMessage = params.message;
-    this.name = 'ValidationException';
-  }
-}
-
-export class ValueValidateException extends ValidationException {
+export class ValueValidateException extends BaseAppException {
   public readonly valueName: LocaleString;
 
   /**
@@ -32,7 +18,7 @@ export class ValueValidateException extends ValidationException {
   }
 }
 
-export class RelationValidateException extends ValidationException {
+export class RelationValidateException extends BaseAppException {
   /**
    * 関連バリデーションエラーを表すカスタム例外クラス
    */
