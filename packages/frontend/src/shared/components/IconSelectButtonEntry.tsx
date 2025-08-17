@@ -39,6 +39,7 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
           <View style={styles.content}>
             {selectedIcon ? (
               <>
+                <View style={styles.leftSpacer} />
                 <Text style={[styles.iconText, { color: colors.text.primary }]}>
                   {selectedIcon}
                 </Text>
@@ -50,8 +51,9 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
               </>
             ) : (
               <>
+                <View style={styles.leftSpacer} />
                 <Text style={[styles.noSelectionText, { color: colors.text.secondary }]}>
-                  設定なし
+                  {t('shared.components.iconSelectButtonEntry.noSelection')}
                 </Text>
                 <Ionicons 
                   name="chevron-forward" 
@@ -77,10 +79,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  leftSpacer: {
+    flex: 1,
+  },
   iconText: {
     fontSize: 24,
+    marginRight: 8,
   },
   noSelectionText: {
     fontSize: 16,
+    marginRight: 8,
   },
 });

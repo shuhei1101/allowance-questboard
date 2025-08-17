@@ -64,7 +64,8 @@
     "components": {
       "iconSelectButtonEntry": {
         "fieldTitle": "アイコン",
-        "placeholder": "選択してください"
+        "placeholder": "選択してください",
+        "noSelection": "設定なし"
       }
     }
   },

@@ -64,7 +64,8 @@
     "components": {
       "iconSelectButtonEntry": {
         "fieldTitle": "Icon",
-        "placeholder": "Please select"
+        "placeholder": "Please select",
+        "noSelection": "Not set"
       }
     }
   },
