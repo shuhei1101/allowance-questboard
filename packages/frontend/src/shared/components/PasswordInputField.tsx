@@ -32,7 +32,7 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
   const hasError = !!error;
   
   // プレースホルダーのデフォルト値を翻訳
-  const defaultPlaceholder = placeholder || t('login.passwordPlaceholder');
+  const defaultPlaceholder = placeholder || t('auth.loginPage.passwordPlaceholder');
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
