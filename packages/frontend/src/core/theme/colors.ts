@@ -20,11 +20,11 @@ export const lightColors = {
   info: '#007AFF',
   success: '#34C759',
 
-  // 背景色
+  // 背景色 - より明るく清潔感のある色に調整
   background: {
-    primary: '#F2F2F7',
-    secondary: '#FFFFFF',
-    tertiary: '#F8F9FA',
+    primary: '#FFFFFF',      // 純白
+    secondary: '#F8F9FA',    // 非常に明るいグレー
+    tertiary: '#F2F3F5',     // 明るいグレー
   },
 
   // サーフェス色
@@ -34,20 +34,20 @@ export const lightColors = {
     secondary: '#E5E5EA',
   },
 
-  // テキストカラー
+  // テキストカラー - コントラストを改善
   text: {
-    primary: '#000000',
-    secondary: '#3C3C43',
-    tertiary: '#8E8E93',
-    disabled: '#C7C7CC',
-    inverse: '#FFFFFF',
+    primary: '#1D1D1F',      // ほぼ黒だが少し柔らかく
+    secondary: '#3A3A3C',    // 濃いグレー
+    tertiary: '#6D6D70',     // ミディアムグレー
+    disabled: '#C7C7CC',     // 薄いグレー
+    inverse: '#FFFFFF',      // 白
   },
 
   // ボーダー色
   border: {
-    light: '#C6C6C8',
-    medium: '#8E8E93',
-    dark: '#3C3C43',
+    light: '#D1D1D6',        // 明るいボーダー
+    medium: '#8E8E93',       // ミディアムボーダー
+    dark: '#3C3C43',         // 暗いボーダー
   },
 
   // 状態色
@@ -80,34 +80,34 @@ export const darkColors = {
   info: '#0A84FF',
   success: '#32D74B',
 
-  // 背景色
+  // 背景色 - より黒に近い色に変更
   background: {
-    primary: '#000000',
-    secondary: '#1C1C1E',
-    tertiary: '#2C2C2E',
+    primary: '#000000',      // 完全な黒
+    secondary: '#111111',    // 非常に濃いグレー
+    tertiary: '#1A1A1A',     // 濃いグレー
   },
 
-  // サーフェス色
+  // サーフェス色 - 背景に合わせて調整
   surface: {
-    elevated: '#1C1C1E',
-    base: '#2C2C2E',
-    secondary: '#3A3A3C',
+    elevated: '#1A1A1A',     // 少し明るいグレー
+    base: '#222222',         // ミディアムグレー
+    secondary: '#2A2A2A',    // より明るいグレー
   },
 
-  // テキストカラー
+  // テキストカラー - コントラストを向上
   text: {
-    primary: '#FFFFFF',
-    secondary: '#EBEBF5',
-    tertiary: '#8E8E93',
-    disabled: '#48484A',
-    inverse: '#000000',
+    primary: '#FFFFFF',      // 純白
+    secondary: '#E5E5E7',    // 明るいグレー
+    tertiary: '#98989D',     // ミディアムグレー
+    disabled: '#48484A',     // 暗いグレー
+    inverse: '#000000',      // 黒
   },
 
-  // ボーダー色
+  // ボーダー色 - 背景に合わせて調整
   border: {
-    light: '#38383A',
-    medium: '#48484A',
-    dark: '#8E8E93',
+    light: '#333333',        // 暗いボーダー
+    medium: '#555555',       // ミディアムボーダー
+    dark: '#777777',         // 明るめのボーダー
   },
 
   // 状態色
@@ -115,8 +115,8 @@ export const darkColors = {
     active: '#0A84FF',
     inactive: '#8E8E93',
     selected: '#1A365D',
-    hover: '#2C2C2E',
-    pressed: '#3A3A3C',
+    hover: '#2A2A2A',        // 背景より少し明るく
+    pressed: '#333333',      // さらに明るく
   },
 } as const;
 
