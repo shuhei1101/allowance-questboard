@@ -2,6 +2,7 @@ import React from 'react';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { EmailInputField } from './EmailInputField';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface Props {
   value: string;
@@ -15,10 +16,12 @@ interface Props {
  * EntryFieldとFieldWithErrorでラップしたEmailInputField
  */
 export const EmailInputFieldEntry: React.FC<Props> = ({ value, onChange, error, placeholder }) => {
+  const { t } = useTranslation();
+  
   return (
     <EntryField
-      icon="diamond"
-      title="メールアドレス"
+      icon="mail"
+      title={t('common.fields.email')}
       required={true}
     >
       <FieldWithError error={error}>

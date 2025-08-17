@@ -16,7 +16,7 @@ export type SetPasswordError = (error: string | null) => void;
 export type SetBirthdayError = (error: string | null) => void;
 export type ClearErrors = () => void;
 
-interface ParentDetailPageState {
+interface ParentEditPageState {
   isLoading: IsLoading;
   parentForm: ParentForm;
   nameError: NameError;
@@ -36,7 +36,7 @@ interface ParentDetailPageState {
 /**
  * 親情報登録画面状態管理ストア
  */
-export const useParentDetailPageStore = create<ParentDetailPageState>()(
+export const useParentEditPageStore = create<ParentEditPageState>()(
   devtools(
     (set) => ({
       isLoading: false,
@@ -80,7 +80,7 @@ export const useParentDetailPageStore = create<ParentDetailPageState>()(
       },
     }),
     {
-      name: 'parent-detail-page-store',
+      name: 'parent-edit-page-store',
     }
   )
 );

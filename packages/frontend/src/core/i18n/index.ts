@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { NativeModules, Platform } from 'react-native';
+import * as Localization from 'expo-localization';
 
 // JSON翻訳ファイルをインポート
 import jaTranslations from './locales/ja.json';
@@ -9,15 +9,12 @@ import enTranslations from './locales/en.json';
 // システム言語を取得（フォールバックは日本語）
 const getDeviceLanguage = (): string => {
   try {
-    let deviceLanguage = 'ja';
+    const deviceLocale = Localization.getLocales()[0]?.languageCode || 'ja';
+    console.log('🌐 Device language detected:', deviceLocale);
     
-    if (Platform.OS === 'ios') {
-      deviceLanguage = NativeModules.SettingsManager?.settings?.AppleLocale?.split('_')[0] || 'ja';
-    } else if (Platform.OS === 'android') {
-      deviceLanguage = NativeModules.I18nManager?.localeIdentifier?.split('_')[0] || 'ja';
-    }
-    
-    return ['ja', 'en'].includes(deviceLanguage) ? deviceLanguage : 'ja';
+    // サポートされている言語かチェック
+    const supportedLanguages = ['ja', 'en'];
+    return supportedLanguages.includes(deviceLocale) ? deviceLocale : 'ja';
   } catch (error) {
     console.warn('言語取得エラー:', error);
     return 'ja';

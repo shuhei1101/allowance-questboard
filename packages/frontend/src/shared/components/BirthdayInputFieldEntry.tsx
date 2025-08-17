@@ -3,6 +3,7 @@ import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface Props {
   value: string;
@@ -16,6 +17,7 @@ interface Props {
  */
 export const BirthdayInputFieldEntry: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const showDatePicker = () => {
     Alert.alert('誕生日選択', 'DateTimePickerを実装予定です');
@@ -29,8 +31,8 @@ export const BirthdayInputFieldEntry: React.FC<Props> = ({ value, onChange, erro
 
   return (
     <EntryField
-      icon="diamond"
-      title="誕生日"
+      icon="calendar"
+      title={t('common.fields.birthday')}
       required={true}
     >
       <FieldWithError error={error}>

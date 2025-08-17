@@ -22,11 +22,13 @@ export const useStyleHelpers = () => {
 
     // ボタンスタイル
     primaryButton: {
-      backgroundColor: colors.primary,
+      backgroundColor: '#FFFFFF',
       paddingVertical: spacing.md,
       paddingHorizontal: spacing.lg,
       borderRadius: borderRadius.md,
       alignItems: 'center' as const,
+      borderWidth: 1,
+      borderColor: colors.border.light,
     } as ViewStyle,
 
     secondaryButton: {
@@ -42,7 +44,7 @@ export const useStyleHelpers = () => {
     // テキストスタイル
     primaryButtonText: {
       ...typography.button,
-      color: colors.text.inverse,
+      color: colors.primary,
     } as TextStyle,
 
     secondaryButtonText: {

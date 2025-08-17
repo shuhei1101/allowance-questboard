@@ -4,6 +4,7 @@ import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface Props {
   selectedIcon?: string;
@@ -17,11 +18,12 @@ interface Props {
  */
 export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, error }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <EntryField
-      icon="diamond"
-      title="アイコン"
+      icon="happy"
+      title={t('common.fields.icon')}
       required={false}
     >
       <FieldWithError error={error}>

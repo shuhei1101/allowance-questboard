@@ -2,6 +2,7 @@ import React from 'react';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { PasswordInputField } from './PasswordInputField';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface Props {
   value: string;
@@ -15,10 +16,12 @@ interface Props {
  * EntryFieldとFieldWithErrorでラップしたPasswordInputField
  */
 export const PasswordInputFieldEntry: React.FC<Props> = ({ value, onChange, error, placeholder }) => {
+  const { t } = useTranslation();
+  
   return (
     <EntryField
-      icon="diamond"
-      title="パスワード"
+      icon="lock-closed"
+      title={t('common.fields.password')}
       required={true}
     >
       <FieldWithError error={error}>

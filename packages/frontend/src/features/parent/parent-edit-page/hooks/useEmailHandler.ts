@@ -1,0 +1,43 @@
+import { useCallback } from 'react';
+import { UpdateParentForm, SetEmailError, EmailError } from '../stores/parentEditPageStore';
+import { ParentForm } from '../models/parentForm';
+import { Email } from '@backend/features/auth/value-object/email';
+
+/**
+ * メールアドレス変更ハンドラーのカスタムフック
+ * 
+ * メールアドレスの値を更新し、エラーをクリアする
+ */
+export const useEmailHandler = (params: {
+  parentForm: ParentForm,
+  updateParentForm: UpdateParentForm,
+  emailError: EmailError,
+  setEmailError: SetEmailError
+}) => {
+  return useCallback((email: string) => {
+    try {
+      const updatedForm = new ParentForm({
+        name: params.parentForm.name,
+        email: new Email(email),
+        password: params.parentForm.password,
+        icon: params.parentForm.icon,
+        birthday: params.parentForm.birthday,
+      });
+      params.updateParentForm(updatedForm);
+      
+      if (params.emailError) {
+        params.setEmailError(null);
+      }
+    } catch (error: any) {
+      params.setEmailError(error.message);
+    }
+  }, [
+    params.parentForm.name, 
+    params.parentForm.password, 
+    params.parentForm.icon, 
+    params.parentForm.birthday,
+    params.updateParentForm, 
+    params.emailError, 
+    params.setEmailError
+  ]);
+};

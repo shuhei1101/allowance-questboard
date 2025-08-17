@@ -3,6 +3,7 @@ import { TextInput, StyleSheet } from 'react-native';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
+import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface Props {
   value: string;
@@ -16,11 +17,12 @@ interface Props {
  */
 export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <EntryField
-      icon="diamond"
-      title="名前"
+      icon="person"
+      title={t('common.fields.name')}
       required={true}
     >
       <FieldWithError error={error}>

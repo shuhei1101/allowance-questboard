@@ -40,12 +40,12 @@ export const EntryField: React.FC<EntryFieldProps> = ({
           <Text style={[styles.titleText, { color: colors.text.primary }]}>
             {title}
           </Text>
+          {required && (
+            <Text style={[styles.requiredMark, { color: colors.danger }]}>
+              *
+            </Text>
+          )}
         </View>
-        {required && (
-          <Text style={[styles.requiredMark, { color: colors.danger }]}>
-            *
-          </Text>
-        )}
       </View>
       
       {/* 内部要素 */}
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 12,
   },
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
   requiredMark: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginLeft: 4,
   },
   contentContainer: {
     paddingLeft: 28, // アイコン分のインデント

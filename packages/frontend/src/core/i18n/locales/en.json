@@ -39,7 +39,16 @@
     "confirm": "Confirm",
     "ok": "OK",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "save": "Save",
+    "cancel": "Cancel",
+    "fields": {
+      "name": "Name",
+      "email": "Email Address",
+      "password": "Password",
+      "icon": "Icon",
+      "birthday": "Birthday"
+    }
   },
   "error": {
     "unexpected": {

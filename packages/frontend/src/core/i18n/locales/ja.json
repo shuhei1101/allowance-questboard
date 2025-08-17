@@ -39,7 +39,16 @@
     "confirm": "確認",
     "ok": "OK",
     "yes": "はい",
-    "no": "いいえ"
+    "no": "いいえ",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "fields": {
+      "name": "名前",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "icon": "アイコン",
+      "birthday": "誕生日"
+    }
   },
   "error": {
     "unexpected": {

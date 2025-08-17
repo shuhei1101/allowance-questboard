@@ -7,17 +7,20 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Localization from 'expo-localization';
 import { useEffect, useState } from 'react';
 import '@/core/i18n';
+import i18n from 'i18next';
 import { localeToLanguageType } from './src/features/auth/utils/localeToLanguageType';
 import { LoadingPage } from './src/shared/loading-page/LoadingPage';
 import { ErrorBoundary } from './src/core/errors/ErrorBoundary';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { initMasterData } from '@/features/auth/services/initMasterData';
-import { LoginPage } from '@/features/auth/login-page/loginPage';
+import { LoginPage } from '@/features/auth/login-page/LoginPage';
+import { DemoNavigator } from '@/features/demo/DemoNavigator';
 
 // Navigation types
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
+  Demo: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -56,7 +59,7 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             id={undefined}
-            initialRouteName="Home"
+            initialRouteName="Demo"
             screenOptions={{
               headerShown: false,
               cardStyle: styles.content,
@@ -67,7 +70,16 @@ export default function App() {
               name="Login" 
               component={LoginPage}
               options={{
+                headerShown: true,
                 title: 'ログイン',
+              }}
+            />
+            <Stack.Screen 
+              name="Demo" 
+              component={DemoNavigator}
+              options={{
+                headerShown: false,
+                title: 'デモ',
               }}
             />
           </Stack.Navigator>
@@ -101,6 +113,10 @@ function HomePage() {
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
         sessionStore.setLanguageType(languageType);
+        
+        // i18nの言語も同期
+        await i18n.changeLanguage(locale);
+        
         console.log('📱 初回言語設定:', locale);
         console.log('languageType.name:', languageType.name.value);
         console.log(' languageType.sortOrder:', languageType.sortOrder);
@@ -128,6 +144,14 @@ function HomePage() {
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
         sessionStore.setLanguageType(languageType);
+        
+        // i18nの言語も同期（フォールバック）
+        try {
+          await i18n.changeLanguage(locale);
+        } catch (i18nError) {
+          console.warn('i18n言語設定エラー:', i18nError);
+        }
+        
         console.log('📱 フォールバック言語設定:', locale);
         
         // エラーが発生してもロード画面を非表示にする

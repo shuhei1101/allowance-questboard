@@ -1,22 +1,21 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/core/theme';
 
 interface Props {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  text?: string;
 }
 
 /**
- * 確定ボタンコンポーネント
+ * 確定ボタンコンポーネント（保存アイコン）
  */
 export const ConfirmButton: React.FC<Props> = ({ 
   onPress, 
   disabled = false, 
-  loading = false, 
-  text = 'OK' 
+  loading = false,
 }) => {
   const { colors } = useTheme();
 
@@ -36,9 +35,11 @@ export const ConfirmButton: React.FC<Props> = ({
       {loading ? (
         <ActivityIndicator color={colors.text.inverse} />
       ) : (
-        <Text style={[styles.text, { color: colors.text.inverse }]}>
-          {text}
-        </Text>
+        <Ionicons 
+          name="save" 
+          size={24} 
+          color={colors.text.inverse} 
+        />
       )}
     </TouchableOpacity>
   );
@@ -52,9 +53,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 48,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

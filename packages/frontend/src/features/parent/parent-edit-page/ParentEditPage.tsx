@@ -1,19 +1,20 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import { useLayoutEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { ParentNameInputFieldEntry } from './components/ParentNameInputFieldEntry';
 import { EmailInputFieldEntry } from '../../../shared/components/EmailInputFieldEntry';
 import { PasswordInputFieldEntry } from '../../../shared/components/PasswordInputFieldEntry';
 import { IconSelectButtonEntry } from '../../../shared/components/IconSelectButtonEntry';
 import { BirthdayInputFieldEntry } from '../../../shared/components/BirthdayInputFieldEntry';
-import { ConfirmButton } from './components/ConfirmButton';
+import { SaveButton } from '../../../shared/components/SaveButton';
 import { useTheme } from '@/core/theme';
-import { useParentDetailPageStore } from './stores/parentDetailPageStore';
-import { useParentDetailPageHandlers } from './hooks/useParentDetailPageHandlers';
-import { LocaleString } from '@backend/core/messages/localeString';
+import { useParentEditPageStore } from './stores/parentEditPageStore';
+import { useParentEditPageHandlers } from './hooks/useParentEditPageHandlers';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 
 /**
- * 親情報登録画面
- * 家族の親情報を登録、編集するためのページ
+ * 親情報編集画面
+ * 家族の親情報を編集するためのページ
  * 
  * Props:
  * - onConfirm: 確定ボタン押下時のコールバック関数
@@ -31,10 +32,11 @@ interface Props {
   onConfirm: (parentData: any) => void;
 }
 
-export const ParentDetailPage: React.FC<Props> = ({ onConfirm }) => {
+export const ParentEditPage: React.FC<Props> = ({ onConfirm }) => {
   const { colors } = useTheme();
-  const pageStore = useParentDetailPageStore();
+  const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
+  const navigation = useNavigation();
   
   // 統合フックで全ハンドラーを取得
   const {
@@ -44,7 +46,21 @@ export const ParentDetailPage: React.FC<Props> = ({ onConfirm }) => {
     handleIconSelect,
     handleBirthdayChange,
     handleConfirm,
-  } = useParentDetailPageHandlers(onConfirm);
+  } = useParentEditPageHandlers(onConfirm);
+
+  // ナビゲーションヘッダーに保存ボタンを設定
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <SaveButton
+          onPress={handleConfirm}
+          disabled={!pageStore.parentForm.isValid}
+          loading={pageStore.isLoading}
+          variant="header"
+        />
+      ),
+    });
+  }, [navigation, handleConfirm, pageStore.parentForm.isValid, pageStore.isLoading]);
   
   return (
     <KeyboardAvoidingView 
@@ -91,19 +107,6 @@ export const ParentDetailPage: React.FC<Props> = ({ onConfirm }) => {
             onChange={handleBirthdayChange}
             error={pageStore.birthdayError || undefined}
           />
-          
-          {/* 確定ボタン */}
-          <View style={styles.buttonContainer}>
-            <ConfirmButton
-              onPress={handleConfirm}
-              disabled={!pageStore.parentForm.isValid}
-              loading={pageStore.isLoading}
-              text={new LocaleString({
-                ja: '確定',
-                en: 'Confirm',
-              }).getMessage(sessionStore.languageType)}
-            />
-          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -121,8 +124,5 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-  },
-  buttonContainer: {
-    marginTop: 32,
   },
 });
