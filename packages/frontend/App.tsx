@@ -16,6 +16,7 @@ import { initMasterData } from '@/features/auth/services/initMasterData';
 import { LoginPage } from '@/features/auth/login-page/LoginPage';
 import { DemoNavigator } from '@/features/demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
+import { ThemeProvider } from '@/core/theme/ThemeProvider';
 
 // Navigation types
 export type RootStackParamList = {
@@ -40,6 +41,48 @@ export default function App() {
     isDark: colorScheme === 'dark'
   });
   
+  /**
+   * グローバルエラーハンドリング
+   * ErrorBoundaryでキャッチされたエラーのログ出力
+   */
+  const handleGlobalError = (error: Error, errorInfo: React.ErrorInfo) => {
+    // エラーログの出力
+    console.error('🚨 Global Error Boundary caught error:', {
+      error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+      errorInfo: {
+        componentStack: errorInfo.componentStack,
+      },
+      timestamp: new Date().toISOString(),
+    });
+
+    // TODO: エラーレポーティングサービスに送信
+    // 例: Sentry, Crashlytics, など
+  };
+
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+/**
+ * ThemeProvider内で使用するアプリコンテンツ
+ */
+function AppContent() {
+  const { colors, colorScheme } = useTheme();
+  
+  // デバッグ用：テーマ情報をログ出力
+  console.log('🎨 Theme Debug:', {
+    colorScheme,
+    primaryBackground: colors.background.primary,
+    isDark: colorScheme === 'dark'
+  });
+
   /**
    * グローバルエラーハンドリング
    * ErrorBoundaryでキャッチされたエラーのログ出力
