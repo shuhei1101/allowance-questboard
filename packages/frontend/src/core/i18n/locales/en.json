@@ -43,7 +43,12 @@
     "yes": "Yes",
     "no": "No",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "birthday": "Birthday"
+    }
   },
   "parent": {
     "parentEditPage": {

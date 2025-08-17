@@ -43,7 +43,12 @@
     "yes": "はい",
     "no": "いいえ",
     "save": "保存",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "fields": {
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "birthday": "誕生日"
+    }
   },
   "parent": {
     "parentEditPage": {
