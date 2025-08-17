@@ -1,4 +1,5 @@
 import { IconCategoryNameByLanguage } from './iconCategoryNameByLanguage';
+import { IconCategoryName } from './iconCategoryName';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { IconCategoryTranslationEntity } from '../entity/iconCategoryEntity';
 import { LanguageType } from '@backend/features/language/enum/languageType';
@@ -22,7 +23,8 @@ export class IconCategoryNames extends BaseCollection<IconCategoryNameByLanguage
     for (const translation of Object.values(translationDict)) {
       if (translation instanceof IconCategoryTranslationEntity) {
         const languageType = LanguageType.getValueById(new LanguageId(translation.language_id));
-        nameList.push(new IconCategoryNameByLanguage(languageType, translation.name));
+        const categoryName = new IconCategoryName(translation.name);
+        nameList.push(new IconCategoryNameByLanguage(languageType, categoryName));
       }
     }
     

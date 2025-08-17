@@ -1,10 +1,18 @@
 import { LocaleString } from "../messages/localeString";
 import { BaseValueObject } from "./baseValueObject";
+import { z } from 'zod';
+
+/**
+ * BaseIdのZodスキーマ
+ */
+export const BaseIdSchema = z.object({
+  value: z.number()
+});
 
 /**
  * ドメインモデルのIDを表す基底クラス
  */
-export abstract class BaseId extends BaseValueObject<number> {
+export abstract class BaseId extends BaseValueObject<number, typeof BaseIdSchema> {
   constructor(value: number) {
     super({ value });
   }

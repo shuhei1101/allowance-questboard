@@ -1,8 +1,16 @@
 import { BaseValueObject } from "@backend/core/value-object/baseValueObject";
 import { LocaleString } from "../../../core/messages/localeString";
 import { ValueValidateException } from "../../../core/validator/validationException";
+import { z } from 'zod';
 
-export class Version extends BaseValueObject<number> {
+/**
+ * VersionのZodスキーマ
+ */
+export const VersionSchema = z.object({
+  value: z.number()
+});
+
+export class Version extends BaseValueObject<number, typeof VersionSchema> {
   constructor(value: number) {
     super({ value });
   }
@@ -21,5 +29,13 @@ export class Version extends BaseValueObject<number> {
         message: new LocaleString({ ja: "バージョンは0以上の数値でなければなりません", en: "Version must be a non-negative number", })
       });
     }
+  }
+
+  /**
+   * Zodスキーマから新しいVersionインスタンスを作成
+   * @param data Zodスキーマに準拠したデータ
+   */
+  static fromZodData(data: z.infer<typeof VersionSchema>): Version {
+    return new Version(data.value);
   }
 }

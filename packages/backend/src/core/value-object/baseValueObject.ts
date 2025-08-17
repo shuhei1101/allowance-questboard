@@ -1,17 +1,18 @@
 import { LocaleString } from "../messages/localeString";
 import { ValueValidateException } from "../validator/validationException";
 import { ValueValidator } from "../validator/valueValidator";
+import { z } from 'zod';
 
 /**
  * 値オブジェクトの基底クラス
  */
-export abstract class BaseValueObject<ValueType> {
-  protected readonly _value: ValueType;
-  protected _validator: ValueValidator<ValueType> | null = null;
+export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.ZodObject<{ value: z.ZodType<TValue> }>> {
+  protected readonly _value: TValue;
+  protected _validator: ValueValidator<TValue> | null = null;
   protected _errorMessage: LocaleString | null = null;
 
   constructor(params: {
-    value: ValueType;
+    value: TValue;
   }) {
     this._value = params.value;
     
@@ -53,7 +54,7 @@ export abstract class BaseValueObject<ValueType> {
   /**
    * 値を取得
    */
-  get value(): ValueType {
+  get value(): TValue {
     return this._value;
   }
 
@@ -74,7 +75,7 @@ export abstract class BaseValueObject<ValueType> {
   /**
    * バリデーターを取得
    */
-  protected get validator(): ValueValidator<ValueType> {
+  protected get validator(): ValueValidator<TValue> {
     if (!this._validator) {
       throw new Error('Validator not initialized');
     }
@@ -106,5 +107,22 @@ export abstract class BaseValueObject<ValueType> {
     return `valueName: ${this.valueName.ja}, value: ${this._value}, errorMessage: ${
       this._errorMessage ? this._errorMessage.ja : null
     }`;
+  }
+
+  /**
+   * Zodスキーマに準拠したデータを返す
+   */
+  toZodData(): z.infer<TZodSchema> {
+    return {
+      value: this._value
+    } as z.infer<TZodSchema>;
+  }
+
+  /**
+   * 静的メソッドfromZodDataの実装
+   * サブクラスで実装する必要がある
+   */
+  static fromZodData(data: any): any {
+    throw new Error(`Static method fromZodData must be implemented`);
   }
 }

@@ -3,6 +3,7 @@ import { LocaleString } from '@backend/core/messages/localeString';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { CollectionItemProtocol } from '@backend/core/models/baseCollection';
+import { IconCategoryName, IconCategoryNameSchema } from './iconCategoryName';
 import { z } from 'zod';
 
 /**
@@ -10,18 +11,19 @@ import { z } from 'zod';
  */
 export const IconCategoryNameByLanguageSchema = z.object({
   languageId: z.number(),
-  value: z.string()
+  categoryName: IconCategoryNameSchema
 });
 
 /**
  * アイコンカテゴリ名の言語別値オブジェクト（集約）
  */
-export class IconCategoryNameByLanguage extends BaseValueObject<string> implements CollectionItemProtocol<LanguageId> {
+export class IconCategoryNameByLanguage implements CollectionItemProtocol<LanguageId> {
   private readonly _language: LanguageTypeValue;
+  private readonly _categoryName: IconCategoryName;
 
-  constructor(language: LanguageTypeValue, value: string) {
-    super({ value });
+  constructor(language: LanguageTypeValue, categoryName: IconCategoryName) {
     this._language = language;
+    this._categoryName = categoryName;
   }
 
   /**
@@ -39,20 +41,25 @@ export class IconCategoryNameByLanguage extends BaseValueObject<string> implemen
   }
 
   /**
-   * バリデーション実行
+   * カテゴリ名値オブジェクトを取得
    */
-  protected validate(): void {
-    this.validator.required();
+  get categoryName(): IconCategoryName {
+    return this._categoryName;
   }
 
   /**
-   * 値オブジェクトの名前を取得
+   * カテゴリ名の文字列値を取得
    */
-  protected get valueName(): LocaleString {
-    return new LocaleString({
-      ja: 'アイコンカテゴリ名（言語別）',
-      en: 'Icon Category Name By Language'
-    });
+  get value(): string {
+    return this._categoryName.value;
+  }
+
+  /**
+   * バリデーション実行
+   */
+  validate(): void {
+    // IconCategoryNameのバリデーションは内部で実行される
+    // 追加のバリデーションがあればここで実行
   }
 
   /**
@@ -61,13 +68,12 @@ export class IconCategoryNameByLanguage extends BaseValueObject<string> implemen
   toZodData(): z.infer<typeof IconCategoryNameByLanguageSchema> {
     return {
       languageId: this._language.id.value,
-      value: this.value
+      categoryName: this._categoryName.toZodData()
     };
   }
 
   /**
    * Zodスキーマから値オブジェクトを初期化
-   * このクラスは読み取り専用なので、新しいインスタンスを作成することを推奨
    * @param data Zodスキーマに準拠したデータ
    */
   setFromZodData(data: z.infer<typeof IconCategoryNameByLanguageSchema>): void {
@@ -75,10 +81,8 @@ export class IconCategoryNameByLanguage extends BaseValueObject<string> implemen
     if (data.languageId !== this._language.id.value) {
       throw new Error(`Language ID mismatch: expected ${this._language.id.value}, got ${data.languageId}`);
     }
-    
-    // BaseValueObjectの内部的な値を更新
-    // 注意: この操作は通常推奨されないが、setFromZodDataの実装として提供
-    (this as any)._value = data.value;
+    // カテゴリ名の値オブジェクトを初期化
+    this._categoryName = IconCategoryName.fromZodData(data.categoryName);
   }
 
   /**
@@ -92,6 +96,7 @@ export class IconCategoryNameByLanguage extends BaseValueObject<string> implemen
       throw new Error(`Language ID mismatch: expected ${languageTypeValue.id.value}, got ${data.languageId}`);
     }
     
-    return new IconCategoryNameByLanguage(languageTypeValue, data.value);
+    const categoryName = IconCategoryName.fromZodData(data.categoryName);
+    return new IconCategoryNameByLanguage(languageTypeValue, categoryName);
   }
 }

@@ -1,5 +1,6 @@
-import { BaseId } from '../../../core/value-object/base_id';
+import { BaseId, BaseIdSchema } from '../../../core/value-object/base_id';
 import { LocaleString } from '../../../core/messages/localeString';
+import { z } from 'zod';
 
 /**
  * 家族メンバータイプのIDを表す値オブジェクト
@@ -18,5 +19,13 @@ export class FamilyMemberTypeId extends BaseId {
       ja: "家族メンバータイプID",
       en: "Family Member Type ID"
     });
+  }
+
+  /**
+   * Zodスキーマから新しいFamilyMemberTypeIdインスタンスを作成
+   * @param data Zodスキーマに準拠したデータ
+   */
+  static fromZodData(data: z.infer<typeof BaseIdSchema>): FamilyMemberTypeId {
+    return new FamilyMemberTypeId(data.value);
   }
 }
