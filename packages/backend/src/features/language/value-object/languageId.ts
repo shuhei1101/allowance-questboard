@@ -4,7 +4,6 @@ import { z } from 'zod';
 
 /**
  * 言語IDを表す値オブジェクト
- * PythonのLanguageIdクラスのTypeScript版
  */
 export class LanguageId extends BaseId {
   constructor(value: number) {
