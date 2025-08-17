@@ -46,6 +46,14 @@ export const ScreenLauncherPage: React.FC = () => {
     navigation.navigate('PageStateSettings');
   };
 
+  const handleComponentList = () => {
+    const components = getDependencyComponents(screenType);
+    navigation.navigate('DependencyComponentList', { 
+      components,
+      screenTitle: screenInfo.title 
+    });
+  };
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <View style={styles.header}>
@@ -122,28 +130,25 @@ export const ScreenLauncherPage: React.FC = () => {
           🧩 依存コンポーネント
         </Text>
         <Text style={[styles.sectionDescription, { color: colors.text.secondary }]}>
-          この画面で使用されているコンポーネント一覧
+          この画面で使用されているコンポーネント（{getDependencyComponents(screenType).length}個）
         </Text>
         
-        {getDependencyComponents(screenType).map((component) => (
-          <TouchableOpacity
-            key={component.id}
-            style={[styles.componentItem, { backgroundColor: colors.surface.elevated }]}
-            onPress={() => navigation.navigate('ComponentDetail', { componentType: component.id })}
-          >
-            <View style={styles.componentItemContent}>
-              <Text style={[styles.componentItemTitle, { color: colors.text.primary }]}>
-                {component.icon} {component.name}
-              </Text>
-              <Text style={[styles.componentItemDescription, { color: colors.text.secondary }]}>
-                {component.description}
-              </Text>
-            </View>
-            <Text style={[styles.componentItemArrow, { color: colors.text.secondary }]}>
-              →
+        <TouchableOpacity
+          style={[styles.settingButton, { backgroundColor: colors.surface.elevated }]}
+          onPress={handleComponentList}
+        >
+          <View style={styles.settingButtonContent}>
+            <Text style={[styles.settingButtonTitle, { color: colors.text.primary }]}>
+              📋 コンポーネント一覧を見る
             </Text>
-          </TouchableOpacity>
-        ))}
+            <Text style={[styles.settingButtonDescription, { color: colors.text.secondary }]}>
+              この画面で使用されているコンポーネントの詳細確認
+            </Text>
+          </View>
+          <Text style={[styles.settingButtonArrow, { color: colors.text.secondary }]}>
+            →
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* 使い方ガイド */}
@@ -162,7 +167,7 @@ export const ScreenLauncherPage: React.FC = () => {
             3. 設定した状態で画面の動作を確認
           </Text>
           <Text style={[styles.guideItem, { color: colors.text.secondary }]}>
-            4. 依存コンポーネントをタップして詳細確認
+            4. コンポーネント一覧で使用コンポーネントを確認
           </Text>
         </View>
       </View>
@@ -377,37 +382,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     marginBottom: 4,
-  },
-  componentItem: {
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  componentItemContent: {
-    flex: 1,
-  },
-  componentItemTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  componentItemDescription: {
-    fontSize: 14,
-    lineHeight: 18,
-  },
-  componentItemArrow: {
-    fontSize: 18,
-    marginLeft: 12,
   },
 });
