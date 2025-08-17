@@ -92,7 +92,7 @@ export const ComponentListPage: React.FC = () => {
             {category.components.map((component) => (
               <TouchableOpacity
                 key={component.id}
-                style={styles.componentCard}
+                style={[styles.componentCard, { backgroundColor: colors.surface.elevated }]}
                 onPress={component.onPress}
               >
                 <View style={styles.componentInfo}>
@@ -120,7 +120,7 @@ export const ComponentListPage: React.FC = () => {
           </Text>
           
           <TouchableOpacity
-            style={[styles.componentCard, styles.specialCard]}
+            style={[styles.componentCard, styles.specialCard, { backgroundColor: colors.surface.elevated }]}
             onPress={() => navigation.navigate('ComponentShowcase')}
           >
             <View style={styles.componentInfo}>
@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
   },
   componentCard: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,

@@ -36,7 +36,7 @@ export const ComponentShowcase: React.FC = () => {
           📝 インプットフィールド
         </Text>
         
-        <View style={styles.componentContainer}>
+        <View style={[styles.componentContainer, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             メールアドレス入力フィールド
           </Text>
@@ -48,7 +48,7 @@ export const ComponentShowcase: React.FC = () => {
           />
         </View>
 
-        <View style={styles.componentContainer}>
+        <View style={[styles.componentContainer, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             パスワード入力フィールド
           </Text>
@@ -60,7 +60,7 @@ export const ComponentShowcase: React.FC = () => {
           />
         </View>
 
-        <View style={styles.componentContainer}>
+        <View style={[styles.componentContainer, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             誕生日入力フィールド
           </Text>
@@ -78,7 +78,7 @@ export const ComponentShowcase: React.FC = () => {
           🎯 選択コンポーネント
         </Text>
         
-        <View style={styles.componentContainer}>
+        <View style={[styles.componentContainer, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             アイコン選択ボタン
           </Text>
@@ -98,7 +98,7 @@ export const ComponentShowcase: React.FC = () => {
           � ボタンコンポーネント
         </Text>
         
-        <View style={styles.componentContainer}>
+        <View style={[styles.componentContainer, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             保存ボタン
           </Text>
@@ -108,7 +108,7 @@ export const ComponentShowcase: React.FC = () => {
           />
         </View>
 
-        <View style={styles.componentContainer}>
+        <View style={[styles.componentContainer, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             無効化された保存ボタン
           </Text>
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   componentContainer: {
-    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 12,
     marginBottom: 16,

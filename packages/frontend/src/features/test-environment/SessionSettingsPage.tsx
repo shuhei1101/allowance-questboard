@@ -92,7 +92,7 @@ export const SessionSettingsPage: React.FC = () => {
           📊 現在のセッション状態
         </Text>
         
-        <View style={styles.statusContainer}>
+        <View style={[styles.statusContainer, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.statusRow}>
             <Text style={[styles.statusLabel, { color: colors.text.secondary }]}>
               JWT:
@@ -139,6 +139,7 @@ export const SessionSettingsPage: React.FC = () => {
             key={option.id}
             style={[
               styles.optionButton,
+              { backgroundColor: colors.surface.elevated },
               sessionStore.languageType?.id.value === option.id && styles.selectedOption
             ]}
             onPress={() => handleLanguageChange(option.id)}
@@ -165,6 +166,7 @@ export const SessionSettingsPage: React.FC = () => {
             key={option.id}
             style={[
               styles.optionButton,
+              { backgroundColor: colors.surface.elevated },
               sessionStore.familyMemberType?.id.value === option.id && styles.selectedOption
             ]}
             onPress={() => handleFamilyMemberTypeChange(option.id)}
@@ -187,7 +189,7 @@ export const SessionSettingsPage: React.FC = () => {
         </Text>
         
         <TextInput
-          style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
+          style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary, backgroundColor: colors.surface.elevated }]}
           value={customJwt}
           onChangeText={setCustomJwt}
           placeholder="JWTトークンを入力..."
@@ -254,7 +256,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   statusContainer: {
-    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 12,
     shadowColor: '#000',
@@ -284,7 +285,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   optionButton: {
-    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 12,
     marginBottom: 8,
@@ -312,7 +312,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textInput: {
-    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,

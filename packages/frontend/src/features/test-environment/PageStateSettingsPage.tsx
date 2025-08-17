@@ -57,7 +57,7 @@ export const PageStateSettingsPage: React.FC = () => {
         {settingsPages.map((page, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.pageCard, { borderLeftColor: page.color }]}
+            style={[styles.pageCard, { borderLeftColor: page.color, backgroundColor: colors.surface.elevated }]}
             onPress={() => navigation.navigate(page.route)}
             activeOpacity={0.8}
           >
@@ -93,7 +93,7 @@ export const PageStateSettingsPage: React.FC = () => {
       </View>
 
       {/* 使い方ガイド */}
-      <View style={styles.guide}>
+      <View style={[styles.guide, { backgroundColor: colors.surface.elevated }]}>
         <Text style={[styles.guideTitle, { color: colors.text.primary }]}>
           💡 使い方
         </Text>
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   pageCard: {
-    backgroundColor: '#ffffff',
     borderRadius: 16,
     borderLeftWidth: 6,
     marginBottom: 16,
@@ -204,7 +203,6 @@ const styles = StyleSheet.create({
   },
   guide: {
     margin: 16,
-    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 20,
     shadowColor: '#000',

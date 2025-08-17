@@ -33,7 +33,7 @@ export const StoreInspector: React.FC = () => {
           🔐 セッションストア
         </Text>
         
-        <View style={styles.storeContainer}>
+        <View style={[styles.storeContainer, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.storeRow}>
             <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
               JWT:
@@ -69,7 +69,7 @@ export const StoreInspector: React.FC = () => {
           🔑 ログインページストア
         </Text>
         
-        <View style={styles.storeContainer}>
+        <View style={[styles.storeContainer, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.storeRow}>
             <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
               ローディング中:
@@ -123,7 +123,7 @@ export const StoreInspector: React.FC = () => {
           👤 親編集ページストア
         </Text>
         
-        <View style={styles.storeContainer}>
+        <View style={[styles.storeContainer, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.storeRow}>
             <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
               ローディング中:
@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   storeContainer: {
-    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 12,
     shadowColor: '#000',

@@ -121,7 +121,7 @@ export const ParentEditPageSettingsPage: React.FC = () => {
           ⚡ 状態設定
         </Text>
         
-        <View style={styles.toggleContainer}>
+        <View style={[styles.toggleContainer, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.toggleItem}>
             <Text style={[styles.toggleLabel, { color: colors.text.primary }]}>
               ローディング状態
@@ -148,7 +148,7 @@ export const ParentEditPageSettingsPage: React.FC = () => {
         {presets.map((preset, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.presetButton, { backgroundColor: '#ffffff' }]}
+            style={[styles.presetButton, { backgroundColor: colors.surface.elevated }]}
             onPress={preset.action}
             activeOpacity={0.7}
           >
@@ -173,7 +173,7 @@ export const ParentEditPageSettingsPage: React.FC = () => {
           📊 現在の状態
         </Text>
         
-        <View style={[styles.statusContainer, { backgroundColor: '#ffffff' }]}>
+        <View style={[styles.statusContainer, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.statusItem}>
             <Text style={[styles.statusLabel, { color: colors.text.secondary }]}>
               名前
@@ -277,7 +277,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   toggleContainer: {
-    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
