@@ -6,10 +6,12 @@
 - 実行はこちらで行います。
   - 例: 
 ```
-git commit -m "fix: 概要を記載する
-- 修正内容の詳細を記載する
--
--"
+git add .
+git commit -m "feat: 概要
+
+- ここに変更内容の概要を記載
+- 
+- "
 git push origin main
 ```
 
