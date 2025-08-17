@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, Alert } from 'react-native';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
@@ -20,6 +20,11 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
   const { colors } = useTheme();
   const { t } = useTranslation();
 
+  const handlePress = () => {
+    // TODO: アイコン選択画面の実装後にonPress()に変更
+    Alert.alert('アイコン選択', 'アイコン選択画面は未実装です');
+  };
+
   return (
     <EntryField
       icon="happy"
@@ -28,26 +33,33 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
     >
       <FieldWithError error={error}>
         <TouchableOpacity 
-          style={[styles.button, { borderColor: colors.border.light }]}
-          onPress={onPress}
+          style={styles.button}
+          onPress={handlePress}
         >
           <View style={styles.content}>
             {selectedIcon ? (
-              <View style={[styles.iconContainer, { backgroundColor: colors.background.primary }]}>
-                <Text style={styles.iconText}>{selectedIcon}</Text>
-              </View>
-            ) : (
-              <View style={[styles.iconContainer, { backgroundColor: colors.background.primary }]}>
-                <Text style={[styles.placeholderText, { color: colors.text.secondary }]}>
-                  {t('shared.components.iconSelectButtonEntry.placeholder')}
+              <>
+                <Text style={[styles.iconText, { color: colors.text.primary }]}>
+                  {selectedIcon}
                 </Text>
-              </View>
+                <Ionicons 
+                  name="chevron-forward" 
+                  size={20} 
+                  color={colors.text.secondary} 
+                />
+              </>
+            ) : (
+              <>
+                <Text style={[styles.noSelectionText, { color: colors.text.secondary }]}>
+                  設定なし
+                </Text>
+                <Ionicons 
+                  name="chevron-forward" 
+                  size={20} 
+                  color={colors.text.secondary} 
+                />
+              </>
             )}
-            <Ionicons 
-              name="chevron-forward" 
-              size={20} 
-              color={colors.text.secondary} 
-            />
           </View>
         </TouchableOpacity>
       </FieldWithError>
@@ -57,8 +69,6 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
 
 const styles = StyleSheet.create({
   button: {
-    borderWidth: 1,
-    borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
@@ -67,17 +77,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   iconText: {
-    fontSize: 20,
+    fontSize: 24,
   },
-  placeholderText: {
-    fontSize: 12,
+  noSelectionText: {
+    fontSize: 16,
   },
 });
