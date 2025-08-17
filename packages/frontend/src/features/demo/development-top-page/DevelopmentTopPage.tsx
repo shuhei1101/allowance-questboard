@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
+import { MainMenuCard } from './components/MainMenuCard';
+import { DevToolCard } from './components/DevToolCard';
+import { EnvironmentInfoCard } from './components/EnvironmentInfoCard';
 
 /**
  * 開発用TOP画面
@@ -18,21 +21,21 @@ export const DevelopmentTopPage: React.FC = () => {
       description: 'メインのログイン画面',
       onPress: () => navigation.navigate('Login'),
       color: '#10b981',
-      size: 'medium',
+      size: 'medium' as const,
     },
     {
       title: '📱 画面一覧',
       description: '各画面の個別起動とテスト',
       onPress: () => navigation.navigate('ScreenList'),
       color: '#3b82f6',
-      size: 'medium',
+      size: 'medium' as const,
     },
     {
       title: '🧩 コンポーネント一覧',
       description: 'コンポーネントの個別確認',
       onPress: () => navigation.navigate('ComponentList'),
       color: '#8b5cf6',
-      size: 'medium',
+      size: 'medium' as const,
     },
   ];
 
@@ -74,21 +77,14 @@ export const DevelopmentTopPage: React.FC = () => {
           🎯 メイン機能
         </Text>
         {topMenuItems.map((item, index) => (
-          <TouchableOpacity
+          <MainMenuCard
             key={index}
-            style={[
-              styles.menuCard,
-              item.size === 'large' && styles.largeCard,
-              { backgroundColor: item.color }
-            ]}
+            title={item.title}
+            description={item.description}
             onPress={item.onPress}
-          >
-            <Text style={styles.menuTitle}>{item.title}</Text>
-            <Text style={styles.menuDescription}>{item.description}</Text>
-            <View style={styles.menuButton}>
-              <Text style={styles.menuButtonText}>開く →</Text>
-            </View>
-          </TouchableOpacity>
+            color={item.color}
+            size={item.size}
+          />
         ))}
       </View>
 
@@ -99,14 +95,13 @@ export const DevelopmentTopPage: React.FC = () => {
         </Text>
         <View style={styles.toolGrid}>
           {devToolItems.map((tool, index) => (
-            <TouchableOpacity
+            <DevToolCard
               key={index}
-              style={[styles.toolCard, { backgroundColor: tool.color }]}
+              title={tool.title}
+              description={tool.description}
               onPress={tool.onPress}
-            >
-              <Text style={styles.toolTitle}>{tool.title}</Text>
-              <Text style={styles.toolDescription}>{tool.description}</Text>
-            </TouchableOpacity>
+              color={tool.color}
+            />
           ))}
         </View>
       </View>
@@ -116,17 +111,7 @@ export const DevelopmentTopPage: React.FC = () => {
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
           📋 環境情報
         </Text>
-        <View style={[styles.infoCard, { backgroundColor: colors.surface.elevated }]}>
-          <Text style={[styles.infoText, { color: colors.text.secondary }]}>
-            開発モード: 有効
-          </Text>
-          <Text style={[styles.infoText, { color: colors.text.secondary }]}>
-            バージョン: 1.0.0
-          </Text>
-          <Text style={[styles.infoText, { color: colors.text.secondary }]}>
-            最終更新: {new Date().toLocaleDateString()}
-          </Text>
-        </View>
+        <EnvironmentInfoCard />
       </View>
 
       <View style={styles.footer}>
@@ -165,93 +150,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
   },
-  menuCard: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  largeCard: {
-    padding: 32,
-  },
-  menuTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 8,
-  },
-  menuDescription: {
-    fontSize: 16,
-    color: '#fff',
-    opacity: 0.9,
-    lineHeight: 22,
-    marginBottom: 20,
-  },
-  menuButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    alignSelf: 'flex-end',
-  },
-  menuButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
   toolGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-  },
-  toolCard: {
-    width: '48%',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  toolTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 6,
-  },
-  toolDescription: {
-    fontSize: 12,
-    color: '#fff',
-    opacity: 0.9,
-    lineHeight: 16,
-  },
-  infoCard: {
-    borderRadius: 12,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  infoText: {
-    fontSize: 14,
-    marginBottom: 4,
   },
   footer: {
     padding: 24,
