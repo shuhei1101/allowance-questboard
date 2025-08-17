@@ -2,14 +2,15 @@
 - `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja/index`を読んでから作業すること
 - 作業する際は、内容にそったドキュメントを読んでから作業すること(例えば、テストを作成するなら→`docs/ja/development/testing.md`)
 - 作業内容がドキュメント(docs/)に影響がある場合は更新すること
-- 修正が完了後、こちらでGitコミットをするため、**コミットメッセージを考えて出力すること**
+- 修正が完了後、こちらでGitコミットをするため、**コミットメッセージを含めたコマンドを出力すること**
+- 実行はこちらで行います。
   - 例: 
 ```
-fix: 概要を記載する
-
+git commit -m "fix: 概要を記載する
 - 修正内容の詳細を記載する
-- 
-- 
+-
+-"
+git push origin main
 ```
 
 
