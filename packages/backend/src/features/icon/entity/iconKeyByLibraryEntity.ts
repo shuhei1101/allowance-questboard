@@ -6,7 +6,6 @@ import {
   Unique,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntity";
 import { IconEntity } from "./iconEntity";
 import { IconLibraryEntity as IconLibraryEntity } from "./iconLibraryEntity";
 import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";

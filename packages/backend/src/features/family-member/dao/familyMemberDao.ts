@@ -19,7 +19,7 @@ export class FamilyMemberDao extends BaseDao<FamilyMemberEntity> {
    * 全ての家族メンバーを取得（キャッシュ付き）
    */
   @cache("family_members:all")
-  async fetchAll(): Promise<FamilyMemberEntity[]> {
+  async fetchAllWithCache(): Promise<FamilyMemberEntity[]> {
     return await super.fetchAll();
   }
 
@@ -27,7 +27,7 @@ export class FamilyMemberDao extends BaseDao<FamilyMemberEntity> {
    * IDで家族メンバーを取得（キャッシュ付き）
    */
   @cache("family_members:{id}")
-  async fetchById(id: number): Promise<FamilyMemberEntity | null> {
+  async fetchByIdWithCache(id: number): Promise<FamilyMemberEntity | null> {
     return await super.fetchById(id);
   }
 
@@ -35,7 +35,7 @@ export class FamilyMemberDao extends BaseDao<FamilyMemberEntity> {
    * 家族メンバーを作成（キャッシュクリア付き）
    */
   @evict("family_members:all")
-  async insert(entity: FamilyMemberEntity): Promise<number> {
+  async insertWithCache(entity: FamilyMemberEntity): Promise<number> {
     return await super.insert(entity);
   }
 
@@ -43,7 +43,7 @@ export class FamilyMemberDao extends BaseDao<FamilyMemberEntity> {
    * 家族メンバーを更新（キャッシュクリア付き）
    */
   @evict("family_members:all", "family_members:{entity.id}")
-  async update(entity: FamilyMemberEntity): Promise<void> {
+  async updateWithCache(entity: FamilyMemberEntity): Promise<void> {
     await super.update(entity);
   }
 
@@ -51,7 +51,7 @@ export class FamilyMemberDao extends BaseDao<FamilyMemberEntity> {
    * 家族メンバーを削除（キャッシュクリア付き）
    */
   @evict("family_members:all", "family_members:{id}")
-  async delete(id: number): Promise<void> {
+  async deleteWithCache(id: number): Promise<void> {
     await super.delete(id);
   }
 }

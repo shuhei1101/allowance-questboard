@@ -14,12 +14,4 @@ export class LanguageDao extends BaseDao<LanguageEntity> {
   protected get entityClass(): new () => LanguageEntity {
     return LanguageEntity;
   }
-
-  /**
-   * 全ての言語を取得
-   * マスタデータのためキャッシュは不要
-   */
-  async fetchAll(): Promise<LanguageEntity[]> {
-    return await super.fetchAll();
-  }
 }

@@ -14,12 +14,4 @@ export class FamilyMemberTypeDao extends BaseDao<FamilyMemberTypeEntity> {
   protected get entityClass(): new () => FamilyMemberTypeEntity {
     return FamilyMemberTypeEntity;
   }
-
-  /**
-   * 全ての家族メンバータイプを取得
-   * マスタデータのためキャッシュは不要
-   */
-  async fetchAll(): Promise<FamilyMemberTypeEntity[]> {
-    return await super.fetchAll();
-  }
 }

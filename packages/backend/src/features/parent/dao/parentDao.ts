@@ -19,7 +19,7 @@ export class ParentDao extends BaseDao<ParentEntity> {
    * 全ての親を取得（キャッシュ付き）
    */
   @cache("parents:all")
-  async fetchAll(): Promise<ParentEntity[]> {
+  async fetchAllWithCache(): Promise<ParentEntity[]> {
     return await super.fetchAll();
   }
 
@@ -27,7 +27,7 @@ export class ParentDao extends BaseDao<ParentEntity> {
    * IDで親を取得（キャッシュ付き）
    */
   @cache("parents:{id}")
-  async fetchById(id: number): Promise<ParentEntity | null> {
+  async fetchByIdWithCache(id: number): Promise<ParentEntity | null> {
     return await super.fetchById(id);
   }
 
@@ -35,7 +35,7 @@ export class ParentDao extends BaseDao<ParentEntity> {
    * 親を作成（キャッシュクリア付き）
    */
   @evict("parents:all")
-  async insert(entity: ParentEntity): Promise<number> {
+  async insertWithCache(entity: ParentEntity): Promise<number> {
     return await super.insert(entity);
   }
 
@@ -43,7 +43,7 @@ export class ParentDao extends BaseDao<ParentEntity> {
    * 親を更新（キャッシュクリア付き）
    */
   @evict("parents:all", "parents:{entity.id}")
-  async update(entity: ParentEntity): Promise<void> {
+  async updateWithCache(entity: ParentEntity): Promise<void> {
     await super.update(entity);
   }
 
@@ -51,7 +51,7 @@ export class ParentDao extends BaseDao<ParentEntity> {
    * 親を削除（キャッシュクリア付き）
    */
   @evict("parents:all", "parents:{id}")
-  async delete(id: number): Promise<void> {
+  async deleteWithCache(id: number): Promise<void> {
     await super.delete(id);
   }
 }

@@ -19,7 +19,7 @@ export class QuestDao extends BaseDao<QuestEntity> {
    * 全てのクエストを取得（キャッシュ付き）
    */
   @cache("quests:all")
-  async fetchAll(): Promise<QuestEntity[]> {
+  async fetchAllWithCache(): Promise<QuestEntity[]> {
     return await super.fetchAll();
   }
 
@@ -27,7 +27,7 @@ export class QuestDao extends BaseDao<QuestEntity> {
    * IDでクエストを取得（キャッシュ付き）
    */
   @cache("quests:{id}")
-  async fetchById(id: number): Promise<QuestEntity | null> {
+  async fetchByIdWithCache(id: number): Promise<QuestEntity | null> {
     return await super.fetchById(id);
   }
 
@@ -35,7 +35,7 @@ export class QuestDao extends BaseDao<QuestEntity> {
    * クエストを作成（キャッシュクリア付き）
    */
   @evict("quests:all")
-  async insert(entity: QuestEntity): Promise<number> {
+  async insertWithCache(entity: QuestEntity): Promise<number> {
     return await super.insert(entity);
   }
 
@@ -43,7 +43,7 @@ export class QuestDao extends BaseDao<QuestEntity> {
    * クエストを更新（キャッシュクリア付き）
    */
   @evict("quests:all", "quests:{entity.id}")
-  async update(entity: QuestEntity): Promise<void> {
+  async updateWithCache(entity: QuestEntity): Promise<void> {
     await super.update(entity);
   }
 
@@ -51,7 +51,7 @@ export class QuestDao extends BaseDao<QuestEntity> {
    * クエストを削除（キャッシュクリア付き）
    */
   @evict("quests:all", "quests:{id}")
-  async delete(id: number): Promise<void> {
+  async deleteWithCache(id: number): Promise<void> {
     await super.delete(id);
   }
 }
