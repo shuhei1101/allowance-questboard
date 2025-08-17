@@ -16,7 +16,7 @@ export const ComponentShowcase: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [birthday, setBirthday] = React.useState('');
-  const [selectedIcon, setSelectedIcon] = React.useState('');
+  const [selectedIcon, setSelectedIcon] = React.useState('star'); // Ioniconsアイコン名
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
@@ -86,7 +86,7 @@ export const ComponentShowcase: React.FC = () => {
             selectedIcon={selectedIcon}
             onPress={() => {
               console.log('アイコン選択が押されました');
-              setSelectedIcon('icon-demo');
+              setSelectedIcon('heart'); // デモ用にheartアイコンに変更
             }}
           />
         </View>

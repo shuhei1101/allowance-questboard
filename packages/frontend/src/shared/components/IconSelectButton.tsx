@@ -6,7 +6,7 @@ import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 interface Props {
-  selectedIcon?: string;
+  selectedIcon?: string; // Ioniconsのアイコン名 (例: "home", "person", "settings")
   onPress: () => void;
   error?: string;
 }
@@ -14,6 +14,7 @@ interface Props {
 /**
  * アイコン選択ボタンコンポーネント
  * 右側に`>`アイコンがあり、アイコン選択画面へ遷移する
+ * react-native-vector-icons (Ionicons) を使用してアイコンを表示
  */
 export const IconSelectButton: React.FC<Props> = ({ selectedIcon, onPress, error }) => {
   const { colors } = useTheme();
@@ -31,11 +32,15 @@ export const IconSelectButton: React.FC<Props> = ({ selectedIcon, onPress, error
         >
           <View style={styles.content}>
             {selectedIcon ? (
-              <View style={[styles.iconContainer, { backgroundColor: colors.background.primary }]}>
-                <Text style={styles.iconText}>{selectedIcon}</Text>
+              <View style={[styles.iconContainer, { backgroundColor: colors.surface.secondary }]}>
+                <Ionicons 
+                  name={selectedIcon as any}
+                  size={24} 
+                  color={colors.text.primary} 
+                />
               </View>
             ) : (
-              <View style={[styles.iconContainer, { backgroundColor: colors.background.primary }]}>
+              <View style={[styles.iconContainer, { backgroundColor: colors.surface.secondary }]}>
                 <Text style={[styles.placeholderText, { color: colors.text.secondary }]}>
                   選択してください
                 </Text>

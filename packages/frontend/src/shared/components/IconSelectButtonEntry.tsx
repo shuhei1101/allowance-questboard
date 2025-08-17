@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
 
 interface Props {
-  selectedIcon?: string;
+  selectedIcon?: string; // Ioniconsのアイコン名 (例: "home", "person", "settings")
   onPress: () => void;
   error?: string;
 }
@@ -15,6 +15,7 @@ interface Props {
 /**
  * アイコン選択エントリーコンポーネント
  * EntryFieldとFieldWithErrorでラップしたアイコン選択ボタン
+ * react-native-vector-icons (Ionicons) を使用してアイコンを表示
  */
 export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, error }) => {
   const { colors } = useTheme();
@@ -40,9 +41,13 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
             {selectedIcon ? (
               <>
                 <View style={styles.leftSpacer} />
-                <Text style={[styles.iconText, { color: colors.text.primary }]}>
-                  {selectedIcon}
-                </Text>
+                <View style={[styles.iconContainer, { backgroundColor: colors.surface.secondary }]}>
+                  <Ionicons 
+                    name={selectedIcon as any}
+                    size={24} 
+                    color={colors.text.primary} 
+                  />
+                </View>
                 <Ionicons 
                   name="chevron-forward" 
                   size={20} 
@@ -81,6 +86,14 @@ const styles = StyleSheet.create({
   },
   leftSpacer: {
     flex: 1,
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
   },
   iconText: {
     fontSize: 24,

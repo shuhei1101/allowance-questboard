@@ -12,7 +12,7 @@ export const IconSelectButtonDetailPage: React.FC = () => {
   
   // IconSelectButtonのプロパティ状態
   const [componentProps, setComponentProps] = useState({
-    selectedIcon: '😀',
+    selectedIcon: 'home', // Ioniconsのアイコン名
     error: '',
   });
 
@@ -62,13 +62,13 @@ export const IconSelectButtonDetailPage: React.FC = () => {
           {/* selectedIcon設定 */}
           <View style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
-              選択アイコン (string)
+              選択アイコン (Ioniconsアイコン名)
             </Text>
             <TextInput
               style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
               value={componentProps.selectedIcon}
               onChangeText={(value) => updateProp('selectedIcon', value)}
-              placeholder="絵文字を入力"
+              placeholder="アイコン名を入力 (例: home, person, settings)"
             />
           </View>
 
@@ -104,7 +104,7 @@ export const IconSelectButtonDetailPage: React.FC = () => {
         <View style={[styles.codeBlock, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.codeText, { color: colors.text.secondary }]}>
 {`<IconSelectButtonEntry
-  selectedIcon={selectedIcon}
+  selectedIcon="home"  // Ioniconsアイコン名
   onPress={handleIconSelect}
   error={iconError}
 />`}
