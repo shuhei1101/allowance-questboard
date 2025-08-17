@@ -82,7 +82,7 @@ export const ScreenLauncherPage: React.FC = () => {
         </Text>
 
         <TouchableOpacity
-          style={styles.settingButton}
+          style={[styles.settingButton, { backgroundColor: colors.surface.elevated }]}
           onPress={handleSessionSettings}
         >
           <View style={styles.settingButtonContent}>
@@ -99,7 +99,7 @@ export const ScreenLauncherPage: React.FC = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.settingButton}
+          style={[styles.settingButton, { backgroundColor: colors.surface.elevated }]}
           onPress={handlePageStateSettings}
         >
           <View style={styles.settingButtonContent}>
@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   settingButton: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,

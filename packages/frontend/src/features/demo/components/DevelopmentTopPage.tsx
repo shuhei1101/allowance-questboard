@@ -116,7 +116,7 @@ export const DevelopmentTopPage: React.FC = () => {
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
           📋 環境情報
         </Text>
-        <View style={styles.infoCard}>
+        <View style={[styles.infoCard, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.infoText, { color: colors.text.secondary }]}>
             開発モード: 有効
           </Text>
@@ -238,7 +238,6 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   infoCard: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     shadowColor: '#000',
