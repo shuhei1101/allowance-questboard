@@ -1,10 +1,9 @@
 import { TranslationEntityProtocol } from './baseTranslationEntity';
 
 /**
- * 翻訳コレクションの基底クラス
- * PythonのBaseTranslationCollectionクラスのTypeScript版
+ * 翻訳エンティティコレクションの基底クラス
  */
-export class BaseTranslationCollection<TEntity extends TranslationEntityProtocol> {
+export class BaseTranslationEntities<TEntity extends TranslationEntityProtocol> {
   private _items: TEntity[];
   private _itemsBySourceId: { [sourceId: number]: { [languageId: number]: TEntity } } = {};
 

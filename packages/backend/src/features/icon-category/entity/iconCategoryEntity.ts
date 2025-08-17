@@ -9,6 +9,7 @@ import {
 import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 import { LanguageEntity } from "src/features/language/entity/languageEntity";
+import { BaseTranslationEntities } from "@backend/core/entity/baseTranslationEntities";
 
 /**
  * アイコンカテゴリエンティティ
@@ -70,3 +71,8 @@ export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
     ];
   }
 }
+
+/**
+ * アイコンカテゴリ翻訳エンティティのリスト
+ */
+export class IconCategoryTranslationEntities extends BaseTranslationEntities<IconCategoryTranslationEntity> {}

@@ -1,7 +1,9 @@
 import z from 'zod';
-import { TranslationEntityProtocol } from '@backend/core/entity/baseTranslationEntity';
+import { BaseMasterTranslationEntity, TranslationEntityProtocol } from '@backend/core/entity/baseTranslationEntity';
 import { BaseEntityProtocol } from '../entity/appBaseEntity';
 import { BaseId } from '../value-object/base_id';
+import { BaseTranslationEntities } from '../entity/baseTranslationEntities';
+import { BaseEntity } from 'typeorm';
 
 
 /**
@@ -70,8 +72,8 @@ export abstract class BaseSimpleEnumValue<
  */
 export abstract class BaseTranslationEnumValue<
   IdType extends BaseId,
-  TEntity,
-  TTranslationEntity,
+  TEntity extends BaseEntity,
+  TTranslationEntity extends TranslationEntityProtocol,
   TSchema extends z.ZodType = z.ZodType
 > extends BaseEnumValue<IdType, TSchema> {
 
@@ -81,7 +83,7 @@ export abstract class BaseTranslationEnumValue<
    * @param entity 更新に使用するエンティティ
    * @param translationDict 言語IDをキーとした翻訳エンティティのマッピング
    */
-  abstract setFromEntity(entity: TEntity, translationDict: Map<number, TTranslationEntity>): void;
+  abstract setFromEntity(entity: TEntity, translationDict: { [languageId: number]: TTranslationEntity }): void;
 }
 
 
@@ -176,14 +178,13 @@ export abstract class BaseSimpleEnum<
  * @template TEnumValue BaseTranslationEnumValueのサブクラス
  * @template TId BaseIdのサブクラス
  * @template TEntity エンティティ型（TranslationEntityProtocolを実装）
- * @template TTranslationEntity 翻訳エンティティ型
  * @template TSchema Zodスキーマ型
  */
 export abstract class BaseTranslationEnum<
   TEnumValue extends BaseTranslationEnumValue<any, any, any, any>,
   TId extends BaseId,
   TEntity extends TranslationEntityProtocol,
-  TTranslationEntity,
+  TTranslationEntities extends BaseTranslationEntities<TEntity>,
   TSchema extends z.ZodType = z.ZodType
 > extends BaseEnum<TEnumValue, TId, TSchema> {
 
@@ -193,15 +194,15 @@ export abstract class BaseTranslationEnum<
    * @param entities 更新に使用するエンティティのリスト
    * @param translations 翻訳データのコレクション
    */
-  updateFromEntities(entities: TEntity[], translations: Map<number, Map<number, TTranslationEntity>>): void {
+  updateFromEntities(entities: TEntity[], translations: TTranslationEntities): void {
     const enumValues = this.getAllValues();
-    
     for (const entity of entities) {
       for (const enumValue of enumValues) {
+        const value = enumValue as  TEnumValue; // 型アサーション
         // エンティティのIDとEnum値のIDが一致するかチェック
         if (enumValue.id.value === entity.id) {
-          const translationDict = translations.get(entity.id) || new Map<number, TTranslationEntity>();
-          enumValue.setFromEntity(entity, translationDict);
+          const translationDict = translations.getBySourceId(entity.id);
+          value.setFromEntity(entity, translationDict);
           break;
         }
       }
