@@ -15,6 +15,7 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { LoginPage } from '@/features/auth/login-page/LoginPage';
 import { DemoNavigator } from '@/features/demo/DemoNavigator';
+import { useTheme } from '@/core/theme';
 
 // Navigation types
 export type RootStackParamList = {
@@ -30,6 +31,8 @@ const Stack = createStackNavigator<RootStackParamList>();
  * React Navigationを使用したナビゲーション設定
  */
 export default function App() {
+  const { colors, colorScheme } = useTheme();
+  
   /**
    * グローバルエラーハンドリング
    * ErrorBoundaryでキャッチされたエラーのログ出力
@@ -54,15 +57,45 @@ export default function App() {
 
   return (
     <ErrorBoundary onError={handleGlobalError}>
-      <SafeAreaProvider style={styles.container}>
-        <ExpoStatusBar style="auto" />
-        <NavigationContainer>
+      <SafeAreaProvider style={[styles.container, { backgroundColor: colors.background.primary }]}>
+        <ExpoStatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+        <NavigationContainer
+          theme={{
+            dark: colorScheme === 'dark',
+            colors: {
+              primary: colors.primary,
+              background: colors.background.primary,
+              card: colors.surface.elevated,
+              text: colors.text.primary,
+              border: colors.border.light,
+              notification: colors.danger,
+            },
+            fonts: {
+              regular: {
+                fontFamily: 'System',
+                fontWeight: 'normal',
+              },
+              medium: {
+                fontFamily: 'System',
+                fontWeight: '500',
+              },
+              bold: {
+                fontFamily: 'System',
+                fontWeight: 'bold',
+              },
+              heavy: {
+                fontFamily: 'System',
+                fontWeight: '900',
+              },
+            },
+          }}
+        >
           <Stack.Navigator
             id={undefined}
             initialRouteName="Demo"
             screenOptions={{
               headerShown: false,
-              cardStyle: styles.content,
+              cardStyle: [styles.content, { backgroundColor: colors.background.primary }],
             }}
           >
             <Stack.Screen name="Home" component={HomePage} />
@@ -176,11 +209,9 @@ function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   content: {
     flex: 1,
-    backgroundColor: '#fff',
   },
 });
