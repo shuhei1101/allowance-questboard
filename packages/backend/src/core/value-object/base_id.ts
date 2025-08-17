@@ -36,6 +36,13 @@ export abstract class BaseId extends BaseValueObject<number> {
   }
 
   /**
+   * IDを文字列として返す
+   */
+  toString(): string {
+    return this._value.toString();
+  }
+
+  /**
    * ハッシュ値の計算（辞書のキーとして使用可能にする）
    * TypeScriptでは組み込みハッシュ機能がないので、単純に値を返す
    */

@@ -1,11 +1,11 @@
 import { LocaleString } from '../messages/localeString';
 import { RelationValidateException } from './validationException';
-import { errorMessages } from '../messages/errorMessages';
+import { ValidationErrorMessages } from '../messages/validationErrorMessages';
 
 /**
  * 関連バリデーションを提供するクラス（BaseModelで使用）
  */
-export class RelationValidator {
+class RelationValidator {
 
   /**
    * 確認一致チェック（パスワード確認など）
@@ -19,7 +19,7 @@ export class RelationValidator {
     if (value !== confirmationValue) {
       throw new RelationValidateException({
         errorType: "confirmation_mismatch",
-        message: optionMessage ?? errorMessages.confirmationMismatch(fieldName)
+        message: optionMessage ?? ValidationErrorMessages.confirmationMismatch(fieldName)
       });
     }
     return this;
@@ -38,7 +38,7 @@ export class RelationValidator {
     if (startDate > endDate) {
       throw new RelationValidateException({
         errorType: "date_range_invalid",
-        message: optionMessage ?? errorMessages.dateRangeInvalid(startFieldName, endFieldName)
+        message: optionMessage ?? ValidationErrorMessages.dateRangeInvalid(startFieldName, endFieldName)
       });
     }
     return this;
@@ -57,7 +57,7 @@ export class RelationValidator {
     if (startDateTime > endDateTime) {
       throw new RelationValidateException({
         errorType: "datetime_range_invalid",
-        message: optionMessage ?? errorMessages.dateTimeRangeInvalid(startFieldName, endFieldName)
+        message: optionMessage ?? ValidationErrorMessages.dateTimeRangeInvalid(startFieldName, endFieldName)
       });
     }
     return this;
@@ -76,7 +76,7 @@ export class RelationValidator {
     if (value <= compareValue) {
       throw new RelationValidateException({
         errorType: "greater_than_invalid",
-        message: optionMessage ?? errorMessages.greaterThanInvalid(valueFieldName, compareFieldName)
+        message: optionMessage ?? ValidationErrorMessages.greaterThanInvalid(valueFieldName, compareFieldName)
       });
     }
     return this;
@@ -95,7 +95,7 @@ export class RelationValidator {
     if (value < compareValue) {
       throw new RelationValidateException({
         errorType: "greater_than_or_equal_invalid",
-        message: optionMessage ?? errorMessages.greaterThanOrEqualInvalid(valueFieldName, compareFieldName)
+        message: optionMessage ?? ValidationErrorMessages.greaterThanOrEqualInvalid(valueFieldName, compareFieldName)
       });
     }
     return this;
@@ -114,7 +114,7 @@ export class RelationValidator {
     if (value >= compareValue) {
       throw new RelationValidateException({
         errorType: "less_than_invalid",
-        message: optionMessage ?? errorMessages.lessThanInvalid(valueFieldName, compareFieldName)
+        message: optionMessage ?? ValidationErrorMessages.lessThanInvalid(valueFieldName, compareFieldName)
       });
     }
     return this;
@@ -133,7 +133,7 @@ export class RelationValidator {
     if (value > compareValue) {
       throw new RelationValidateException({
         errorType: "less_than_or_equal_invalid",
-        message: optionMessage ?? errorMessages.lessThanOrEqualInvalid(valueFieldName, compareFieldName)
+        message: optionMessage ?? ValidationErrorMessages.lessThanOrEqualInvalid(valueFieldName, compareFieldName)
       });
     }
     return this;
@@ -152,7 +152,7 @@ export class RelationValidator {
     if (value === compareValue) {
       throw new RelationValidateException({
         errorType: "not_equal_invalid",
-        message: optionMessage ?? errorMessages.notEqualInvalid(valueFieldName, compareFieldName)
+        message: optionMessage ?? ValidationErrorMessages.notEqualInvalid(valueFieldName, compareFieldName)
       });
     }
     return this;
@@ -182,7 +182,7 @@ export class RelationValidator {
     if (calculatedAge !== age) {
       throw new RelationValidateException({
         errorType: "age_consistency_invalid",
-        message: optionMessage ?? errorMessages.ageConsistencyInvalid(fieldName)
+        message: optionMessage ?? ValidationErrorMessages.ageConsistencyInvalid(fieldName)
       });
     }
     return this;
@@ -201,7 +201,7 @@ export class RelationValidator {
     if (dependentValue != null && requiredValue == null) {
       throw new RelationValidateException({
         errorType: "dependency_invalid",
-        message: optionMessage ?? errorMessages.dependencyInvalid(dependentFieldName, requiredFieldName)
+        message: optionMessage ?? ValidationErrorMessages.dependencyInvalid(dependentFieldName, requiredFieldName)
       });
     }
     return this;
@@ -220,7 +220,7 @@ export class RelationValidator {
     if (value1 != null && value2 != null) {
       throw new RelationValidateException({
         errorType: "mutual_exclusion_invalid",
-        message: optionMessage ?? errorMessages.mutualExclusionInvalid(field1Name, field2Name)
+        message: optionMessage ?? ValidationErrorMessages.mutualExclusionInvalid(field1Name, field2Name)
       });
     }
     return this;
@@ -240,9 +240,11 @@ export class RelationValidator {
     if (Math.abs(total - calculatedTotal) > 0.01) { // 浮動小数点の誤差を考慮
       throw new RelationValidateException({
         errorType: "quantity_consistency_invalid",
-        message: optionMessage ?? errorMessages.quantityConsistencyInvalid(totalFieldName, partFieldNames)
+        message: optionMessage ?? ValidationErrorMessages.quantityConsistencyInvalid(totalFieldName, partFieldNames)
       });
     }
     return this;
   }
 }
+
+export const relationValidator = new RelationValidator();

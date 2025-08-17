@@ -1,17 +1,21 @@
 import { LocaleString } from "../messages/localeString";
-import { RelationValidator } from "../validator/relationValidator";
-import { ValueValidateException } from "../validator/validationException";
+import { relationValidator } from "../validator/relationValidator";
+import { RelationValidateException } from "../validator/validationException";
 
 export abstract class BaseModel {
-  protected readonly validator: RelationValidator = new RelationValidator();
+  protected readonly validator = relationValidator;
   protected _errorMessage: LocaleString | null = null;
 
-  constructor() {
+  constructor() {}
+
+  /**
+   * _validateの実行
+   */
+  protected runValidate(): void {
     try {
-      this._validate();
-      this._errorMessage = null;
+      this.validate();
     } catch (error) {
-      if (error instanceof ValueValidateException) {
+      if (error instanceof RelationValidateException) {
         this._errorMessage = error.localeMessage;
       } else {
         // 予期しないエラーの場合は再スロー
@@ -23,7 +27,7 @@ export abstract class BaseModel {
   /**
    * モデルの値を検証する（サブクラスで実装必須）
    */
-  protected abstract _validate(): void;
+  protected abstract validate(): void;
 
   /**
    * 有効な値かどうかを示す

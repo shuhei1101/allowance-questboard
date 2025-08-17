@@ -1,25 +1,16 @@
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
-import type { AppRouter } from '@backend/router';
-import { useLoginPageStore } from '../stores/loginPageStore';
-import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
+import { UpdateSelectFamilyDialog } from '../stores/loginPageStore';
+import { LocaleString } from '@backend/core/messages/localeString';
+import { SelectFamilyDialog } from '../models/selectFamilyDialog';
+import { FamilyName } from '@backend/features/family/entity/value-object/familyName';
+import { LoginRouter } from '@backend/features/auth/router/loginRouter';
+import { BaseAppException } from '@backend/core/errors/baseAppException';
+import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 
-/**
- * ログインユースケースのパラメータ
- */
-export interface LoginParams {
-  /** JWTトークン */
-  jwtToken: string;
+interface LoginParams {
+  updateSelectFamilyDialog: UpdateSelectFamilyDialog,
+  router: LoginRouter
 }
-
-/**
- * ログインユースケースの実行結果
- */
-export interface LoginResult {
-  /** 成功フラグ */
-  success: boolean;
-  /** エラーメッセージ（失敗時のみ） */
-  errorMessage?: string;
-}
+export type Login = (params: LoginParams) => void;
 
 /**
  * ログインユースケース
@@ -29,58 +20,28 @@ export interface LoginResult {
  * 
  * @param params ログインパラメータ
  * @returns ログイン結果
+ * @throws BaseAppException ログインに失敗した場合
  */
-export const login = async (params: LoginParams): Promise<LoginResult> => {
-  const { jwtToken } = params;
-  
-  // ローディング状態を開始
-  const { setLoading } = useLoginPageStore.getState();
-  const { updateJwt } = useSessionStore.getState();
-  
-  setLoading(true);
-  
+export const login = async (params: LoginParams): Promise<void> => {
   try {
-    // tRPCクライアントでログインAPI呼び出し
-    // 動的にヘッダーを設定してクライアントを作成
-    const clientWithAuth = createTRPCClient<AppRouter>({
-      links: [
-        httpBatchLink({
-          url: process.env.EXPO_PUBLIC_TRPC_SERVER_URL || 'http://localhost:3000/trpc',
-          headers: () => ({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwtToken}`,
-            'languageid': '1', // デフォルトで日本語
-          }),
-        }),
-      ],
-    });
+    // ログインAPIを実行
+    const response = await params.router.query();
 
-    // anyキャストを避け、適切に型付けされたクライアントを使用
-    const response = await clientWithAuth.login.login.query();
-    
-    // JWTトークンをセッションに保存
-    // ※ familyMemberTypeは後でログインタイプ選択時に設定される
-    updateJwt(jwtToken);
-    
-    return {
-      success: true,
-    };
-    
+    // responseから状態を更新
+    params.updateSelectFamilyDialog(
+      new SelectFamilyDialog({
+        familyName: new FamilyName(response.familyName),
+      })
+    )
   } catch (error) {
-    console.error('ログインエラー:', error);
-    
-    let errorMessage = 'ログインに失敗しました';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    
-    return {
-      success: false,
-      errorMessage,
-    };
-    
-  } finally {
-    // ローディング状態を終了
-    setLoading(false);
+    // tRPCエラーをBaseAppExceptionに変換して再スロー
+    throw BaseAppException.fromTRPCError({
+      error,
+      fallbackErrorType: 'LOGIN_ERROR',
+      fallbackMessage: new LocaleString({
+        ja: AuthErrorMessages.internalServerError().ja,
+        en: AuthErrorMessages.internalServerError().en,
+      })
+    });
   }
 };

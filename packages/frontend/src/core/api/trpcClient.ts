@@ -2,6 +2,7 @@ import { createTRPCReact } from '@trpc/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { QueryClient } from '@tanstack/react-query';
 import { AppRouter } from '@backend/router';
+import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 
 /**
  * 共通設定
@@ -34,3 +35,25 @@ export const trpc = createTRPCReact<AppRouter>();
 export const trpcClient = createTRPCClient<AppRouter>({
   links: [httpLink],
 });
+
+/**
+ * 認証トークン付きのtRPCクライアントを作成
+ * 
+ * @param jwtToken JWTトークン
+ * @param languageId 言語ID（デフォルト: '1'）
+ * @returns 認証情報付きのtRPCクライアント
+ */
+export const createAuthenticatedClient = (params: { jwtToken: string, languageType: LanguageTypeValue }) => {
+  return createTRPCClient<AppRouter>({
+    links: [
+      httpBatchLink({
+        url: TRPC_SERVER_URL,
+        headers: () => ({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${params.jwtToken}`,
+          'languageid': params.languageType.id.toString(), // LanguageTypeValueからIDを取得
+        }),
+      }),
+    ],
+  });
+};

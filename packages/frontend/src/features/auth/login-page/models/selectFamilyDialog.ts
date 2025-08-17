@@ -1,21 +1,28 @@
 import { FamilyName } from '@backend/features/family/entity/value-object/familyName';
+import { BaseModel } from '@backend/core/models/baseModel';
 
 /**
  * 家族選択ダイアログモデル
  */
-export class SelectFamilyDialog {
+export class SelectFamilyDialog extends BaseModel {
   public readonly familyName: FamilyName;
 
   constructor(params: {familyName: FamilyName}) {
+    super();
     this.familyName = params.familyName;
   }
 
   /**
+   * モデルの値を検証する
+   */
+  protected validate(): void {}
+
+  /**
    * 家族が選択されているかを判定
-   * @returns 家族名が設定されている場合true
+   * @returns 家族名が設定されていて有効な場合true
    */
   public hasSelectedFamily(): boolean {
-    return this.familyName !== null;
+    return this.familyName !== null && this.familyName.value.length > 0;
   }
 
   /**
@@ -35,5 +42,4 @@ export class SelectFamilyDialog {
       familyName: new FamilyName(''),
     });
   }
-
 }

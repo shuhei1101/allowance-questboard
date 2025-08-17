@@ -3,22 +3,36 @@ import { devtools } from 'zustand/middleware';
 import { LoginForm } from '../models/loginForm';
 import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 
+export type IsLoading = boolean;
+export type IsDialogVisible = boolean;
+export type EmailError = string | null;
+export type PasswordError = string | null;
+
+export type UpdateLoginForm = (form: LoginForm) => void;
+export type UpdateSelectFamilyDialog = (dialog: SelectFamilyDialog) => void;
+export type ShowDialog = () => void;
+export type HideDialog = () => void;
+export type SetLoading = (loading: boolean) => void;
+export type SetEmailError = (error: string | null) => void;
+export type SetPasswordError = (error: string | null) => void;
+export type ClearErrors = () => void;
+
 interface LoginPageState {
-  isLoading: boolean;
-  isDialogVisible: boolean;
+  isLoading: IsLoading;
+  isDialogVisible: IsDialogVisible;
   loginForm: LoginForm;
   selectFamilyDialog: SelectFamilyDialog;
-  emailError: string | null;
-  passwordError: string | null;
+  emailError: EmailError;
+  passwordError: PasswordError;
 
-  updateLoginForm: (form: LoginForm) => void;
-  updateSelectFamilyDialog: (dialog: SelectFamilyDialog) => void;
-  showDialog: () => void;
-  hideDialog: () => void;
-  setLoading: (loading: boolean) => void;
-  setEmailError: (error: string | null) => void;
-  setPasswordError: (error: string | null) => void;
-  clearErrors: () => void;
+  updateLoginForm: UpdateLoginForm;
+  updateSelectFamilyDialog: UpdateSelectFamilyDialog;
+  showDialog: ShowDialog;
+  hideDialog: HideDialog;
+  setLoading: SetLoading;
+  setEmailError: SetEmailError;
+  setPasswordError: SetPasswordError;
+  clearErrors: ClearErrors;
 }
 
 /**

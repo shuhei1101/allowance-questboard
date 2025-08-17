@@ -7,11 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Localization from 'expo-localization';
 import { useEffect, useState } from 'react';
 import '@/core/i18n';
-import { localeToLanguageType } from './src/features/auth/shared/utils/localeToLanguageType';
-import { LoadingScreen } from './src/shared/components/LoadingScreen';
-import { LoginPage } from './src/features/auth/login-page';
-import { useSessionStore } from '@/features/auth/shared/stores/sessionStore';
-import { initMasterData } from '@/features/auth/shared/services/initMasterData';
+import { localeToLanguageType } from './src/features/auth/utils/localeToLanguageType';
+import { LoadingPage } from './src/shared/loading-page/LoadingPage';
+import { ErrorBoundary } from './src/core/errors/ErrorBoundary';
+import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { initMasterData } from '@/features/auth/services/initMasterData';
+import { LoginPage } from '@/features/auth/login-page/loginPage';
 
 // Navigation types
 export type RootStackParamList = {
@@ -26,29 +27,53 @@ const Stack = createStackNavigator<RootStackParamList>();
  * React Navigationを使用したナビゲーション設定
  */
 export default function App() {
+  /**
+   * グローバルエラーハンドリング
+   * ErrorBoundaryでキャッチされたエラーのログ出力
+   */
+  const handleGlobalError = (error: Error, errorInfo: React.ErrorInfo) => {
+    // エラーログの出力
+    console.error('🚨 Global Error Boundary caught error:', {
+      error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+      errorInfo: {
+        componentStack: errorInfo.componentStack,
+      },
+      timestamp: new Date().toISOString(),
+    });
+
+    // TODO: エラーレポーティングサービスに送信
+    // 例: Sentry, Crashlytics, など
+  };
+
   return (
-    <SafeAreaProvider style={styles.container}>
-      <ExpoStatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator
-          id={undefined}
-          initialRouteName="Home"
-          screenOptions={{
-            headerShown: false,
-            cardStyle: styles.content,
-          }}
-        >
-          <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen 
-            name="Login" 
-            component={LoginPage}
-            options={{
-              title: 'ログイン',
+    <ErrorBoundary onError={handleGlobalError}>
+      <SafeAreaProvider style={styles.container}>
+        <ExpoStatusBar style="auto" />
+        <NavigationContainer>
+          <Stack.Navigator
+            id={undefined}
+            initialRouteName="Home"
+            screenOptions={{
+              headerShown: false,
+              cardStyle: styles.content,
             }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+          >
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen 
+              name="Login" 
+              component={LoginPage}
+              options={{
+                title: 'ログイン',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }
 
@@ -90,7 +115,15 @@ function HomePage() {
 
       } catch (error) {
         console.error('❌ アプリ初期化エラー:', error);
-        // エラーが発生しても言語設定は実行する
+        
+        // 初期化エラーの場合は上位のErrorBoundaryに委譲
+        // 致命的なエラー（マスタデータ読み込み失敗など）の場合はthrowして
+        // ErrorBoundaryでキャッチさせる
+        if (error instanceof Error && error.message.includes('critical')) {
+          throw error;
+        }
+        
+        // 非致命的なエラーの場合はフォールバック処理を実行
         setLoadingMessage("エラーが発生しましたが、続行します... ⚠️");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
@@ -110,7 +143,7 @@ function HomePage() {
 
   // 初期化中はローディング画面を表示
   if (isInitializing) {
-    return <LoadingScreen message={loadingMessage} />;
+    return <LoadingPage message={loadingMessage} />;
   }
 
   return <LoginPage />;

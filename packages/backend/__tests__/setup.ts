@@ -3,6 +3,3 @@
 
 // タイムゾーンの設定
 process.env.TZ = 'Asia/Tokyo';
-
-// テスト用の環境変数設定
-process.env.NODE_ENV = 'test';

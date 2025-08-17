@@ -40,5 +40,20 @@
     "ok": "OK",
     "yes": "Yes",
     "no": "No"
+  },
+  "error": {
+    "unexpected": {
+      "title": "An Unexpected Error Occurred",
+      "message": "The app encountered a problem. Please tap the retry button to try again."
+    },
+    "details": {
+      "title": "Error Details (Development Mode)"
+    },
+    "actions": {
+      "retry": "Retry"
+    },
+    "help": {
+      "contact": "If the problem persists, please restart the app and try again."
+    }
   }
 }

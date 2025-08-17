@@ -1,8 +1,8 @@
-import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemberEntity";
-import { ParentEntity } from "src/features/parent/entity/parentEntity";
-import { ChildEntity } from "src/features/child/entity/childEntity";
-import { FamilyEntity } from "src/features/family/entity/familyEntity";
 import { BaseQueryParams } from "@backend/core/query-service/baseQueryParams";
+import { ChildEntity } from "@backend/features/child/entity/childEntity";
+import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
+import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
+import { ParentEntity } from "@backend/features/parent/entity/parentEntity";
 
 /**
  * ログインクエリパラメータ

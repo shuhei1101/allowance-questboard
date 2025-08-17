@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   displayName: 'frontend',
   roots: ['<rootDir>/src', '<rootDir>/__tests__'],
   testMatch: [
@@ -15,7 +15,9 @@ module.exports = {
     }],
   },
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^@frontend/(.*)$': '<rootDir>/src/$1',
+    '^@backend/(.*)$': '<rootDir>/../backend/src/$1',
   },
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

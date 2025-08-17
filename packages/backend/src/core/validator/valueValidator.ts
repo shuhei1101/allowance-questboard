@@ -1,6 +1,6 @@
 import { LocaleString } from '../messages/localeString';
 import { ValueValidateException } from './validationException';
-import { errorMessages } from '../messages/errorMessages';
+import { ValidationErrorMessages } from '../messages/validationErrorMessages';
 
 /**
  * 値オブジェクトのバリデーションを提供するクラス
@@ -27,7 +27,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "required",
-        message: optionMessage ?? errorMessages.required(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.required(this.valueName)
       });
     }
     return this;
@@ -42,7 +42,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "max_length",
-        message: optionMessage ?? errorMessages.maxLength(this.valueName, maxLength)
+        message: optionMessage ?? ValidationErrorMessages.maxLength(this.valueName, maxLength)
       });
     }
     return this;
@@ -57,7 +57,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "min_length",
-        message: optionMessage ?? errorMessages.minLength(this.valueName, minLength)
+        message: optionMessage ?? ValidationErrorMessages.minLength(this.valueName, minLength)
       });
     }
     return this;
@@ -72,7 +72,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "alphanumeric",
-        message: optionMessage ?? errorMessages.alphanumeric(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.alphanumeric(this.valueName)
       });
     }
     return this;
@@ -89,7 +89,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "email_format",
-        message: optionMessage ?? errorMessages.emailFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.emailFormat(this.valueName)
       });
     }
     return this;
@@ -104,7 +104,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "phone_format",
-        message: optionMessage ?? errorMessages.phoneFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.phoneFormat(this.valueName)
       });
     }
     return this;
@@ -119,7 +119,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "url_format",
-        message: optionMessage ?? errorMessages.urlFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.urlFormat(this.valueName)
       });
     }
     return this;
@@ -135,7 +135,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "date_format",
-        message: optionMessage ?? errorMessages.dateFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.dateFormat(this.valueName)
       });
     }
     
@@ -145,7 +145,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "date_format",
-        message: optionMessage ?? errorMessages.dateFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.dateFormat(this.valueName)
       });
     }
     return this;
@@ -162,7 +162,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "numeric_format",
-        message: optionMessage ?? errorMessages.numericFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.numericFormat(this.valueName)
       });
     }
     return this;
@@ -177,7 +177,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "integer_format",
-        message: optionMessage ?? errorMessages.integerFormat(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.integerFormat(this.valueName)
       });
     }
     return this;
@@ -192,7 +192,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "min_value",
-        message: optionMessage ?? errorMessages.minValue(this.valueName, minValue)
+        message: optionMessage ?? ValidationErrorMessages.minValue(this.valueName, minValue)
       });
     }
     return this;
@@ -207,7 +207,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "max_value",
-        message: optionMessage ?? errorMessages.maxValue(this.valueName, maxValue)
+        message: optionMessage ?? ValidationErrorMessages.maxValue(this.valueName, maxValue)
       });
     }
     return this;
@@ -222,7 +222,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "range_value",
-        message: optionMessage ?? errorMessages.range(this.valueName, minValue, maxValue)
+        message: optionMessage ?? ValidationErrorMessages.range(this.valueName, minValue, maxValue)
       });
     }
     return this;
@@ -240,7 +240,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "password_length",
-        message: optionMessage ?? errorMessages.minLength(this.valueName, 8)
+        message: optionMessage ?? ValidationErrorMessages.minLength(this.valueName, 8)
       });
     }
     
@@ -248,7 +248,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "password_contains_alpha",
-        message: optionMessage ?? errorMessages.passwordContainsLowercase(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.passwordContainsLowercase(this.valueName)
       });
     }
     
@@ -256,7 +256,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "password_contains_digit",
-        message: optionMessage ?? errorMessages.passwordContainsDigit(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.passwordContainsDigit(this.valueName)
       });
     }
     
@@ -264,7 +264,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "password_contains_symbol",
-        message: optionMessage ?? errorMessages.passwordContainsSymbol(this.valueName)
+        message: optionMessage ?? ValidationErrorMessages.passwordContainsSymbol(this.valueName)
       });
     }
     return this;
@@ -280,7 +280,7 @@ export class ValueValidator<T = any> {
       throw new ValueValidateException({
         valueName: this.valueName,
         errorType: "contains_only",
-        message: optionMessage ?? errorMessages.containsOnly(this.valueName, allowedChars)
+        message: optionMessage ?? ValidationErrorMessages.containsOnly(this.valueName, allowedChars)
       });
     }
     return this;
