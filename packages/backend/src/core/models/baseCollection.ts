@@ -1,5 +1,4 @@
 import { BaseId } from '../value-object/base_id';
-import { BaseDomainModel } from './baseDomainModel';
 
 /**
  * コレクションアイテムのプロトコル（インターフェース）
@@ -12,10 +11,10 @@ export interface CollectionItemProtocol<IdType extends BaseId> {
 }
 
 /**
- * ドメインモデルのコレクションを表現する基底抽象クラス（ファーストコレクション）
+ * IDをもつクラスのコレクションを表現する基底抽象クラス（ファーストコレクション）
  */
 export abstract class BaseCollection<
-  ItemType extends BaseDomainModel<IdType, any> & CollectionItemProtocol<IdType>,
+  ItemType extends CollectionItemProtocol<IdType>,
   IdType extends BaseId
 > {
   protected _items: ItemType[];
@@ -83,6 +82,8 @@ export abstract class BaseCollection<
 
   /**
    * 具象クラスで実装するカスタムインデックスの更新メソッド（任意）
+   * 
+   * 内部に複数の辞書を持つ場合はここで更新処理を実装
    */
   protected abstract _updateCustomIndex(): void;
 }
