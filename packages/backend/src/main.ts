@@ -10,6 +10,10 @@ import { redisClient } from './core/config/redisConfig'   // Redis クライア�
 import { initMasterData } from './features/auth/usecase/initMasterData' // マスタデータ初期化
 import { LanguageDao } from './features/language/dao/languageDao' // 言語DAO
 import { FamilyMemberTypeDao } from './features/family-member/dao/familyMemberTypeDao' // 家族メンバータイプDAO
+import { LanguageRepository } from './features/language/repository/languageRepository'
+import { FamilyMemberTypeRepository } from './features/family-member/repository/familyMemberTypeRepository'
+import { IconCategoryRepository } from './features/icon-category/repository/iconCategoryRepository'
+import { IconCategoryDao } from './features/icon-category/dao/iconCategoryDao'
 
 async function main() {
   // Redis クライアントを初期化（アプリケーション起動時に一度だけ）
@@ -28,12 +32,15 @@ async function main() {
     try {
       const entityManager = AppDataSource.manager;
       await initMasterData({
-        languageRepositoryDeps: {
+        languageRepository: new LanguageRepository({ 
           languageDao: new LanguageDao(entityManager)
-        },
-        familyMemberTypeRepositoryDeps: {
+        }),
+        familyMemberTypeRepository: new FamilyMemberTypeRepository({
           familyMemberTypeDao: new FamilyMemberTypeDao(entityManager)
-        }
+        }),
+        iconCategoryRepository: new IconCategoryRepository({
+          iconCategoryDao: new IconCategoryDao(entityManager)
+        })
       });
       console.log('✨ マスタデータ初期化完了！');
     } catch (error) {

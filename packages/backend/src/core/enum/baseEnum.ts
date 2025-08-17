@@ -1,6 +1,6 @@
 import z from 'zod';
 import { BaseMasterTranslationEntity, TranslationEntityProtocol } from '@backend/core/entity/baseTranslationEntity';
-import { BaseEntityProtocol } from '../entity/appBaseEntity';
+import { BaseEntityProtocol, AppBaseEntity } from '../entity/appBaseEntity';
 import { BaseId } from '../value-object/base_id';
 import { BaseTranslationEntities } from '../entity/baseTranslationEntities';
 import { BaseEntity } from 'typeorm';
@@ -177,28 +177,31 @@ export abstract class BaseSimpleEnum<
  * 翻訳ありのEnumの基底クラス
  * @template TEnumValue BaseTranslationEnumValueのサブクラス
  * @template TId BaseIdのサブクラス
- * @template TEntity エンティティ型（TranslationEntityProtocolを実装）
+ * @template TMainEntity メインエンティティ型
+ * @template TTranslationEntity 翻訳エンティティ型（TranslationEntityProtocolを実装）
+ * @template TTranslationEntities 翻訳エンティティコレクション型
  * @template TSchema Zodスキーマ型
  */
 export abstract class BaseTranslationEnum<
   TEnumValue extends BaseTranslationEnumValue<any, any, any, any>,
   TId extends BaseId,
-  TEntity extends TranslationEntityProtocol,
-  TTranslationEntities extends BaseTranslationEntities<TEntity>,
+  TMainEntity extends AppBaseEntity,
+  TTranslationEntity extends TranslationEntityProtocol,
+  TTranslationEntities extends BaseTranslationEntities<TTranslationEntity>,
   TSchema extends z.ZodType = z.ZodType
 > extends BaseEnum<TEnumValue, TId, TSchema> {
 
   /**
    * エンティティリストから列挙型の値を更新する（翻訳テーブルあり）
    * PythonのTranslationEnumMixin.update_from_entitiesのTypeScript版
-   * @param entities 更新に使用するエンティティのリスト
+   * @param mainEntities 更新に使用するメインエンティティのリスト
    * @param translations 翻訳データのコレクション
    */
-  updateFromEntities(entities: TEntity[], translations: TTranslationEntities): void {
+  updateFromEntities(mainEntities: TMainEntity[], translations: TTranslationEntities): void {
     const enumValues = this.getAllValues();
-    for (const entity of entities) {
+    for (const entity of mainEntities) {
       for (const enumValue of enumValues) {
-        const value = enumValue as  TEnumValue; // 型アサーション
+        const value = enumValue as TEnumValue; // 型アサーション
         // エンティティのIDとEnum値のIDが一致するかチェック
         if (enumValue.id.value === entity.id) {
           const translationDict = translations.getBySourceId(entity.id);

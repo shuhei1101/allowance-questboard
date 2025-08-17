@@ -10,6 +10,7 @@ import { IconCategoryEntity, IconCategoryTranslationEntity, IconCategoryTranslat
 class IconCategoryEnum extends BaseTranslationEnum<
   IconCategoryValue,
   IconCategoryId,
+  IconCategoryEntity,
   IconCategoryTranslationEntity,
   IconCategoryTranslationEntities,
   typeof IconCategoryValueSchema

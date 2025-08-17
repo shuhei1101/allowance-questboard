@@ -27,12 +27,8 @@ describe('initMasterData', () => {
     
     // パラメータの設定
     params = {
-      languageRepositoryDeps: {
-        languageDao: mockLanguageDao
-      },
-      familyMemberTypeRepositoryDeps: {
-        familyMemberTypeDao: mockFamilyMemberTypeDao
-      }
+      languageRepository: new MockedLanguageRepository(mockLanguageDao),
+      familyMemberTypeRepository: new MockedFamilyMemberTypeRepository(mockFamilyMemberTypeDao)
     };
 
     // コンソールログのスパイを設定
@@ -61,8 +57,8 @@ describe('initMasterData', () => {
       await initMasterData(params);
 
       // 検証
-      expect(MockedLanguageRepository).toHaveBeenCalledWith(params.languageRepositoryDeps);
-      expect(MockedFamilyMemberTypeRepository).toHaveBeenCalledWith(params.familyMemberTypeRepositoryDeps);
+      expect(MockedLanguageRepository).toHaveBeenCalledWith(params.languageRepository);
+      expect(MockedFamilyMemberTypeRepository).toHaveBeenCalledWith(params.familyMemberTypeRepository);
       expect(mockUpdateLanguageEnum).toHaveBeenCalledTimes(1);
       expect(mockUpdateFamilyMemberTypeEnum).toHaveBeenCalledTimes(1);
       expect(consoleSpy).toHaveBeenCalledWith('マスタデータの初期化が完了しました');

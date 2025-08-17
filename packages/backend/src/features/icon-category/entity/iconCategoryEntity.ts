@@ -8,7 +8,6 @@ import {
 } from "typeorm";
 import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
-import { LanguageEntity } from "src/features/language/entity/languageEntity";
 import { BaseTranslationEntities } from "@backend/core/entity/baseTranslationEntities";
 
 /**

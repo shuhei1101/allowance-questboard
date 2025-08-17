@@ -1,12 +1,14 @@
-import { LanguageRepository, LanguageRepositoryParams } from '../../language/repository/languageRepository';
-import { FamilyMemberTypeRepository, FamilyMemberTypeRepositoryParams } from '../../family-member/repository/familyMemberTypeRepository';
+import { LanguageRepository } from '../../language/repository/languageRepository';
+import { FamilyMemberTypeRepository } from '../../family-member/repository/familyMemberTypeRepository';
+import { IconCategoryRepository } from '@backend/features/icon-category/repository/iconCategoryRepository';
 
 /**
  * マスタデータ初期化のパラメータ
  */
 export interface InitMasterDataParams {
-  languageRepositoryDeps: LanguageRepositoryParams;
-  familyMemberTypeRepositoryDeps: FamilyMemberTypeRepositoryParams;
+  languageRepository: LanguageRepository;
+  familyMemberTypeRepository: FamilyMemberTypeRepository;
+  iconCategoryRepository: IconCategoryRepository;
 }
 
 /**
@@ -17,14 +19,11 @@ export interface InitMasterDataParams {
  */
 export async function initMasterData(params: InitMasterDataParams): Promise<void> {
   try {
-    // リポジトリのインスタンスを作成
-    const languageRepository = new LanguageRepository(params.languageRepositoryDeps);
-    const familyMemberTypeRepository = new FamilyMemberTypeRepository(params.familyMemberTypeRepositoryDeps);
-
     // 各リポジトリのEnum更新メソッドを並行実行
     await Promise.all([
-      languageRepository.updateLanguageEnum(),
-      familyMemberTypeRepository.updateFamilyMemberTypeEnum()
+      params.languageRepository.updateLanguageEnum(),
+      params.familyMemberTypeRepository.updateFamilyMemberTypeEnum(),
+      params.iconCategoryRepository.updateIconCategoryEnum()
     ]);
 
     console.log('マスタデータの初期化が完了しました');

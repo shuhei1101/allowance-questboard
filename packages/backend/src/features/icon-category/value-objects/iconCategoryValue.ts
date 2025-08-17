@@ -93,8 +93,16 @@ export class IconCategoryValue extends BaseTranslationEnumValue<
    * @param data Zodスキーマに準拠したデータ
    */
   setFromZodData(data: z.infer<typeof IconCategoryValueSchema>): void {
-    // 必要に応じて実装（今回は基本的な実装）
+    // IDの一致チェック
+    if (data.id !== this._id.value) {
+      throw new Error(`ID mismatch: expected ${this._id.value}, got ${data.id}`);
+    }
+    
+    // 基本プロパティの設定
     this._sortOrder = data.sortOrder;
     this._isActive = data.isActive;
+    
+    // nameByLanguagesの復元は複雑なので、必要に応じて後で実装
+    // 現在は基本プロパティのみ対応
   }
 }
