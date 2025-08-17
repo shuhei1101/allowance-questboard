@@ -116,6 +116,36 @@ export const ScreenLauncherPage: React.FC = () => {
         </TouchableOpacity>
       </View>
 
+      {/* 依存コンポーネント */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
+          🧩 依存コンポーネント
+        </Text>
+        <Text style={[styles.sectionDescription, { color: colors.text.secondary }]}>
+          この画面で使用されているコンポーネント一覧
+        </Text>
+        
+        {getDependencyComponents(screenType).map((component) => (
+          <TouchableOpacity
+            key={component.id}
+            style={[styles.componentItem, { backgroundColor: colors.surface.elevated }]}
+            onPress={() => navigation.navigate('ComponentDetail', { componentType: component.id })}
+          >
+            <View style={styles.componentItemContent}>
+              <Text style={[styles.componentItemTitle, { color: colors.text.primary }]}>
+                {component.icon} {component.name}
+              </Text>
+              <Text style={[styles.componentItemDescription, { color: colors.text.secondary }]}>
+                {component.description}
+              </Text>
+            </View>
+            <Text style={[styles.componentItemArrow, { color: colors.text.secondary }]}>
+              →
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       {/* 使い方ガイド */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
@@ -130,6 +160,9 @@ export const ScreenLauncherPage: React.FC = () => {
           </Text>
           <Text style={[styles.guideItem, { color: colors.text.secondary }]}>
             3. 設定した状態で画面の動作を確認
+          </Text>
+          <Text style={[styles.guideItem, { color: colors.text.secondary }]}>
+            4. 依存コンポーネントをタップして詳細確認
           </Text>
         </View>
       </View>
@@ -174,6 +207,84 @@ function getScreenInfo(screenType: string) {
     description: '画面情報が見つかりません',
     color: '#6b7280',
   };
+}
+
+/**
+ * 画面タイプから依存コンポーネント一覧を取得
+ */
+function getDependencyComponents(screenType: string) {
+  const dependencyMap = {
+    'login': [
+      {
+        id: 'email-input',
+        name: 'EmailInputField',
+        icon: '📧',
+        description: 'メールアドレス入力フィールド',
+      },
+      {
+        id: 'password-input',
+        name: 'PasswordInputField',
+        icon: '🔒',
+        description: 'パスワード入力フィールド',
+      },
+      {
+        id: 'save-button',
+        name: 'SaveButton',
+        icon: '💾',
+        description: 'ログイン実行ボタン',
+      },
+    ],
+    'parent-edit': [
+      {
+        id: 'email-input',
+        name: 'EmailInputField',
+        icon: '📧',
+        description: 'メールアドレス入力フィールド',
+      },
+      {
+        id: 'password-input',
+        name: 'PasswordInputField',
+        icon: '🔒',
+        description: 'パスワード入力フィールド',
+      },
+      {
+        id: 'icon-select-button',
+        name: 'IconSelectButton',
+        icon: '🎨',
+        description: 'アイコン選択ボタン',
+      },
+      {
+        id: 'birthday-input',
+        name: 'BirthdayInputField',
+        icon: '🗓️',
+        description: '誕生日入力フィールド',
+      },
+      {
+        id: 'save-button',
+        name: 'SaveButton',
+        icon: '💾',
+        description: '保存ボタン',
+      },
+    ],
+    'child-edit': [
+      {
+        id: 'save-button',
+        name: 'SaveButton',
+        icon: '💾',
+        description: '保存ボタン（今後実装予定）',
+      },
+    ],
+    'family-member-list': [
+      {
+        id: 'loading-spinner',
+        name: 'LoadingSpinner',
+        icon: '⏳',
+        description: 'ローディング表示（今後実装予定）',
+      },
+    ],
+  };
+
+  return dependencyMap[screenType as keyof typeof dependencyMap] || [];
 }
 
 const styles = StyleSheet.create({
@@ -266,5 +377,37 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     marginBottom: 4,
+  },
+  componentItem: {
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  componentItemContent: {
+    flex: 1,
+  },
+  componentItemTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  componentItemDescription: {
+    fontSize: 14,
+    lineHeight: 18,
+  },
+  componentItemArrow: {
+    fontSize: 18,
+    marginLeft: 12,
   },
 });

@@ -90,7 +90,7 @@ export const ComponentDetailPage: React.FC = () => {
 
   const renderPropsEditor = () => {
     return (
-      <View style={styles.propsEditor}>
+      <View style={[styles.propsEditor, { backgroundColor: colors.surface.elevated }]}>
         {componentInfo.props.map((prop) => (
           <View key={prop.name} style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
@@ -146,7 +146,7 @@ export const ComponentDetailPage: React.FC = () => {
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
           🎯 コンポーネントプレビュー
         </Text>
-        <View style={styles.componentPreview}>
+        <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
           {renderComponent()}
         </View>
       </View>
@@ -162,7 +162,7 @@ export const ComponentDetailPage: React.FC = () => {
           style={[styles.reflectButton, { backgroundColor: colors.primary }]}
           onPress={handleReflectProps}
         >
-          <Text style={styles.reflectButtonText}>
+          <Text style={[styles.reflectButtonText, { color: colors.text.inverse }]}>
             プロパティを反映
           </Text>
         </TouchableOpacity>
@@ -173,7 +173,7 @@ export const ComponentDetailPage: React.FC = () => {
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
           💡 使用例
         </Text>
-        <View style={styles.codeBlock}>
+        <View style={[styles.codeBlock, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.codeText, { color: colors.text.secondary }]}>
             {componentInfo.usage}
           </Text>
@@ -308,10 +308,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   componentPreview: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 24,
-    alignItems: 'center',
+    alignItems: 'stretch',
+    width: '100%',
+    minHeight: 80,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -322,7 +323,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   propsEditor: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -360,12 +360,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   reflectButtonText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
   codeBlock: {
-    backgroundColor: '#f3f4f6',
     borderRadius: 8,
     padding: 16,
   },
