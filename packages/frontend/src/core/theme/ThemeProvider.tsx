@@ -34,7 +34,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     console.log('🎨 Manual Theme Toggle:', {
       from: effectiveScheme,
       to: newTheme,
-      newBackground: getColors(newTheme).background.primary
+      newBackground: getColors(newTheme).background.primary,
+      willUseDarkColors: newTheme === 'dark'
     });
   };
   
