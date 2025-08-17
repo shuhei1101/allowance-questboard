@@ -16,7 +16,7 @@ import { initMasterData } from '@/features/auth/services/initMasterData';
 import { LoginPage } from '@/features/auth/login-page/LoginPage';
 import { DemoNavigator } from '@/features/demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
-import { ThemeProvider, useManualTheme } from '@/core/theme/ThemeProvider';
+import { ThemeProvider } from '@/core/theme/ThemeProvider';
 
 // Navigation types
 export type RootStackParamList = {
@@ -74,14 +74,7 @@ export default function App() {
  * ThemeProvider内で使用するアプリコンテンツ
  */
 function AppContent() {
-  const { colors, colorScheme } = useManualTheme(); // 手動テーマを使用
-  
-  // デバッグ用：テーマ情報をログ出力
-  console.log('🎨 AppContent Theme Debug:', {
-    colorScheme,
-    primaryBackground: colors.background.primary,
-    isDark: colorScheme === 'dark'
-  });
+  const { colors, colorScheme } = useTheme(); // 自動テーマを使用
 
   /**
    * グローバルエラーハンドリング

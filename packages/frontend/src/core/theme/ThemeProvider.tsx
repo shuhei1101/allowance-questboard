@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
+import { useColorScheme, View } from 'react-native';
 import { getColors, ColorTheme } from './colors';
 
 type ThemeContextType = {
   colors: ColorTheme;
   colorScheme: 'light' | 'dark';
   isDark: boolean;
-  toggleTheme: () => void;
-  isManualOverride: boolean;
+  isSystemControlled: boolean;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -16,52 +16,30 @@ interface ThemeProviderProps {
 }
 
 /**
- * 手動テーマ切り替え機能付きのテーマプロバイダー
- * システムのuseColorScheme()が動作しない場合の代替手段
+ * テーマプロバイダー
+ * システムのダークモード設定に自動的に追従します
  */
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [manualTheme, setManualTheme] = useState<'light' | 'dark' | null>(null);
-  
-  // 手動設定がある場合はそれを使用、なければシステム設定
-  const effectiveScheme = manualTheme || 'light'; // 一旦デフォルトはlight
+  const systemColorScheme = useColorScheme();
+  const effectiveScheme = systemColorScheme || 'light';
   const colors = getColors(effectiveScheme);
-  const isDark = effectiveScheme === 'dark';
   
-  const toggleTheme = () => {
-    const newTheme = effectiveScheme === 'dark' ? 'light' : 'dark';
-    setManualTheme(newTheme);
-    
-    console.log('🎨 Manual Theme Toggle:', {
-      from: effectiveScheme,
-      to: newTheme,
-      newBackground: getColors(newTheme).background.primary,
-      willUseDarkColors: newTheme === 'dark'
-    });
-  };
-  
-  console.log('🎨 ThemeProvider Debug:', {
-    manualTheme,
+  console.log('🎨 ThemeProvider System Auto:', {
+    systemColorScheme,
     effectiveScheme,
+    isSystemDark: systemColorScheme === 'dark',
     backgroundColor: colors.background.primary
   });
 
   return (
-    <ThemeContext.Provider 
-      value={{
-        colors,
-        colorScheme: effectiveScheme,
-        isDark,
-        toggleTheme,
-        isManualOverride: manualTheme !== null
-      }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
       {children}
-    </ThemeContext.Provider>
+    </View>
   );
 };
 
 /**
- * 手動テーマ切り替え対応のuseThemeフック
+ * システム自動追従テーマフック
  */
 export const useManualTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
