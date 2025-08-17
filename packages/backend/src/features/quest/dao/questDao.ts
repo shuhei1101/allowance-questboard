@@ -5,7 +5,6 @@ import { cache, evict } from '@backend/core/cache/redisCache';
 
 /**
  * クエストDAOクラス
- * PythonのQuestDAOクラスのTypeScript版
  */
 export class QuestDao extends BaseDao<QuestEntity> {
   constructor(session: EntityManager) {

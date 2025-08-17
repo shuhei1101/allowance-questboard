@@ -5,7 +5,6 @@ import { cache, evict } from '@backend/core/cache/redisCache';
 
 /**
  * 家族メンバーDAOクラス
- * QuestDAOクラスを参考にしたTypeScript版
  */
 export class FamilyMemberDao extends BaseDao<FamilyMemberEntity> {
   constructor(session: EntityManager) {
