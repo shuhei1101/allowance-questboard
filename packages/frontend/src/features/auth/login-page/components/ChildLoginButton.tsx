@@ -26,7 +26,7 @@ export const ChildLoginButton: React.FC<ChildLoginButtonProps> = ({
     >
       <Ionicons name="happy" size={20} color={colors.text.inverse} style={styles.icon} />
       <Text style={[styles.buttonText, { color: colors.text.inverse }]}>
-        {t('login.childLogin')}
+        {t('auth.loginPage.childLogin')}
       </Text>
     </TouchableOpacity>
   );

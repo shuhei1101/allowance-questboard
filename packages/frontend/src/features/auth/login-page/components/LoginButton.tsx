@@ -45,7 +45,7 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
             color: isInteractionDisabled ? colors.text.disabled : colors.text.inverse
           }
         ]}>
-          {t('login.loginButton')}
+          {t('auth.loginPage.loginButton')}
         </Text>
       )}
     </TouchableOpacity>

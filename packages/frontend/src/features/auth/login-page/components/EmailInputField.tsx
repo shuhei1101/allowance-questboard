@@ -29,7 +29,7 @@ export const EmailInputField: React.FC<EmailInputFieldProps> = ({
   const hasError = !!error;
   
   // プレースホルダーのデフォルト値を翻訳
-  const defaultPlaceholder = placeholder || t('login.emailPlaceholder');
+  const defaultPlaceholder = placeholder || t('auth.loginPage.emailPlaceholder');
 
   return (
     <View style={styles.container}>

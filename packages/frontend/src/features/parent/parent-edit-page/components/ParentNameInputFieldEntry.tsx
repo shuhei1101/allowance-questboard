@@ -22,7 +22,7 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
   return (
     <EntryField
       icon="person"
-      title={t('common.fields.name')}
+      title={t('parent.parentEditPage.components.parentNameInputFieldEntry.fieldTitle')}
       required={true}
     >
       <FieldWithError error={error}>
@@ -34,7 +34,7 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
           }]}
           value={value}
           onChangeText={onChange}
-          placeholder="名前を入力してください"
+          placeholder={t('parent.parentEditPage.components.parentNameInputFieldEntry.placeholder')}
           placeholderTextColor={colors.text.secondary}
           autoCapitalize="words"
           autoCorrect={false}

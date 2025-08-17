@@ -24,7 +24,7 @@ export const ForgotPasswordLink: React.FC<ForgotPasswordLinkProps> = ({
       onPress={onPress}
     >
       <Text style={[styles.linkText, { color: colors.primary }]}>
-        {t('login.forgotPassword')}
+        {t('auth.loginPage.forgotPassword')}
       </Text>
     </TouchableOpacity>
   );

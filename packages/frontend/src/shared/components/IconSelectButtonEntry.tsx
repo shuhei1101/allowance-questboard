@@ -23,7 +23,7 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
   return (
     <EntryField
       icon="happy"
-      title={t('common.fields.icon')}
+      title={t('shared.components.iconSelectButtonEntry.fieldTitle')}
       required={false}
     >
       <FieldWithError error={error}>
@@ -39,7 +39,7 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
             ) : (
               <View style={[styles.iconContainer, { backgroundColor: colors.background.primary }]}>
                 <Text style={[styles.placeholderText, { color: colors.text.secondary }]}>
-                  選択してください
+                  {t('shared.components.iconSelectButtonEntry.placeholder')}
                 </Text>
               </View>
             )}

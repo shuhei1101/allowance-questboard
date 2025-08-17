@@ -24,7 +24,7 @@ export const CancelButton: React.FC<CancelButtonProps> = ({
       onPress={onClick}
     >
       <Text style={[styles.buttonText, { color: colors.text.inverse }]}>
-        {t('login.cancel')}
+        {t('auth.loginPage.cancel')}
       </Text>
     </TouchableOpacity>
   );

@@ -33,10 +33,10 @@ export const useParentLoginHandler = (params: {
 
       // TODO: 親用ホーム画面への遷移
       console.log('親用ホーム画面への遷移');
-      Alert.alert(t('common.success'), t('login.success.parentLogin'));
+      Alert.alert(t('common.success'), t('auth.loginPage.success.parentLogin'));
     } catch (error) {
       console.error('親ログインエラー:', error);
-      Alert.alert(t('common.error'), t('login.errors.parentLoginFailed'));
+      Alert.alert(t('common.error'), t('auth.loginPage.errors.parentLoginFailed'));
     }
   }, [params.updateFamilyMemberType, params.hideDialog, params.updateLoginForm, params.setLoading, t]);
 };

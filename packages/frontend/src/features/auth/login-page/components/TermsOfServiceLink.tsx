@@ -37,7 +37,7 @@ export const TermsOfServiceLink: React.FC<TermsOfServiceLinkProps> = ({
       onPress={onPress}
     >
       <Text style={styles.linkText}>
-        {t('login.termsOfService')}
+        {t('auth.loginPage.termsOfService')}
       </Text>
     </TouchableOpacity>
   );

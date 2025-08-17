@@ -48,11 +48,11 @@ export const SelectFamilyDialog: React.FC<SelectFamilyDialogProps> = ({
     >
       <View style={styles.overlay}>
         <View style={[styles.dialogContainer, { backgroundColor: colors.background.secondary }]}>
-          <Text style={[styles.title, { color: colors.text.primary }]}>{t('login.selectLoginType')}</Text>
+          <Text style={[styles.title, { color: colors.text.primary }]}>{t('auth.loginPage.selectLoginType')}</Text>
           
           {familyName && (
             <Text style={[styles.familyName, { color: colors.text.secondary }]}>
-              {t('login.familyLabel', { familyName })}
+              {t('auth.loginPage.familyLabel', { familyName })}
             </Text>
           )}
           

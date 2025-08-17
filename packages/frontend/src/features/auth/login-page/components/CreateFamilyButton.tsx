@@ -24,7 +24,7 @@ export const CreateFamilyButton: React.FC<CreateFamilyButtonProps> = ({
       onPress={onPress}
     >
       <Text style={[styles.buttonText, { color: colors.text.inverse }]}>
-        {t('login.createFamilyButton')}
+        {t('auth.loginPage.createFamilyButton')}
       </Text>
     </TouchableOpacity>
   );
