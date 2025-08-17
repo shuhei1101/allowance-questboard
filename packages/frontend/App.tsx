@@ -33,6 +33,13 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function App() {
   const { colors, colorScheme } = useTheme();
   
+  // デバッグ用：テーマ情報をログ出力
+  console.log('🎨 Theme Debug:', {
+    colorScheme,
+    primaryBackground: colors.background.primary,
+    isDark: colorScheme === 'dark'
+  });
+  
   /**
    * グローバルエラーハンドリング
    * ErrorBoundaryでキャッチされたエラーのログ出力

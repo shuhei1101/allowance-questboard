@@ -1,4 +1,5 @@
 import { useColorScheme } from 'react-native';
+import { Appearance } from 'react-native';
 import { getColors, ColorTheme } from './colors';
 
 /**
@@ -9,6 +10,17 @@ import { getColors, ColorTheme } from './colors';
  */
 export const useTheme = () => {
   const colorScheme = useColorScheme();
+  
+  // デバッグ用：詳細なテーマ情報をログ出力
+  const systemColorScheme = Appearance.getColorScheme();
+  console.log('🎨 useTheme Debug:', {
+    useColorSchemeResult: colorScheme,
+    appearanceGetColorScheme: systemColorScheme,
+    actualScheme: colorScheme || 'light',
+    isSystemDark: systemColorScheme === 'dark',
+    isHookDark: colorScheme === 'dark'
+  });
+  
   const colors = getColors(colorScheme);
   
   return {

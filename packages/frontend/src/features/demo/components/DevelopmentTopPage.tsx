@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
+import { ThemeToggleButton } from '@/shared/components/ThemeToggleButton';
 
 /**
  * 開発用TOP画面
@@ -66,6 +67,9 @@ export const DevelopmentTopPage: React.FC = () => {
         <Text style={[styles.headerSubtitle, { color: colors.text.secondary }]}>
           開発・テスト・デモ機能のメインハブ
         </Text>
+        
+        {/* テーマ切り替えボタン（デバッグ用） */}
+        <ThemeToggleButton />
       </View>
 
       {/* メイン機能 */}

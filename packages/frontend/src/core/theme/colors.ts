@@ -186,5 +186,14 @@ export interface ColorTheme {
  * @returns 適切なカラーテーマ
  */
 export const getColors = (colorScheme: ColorSchemeName): ColorTheme => {
-  return colorScheme === 'dark' ? darkColors : lightColors;
+  const selectedTheme = colorScheme === 'dark' ? darkColors : lightColors;
+  
+  // デバッグ用：色の選択結果をログ出力
+  console.log('🎨 getColors Debug:', {
+    inputScheme: colorScheme,
+    selectedTheme: colorScheme === 'dark' ? 'dark' : 'light',
+    backgroundColor: selectedTheme.background.primary
+  });
+  
+  return selectedTheme;
 };
