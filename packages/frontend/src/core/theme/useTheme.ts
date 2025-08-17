@@ -10,14 +10,6 @@ export const useTheme = (): UseThemeReturn => {
   const systemColorScheme = useColorScheme();
   const actualScheme = systemColorScheme || 'light';
   
-  console.log('🎨 useTheme System Auto:', {
-    systemColorScheme,
-    actualScheme,
-    isSystemDark: systemColorScheme === 'dark',
-    useColorSchemeResult: systemColorScheme,
-    appearanceGetColorScheme: Appearance.getColorScheme()
-  });
-
   const colors = getColors(actualScheme);
   
   return {

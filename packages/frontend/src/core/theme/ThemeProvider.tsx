@@ -23,13 +23,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const systemColorScheme = useColorScheme();
   const effectiveScheme = systemColorScheme || 'light';
   const colors = getColors(effectiveScheme);
-  
-  console.log('🎨 ThemeProvider System Auto:', {
-    systemColorScheme,
-    effectiveScheme,
-    isSystemDark: systemColorScheme === 'dark',
-    backgroundColor: colors.background.primary
-  });
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
