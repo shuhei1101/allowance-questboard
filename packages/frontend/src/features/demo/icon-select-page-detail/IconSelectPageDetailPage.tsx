@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { IconSelectPage } from '@/features/shared/icon-select-page/IconSelectPage';
+import { AppConstants } from '@/core/constants/appConstants';
 
 interface DemoState {
   initialSelectedIcon: string;
@@ -156,6 +157,41 @@ export const IconSelectPageDetailPage: React.FC = () => {
           3. カテゴリを選択してアイコンを選ぶ{'\n'}
           4. 確定ボタンで選択完了
         </Text>
+      </View>
+
+      {/* AppConstants.iconCategories の情報 */}
+      <View style={[styles.section, { backgroundColor: colors.background.secondary }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
+          📊 AppConstants.iconCategories 情報
+        </Text>
+        {AppConstants.iconCategories ? (
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text.secondary }]}>
+              総カテゴリ数: {AppConstants.iconCategories.getActiveSortedCategories().length}
+            </Text>
+            <Text style={[styles.settingLabel, { color: colors.text.secondary }]}>
+              アクティブなカテゴリ数: {AppConstants.iconCategories.getActiveCategories().length}
+            </Text>
+            
+            <Text style={[styles.description, { color: colors.text.primary, marginTop: 12, marginBottom: 8 }]}>
+              カテゴリ一覧:
+            </Text>
+            {AppConstants.iconCategories.getActiveSortedCategories().map((category, index) => (
+              <View key={category.id.value} style={styles.stateRow}>
+                <Text style={[styles.stateLabel, { color: colors.text.primary }]}>
+                  {index + 1}. ID: {category.id.value}
+                </Text>
+                <Text style={[styles.stateValue, { color: colors.text.secondary }]}>
+                  並び順: {category.sortOrder.value}
+                </Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text style={[styles.description, { color: colors.text.secondary }]}>
+            AppConstants.iconCategories が読み込まれていません
+          </Text>
+        )}
       </View>
     </ScrollView>
   );
