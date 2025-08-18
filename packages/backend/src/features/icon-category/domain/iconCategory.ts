@@ -34,9 +34,6 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
     super(id, version);
   }
 
-
-
-
   /**
    * このカテゴリに属するアクティブなアイコンのみを取得
    */

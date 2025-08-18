@@ -20,7 +20,7 @@ export abstract class BaseCollection<
   protected readonly itemByIds: Map<string, ItemType> = new Map();
 
   constructor(
-    protected items: ItemType[]) 
+    public readonly items: ItemType[]) 
   {
     this.updateIndex();
   }

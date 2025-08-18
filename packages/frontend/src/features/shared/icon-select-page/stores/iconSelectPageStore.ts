@@ -64,8 +64,10 @@ export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => 
   initialize: (iconCategories, initialSelectedIcon) => {
     const activeCategories = iconCategories.filter(category => category.isActive);
     const firstCategory = activeCategories.length > 0 ? activeCategories[0] : undefined;
-    // TODO: BaseCollectionのitemsにアクセスできるメソッドを追加後に修正
-    const firstCategoryIcons: Icon[] = [];
+    // 最初のカテゴリのアクティブでソートされたアイコンを取得
+    const firstCategoryIcons: Icon[] = firstCategory 
+      ? firstCategory.getActiveSortedIcons().items 
+      : [];
     
     set({
       iconCategories: activeCategories,
@@ -78,8 +80,10 @@ export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => 
   selectCategory: (categoryId) => {
     const { iconCategories } = get();
     const category = iconCategories.find(cat => cat.id.equals(categoryId));
-    // TODO: BaseCollectionのitemsにアクセスできるメソッドを追加後に修正
-    const categoryIcons: Icon[] = [];
+    // カテゴリのアクティブでソートされたアイコンを取得
+    const categoryIcons: Icon[] = category 
+      ? category.getActiveSortedIcons().items 
+      : [];
     
     set({
       selectedCategoryId: categoryId,
