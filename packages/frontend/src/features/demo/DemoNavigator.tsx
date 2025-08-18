@@ -17,6 +17,7 @@ import { PasswordInputDetailPage } from './password-input-detail-page/PasswordIn
 import { BirthdayInputDetailPage } from './birthday-input-detail-page/BirthdayInputDetailPage';
 import { SaveButtonDetailPage } from './save-button-detail-page/SaveButtonDetailPage';
 import { IconSelectButtonDetailPage } from './icon-select-button-detail-page/IconSelectButtonDetailPage';
+import { IconSelectPageDetailPage } from './icon-select-page-detail/IconSelectPageDetailPage';
 import { SessionSettingsPage } from '../test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from '../test-environment/PageStateSettingsPage';
 import { LoginPageSettingsPage } from '../test-environment/LoginPageSettingsPage';
@@ -43,6 +44,7 @@ export type DemoStackParamList = {
   'birthday-inputDetail': undefined;
   'save-buttonDetail': undefined;
   'icon-select-buttonDetail': undefined;
+  'icon-select-pageDetail': undefined;
   DemoLoginPage: undefined;
   DemoParentEditPage: undefined;
   ComponentShowcase: undefined;
@@ -132,6 +134,11 @@ export const DemoNavigator: React.FC = () => {
           name="icon-select-buttonDetail" 
           component={IconSelectButtonDetailPage}
           options={{ title: '🎨 IconSelectButton詳細' }}
+        />
+        <DemoStack.Screen 
+          name="icon-select-pageDetail" 
+          component={IconSelectPageDetailPage}
+          options={{ title: '🎨 IconSelectPage詳細' }}
         />
         <DemoStack.Screen 
           name="DemoLoginPage" 

@@ -53,6 +53,17 @@ export const ComponentListPage: React.FC = () => {
       ],
     },
     {
+      title: '📄 ページコンポーネント',
+      components: [
+        {
+          id: 'icon-select-page',
+          name: 'IconSelectPage',
+          description: 'アイコン選択画面',
+          onPress: () => navigation.navigate('icon-select-pageDetail'),
+        },
+      ],
+    },
+    {
       title: '🎨 表示コンポーネント',
       components: [
         {
