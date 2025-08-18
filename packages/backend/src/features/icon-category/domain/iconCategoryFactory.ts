@@ -1,10 +1,10 @@
 import { Icons } from '@backend/features/icon/domain/icons';
 import { IconCategoryEntity, IconCategoryTranslationEntity } from '../entity/iconCategoryEntity';
 import { IconCategory } from './iconCategory';
-import { IconCategoryNames } from '../value-objects/iconCategoryNames';
 import { IconCategoryId } from '../value-objects/iconCategoryId';
 import { Version } from '@backend/features/shared/value-object/version';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
+import { IconCategoryNamesFactory } from './iconCategoryNamesFactory';
 
 
 class Factory {
@@ -19,7 +19,7 @@ class Factory {
     translationDict: { [languageId: number]: IconCategoryTranslationEntity },
     icons: Icons
   }): IconCategory {
-    const nameByLanguages = IconCategoryNames.fromEntity(params.translationDict);
+    const nameByLanguages = IconCategoryNamesFactory.fromEntity(params.translationDict);
     return new IconCategory(
       new IconCategoryId(params.entity.id),
       new Version(params.entity.version),

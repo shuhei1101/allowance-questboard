@@ -1,6 +1,6 @@
 import { BaseMasterModel } from '@backend/core/models/baseMasterModel';
 import { IconCategoryId, IconCategoryIdSchema } from '../value-objects/iconCategoryId';
-import { IconCategoryNames, IconCategoryNamesSchema } from '../value-objects/iconCategoryNames';
+import { IconCategoryNames, IconCategoryNamesSchema } from './iconCategoryNames';
 import { Version, VersionSchema } from '@backend/features/shared/value-object/version';
 import { Icons, IconsSchema } from '../../icon/domain/icons';
 import { z } from 'zod';

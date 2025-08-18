@@ -2,7 +2,7 @@ import { LanguageTypeValue, LanguageTypeValueSchema } from '@backend/features/la
 import { getLanguageTypeFromZodData } from '@backend/features/language/enum/languageType';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { CollectionItemProtocol } from '@backend/core/models/baseCollection';
-import { IconCategoryName, IconCategoryNameSchema } from './iconCategoryName';
+import { IconCategoryName, IconCategoryNameSchema } from '../value-objects/iconCategoryName';
 import { z } from 'zod';
 
 /**
