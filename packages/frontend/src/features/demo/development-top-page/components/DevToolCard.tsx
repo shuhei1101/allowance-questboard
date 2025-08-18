@@ -6,6 +6,7 @@ interface Props {
   description: string;
   onPress: () => void;
   color: string;
+  disabled?: boolean;
 }
 
 /**
@@ -16,15 +17,25 @@ export const DevToolCard: React.FC<Props> = ({
   title, 
   description, 
   onPress, 
-  color 
+  color,
+  disabled = false
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.toolCard, { backgroundColor: color }]}
-      onPress={onPress}
+      style={[
+        styles.toolCard, 
+        { backgroundColor: color },
+        disabled && styles.disabled
+      ]}
+      onPress={disabled ? undefined : onPress}
+      disabled={disabled}
     >
-      <Text style={styles.toolTitle}>{title}</Text>
-      <Text style={styles.toolDescription}>{description}</Text>
+      <Text style={[styles.toolTitle, disabled && styles.disabledText]}>
+        {title}
+      </Text>
+      <Text style={[styles.toolDescription, disabled && styles.disabledText]}>
+        {description}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -44,6 +55,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  disabled: {
+    opacity: 0.6,
+  },
   toolTitle: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -55,5 +69,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     opacity: 0.9,
     lineHeight: 16,
+  },
+  disabledText: {
+    opacity: 0.7,
   },
 });

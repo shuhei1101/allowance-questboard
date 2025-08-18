@@ -1,10 +1,11 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
 import { MainMenuCard } from './components/MainMenuCard';
 import { DevToolCard } from './components/DevToolCard';
 import { EnvironmentInfoCard } from './components/EnvironmentInfoCard';
+import { initMasterData } from '@/features/auth/services/initMasterData';
 
 /**
  * 開発用TOP画面
@@ -13,6 +14,37 @@ import { EnvironmentInfoCard } from './components/EnvironmentInfoCard';
 export const DevelopmentTopPage: React.FC = () => {
   const { colors } = useTheme();
   const navigation = useNavigation<any>();
+  const [isInitializing, setIsInitializing] = useState(false);
+
+  // 初期データ取得ハンドラー
+  const handleInitMasterData = async () => {
+    if (isInitializing) return;
+    
+    setIsInitializing(true);
+    
+    try {
+      console.log('🚀 マスタデータ初期化開始...');
+      await initMasterData();
+      console.log('✅ マスタデータ初期化完了！');
+      
+      Alert.alert(
+        '✅ 成功',
+        'マスタデータの初期化が完了しました！',
+        [{ text: 'OK' }]
+      );
+    } catch (error) {
+      console.error('❌ マスタデータ初期化エラー:', error);
+      
+      Alert.alert(
+        '❌ エラー',
+        'マスタデータの初期化に失敗しました。\n\n' + 
+        (error instanceof Error ? error.message : '不明なエラー'),
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setIsInitializing(false);
+    }
+  };
 
   const topMenuItems = [
     {
@@ -41,7 +73,14 @@ export const DevelopmentTopPage: React.FC = () => {
 
   const devToolItems = [
     {
-      title: '🔍 ストア状態検査',
+      title: '� 初期データ取得',
+      description: isInitializing ? '初期化中...' : 'マスタデータを初期化',
+      onPress: handleInitMasterData,
+      color: isInitializing ? '#9ca3af' : '#10b981',
+      disabled: isInitializing,
+    },
+    {
+      title: '�🔍 ストア状態検査',
       description: 'Zustandストアの状態確認',
       onPress: () => navigation.navigate('StoreInspector'),
       color: '#f59e0b',
@@ -101,6 +140,7 @@ export const DevelopmentTopPage: React.FC = () => {
               description={tool.description}
               onPress={tool.onPress}
               color={tool.color}
+              disabled={tool.disabled}
             />
           ))}
         </View>

@@ -27,8 +27,8 @@ export const initMasterData = async () => {
     
     // icon categories
     const iconCategories = IconCategories.fromZodData(result.iconCategories);
-    AppConstants.setIconCategories(iconCategories);
-    
+    AppConstants.iconCategories = iconCategories;
+
   } catch (error) {
     console.error("マスターデータの初期化に失敗しました:", error);
     throw error;
