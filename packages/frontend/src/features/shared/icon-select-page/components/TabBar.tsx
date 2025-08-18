@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-nati
 import { useTheme } from '@/core/theme';
 import { IconCategory } from '@backend/features/icon-category/domain/iconCategory';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
+import { useSessionStore } from '@/features/auth/stores/sessionStore';
 
 interface Props {
   /**
@@ -30,6 +31,7 @@ export const TabBar: React.FC<Props> = ({
   onCategoryChange,
 }) => {
   const { colors } = useTheme();
+  const { languageType } = useSessionStore();
 
   if (categories.length === 0) {
     return null;
@@ -44,8 +46,10 @@ export const TabBar: React.FC<Props> = ({
       >
         {categories.map((category, index) => {
           const isSelected = selectedCategoryId?.equals(category.id);
-          // TODO: 言語タイプでの名前取得メソッドを実装後に修正
-          const categoryName = `カテゴリ${index + 1}`;
+          // 言語タイプに応じてカテゴリ名を取得
+          const categoryName = languageType 
+            ? category.nameByLanguages.get(languageType.id)?.value ?? `カテゴリ${index + 1}`
+            : `カテゴリ${index + 1}`;
           
           return (
             <TouchableOpacity

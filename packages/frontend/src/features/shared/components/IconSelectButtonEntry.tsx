@@ -5,8 +5,7 @@ import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
-import { IconSelectModal } from './IconSelectModal';
-import { useIconSelectModal } from '../hooks/useIconSelectModal';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   selectedIcon?: string; // Ioniconsのアイコン名 (例: "home", "person", "settings")
@@ -22,20 +21,13 @@ interface Props {
 export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSelected, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const { 
-    isVisible, 
-    openModal, 
-    closeModal, 
-    handleIconSelected 
-  } = useIconSelectModal();
+  const navigation = useNavigation();
 
   const handlePress = () => {
-    openModal(selectedIcon);
-  };
-
-  const handleModalIconSelected = (iconName: string) => {
-    handleIconSelected(iconName);
-    onIconSelected(iconName);
+    // アイコン選択画面に遷移
+    (navigation as any).navigate('IconSelectPage', {
+      initialSelectedIcon: selectedIcon,
+    });
   };
 
   return (
@@ -82,14 +74,6 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSel
           </View>
         </TouchableOpacity>
       </FieldWithError>
-      
-      {/* アイコン選択モーダル */}
-      <IconSelectModal
-        visible={isVisible}
-        initialSelectedIcon={selectedIcon}
-        onIconSelected={handleModalIconSelected}
-        onClose={closeModal}
-      />
     </EntryField>
   );
 };
