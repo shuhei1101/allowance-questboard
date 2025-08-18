@@ -66,6 +66,25 @@ export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
    */
   protected static seedData(): IconCategoryTranslationEntity[] {
     return [
+      // 日本語翻訳
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 1, name: "家事・掃除" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 1, name: "勉強・学習" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 1, name: "スポーツ・運動" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 4, language_id: 1, name: "料理・食事" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 5, language_id: 1, name: "お買い物・外出" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 6, language_id: 1, name: "ペット・動物" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 7, language_id: 1, name: "趣味・創作" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 8, language_id: 1, name: "健康・美容" }),
+      
+      // 英語翻訳
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 2, name: "Housework & Cleaning" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 2, name: "Study & Learning" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 2, name: "Sports & Exercise" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 4, language_id: 2, name: "Cooking & Dining" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 5, language_id: 2, name: "Shopping & Outings" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 6, language_id: 2, name: "Pets & Animals" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 7, language_id: 2, name: "Hobbies & Creativity" }),
+      Object.assign(new IconCategoryTranslationEntity(), { category_id: 8, language_id: 2, name: "Health & Beauty" }),
     ];
   }
 }
