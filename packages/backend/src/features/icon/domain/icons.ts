@@ -1,7 +1,15 @@
 import { BaseCollection } from '@backend/core/models/baseCollection';
 import { IconId } from '../value-objects/iconId';
-import { Icon } from './icon';
+import { Icon, IconSchema } from './icon';
 import { IconCategoryId } from '../../icon-category/value-objects/iconCategoryId';
+import { z } from 'zod';
+
+/**
+ * IconsのZodスキーマ
+ */
+export const IconsSchema = z.object({
+  items: z.array(IconSchema)
+});
 
 /**
  * アイコンのファーストクラスコレクション
@@ -15,7 +23,7 @@ export class Icons extends BaseCollection<Icon, IconId> {
    * カスタムインデックス更新
    * 現在は特別なインデックスを持たないため、何もしない
    */
-  protected _updateCustomIndex(): void {
+  protected updateCustomIndex(): void {
     // デフォルト辞書以外を使用する場合はここで実装
   }
 
@@ -23,14 +31,14 @@ export class Icons extends BaseCollection<Icon, IconId> {
    * アクティブなアイコンを取得
    */
   getActiveIcons(): Icon[] {
-    return this._items.filter(icon => icon.isActive);
+    return this.items.filter(icon => icon.isActive);
   }
 
   /**
    * ソート順で並べ替えたアイコンを取得
    */
   getSortedIcons(): Icon[] {
-    return [...this._items].sort((a, b) => a.sortOrder.value - b.sortOrder.value);
+    return [...this.items].sort((a, b) => a.sortOrder.value - b.sortOrder.value);
   }
 
   /**
@@ -45,7 +53,7 @@ export class Icons extends BaseCollection<Icon, IconId> {
    * @param categoryId アイコンカテゴリID
    */
   getByCategory(categoryId: IconCategoryId): Icon[] {
-    return this._items.filter(icon => 
+    return this.items.filter(icon => 
       icon.iconCategoryId?.equals(categoryId) === true
     );
   }
@@ -54,7 +62,7 @@ export class Icons extends BaseCollection<Icon, IconId> {
    * カテゴリが未設定のアイコンを取得
    */
   getUncategorizedIcons(): Icon[] {
-    return this._items.filter(icon => icon.iconCategoryId === undefined);
+    return this.items.filter(icon => icon.iconCategoryId === undefined);
   }
 
   /**
@@ -71,8 +79,26 @@ export class Icons extends BaseCollection<Icon, IconId> {
    */
   searchByName(name: string): Icon[] {
     const searchTerm = name.toLowerCase();
-    return this._items.filter(icon => 
+    return this.items.filter(icon => 
       icon.name.value.toLowerCase().includes(searchTerm)
     );
+  }
+
+  /**
+   * Zodスキーマに準拠したデータを返す
+   */
+  toZodData(): z.infer<typeof IconsSchema> {
+    return {
+      items: this.items.map(icon => icon.toZodData())
+    };
+  }
+
+  /**
+   * Zodスキーマから新しいIconsインスタンスを作成
+   * @param data Zodスキーマに準拠したデータ
+   */
+  static fromZodData(data: z.infer<typeof IconsSchema>): Icons {
+    const icons = data.items.map(iconData => Icon.fromZodData(iconData));
+    return new Icons(icons);
   }
 }

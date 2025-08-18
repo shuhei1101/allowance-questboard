@@ -2,6 +2,11 @@ import { BaseId, BaseIdSchema } from '@backend/core/value-object/base_id';
 import { z } from 'zod';
 
 /**
+ * IconCategoryIdのZodスキーマ
+ */
+export const IconCategoryIdSchema = BaseIdSchema;
+
+/**
  * アイコンカテゴリのIDを表すクラス
  */
 export class IconCategoryId extends BaseId {

@@ -17,11 +17,11 @@ export abstract class BaseCollection<
   ItemType extends CollectionItemProtocol<IdType>,
   IdType extends BaseId
 > {
-  protected _items: ItemType[];
-  protected _itemByIds: Map<string, ItemType> = new Map();
+  protected readonly itemByIds: Map<string, ItemType> = new Map();
 
-  constructor(items: ItemType[]) {
-    this._items = items;
+  constructor(
+    protected items: ItemType[]) 
+  {
     this.updateIndex();
   }
 
@@ -38,13 +38,13 @@ export abstract class BaseCollection<
    * インデックス辞書の更新
    */
   updateIndex(): void {
-    this._itemByIds.clear();
-    for (const item of this._items) {
+    this.itemByIds.clear();
+    for (const item of this.items) {
       // BaseIdのhash()メソッドを使用してMapのキーにする
       const key = item.id.hash().toString();
-      this._itemByIds.set(key, item);
+      this.itemByIds.set(key, item);
     }
-    this._updateCustomIndex();
+    this.updateCustomIndex();
   }
 
   /**
@@ -54,7 +54,7 @@ export abstract class BaseCollection<
     if (!item || typeof item !== 'object') {
       throw new TypeError(`Expected item of valid type, got ${typeof item}`);
     }
-    this._items.push(item);
+    this.items.push(item);
     this.updateIndex();
   }
 
@@ -63,21 +63,14 @@ export abstract class BaseCollection<
    */
   get(itemId: IdType): ItemType | null {
     const key = itemId.hash().toString();
-    return this._itemByIds.get(key) || null;
+    return this.itemByIds.get(key) || null;
   }
 
   /**
    * アイテム数を取得
    */
   get length(): number {
-    return this._items.length;
-  }
-
-  /**
-   * すべてのアイテムを取得（読み取り専用）
-   */
-  get items(): readonly ItemType[] {
-    return [...this._items];
+    return this.items.length;
   }
 
   /**
@@ -85,5 +78,5 @@ export abstract class BaseCollection<
    * 
    * 内部に複数の辞書を持つ場合はここで更新処理を実装
    */
-  protected abstract _updateCustomIndex(): void;
+  protected abstract updateCustomIndex(): void;
 }

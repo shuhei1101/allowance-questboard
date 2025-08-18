@@ -1,7 +1,15 @@
 import { BaseCollection } from '@backend/core/models/baseCollection';
 import { IconCategoryId } from '../value-objects/iconCategoryId';
-import { IconCategory } from './iconCategory';
+import { IconCategory, IconCategorySchema } from './iconCategory';
 import { Icons } from '../../icon/domain/icons';
+import { z } from 'zod';
+
+/**
+ * IconCategoriesのZodスキーマ
+ */
+export const IconCategoriesSchema = z.object({
+  items: z.array(IconCategorySchema)
+});
 
 /**
  * アイコンカテゴリのファーストクラスコレクション
@@ -15,7 +23,7 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    * カスタムインデックス更新
    * 現在は特別なインデックスを持たないため、何もしない
    */
-  protected _updateCustomIndex(): void {
+  protected updateCustomIndex(): void {
     // デフォルト辞書以外を使用する場合はここで実装
   }
 
@@ -23,14 +31,14 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    * アクティブなアイコンカテゴリを取得
    */
   getActiveCategories(): IconCategory[] {
-    return this._items.filter(category => category.isActive);
+    return this.items.filter(category => category.isActive);
   }
 
   /**
    * ソート順で並べ替えたアイコンカテゴリを取得
    */
   getSortedCategories(): IconCategory[] {
-    return [...this._items].sort((a, b) => a.sortOrder - b.sortOrder);
+    return [...this.items].sort((a, b) => a.sortOrder - b.sortOrder);
   }
 
   /**
@@ -45,10 +53,28 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    * @param icons 全てのアイコン
    */
   setIcons(icons: Icons): void {
-    for (const category of this._items) {
+    for (const category of this.items) {
       // このカテゴリに属するアイコンを抽出
       const categoryIcons = icons.getByCategory(category.id);
-      category.setIcons(new Icons(categoryIcons));
+      category.icons = new Icons(categoryIcons);
     }
+  }
+
+  /**
+   * Zodスキーマに準拠したデータを返す
+   */
+  toZodData(): z.infer<typeof IconCategoriesSchema> {
+    return {
+      items: this.items.map(category => category.toZodData())
+    };
+  }
+
+  /**
+   * Zodスキーマから新しいIconCategoriesインスタンスを作成
+   * @param data Zodスキーマに準拠したデータ
+   */
+  static fromZodData(data: z.infer<typeof IconCategoriesSchema>): IconCategories {
+    const items = data.items.map(item => IconCategory.fromZodData(item));
+    return new IconCategories(items);
   }
 }

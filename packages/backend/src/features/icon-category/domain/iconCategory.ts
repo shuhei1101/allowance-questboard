@@ -1,35 +1,37 @@
 import { BaseMasterModel } from '@backend/core/models/baseMasterModel';
-import { IconCategoryId } from '../value-objects/iconCategoryId';
-import { IconCategoryNames } from '../value-objects/iconCategoryNames';
+import { IconCategoryId, IconCategoryIdSchema } from '../value-objects/iconCategoryId';
+import { IconCategoryNames, IconCategoryNamesSchema } from '../value-objects/iconCategoryNames';
 import { IconCategoryEntity, IconCategoryTranslationEntity } from '../entity/iconCategoryEntity';
-import { Version } from '@backend/features/shared/value-object/version';
-import { FamilyMemberId } from '@backend/features/family-member/value-object/familyMemberId';
-import { ScreenId } from '@backend/features/shared/value-object/screenId';
-import { Icons } from '../../icon/domain/icons';
+import { Version, VersionSchema } from '@backend/features/shared/value-object/version';
+import { Icons, IconsSchema } from '../../icon/domain/icons';
+import { z } from 'zod';
+
+/**
+ * IconCategoryのZodスキーマ
+ */
+export const IconCategorySchema = z.object({
+  id: IconCategoryIdSchema,
+  version: VersionSchema,
+  nameByLanguages: IconCategoryNamesSchema,
+  sortOrder: z.number(),
+  isActive: z.boolean(),
+  icons: IconsSchema
+});
 
 /**
  * アイコンカテゴリドメインモデル
  */
 export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEntity> {
-  private _nameByLanguages: IconCategoryNames;
-  private _sortOrder: number;
-  private _isActive: boolean;
-  private _icons: Icons;
-
 
   constructor(
     id: IconCategoryId,
     version: Version,
-    nameByLanguages: IconCategoryNames = IconCategoryNames.fromEmpty(),
-    sortOrder: number = 0,
-    isActive: boolean = true,
-    icons: Icons = new Icons([]),
+    public readonly nameByLanguages: IconCategoryNames = new IconCategoryNames([]),
+    public readonly sortOrder: number = 0,
+    public readonly isActive: boolean = true,
+    public icons: Icons = new Icons([]),
   ) {
     super(id, version);
-    this._nameByLanguages = nameByLanguages;
-    this._sortOrder = sortOrder;
-    this._isActive = isActive;
-    this._icons = icons;
   }
 
   /**
@@ -54,39 +56,12 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
     );
   }
 
-  /**
-   * 名前の多言語オブジェクトを取得
-   */
-  get nameByLanguages(): IconCategoryNames {
-    return this._nameByLanguages;
-  }
-
-  /**
-   * 表示順序を取得
-   */
-  get sortOrder(): number {
-    return this._sortOrder;
-  }
-
-  /**
-   * アクティブフラグを取得
-   */
-  get isActive(): boolean {
-    return this._isActive;
-  }
-
-  /**
-   * このカテゴリに属するアイコン一覧を取得
-   */
-  get icons(): Icons {
-    return this._icons;
-  }
 
   /**
    * このカテゴリに属するアクティブなアイコンのみを取得
    */
   getActiveIcons(): Icons {
-    const activeIcons = this._icons.getActiveIcons();
+    const activeIcons = this.icons.getActiveIcons();
     return new Icons(activeIcons);
   }
 
@@ -94,16 +69,8 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
    * このカテゴリに属するアクティブかつソート順で並べ替えたアイコンを取得
    */
   getActiveSortedIcons(): Icons {
-    const activeSortedIcons = this._icons.getActiveSortedIcons();
+    const activeSortedIcons = this.icons.getActiveSortedIcons();
     return new Icons(activeSortedIcons);
-  }
-
-  /**
-   * このカテゴリに属するアイコン一覧を設定する
-   * @param icons 設定するアイコン一覧
-   */
-  setIcons(icons: Icons): void {
-    this._icons = icons;
   }
 
   /**
@@ -112,10 +79,39 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
   toEntity(): IconCategoryEntity {
     const entity = new IconCategoryEntity();
     entity.id = this.id.value;
-    entity.sort_order = this._sortOrder;
-    entity.is_active = this._isActive;
+    entity.sort_order = this.sortOrder;
+    entity.is_active = this.isActive;
     entity.version = this.version.value;
     return entity;
+  }
+
+  /**
+   * Zodスキーマに準拠したデータを返す
+   */
+  toZodData(): z.infer<typeof IconCategorySchema> {
+    return {
+      id: this.id.toZodData(),
+      version: this.version.toZodData(),
+      nameByLanguages: this.nameByLanguages.toZodData(),
+      sortOrder: this.sortOrder,
+      isActive: this.isActive,
+      icons: this.icons.toZodData()
+    };
+  }
+
+  /**
+   * Zodスキーマから新しいIconCategoryインスタンスを作成
+   * @param data Zodスキーマに準拠したデータ
+   */
+  static fromZodData(data: z.infer<typeof IconCategorySchema>): IconCategory {
+    return new IconCategory(
+      IconCategoryId.fromZodData(data.id),
+      Version.fromZodData(data.version),
+      IconCategoryNames.fromZodData(data.nameByLanguages),
+      data.sortOrder,
+      data.isActive,
+      Icons.fromZodData(data.icons)
+    );
   }
 
   /**

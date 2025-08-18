@@ -103,4 +103,18 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
     this._isActive = data.isActive ?? false;
     this._sortOrder = new SortOrder(data.sortOrder ?? 0);
   }
+
+  /**
+   * Zodスキーマから新しいLanguageTypeValueインスタンスを作成
+   * @param data Zodスキーマに準拠したデータ
+   */
+  static fromZodData(data: z.infer<typeof LanguageTypeValueSchema>): LanguageTypeValue {
+    return new LanguageTypeValue(
+      new LanguageId(data.id),
+      new LanguageCode(data.code || 'unknown'),
+      new LanguageName(data.name || 'Unknown'),
+      data.isActive ?? false,
+      new SortOrder(data.sortOrder ?? 0)
+    );
+  }
 }
