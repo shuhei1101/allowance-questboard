@@ -5,6 +5,8 @@ import { IconCategoryEntity, IconCategoryTranslationEntity } from '../entity/ico
 import { Version, VersionSchema } from '@backend/features/shared/value-object/version';
 import { Icons, IconsSchema } from '../../icon/domain/icons';
 import { z } from 'zod';
+import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-object/sortOrder';
+import { id } from 'zod/v4/locales/index.cjs';
 
 /**
  * IconCategoryのZodスキーマ
@@ -13,7 +15,7 @@ export const IconCategorySchema = z.object({
   id: IconCategoryIdSchema,
   version: VersionSchema,
   nameByLanguages: IconCategoryNamesSchema,
-  sortOrder: z.number(),
+  sortOrder: SortOrderSchema,
   isActive: z.boolean(),
   icons: IconsSchema
 });
@@ -27,7 +29,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
     id: IconCategoryId,
     version: Version,
     public readonly nameByLanguages: IconCategoryNames = new IconCategoryNames([]),
-    public readonly sortOrder: number = 0,
+    public readonly sortOrder: SortOrder = new SortOrder(0),
     public readonly isActive: boolean = true,
     public icons: Icons = new Icons([]),
   ) {
@@ -50,7 +52,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
       new IconCategoryId(entity.id),
       new Version(entity.version),
       nameByLanguages,
-      entity.sort_order,
+      new SortOrder(entity.sort_order),
       entity.is_active,
       icons
     );
@@ -79,7 +81,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
   toEntity(): IconCategoryEntity {
     const entity = new IconCategoryEntity();
     entity.id = this.id.value;
-    entity.sort_order = this.sortOrder;
+    entity.sort_order = this.sortOrder.value;
     entity.is_active = this.isActive;
     entity.version = this.version.value;
     return entity;
@@ -108,7 +110,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
       IconCategoryId.fromZodData(data.id),
       Version.fromZodData(data.version),
       IconCategoryNames.fromZodData(data.nameByLanguages),
-      data.sortOrder,
+      SortOrder.fromZodData(data.sortOrder),
       data.isActive,
       Icons.fromZodData(data.icons)
     );

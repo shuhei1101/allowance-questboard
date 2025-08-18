@@ -20,8 +20,6 @@ import { TemplateQuestCategoryEntity } from '../features/quest/entity/templateQu
 import { TemplateQuestEntity } from '../features/quest/entity/templateQuestEntity';
 import { ReportStatusEntity, ReportStatusTranslationEntity } from '../features/report/entity/reportStatusEntity';
 import { AllowanceTableTypeEntity } from 'src/features/allowance-table/entity/allowanceTableTypeEntity';
-import { IconLibraryEntity } from 'src/features/icon/entity/iconLibraryEntity';
-import { IconKeyByLibraryEntity } from 'src/features/icon/entity/iconKeyByLibraryEntity';
 import { NotifiableTypeEntity } from 'src/features/notification/entity/notifiableTypeEntity';
 import { CurrencyByLanguageEntity } from 'src/features/shared/entity/currencyByLanguageEntity';
 import { CurrencyEntity } from 'src/features/shared/entity/currencyEntity';
@@ -40,8 +38,6 @@ export async function seedMasterData(dataSource: DataSource): Promise<void> {
     await IconCategoryEntity.seed(dataSource);
     await IconCategoryTranslationEntity.seed(dataSource);
     await IconEntity.seed(dataSource);
-    await IconLibraryEntity.seed(dataSource)
-    await IconKeyByLibraryEntity.seed(dataSource)
     await FamilyMemberTypeEntity.seed(dataSource);
     await ReportableTypeEntity.seed(dataSource);
     await ScreenEntity.seed(dataSource);

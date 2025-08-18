@@ -1,14 +1,16 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { IconSelectModal } from './IconSelectModal';
+import { useIconSelectModal } from '../hooks/useIconSelectModal';
 
 interface Props {
   selectedIcon?: string; // Ioniconsのアイコン名 (例: "home", "person", "settings")
-  onPress: () => void;
+  onIconSelected: (iconName: string) => void;
   error?: string;
 }
 
@@ -17,13 +19,23 @@ interface Props {
  * EntryFieldとFieldWithErrorでラップしたアイコン選択ボタン
  * react-native-vector-icons (Ionicons) を使用してアイコンを表示
  */
-export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, error }) => {
+export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSelected, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
+  const { 
+    isVisible, 
+    openModal, 
+    closeModal, 
+    handleIconSelected 
+  } = useIconSelectModal();
 
   const handlePress = () => {
-    // TODO: アイコン選択画面の実装後にonPress()に変更
-    Alert.alert('アイコン選択', 'アイコン選択画面は未実装です');
+    openModal(selectedIcon);
+  };
+
+  const handleModalIconSelected = (iconName: string) => {
+    handleIconSelected(iconName);
+    onIconSelected(iconName);
   };
 
   return (
@@ -70,6 +82,14 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onPress, 
           </View>
         </TouchableOpacity>
       </FieldWithError>
+      
+      {/* アイコン選択モーダル */}
+      <IconSelectModal
+        visible={isVisible}
+        initialSelectedIcon={selectedIcon}
+        onIconSelected={handleModalIconSelected}
+        onClose={closeModal}
+      />
     </EntryField>
   );
 };

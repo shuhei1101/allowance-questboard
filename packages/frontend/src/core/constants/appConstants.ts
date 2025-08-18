@@ -2,6 +2,10 @@ import { IconCategories } from '@backend/features/icon-category/domain/iconCateg
 
 class Constants {
   iconCategories?: IconCategories;
+
+  setIconCategories(iconCategories: IconCategories) {
+    this.iconCategories = iconCategories;
+  }
 }
 
 export const AppConstants = new Constants();

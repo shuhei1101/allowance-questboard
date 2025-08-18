@@ -38,14 +38,14 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    * ソート順で並べ替えたアイコンカテゴリを取得
    */
   getSortedCategories(): IconCategory[] {
-    return [...this.items].sort((a, b) => a.sortOrder - b.sortOrder);
+    return [...this.items].sort((a, b) => a.sortOrder.value - b.sortOrder.value);
   }
 
   /**
    * アクティブかつソート順で並べ替えたアイコンカテゴリを取得
    */
   getActiveSortedCategories(): IconCategory[] {
-    return this.getActiveCategories().sort((a, b) => a.sortOrder - b.sortOrder);
+    return this.getActiveCategories().sort((a, b) => a.sortOrder.value - b.sortOrder.value);
   }
 
   /**

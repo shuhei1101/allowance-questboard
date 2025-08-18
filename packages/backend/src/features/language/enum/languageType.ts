@@ -50,6 +50,21 @@ class LanguageTypeEnum extends BaseSimpleEnum<LanguageTypeValue, LanguageId, Lan
       this.ENGLISH.setFromZodData(data.english);
     }
   }
+
+
 }
 
 export const LanguageType = new LanguageTypeEnum()
+
+/**
+ * Zodスキーマから値オブジェクトを取得する
+ */
+export const getLanguageTypeFromZodData = (data: z.infer<typeof LanguageTypeValueSchema>): LanguageTypeValue => {
+  if (data.id === 1) {
+    return LanguageType.JAPANESE;
+  }
+  if (data.id === 2) {
+    return LanguageType.ENGLISH;
+  }
+  throw new Error(`Unknown LanguageTypeValue id: ${data.id}`);
+}

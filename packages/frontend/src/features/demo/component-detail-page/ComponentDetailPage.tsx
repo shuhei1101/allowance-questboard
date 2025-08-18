@@ -22,7 +22,7 @@ export const ComponentDetailPage: React.FC = () => {
   const { componentType } = route.params as ComponentDetailPageProps;
 
   const componentInfo = getComponentInfo(componentType);
-  const [componentProps, setComponentProps] = useState(componentInfo.defaultProps);
+  const [componentProps, setComponentProps] = useState<any>(componentInfo.defaultProps);
 
   const updateProp = (key: string, value: any) => {
     setComponentProps(prev => ({ ...prev, [key]: value }));
@@ -38,20 +38,18 @@ export const ComponentDetailPage: React.FC = () => {
         return (
           <EmailInputField
             value={componentProps.value}
-            onChangeText={(value) => updateProp('value', value)}
+            onChange={(value) => updateProp('value', value)}
             placeholder={componentProps.placeholder}
-            errorMessage={componentProps.errorMessage}
-            disabled={componentProps.disabled}
+            error={componentProps.errorMessage}
           />
         );
       case 'password-input':
         return (
           <PasswordInputField
             value={componentProps.value}
-            onChangeText={(value) => updateProp('value', value)}
+            onChange={(value) => updateProp('value', value)}
             placeholder={componentProps.placeholder}
-            errorMessage={componentProps.errorMessage}
-            disabled={componentProps.disabled}
+            error={componentProps.errorMessage}
           />
         );
       case 'birthday-input':
@@ -59,8 +57,7 @@ export const ComponentDetailPage: React.FC = () => {
           <BirthdayInputField
             value={componentProps.value}
             onChange={(value) => updateProp('value', value)}
-            errorMessage={componentProps.errorMessage}
-            disabled={componentProps.disabled}
+            error={componentProps.errorMessage}
           />
         );
       case 'save-button':
@@ -75,8 +72,7 @@ export const ComponentDetailPage: React.FC = () => {
         return (
           <IconSelectButton
             selectedIcon={componentProps.selectedIcon}
-            onSelectIcon={(icon) => updateProp('selectedIcon', icon)}
-            disabled={componentProps.disabled}
+            onPress={() => Alert.alert('アイコン選択', 'IconSelectButtonが押されました！')}
           />
         );
       default:
@@ -108,7 +104,7 @@ export const ComponentDetailPage: React.FC = () => {
       case 'string':
         return (
           <TextInput
-            style={[styles.textInput, { borderColor: colors.border, color: colors.text.primary }]}
+            style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
             value={value}
             onChangeText={onChange}
             placeholder={prop.placeholder || `${prop.label}を入力`}

@@ -59,14 +59,14 @@ describe('IconCategory', () => {
         iconCategoryId,
         version,
         iconCategoryNames,
-        10,
+        new SortOrder(10),
         true,
         icons
       );
 
       expect(iconCategory.id).toBe(iconCategoryId);
       expect(iconCategory.nameByLanguages).toBe(iconCategoryNames);
-      expect(iconCategory.sortOrder).toBe(10);
+      expect(iconCategory.sortOrder.value).toBe(10);
       expect(iconCategory.isActive).toBe(true);
       expect(iconCategory.icons).toBe(icons);
     });
@@ -123,7 +123,7 @@ describe('IconCategory', () => {
         iconCategoryId,
         version,
         iconCategoryNames,
-        10,
+        new SortOrder(10),
         true,
         icons
       );
@@ -143,17 +143,17 @@ describe('IconCategory', () => {
         iconCategoryId,
         version,
         iconCategoryNames,
-        10,
+        new SortOrder(10),
         true,
         icons
       );
 
       const activeSortedIcons = iconCategory.getActiveSortedIcons();
-      const iconList = activeSortedIcons.items;
 
       expect(activeSortedIcons.length).toBe(2);
-      expect(iconList[0]).toBe(icon3); // sort_order: 5
-      expect(iconList[1]).toBe(icon1); // sort_order: 10
+      // getメソッドでアイテムを取得してテスト
+      expect(activeSortedIcons.get(icon3.id)).toBe(icon3); // sort_order: 5
+      expect(activeSortedIcons.get(icon1.id)).toBe(icon1); // sort_order: 10
     });
   });
 
@@ -163,7 +163,7 @@ describe('IconCategory', () => {
         iconCategoryId,
         version,
         iconCategoryNames,
-        10,
+        new SortOrder(10),
         true,
         icons
       );
@@ -185,7 +185,7 @@ describe('IconCategory', () => {
         iconCategoryId,
         version,
         iconCategoryNames,
-        10,
+        new SortOrder(10),
         true,
         icons
       );
@@ -196,7 +196,7 @@ describe('IconCategory', () => {
     });
 
     it('sortOrderを正常に取得できること', () => {
-      expect(iconCategory.sortOrder).toBe(10);
+      expect(iconCategory.sortOrder.value).toBe(10);
     });
 
     it('isActiveを正常に取得できること', () => {

@@ -24,10 +24,6 @@ export const IconSelectButtonDetailPage: React.FC = () => {
     Alert.alert('プロパティ反映', 'IconSelectButtonのプロパティが反映されました！');
   };
 
-  const handleIconPress = () => {
-    Alert.alert('アイコン選択', 'アイコン選択画面は未実装です');
-  };
-
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <View style={styles.header}>
@@ -47,7 +43,7 @@ export const IconSelectButtonDetailPage: React.FC = () => {
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
           <IconSelectButtonEntry
             selectedIcon={componentProps.selectedIcon}
-            onPress={handleIconPress}
+            onIconSelected={(iconName) => updateProp('selectedIcon', iconName)}
             error={componentProps.error}
           />
         </View>

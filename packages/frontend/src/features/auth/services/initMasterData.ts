@@ -1,6 +1,8 @@
 import { trpcClient } from "@/core/api/trpcClient";
 import { LanguageType } from "@backend/features/language/enum/languageType";
 import { FamilyMemberType } from "@backend/features/family-member/enum/familyMemberType";
+import { IconCategories } from "@backend/features/icon-category/domain/iconCategories";
+import { AppConstants } from "@/core/constants/appConstants";
 
 /**
  * マスタデータを初期化する
@@ -10,28 +12,25 @@ import { FamilyMemberType } from "@backend/features/family-member/enum/familyMem
  * - マスタデータをsessionStorageに保存する
  * @returns Promise<void>
  */
-export async function initMasterData(): Promise<void> {
+/**
+ * マスターデータを初期化する
+ */
+export const initMasterData = async () => {
   try {
-    console.log('🚧 マスタデータ初期化は一時的に無効化されています');
-    // tRPC経由でマスタデータを取得
-    const masterData = await trpcClient.init.getMasterData.query();
+    const result = await trpcClient.init.getMasterData.query();
     
-    // LanguageType Enumの値を更新
-    if (masterData.languages) {
-      LanguageType.setFromZodData(masterData.languages);
-      console.log('✨ LanguageType Enum更新完了！');
-    }
+    // language
+    LanguageType.setFromZodData(result.languages);
     
-    // FamilyMemberType Enumの値を更新
-    if (masterData.familyMemberTypes) {
-      FamilyMemberType.setFromZodData(masterData.familyMemberTypes);
-      console.log('✨ FamilyMemberType Enum更新完了！');
-    }
+    // family member types
+    FamilyMemberType.setFromZodData(result.familyMemberTypes);
     
-    console.log('🌟 マスタデータ初期化完了！');
+    // icon categories
+    const iconCategories = IconCategories.fromZodData(result.iconCategories);
+    AppConstants.setIconCategories(iconCategories);
     
   } catch (error) {
-    console.error('❌ マスタデータ初期化エラー:', error);
-    throw new Error(`マスタデータの初期化に失敗しました: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    console.error("マスターデータの初期化に失敗しました:", error);
+    throw error;
   }
-}
+};

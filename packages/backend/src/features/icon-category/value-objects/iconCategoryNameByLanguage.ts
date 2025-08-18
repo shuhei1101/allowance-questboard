@@ -1,4 +1,5 @@
 import { LanguageTypeValue, LanguageTypeValueSchema } from '@backend/features/language/value-object/languageTypeValue';
+import { getLanguageTypeFromZodData } from '@backend/features/language/enum/languageType';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { CollectionItemProtocol } from '@backend/core/models/baseCollection';
 import { IconCategoryName, IconCategoryNameSchema } from './iconCategoryName';
@@ -38,7 +39,7 @@ export class IconCategoryNameByLanguage implements CollectionItemProtocol<Langua
    */
   static fromZodData(data: z.infer<typeof IconCategoryNameByLanguageSchema>): IconCategoryNameByLanguage {
     return new IconCategoryNameByLanguage(
-      LanguageTypeValue.fromZodData(data.language),
+      getLanguageTypeFromZodData(data.language),
       IconCategoryName.fromZodData(data.categoryName)
     );
   }
