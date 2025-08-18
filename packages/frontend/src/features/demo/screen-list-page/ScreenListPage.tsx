@@ -40,6 +40,13 @@ export const ScreenListPage: React.FC = () => {
       onPress: () => navigation.navigate('ScreenLauncher', { screenType: 'family-member-list' }),
       color: '#ef4444',
     },
+    {
+      id: 'icon-select',
+      title: '🎨 アイコン選択画面',
+      description: 'カテゴリごとのアイコン選択とプレビュー機能',
+      onPress: () => navigation.navigate('icon-select-pageDetail'),
+      color: '#8b5cf6',
+    },
   ];
 
   return (
