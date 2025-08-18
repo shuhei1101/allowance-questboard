@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { IconSelectPage } from '@/features/shared/icon-select-page/IconSelectPage';
 import { AppConstants } from '@/core/constants/appConstants';
+import { initMasterData } from '@/features/auth/services/initMasterData';
 
 interface DemoState {
   initialSelectedIcon: string;
   showingIconSelect: boolean;
   lastSelectedIcon?: string;
+  masterDataLoaded: boolean;
+  masterDataLoading: boolean;
 }
 
 /**
@@ -21,7 +24,42 @@ export const IconSelectPageDetailPage: React.FC = () => {
     initialSelectedIcon: 'home',
     showingIconSelect: false,
     lastSelectedIcon: undefined,
+    masterDataLoaded: false,
+    masterDataLoading: false,
   });
+
+  // 初期データ取得処理
+  useEffect(() => {
+    const loadMasterData = async () => {
+      if (demoState.masterDataLoaded || demoState.masterDataLoading) {
+        return; // 既に読み込み済みまたは読み込み中の場合はスキップ
+      }
+
+      setDemoState(prev => ({ ...prev, masterDataLoading: true }));
+      
+      try {
+        await initMasterData();
+        setDemoState(prev => ({ 
+          ...prev, 
+          masterDataLoaded: true, 
+          masterDataLoading: false 
+        }));
+        console.log('マスターデータの初期化が完了しました');
+      } catch (error) {
+        console.error('マスターデータの初期化に失敗しました:', error);
+        setDemoState(prev => ({ 
+          ...prev, 
+          masterDataLoading: false 
+        }));
+        Alert.alert(
+          'エラー', 
+          'マスターデータの読み込みに失敗しました。ネットワーク接続を確認してください。'
+        );
+      }
+    };
+
+    loadMasterData();
+  }, []); // 空の依存配列で初回のみ実行
 
   const handleShowIconSelect = () => {
     setDemoState(prev => ({ ...prev, showingIconSelect: true }));
@@ -42,6 +80,30 @@ export const IconSelectPageDetailPage: React.FC = () => {
 
   const handleChangeInitialIcon = (iconName: string) => {
     setDemoState(prev => ({ ...prev, initialSelectedIcon: iconName }));
+  };
+
+  const handleReloadMasterData = async () => {
+    setDemoState(prev => ({ ...prev, masterDataLoading: true }));
+    
+    try {
+      await initMasterData();
+      setDemoState(prev => ({ 
+        ...prev, 
+        masterDataLoaded: true, 
+        masterDataLoading: false 
+      }));
+      Alert.alert('成功', 'マスターデータを再読み込みしました');
+    } catch (error) {
+      console.error('マスターデータの再読み込みに失敗しました:', error);
+      setDemoState(prev => ({ 
+        ...prev, 
+        masterDataLoading: false 
+      }));
+      Alert.alert(
+        'エラー', 
+        'マスターデータの再読み込みに失敗しました。ネットワーク接続を確認してください。'
+      );
+    }
   };
 
   if (demoState.showingIconSelect) {
@@ -87,6 +149,19 @@ export const IconSelectPageDetailPage: React.FC = () => {
             {demoState.lastSelectedIcon || '未選択'}
           </Text>
         </View>
+        <View style={styles.stateRow}>
+          <Text style={[styles.stateLabel, { color: colors.text.secondary }]}>
+            マスターデータ:
+          </Text>
+          <Text style={[styles.stateValue, { color: colors.text.primary }]}>
+            {demoState.masterDataLoading 
+              ? '読み込み中...' 
+              : demoState.masterDataLoaded 
+                ? '読み込み済み' 
+                : '未読み込み'
+            }
+          </Text>
+        </View>
       </View>
 
       {/* アクション */}
@@ -102,6 +177,25 @@ export const IconSelectPageDetailPage: React.FC = () => {
         >
           <Text style={[styles.actionButtonText, { color: colors.text.inverse }]}>
             🎨 アイコン選択画面を表示
+          </Text>
+        </TouchableOpacity>
+
+        {/* マスターデータ再読み込み */}
+        <TouchableOpacity
+          style={[
+            styles.actionButton, 
+            { 
+              backgroundColor: demoState.masterDataLoading 
+                ? colors.background.tertiary 
+                : colors.primary,
+              opacity: demoState.masterDataLoading ? 0.6 : 1
+            }
+          ]}
+          onPress={handleReloadMasterData}
+          disabled={demoState.masterDataLoading}
+        >
+          <Text style={[styles.actionButtonText, { color: colors.text.inverse }]}>
+            🔄 マスターデータ再読み込み
           </Text>
         </TouchableOpacity>
       </View>
