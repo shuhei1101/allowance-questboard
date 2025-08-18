@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Platform, StatusBar, AppState, AppStateStatus } from 'react-native';
+import { StyleSheet, Platform, StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import '@/core/i18n';
 import i18n from 'i18next';
 import { localeToLanguageType } from './src/features/auth/utils/localeToLanguageType';
-import { LoadingPage } from './src/shared/loading-page/LoadingPage';
+import { LoadingPage } from './src/features/shared/loading-page/LoadingPage';
 import { ErrorBoundary } from './src/core/errors/ErrorBoundary';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { initMasterData } from '@/features/auth/services/initMasterData';

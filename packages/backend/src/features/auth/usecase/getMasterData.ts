@@ -1,6 +1,7 @@
-import { IconCategory } from "@backend/features/icon-category/enum/iconCategory";
-import { FamilyMemberType } from "src/features/family-member/enum/familyMemberType";
-import { LanguageType } from "src/features/language/enum/languageType";
+import { BaseAppException } from "@backend/core/errors/baseAppException";
+import { LocaleString } from "@backend/core/messages/localeString";
+import { FamilyMemberType } from "@backend/features/family-member/enum/familyMemberType";
+import { LanguageType } from "@backend/features/language/enum/languageType";
 
 /**
  * マスタデータを取得する
@@ -12,9 +13,14 @@ export async function getMasterData() {
     return {
       languages: LanguageType.toZodData(),
       familyMemberTypes: FamilyMemberType.toZodData(),
-      iconCategories: IconCategory.toZodData() 
     };
   } catch (error) {
-    throw new Error(`マスタデータ取得中にエラーが発生しました: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new BaseAppException({
+      errorType: 'GET_MASTER_DATA_ERROR',
+      message: new LocaleString({
+        ja: 'マスタデータの取得に失敗しました',
+        en: 'Failed to fetch master data'
+      })
+    });
   }
 }

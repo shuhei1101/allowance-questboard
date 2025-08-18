@@ -2,11 +2,11 @@ import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 're
 import { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ParentNameInputFieldEntry } from './components/ParentNameInputFieldEntry';
-import { EmailInputFieldEntry } from '../../../shared/components/EmailInputFieldEntry';
-import { PasswordInputFieldEntry } from '../../../shared/components/PasswordInputFieldEntry';
-import { IconSelectButtonEntry } from '../../../shared/components/IconSelectButtonEntry';
-import { BirthdayInputFieldEntry } from '../../../shared/components/BirthdayInputFieldEntry';
-import { SaveButton } from '../../../shared/components/SaveButton';
+import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEntry';
+import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
+import { IconSelectButtonEntry } from '../../shared/components/IconSelectButtonEntry';
+import { BirthdayInputFieldEntry } from '../../shared/components/BirthdayInputFieldEntry';
+import { SaveButton } from '../../shared/components/SaveButton';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
 import { useParentEditPageHandlers } from './hooks/useParentEditPageHandlers';

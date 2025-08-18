@@ -4,8 +4,10 @@ import { FamilyMemberType } from "@backend/features/family-member/enum/familyMem
 
 /**
  * マスタデータを初期化する
- * tRPC経由でバックエンドからマスタデータのEnum値を取得し、
- * フロントエンドのEnum値を更新する
+ * 
+ * - tRPC経由でバックエンドからマスタデータを取得する
+ * - フロントエンドのEnum値を更新する
+ * - マスタデータをsessionStorageに保存する
  * @returns Promise<void>
  */
 export async function initMasterData(): Promise<void> {

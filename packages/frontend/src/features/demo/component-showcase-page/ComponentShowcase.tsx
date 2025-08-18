@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { EmailInputField } from '@/shared/components/EmailInputField';
-import { PasswordInputField } from '@/shared/components/PasswordInputField';
-import { SaveButton } from '@/shared/components/SaveButton';
-import { BirthdayInputField } from '@/shared/components/BirthdayInputField';
-import { IconSelectButton } from '@/shared/components/IconSelectButton';
+import { EmailInputField } from '@/features/shared/components/EmailInputField';
+import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
+import { SaveButton } from '@/features/shared/components/SaveButton';
+import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
+import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 
 /**
  * コンポーネントショーケース

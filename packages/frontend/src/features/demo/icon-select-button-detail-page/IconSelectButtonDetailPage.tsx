@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { IconSelectButtonEntry } from '@/shared/components/IconSelectButtonEntry';
+import { IconSelectButtonEntry } from '@/features/shared/components/IconSelectButtonEntry';
 
 /**
  * IconSelectButton詳細ページ

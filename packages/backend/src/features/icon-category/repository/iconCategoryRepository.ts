@@ -5,6 +5,8 @@ import { IconCategories } from '../domain/iconCategories';
 import { IconCategory } from '../domain/iconCategory';
 import { Icons } from '../../icon/domain/icons';
 import { Icon } from '../../icon/domain/icon';
+import { BaseAppException } from '@backend/core/errors/baseAppException';
+import { LocaleString } from '@backend/core/messages/localeString';
 
 /**
  * アイコンカテゴリリポジトリの依存関係
@@ -61,7 +63,13 @@ export class IconCategoryRepository {
       return iconCategories;
       
     } catch (error) {
-      throw new Error(`アイコンカテゴリ取得中にエラーが発生しました: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new BaseAppException({
+        errorType: 'ICON_CATEGORY_REPOSITORY_ERROR',
+        message: new LocaleString({
+          ja: 'アイコンカテゴリの取得に失敗しました',
+          en: 'Failed to fetch icon categories'
+        })
+      });
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { SaveButton } from '@/shared/components/SaveButton';
+import { SaveButton } from '@/features/shared/components/SaveButton';
 
 /**
  * SaveButton詳細ページ

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { BirthdayInputField } from '@/shared/components/BirthdayInputField';
+import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
 
 /**
  * BirthdayInputField詳細ページ

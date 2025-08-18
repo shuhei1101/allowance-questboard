@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { EmailInputField } from '@/shared/components/EmailInputField';
+import { EmailInputField } from '@/features/shared/components/EmailInputField';
 
 /**
  * EmailInputField詳細ページ

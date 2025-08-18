@@ -1,8 +1,8 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { AppIcon } from './components/AppIcon';
 import { AppTitleLabel } from './components/AppTitleLabel';
-import { EmailInputField } from '../../../shared/components/EmailInputField';
-import { PasswordInputField } from '../../../shared/components/PasswordInputField';
+import { EmailInputField } from '../../shared/components/EmailInputField';
+import { PasswordInputField } from '../../shared/components/PasswordInputField';
 import { LoginButton } from './components/LoginButton';
 import { CreateFamilyButton } from './components/CreateFamilyButton';
 import { ForgotPasswordLink } from './components/ForgotPasswordLink';
