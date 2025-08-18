@@ -22,7 +22,7 @@ interface Props {
 
 /**
  * アイコン選択画面のアイコングリッド
- * アイコンを5列のグリッドレイアウトで表示
+ * アイコンを6列のグリッドレイアウトで表示
  */
 export const IconGrid: React.FC<Props> = ({
   icons,
@@ -49,7 +49,7 @@ export const IconGrid: React.FC<Props> = ({
       >
         <Ionicons
           name={iconName as any}
-          size={32}
+          size={24}
           color={isSelected ? colors.primary : colors.text.primary}
         />
       </TouchableOpacity>
@@ -71,7 +71,7 @@ export const IconGrid: React.FC<Props> = ({
       data={icons}
       renderItem={renderIcon}
       keyExtractor={(item) => item.id.value.toString()}
-      numColumns={5}
+      numColumns={6}
       contentContainerStyle={styles.gridContainer}
       showsVerticalScrollIndicator={false}
       testID="icon-grid"
@@ -81,17 +81,17 @@ export const IconGrid: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   gridContainer: {
-    padding: 8,
+    padding: 4,
   },
   iconItem: {
     flex: 1,
     aspectRatio: 1,
-    margin: 8,
-    borderRadius: 12,
-    borderWidth: 2,
+    margin: 4,
+    borderRadius: 8,
+    borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 60,
+    minWidth: 48,
   },
   emptyContainer: {
     flex: 1,
