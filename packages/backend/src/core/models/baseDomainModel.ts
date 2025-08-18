@@ -4,11 +4,15 @@ import { BaseId } from '../value-object/base_id';
 import { FamilyMemberId } from 'src/features/family-member/value-object/familyMemberId';
 import { ScreenId } from 'src/features/shared/value-object/screenId';
 import { BaseModel } from './baseModel';
+import { CollectionItemProtocol } from './baseCollection';
 
 /**
  * ドメインモデルの基底抽象クラス
  */
-export abstract class BaseDomainModel<IdType extends BaseId, EntityType extends AppBaseEntity> extends BaseModel {
+export abstract class BaseDomainModel<
+    IdType extends BaseId, 
+    EntityType extends AppBaseEntity
+  > extends BaseModel implements CollectionItemProtocol<IdType> {
   protected _id: IdType;
   protected _version: Version;
   protected _createdAt?: Date;
@@ -38,6 +42,12 @@ export abstract class BaseDomainModel<IdType extends BaseId, EntityType extends 
     this._updatedAt = updatedAt;
     this._updatedBy = updatedBy;
     this._updatedFrom = updatedFrom;
+  }
+  toZodData() {
+    throw new Error('Method not implemented.');
+  }
+  setFromZodData(data: any): void {
+    throw new Error('Method not implemented.');
   }
 
   /**

@@ -1,5 +1,4 @@
 import { BaseId } from '../value-object/base_id';
-import { z } from 'zod';
 
 /**
  * コレクションアイテムのプロトコル（インターフェース）
@@ -9,16 +8,6 @@ export interface CollectionItemProtocol<IdType extends BaseId> {
    * アイテムのIDを返す
    */
   readonly id: IdType;
-  
-  /**
-   * Zodスキーマに準拠したデータを返す
-   */
-  toZodData(): any;
-  
-  /**
-   * Zodスキーマから値オブジェクトを初期化
-   */
-  setFromZodData(data: any): void;
 }
 
 /**
@@ -89,36 +78,6 @@ export abstract class BaseCollection<
    */
   get items(): readonly ItemType[] {
     return [...this._items];
-  }
-
-  /**
-   * コレクション全体をZodスキーマに準拠したデータとして返す
-   * 各アイテムのtoZodDataメソッドを使用
-   */
-  toZodData(): any[] {
-    return this._items.map(item => item.toZodData());
-  }
-
-  /**
-   * Zodスキーマからコレクションを初期化
-   * 各アイテムのsetFromZodDataメソッドを使用
-   * @param dataArray アイテムデータの配列
-   */
-  setFromZodData(dataArray: any[]): void {
-    if (!Array.isArray(dataArray)) {
-      throw new TypeError('Expected array for collection data');
-    }
-
-    // 既存のアイテムを各データで更新
-    for (let i = 0; i < Math.min(this._items.length, dataArray.length); i++) {
-      const item = this._items[i];
-      const data = dataArray[i];
-      
-      item.setFromZodData(data);
-    }
-    
-    // インデックスを更新
-    this.updateIndex();
   }
 
   /**
