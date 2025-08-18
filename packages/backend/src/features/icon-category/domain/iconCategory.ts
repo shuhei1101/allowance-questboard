@@ -1,4 +1,4 @@
-import { BaseDomainModel } from '@backend/core/models/baseDomainModel';
+import { BaseMasterModel } from '@backend/core/models/baseMasterModel';
 import { IconCategoryId } from '../value-objects/iconCategoryId';
 import { IconCategoryNames } from '../value-objects/iconCategoryNames';
 import { IconCategoryEntity, IconCategoryTranslationEntity } from '../entity/iconCategoryEntity';
@@ -10,7 +10,7 @@ import { Icons } from '../../icon/domain/icons';
 /**
  * アイコンカテゴリドメインモデル
  */
-export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEntity> {
+export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEntity> {
   private _nameByLanguages: IconCategoryNames;
   private _sortOrder: number;
   private _isActive: boolean;
@@ -24,14 +24,8 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
     sortOrder: number = 0,
     isActive: boolean = true,
     icons: Icons = new Icons([]),
-    createdAt?: Date,
-    createdBy?: FamilyMemberId,
-    createdFrom?: ScreenId,
-    updatedAt?: Date,
-    updatedBy?: FamilyMemberId,
-    updatedFrom?: ScreenId
   ) {
-    super(id, version, createdAt, createdBy, createdFrom, updatedAt, updatedBy, updatedFrom);
+    super(id, version);
     this._nameByLanguages = nameByLanguages;
     this._sortOrder = sortOrder;
     this._isActive = isActive;
@@ -117,10 +111,10 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
    */
   toEntity(): IconCategoryEntity {
     const entity = new IconCategoryEntity();
-    entity.id = this._id.value;
+    entity.id = this.id.value;
     entity.sort_order = this._sortOrder;
     entity.is_active = this._isActive;
-    entity.version = this._version.value;
+    entity.version = this.version.value;
     return entity;
   }
 

@@ -1,7 +1,5 @@
 import { EntityManager, Repository } from 'typeorm';
 import { AppBaseEntity } from '../entity/appBaseEntity';
-import { TranslationEntityProtocol } from '../entity/baseTranslationEntity';
-import { BaseTranslationEntities } from '../entity/baseTranslationEntities';
 
 /**
  * データアクセスオブジェクトの基底クラス（排他制御対応）
