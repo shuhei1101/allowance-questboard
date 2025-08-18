@@ -6,8 +6,8 @@ import {
   Unique,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { FamilyEntity } from "src/features/family/entity/familyEntity";
-import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemberEntity";
+import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
+import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 
 /**
  * 親エンティティ

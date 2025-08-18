@@ -9,7 +9,7 @@ import { BaseId } from '../value-object/base_id';
  */
 export abstract class BaseRepository<
   TId extends BaseId, 
-  TModel extends BaseDomainModel<TId, TEntity>,
+  TModel extends BaseDomainModel<TId>,
   TEntity extends AppBaseEntity
 > {
   /**

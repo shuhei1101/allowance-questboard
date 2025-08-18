@@ -1,12 +1,10 @@
 import { BaseMasterModel } from '@backend/core/models/baseMasterModel';
 import { IconCategoryId, IconCategoryIdSchema } from '../value-objects/iconCategoryId';
 import { IconCategoryNames, IconCategoryNamesSchema } from '../value-objects/iconCategoryNames';
-import { IconCategoryEntity, IconCategoryTranslationEntity } from '../entity/iconCategoryEntity';
 import { Version, VersionSchema } from '@backend/features/shared/value-object/version';
 import { Icons, IconsSchema } from '../../icon/domain/icons';
 import { z } from 'zod';
 import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-object/sortOrder';
-import { id } from 'zod/v4/locales/index.cjs';
 
 /**
  * IconCategoryのZodスキーマ
@@ -23,7 +21,7 @@ export const IconCategorySchema = z.object({
 /**
  * アイコンカテゴリドメインモデル
  */
-export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEntity> {
+export class IconCategory extends BaseMasterModel<IconCategoryId> {
 
   constructor(
     id: IconCategoryId,
@@ -36,27 +34,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
     super(id, version);
   }
 
-  /**
-   * エンティティからドメインモデルを生成
-   * @param entity アイコンカテゴリエンティティ
-   * @param translationDict 言語IDをキーとした翻訳エンティティのマッピング
-   * @param icons このカテゴリに属するアイコン一覧（省略時は空のコレクション）
-   */
-  static fromEntity(
-    entity: IconCategoryEntity, 
-    translationDict: { [languageId: number]: IconCategoryTranslationEntity },
-    icons: Icons = new Icons([])
-  ): IconCategory {
-    const nameByLanguages = IconCategoryNames.fromEntity(translationDict);
-    return new IconCategory(
-      new IconCategoryId(entity.id),
-      new Version(entity.version),
-      nameByLanguages,
-      new SortOrder(entity.sort_order),
-      entity.is_active,
-      icons
-    );
-  }
+
 
 
   /**
@@ -75,17 +53,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId, IconCategoryEn
     return new Icons(activeSortedIcons);
   }
 
-  /**
-   * エンティティに変換する
-   */
-  toEntity(): IconCategoryEntity {
-    const entity = new IconCategoryEntity();
-    entity.id = this.id.value;
-    entity.sort_order = this.sortOrder.value;
-    entity.is_active = this.isActive;
-    entity.version = this.version.value;
-    return entity;
-  }
+
 
   /**
    * Zodスキーマに準拠したデータを返す
