@@ -12,12 +12,23 @@ export abstract class BaseDomainModel<
     IdType extends BaseId, 
     EntityType extends AppBaseEntity
   > extends BaseModel implements CollectionItemProtocol<IdType> {
+  public isUpdated: boolean = false;
 
   constructor(
     public id: IdType,
     public version: Version
   ) {
     super();
+  }
+
+  /**
+   * バージョンを1上げ、更新フラグを設定する
+   */
+  protected _updateVersion(): void {
+    if (!this.isUpdated) {
+      this.isUpdated = true;
+      this.version = new Version(this.version.value + 1);
+    }
   }
 
   /**
