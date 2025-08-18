@@ -25,6 +25,11 @@ npx expo start
 npm run dev
 ```
 
+#### db初期化
+```bash
+npx ts-node -r tsconfig-paths/register src/seed/dbInitializer.ts
+```
+
 #### ts-nodeのインストール
 ```bash
 npm install -g ts-node

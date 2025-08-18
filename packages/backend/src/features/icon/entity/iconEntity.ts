@@ -33,9 +33,9 @@ export class IconEntity extends BaseMasterEntity {
    */
   protected static seedData(): IconEntity[] {
     return [
-      Object.assign(new IconEntity(), { id: 1, category_id: 1, sort_order: 10, is_active: true }),
-      Object.assign(new IconEntity(), { id: 2, category_id: 2, sort_order: 10, is_active: true }),
-      Object.assign(new IconEntity(), { id: 3, category_id: 3, sort_order: 10, is_active: true }),
+      Object.assign(new IconEntity(), { id: 1, category_id: 1, name: "home", sort_order: 10, is_active: true }),
+      Object.assign(new IconEntity(), { id: 2, category_id: 2, name: "navigation", sort_order: 10, is_active: true }),
+      Object.assign(new IconEntity(), { id: 3, category_id: 3, name: "chat-bubble", sort_order: 10, is_active: true }),
     ];
   }
 }
