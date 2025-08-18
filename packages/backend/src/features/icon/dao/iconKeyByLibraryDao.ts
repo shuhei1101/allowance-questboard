@@ -1,6 +1,7 @@
 import { EntityManager } from 'typeorm';
 import { BaseDao } from '@backend/core/dao/baseDao';
 import { IconKeyByLibraryEntity } from '../entity/iconKeyByLibraryEntity';
+import { cache } from '@backend/core/cache/redisCache';
 
 /**
  * ライブラリ別アイコンキーDAOクラス
@@ -13,5 +14,10 @@ export class IconKeyByLibraryDao extends BaseDao<IconKeyByLibraryEntity> {
 
   protected get entityClass(): new () => IconKeyByLibraryEntity {
     return IconKeyByLibraryEntity;
+  }
+
+  @cache("icon_key_by_libraries:all")
+  async fetchAll(): Promise<IconKeyByLibraryEntity[]> {
+    return await super.fetchAll();
   }
 }

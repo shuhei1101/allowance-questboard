@@ -14,6 +14,7 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
   private _sortOrder: number;
   private _isActive: boolean;
 
+
   constructor(
     id: IconCategoryId,
     version: Version,
