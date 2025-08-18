@@ -1,4 +1,5 @@
 import { IconCategoryDao } from '../dao/iconCategoryDao';
+import { IconCategory } from '../enum/iconCategory';
 
 /**
  * アイコンカテゴリリポジトリの依存関係
