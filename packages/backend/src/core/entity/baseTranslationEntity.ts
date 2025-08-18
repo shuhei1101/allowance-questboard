@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { AppBaseEntity, BaseEntityProtocol } from "./appBaseEntity";
 import { BaseTransactionEntity } from "./baseTransactionEntity";
-import { LanguageEntity } from "src/features/language/entity/languageEntity";
+import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
 
 /**
  * 翻訳可能エンティティのインターフェース

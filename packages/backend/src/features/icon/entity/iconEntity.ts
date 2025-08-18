@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
 } from "typeorm";
 import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
-import { IconCategoryEntity } from "src/features/icon-category/entity/iconCategoryEntity";
+import { IconCategoryEntity } from "@backend/features/icon-category/entity/iconCategoryEntity";
 
 /**
  * アイコンエンティティ
