@@ -17,6 +17,8 @@ export class IconEntity extends BaseMasterEntity {
   id!: number;
   @Column({ type: "int", nullable: true, comment: "アイコンカテゴリID" })
   category_id?: number;
+  @Column({ type: "varchar", length: 255, nullable: false, comment: "expo/vector-iconsのアイコン名" })
+  name!: string;
   @Column({ type: "int", default: 0, comment: "表示順序" })
   sort_order!: number;
   @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })

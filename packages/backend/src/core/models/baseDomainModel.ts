@@ -43,12 +43,6 @@ export abstract class BaseDomainModel<
     this._updatedBy = updatedBy;
     this._updatedFrom = updatedFrom;
   }
-  toZodData() {
-    throw new Error('Method not implemented.');
-  }
-  setFromZodData(data: any): void {
-    throw new Error('Method not implemented.');
-  }
 
   /**
    * IDを取得する

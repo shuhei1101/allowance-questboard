@@ -4,6 +4,7 @@ import { LanguageCode } from 'src/features/language/value-object/languageCode';
 import { LanguageId } from 'src/features/language/value-object/languageId';
 import { LanguageName } from 'src/features/language/value-object/languageName';
 import { LanguageTypeValue, LanguageTypeValueSchema } from 'src/features/language/value-object/languageTypeValue';
+import { SortOrder } from 'src/features/shared/value-object/sortOrder';
 
 describe('LanguageTypeValue', () => {
   describe('コンストラクタでインスタンスを作成すること', () => {
@@ -19,7 +20,7 @@ describe('LanguageTypeValue', () => {
       expect(languageTypeValue.code.value).toBe('unknown');
       expect(languageTypeValue.name.value).toBe('Unknown');
       expect(languageTypeValue.isActive).toBe(false);
-      expect(languageTypeValue.sortOrder).toBe(0);
+      expect(languageTypeValue.sortOrder.value).toBe(0);
     });
 
     test('すべてのパラメータを指定してインスタンスが作成されること', () => {
@@ -28,7 +29,7 @@ describe('LanguageTypeValue', () => {
       const code = new LanguageCode('ja');
       const name = new LanguageName('Japanese');
       const isActive = true;
-      const sortOrder = 1;
+      const sortOrder = new SortOrder(1);
       
       // 実行
       const languageTypeValue = new LanguageTypeValue(id, code, name, isActive, sortOrder);
@@ -62,7 +63,7 @@ describe('LanguageTypeValue', () => {
       expect(languageTypeValue.code.value).toBe('en');
       expect(languageTypeValue.name.value).toBe('English');
       expect(languageTypeValue.isActive).toBe(true);
-      expect(languageTypeValue.sortOrder).toBe(2);
+      expect(languageTypeValue.sortOrder.value).toBe(2);
     });
   });
 
@@ -72,7 +73,7 @@ describe('LanguageTypeValue', () => {
       const id = new LanguageId(1);
       const code = new LanguageCode('ja');
       const name = new LanguageName('Japanese');
-      const languageTypeValue = new LanguageTypeValue(id, code, name, true, 1);
+      const languageTypeValue = new LanguageTypeValue(id, code, name, true, new SortOrder(1));
       
       // 実行
       const zodData = languageTypeValue.toZodData();
@@ -119,7 +120,7 @@ describe('LanguageTypeValue', () => {
       expect(languageTypeValue.code.value).toBe('en');
       expect(languageTypeValue.name.value).toBe('English');
       expect(languageTypeValue.isActive).toBe(true);
-      expect(languageTypeValue.sortOrder).toBe(2);
+      expect(languageTypeValue.sortOrder.value).toBe(2);
     });
 
     test('一部のプロパティが未定義でもデフォルト値が設定されること', () => {
@@ -137,7 +138,7 @@ describe('LanguageTypeValue', () => {
       expect(languageTypeValue.code.value).toBe('unknown');
       expect(languageTypeValue.name.value).toBe('Unknown');
       expect(languageTypeValue.isActive).toBe(false);
-      expect(languageTypeValue.sortOrder).toBe(0);
+      expect(languageTypeValue.sortOrder.value).toBe(0);
     });
 
     test('IDが異なる場合にエラーが発生すること', () => {

@@ -5,6 +5,7 @@ import { IconCategoryEntity, IconCategoryTranslationEntity } from '../entity/ico
 import { Version } from '@backend/features/shared/value-object/version';
 import { FamilyMemberId } from '@backend/features/family-member/value-object/familyMemberId';
 import { ScreenId } from '@backend/features/shared/value-object/screenId';
+import { Icons } from '../../icon/domain/icons';
 
 /**
  * アイコンカテゴリドメインモデル
@@ -13,6 +14,7 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
   private _nameByLanguages: IconCategoryNames;
   private _sortOrder: number;
   private _isActive: boolean;
+  private _icons: Icons;
 
 
   constructor(
@@ -21,6 +23,7 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
     nameByLanguages: IconCategoryNames = IconCategoryNames.fromEmpty(),
     sortOrder: number = 0,
     isActive: boolean = true,
+    icons: Icons = new Icons([]),
     createdAt?: Date,
     createdBy?: FamilyMemberId,
     createdFrom?: ScreenId,
@@ -32,16 +35,19 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
     this._nameByLanguages = nameByLanguages;
     this._sortOrder = sortOrder;
     this._isActive = isActive;
+    this._icons = icons;
   }
 
   /**
    * エンティティからドメインモデルを生成
    * @param entity アイコンカテゴリエンティティ
    * @param translationDict 言語IDをキーとした翻訳エンティティのマッピング
+   * @param icons このカテゴリに属するアイコン一覧（省略時は空のコレクション）
    */
   static fromEntity(
     entity: IconCategoryEntity, 
-    translationDict: { [languageId: number]: IconCategoryTranslationEntity }
+    translationDict: { [languageId: number]: IconCategoryTranslationEntity },
+    icons: Icons = new Icons([])
   ): IconCategory {
     const nameByLanguages = IconCategoryNames.fromEntity(translationDict);
     return new IconCategory(
@@ -49,7 +55,8 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
       new Version(entity.version),
       nameByLanguages,
       entity.sort_order,
-      entity.is_active
+      entity.is_active,
+      icons
     );
   }
 
@@ -72,6 +79,37 @@ export class IconCategory extends BaseDomainModel<IconCategoryId, IconCategoryEn
    */
   get isActive(): boolean {
     return this._isActive;
+  }
+
+  /**
+   * このカテゴリに属するアイコン一覧を取得
+   */
+  get icons(): Icons {
+    return this._icons;
+  }
+
+  /**
+   * このカテゴリに属するアクティブなアイコンのみを取得
+   */
+  getActiveIcons(): Icons {
+    const activeIcons = this._icons.getActiveIcons();
+    return new Icons(activeIcons);
+  }
+
+  /**
+   * このカテゴリに属するアクティブかつソート順で並べ替えたアイコンを取得
+   */
+  getActiveSortedIcons(): Icons {
+    const activeSortedIcons = this._icons.getActiveSortedIcons();
+    return new Icons(activeSortedIcons);
+  }
+
+  /**
+   * このカテゴリに属するアイコン一覧を設定する
+   * @param icons 設定するアイコン一覧
+   */
+  setIcons(icons: Icons): void {
+    this._icons = icons;
   }
 
   /**

@@ -1,6 +1,7 @@
 import { LanguageId } from './languageId';
 import { LanguageCode } from './languageCode';
 import { LanguageName } from './languageName';
+import { SortOrder } from '../../shared/value-object/sortOrder';
 import z from 'zod';
 import { LanguageEntity } from '../entity/languageEntity';
 import { BaseSimpleEnumValue } from '@backend/core/enum/baseEnum';
@@ -21,14 +22,14 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
   private _code: LanguageCode;
   private _name: LanguageName;
   private _isActive: boolean;
-  private _sortOrder: number;
+  private _sortOrder: SortOrder;
 
   constructor(
     id: LanguageId,
     code: LanguageCode = new LanguageCode('unknown'),
     name: LanguageName = new LanguageName('Unknown'),
     isActive: boolean = false,
-    sortOrder: number = 0
+    sortOrder: SortOrder = new SortOrder(0)
   ) {
     super(id);
     this._code = code;
@@ -45,7 +46,7 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
     this._code = new LanguageCode(entity.code);
     this._name = new LanguageName(entity.name);
     this._isActive = entity.is_active;
-    this._sortOrder = entity.sort_order;
+    this._sortOrder = new SortOrder(entity.sort_order);
   }
 
   /**
@@ -72,7 +73,7 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
   /**
    * 表示順序を返す
    */
-  get sortOrder(): number {
+  get sortOrder(): SortOrder {
     return this._sortOrder;
   }
 
@@ -85,7 +86,7 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
       code: this._code.value,
       name: this._name.value,
       isActive: this._isActive,
-      sortOrder: this._sortOrder,
+      sortOrder: this._sortOrder.value,
     };
   }
 
@@ -100,6 +101,6 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
     this._code = new LanguageCode(data.code || 'unknown');
     this._name = new LanguageName(data.name || 'Unknown');
     this._isActive = data.isActive ?? false;
-    this._sortOrder = data.sortOrder ?? 0;
+    this._sortOrder = new SortOrder(data.sortOrder ?? 0);
   }
 }

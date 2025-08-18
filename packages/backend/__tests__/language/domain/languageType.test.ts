@@ -87,12 +87,12 @@ describe('LanguageType', () => {
       expect(LanguageType.JAPANESE.code.value).toBe('ja');
       expect(LanguageType.JAPANESE.name.value).toBe('Japanese');
       expect(LanguageType.JAPANESE.isActive).toBe(true);
-      expect(LanguageType.JAPANESE.sortOrder).toBe(1);
+      expect(LanguageType.JAPANESE.sortOrder.value).toBe(1);
       
       expect(LanguageType.ENGLISH.code.value).toBe('en');
       expect(LanguageType.ENGLISH.name.value).toBe('English');
       expect(LanguageType.ENGLISH.isActive).toBe(true);
-      expect(LanguageType.ENGLISH.sortOrder).toBe(2);
+      expect(LanguageType.ENGLISH.sortOrder.value).toBe(2);
     });
 
     test('一部のエンティティのみ存在する場合でも正しく更新されること', () => {
@@ -120,7 +120,7 @@ describe('LanguageType', () => {
       // 検証
       expect(LanguageType.JAPANESE.name.value).toBe('Japanese Updated');
       expect(LanguageType.JAPANESE.isActive).toBe(false);
-      expect(LanguageType.JAPANESE.sortOrder).toBe(10);
+      expect(LanguageType.JAPANESE.sortOrder.value).toBe(10);
       
       // ENGLISHは変更されていないことを確認
       expect(LanguageType.ENGLISH.code.value).toBe(englishBefore.code);

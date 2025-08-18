@@ -1,6 +1,7 @@
 import { BaseCollection } from '@backend/core/models/baseCollection';
 import { IconCategoryId } from '../value-objects/iconCategoryId';
 import { IconCategory } from './iconCategory';
+import { Icons } from '../../icon/domain/icons';
 
 /**
  * アイコンカテゴリのファーストクラスコレクション
@@ -37,5 +38,17 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    */
   getActiveSortedCategories(): IconCategory[] {
     return this.getActiveCategories().sort((a, b) => a.sortOrder - b.sortOrder);
+  }
+
+  /**
+   * 各アイコンカテゴリにアイコンを設定する
+   * @param icons 全てのアイコン
+   */
+  setIcons(icons: Icons): void {
+    for (const category of this._items) {
+      // このカテゴリに属するアイコンを抽出
+      const categoryIcons = icons.getByCategory(category.id);
+      category.setIcons(new Icons(categoryIcons));
+    }
   }
 }
