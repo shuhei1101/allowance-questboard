@@ -27,9 +27,14 @@ export class IconCategoryEntity extends BaseMasterEntity {
    */
   protected static seedData(): IconCategoryEntity[] {
     return [
-      Object.assign(new IconCategoryEntity(), { id: 1, sort_order: 1, is_active: true }),
-      Object.assign(new IconCategoryEntity(), { id: 2, sort_order: 2, is_active: true }),
-      Object.assign(new IconCategoryEntity(), { id: 3, sort_order: 3, is_active: true }),
+      Object.assign(new IconCategoryEntity(), { id: 1, sort_order: 1, is_active: true }), // 家事・掃除
+      Object.assign(new IconCategoryEntity(), { id: 2, sort_order: 2, is_active: true }), // 勉強・学習
+      Object.assign(new IconCategoryEntity(), { id: 3, sort_order: 3, is_active: true }), // スポーツ・運動
+      Object.assign(new IconCategoryEntity(), { id: 4, sort_order: 4, is_active: true }), // 料理・食事
+      Object.assign(new IconCategoryEntity(), { id: 5, sort_order: 5, is_active: true }), // お買い物・外出
+      Object.assign(new IconCategoryEntity(), { id: 6, sort_order: 6, is_active: true }), // ペット・動物
+      Object.assign(new IconCategoryEntity(), { id: 7, sort_order: 7, is_active: true }), // 趣味・創作
+      Object.assign(new IconCategoryEntity(), { id: 8, sort_order: 8, is_active: true }), // 健康・美容
     ];
   }
 }
@@ -61,12 +66,6 @@ export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
    */
   protected static seedData(): IconCategoryTranslationEntity[] {
     return [
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 1, name: "アクション" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 2, name: "Action" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 1, name: "ナビゲーション" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 2, name: "Navigation" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 1, name: "コミュニケーション" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 2, name: "Communication" }),
     ];
   }
 }
