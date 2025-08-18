@@ -70,7 +70,7 @@ export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => 
     set({
       iconCategories: activeCategories,
       selectedCategoryId: firstCategory?.id,
-      selectedIcon: initialSelectedIcon,
+      selectedIcon: undefined, // 初期選択は常に無しに設定
       currentCategoryIcons: firstCategoryIcons,
     });
   },
