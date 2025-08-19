@@ -44,101 +44,6 @@ export default function App() {
  */
 function AppContent() {
   const { colors, colorScheme } = useTheme(); // 自動テーマを使用
-
-  /**
-   * グローバルエラーハンドリング
-   * ErrorBoundaryでキャッチされたエラーのログ出力
-   */
-  const handleGlobalError = (error: Error, errorInfo: React.ErrorInfo) => {
-    // エラーログの出力
-    console.error('🚨 Global Error Boundary caught error:', {
-      error: {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      },
-      errorInfo: {
-        componentStack: errorInfo.componentStack,
-      },
-      timestamp: new Date().toISOString(),
-    });
-
-    // TODO: エラーレポーティングサービスに送信
-    // 例: Sentry, Crashlytics, など
-  };
-
-  return (
-    <ErrorBoundary onError={handleGlobalError}>
-      <SafeAreaProvider style={[styles.container, { backgroundColor: colors.background.primary }]}>
-        <ExpoStatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-        <NavigationContainer
-          theme={{
-            dark: colorScheme === 'dark',
-            colors: {
-              primary: colors.primary,
-              background: colors.background.primary,
-              card: colors.surface.elevated,
-              text: colors.text.primary,
-              border: colors.border.light,
-              notification: colors.danger,
-            },
-            fonts: {
-              regular: {
-                fontFamily: 'System',
-                fontWeight: 'normal',
-              },
-              medium: {
-                fontFamily: 'System',
-                fontWeight: '500',
-              },
-              bold: {
-                fontFamily: 'System',
-                fontWeight: 'bold',
-              },
-              heavy: {
-                fontFamily: 'System',
-                fontWeight: '900',
-              },
-            },
-          }}
-        >
-          <Stack.Navigator
-            id={undefined}
-            initialRouteName="Demo"
-            screenOptions={{
-              headerShown: false,
-              cardStyle: [styles.content, { backgroundColor: colors.background.primary }],
-            }}
-          >
-            <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen 
-              name="Login" 
-              component={LoginPage}
-              options={{
-                headerShown: true,
-                title: 'ログイン',
-              }}
-            />
-            <Stack.Screen 
-              name="Demo" 
-              component={DemoNavigator}
-              options={{
-                headerShown: false,
-                title: 'デモ',
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </ErrorBoundary>
-  );
-}
-
-/**
- * ホーム画面コンポーネント
- * アプリのエントリーポイント
- */
-function HomePage() {
   const sessionStore = useSessionStore();
   const [isInitializing, setIsInitializing] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState("アプリを初期化しています...");
@@ -210,11 +115,105 @@ function HomePage() {
 
   }, []); // 依存配列を空にして1回だけ実行
 
+  /**
+   * グローバルエラーハンドリング
+   * ErrorBoundaryでキャッチされたエラーのログ出力
+   */
+  const handleGlobalError = (error: Error, errorInfo: React.ErrorInfo) => {
+    // エラーログの出力
+    console.error('🚨 Global Error Boundary caught error:', {
+      error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+      errorInfo: {
+        componentStack: errorInfo.componentStack,
+      },
+      timestamp: new Date().toISOString(),
+    });
+
+    // TODO: エラーレポーティングサービスに送信
+    // 例: Sentry, Crashlytics, など
+  };
+
   // 初期化中はローディング画面を表示
   if (isInitializing) {
     return <LoadingPage message={loadingMessage} />;
   }
 
+  return (
+    <ErrorBoundary onError={handleGlobalError}>
+      <SafeAreaProvider style={[styles.container, { backgroundColor: colors.background.primary }]}>
+        <ExpoStatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+        <NavigationContainer
+          theme={{
+            dark: colorScheme === 'dark',
+            colors: {
+              primary: colors.primary,
+              background: colors.background.primary,
+              card: colors.surface.elevated,
+              text: colors.text.primary,
+              border: colors.border.light,
+              notification: colors.danger,
+            },
+            fonts: {
+              regular: {
+                fontFamily: 'System',
+                fontWeight: 'normal',
+              },
+              medium: {
+                fontFamily: 'System',
+                fontWeight: '500',
+              },
+              bold: {
+                fontFamily: 'System',
+                fontWeight: 'bold',
+              },
+              heavy: {
+                fontFamily: 'System',
+                fontWeight: '900',
+              },
+            },
+          }}
+        >
+          <Stack.Navigator
+            id={undefined}
+            initialRouteName="Demo"
+            screenOptions={{
+              headerShown: false,
+              cardStyle: [styles.content, { backgroundColor: colors.background.primary }],
+            }}
+          >
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen 
+              name="Login" 
+              component={LoginPage}
+              options={{
+                headerShown: true,
+                title: 'ログイン',
+              }}
+            />
+            <Stack.Screen 
+              name="Demo" 
+              component={DemoNavigator}
+              options={{
+                headerShown: false,
+                title: 'デモ',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ErrorBoundary>
+  );
+}
+
+/**
+ * ホーム画面コンポーネント
+ * シンプルなログインページを表示
+ */
+function HomePage() {
   return <LoginPage />;
 }
 
