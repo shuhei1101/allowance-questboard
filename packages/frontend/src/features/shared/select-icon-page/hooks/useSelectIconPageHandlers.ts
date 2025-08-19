@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useIconSelectPageStore } from '../stores/iconSelectPageStore';
+import { useSelectIconPageStore } from '../stores/selectIconPageStore';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { AppConstants } from '@/core/constants/appConstants';
 
@@ -22,12 +22,12 @@ interface Props {
 /**
  * アイコン選択ページのイベントハンドラー
  */
-export const useIconSelectPageHandlers = ({
+export const useSelectIconPageHandlers = ({
   initialSelectedIcon,
   onIconSelected,
   onBack,
 }: Props) => {
-  const pageStore = useIconSelectPageStore();
+  const pageStore = useSelectIconPageStore();
 
   // 初期化
   useEffect(() => {

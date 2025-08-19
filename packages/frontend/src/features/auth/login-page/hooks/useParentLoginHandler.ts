@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { HideDialog, UpdateLoginForm, SetLoading } from '../stores/loginPageStore';
 import { UpdateFamilyMemberType } from '@/features/auth/stores/sessionStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -18,6 +19,7 @@ export const useParentLoginHandler = (params: {
   setLoading: SetLoading
 }) => {
   const { t } = useTranslation();
+  const navigation = useNavigation<any>();
   
   return useCallback((): void => {
     try {
@@ -31,12 +33,13 @@ export const useParentLoginHandler = (params: {
       params.updateLoginForm(LoginForm.initialize());
       params.setLoading(false);
 
-      // TODO: 親用ホーム画面への遷移
+      // 親用ホーム画面への遷移
       console.log('親用ホーム画面への遷移');
+      navigation.navigate('ParentHome');
       Alert.alert(t('common.success'), t('auth.loginPage.success.parentLogin'));
     } catch (error) {
       console.error('親ログインエラー:', error);
       Alert.alert(t('common.error'), t('auth.loginPage.errors.parentLoginFailed'));
     }
-  }, [params.updateFamilyMemberType, params.hideDialog, params.updateLoginForm, params.setLoading, t]);
+  }, [params.updateFamilyMemberType, params.hideDialog, params.updateLoginForm, params.setLoading, t, navigation]);
 };

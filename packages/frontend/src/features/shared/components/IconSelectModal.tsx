@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, SafeAreaView, StyleSheet } from 'react-native';
-import { IconSelectPage } from '../icon-select-page/IconSelectPage';
+import { SelectIconPage } from '../select-icon-page/SelectIconPage';
 
 interface Props {
   /**
@@ -48,7 +48,7 @@ export const IconSelectModal: React.FC<Props> = ({
       onRequestClose={onClose}
     >
       <SafeAreaView style={styles.container}>
-        <IconSelectPage
+        <SelectIconPage
           initialSelectedIcon={initialSelectedIcon}
           onIconSelected={handleIconSelected}
           onBack={handleBack}

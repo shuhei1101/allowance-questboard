@@ -42,33 +42,14 @@ export function AppNavigator(props: AppNavigatorProps) {
         card: colors.surface.elevated,
         text: colors.text.primary,
         border: colors.border.light,
-        notification: colors.primary,
-      },
-      fonts: {
-        regular: {
-          fontFamily: 'System',
-          fontWeight: 'normal',
-        },
-        medium: {
-          fontFamily: 'System',
-          fontWeight: '500',
-        },
-        bold: {
-          fontFamily: 'System',
-          fontWeight: 'bold',
-        },
-        heavy: {
-          fontFamily: 'System',
-          fontWeight: '900',
-        },
-      },
+        notification: colors.accent,
+      }
     }}>
       <AppStack.Navigator
         initialRouteName="Auth"
         screenOptions={{
           headerShown: false,
         }}
-        {...({} as any)}
       >
         <AppStack.Screen 
           name="Auth" 

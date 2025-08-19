@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useIconSelectPageStore } from './stores/iconSelectPageStore';
-import { useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
+import { useSelectIconPageStore } from './stores/selectIconPageStore';
+import { useSelectIconPageHandlers } from './hooks/useSelectIconPageHandlers';
 import { ActionBar } from './components/ActionBar';
 import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
@@ -27,20 +27,20 @@ interface Props {
  * アイコン選択画面
  * カテゴリごとにタブで分けられたアイコン一覧から、アイコンを選択する画面
  */
-export const IconSelectPage: React.FC<Props> = ({
+export const SelectIconPage: React.FC<Props> = ({
   initialSelectedIcon,
   onIconSelected,
   onBack,
 }) => {
   const { colors } = useTheme();
-  const pageStore = useIconSelectPageStore();
+  const pageStore = useSelectIconPageStore();
   
   const {
     handleBack,
     handleConfirm,
     handleCategoryChange,
     handleIconSelect,
-  } = useIconSelectPageHandlers({ 
+  } = useSelectIconPageHandlers({ 
     initialSelectedIcon, 
     onIconSelected, 
     onBack 

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-navigation/bottom-tabs": "^7.4.6",
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/stack": "^7.4.7",
     "@supabase/ssr": "^0.6.1",
@@ -26,6 +27,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-system-ui": "~5.0.10",
     "i18next": "^25.3.4",
+    "lucide-react-native": "^0.540.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-i18next": "^15.6.1",

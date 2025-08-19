@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { useSessionStore } from '../../stores/sessionStore';
 
@@ -10,13 +11,15 @@ import { useSessionStore } from '../../stores/sessionStore';
  */
 export const useForgotPasswordHandler = () => {
   const { languageType } = useSessionStore();
+  const navigation = useNavigation();
   
   return useCallback((): void => {
-    // TODO: React Navigationの実装
+    // パスワードリセット画面への遷移
     console.log('パスワードリセット画面への遷移');
+    navigation.navigate('PasswordReset' as never);
     Alert.alert(
       AuthErrorMessages.forgotPasswordTitle().getMessage(languageType),
       AuthErrorMessages.forgotPasswordMessage().getMessage(languageType)
     );
-  }, [languageType]);
+  }, [languageType, navigation]);
 };

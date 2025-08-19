@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { IconSelectPage } from '@/features/shared/icon-select-page/IconSelectPage';
+import { SelectIconPage } from '@/features/shared/select-icon-page/SelectIconPage';
 import { AppConstants } from '@/core/constants/appConstants';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 
@@ -108,7 +108,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
 
   if (demoState.showingIconSelect) {
     return (
-      <IconSelectPage
+      <SelectIconPage
         initialSelectedIcon={demoState.initialSelectedIcon}
         onIconSelected={handleIconSelected}
         onBack={handleBack}

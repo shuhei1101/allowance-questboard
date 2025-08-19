@@ -6,7 +6,7 @@ import { Icon } from '@backend/features/icon/domain/icon';
 /**
  * アイコン選択ページの状態管理
  */
-interface IconSelectPageState {
+interface SelectIconPageState {
   /**
    * 利用可能なアイコンカテゴリ一覧
    */
@@ -55,7 +55,7 @@ interface IconSelectPageState {
 /**
  * アイコン選択ページのストア
  */
-export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => ({
+export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => ({
   iconCategories: [],
   selectedCategoryId: undefined,
   selectedIcon: undefined,

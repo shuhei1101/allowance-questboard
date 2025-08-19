@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { Ionicons } from '@expo/vector-icons';
+import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
 
 interface Props {
@@ -35,23 +35,32 @@ export const IconGrid: React.FC<Props> = ({
     const iconName = item.name.value;
     const isSelected = selectedIcon === iconName;
 
+    // Lucideアイコンを動的に取得
+    const IconComponent = (LucideIcons as any)[iconName];
+
     return (
       <TouchableOpacity
         style={[
           styles.iconItem,
           {
-            backgroundColor: isSelected ? colors.primary : colors.surface.secondary,
-            borderColor: isSelected ? colors.primary : colors.border.light,
+            backgroundColor: colors.surface.secondary,
+            borderColor: isSelected ? colors.secondary : colors.border.light,
           },
         ]}
         onPress={() => onIconSelect(iconName)}
         testID={`icon-item-${iconName}`}
       >
-        <Ionicons
-          name={iconName as any}
-          size={24}
-          color={isSelected ? colors.primary : colors.text.primary}
-        />
+        {IconComponent ? (
+          <IconComponent
+            size={24}
+            color={colors.text.primary}
+          />
+        ) : (
+          <LucideIcons.HelpCircle
+            size={24}
+            color={colors.text.primary}
+          />
+        )}
       </TouchableOpacity>
     );
   };

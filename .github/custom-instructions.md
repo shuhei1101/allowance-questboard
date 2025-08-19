@@ -15,6 +15,8 @@ git commit -m "feat: 概要
 git push origin main
 ```
 
+- 実装完了後に`expo start`や`npm run dev`などの動作確認コマンドはしないこと
+  - こちらで実行します。
 
 ## おすすめコンテキスト
 - 作業内容に応じて以下フォルダをコンテキストに追加すると便利です。

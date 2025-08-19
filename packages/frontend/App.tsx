@@ -7,7 +7,7 @@ import { ErrorBoundary } from './src/core/errors/ErrorBoundary';
 import { useTheme } from '@/core/theme';
 import { ThemeProvider } from '@/core/theme/ThemeProvider';
 import { AppInitializer } from './AppInitializer';
-import { AppNavigator, RootStackParamList } from './AppNavigator';
+import { AppNavigator, AppStackParamList } from './AppNavigator';
 
 /**
  * メインアプリコンポーネント
