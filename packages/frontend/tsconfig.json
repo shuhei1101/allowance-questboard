@@ -7,8 +7,9 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@backend/*": ["../backend/src/*"],
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@demo/*": ["demo/*"]
     }
   },
-  "include": ["src/**/*", "app/**/*", "__tests__/**/*", "App.tsx", "index.ts"]
+  "include": ["src/**/*", "demo/**/*", "app/**/*", "__tests__/**/*", "App.tsx", "index.ts"]
 }

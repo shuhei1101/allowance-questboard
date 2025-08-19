@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from '@/features/auth/login-page/LoginPage';
-import { DemoNavigator } from '@/features/demo/DemoNavigator';
+import { DemoNavigator } from '@demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
 
 // Navigation types

@@ -14,13 +14,40 @@
 ## フォルダ構成
 
 ```
-src/features/demo/
+demo/
 ├── DemoNavigator.tsx              # メインのデモナビゲーター
-├── components/
-│   ├── ComponentShowcase.tsx     # コンポーネント表示確認
-│   └── StoreInspector.tsx        # ストア状態検査
-├── providers/
-│   └── DemoMockProvider.tsx      # モック状態管理
+├── features/                      # ビジネス機能（srcと同じ構成）
+│   ├── auth/                      # 認証機能
+│   │   └── login-page/
+│   ├── family/                    # 家族機能
+│   │   └── create-family-page/
+│   ├── parent/                    # 親機能
+│   │   └── parent-edit-page/
+│   └── shared/                    # 共通機能
+│       └── icon-select-page/
+├── development/                   # 開発支援機能（デモ専用）
+│   ├── development-top-page/      # 開発トップページ
+│   ├── component-showcase-page/   # コンポーネント展示
+│   ├── component-list-page/       # コンポーネント一覧
+│   ├── component-detail-page/     # コンポーネント詳細
+│   ├── dependency-component-list-page/
+│   ├── screen-list-page/          # 画面一覧
+│   ├── screen-launcher-page/      # 画面起動
+│   ├── store-inspector-page/      # ストア検査
+│   └── component-details/         # 個別コンポーネント詳細
+│       ├── email-input-detail-page/
+│       ├── password-input-detail-page/
+│       ├── birthday-input-detail-page/
+│       ├── save-button-detail-page/
+│       ├── icon-select-button-detail-page/
+│       └── icon-select-page-detail/
+├── test-environment/              # テスト環境設定
+│   ├── SessionSettingsPage.tsx
+│   ├── PageStateSettingsPage.tsx
+│   ├── LoginPageSettingsPage.tsx
+│   └── ParentEditPageSettingsPage.tsx
+├── providers/                     # 共通プロバイダー
+│   └── DemoMockProvider.tsx
 └── README.md                     # このファイル
 ```
 
