@@ -41,19 +41,6 @@ export class ParentForm extends BaseModel {
   }
 
   /**
-   * フォームの入力が有効かどうかを判定
-   * @returns 有効な場合はtrue
-   */
-  public get isValid(): boolean {
-    try {
-      this.runValidate();
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  /**
    * 初期状態のフォームを作成
    * @returns 初期状態のParentFormインスタンス
    */
