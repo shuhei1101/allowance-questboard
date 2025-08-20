@@ -33,6 +33,8 @@ interface LoginPageState {
   setEmailError: SetEmailError;
   setPasswordError: SetPasswordError;
   clearErrors: ClearErrors;
+  getEmailError: EmailError;
+  getPasswordError: PasswordError;
 }
 
 /**
@@ -40,7 +42,7 @@ interface LoginPageState {
  */
 export const useLoginPageStore = create<LoginPageState>()(
   devtools(
-    (set) => ({
+    (set, get) => ({
       isLoading: false,
       isDialogVisible: false,
       loginForm: LoginForm.initialize(),
@@ -79,6 +81,8 @@ export const useLoginPageStore = create<LoginPageState>()(
       clearErrors: () => {
         set({ emailError: null, passwordError: null }, false, 'clearErrors');
       },
+
+      getEmailError: ()
     }),
     {
       name: 'login-page-store',
