@@ -4,7 +4,7 @@ import { RelationValidateException } from "../validator/validationException";
 
 export abstract class BaseModel {
   protected readonly validator = relationValidator;
-  protected _errorMessage: LocaleString | null = null;
+  protected errorMessage: LocaleString | null = null;
 
   constructor() {}
 
@@ -16,7 +16,7 @@ export abstract class BaseModel {
       this.validate();
     } catch (error) {
       if (error instanceof RelationValidateException) {
-        this._errorMessage = error.localeMessage;
+        this.errorMessage = error.localeMessage;
       } else {
         // 予期しないエラーの場合は再スロー
         throw error;
@@ -33,13 +33,6 @@ export abstract class BaseModel {
    * 有効な値かどうかを示す
    */
   get isValid(): boolean {
-    return this._errorMessage === null;
-  }
-
-  /**
-   * エラーメッセージを取得
-   */
-  get errorMessage(): LocaleString | null {
-    return this._errorMessage;
+    return this.errorMessage === null;
   }
 }
