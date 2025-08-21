@@ -6,6 +6,7 @@ import { IconName, IconNameSchema } from '../value-objects/iconName';
 import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-object/sortOrder';
 import { BaseIdSchema } from '@backend/core/value-object/base_id';
 import { z } from 'zod';
+import { Hashable } from '@backend/core/models/baseCollection';
 
 /**
  * IconのZodスキーマ
@@ -34,13 +35,16 @@ export class Icon extends BaseMasterModel<IconId> {
   ) {
     super(id, version);
   }
+  hash(): number | string {
+    throw new Error('Method not implemented.');
+  }
 
   /**
    * Zodスキーマに準拠したデータを返す
    */
   toZodData(): z.infer<typeof IconSchema> {
     return {
-      id: this.id.toZodData(),
+      id: this.key.toZodData(),
       version: this.version.toZodData(),
       name: this.name.toZodData(),
       sortOrder: this.sortOrder.toZodData(),

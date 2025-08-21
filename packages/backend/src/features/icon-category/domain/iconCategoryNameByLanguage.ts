@@ -47,7 +47,7 @@ export class IconCategoryNameByLanguage implements CollectionItemProtocol<Langua
   /**
    * 言語タイプをIDとして返す
    */
-  get id(): LanguageId {
+  get key(): LanguageId {
     return this.language.id;
   }
 

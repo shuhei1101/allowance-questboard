@@ -11,7 +11,7 @@ export abstract class BaseDomainModel<TId extends BaseId> extends BaseModel impl
   public isUpdated: boolean = false;
 
   constructor(
-    public id: TId,
+    public key: TId,
     public version: Version
   ) {
     super();

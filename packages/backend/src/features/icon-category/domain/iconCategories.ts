@@ -3,6 +3,7 @@ import { IconCategoryId } from '../value-objects/iconCategoryId';
 import { IconCategory, IconCategorySchema } from './iconCategory';
 import { Icons } from '../../icon/domain/icons';
 import { z } from 'zod';
+import { Icon } from '@backend/features/parent/value-object/icon';
 
 /**
  * IconCategoriesのZodスキーマ
@@ -17,6 +18,12 @@ export const IconCategoriesSchema = z.object({
 export class IconCategories extends BaseCollection<IconCategory, IconCategoryId> {
   constructor(items: IconCategory[]) {
     super(items);
+  }
+  /**
+   * 全てのアイコンを取得
+   */
+  getAllIcons(): Icons {
+
   }
 
   /**
@@ -55,7 +62,7 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
   setIcons(icons: Icons): void {
     for (const category of this.items) {
       // このカテゴリに属するアイコンを抽出
-      const categoryIcons = icons.getByCategory(category.id);
+      const categoryIcons = icons.getByCategory(category.key);
       category.icons = new Icons(categoryIcons);
     }
   }

@@ -4,7 +4,7 @@ import { LocalizedTRPCErrorSchema } from './localizedTRPCError';
 /**
  * アプリケーション共通の基底例外クラス
  */
-export class BaseAppException extends Error {
+export class AppError extends Error {
   public readonly errorType: string;
   public readonly localeMessage: LocaleString;
 
@@ -15,7 +15,7 @@ export class BaseAppException extends Error {
     super(params.message.en);
     this.errorType = params.errorType;
     this.localeMessage = params.message;
-    this.name = 'ValidationException';
+    this.name = params.message.en;;
   }
 
   /**
@@ -31,14 +31,14 @@ export class BaseAppException extends Error {
     error: unknown,
     fallbackErrorType: string,
     fallbackMessage: LocaleString
-  }): BaseAppException {
+  }): AppError {
     // tRPCエラーかどうかをチェック
     if (params.error && typeof params.error === 'object' && 'data' in params.error) {
       const trpcError = params.error as LocalizedTRPCErrorSchema;
       
       // LocalizedTRPCErrorの場合
       if (trpcError.data?.cause?.errorType && trpcError.data?.cause?.localeMessage) {
-        return new BaseAppException({
+        return new AppError({
           errorType: trpcError.data.cause.errorType,
           message: new LocaleString({
             ja: trpcError.data.cause.localeMessage.ja,
@@ -49,7 +49,7 @@ export class BaseAppException extends Error {
       
       // 通常のtRPCエラーの場合（messageのみ）
       if (trpcError.message) {
-        return new BaseAppException({
+        return new AppError({
           errorType: params.fallbackErrorType,
           message: new LocaleString({
             ja: trpcError.message,
@@ -60,7 +60,7 @@ export class BaseAppException extends Error {
     }
     
     // その他のエラーの場合
-    return new BaseAppException({
+    return new AppError({
       errorType: params.fallbackErrorType,
       message: params.fallbackMessage
     });

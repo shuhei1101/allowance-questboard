@@ -1,7 +1,7 @@
-import { BaseAppException } from '../errors/baseAppException';
+import { AppError } from '../errors/appError';
 import { LocaleString } from '../messages/localeString';
 
-export class ValueValidateException extends BaseAppException {
+export class ValueValidateError extends AppError {
   public readonly valueName: LocaleString;
 
   /**
@@ -14,11 +14,10 @@ export class ValueValidateException extends BaseAppException {
   }) {
     super({ errorType: params.errorType, message: params.message });
     this.valueName = params.valueName;
-    this.name = 'ValueValidateException';
   }
 }
 
-export class RelationValidateException extends BaseAppException {
+export class RelationValidateError extends AppError {
   /**
    * 関連バリデーションエラーを表すカスタム例外クラス
    */
@@ -27,6 +26,5 @@ export class RelationValidateException extends BaseAppException {
     message: LocaleString;
   }) {
     super({ errorType: params.errorType, message: params.message });
-    this.name = 'RelationValidateException';
   }
 } 

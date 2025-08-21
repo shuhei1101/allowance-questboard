@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Alert } from 'react-native';
-import { SelectIconPage } from './select-icon-page/SelectIconPage';
+import { IconSelectPage } from '../icon/icon-select-page/IconSelectPage';
 import { LoadingPage } from './loading-page/LoadingPage';
 
 // 共通機能のナビゲーションパラメータ型定義
@@ -31,7 +31,7 @@ const IconSelectPageWrapper: React.FC<{ route: any; navigation: any }> = ({ rout
   };
 
   return (
-    <SelectIconPage
+    <IconSelectPage
       initialSelectedIcon={initialSelectedIcon}
       onIconSelected={handleIconSelected}
       onBack={handleBack}

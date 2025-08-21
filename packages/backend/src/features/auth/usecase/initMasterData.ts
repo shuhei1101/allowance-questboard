@@ -1,6 +1,6 @@
 import { LanguageRepository } from '../../language/repository/languageRepository';
 import { FamilyMemberTypeRepository } from '../../family-member/repository/familyMemberTypeRepository';
-import { BaseAppException } from '@backend/core/errors/baseAppException';
+import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 
 /**
@@ -27,7 +27,7 @@ export async function initMasterData(params: InitMasterDataParams): Promise<void
 
     console.log('マスタデータの初期化が完了しました');
   } catch (error) {
-    throw new BaseAppException({
+    throw new AppError({
       errorType: 'INIT_MASTER_DATA_ERROR',
       message: new LocaleString({
         ja: 'マスタデータの初期化に失敗しました',

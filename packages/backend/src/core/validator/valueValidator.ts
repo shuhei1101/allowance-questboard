@@ -1,5 +1,5 @@
 import { LocaleString } from '../messages/localeString';
-import { ValueValidateException } from './validationException';
+import { ValueValidateError } from './validationError';
 import { ValidationErrorMessages } from '../messages/validationErrorMessages';
 
 /**
@@ -24,7 +24,7 @@ export class ValueValidator<T = any> {
    */
   required(optionMessage?: LocaleString): ValueValidator<T> {
     if (this.value == null || (typeof this.value === 'string' && this.value.trim() === '')) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "required",
         message: optionMessage ?? ValidationErrorMessages.required(this.valueName)
@@ -39,7 +39,7 @@ export class ValueValidator<T = any> {
   maxLength(maxLength: number, optionMessage?: LocaleString): ValueValidator<T> {
     const strValue = String(this.value);
     if (strValue.length > maxLength) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "max_length",
         message: optionMessage ?? ValidationErrorMessages.maxLength(this.valueName, maxLength)
@@ -54,7 +54,7 @@ export class ValueValidator<T = any> {
   minLength(minLength: number, optionMessage?: LocaleString): ValueValidator<T> {
     const strValue = String(this.value);
     if (strValue.length < minLength) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "min_length",
         message: optionMessage ?? ValidationErrorMessages.minLength(this.valueName, minLength)
@@ -69,7 +69,7 @@ export class ValueValidator<T = any> {
   alphanumeric(optionMessage?: LocaleString): ValueValidator<T> {
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
     if (!alphanumericPattern.test(String(this.value))) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "alphanumeric",
         message: optionMessage ?? ValidationErrorMessages.alphanumeric(this.valueName)
@@ -86,7 +86,7 @@ export class ValueValidator<T = any> {
   email(optionMessage?: LocaleString): ValueValidator<T> {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(String(this.value))) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "email_format",
         message: optionMessage ?? ValidationErrorMessages.emailFormat(this.valueName)
@@ -101,7 +101,7 @@ export class ValueValidator<T = any> {
   phone(optionMessage?: LocaleString): ValueValidator<T> {
     const phonePattern = /^0\d{1,4}-\d{1,4}-\d{4}$/;
     if (!phonePattern.test(String(this.value))) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "phone_format",
         message: optionMessage ?? ValidationErrorMessages.phoneFormat(this.valueName)
@@ -116,7 +116,7 @@ export class ValueValidator<T = any> {
   url(optionMessage?: LocaleString): ValueValidator<T> {
     const urlPattern = /^https?:\/\/[^\s/$.?#].[^\s]*$/;
     if (!urlPattern.test(String(this.value))) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "url_format",
         message: optionMessage ?? ValidationErrorMessages.urlFormat(this.valueName)
@@ -132,7 +132,7 @@ export class ValueValidator<T = any> {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     const strValue = String(this.value);
     if (!datePattern.test(strValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "date_format",
         message: optionMessage ?? ValidationErrorMessages.dateFormat(this.valueName)
@@ -142,7 +142,7 @@ export class ValueValidator<T = any> {
     // 実際に有効な日付かチェック
     const date = new Date(strValue);
     if (isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== strValue) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "date_format",
         message: optionMessage ?? ValidationErrorMessages.dateFormat(this.valueName)
@@ -159,7 +159,7 @@ export class ValueValidator<T = any> {
   numeric(optionMessage?: LocaleString): ValueValidator<T> {
     const numValue = Number(this.value);
     if (isNaN(numValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "numeric_format",
         message: optionMessage ?? ValidationErrorMessages.numericFormat(this.valueName)
@@ -174,7 +174,7 @@ export class ValueValidator<T = any> {
   integer(optionMessage?: LocaleString): ValueValidator<T> {
     const numValue = Number(this.value);
     if (isNaN(numValue) || !Number.isInteger(numValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "integer_format",
         message: optionMessage ?? ValidationErrorMessages.integerFormat(this.valueName)
@@ -189,7 +189,7 @@ export class ValueValidator<T = any> {
   minValue(minValue: number, optionMessage?: LocaleString): ValueValidator<T> {
     const numValue = Number(this.value);
     if (isNaN(numValue) || numValue < minValue) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "min_value",
         message: optionMessage ?? ValidationErrorMessages.minValue(this.valueName, minValue)
@@ -204,7 +204,7 @@ export class ValueValidator<T = any> {
   maxValue(maxValue: number, optionMessage?: LocaleString): ValueValidator<T> {
     const numValue = Number(this.value);
     if (isNaN(numValue) || numValue > maxValue) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "max_value",
         message: optionMessage ?? ValidationErrorMessages.maxValue(this.valueName, maxValue)
@@ -219,7 +219,7 @@ export class ValueValidator<T = any> {
   range(minValue: number, maxValue: number, optionMessage?: LocaleString): ValueValidator<T> {
     const numValue = Number(this.value);
     if (isNaN(numValue) || numValue < minValue || numValue > maxValue) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "range_value",
         message: optionMessage ?? ValidationErrorMessages.range(this.valueName, minValue, maxValue)
@@ -237,7 +237,7 @@ export class ValueValidator<T = any> {
     const strValue = String(this.value);
     
     if (strValue.length < 8) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "password_length",
         message: optionMessage ?? ValidationErrorMessages.minLength(this.valueName, 8)
@@ -245,7 +245,7 @@ export class ValueValidator<T = any> {
     }
     
     if (!/[a-zA-Z]/.test(strValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "password_contains_alpha",
         message: optionMessage ?? ValidationErrorMessages.passwordContainsLowercase(this.valueName)
@@ -253,7 +253,7 @@ export class ValueValidator<T = any> {
     }
     
     if (!/\d/.test(strValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "password_contains_digit",
         message: optionMessage ?? ValidationErrorMessages.passwordContainsDigit(this.valueName)
@@ -261,7 +261,7 @@ export class ValueValidator<T = any> {
     }
     
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(strValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "password_contains_symbol",
         message: optionMessage ?? ValidationErrorMessages.passwordContainsSymbol(this.valueName)
@@ -277,7 +277,7 @@ export class ValueValidator<T = any> {
     const escapedChars = allowedChars.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const pattern = new RegExp(`^[${escapedChars}]+$`);
     if (!pattern.test(String(this.value))) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "contains_only",
         message: optionMessage ?? ValidationErrorMessages.containsOnly(this.valueName, allowedChars)
@@ -293,7 +293,7 @@ export class ValueValidator<T = any> {
     const strValue = String(this.value);
     
     if (!/[a-zA-Z]/.test(strValue) || !/\d/.test(strValue)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "contains_alpha_numeric",
         message: optionMessage ?? new LocaleString({
@@ -310,7 +310,7 @@ export class ValueValidator<T = any> {
    */
   custom(validator: (value: T) => boolean, errorType: string, errorMessage: LocaleString): ValueValidator<T> {
     if (!validator(this.value)) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: errorType,
         message: errorMessage

@@ -2,12 +2,12 @@ import { useCallback } from 'react';
 import { Alert } from 'react-native';
 import { ClearErrors, SetEmailError, SetPasswordError, SetLoading, ShowDialog, UpdateSelectFamilyDialog } from '../stores/loginPageStore';
 import { supabase } from '@/core/supabase/supabase';
-import { BaseAppException } from '@backend/core/errors/baseAppException';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { Login } from '../services/login';
 import { LoginRouter } from '@backend/features/auth/router/loginRouter';
+import { AppError } from '@backend/core/errors/appError';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -62,7 +62,7 @@ export const useLoginHandler = (params: {
       // エラーが発生した場合は例外をスロー
       if (error) {
         console.error('Supabase login error:', error);
-        throw new BaseAppException({
+        throw new AppError({
           errorType: 'LoginError',
           message: AuthErrorMessages.loginFailed(),
         });
@@ -71,7 +71,7 @@ export const useLoginHandler = (params: {
       // JWTトークンを取得
       const jwtToken = data.session?.access_token;
       if (!jwtToken) {
-        throw new BaseAppException({
+        throw new AppError({
           errorType: 'LoginError',
           message: AuthErrorMessages.tokenRetrievalFailed(),
         });
@@ -86,7 +86,7 @@ export const useLoginHandler = (params: {
       // ダイアログの表示
       params.showDialog();
     } catch (error) {
-      if (error instanceof BaseAppException) {
+      if (error instanceof AppError) {
         Alert.alert(
           AuthErrorMessages.loginErrorTitle().getMessage(params.currentLanguageType),
           error.localeMessage.getMessage(params.currentLanguageType));

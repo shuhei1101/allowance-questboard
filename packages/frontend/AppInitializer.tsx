@@ -30,7 +30,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("言語設定を適用しています... 📱");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        sessionStore.setLanguageType(languageType);
+        sessionStore.updateLanguageType(languageType);
         
         // i18nの言語も同期
         await i18n.changeLanguage(locale);
@@ -61,7 +61,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("エラーが発生しましたが、続行します... ⚠️");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        sessionStore.setLanguageType(languageType);
+        sessionStore.updateLanguageType(languageType);
         
         // i18nの言語も同期（フォールバック）
         try {

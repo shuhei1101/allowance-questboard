@@ -1,36 +1,41 @@
-import { BaseId } from '../value-object/base_id';
+/**
+ * ハッシュ可能
+ */
+export interface Hashable {
+  /**
+   * ハッシュ値を返す
+   */
+  hash(): number | string;
+}
 
 /**
  * コレクションアイテムのプロトコル（インターフェース）
  */
-export interface CollectionItemProtocol<IdType extends BaseId> {
+export interface CollectionItemProtocol<TKey extends Hashable> {
   /**
    * アイテムのIDを返す
    */
-  readonly id: IdType;
+  readonly key: TKey;
 }
 
 /**
  * IDをもつクラスのコレクションを表現する基底抽象クラス（ファーストコレクション）
  */
 export abstract class BaseCollection<
-  ItemType extends CollectionItemProtocol<IdType>,
-  IdType extends BaseId
+  TItem extends CollectionItemProtocol<TKey>,
+  TKey extends Hashable
 > {
-  protected readonly itemByIds: Map<string, ItemType> = new Map();
+  protected readonly itemByIds: Map<string, TItem> = new Map();
 
   constructor(
-    public readonly items: ItemType[]) 
+    public readonly items: TItem[]) 
   {
     this.updateIndex();
   }
-
-  /**
-   * 空のコレクションを作成する
-   */
-  static fromEmpty<T extends BaseCollection<any, any>>(
-    this: new (items: any[]) => T
-  ): T {
+  
+  static fromEmpty<TItem extends CollectionItemProtocol<TKey>, TKey extends Hashable>(
+    this: new (items: TItem[]) => BaseCollection<TItem, TKey>
+  ): BaseCollection<TItem, TKey> {
     return new this([]);
   }
 
@@ -41,7 +46,7 @@ export abstract class BaseCollection<
     this.itemByIds.clear();
     for (const item of this.items) {
       // BaseIdのhash()メソッドを使用してMapのキーにする
-      const key = item.id.hash().toString();
+      const key = item.key.hash().toString();
       this.itemByIds.set(key, item);
     }
     this.updateCustomIndex();
@@ -50,7 +55,7 @@ export abstract class BaseCollection<
   /**
    * アイテムを追加
    */
-  append(item: ItemType): void {
+  append(item: TItem): void {
     if (!item || typeof item !== 'object') {
       throw new TypeError(`Expected item of valid type, got ${typeof item}`);
     }
@@ -61,7 +66,7 @@ export abstract class BaseCollection<
   /**
    * IDでアイテムを取得
    */
-  get(itemId: IdType): ItemType | null {
+  get(itemId: TKey): TItem | null {
     const key = itemId.hash().toString();
     return this.itemByIds.get(key) || null;
   }
@@ -71,6 +76,14 @@ export abstract class BaseCollection<
    */
   get length(): number {
     return this.items.length;
+  }
+
+  [Symbol.iterator](): Iterator<TItem> {
+    return this.items[Symbol.iterator]();
+  }
+
+  map<TResult>(callback: (item: TItem, index: number) => TResult): TResult[] {
+    return this.items.map(callback);
   }
 
   /**

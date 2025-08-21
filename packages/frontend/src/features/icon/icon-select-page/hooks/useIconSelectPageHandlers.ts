@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelectIconPageStore } from '../stores/selectIconPageStore';
+import { useSelectIconPageStore } from '../stores/iconSelectPageStore';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { AppConstants } from '@/core/constants/appConstants';
 

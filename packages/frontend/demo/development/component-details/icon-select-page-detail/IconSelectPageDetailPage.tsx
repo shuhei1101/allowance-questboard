@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { SelectIconPage } from '@/features/shared/select-icon-page/SelectIconPage';
+import { IconSelectPage } from '@/features/icon/icon-select-page/IconSelectPage';
 import { AppConstants } from '@/core/constants/appConstants';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 
@@ -108,7 +108,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
 
   if (demoState.showingIconSelect) {
     return (
-      <SelectIconPage
+      <IconSelectPage
         initialSelectedIcon={demoState.initialSelectedIcon}
         onIconSelected={handleIconSelected}
         onBack={handleBack}
@@ -271,9 +271,9 @@ export const IconSelectPageDetailPage: React.FC = () => {
               カテゴリ一覧:
             </Text>
             {AppConstants.iconCategories.getActiveSortedCategories().map((category, index) => (
-              <View key={category.id.value} style={styles.stateRow}>
+              <View key={category.key.value} style={styles.stateRow}>
                 <Text style={[styles.stateLabel, { color: colors.text.primary }]}>
-                  {index + 1}. ID: {category.id.value}
+                  {index + 1}. ID: {category.key.value}
                 </Text>
                 <Text style={[styles.stateValue, { color: colors.text.secondary }]}>
                   並び順: {category.sortOrder.value}

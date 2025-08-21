@@ -22,7 +22,7 @@ class Factory {
         translationDict: translations, 
         icons: params.icons
       });
-      const categoryIcons = params.icons.getByCategory(iconCategory.id);
+      const categoryIcons = params.icons.getByCategory(iconCategory.key);
       iconCategory.icons = new Icons(categoryIcons);
       iconCategoryList.push(iconCategory);
     }

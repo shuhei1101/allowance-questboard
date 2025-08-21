@@ -1,6 +1,6 @@
 import { LocaleString } from "../messages/localeString";
 import { relationValidator } from "../validator/relationValidator";
-import { RelationValidateException } from "../validator/validationException";
+import { RelationValidateError } from "../validator/validationError";
 
 export abstract class BaseModel {
   protected readonly validator = relationValidator;
@@ -15,7 +15,7 @@ export abstract class BaseModel {
     try {
       this.validate();
     } catch (error) {
-      if (error instanceof RelationValidateException) {
+      if (error instanceof RelationValidateError) {
         this.errorMessage = error.localeMessage;
       } else {
         // 予期しないエラーの場合は再スロー

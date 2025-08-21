@@ -10,7 +10,7 @@ import { useSessionStore } from '../../stores/sessionStore';
  * パスワードリセット画面への遷移を行う
  */
 export const useForgotPasswordHandler = () => {
-  const { languageType } = useSessionStore();
+  const { languageType: languageType } = useSessionStore();
   const navigation = useNavigation();
   
   return useCallback((): void => {

@@ -4,7 +4,7 @@ import { ParentName } from '@backend/features/parent/value-object/parentName';
 import { Birthday } from '@backend/features/parent/value-object/birthday';
 import { Icon } from '@backend/features/parent/value-object/icon';
 import { BaseModel } from '@backend/core/models/baseModel';
-import { RelationValidateException } from '@backend/core/validator/validationException';
+import { RelationValidateError } from '@backend/core/validator/validationException';
 import { LocaleString } from '@backend/core/messages/localeString';
 
 /**

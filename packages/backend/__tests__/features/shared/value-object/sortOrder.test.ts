@@ -1,6 +1,6 @@
 import { describe, test, expect } from '@jest/globals';
 import { SortOrder } from 'src/features/shared/value-object/sortOrder';
-import { ValueValidateException } from 'src/core/validator/validationException';
+import { ValueValidateError } from '@backend/core/validator/validationError';
 
 describe('SortOrder', () => {
   describe('正常系のテストケース', () => {

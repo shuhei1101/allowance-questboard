@@ -2,7 +2,7 @@ import { IconCategoryDao } from '../dao/iconCategoryDao';
 import { IconCategoryTranslationDao } from '../dao/iconCategoryTranslationDao';
 import { IconDao } from '../../icon/dao/iconDao';
 import { IconCategories } from '../domain/iconCategories';
-import { BaseAppException } from '@backend/core/errors/baseAppException';
+import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { IconsFactory } from '@backend/features/icon/domain/iconsFactory';
 import { IconCategoriesFactory } from '../domain/iconCategoriesFactory';
@@ -50,7 +50,7 @@ export class IconCategoryRepository {
       return iconCategories;
       
     } catch (error) {
-      throw new BaseAppException({
+      throw new AppError({
         errorType: 'ICON_CATEGORY_REPOSITORY_ERROR',
         message: new LocaleString({
           ja: 'アイコンカテゴリの取得に失敗しました',

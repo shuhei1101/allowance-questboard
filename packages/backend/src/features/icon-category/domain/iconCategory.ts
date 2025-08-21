@@ -57,7 +57,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
    */
   toZodData(): z.infer<typeof IconCategorySchema> {
     return {
-      id: this.id.toZodData(),
+      id: this.key.toZodData(),
       version: this.version.toZodData(),
       nameByLanguages: this.nameByLanguages.toZodData(),
       sortOrder: this.sortOrder,

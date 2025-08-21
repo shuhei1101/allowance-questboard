@@ -1,5 +1,5 @@
 import { LocaleString } from "../messages/localeString";
-import { ValueValidateException } from "../validator/validationException";
+import { ValueValidateError } from "../validator/validationError";
 import { ValueValidator } from "../validator/valueValidator";
 import { z } from 'zod';
 
@@ -22,7 +22,7 @@ export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.Z
       this.validate();
       this._errorMessage = null;
     } catch (error) {
-      if (error instanceof ValueValidateException) {
+      if (error instanceof ValueValidateError) {
         this._errorMessage = error.localeMessage;
       } else {
         // 予期しないエラーの場合は再スロー

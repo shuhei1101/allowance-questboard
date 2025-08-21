@@ -1,6 +1,6 @@
 import { BaseValueObject } from "@backend/core/value-object/baseValueObject";
 import { LocaleString } from "../../../core/messages/localeString";
-import { ValueValidateException } from "../../../core/validator/validationException";
+import { ValueValidateError } from "../../../core/validator/validationError";
 import { z } from 'zod';
 
 /**
@@ -23,7 +23,7 @@ export class SortOrder extends BaseValueObject<number, typeof SortOrderSchema> {
 
   protected validate(): void {
     if (this.value < 0) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "InvalidSortOrder",
         message: new LocaleString({ 

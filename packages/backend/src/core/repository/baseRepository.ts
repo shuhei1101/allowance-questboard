@@ -24,7 +24,7 @@ export abstract class BaseRepository<
     model: TModel, 
     dao: BaseDao<TEntity>
   ): Promise<boolean> {
-    const modelId = model.id.toNumber();
+    const modelId = model.key.toNumber();
 
     const currentVersion = await dao.getVersion(modelId);
     if (currentVersion === null || currentVersion === undefined) {

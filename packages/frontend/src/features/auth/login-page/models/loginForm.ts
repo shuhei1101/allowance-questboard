@@ -1,8 +1,8 @@
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { BaseModel } from '@backend/core/models/baseModel';
-import { RelationValidateException } from '@backend/core/validator/validationException';
 import { LocaleString } from '@backend/core/messages/localeString';
+import { RelationValidateError } from '@backend/core/validator/validationError';
 
 /**
  * ログインフォームモデル
@@ -23,7 +23,7 @@ export class LoginForm extends BaseModel {
    */
   protected validate(): void {
     if (this.email.value.length === 0 || this.password.value.length === 0) {
-      throw new RelationValidateException({
+      throw new RelationValidateError({
         errorType: 'LoginFormValidationError',
         message: new LocaleString({
           ja: 'メールアドレスとパスワードの両方を入力してください',

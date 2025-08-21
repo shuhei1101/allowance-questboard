@@ -45,21 +45,21 @@ export const TabBar: React.FC<Props> = ({
         contentContainerStyle={styles.scrollContent}
       >
         {categories.map((category, index) => {
-          const isSelected = selectedCategoryId?.equals(category.id);
+          const isSelected = selectedCategoryId?.equals(category.key);
           // 言語タイプに応じてカテゴリ名を取得
-          const categoryName = languageType 
-            ? category.nameByLanguages.get(languageType.id)?.value ?? `カテゴリ${index + 1}`
+          const categoryName = languageType
+            ? category.nameByLanguages.get(languageType?.id)?.value ?? `カテゴリ${index + 1}`
             : `カテゴリ${index + 1}`;
           
           return (
             <TouchableOpacity
-              key={category.id.value}
+              key={category.key.value}
               style={[
                 styles.tab,
                 isSelected && [styles.tabSelected, { borderBottomColor: colors.primary }],
               ]}
-              onPress={() => onCategoryChange(category.id)}
-              testID={`icon-category-tab-${category.id.value}`}
+              onPress={() => onCategoryChange(category.key)}
+              testID={`icon-category-tab-${category.key.value}`}
             >
               <Text
                 style={[

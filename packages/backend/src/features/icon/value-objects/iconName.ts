@@ -1,7 +1,8 @@
 import { BaseValueObject } from '@backend/core/value-object/baseValueObject';
 import { LocaleString } from '../../../core/messages/localeString';
-import { ValueValidateException } from '../../../core/validator/validationException';
+import { ValueValidateError } from '../../../core/validator/validationError';
 import { z } from 'zod';
+import { Hashable } from '@backend/core/models/baseCollection';
 
 /**
  * IconNameのZodスキーマ
@@ -13,9 +14,12 @@ export const IconNameSchema = z.object({
 /**
  * アイコン名を表すクラス
  */
-export class IconName extends BaseValueObject<string, typeof IconNameSchema> {
+export class IconName extends BaseValueObject<string, typeof IconNameSchema> implements Hashable {
   constructor(value: string) {
     super({ value });
+  }
+  hash(): number | string {
+    return this.value;
   }
 
   protected get valueName(): LocaleString {
@@ -27,7 +31,7 @@ export class IconName extends BaseValueObject<string, typeof IconNameSchema> {
 
   protected validate(): void {
     if (!this.value || this.value.trim().length === 0) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "Required",
         message: new LocaleString({ 
@@ -38,7 +42,7 @@ export class IconName extends BaseValueObject<string, typeof IconNameSchema> {
     }
 
     if (this.value.length > 255) {
-      throw new ValueValidateException({
+      throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "MaxLength",
         message: new LocaleString({ 

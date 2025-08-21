@@ -1,4 +1,5 @@
 import { LocaleString } from "../messages/localeString";
+import { Hashable } from "../models/baseCollection";
 import { BaseValueObject } from "./baseValueObject";
 import { z } from 'zod';
 
@@ -12,7 +13,7 @@ export const BaseIdSchema = z.object({
 /**
  * ドメインモデルのIDを表す基底クラス
  */
-export abstract class BaseId extends BaseValueObject<number, typeof BaseIdSchema> {
+export abstract class BaseId extends BaseValueObject<number, typeof BaseIdSchema> implements Hashable {
   constructor(value: number) {
     super({ value });
   }

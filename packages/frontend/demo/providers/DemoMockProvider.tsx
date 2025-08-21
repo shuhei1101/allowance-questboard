@@ -67,7 +67,7 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
     // モック家族メンバータイプ（親）
     const mockFamilyMemberType = new FamilyMemberTypeValue(new FamilyMemberTypeId(1));
 
-    sessionStore.setLanguageType(mockLanguageType);
+    sessionStore.updateLanguageType(mockLanguageType);
     sessionStore.updateFamilyMemberType(mockFamilyMemberType);
     
     // モックJWT（デモ用）

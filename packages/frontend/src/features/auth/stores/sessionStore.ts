@@ -14,7 +14,7 @@ interface SessionState {
   languageType?: LanguageTypeValue;
   updateJwt: UpdateJwt;
   updateFamilyMemberType: UpdateFamilyMemberType;
-  setLanguageType: SetLanguageType;
+  updateLanguageType: SetLanguageType;
 }
 
 const getStorage = () => {
@@ -43,7 +43,7 @@ export const useSessionStore = create<SessionState>()(
         updateFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => {
           set((_) => ({ familyMemberType }), false, 'updateFamilyMemberType');
         },
-        setLanguageType: (languageType: LanguageTypeValue) => {
+        updateLanguageType: (languageType: LanguageTypeValue) => {
           set((_) => ({ languageType }), false, 'setLanguageType');
         },
         clear: () => {

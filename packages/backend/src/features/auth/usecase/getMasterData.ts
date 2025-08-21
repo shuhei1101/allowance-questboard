@@ -1,4 +1,4 @@
-import { BaseAppException } from "@backend/core/errors/baseAppException";
+import { AppError } from "@backend/core/errors/appError";
 import { LocaleString } from "@backend/core/messages/localeString";
 import { FamilyMemberType } from "@backend/features/family-member/enum/familyMemberType";
 import { LanguageType } from "@backend/features/language/enum/languageType";
@@ -21,7 +21,7 @@ export async function getMasterData(iconCategoryRepository: IconCategoryReposito
       iconCategories: iconCategories.toZodData(),
     };
   } catch (error) {
-    throw new BaseAppException({
+    throw new AppError({
       errorType: 'GET_MASTER_DATA_ERROR',
       message: new LocaleString({
         ja: 'マスタデータの取得に失敗しました',

@@ -3,8 +3,8 @@ import { LocaleString } from '@backend/core/messages/localeString';
 import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 import { FamilyName } from '@backend/features/family/entity/value-object/familyName';
 import { LoginRouter } from '@backend/features/auth/router/loginRouter';
-import { BaseAppException } from '@backend/core/errors/baseAppException';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
+import { AppError } from '@backend/core/errors/appError';
 
 interface LoginParams {
   updateSelectFamilyDialog: UpdateSelectFamilyDialog,
@@ -35,7 +35,7 @@ export const login = async (params: LoginParams): Promise<void> => {
     )
   } catch (error) {
     // tRPCエラーをBaseAppExceptionに変換して再スロー
-    throw BaseAppException.fromTRPCError({
+    throw AppError.fromTRPCError({
       error,
       fallbackErrorType: 'LOGIN_ERROR',
       fallbackMessage: new LocaleString({

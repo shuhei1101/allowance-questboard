@@ -20,7 +20,7 @@ export const SessionSettingsPage: React.FC = () => {
   const handleLanguageChange = (languageId: number) => {
     try {
       const languageType = new LanguageTypeValue(new LanguageId(languageId));
-      sessionStore.setLanguageType(languageType);
+      sessionStore.updateLanguageType(languageType);
       Alert.alert('成功', `言語を変更しました (ID: ${languageId})`);
     } catch (error) {
       Alert.alert('エラー', `言語変更に失敗しました: ${error}`);
@@ -54,7 +54,7 @@ export const SessionSettingsPage: React.FC = () => {
           onPress: () => {
             // セッションストアの内容をクリア
             sessionStore.updateJwt('');
-            sessionStore.setLanguageType(undefined as any);
+            sessionStore.updateLanguageType(undefined as any);
             sessionStore.updateFamilyMemberType(undefined as any);
             setCustomJwt('');
             Alert.alert('完了', 'セッション情報をクリアしました');

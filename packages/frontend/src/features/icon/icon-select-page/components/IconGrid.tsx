@@ -79,7 +79,7 @@ export const IconGrid: React.FC<Props> = ({
     <FlatList
       data={icons}
       renderItem={renderIcon}
-      keyExtractor={(item) => item.id.value.toString()}
+      keyExtractor={(item) => item.key.value.toString()}
       numColumns={6}
       contentContainerStyle={styles.gridContainer}
       showsVerticalScrollIndicator={false}
