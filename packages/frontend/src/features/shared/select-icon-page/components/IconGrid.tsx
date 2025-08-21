@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   iconItem: {
+    width: `${100 / 6}%`,
     aspectRatio: 1,
     margin: 4,
     borderRadius: 8,
