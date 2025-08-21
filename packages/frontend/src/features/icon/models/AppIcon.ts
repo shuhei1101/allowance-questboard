@@ -1,38 +1,38 @@
 import { AppError } from "@backend/core/errors/appError";
 import { LocaleString } from "@backend/core/messages/localeString";
 import { CollectionItemProtocol } from "@backend/core/models/baseCollection";
-import { IconName } from "@backend/features/icon/value-objects/iconName";
+import { Icon } from "@backend/features/icon/domain/icon";
 import * as LucideIcons from 'lucide-react-native';
 
 /**
  * アプリケーションで使用するアイコンモデル
  */
-export class AppIcon implements CollectionItemProtocol<IconName> {
+export class AppIcon implements CollectionItemProtocol<Icon> {
   /**
    * アイコン名
    */
-  readonly name: IconName;
+  readonly icon: Icon;
   
   /**
    * LucideIconオブジェクト
    */
-  readonly icon: React.ComponentType<LucideIcons.LucideProps>;
+  readonly obj: React.ComponentType<LucideIcons.LucideProps>;
 
-  constructor(name: IconName, icon: React.ComponentType<LucideIcons.LucideProps>) {
-    this.name = name;
+  constructor(icon: Icon, obj: React.ComponentType<LucideIcons.LucideProps>) {
     this.icon = icon;
+    this.obj = obj;
   }
   
-  get key(): IconName {
-    return this.name;
+  get key(): Icon {
+    return this.icon;
   }
 
   /**
    * アイコン名から生成
    */
-  static fromName(iconName: IconName): AppIcon {
-    const icon = (LucideIcons as any)[iconName.value];
-    if (!icon) {
+  static fromName(icon: Icon): AppIcon {
+    const obj = (LucideIcons as any)[icon.name.value];
+    if (!obj) {
       throw new AppError({
         errorType: "IconNotFound",
         message: new LocaleString({
@@ -41,6 +41,6 @@ export class AppIcon implements CollectionItemProtocol<IconName> {
         })
       })
     }
-    return new AppIcon(iconName, icon);
+    return new AppIcon(icon, obj);
   }
 }

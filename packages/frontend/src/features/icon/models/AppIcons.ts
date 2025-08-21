@@ -1,19 +1,19 @@
 import { BaseCollection } from "@backend/core/models/baseCollection";
 import { AppIcon } from "./AppIcon";
-import { IconName } from "@backend/features/icon/value-objects/iconName";
 import { Icons } from "@backend/features/icon/domain/icons";
 import { AppError } from "@backend/core/errors/appError";
+import { Icon } from "@backend/features/icon/domain/icon";
 
-export class IconByName extends BaseCollection<AppIcon, IconName> {
+export class AppIcons extends BaseCollection<AppIcon, Icon> {
   protected updateCustomIndex(): void {
     // AppIconsはカスタムインデックスを持たないため、何もしない
   }
 
-  static fromIcons(icons: Icons): IconByName {
-    const appIcons: AppIcon[] = [];
+  static fromIcons(icons: Icons): AppIcons {
+    const appIconList: AppIcon[] = [];
     for (const icon of icons.items) {
       try {
-        appIcons.push(AppIcon.fromName(icon.name));
+        appIconList.push(AppIcon.fromName(icon));
       } catch (error) {
         if (error instanceof AppError) {
           console.error(`Error creating AppIcon from Icon: ${icon.name.value}`, error);
@@ -22,6 +22,6 @@ export class IconByName extends BaseCollection<AppIcon, IconName> {
         }
       }
     }
-    return new IconByName(appIcons);
+    return new AppIcons(appIconList);
   }    
 }

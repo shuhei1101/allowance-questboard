@@ -2,30 +2,31 @@ import { useEffect } from 'react';
 import { useSelectIconPageStore } from '../stores/iconSelectPageStore';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { AppConstants } from '@/core/constants/appConstants';
+import { Icon } from '@backend/features/icon/domain/icon';
 
 interface Props {
   /**
-   * 初期選択されたアイコン名
-   */
-  initialSelectedIcon?: string;
-  /**
    * アイコンが選択された時のコールバック
-   * @param iconName 選択されたアイコン名
+   * @param icon 選択されたアイコン
    */
-  onIconSelected: (iconName: string) => void;
+  onIconSelected: (icon: Icon) => void;
   /**
    * 戻るボタンが押された時のコールバック
    */
   onBack: () => void;
+  /**
+   * 初期選択されたアイコン
+   */
+  initialSelectedIcon?: Icon;
 }
 
 /**
  * アイコン選択ページのイベントハンドラー
  */
 export const useSelectIconPageHandlers = ({
-  initialSelectedIcon,
   onIconSelected,
   onBack,
+  initialSelectedIcon,
 }: Props) => {
   const pageStore = useSelectIconPageStore();
 
@@ -33,7 +34,7 @@ export const useSelectIconPageHandlers = ({
   useEffect(() => {
     if (AppConstants.iconCategories) {
       pageStore.initialize(
-        AppConstants.iconCategories.getActiveSortedCategories(),
+        AppConstants.iconCategories,
         initialSelectedIcon
       );
     }
@@ -70,10 +71,10 @@ export const useSelectIconPageHandlers = ({
 
   /**
    * アイコン選択ハンドラー
-   * @param iconName 選択するアイコン名
+   * @param icon 選択するアイコン
    */
-  const handleIconSelect = (iconName: string) => {
-    pageStore.selectIcon(iconName);
+  const handleIconSelect = (icon: Icon) => {
+    pageStore.selectIcon(icon);
   };
 
   return {

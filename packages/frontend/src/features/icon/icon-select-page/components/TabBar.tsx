@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { IconCategory } from '@backend/features/icon-category/domain/iconCategory';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
 
 interface Props {
   /**
    * アイコンカテゴリ一覧
    */
-  categories: IconCategory[];
+  categories: IconCategories;
   /**
    * 現在選択されているカテゴリID
    */

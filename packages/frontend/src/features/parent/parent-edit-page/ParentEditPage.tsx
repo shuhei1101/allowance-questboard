@@ -97,7 +97,7 @@ export const ParentEditPage: React.FC<Props> = ({ onConfirm }) => {
           
           {/* アイコン選択ボタン */}
           <IconSelectButtonEntry
-            selectedIcon={pageStore.parentForm.icon.value}
+            selectedIcon={pageStore.parentForm.icon}
             onIconSelected={handleIconSelect}
           />
           

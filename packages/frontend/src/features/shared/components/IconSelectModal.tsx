@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, SafeAreaView, StyleSheet } from 'react-native';
 import { IconSelectPage } from '../../icon/icon-select-page/IconSelectPage';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
 
 interface Props {
   /**
@@ -10,12 +11,12 @@ interface Props {
   /**
    * 初期選択されたアイコン名
    */
-  initialSelectedIcon?: string;
+  initialSelectedIcon?: IconName;
   /**
    * アイコンが選択された時のコールバック
    * @param iconName 選択されたアイコン名
    */
-  onIconSelected: (iconName: string) => void;
+  onIconSelected: (iconName: IconName) => void;
   /**
    * モーダルを閉じる時のコールバック
    */
@@ -31,7 +32,7 @@ export const IconSelectModal: React.FC<Props> = ({
   onIconSelected,
   onClose,
 }) => {
-  const handleIconSelected = (iconName: string) => {
+  const handleIconSelected = (iconName: IconName) => {
     onIconSelected(iconName);
     onClose();
   };

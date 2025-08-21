@@ -4,22 +4,22 @@ import { useTheme } from '@/core/theme';
 import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { AppConstants } from '@/core/constants/appConstants';
-import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { Icons } from '@backend/features/icon/domain/icons';
 
 interface Props {
   /**
    * 表示するアイコン一覧
    */
-  icons: Icon[];
+  icons: Icons;
   /**
-   * 現在選択されているアイコン名
+   * 現在選択されているアイコン
    */
-  selectedIcon?: IconName;
+  selectedIcon?: Icon;
   /**
    * アイコンが選択された時のコールバック
-   * @param iconName 選択されたアイコン名
+   * @param icon 選択されたアイコン
    */
-  onIconSelect: (iconName: IconName) => void;
+  onIconSelect: (icon: Icon) => void;
 }
 
 /**
@@ -34,12 +34,11 @@ export const IconGrid: React.FC<Props> = ({
   const { colors } = useTheme();
 
   const renderIcon = ({ item }: { item: Icon }) => {
-    const iconName = item.name;
-    const isSelected = selectedIcon === iconName;
+    const isSelected = selectedIcon?.key.equals(item.key) === true;
 
     // AppConstants.iconByNameから事前に生成されたAppIconを取得
-    const appIcon = AppConstants.iconByName?.get(item.name);
-    const IconComponent = appIcon?.icon || LucideIcons.HelpCircle;
+    const appIcon = AppConstants.iconByName?.get(item);
+    const IconComponent = appIcon?.obj || LucideIcons.HelpCircle;
 
     return (
       <TouchableOpacity
@@ -50,8 +49,8 @@ export const IconGrid: React.FC<Props> = ({
             borderColor: isSelected ? colors.secondary : colors.border.light,
           },
         ]}
-        onPress={() => onIconSelect(iconName)}
-        testID={`icon-item-${iconName}`}
+        onPress={() => onIconSelect(item)}
+        testID={`icon-item-${item.name.value}`}
       >
         <IconComponent
           size={24}
@@ -73,7 +72,7 @@ export const IconGrid: React.FC<Props> = ({
 
   return (
     <FlatList
-      data={icons}
+      data={icons.items}
       renderItem={renderIcon}
       keyExtractor={(item) => item.key.value.toString()}
       numColumns={6}

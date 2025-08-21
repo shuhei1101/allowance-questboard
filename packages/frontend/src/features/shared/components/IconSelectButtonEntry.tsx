@@ -6,10 +6,12 @@ import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useNavigation } from '@react-navigation/native';
+import { Icon } from '@backend/features/icon/domain/icon';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
 
 interface Props {
-  selectedIcon?: string; // Ioniconsのアイコン名 (例: "home", "person", "settings")
-  onIconSelected: (iconName: string) => void;
+  selectedIcon?: Icon;
+  onIconSelected: (iconName: IconName) => void;
   error?: string;
 }
 

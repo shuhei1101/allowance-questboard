@@ -2,10 +2,8 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
 import { Birthday } from '@backend/features/parent/value-object/birthday';
-import { Icon } from '@backend/features/parent/value-object/icon';
 import { BaseModel } from '@backend/core/models/baseModel';
-import { RelationValidateError } from '@backend/core/validator/validationException';
-import { LocaleString } from '@backend/core/messages/localeString';
+import { Icon } from '@backend/features/icon/domain/icon';
 
 /**
  * 親登録フォームモデル
@@ -14,7 +12,7 @@ export class ParentForm extends BaseModel {
   public readonly name: ParentName;
   public readonly email: Email;
   public readonly password: Password;
-  public readonly icon: Icon;
+  public readonly icon: Icon | null;
   public readonly birthday: Birthday;
 
   constructor(params: { 
@@ -49,7 +47,7 @@ export class ParentForm extends BaseModel {
       name: new ParentName(''),
       email: new Email(''),
       password: new Password(''),
-      icon: new Icon(''),
+      icon: null,
       birthday: new Birthday(''),
     });
   }

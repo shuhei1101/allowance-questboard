@@ -1,22 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useSelectIconPageStore as useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
 import { ActionBar } from './components/ActionBar';
 import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
+import { Icon } from '@backend/features/icon/domain/icon';
 
 interface Props {
   /**
-   * 初期選択されたアイコン名
+   * 初期選択されたアイコン
    */
-  initialSelectedIcon?: string;
+  initialSelectedIcon?: Icon;
   /**
    * アイコンが選択された時のコールバック
-   * @param iconName 選択されたアイコン名
+   * @param icon 選択されたアイコン
    */
-  onIconSelected: (iconName: string) => void;
+  onIconSelected: (icon: Icon) => void;
   /**
    * 戻るボタンが押された時のコールバック
    */
@@ -41,9 +42,9 @@ export const IconSelectPage: React.FC<Props> = ({
     handleCategoryChange,
     handleIconSelect,
   } = useIconSelectPageHandlers({ 
-    initialSelectedIcon, 
     onIconSelected, 
-    onBack 
+    onBack,
+    initialSelectedIcon
   });
 
   return (

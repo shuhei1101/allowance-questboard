@@ -11,10 +11,14 @@ export abstract class BaseDomainModel<TId extends BaseId> extends BaseModel impl
   public isUpdated: boolean = false;
 
   constructor(
-    public key: TId,
+    public id: TId,
     public version: Version
   ) {
     super();
+  }
+
+  get key(): TId {
+    return this.id;
   }
 
   /**

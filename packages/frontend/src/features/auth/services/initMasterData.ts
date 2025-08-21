@@ -3,7 +3,7 @@ import { LanguageType } from "@backend/features/language/enum/languageType";
 import { FamilyMemberType } from "@backend/features/family-member/enum/familyMemberType";
 import { IconCategories } from "@backend/features/icon-category/domain/iconCategories";
 import { AppConstants } from "@/core/constants/appConstants";
-import { IconByName } from "@/features/icon/models/IconByName";
+import { AppIcons } from "@/features/icon/models/AppIcons";
 
 /**
  * マスタデータを初期化する
@@ -29,7 +29,7 @@ export const initMasterData = async () => {
     // icon categories
     const iconCategories = IconCategories.fromZodData(result.iconCategories);
     AppConstants.iconCategories = iconCategories;
-    AppConstants.iconByName = IconByName.fromIcons(
+    AppConstants.iconByName = AppIcons.fromIcons(
       iconCategories.getAllIcons()
     )
 
