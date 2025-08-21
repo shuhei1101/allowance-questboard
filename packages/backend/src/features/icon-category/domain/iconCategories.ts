@@ -2,8 +2,8 @@ import { BaseCollection } from '@backend/core/models/baseCollection';
 import { IconCategoryId } from '../value-objects/iconCategoryId';
 import { IconCategory, IconCategorySchema } from './iconCategory';
 import { Icons } from '../../icon/domain/icons';
+import { Icon } from '../../icon/domain/icon';
 import { z } from 'zod';
-import { Icon } from '@backend/features/parent/value-object/icon';
 
 /**
  * IconCategoriesのZodスキーマ
@@ -23,7 +23,14 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    * 全てのアイコンを取得
    */
   getAllIcons(): Icons {
-
+    const allIcons: Icon[] = [];
+    
+    // 全てのカテゴリから中のアイコンを取得して配列に追加
+    for (const category of this.items) {
+      allIcons.push(...category.icons.items);
+    }
+    
+    return new Icons(allIcons);
   }
 
   /**

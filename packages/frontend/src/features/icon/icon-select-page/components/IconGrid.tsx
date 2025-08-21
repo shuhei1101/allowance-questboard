@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native
 import { useTheme } from '@/core/theme';
 import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
+import { AppConstants } from '@/core/constants/appConstants';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
 
 interface Props {
   /**
@@ -12,12 +14,12 @@ interface Props {
   /**
    * 現在選択されているアイコン名
    */
-  selectedIcon?: string;
+  selectedIcon?: IconName;
   /**
    * アイコンが選択された時のコールバック
    * @param iconName 選択されたアイコン名
    */
-  onIconSelect: (iconName: string) => void;
+  onIconSelect: (iconName: IconName) => void;
 }
 
 /**
@@ -32,11 +34,12 @@ export const IconGrid: React.FC<Props> = ({
   const { colors } = useTheme();
 
   const renderIcon = ({ item }: { item: Icon }) => {
-    const iconName = item.name.value;
+    const iconName = item.name;
     const isSelected = selectedIcon === iconName;
 
-    // Lucideアイコンを動的に取得
-    const IconComponent = (LucideIcons as any)[iconName];
+    // AppConstants.iconByNameから事前に生成されたAppIconを取得
+    const appIcon = AppConstants.iconByName?.get(item.name);
+    const IconComponent = appIcon?.icon || LucideIcons.HelpCircle;
 
     return (
       <TouchableOpacity
@@ -50,17 +53,10 @@ export const IconGrid: React.FC<Props> = ({
         onPress={() => onIconSelect(iconName)}
         testID={`icon-item-${iconName}`}
       >
-        {IconComponent ? (
-          <IconComponent
-            size={24}
-            color={colors.text.primary}
-          />
-        ) : (
-          <LucideIcons.HelpCircle
-            size={24}
-            color={colors.text.primary}
-          />
-        )}
+        <IconComponent
+          size={24}
+          color={colors.text.primary}
+        />
       </TouchableOpacity>
     );
   };

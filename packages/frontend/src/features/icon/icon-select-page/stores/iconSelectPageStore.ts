@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import { IconCategory } from '@backend/features/icon-category/domain/iconCategory';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { Icon } from '@backend/features/icon/domain/icon';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
+import { Icons } from '@backend/features/icon/domain/icons';
 
 /**
  * アイコン選択ページの状態管理
@@ -10,7 +13,7 @@ interface SelectIconPageState {
   /**
    * 利用可能なアイコンカテゴリ一覧
    */
-  iconCategories: IconCategory[];
+  iconCategories: IconCategories;
   
   /**
    * 現在選択されているカテゴリID
@@ -20,12 +23,12 @@ interface SelectIconPageState {
   /**
    * 現在選択されているアイコン名
    */
-  selectedIcon?: string;
+  selectedIcon?: IconName;
   
   /**
    * 現在のカテゴリのアイコン一覧
    */
-  currentCategoryIcons: Icon[];
+  currentCategoryIcons: Icons;
   
   /**
    * 初期化処理
@@ -56,13 +59,14 @@ interface SelectIconPageState {
  * アイコン選択ページのストア
  */
 export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => ({
-  iconCategories: [],
+  iconCategories: IconCategories.fromEmpty() as IconCategories,
   selectedCategoryId: undefined,
   selectedIcon: undefined,
-  currentCategoryIcons: [],
+  currentCategoryIcons: Icons.fromEmpty() as Icons,
   
   initialize: (iconCategories, initialSelectedIcon) => {
-    const activeCategories = iconCategories.filter(category => category.isActive);
+    const iconCategoriesCollection = new IconCategories(iconCategories);
+    const activeCategories = iconCategoriesCollection.getActiveSortedCategories();
     const firstCategory = activeCategories.length > 0 ? activeCategories[0] : undefined;
     // 最初のカテゴリのアクティブでソートされたアイコンを取得
     const firstCategoryIcons: Icon[] = firstCategory 
@@ -70,16 +74,16 @@ export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => 
       : [];
     
     set({
-      iconCategories: activeCategories,
+      iconCategories: new IconCategories(activeCategories),
       selectedCategoryId: firstCategory?.key,
       selectedIcon: undefined, // 初期選択は常に無しに設定
-      currentCategoryIcons: firstCategoryIcons,
+      currentCategoryIcons: new Icons(firstCategoryIcons),
     });
   },
   
   selectCategory: (categoryId) => {
     const { iconCategories } = get();
-    const category = iconCategories.find(cat => cat.key.equals(categoryId));
+    const category = iconCategories.get(categoryId);
     // カテゴリのアクティブでソートされたアイコンを取得
     const categoryIcons: Icon[] = category 
       ? category.getActiveSortedIcons().items 
@@ -87,22 +91,22 @@ export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => 
     
     set({
       selectedCategoryId: categoryId,
-      currentCategoryIcons: categoryIcons,
+      currentCategoryIcons: new Icons(categoryIcons),
     });
   },
   
   selectIcon: (iconName) => {
     set({
-      selectedIcon: iconName,
+      selectedIcon: new IconName(iconName),
     });
   },
   
   reset: () => {
     set({
-      iconCategories: [],
+      iconCategories: IconCategories.fromEmpty() as IconCategories,
       selectedCategoryId: undefined,
       selectedIcon: undefined,
-      currentCategoryIcons: [],
+      currentCategoryIcons: Icons.fromEmpty() as Icons,
     });
   },
 }));
