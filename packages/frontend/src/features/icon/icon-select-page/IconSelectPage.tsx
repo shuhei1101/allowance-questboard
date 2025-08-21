@@ -53,7 +53,13 @@ export const IconSelectPage: React.FC<Props> = ({
       <ActionBar
         onBack={handleBack}
         onConfirm={handleConfirm}
-        isConfirmEnabled={!!pageStore.selectedIcon}
+        isConfirmEnabled={
+          !!pageStore.selectedIcon && 
+          (
+            !initialSelectedIcon || 
+            !pageStore.selectedIcon.key.equals(initialSelectedIcon.key)
+          )
+        }
       />
       
       {/* タブバー */}
