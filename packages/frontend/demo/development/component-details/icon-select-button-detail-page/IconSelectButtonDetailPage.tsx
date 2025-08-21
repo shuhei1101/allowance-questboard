@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { IconSelectButtonEntry } from '@/features/shared/components/IconSelectButtonEntry';
+import { Icon } from '@backend/features/icon/domain/icon';
+import { IconId } from '@backend/features/icon/value-objects/iconId';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { Version } from '@backend/features/shared/value-object/version';
+import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 
 /**
  * IconSelectButton詳細ページ
@@ -10,11 +15,31 @@ import { IconSelectButtonEntry } from '@/features/shared/components/IconSelectBu
 export const IconSelectButtonDetailPage: React.FC = () => {
   const { colors } = useTheme();
   
+  // モックIcon作成関数
+  const createMockIcon = (iconName: string): Icon => {
+    return new Icon(
+      new IconId(Math.floor(Math.random() * 1000)), // ランダムなID
+      new Version(1),
+      new IconName(iconName),
+      new SortOrder(0),
+      true
+    );
+  };
+  
   // IconSelectButtonのプロパティ状態
   const [componentProps, setComponentProps] = useState({
-    selectedIcon: 'home', // Ioniconsのアイコン名
+    selectedIcon: createMockIcon('Home'), // Lucideアイコン名
+    selectedIconName: 'Home', // 編集用のアイコン名
     error: '',
   });
+
+  const updateIconName = (iconName: string) => {
+    setComponentProps(prev => ({ 
+      ...prev, 
+      selectedIconName: iconName,
+      selectedIcon: createMockIcon(iconName)
+    }));
+  };
 
   const updateProp = (key: string, value: any) => {
     setComponentProps(prev => ({ ...prev, [key]: value }));
@@ -43,7 +68,13 @@ export const IconSelectButtonDetailPage: React.FC = () => {
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
           <IconSelectButtonEntry
             selectedIcon={componentProps.selectedIcon}
-            onIconSelected={(iconName) => updateProp('selectedIcon', iconName)}
+            onIconSelected={(icon) => {
+              setComponentProps(prev => ({
+                ...prev, 
+                selectedIcon: icon,
+                selectedIconName: icon.name.value
+              }));
+            }}
             error={componentProps.error}
           />
         </View>
@@ -58,13 +89,13 @@ export const IconSelectButtonDetailPage: React.FC = () => {
           {/* selectedIcon設定 */}
           <View style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
-              選択アイコン (Ioniconsアイコン名)
+              選択アイコン (Lucideアイコン名)
             </Text>
             <TextInput
               style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
-              value={componentProps.selectedIcon}
-              onChangeText={(value) => updateProp('selectedIcon', value)}
-              placeholder="アイコン名を入力 (例: home, person, settings)"
+              value={componentProps.selectedIconName}
+              onChangeText={(value) => updateIconName(value)}
+              placeholder="アイコン名を入力 (例: Home, User, Settings)"
             />
           </View>
 
@@ -100,8 +131,8 @@ export const IconSelectButtonDetailPage: React.FC = () => {
         <View style={[styles.codeBlock, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.codeText, { color: colors.text.secondary }]}>
 {`<IconSelectButtonEntry
-  selectedIcon="home"  // Ioniconsアイコン名
-  onPress={handleIconSelect}
+  selectedIcon={iconObject}  // Iconクラスのインスタンス
+  onIconSelected={handleIconSelect}  // (icon: Icon) => void
   error={iconError}
 />`}
           </Text>

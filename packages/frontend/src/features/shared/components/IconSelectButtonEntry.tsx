@@ -7,11 +7,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@backend/features/icon/domain/icon';
-import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { AppIcon } from '@/features/icon/models/AppIcon';
 
 interface Props {
   selectedIcon?: Icon;
-  onIconSelected: (iconName: IconName) => void;
+  onIconSelected: (icon: Icon) => void;
   error?: string;
 }
 
@@ -48,11 +48,27 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSel
               <>
                 <View style={styles.leftSpacer} />
                 <View style={[styles.iconContainer, { backgroundColor: colors.surface.secondary }]}>
-                  <Ionicons 
-                    name={selectedIcon as any}
-                    size={24} 
-                    color={colors.text.primary} 
-                  />
+                  {(() => {
+                    try {
+                      const appIcon = AppIcon.fromName(selectedIcon);
+                      const IconComponent = appIcon.obj;
+                      return (
+                        <IconComponent 
+                          size={24} 
+                          color={colors.text.primary} 
+                        />
+                      );
+                    } catch (error) {
+                      // アイコンが見つからない場合はデフォルトアイコンを表示
+                      return (
+                        <Ionicons 
+                          name="help-circle-outline"
+                          size={24} 
+                          color={colors.text.primary} 
+                        />
+                      );
+                    }
+                  })()}
                 </View>
                 <Ionicons 
                   name="chevron-forward" 

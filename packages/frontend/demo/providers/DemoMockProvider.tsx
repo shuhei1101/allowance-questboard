@@ -12,7 +12,11 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
 import { Birthday } from '@backend/features/parent/value-object/birthday';
-import { Icon } from '@backend/features/parent/value-object/icon';
+import { Icon } from '@backend/features/icon/domain/icon';
+import { IconId } from '@backend/features/icon/value-objects/iconId';
+import { Version } from '@backend/features/shared/value-object/version';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 
 interface Props {
   children: ReactNode;
@@ -100,7 +104,12 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
       name: new ParentName('田中太郎'),
       email: new Email('tanaka@example.com'),
       password: new Password('password123'),
-      icon: new Icon('icon-001'),
+      icon: new Icon(
+        new IconId(1),
+        new Version(1),
+        new IconName('home'),
+        new SortOrder(1)
+      ),
       birthday: new Birthday('1985-05-15'),
     });
 

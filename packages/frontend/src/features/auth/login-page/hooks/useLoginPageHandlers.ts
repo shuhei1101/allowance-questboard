@@ -21,23 +21,16 @@ export const useLoginPageHandlers = () => {
   const pageStore = useLoginPageStore();
   const sessionStore = useSessionStore();
   const handleEmailChange = useEmailHandler({
-    emailError: pageStore.emailError,
     loginForm: pageStore.loginForm,
     updateLoginForm: pageStore.updateLoginForm,
-    setEmailError: pageStore.setEmailError,
   });
   const handlePasswordChange = usePasswordHandler({
-    passwordError: pageStore.passwordError,
     loginForm: pageStore.loginForm,
     updateLoginForm: pageStore.updateLoginForm,
-    setPasswordError: pageStore.setPasswordError,
   });
   const handleLogin = useLoginHandler({
-    clearErrors: pageStore.clearErrors,
     loginForm: pageStore.loginForm,
     currentLanguageType: sessionStore.languageType,
-    setEmailError: pageStore.setEmailError,
-    setPasswordError: pageStore.setPasswordError,
     showDialog: pageStore.showDialog,
     setLoading: pageStore.setLoading,
     login: login,

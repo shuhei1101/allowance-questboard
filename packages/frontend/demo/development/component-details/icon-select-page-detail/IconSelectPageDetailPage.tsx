@@ -4,11 +4,16 @@ import { useTheme } from '@/core/theme';
 import { IconSelectPage } from '@/features/icon/icon-select-page/IconSelectPage';
 import { AppConstants } from '@/core/constants/appConstants';
 import { initMasterData } from '@/features/auth/services/initMasterData';
+import { Icon } from '@backend/features/icon/domain/icon';
+import { IconId } from '@backend/features/icon/value-objects/iconId';
+import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { Version } from '@backend/features/shared/value-object/version';
+import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 
 interface DemoState {
-  initialSelectedIcon: string;
+  initialSelectedIcon?: Icon;
   showingIconSelect: boolean;
-  lastSelectedIcon?: string;
+  lastSelectedIcon?: Icon;
   masterDataLoaded: boolean;
   masterDataLoading: boolean;
 }
@@ -20,8 +25,19 @@ interface DemoState {
 export const IconSelectPageDetailPage: React.FC = () => {
   const { colors } = useTheme();
   
+  // モックIcon作成関数
+  const createMockIcon = (iconName: string): Icon => {
+    return new Icon(
+      new IconId(Math.floor(Math.random() * 1000)),
+      new Version(1),
+      new IconName(iconName),
+      new SortOrder(0),
+      true
+    );
+  };
+  
   const [demoState, setDemoState] = useState<DemoState>({
-    initialSelectedIcon: 'home',
+    initialSelectedIcon: createMockIcon('Home'),
     showingIconSelect: false,
     lastSelectedIcon: undefined,
     masterDataLoaded: false,
@@ -65,13 +81,13 @@ export const IconSelectPageDetailPage: React.FC = () => {
     setDemoState(prev => ({ ...prev, showingIconSelect: true }));
   };
 
-  const handleIconSelected = (iconName: string) => {
+  const handleIconSelected = (icon: Icon) => {
     setDemoState(prev => ({
       ...prev,
       showingIconSelect: false,
-      lastSelectedIcon: iconName,
+      lastSelectedIcon: icon,
     }));
-    Alert.alert('アイコンが選択されました', `選択されたアイコン: ${iconName}`);
+    Alert.alert('アイコンが選択されました', `選択されたアイコン: ${icon.name.value}`);
   };
 
   const handleBack = () => {
@@ -79,7 +95,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
   };
 
   const handleChangeInitialIcon = (iconName: string) => {
-    setDemoState(prev => ({ ...prev, initialSelectedIcon: iconName }));
+    setDemoState(prev => ({ ...prev, initialSelectedIcon: createMockIcon(iconName) }));
   };
 
   const handleReloadMasterData = async () => {
@@ -138,7 +154,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
             初期選択アイコン:
           </Text>
           <Text style={[styles.stateValue, { color: colors.text.primary }]}>
-            {demoState.initialSelectedIcon}
+            {demoState.initialSelectedIcon?.name.value || '未設定'}
           </Text>
         </View>
         <View style={styles.stateRow}>
@@ -146,7 +162,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
             最後に選択されたアイコン:
           </Text>
           <Text style={[styles.stateValue, { color: colors.text.primary }]}>
-            {demoState.lastSelectedIcon || '未選択'}
+            {demoState.lastSelectedIcon?.name.value || '未選択'}
           </Text>
         </View>
         <View style={styles.stateRow}>
@@ -211,13 +227,13 @@ export const IconSelectPageDetailPage: React.FC = () => {
         </Text>
         
         <View style={styles.iconButtonGrid}>
-          {['home', 'user', 'star', 'heart', 'gift', 'car'].map((iconName) => (
+          {['Home', 'User', 'Star', 'Heart', 'Gift', 'Car'].map((iconName) => (
             <TouchableOpacity
               key={iconName}
               style={[
                 styles.iconButton,
                 {
-                  backgroundColor: demoState.initialSelectedIcon === iconName 
+                  backgroundColor: demoState.initialSelectedIcon?.name.value === iconName 
                     ? colors.primary 
                     : colors.background.tertiary,
                   borderColor: colors.border.light,
@@ -228,7 +244,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
               <Text style={[
                 styles.iconButtonText,
                 {
-                  color: demoState.initialSelectedIcon === iconName 
+                  color: demoState.initialSelectedIcon?.name.value === iconName 
                     ? colors.text.inverse 
                     : colors.text.primary
                 }

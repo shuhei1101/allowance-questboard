@@ -25,7 +25,6 @@ export const LoginPageSettingsPage: React.FC = () => {
       icon: '🔄',
       action: () => {
         loginPageStore.updateLoginForm(LoginForm.initialize());
-        loginPageStore.clearErrors();
         loginPageStore.setLoading(false);
         loginPageStore.hideDialog();
         setIsLoading(false);
@@ -44,7 +43,6 @@ export const LoginPageSettingsPage: React.FC = () => {
             password: new Password('demo123456'),
           });
           loginPageStore.updateLoginForm(sampleForm);
-          loginPageStore.clearErrors();
           Alert.alert('設定完了', 'サンプルデータを設定しました');
         } catch (error) {
           Alert.alert('エラー', `設定に失敗しました: ${error}`);
@@ -52,21 +50,10 @@ export const LoginPageSettingsPage: React.FC = () => {
       },
     },
     {
-      name: 'エラー状態',
-      description: 'バリデーションエラーを表示',
-      icon: '❌',
-      action: () => {
-        loginPageStore.setEmailError('メールアドレスが無効です');
-        loginPageStore.setPasswordError('パスワードが短すぎます');
-        Alert.alert('設定完了', 'エラー状態を設定しました');
-      },
-    },
-    {
       name: 'エラークリア',
       description: 'すべてのエラーを削除',
       icon: '✨',
       action: () => {
-        loginPageStore.clearErrors();
         Alert.alert('設定完了', 'エラーをクリアしました');
       },
     },
@@ -206,7 +193,7 @@ export const LoginPageSettingsPage: React.FC = () => {
               エラー状態
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {(loginPageStore.emailError || loginPageStore.passwordError) ? '❌ エラーあり' : '✅ エラーなし'}
+              {(loginPageStore.getEmailError() || loginPageStore.getPasswordError()) ? '❌ エラーあり' : '✅ エラーなし'}
             </Text>
           </View>
         </View>

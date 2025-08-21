@@ -21,7 +21,7 @@ describe('useEmailHandler', () => {
         useEmailHandler({
           loginForm: existingLoginForm,
           updateLoginForm: mockUpdateLoginForm,
-          emailError: null,
+          getEmailError: null,
           setEmailError: mockSetEmailError
         })
       );
@@ -50,7 +50,7 @@ describe('useEmailHandler', () => {
         useEmailHandler({
           loginForm: existingLoginForm,
           updateLoginForm: mockUpdateLoginForm,
-          emailError: existingError,
+          getEmailError: existingError,
           setEmailError: mockSetEmailError
         })
       );
@@ -75,7 +75,7 @@ describe('useEmailHandler', () => {
         useEmailHandler({
           loginForm: existingLoginForm,
           updateLoginForm: mockUpdateLoginForm,
-          emailError: null,
+          getEmailError: null,
           setEmailError: mockSetEmailError
         })
       );

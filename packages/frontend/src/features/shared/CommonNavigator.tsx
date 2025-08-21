@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Alert } from 'react-native';
 import { IconSelectPage } from '../icon/icon-select-page/IconSelectPage';
 import { LoadingPage } from './loading-page/LoadingPage';
-import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { Icon } from '@backend/features/icon/domain/icon';
 
 // 共通機能のナビゲーションパラメータ型定義
 export type CommonStackParamList = {
@@ -23,8 +23,8 @@ const CommonStack = createStackNavigator<CommonStackParamList>();
 const IconSelectPageWrapper: React.FC<{ route: any; navigation: any }> = ({ route, navigation }) => {
   const { initialSelectedIcon } = route.params || {};
 
-  const handleIconSelected = (iconName: IconName) => {
-    Alert.alert('アイコン選択', `${iconName} が選択されました`);
+  const handleIconSelected = (icon: Icon) => {
+    Alert.alert('アイコン選択', `${icon} が選択されました`);
   };
 
   const handleBack = () => {

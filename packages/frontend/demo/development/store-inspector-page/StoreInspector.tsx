@@ -111,7 +111,7 @@ export const StoreInspector: React.FC = () => {
               メールエラー:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.emailError || '無し'}
+              {loginPageStore.getEmailError() || '無し'}
             </Text>
           </View>
         </View>
@@ -172,7 +172,6 @@ export const StoreInspector: React.FC = () => {
           style={[styles.actionButton, { backgroundColor: '#ef4444' }]}
           onPress={() => {
             console.log('🎯 Demo - Clearing all errors...');
-            loginPageStore.clearErrors();
             parentEditPageStore.clearErrors();
           }}
         >
