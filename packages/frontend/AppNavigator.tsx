@@ -64,7 +64,7 @@ export function AppNavigator(props: AppNavigatorProps) {
       },
     }}>
       <AppStack.Navigator
-        initialRouteName="Auth"
+        initialRouteName="Demo"
         screenOptions={{
           headerShown: false,
         }}
