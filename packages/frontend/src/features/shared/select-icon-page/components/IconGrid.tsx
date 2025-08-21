@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   iconItem: {
-    flex: 1,
+    width: `${100 / 6}%`,
     aspectRatio: 1,
     margin: 4,
     borderRadius: 8,
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     minWidth: 48,
   },
   emptyContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 40,

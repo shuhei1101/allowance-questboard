@@ -37,44 +37,7 @@ export class ParentForm extends BaseModel {
    * モデルの値を検証する
    */
   protected validate(): void {
-    const errors: string[] = [];
-
-    // 必須項目チェック
-    if (this.name.value.length === 0) {
-      errors.push('名前');
-    }
-    if (this.email.value.length === 0) {
-      errors.push('メールアドレス');
-    }
-    if (this.password.value.length === 0) {
-      errors.push('パスワード');
-    }
-    if (this.birthday.value.length === 0) {
-      errors.push('誕生日');
-    }
-
-    if (errors.length > 0) {
-      throw new RelationValidateException({
-        errorType: 'ParentFormValidationError',
-        message: new LocaleString({
-          ja: `必須項目が入力されていません: ${errors.join(', ')}`,
-          en: `Required fields are not filled: ${errors.join(', ')}`,
-        })
-      });
-    }
-  }
-
-  /**
-   * フォームの入力が有効かどうかを判定
-   * @returns 有効な場合はtrue
-   */
-  public get isValid(): boolean {
-    try {
-      this.runValidate();
-      return true;
-    } catch {
-      return false;
-    }
+    // 関連チェック無し
   }
 
   /**
