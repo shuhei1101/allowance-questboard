@@ -15,7 +15,8 @@ export const useConfirmHandler = (params: {
   setEmailError: SetEmailError,
   setPasswordError: SetPasswordError,
   setBirthdayError: SetBirthdayError,
-  onConfirm: (parentData: any) => void
+  onConfirm: (parentData: any) => void,
+  shouldUpdate?: boolean
 }) => {
   return useCallback(async (): Promise<void> => {
     try {
@@ -27,10 +28,13 @@ export const useConfirmHandler = (params: {
       params.setLoading(true);
       params.clearErrors();
 
-      // 親情報の登録API呼び出し（今後実装予定）
-      // await registerParent(params.parentForm);
+      // shouldUpdateがtrueの場合のみ更新クエリを送信
+      if (params.shouldUpdate !== false) {
+        // 親情報の登録API呼び出し（今後実装予定）
+        // await registerParent(params.parentForm);
+      }
 
-      // コールバック実行
+      // コールバック実行（状態を更新してフォームデータを渡す）
       params.onConfirm(params.parentForm);
       
     } catch (error: any) {
@@ -61,6 +65,7 @@ export const useConfirmHandler = (params: {
     params.setEmailError,
     params.setPasswordError,
     params.setBirthdayError,
-    params.onConfirm
+    params.onConfirm,
+    params.shouldUpdate
   ]);
 };

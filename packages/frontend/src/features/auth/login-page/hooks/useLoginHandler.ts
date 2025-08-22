@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { SetLoading, ShowDialog, UpdateSelectFamilyDialog } from '../stores/loginPageStore';
+import { ClearErrors, SetEmailError, SetPasswordError, SetLoading, ShowDialog, UpdateSelectFamilyDialog } from '../stores/loginPageStore';
 import { supabase } from '@/core/supabase/supabase';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
@@ -17,6 +17,9 @@ import { AppError } from '@backend/core/errors/appError';
 export const useLoginHandler = (params: {
   loginForm: LoginForm,
   currentLanguageType: LanguageTypeValue,
+  clearErrors: ClearErrors,
+  setEmailError: SetEmailError,
+  setPasswordError: SetPasswordError,
   setLoading: SetLoading,
   showDialog: ShowDialog,
   login: Login,
@@ -24,8 +27,26 @@ export const useLoginHandler = (params: {
   loginRouter: LoginRouter
 }) => {
   return useCallback(async (): Promise<void> => {
+    // エラーをクリア
+    params.clearErrors();
+
+    // バリデーションチェック
+    let hasValidationError = false;
+
+    // メールアドレスのバリデーション
+    if (!params.loginForm.email.isValid) {
+      params.setEmailError(params.loginForm.email.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    // パスワードのバリデーション
+    if (!params.loginForm.password.isValid) {
+      params.setPasswordError(params.loginForm.password.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
     // バリデーションエラーがある場合は処理を終了
-    if (!params.loginForm.isValid) {
+    if (hasValidationError) {
       return;
     }
 
@@ -78,6 +99,9 @@ export const useLoginHandler = (params: {
   }, [
     params.loginForm,
     params.currentLanguageType,
+    params.clearErrors,
+    params.setEmailError,
+    params.setPasswordError,
     params.setLoading,
     params.showDialog
   ]);

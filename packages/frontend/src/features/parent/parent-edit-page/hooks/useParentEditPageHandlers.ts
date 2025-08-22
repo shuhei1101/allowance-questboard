@@ -12,8 +12,9 @@ import { useParentEditPageStore as useParentEditPageStore } from '../stores/pare
  * 親情報登録画面で使用する全てのイベントハンドラーを一括で提供
  * 
  * @param onConfirm 確定ボタン押下時のコールバック関数
+ * @param shouldUpdate 更新クエリを送信するかのフラグ (デフォルト: true)
  */
-export const useParentEditPageHandlers = (onConfirm: (parentData: any) => void) => {
+export const useParentEditPageHandlers = (onConfirm: (parentData: any) => void, shouldUpdate: boolean = true) => {
   const pageStore = useParentEditPageStore();
   const handleNameChange = useNameHandler({
     parentForm: pageStore.parentForm,
@@ -49,6 +50,7 @@ export const useParentEditPageHandlers = (onConfirm: (parentData: any) => void) 
     setPasswordError: pageStore.setPasswordError,
     setBirthdayError: pageStore.setBirthdayError,
     onConfirm: onConfirm,
+    shouldUpdate: shouldUpdate,
   });
 
   return {

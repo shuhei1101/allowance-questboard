@@ -5,28 +5,34 @@ import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 
 export type IsLoading = boolean;
 export type IsDialogVisible = boolean;
+export type EmailError = string | null;
+export type PasswordError = string | null;
 
 export type UpdateLoginForm = (form: LoginForm) => void;
 export type UpdateSelectFamilyDialog = (dialog: SelectFamilyDialog) => void;
 export type ShowDialog = () => void;
 export type HideDialog = () => void;
 export type SetLoading = (loading: boolean) => void;
-export type GetEmailError = () => string | undefined;
-export type GetPasswordError = () => string | undefined;
+export type SetEmailError = (error: string | null) => void;
+export type SetPasswordError = (error: string | null) => void;
+export type ClearErrors = () => void;
 
 interface LoginPageState {
   isLoading: IsLoading;
   isDialogVisible: IsDialogVisible;
   loginForm: LoginForm;
   selectFamilyDialog: SelectFamilyDialog;
-  getEmailError: GetEmailError;
-  getPasswordError: GetPasswordError;
+  emailError: EmailError;
+  passwordError: PasswordError;
 
   updateLoginForm: UpdateLoginForm;
   updateSelectFamilyDialog: UpdateSelectFamilyDialog;
   showDialog: ShowDialog;
   hideDialog: HideDialog;
   setLoading: SetLoading;
+  setEmailError: SetEmailError;
+  setPasswordError: SetPasswordError;
+  clearErrors: ClearErrors;
 }
 
 /**
@@ -34,11 +40,13 @@ interface LoginPageState {
  */
 export const useLoginPageStore = create<LoginPageState>()(
   devtools(
-    (set, get) => ({
+    (set) => ({
       isLoading: false,
       isDialogVisible: false,
       loginForm: LoginForm.initialize(),
       selectFamilyDialog: SelectFamilyDialog.initialize(),
+      emailError: null,
+      passwordError: null,
 
       updateLoginForm: (loginForm: LoginForm) => {
         set({ loginForm }, false, 'updateLoginForm');
@@ -59,11 +67,17 @@ export const useLoginPageStore = create<LoginPageState>()(
       setLoading: (loading: boolean) => {
         set({ isLoading: loading }, false, 'setLoading');
       },
-      getEmailError: () => {
-        return get().loginForm.email.errorMessage
+
+      setEmailError: (error: string | null) => {
+        set({ emailError: error }, false, 'setEmailError');
       },
-      getPasswordError: () => {
-        return get().loginForm.password.errorMessage;
+
+      setPasswordError: (error: string | null) => {
+        set({ passwordError: error }, false, 'setPasswordError');
+      },
+
+      clearErrors: () => {
+        set({ emailError: null, passwordError: null }, false, 'clearErrors');
       },
     }),
     {

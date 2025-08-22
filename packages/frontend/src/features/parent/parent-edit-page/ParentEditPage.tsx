@@ -18,6 +18,7 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
  * 
  * Props:
  * - onConfirm: 確定ボタン押下時のコールバック関数
+ * - shouldUpdate: 更新クエリを送信するかのフラグ (デフォルト: true)
  * 
  * 機能:
  * - 親の名前入力
@@ -30,9 +31,10 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
  */
 interface Props {
   onConfirm: (parentData: any) => void;
+  shouldUpdate?: boolean;
 }
 
-export const ParentEditPage: React.FC<Props> = ({ onConfirm }) => {
+export const ParentEditPage: React.FC<Props> = ({ onConfirm, shouldUpdate = true }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
@@ -46,7 +48,7 @@ export const ParentEditPage: React.FC<Props> = ({ onConfirm }) => {
     handleIconSelect,
     handleBirthdayChange,
     handleConfirm,
-  } = useParentEditPageHandlers(onConfirm);
+  } = useParentEditPageHandlers(onConfirm, shouldUpdate);
 
   // ナビゲーションヘッダーに保存ボタンを設定
   useLayoutEffect(() => {

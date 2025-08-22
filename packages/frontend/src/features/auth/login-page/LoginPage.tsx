@@ -65,14 +65,14 @@ export const LoginPage: React.FC = () => {
           <EmailInputField
             value={pageStore.loginForm.email.value}
             onChange={handleEmailChange}
-            error={pageStore.getEmailError() || undefined}
+            error={pageStore.emailError || undefined}
           />
           
           {/* Password入力フィールド */}
           <PasswordInputField
             value={pageStore.loginForm.password.value}
             onChange={handlePasswordChange}
-            error={pageStore.getPasswordError() || undefined}
+            error={pageStore.passwordError || undefined}
           />
           
           {/* ログインボタン */}
