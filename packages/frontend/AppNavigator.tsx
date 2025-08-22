@@ -2,11 +2,12 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator } from '@/features/auth/AuthNavigator';
+import { AuthNavigator, NAME as AUTH_STACK_NAME } from '@/features/auth/AuthNavigator';
 import { ParentNavigator } from '@/features/parent/ParentNavigator';
 import { CommonNavigator } from '@/features/shared/CommonNavigator';
 import { DemoNavigator } from '@demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
+
 
 // Navigation types - 機能別Navigatorを組み合わせる
 export type AppStackParamList = {
@@ -71,7 +72,7 @@ export function AppNavigator(props: AppNavigatorProps) {
         {...({} as any)}
       >
         <AppStack.Screen 
-          name=AuthStack.name
+          name=AUTH_STACK_NAME
           component={AuthNavigator} 
         />
         <AppStack.Screen 
