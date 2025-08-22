@@ -2,6 +2,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from './login-page/LoginPage';
 
+export const AUTHSTACK = ’Auth’
+export const SCREENS = {
+  Login: 'Login',
+} as const;
+
 // 認証関連のナビゲーションパラメータ型定義
 export type AuthStackParamList = {
   Login: undefined;
@@ -16,14 +21,14 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 export function AuthNavigator() {
   return (
     <AuthStack.Navigator
-      initialRouteName="Login"
+      initialRouteName=SCREENS.Login
       screenOptions={{
         headerShown: false,
       }}
       {...({} as any)}
     >
       <AuthStack.Screen 
-        name="Login" 
+        name=SCREENS.Login 
         component={LoginPage} 
       />
     </AuthStack.Navigator>
