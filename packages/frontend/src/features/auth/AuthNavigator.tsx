@@ -2,9 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from './login-page/LoginPage';
 
-export type 
-
-export const AuthStack {
+export const StackInfo {
   name: ’Auth’,
   screens: {
     login: 'Login',
