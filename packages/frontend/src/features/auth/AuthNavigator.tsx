@@ -2,9 +2,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from './login-page/LoginPage';
 
-export const AUTHSTACK = ’Auth’
-export const SCREENS = {
-  Login: 'Login',
+export const AUTH_STACK {
+  name: ’Auth’,
+  screens 
+}
+export const AUTH_ = {
+  login: 'Login',
 } as const;
 
 // 認証関連のナビゲーションパラメータ型定義
