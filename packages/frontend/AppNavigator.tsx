@@ -71,7 +71,7 @@ export function AppNavigator(props: AppNavigatorProps) {
         {...({} as any)}
       >
         <AppStack.Screen 
-          name=AUTHSTACK
+          name=AuthStack.name
           component={AuthNavigator} 
         />
         <AppStack.Screen 
