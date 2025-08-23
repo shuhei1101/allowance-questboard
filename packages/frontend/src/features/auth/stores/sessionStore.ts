@@ -4,17 +4,17 @@ import { FamilyMemberTypeValue } from '@backend/features/family-member/value-obj
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type UpdateJwt = (jwt: string) => void;
-export type UpdateFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
+export type SetJwt = (jwt: string) => void;
+export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
 export type SetLanguageType = (languageType: LanguageTypeValue) => void;
 
 interface SessionState {
   jwt?: string;
   familyMemberType?: FamilyMemberTypeValue;
   languageType?: LanguageTypeValue;
-  updateJwt: UpdateJwt;
-  updateFamilyMemberType: UpdateFamilyMemberType;
-  updateLanguageType: SetLanguageType;
+  setJwt: SetJwt;
+  setFamilyMemberType: SetFamilyMemberType;
+  setLanguageType: SetLanguageType;
 }
 
 const getStorage = () => {
@@ -37,13 +37,13 @@ export const useSessionStore = create<SessionState>()(
         familyMemberType: undefined,
         languageType: undefined,
 
-        updateJwt: (jwt: string) => {
+        setJwt: (jwt: string) => {
           set((_) => ({ jwt }), false, 'updateJwt');
         },
-        updateFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => {
+        setFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => {
           set((_) => ({ familyMemberType }), false, 'updateFamilyMemberType');
         },
-        updateLanguageType: (languageType: LanguageTypeValue) => {
+        setLanguageType: (languageType: LanguageTypeValue) => {
           set((_) => ({ languageType }), false, 'setLanguageType');
         },
         clear: () => {

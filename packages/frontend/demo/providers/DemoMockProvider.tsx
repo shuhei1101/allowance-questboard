@@ -70,11 +70,11 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
     // モック家族メンバータイプ（親）
     const mockFamilyMemberType = new FamilyMemberTypeValue(new FamilyMemberTypeId(1));
 
-    sessionStore.updateLanguageType(mockLanguageType);
-    sessionStore.updateFamilyMemberType(mockFamilyMemberType);
+    sessionStore.setLanguageType(mockLanguageType);
+    sessionStore.setFamilyMemberType(mockFamilyMemberType);
     
     // モックJWT（デモ用）
-    sessionStore.updateJwt('demo-jwt-token-12345');
+    sessionStore.setJwt('demo-jwt-token-12345');
 
     console.log('🎯 Demo - Session mock data set');
   };

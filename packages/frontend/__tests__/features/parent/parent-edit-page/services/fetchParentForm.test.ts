@@ -6,23 +6,15 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
-import { AppConstants } from '@/core/constants/appConstants';
 import { AppError } from '@backend/core/errors/appError';
-
-// AppConstantsのモック
-jest.mock('@/core/constants/appConstants', () => ({
-  AppConstants: {
-    iconCategories: {
-      getAllIcons: jest.fn()
-    }
-  }
-}));
 
 describe('fetchParentForm', () => {
 
   const mockRouter: ParentRouter = {
     query: jest.fn()
   };
+
+  const mockGetAllIcons = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -45,12 +37,13 @@ describe('fetchParentForm', () => {
       mockIconsMap.set(new IconId(5), mockIcon);
       
       (mockRouter.query as jest.Mock).mockResolvedValue(mockResponse);
-      (AppConstants.iconCategories?.getAllIcons as jest.Mock).mockReturnValue(mockIconsMap);
+      mockGetAllIcons.mockReturnValue(mockIconsMap);
 
       // 実行
       const result = await fetchParentForm({
         parentId,
-        router: mockRouter
+        router: mockRouter,
+        getAllIcons: mockGetAllIcons
       });
 
       // 検証
@@ -78,7 +71,8 @@ describe('fetchParentForm', () => {
       // 実行
       const result = await fetchParentForm({
         parentId,
-        router: mockRouter
+        router: mockRouter,
+        getAllIcons: mockGetAllIcons
       });
 
       // 検証
@@ -101,12 +95,13 @@ describe('fetchParentForm', () => {
       const mockIconsMap = new Map(); // 空のマップ
       
       (mockRouter.query as jest.Mock).mockResolvedValue(mockResponse);
-      (AppConstants.iconCategories?.getAllIcons as jest.Mock).mockReturnValue(mockIconsMap);
+      mockGetAllIcons.mockReturnValue(mockIconsMap);
 
       // 実行
       const result = await fetchParentForm({
         parentId,
-        router: mockRouter
+        router: mockRouter,
+        getAllIcons: mockGetAllIcons
       });
 
       // 検証
@@ -126,7 +121,8 @@ describe('fetchParentForm', () => {
       // 実行・検証
       await expect(fetchParentForm({
         parentId,
-        router: mockRouter
+        router: mockRouter,
+        getAllIcons: mockGetAllIcons
       })).rejects.toThrow(AppError);
     });
   });

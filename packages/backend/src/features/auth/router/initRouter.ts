@@ -5,6 +5,16 @@ import { IconCategoryRepository } from '@backend/features/icon-category/reposito
 import { IconCategoryDao } from '@backend/features/icon-category/dao/iconCategoryDao';
 import { IconCategoryTranslationDao } from '@backend/features/icon-category/dao/iconCategoryTranslationDao';
 import { IconDao } from '@backend/features/icon/dao/iconDao';
+import { IconCategories, IconCategoriesSchema } from '@backend/features/icon-category/domain/iconCategories';
+import { FamilyMemberTypeSchema } from '@backend/features/family-member/enum/familyMemberType';
+import { LanguageTypeSchema } from '@backend/features/language/enum/languageType';
+import z from 'zod';
+
+export const GetMasterDataResponseScheme = z.object({
+  languages: LanguageTypeSchema,
+  familyMemberTypes: FamilyMemberTypeSchema,
+  iconCategories: IconCategoriesSchema,
+});
 
 /**
  * マスタデータに関するtRPCルーター
@@ -15,6 +25,7 @@ export const initRouter = t.router({
    * 言語Enumと家族メンバータイプEnum、アイコンカテゴリのZodスキーマを返す
    */
   getMasterData: t.procedure
+    .output(GetMasterDataResponseScheme)
     .query(async ({ ctx }) => {
       try {
         // リポジトリの依存関係を作成
@@ -37,3 +48,7 @@ export const initRouter = t.router({
       }
     }),
 });
+export type GetMasterDataResponse = z.infer<typeof GetMasterDataResponseScheme>;
+export interface GetMasterDataHandler {
+  query(): Promise<GetMasterDataResponse>;
+}

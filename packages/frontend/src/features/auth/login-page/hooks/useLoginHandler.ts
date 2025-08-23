@@ -6,7 +6,7 @@ import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { Login } from '../services/login';
-import { LoginRouter } from '@backend/features/auth/router/loginRouter';
+import { LoginHandler } from '@backend/features/auth/router/loginRouter';
 import { AppError } from '@backend/core/errors/appError';
 import { useLoginFormValidationHandler } from '../handlers/useLoginFormValidationHandler';
 
@@ -25,7 +25,7 @@ export const useLoginHandler = (params: {
   showDialog: ShowDialog,
   login: Login,
   setSelectFamilyDialog: SetSelectFamilyDialog,
-  loginRouter: LoginRouter
+  loginHandler: LoginHandler
 }) => {
   // バリデーションハンドラーを取得
   const validateLoginForm = useLoginFormValidationHandler({
@@ -73,7 +73,7 @@ export const useLoginHandler = (params: {
       // jwtを元にアプリにログイン
       await params.login({
         setSelectFamilyDialog: params.setSelectFamilyDialog,
-        router: params.loginRouter
+        loginHandler: params.loginHandler
       });
 
       // ダイアログの表示
@@ -96,7 +96,7 @@ export const useLoginHandler = (params: {
     params.showDialog,
     params.login,
     params.setSelectFamilyDialog,
-    params.loginRouter,
+    params.loginHandler,
     validateLoginForm
   ]);
 };

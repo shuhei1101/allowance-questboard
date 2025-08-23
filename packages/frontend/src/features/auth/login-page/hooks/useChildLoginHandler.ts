@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HideDialog, SetLoginForm, SetLoading } from '../stores/loginPageStore';
-import { UpdateFamilyMemberType } from '@/features/auth/stores/sessionStore';
+import { SetFamilyMemberType } from '@/features/auth/stores/sessionStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
@@ -13,7 +13,7 @@ import { FamilyMemberType } from '@backend/features/family-member/enum/familyMem
  * 子供としてログインし、子供用ホーム画面へ遷移する
  */
 export const useChildLoginHandler = (params: {
-  updateFamilyMemberType: UpdateFamilyMemberType,
+  updateFamilyMemberType: SetFamilyMemberType,
   hideDialog: HideDialog,
   setLoginForm: SetLoginForm,
   setLoading: SetLoading

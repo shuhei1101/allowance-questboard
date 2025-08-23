@@ -14,6 +14,7 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ComfirmButton } from '@/features/shared/components';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 
 /**
  * 親情報編集画面
@@ -48,6 +49,9 @@ export const ParentEditPage: React.FC<Props> = ({
   
   const parentId = rawParentId ? new ParentId(Number(rawParentId)) : undefined;
 
+  // アプリ設定ストア
+  const appConfigStore = useAppConfigStore();
+
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
     jwtToken: sessionStore.jwt,
@@ -55,7 +59,7 @@ export const ParentEditPage: React.FC<Props> = ({
   }).parent.getParent;
 
   // 親データ初期化フック
-  useInitializeParentData(parentId, parentRouter);
+  useInitializeParentData(parentId, parentRouter, appConfigStore.getAllIcons);
   
   // 統合フックで全ハンドラーを取得
   

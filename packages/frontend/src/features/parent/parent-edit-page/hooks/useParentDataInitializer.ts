@@ -3,20 +3,26 @@ import { useParentEditPageStore } from '../stores/parentEditPageStore';
 import { fetchParentForm } from '../services/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ParentRouter } from '@backend/features/parent/router/parentRouter';
+import { GetAllIcons } from '@/features/shared/stores/appConfigStore';
 
 /**
  * 親データ初期化フック
  */
-export const useInitializeParentData = (parentId?: ParentId, parentRouter?: ParentRouter) => {
+export const useInitializeParentData = (
+  parentId?: ParentId, 
+  parentRouter?: ParentRouter,
+  getAllIcons?: GetAllIcons
+) => {
   const pageStore = useParentEditPageStore();
 
   useEffect(() => {
     const initializeParentData = async () => {
-      if (!parentId || !parentRouter) return;
+      if (!parentId || !parentRouter || !getAllIcons) return;
       try {
         const parentForm = await fetchParentForm({
           parentId,
-          router: parentRouter
+          router: parentRouter,
+          getAllIcons
         });
         pageStore.setParentForm(parentForm);
       } catch (error) {
@@ -28,5 +34,5 @@ export const useInitializeParentData = (parentId?: ParentId, parentRouter?: Pare
     pageStore.reset();
     
     initializeParentData();
-  }, [parentId, parentRouter]); // parentRouterも依存配列に追加
+  }, [parentId, parentRouter, getAllIcons]); // getAllIconsも依存配列に追加
 };

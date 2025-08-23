@@ -2,15 +2,15 @@ import { SetSelectFamilyDialog } from '../stores/loginPageStore';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 import { FamilyName } from '@backend/features/family/value-object/familyName';
-import { LoginRouter } from '@backend/features/auth/router/loginRouter';
+import { LoginHandler } from '@backend/features/auth/router/loginRouter';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
 
 interface LoginParams {
   setSelectFamilyDialog: SetSelectFamilyDialog,
-  router: LoginRouter
+  loginHandler: LoginHandler
 }
-export type Login = (params: LoginParams) => void;
+export type Login = (params: LoginParams) => Promise<void>;
 
 /**
  * ログインユースケース
@@ -22,10 +22,10 @@ export type Login = (params: LoginParams) => void;
  * @returns ログイン結果
  * @throws BaseAppException ログインに失敗した場合
  */
-export const login = async (params: LoginParams): Promise<void> => {
+export const login: Login = async (params: LoginParams): Promise<void> => {
   try {
     // ログインAPIを実行
-    const response = await params.router.query();
+    const response = await params.loginHandler.query();
 
     // responseから状態を更新
     params.setSelectFamilyDialog(

@@ -6,13 +6,14 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
-import { AppConstants } from '@/core/constants/appConstants';
+import { GetAllIcons } from '@/features/shared/stores/appConfigStore';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { AppError } from '@backend/core/errors/appError';
 
 interface FetchParentFormParams {
   parentId: ParentId;
   router: ParentRouter;
+  getAllIcons: GetAllIcons;
 }
 
 /**
@@ -35,7 +36,7 @@ export const fetchParentForm = async (params: FetchParentFormParams): Promise<Pa
     // アイコンデータの取得（iconIdがある場合）
     let icon = null;
     if (response.iconId) {
-      const allIcons = AppConstants.iconCategories?.getAllIcons();
+      const allIcons = params.getAllIcons();
       icon = allIcons?.get(new IconId(response.iconId)) || null;
     }
 

@@ -42,19 +42,19 @@ export const useLoginPageHandlers = () => {
     setLoading: pageStore.setLoading,
     login: login,
     setSelectFamilyDialog: pageStore.setSelectFamilyDialog,
-    loginRouter: createAuthenticatedClient({
+    loginHandler: createAuthenticatedClient({
       jwtToken: sessionStore.jwt,
       languageType: sessionStore.languageType,
-    }).login.login
+    }).login.login,
   });
   const handleParentLogin = useParentLoginHandler({
-    updateFamilyMemberType: sessionStore.updateFamilyMemberType,
+    updateFamilyMemberType: sessionStore.setFamilyMemberType,
     hideDialog: pageStore.hideDialog,
     setLoginForm: pageStore.setLoginForm,
     setLoading: pageStore.setLoading,
   });
   const handleChildLogin = useChildLoginHandler({
-    updateFamilyMemberType: sessionStore.updateFamilyMemberType,
+    updateFamilyMemberType: sessionStore.setFamilyMemberType,
     hideDialog: pageStore.hideDialog,
     setLoginForm: pageStore.setLoginForm,
     setLoading: pageStore.setLoading,
