@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
+import { AppError } from '@backend/core/errors/appError';
+import { LocaleString } from '@backend/core/messages/localeString';
 
 /**
  * 確定ボタン押下ハンドラーのカスタムフック
@@ -21,7 +23,13 @@ export const useConfirmHandler = (params: {
     try {
       // バリデーション実行
       if (!params.parentForm.isValid) {
-        throw new Error('必須項目が入力されていません');
+        throw new AppError({
+          errorType: 'VALIDATION_ERROR',
+          message: new LocaleString({
+            ja: '入力に誤りがあります。各項目を確認してください。',
+            en: 'There are errors in the input. Please check each item.'
+          })
+        });
       }
 
       params.setLoading(true);

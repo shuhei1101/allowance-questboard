@@ -8,6 +8,7 @@ import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { Login } from '../services/login';
 import { LoginRouter } from '@backend/features/auth/router/loginRouter';
 import { AppError } from '@backend/core/errors/appError';
+import { useLoginValidationHandler } from '../handlers/useLoginValidationHandler';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -26,27 +27,19 @@ export const useLoginHandler = (params: {
   setSelectFamilyDialog: SetSelectFamilyDialog,
   loginRouter: LoginRouter
 }) => {
+  // バリデーションハンドラーを取得
+  const validateLoginForm = useLoginValidationHandler({
+    loginForm: params.loginForm,
+    currentLanguageType: params.currentLanguageType,
+    clearErrors: params.clearErrors,
+    setEmailError: params.setEmailError,
+    setPasswordError: params.setPasswordError
+  });
+
   return useCallback(async (): Promise<void> => {
-    // エラーをクリア
-    params.clearErrors();
-
     // バリデーションチェック
-    let hasValidationError = false;
-
-    // メールアドレスのバリデーション
-    if (!params.loginForm.email.isValid) {
-      params.setEmailError(params.loginForm.email.errorMessage.getMessage(params.currentLanguageType));
-      hasValidationError = true;
-    }
-
-    // パスワードのバリデーション
-    if (!params.loginForm.password.isValid) {
-      params.setPasswordError(params.loginForm.password.errorMessage.getMessage(params.currentLanguageType));
-      hasValidationError = true;
-    }
-
-    // バリデーションエラーがある場合は処理を終了
-    if (hasValidationError) {
+    const validationResult = validateLoginForm();
+    if (!validationResult.isValid) {
       return;
     }
 
@@ -99,10 +92,11 @@ export const useLoginHandler = (params: {
   }, [
     params.loginForm,
     params.currentLanguageType,
-    params.clearErrors,
-    params.setEmailError,
-    params.setPasswordError,
     params.setLoading,
-    params.showDialog
+    params.showDialog,
+    params.login,
+    params.setSelectFamilyDialog,
+    params.loginRouter,
+    validateLoginForm
   ]);
 };

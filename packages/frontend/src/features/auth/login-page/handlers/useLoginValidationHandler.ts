@@ -1,0 +1,53 @@
+import { useCallback } from 'react';
+import { ClearErrors, SetEmailError, SetPasswordError } from '../stores/loginPageStore';
+import { LoginForm } from '../models/loginForm';
+import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+
+/**
+ * バリデーション結果
+ */
+export interface ValidationResult {
+  isValid: boolean;
+}
+
+/**
+ * ログインフォームのバリデーションハンドラー
+ * 
+ * フォームの入力内容をバリデーションし、エラーメッセージを設定する
+ */
+export const useLoginValidationHandler = (params: {
+  loginForm: LoginForm;
+  currentLanguageType: LanguageTypeValue;
+  clearErrors: ClearErrors;
+  setEmailError: SetEmailError;
+  setPasswordError: SetPasswordError;
+}) => {
+  return useCallback((): ValidationResult => {
+    // エラーをクリア
+    params.clearErrors();
+
+    let hasValidationError = false;
+
+    // メールアドレスのバリデーション
+    if (!params.loginForm.email.isValid) {
+      params.setEmailError(params.loginForm.email.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    // パスワードのバリデーション
+    if (!params.loginForm.password.isValid) {
+      params.setPasswordError(params.loginForm.password.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    return {
+      isValid: !hasValidationError
+    };
+  }, [
+    params.loginForm,
+    params.currentLanguageType,
+    params.clearErrors,
+    params.setEmailError,
+    params.setPasswordError
+  ]);
+};
