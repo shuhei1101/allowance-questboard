@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { QuestTypeEntity } from "./questTypeEntity";
 import { QuestCategoryEntity } from "./questCategoryEntity";
-import { IconEntity } from "src/features/icon/entity/iconEntity";
+import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 

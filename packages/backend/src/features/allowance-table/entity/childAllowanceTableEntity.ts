@@ -2,7 +2,7 @@
 //     """子供お小遣いテーブルエンティティ"""
 
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { ChildEntity } from "src/features/child/entity/childEntity";
+import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { AllowanceTableEntity } from "./allowanceTableEntity";
 

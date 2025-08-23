@@ -1,5 +1,5 @@
 module.exports = {
-  preset: 'ts-jest',
+  preset: 'react-native',
   testEnvironment: 'jsdom',
   displayName: 'frontend',
   roots: ['<rootDir>/src', '<rootDir>/__tests__'],
@@ -26,5 +26,5 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.tsx']
 };

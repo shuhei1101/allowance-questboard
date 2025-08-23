@@ -6,7 +6,7 @@ import {
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { LevelTableEntity } from "./levelTableEntity";
-import { ChildEntity } from "src/features/child/entity/childEntity";
+import { ChildEntity } from "@backend/features/child/entity/childEntity";
 
 /**
  * 子供用レベルテーブルエンティティ

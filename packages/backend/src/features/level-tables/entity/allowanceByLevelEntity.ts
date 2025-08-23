@@ -7,7 +7,7 @@ import {
   Unique,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { AllowanceTableEntity } from "src/features/allowance-table/entity/allowanceTableEntity";
+import { AllowanceTableEntity } from "@backend/features/allowance-table/entity/allowanceTableEntity";
 
 /**
  * レベル別お小遣いテーブルエンティティ

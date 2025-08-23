@@ -6,7 +6,7 @@ import { Birthday } from '@backend/features/shared/value-object/birthday';
 /**
  * 誕生日変更ハンドラーのカスタムフック
  * 
- * 誕生日の値を更新し、エラーをクリアする
+ * 誕生日の値を更新し、エラーをクリア
  */
 export const useBirthdayHandler = (params: {
   parentForm: ParentForm,
@@ -21,7 +21,7 @@ export const useBirthdayHandler = (params: {
         email: params.parentForm.email,
         password: params.parentForm.password,
         icon: params.parentForm.icon,
-        birthday: new Birthday(birthday),
+        birthday: Birthday.fromString(birthday),
       });
       params.setParentForm(updatedForm);
       
@@ -32,10 +32,7 @@ export const useBirthdayHandler = (params: {
       params.setBirthdayError(error.message);
     }
   }, [
-    params.parentForm.name, 
-    params.parentForm.email, 
-    params.parentForm.password, 
-    params.parentForm.icon,
+    params.parentForm,
     params.setParentForm, 
     params.birthdayError, 
     params.setBirthdayError

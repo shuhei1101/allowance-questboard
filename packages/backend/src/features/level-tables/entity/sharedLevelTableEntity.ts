@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { FamilyLevelTableEntity } from "./familyLevelTableEntity";
-import { FamilyEntity } from "src/features/family/entity/familyEntity";
+import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 
 /**
  * 保存された共有レベルテーブルエンティティ

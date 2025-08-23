@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { ChildEntity } from "./childEntity";
-import { EducationEntity } from "src/features/child/entity/educationEntity";
+import { EducationEntity } from "@backend/features/child/entity/educationEntity";
 
 /**
  * 子供の現在の学年を定義するエンティティ

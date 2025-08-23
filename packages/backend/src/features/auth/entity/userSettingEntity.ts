@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
-import { LanguageEntity } from "src/features/language/entity/languageEntity";
+import { LanguageEntity } from "@backend/features/language/entity/languageEntity";
 
 /**
  * ユーザ設定エンティティ

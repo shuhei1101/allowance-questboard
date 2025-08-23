@@ -5,8 +5,8 @@ import { useRoute } from '@react-navigation/native';
 import { EmailInputField } from '@/features/shared/components/EmailInputField';
 import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
 import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
-import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
+import { ComfirmButton } from '@/features/shared/components';
 
 interface ComponentDetailPageProps {
   componentType: string;

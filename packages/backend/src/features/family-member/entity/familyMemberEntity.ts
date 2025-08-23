@@ -6,7 +6,7 @@ import {
   Check,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { IconEntity } from "src/features/icon/entity/iconEntity";
+import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 
 /**
  * 家族メンバーエンティティ

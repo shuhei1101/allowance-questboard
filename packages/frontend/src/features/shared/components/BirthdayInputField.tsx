@@ -1,5 +1,6 @@
-import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { EntryField } from '@/core/components/EntryField';
 import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
@@ -12,13 +13,23 @@ interface Props {
 
 /**
  * 誕生日入力フィールドコンポーネント
- * 一旦はメッセージ表示のみ（DateTimePicker未インストールのため）
+ * DateTimePickerを使用したカレンダー式誕生日選択
  */
 export const BirthdayInputField: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
+  const [showPicker, setShowPicker] = useState(false);
+
+  const currentDate = value ? new Date(value) : new Date();
+
+  const handleDateChange = (event: any, selectedDate?: Date) => {
+    setShowPicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      onChange(selectedDate.toISOString());
+    }
+  };
 
   const showDatePicker = () => {
-    Alert.alert('誕生日選択', 'DateTimePickerを実装予定です');
+    setShowPicker(true);
   };
 
   const formatDisplayDate = (dateString: string) => {
@@ -48,6 +59,16 @@ export const BirthdayInputField: React.FC<Props> = ({ value, onChange, error }) 
             {value ? formatDisplayDate(value) : 'YYYY/MM/DD'}
           </Text>
         </TouchableOpacity>
+        
+        {showPicker && (
+          <DateTimePicker
+            value={currentDate}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={handleDateChange}
+            maximumDate={new Date()}
+          />
+        )}
       </EntryField>
     </FieldWithError>
   );

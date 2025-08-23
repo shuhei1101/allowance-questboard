@@ -6,13 +6,13 @@ import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEnt
 import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
 import { IconSelectButtonEntry } from '../../shared/components/IconSelectButtonEntry';
 import { BirthdayInputFieldEntry } from '../../shared/components/BirthdayInputFieldEntry';
-import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
 import { useParentEditPageHandlers } from './hooks/useParentEditPageHandlers';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { fetchParentForm } from './query/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
+import { ComfirmButton } from '@/features/shared/components';
 
 /**
  * 親情報編集画面
@@ -125,7 +125,7 @@ export const ParentEditPage: React.FC<Props> = async ({
           
           {/* 誕生日入力フィールド */}
           <BirthdayInputFieldEntry
-            value={pageStore.parentForm.birthday.toString()}
+            value={pageStore.parentForm.birthday.toISOString()}
             onChange={handleBirthdayChange}
             error={pageStore.birthdayError || undefined}
           />

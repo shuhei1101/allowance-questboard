@@ -7,7 +7,7 @@ import {
   Check,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { CurrencyEntity } from "src/features/shared/entity/currencyEntity";
+import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
 import { QuestEntity } from "./questEntity";
 import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTranslationEntity";
 

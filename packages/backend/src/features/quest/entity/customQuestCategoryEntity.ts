@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { QuestCategoryEntity } from "./questCategoryEntity";
-import { FamilyEntity } from "src/features/family/entity/familyEntity";
+import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 
 /**
  * カスタムクエストカテゴリエンティティ

@@ -6,9 +6,9 @@ import {
   Index,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { FamilyMemberEntity } from "src/features/family-member/entity/familyMemberEntity";
+import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 import { NotifiableTypeEntity } from "./notifiableTypeEntity";
-import { ScreenEntity } from "src/features/shared/entity/screenEntity";
+import { ScreenEntity } from "@backend/features/shared/entity/screenEntity";
 
 /**
  * 通知エンティティ

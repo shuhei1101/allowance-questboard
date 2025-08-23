@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
+import { ComfirmButton } from '@/features/shared/components';
 
 /**
  * SaveButton詳細ページ

@@ -60,3 +60,17 @@ export const BackButton: React.FC<Props> = (props) => {
     />
   );
 };
+
+/**
+ * 確定ボタンコンポーネント
+ * ActionButtonをラップしてsaveアイコンを提供
+ * ナビゲーションバーのアクションボタンとしても使用可能
+ */
+export const ComfirmButton: React.FC<Props> = (props) => {
+  return (
+    <ActionButton
+      {...props}
+      iconName="checkmark"
+    />
+  );
+};

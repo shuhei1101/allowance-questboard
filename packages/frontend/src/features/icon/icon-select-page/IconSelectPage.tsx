@@ -6,8 +6,8 @@ import { useSelectIconPageStore as useIconSelectPageStore } from './stores/iconS
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
 import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
-import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { Icon } from '@backend/features/icon/domain/icon';
+import { ComfirmButton } from '@/features/shared/components/ActionButtons';
 
 interface Props {
   /**

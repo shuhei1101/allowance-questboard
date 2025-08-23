@@ -6,7 +6,7 @@ import {
   Check,
 } from "typeorm";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
-import { ChildEntity } from "src/features/child/entity/childEntity";
+import { ChildEntity } from "@backend/features/child/entity/childEntity";
 import { AllowanceableTypeEntity } from "./allowanceableTypeEntity";
 
 /**
