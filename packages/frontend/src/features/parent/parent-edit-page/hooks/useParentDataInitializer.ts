@@ -24,5 +24,5 @@ export const useInitializeParentData = (parentId?: ParentId) => {
     pageStore.reset();
     
     initializeParentData();
-  }, [parentId, pageStore]);
+  }, [parentId]); // pageStoreを依存配列から削除
 };
