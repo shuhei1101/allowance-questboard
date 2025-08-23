@@ -1,0 +1,69 @@
+import { useCallback } from 'react';
+import { ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../stores/parentEditPageStore';
+import { ParentForm } from '../models/parentForm';
+import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+
+/**
+ * バリデーション結果
+ */
+export interface ValidationResult {
+  isValid: boolean;
+}
+
+/**
+ * 親編集フォームのバリデーションハンドラー
+ * 
+ * フォームの入力内容をバリデーションし、エラーメッセージを設定する
+ */
+export const useParentFormValidationHandler = (params: {
+  parentForm: ParentForm;
+  currentLanguageType: LanguageTypeValue;
+  clearErrors: ClearErrors;
+  setNameError: SetNameError;
+  setEmailError: SetEmailError;
+  setPasswordError: SetPasswordError;
+  setBirthdayError: SetBirthdayError;
+}) => {
+  return useCallback((): ValidationResult => {
+    // エラーをクリア
+    params.clearErrors();
+
+    let hasValidationError = false;
+
+    // 名前のバリデーション
+    if (!params.parentForm.name.isValid) {
+      params.setNameError(params.parentForm.name.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    // メールアドレスのバリデーション
+    if (!params.parentForm.email.isValid) {
+      params.setEmailError(params.parentForm.email.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    // パスワードのバリデーション
+    if (!params.parentForm.password.isValid) {
+      params.setPasswordError(params.parentForm.password.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    // 誕生日のバリデーション
+    if (!params.parentForm.birthday.isValid) {
+      params.setBirthdayError(params.parentForm.birthday.errorMessage.getMessage(params.currentLanguageType));
+      hasValidationError = true;
+    }
+
+    return {
+      isValid: !hasValidationError
+    };
+  }, [
+    params.parentForm,
+    params.currentLanguageType,
+    params.clearErrors,
+    params.setNameError,
+    params.setEmailError,
+    params.setPasswordError,
+    params.setBirthdayError
+  ]);
+};

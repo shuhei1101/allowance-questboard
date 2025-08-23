@@ -1,33 +1,4 @@
-import { renderHook }       const { result } = renderHook(() =>
-        useLoginFormValidationHandler({
-          loginForm,
-          currentLanguageType,
-          clearErrors: mockClearErrors,
-          setEmailError: mockSetEmailError,
-          setPasswordError: mockSetPasswordError,
-        })
-      );
-
-      // 実行
-      const validationResult: ValidationResult = result.current();
-
-      // 検証
-      expect(validationResult.isValid).toBe(true);
-      expect(mockClearErrors).toHaveBeenCalledTimes(1);
-      expect(mockSetEmailError).not.toHaveBeenCalled();
-      expect(mockSetPasswordError).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('バリデーションが失敗すること', () => {
-    it('メールアドレスが無効な場合、バリデーションが失敗すること', () => {
-      // 準備
-      const loginForm = LoginForm.initialize()
-        .updateEmail('invalid-email')
-        .updatePassword('validPassword123');
-
-      const { result } = renderHook(() =>
-        useLoginFormValidationHandler({rary/react-native';
+import { renderHook } from '@testing-library/react-native';
 import { useLoginFormValidationHandler, ValidationResult } from '../handlers/useLoginFormValidationHandler';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
@@ -78,7 +49,7 @@ describe('useLoginFormValidationHandler', () => {
         .updatePassword('validPassword123');
 
       const { result } = renderHook(() =>
-        useLoginValidationHandler({
+        useLoginFormValidationHandler({
           loginForm,
           currentLanguageType,
           clearErrors: mockClearErrors,
@@ -104,7 +75,7 @@ describe('useLoginFormValidationHandler', () => {
         .updatePassword('');
 
       const { result } = renderHook(() =>
-        useLoginValidationHandler({
+        useLoginFormValidationHandler({
           loginForm,
           currentLanguageType,
           clearErrors: mockClearErrors,
@@ -130,7 +101,7 @@ describe('useLoginFormValidationHandler', () => {
         .updatePassword('');
 
       const { result } = renderHook(() =>
-        useLoginValidationHandler({
+        useLoginFormValidationHandler({
           loginForm,
           currentLanguageType,
           clearErrors: mockClearErrors,

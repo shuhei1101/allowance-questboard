@@ -8,7 +8,7 @@ import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { Login } from '../services/login';
 import { LoginRouter } from '@backend/features/auth/router/loginRouter';
 import { AppError } from '@backend/core/errors/appError';
-import { useLoginValidationHandler } from '../handlers/useLoginValidationHandler';
+import { useLoginFormValidationHandler } from '../handlers/useLoginFormValidationHandler';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -28,7 +28,7 @@ export const useLoginHandler = (params: {
   loginRouter: LoginRouter
 }) => {
   // バリデーションハンドラーを取得
-  const validateLoginForm = useLoginValidationHandler({
+  const validateLoginForm = useLoginFormValidationHandler({
     loginForm: params.loginForm,
     currentLanguageType: params.currentLanguageType,
     clearErrors: params.clearErrors,

@@ -15,7 +15,7 @@ export interface ValidationResult {
  * 
  * フォームの入力内容をバリデーションし、エラーメッセージを設定する
  */
-export const useLoginValidationHandler = (params: {
+export const useLoginFormValidationHandler = (params: {
   loginForm: LoginForm;
   currentLanguageType: LanguageTypeValue;
   clearErrors: ClearErrors;

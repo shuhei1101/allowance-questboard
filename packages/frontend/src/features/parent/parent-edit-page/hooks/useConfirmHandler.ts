@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
-import { AppError } from '@backend/core/errors/appError';
-import { LocaleString } from '@backend/core/messages/localeString';
+import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+import { useParentFormValidationHandler as useParentFormValidationHandler } from '../handlers/useParentFormValidationHandler';
 
 /**
  * 確定ボタン押下ハンドラーのカスタムフック
@@ -11,6 +11,7 @@ import { LocaleString } from '@backend/core/messages/localeString';
  */
 export const useConfirmHandler = (params: {
   parentForm: ParentForm,
+  currentLanguageType: LanguageTypeValue,
   setLoading: SetLoading,
   clearErrors: ClearErrors,
   setNameError: SetNameError,
@@ -19,21 +20,26 @@ export const useConfirmHandler = (params: {
   setBirthdayError: SetBirthdayError,
   shouldUpdate?: boolean
 }) => {
+  // バリデーションハンドラーを取得
+  const validateParentForm = useParentFormValidationHandler({
+    parentForm: params.parentForm,
+    currentLanguageType: params.currentLanguageType,
+    clearErrors: params.clearErrors,
+    setNameError: params.setNameError,
+    setEmailError: params.setEmailError,
+    setPasswordError: params.setPasswordError,
+    setBirthdayError: params.setBirthdayError
+  });
+
   return useCallback(async (): Promise<void> => {
     try {
-      // バリデーション実行
-      if (!params.parentForm.isValid) {
-        throw new AppError({
-          errorType: 'VALIDATION_ERROR',
-          message: new LocaleString({
-            ja: '入力に誤りがあります。各項目を確認してください。',
-            en: 'There are errors in the input. Please check each item.'
-          })
-        });
+      // バリデーションチェック
+      const validationResult = validateParentForm();
+      if (!validationResult.isValid) {
+        return; // バリデーションエラーの場合は処理を終了
       }
 
       params.setLoading(true);
-      params.clearErrors();
 
       // shouldUpdateがtrueの場合のみ更新クエリを送信
       if (params.shouldUpdate !== false) {
@@ -41,33 +47,23 @@ export const useConfirmHandler = (params: {
         // await registerParent(params.parentForm);
       }
     } catch (error: any) {
-      // エラー時の処理
+      // API呼び出し時のエラー処理
       console.error('親情報登録エラー:', error);
       
-      // 各フィールドのエラーメッセージ設定（今後詳細化予定）
-      if (error.message.includes('名前')) {
-        params.setNameError(error.message);
-      }
-      if (error.message.includes('メール')) {
-        params.setEmailError(error.message);
-      }
-      if (error.message.includes('パスワード')) {
-        params.setPasswordError(error.message);
-      }
-      if (error.message.includes('誕生日')) {
-        params.setBirthdayError(error.message);
-      }
+      // TODO: API関連のエラーメッセージ表示処理を実装予定
     } finally {
       params.setLoading(false);
     }
   }, [
     params.parentForm,
+    params.currentLanguageType,
     params.setLoading,
     params.clearErrors,
     params.setNameError,
     params.setEmailError,
     params.setPasswordError,
     params.setBirthdayError,
-    params.shouldUpdate
+    params.shouldUpdate,
+    validateParentForm
   ]);
 };
