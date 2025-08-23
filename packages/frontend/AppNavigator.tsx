@@ -86,9 +86,6 @@ export function AppNavigator(props: AppNavigatorProps) {
         <AppStack.Screen 
           name={DemoStackInfo.name} 
           component={DemoNavigator}
-          options={{
-            headerShown: true,
-          }}
         />
       </AppStack.Navigator>
     </NavigationContainer>
