@@ -1,7 +1,6 @@
 import { BaseMasterModel } from '@backend/core/models/baseMasterModel';
 import { IconCategoryId, IconCategoryIdSchema } from '../value-objects/iconCategoryId';
 import { IconCategoryNames, IconCategoryNamesSchema } from './iconCategoryNames';
-import { Version, VersionSchema } from '@backend/features/shared/value-object/version';
 import { Icons, IconsSchema } from '../../icon/domain/icons';
 import { z } from 'zod';
 import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-object/sortOrder';
@@ -11,7 +10,6 @@ import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-objec
  */
 export const IconCategorySchema = z.object({
   id: IconCategoryIdSchema,
-  version: VersionSchema,
   nameByLanguages: IconCategoryNamesSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),
@@ -25,13 +23,12 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
 
   constructor(
     id: IconCategoryId,
-    version: Version,
     public readonly nameByLanguages: IconCategoryNames = new IconCategoryNames([]),
     public readonly sortOrder: SortOrder = new SortOrder(0),
     public readonly isActive: boolean = true,
     public icons: Icons = new Icons([]),
   ) {
-    super(id, version);
+    super(id);
   }
 
   /**
@@ -58,7 +55,6 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
   toZodData(): z.infer<typeof IconCategorySchema> {
     return {
       id: this.key.toZodData(),
-      version: this.version.toZodData(),
       nameByLanguages: this.nameByLanguages.toZodData(),
       sortOrder: this.sortOrder,
       isActive: this.isActive,
@@ -73,7 +69,6 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
   static fromZodData(data: z.infer<typeof IconCategorySchema>): IconCategory {
     return new IconCategory(
       IconCategoryId.fromZodData(data.id),
-      Version.fromZodData(data.version),
       IconCategoryNames.fromZodData(data.nameByLanguages),
       SortOrder.fromZodData(data.sortOrder),
       data.isActive,

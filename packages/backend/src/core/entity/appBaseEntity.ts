@@ -19,10 +19,6 @@ export abstract class AppBaseEntity extends BaseEntity implements BaseEntityProt
   abstract id: number;
   @Column({ type: "int", default: 1, nullable: false, comment: "バージョン" })
   version!: number;
-  // ドメインモデルからエンティティ生成（抽象）
-  static fromModel(model: any): BaseEntity {
-    throw new Error("fromModel must be implemented in subclass");
-  }
 
   // シード用データ取得（抽象）
   protected static seedData(): AppBaseEntity[] {

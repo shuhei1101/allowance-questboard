@@ -1,7 +1,7 @@
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
-import { Birthday } from '@backend/features/parent/value-object/birthday';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { BaseModel } from '@backend/core/models/baseModel';
 import { Icon } from '@backend/features/icon/domain/icon';
 

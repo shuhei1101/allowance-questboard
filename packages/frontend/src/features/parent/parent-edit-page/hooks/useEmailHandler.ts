@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { UpdateParentForm, SetEmailError, EmailError } from '../stores/parentEditPageStore';
+import { SetParentForm, SetEmailError, EmailError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
 import { Email } from '@backend/features/auth/value-object/email';
 
@@ -10,7 +10,7 @@ import { Email } from '@backend/features/auth/value-object/email';
  */
 export const useEmailHandler = (params: {
   parentForm: ParentForm,
-  updateParentForm: UpdateParentForm,
+  setParentForm: SetParentForm,
   emailError: EmailError,
   setEmailError: SetEmailError
 }) => {
@@ -23,7 +23,7 @@ export const useEmailHandler = (params: {
         icon: params.parentForm.icon,
         birthday: params.parentForm.birthday,
       });
-      params.updateParentForm(updatedForm);
+      params.setParentForm(updatedForm);
       
       if (params.emailError) {
         params.setEmailError(null);
@@ -36,7 +36,7 @@ export const useEmailHandler = (params: {
     params.parentForm.password, 
     params.parentForm.icon, 
     params.parentForm.birthday,
-    params.updateParentForm, 
+    params.setParentForm, 
     params.emailError, 
     params.setEmailError
   ]);

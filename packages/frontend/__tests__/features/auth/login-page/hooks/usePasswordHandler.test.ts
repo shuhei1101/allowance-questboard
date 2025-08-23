@@ -7,20 +7,20 @@ import { Password } from '@backend/features/auth/value-object/password';
 
 describe('usePasswordHandler', () => {
   describe('パスワード変更ハンドラーが正しく動作すること', () => {
-    test('新しいパスワードが入力された時にupdateLoginFormが呼び出されること', () => {
+    test('新しいパスワードが入力された時にsetLoginFormが呼び出されること', () => {
       // 準備
       const existingLoginForm = new LoginForm({
         email: new Email('test@example.com'),
         password: new Password('oldPassword')
       });
-      const mockUpdateLoginForm = jest.fn();
+      const mocksetLoginForm = jest.fn();
       const mockSetPasswordError = jest.fn();
       
       // 実行
       const { result } = renderHook(() =>
         usePasswordHandler({
           loginForm: existingLoginForm,
-          updateLoginForm: mockUpdateLoginForm,
+          setLoginForm: mocksetLoginForm,
           passwordError: null,
           setPasswordError: mockSetPasswordError
         })
@@ -29,8 +29,8 @@ describe('usePasswordHandler', () => {
       result.current('newPassword123');
       
       // 検証
-      expect(mockUpdateLoginForm).toHaveBeenCalledTimes(1);
-      const calledLoginForm = mockUpdateLoginForm.mock.calls[0][0] as LoginForm;
+      expect(mocksetLoginForm).toHaveBeenCalledTimes(1);
+      const calledLoginForm = mocksetLoginForm.mock.calls[0][0] as LoginForm;
       expect(calledLoginForm.email.value).toBe('test@example.com');
       expect(calledLoginForm.password.value).toBe('newPassword123');
     });
@@ -41,7 +41,7 @@ describe('usePasswordHandler', () => {
         email: new Email('test@example.com'),
         password: new Password('password123')
       });
-      const mockUpdateLoginForm = jest.fn();
+      const mocksetLoginForm = jest.fn();
       const mockSetPasswordError = jest.fn();
       const existingError = 'パスワードが短すぎます';
       
@@ -49,7 +49,7 @@ describe('usePasswordHandler', () => {
       const { result } = renderHook(() =>
         usePasswordHandler({
           loginForm: existingLoginForm,
-          updateLoginForm: mockUpdateLoginForm,
+          setLoginForm: mocksetLoginForm,
           passwordError: existingError,
           setPasswordError: mockSetPasswordError
         })
@@ -67,14 +67,14 @@ describe('usePasswordHandler', () => {
         email: new Email('test@example.com'),
         password: new Password('password123')
       });
-      const mockUpdateLoginForm = jest.fn();
+      const mocksetLoginForm = jest.fn();
       const mockSetPasswordError = jest.fn();
       
       // 実行
       const { result } = renderHook(() =>
         usePasswordHandler({
           loginForm: existingLoginForm,
-          updateLoginForm: mockUpdateLoginForm,
+          setLoginForm: mocksetLoginForm,
           passwordError: null,
           setPasswordError: mockSetPasswordError
         })

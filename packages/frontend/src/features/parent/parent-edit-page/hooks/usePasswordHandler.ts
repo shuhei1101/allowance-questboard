@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { UpdateParentForm, SetPasswordError, PasswordError } from '../stores/parentEditPageStore';
+import { SetParentForm, SetPasswordError, PasswordError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
 import { Password } from '@backend/features/auth/value-object/password';
 
@@ -10,7 +10,7 @@ import { Password } from '@backend/features/auth/value-object/password';
  */
 export const usePasswordHandler = (params: {
   parentForm: ParentForm,
-  updateParentForm: UpdateParentForm,
+  setParentForm: SetParentForm,
   passwordError: PasswordError,
   setPasswordError: SetPasswordError
 }) => {
@@ -23,7 +23,7 @@ export const usePasswordHandler = (params: {
         icon: params.parentForm.icon,
         birthday: params.parentForm.birthday,
       });
-      params.updateParentForm(updatedForm);
+      params.setParentForm(updatedForm);
       
       if (params.passwordError) {
         params.setPasswordError(null);
@@ -36,7 +36,7 @@ export const usePasswordHandler = (params: {
     params.parentForm.email, 
     params.parentForm.icon, 
     params.parentForm.birthday,
-    params.updateParentForm, 
+    params.setParentForm, 
     params.passwordError, 
     params.setPasswordError
   ]);

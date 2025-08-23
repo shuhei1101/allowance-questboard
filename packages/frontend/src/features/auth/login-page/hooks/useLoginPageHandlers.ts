@@ -23,13 +23,13 @@ export const useLoginPageHandlers = () => {
   const handleEmailChange = useEmailHandler({
     emailError: pageStore.emailError,
     loginForm: pageStore.loginForm,
-    updateLoginForm: pageStore.updateLoginForm,
+    setLoginForm: pageStore.setLoginForm,
     setEmailError: pageStore.setEmailError,
   });
   const handlePasswordChange = usePasswordHandler({
     passwordError: pageStore.passwordError,
     loginForm: pageStore.loginForm,
-    updateLoginForm: pageStore.updateLoginForm,
+    setLoginForm: pageStore.setLoginForm,
     setPasswordError: pageStore.setPasswordError,
   });
   const handleLogin = useLoginHandler({
@@ -41,7 +41,7 @@ export const useLoginPageHandlers = () => {
     showDialog: pageStore.showDialog,
     setLoading: pageStore.setLoading,
     login: login,
-    updateSelectFamilyDialog: pageStore.updateSelectFamilyDialog,
+    setSelectFamilyDialog: pageStore.setSelectFamilyDialog,
     loginRouter: createAuthenticatedClient({
       jwtToken: sessionStore.jwt,
       languageType: sessionStore.languageType,
@@ -50,13 +50,13 @@ export const useLoginPageHandlers = () => {
   const handleParentLogin = useParentLoginHandler({
     updateFamilyMemberType: sessionStore.updateFamilyMemberType,
     hideDialog: pageStore.hideDialog,
-    updateLoginForm: pageStore.updateLoginForm,
+    setLoginForm: pageStore.setLoginForm,
     setLoading: pageStore.setLoading,
   });
   const handleChildLogin = useChildLoginHandler({
     updateFamilyMemberType: sessionStore.updateFamilyMemberType,
     hideDialog: pageStore.hideDialog,
-    updateLoginForm: pageStore.updateLoginForm,
+    setLoginForm: pageStore.setLoginForm,
     setLoading: pageStore.setLoading,
   });
   const handleCloseDialog = useCloseDialogHandler({

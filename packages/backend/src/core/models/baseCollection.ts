@@ -15,7 +15,7 @@ export interface CollectionItemProtocol<TKey extends Hashable> {
   /**
    * アイテムのIDを返す
    */
-  readonly key: TKey;
+  readonly key: TKey | null;
 }
 
 /**
@@ -45,6 +45,9 @@ export abstract class BaseCollection<
   updateIndex(): void {
     this.itemByIds.clear();
     for (const item of this.items) {
+      if (!item.key) {
+        continue;
+      }
       // BaseIdのhash()メソッドを使用してMapのキーにする
       const key = item.key.hash().toString();
       this.itemByIds.set(key, item);

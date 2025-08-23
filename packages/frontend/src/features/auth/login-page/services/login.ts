@@ -1,13 +1,13 @@
-import { UpdateSelectFamilyDialog } from '../stores/loginPageStore';
+import { SetSelectFamilyDialog } from '../stores/loginPageStore';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { SelectFamilyDialog } from '../models/selectFamilyDialog';
-import { FamilyName } from '@backend/features/family/entity/value-object/familyName';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
 import { LoginRouter } from '@backend/features/auth/router/loginRouter';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
 
 interface LoginParams {
-  updateSelectFamilyDialog: UpdateSelectFamilyDialog,
+  setSelectFamilyDialog: SetSelectFamilyDialog,
   router: LoginRouter
 }
 export type Login = (params: LoginParams) => void;
@@ -28,7 +28,7 @@ export const login = async (params: LoginParams): Promise<void> => {
     const response = await params.router.query();
 
     // responseから状態を更新
-    params.updateSelectFamilyDialog(
+    params.setSelectFamilyDialog(
       new SelectFamilyDialog({
         familyName: new FamilyName(response.familyName),
       })

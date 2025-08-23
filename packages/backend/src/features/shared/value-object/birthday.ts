@@ -6,23 +6,21 @@ import { z } from 'zod';
  * BirthdayのZodスキーマ
  */
 export const BirthdaySchema = z.object({
-  value: z.string()
+  value: z.date()
 });
 
 /**
  * 誕生日を表す値オブジェクト
  */
-export class Birthday extends BaseValueObject<string, typeof BirthdaySchema> {
-  constructor(value: string) {
+export class Birthday extends BaseValueObject<Date, typeof BirthdaySchema> {
+  constructor(value: Date) {
     super({ value });
   }
 
   protected validate(): void {
-    // 一旦シンプルな実装
     this.validator
       .required()
-      .minLength(1)
-      .maxLength(20);
+      .todayOrBefore();
   }
 
   protected get valueName(): LocaleString {

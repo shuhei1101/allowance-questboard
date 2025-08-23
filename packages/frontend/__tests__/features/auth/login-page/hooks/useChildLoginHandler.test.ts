@@ -41,7 +41,7 @@ describe('useChildLoginHandler', () => {
       // 準備
       const mockUpdateFamilyMemberType = jest.fn();
       const mockHideDialog = jest.fn();
-      const mockUpdateLoginForm = jest.fn();
+      const mocksetLoginForm = jest.fn();
       const mockSetLoading = jest.fn();
       
       // 実行
@@ -49,7 +49,7 @@ describe('useChildLoginHandler', () => {
         useChildLoginHandler({
           updateFamilyMemberType: mockUpdateFamilyMemberType,
           hideDialog: mockHideDialog,
-          updateLoginForm: mockUpdateLoginForm,
+          setLoginForm: mocksetLoginForm,
           setLoading: mockSetLoading
         })
       );
@@ -59,7 +59,7 @@ describe('useChildLoginHandler', () => {
       // 検証
       expect(mockUpdateFamilyMemberType).toHaveBeenCalledWith(FamilyMemberType.CHILD);
       expect(mockHideDialog).toHaveBeenCalledTimes(1);
-      expect(mockUpdateLoginForm).toHaveBeenCalledTimes(1);
+      expect(mocksetLoginForm).toHaveBeenCalledTimes(1);
       expect(mockSetLoading).toHaveBeenCalledWith(false);
     });
 
@@ -69,7 +69,7 @@ describe('useChildLoginHandler', () => {
         throw new Error('テストエラー');
       });
       const mockHideDialog = jest.fn();
-      const mockUpdateLoginForm = jest.fn();
+      const mocksetLoginForm = jest.fn();
       const mockSetLoading = jest.fn();
       const { Alert } = require('react-native');
       jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -79,7 +79,7 @@ describe('useChildLoginHandler', () => {
         useChildLoginHandler({
           updateFamilyMemberType: mockUpdateFamilyMemberType,
           hideDialog: mockHideDialog,
-          updateLoginForm: mockUpdateLoginForm,
+          setLoginForm: mocksetLoginForm,
           setLoading: mockSetLoading
         })
       );

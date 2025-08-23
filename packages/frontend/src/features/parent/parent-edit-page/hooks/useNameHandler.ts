@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { UpdateParentForm, SetNameError, NameError } from '../stores/parentEditPageStore';
+import { SetParentForm, SetNameError, NameError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
 
@@ -10,7 +10,7 @@ import { ParentName } from '@backend/features/parent/value-object/parentName';
  */
 export const useNameHandler = (params: {
   parentForm: ParentForm,
-  updateParentForm: UpdateParentForm,
+  setParentForm: SetParentForm,
   nameError: NameError,
   setNameError: SetNameError
 }) => {
@@ -23,7 +23,7 @@ export const useNameHandler = (params: {
         icon: params.parentForm.icon,
         birthday: params.parentForm.birthday,
       });
-      params.updateParentForm(updatedForm);
+      params.setParentForm(updatedForm);
       
       if (params.nameError) {
         params.setNameError(null);
@@ -36,7 +36,7 @@ export const useNameHandler = (params: {
     params.parentForm.password, 
     params.parentForm.icon, 
     params.parentForm.birthday,
-    params.updateParentForm, 
+    params.setParentForm, 
     params.nameError, 
     params.setNameError
   ]);

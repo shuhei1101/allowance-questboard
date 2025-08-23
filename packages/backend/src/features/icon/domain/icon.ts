@@ -1,6 +1,5 @@
 import { BaseMasterModel } from '@backend/core/models/baseMasterModel';
 import { IconId } from '../value-objects/iconId';
-import { Version, VersionSchema } from '@backend/features/shared/value-object/version';
 import { IconCategoryId } from '../../icon-category/value-objects/iconCategoryId';
 import { IconName, IconNameSchema } from '../value-objects/iconName';
 import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-object/sortOrder';
@@ -12,7 +11,6 @@ import { z } from 'zod';
  */
 export const IconSchema = z.object({
   id: BaseIdSchema,
-  version: VersionSchema,
   name: IconNameSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),
@@ -26,13 +24,12 @@ export class Icon extends BaseMasterModel<IconId> {
 
   constructor(
     id: IconId,
-    version: Version,
     public readonly name: IconName,
     public readonly sortOrder: SortOrder = new SortOrder(0),
     public readonly isActive: boolean = true,
     public readonly iconCategoryId?: IconCategoryId
   ) {
-    super(id, version);
+    super(id);
   }
   hash(): number | string {
     return this.id.value;
@@ -44,7 +41,6 @@ export class Icon extends BaseMasterModel<IconId> {
   toZodData(): z.infer<typeof IconSchema> {
     return {
       id: this.key.toZodData(),
-      version: this.version.toZodData(),
       name: this.name.toZodData(),
       sortOrder: this.sortOrder.toZodData(),
       isActive: this.isActive,
@@ -59,7 +55,6 @@ export class Icon extends BaseMasterModel<IconId> {
   static fromZodData(data: z.infer<typeof IconSchema>): Icon {
     return new Icon(
       IconId.fromZodData(data.id),
-      Version.fromZodData(data.version),
       IconName.fromZodData(data.name),
       SortOrder.fromZodData(data.sortOrder),
       data.isActive,

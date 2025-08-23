@@ -151,6 +151,27 @@ export class ValueValidator<T = any> {
     return this;
   }
 
+  // 今日以前の日付チェック
+  todayOrBefore(optionMessage?: LocaleString): ValueValidator<T> {
+    if (this.value instanceof Date === false) {
+      throw new ValueValidateError({
+        valueName: this.valueName,
+        errorType: "date_format",
+        message: optionMessage ?? ValidationErrorMessages.dateFormat(this.valueName)
+      });
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (this.value > today) {
+      throw new ValueValidateError({
+        valueName: this.valueName,
+        errorType: "date_today_or_before",
+        message: optionMessage ?? ValidationErrorMessages.dateTodayOrBefore(this.valueName)
+      });
+    }
+    return this;
+  }
+
   // 数値バリデーション
 
   /**

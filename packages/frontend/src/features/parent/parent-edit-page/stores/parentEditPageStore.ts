@@ -7,15 +7,17 @@ export type NameError = string | null;
 export type EmailError = string | null;
 export type PasswordError = string | null;
 export type BirthdayError = string | null;
+export type IsConfirmed = boolean;
 
-export type UpdateParentForm = (form: ParentForm) => void;
+export type SetParentForm = (form: ParentForm) => void;
 export type SetLoading = (loading: boolean) => void;
 export type SetNameError = (error: string | null) => void;
 export type SetEmailError = (error: string | null) => void;
 export type SetPasswordError = (error: string | null) => void;
 export type SetBirthdayError = (error: string | null) => void;
 export type ClearErrors = () => void;
-
+export type SetConfirmed = (confirmed: boolean) => void;
+export type Reset = () => void;
 interface ParentEditPageState {
   isLoading: IsLoading;
   parentForm: ParentForm;
@@ -23,15 +25,28 @@ interface ParentEditPageState {
   emailError: EmailError;
   passwordError: PasswordError;
   birthdayError: BirthdayError;
+  isConfirmed: IsConfirmed;
 
-  updateParentForm: UpdateParentForm;
+  setParentForm: SetParentForm;
   setLoading: SetLoading;
   setNameError: SetNameError;
   setEmailError: SetEmailError;
   setPasswordError: SetPasswordError;
   setBirthdayError: SetBirthdayError;
   clearErrors: ClearErrors;
+  setConfirmed: SetConfirmed;
+  reset: Reset;
 }
+
+const initialState = {
+  isLoading: false,
+  parentForm: ParentForm.initialize(),
+  nameError: null,
+  emailError: null,
+  passwordError: null,
+  birthdayError: null,
+  isConfirmed: false,
+};
 
 /**
  * 親情報登録画面状態管理ストア
@@ -39,15 +54,10 @@ interface ParentEditPageState {
 export const useParentEditPageStore = create<ParentEditPageState>()(
   devtools(
     (set) => ({
-      isLoading: false,
-      parentForm: ParentForm.initialize(),
-      nameError: null,
-      emailError: null,
-      passwordError: null,
-      birthdayError: null,
+      ...initialState,
 
-      updateParentForm: (parentForm: ParentForm) => {
-        set({ parentForm }, false, 'updateParentForm');
+      setParentForm: (parentForm: ParentForm) => {
+        set({ parentForm }, false, 'setParentForm');
       },
 
       setLoading: (loading: boolean) => {
@@ -77,6 +87,14 @@ export const useParentEditPageStore = create<ParentEditPageState>()(
           passwordError: null, 
           birthdayError: null 
         }, false, 'clearErrors');
+      },
+
+      setConfirmed: (confirmed: boolean) => {
+        set({ isConfirmed: confirmed }, false, 'setConfirmed');
+      },
+
+      reset: () => {
+        set(initialState, false, 'reset');
       },
     }),
     {

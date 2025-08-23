@@ -17,8 +17,8 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
  * 家族の親情報を編集するためのページ
  * 
  * Props:
- * - onConfirm: 確定ボタン押下時のコールバック関数
- * - shouldUpdate: 更新クエリを送信するかのフラグ (デフォルト: true)
+ * - onConfirm: 確定ボタンが押された時のコールバック
+ * - shouldUpdate: 更新クエリを送信するかのフラグ（デフォルト: true）
  * 
  * 機能:
  * - 親の名前入力
@@ -30,15 +30,26 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
  * - 必須項目が未入力時の確定ボタン無効化
  */
 interface Props {
-  onConfirm: (parentData: any) => void;
-  shouldUpdate?: boolean;
+  shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
+  parentId?: string; // 親ID（オプション）
 }
 
-export const ParentEditPage: React.FC<Props> = ({ onConfirm, shouldUpdate = true }) => {
+export const ParentEditPage: React.FC<Props> = ({
+  shouldUpdate = true,
+  parentId,
+}) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
   const navigation = useNavigation();
+
+  // 親情報の取得
+  if (parentId) {
+    pageStore.fetchParentInfo(parentId);
+  }
+
+  // 状態を初期化
+  pageStore.reset();
   
   // 統合フックで全ハンドラーを取得
   const {
@@ -48,7 +59,10 @@ export const ParentEditPage: React.FC<Props> = ({ onConfirm, shouldUpdate = true
     handleIconSelect,
     handleBirthdayChange,
     handleConfirm,
-  } = useParentEditPageHandlers(onConfirm, shouldUpdate);
+  } = useParentEditPageHandlers({
+    shouldUpdate,
+    parentId
+  });
 
   // ナビゲーションヘッダーに保存ボタンを設定
   useLayoutEffect(() => {

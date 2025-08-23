@@ -8,8 +8,8 @@ export type IsDialogVisible = boolean;
 export type EmailError = string | null;
 export type PasswordError = string | null;
 
-export type UpdateLoginForm = (form: LoginForm) => void;
-export type UpdateSelectFamilyDialog = (dialog: SelectFamilyDialog) => void;
+export type SetLoginForm = (form: LoginForm) => void;
+export type SetSelectFamilyDialog = (dialog: SelectFamilyDialog) => void;
 export type ShowDialog = () => void;
 export type HideDialog = () => void;
 export type SetLoading = (loading: boolean) => void;
@@ -25,8 +25,8 @@ interface LoginPageState {
   emailError: EmailError;
   passwordError: PasswordError;
 
-  updateLoginForm: UpdateLoginForm;
-  updateSelectFamilyDialog: UpdateSelectFamilyDialog;
+  setLoginForm: SetLoginForm;
+  setSelectFamilyDialog: SetSelectFamilyDialog;
   showDialog: ShowDialog;
   hideDialog: HideDialog;
   setLoading: SetLoading;
@@ -48,12 +48,12 @@ export const useLoginPageStore = create<LoginPageState>()(
       emailError: null,
       passwordError: null,
 
-      updateLoginForm: (loginForm: LoginForm) => {
-        set({ loginForm }, false, 'updateLoginForm');
+      setLoginForm: (loginForm: LoginForm) => {
+        set({ loginForm }, false, 'setLoginForm');
       },
 
-      updateSelectFamilyDialog: (dialog: SelectFamilyDialog) => {
-        set({ selectFamilyDialog: dialog }, false, 'updateSelectFamilyDialog');
+      setSelectFamilyDialog: (dialog: SelectFamilyDialog) => {
+        set({ selectFamilyDialog: dialog }, false, 'setSelectFamilyDialog');
       },
 
       showDialog: () => {

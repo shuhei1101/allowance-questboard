@@ -4,8 +4,8 @@ import { IconDao } from '../../icon/dao/iconDao';
 import { IconCategories } from '../domain/iconCategories';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
-import { IconsFactory } from '@backend/features/icon/domain/iconsFactory';
-import { IconCategoriesFactory } from '../domain/iconCategoriesFactory';
+import { fromEntities as createIconsFromEntities } from '@backend/features/icon/domain/iconsFactory';
+import { fromEntity as createIconCategoriesFromEntity } from '../domain/iconCategoriesFactory';
 
 /**
  * アイコンカテゴリリポジトリの依存関係
@@ -39,9 +39,9 @@ export class IconCategoryRepository {
       const iconEntities = await this.params.iconDao.fetchAll();
       
       // アイコンエンティティからドメインモデルに変換
-      const icons = IconsFactory.fromEntity({entities: iconEntities});
-      
-      const iconCategories = IconCategoriesFactory.fromEntity({
+      const icons = createIconsFromEntities({entities: iconEntities});
+
+      const iconCategories = createIconCategoriesFromEntity({
         entities: categoryEntities,
         translationEntities: translationEntities,
         icons

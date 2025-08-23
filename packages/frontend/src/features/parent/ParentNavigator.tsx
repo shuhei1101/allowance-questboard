@@ -1,31 +1,23 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Alert } from 'react-native';
-import { ParentEditPage } from './parent-edit-page/ParentEditPage';
+import { ParentEditPage } from './parent-edit-page/ParentEditPage'
+
+export const StackInfo = {
+  name: 'Parent',
+  screens: {
+    parentEdit: 'ParentEdit',
+  },
+} as const;
 
 // 親機能関連のナビゲーションパラメータ型定義
 export type ParentStackParamList = {
-  ParentEdit: { onConfirm: (parentData: any) => void };
+  ParentEdit: {
+    shouldShowBackButton?: boolean;
+  }
 };
 
 const ParentStack = createStackNavigator<ParentStackParamList>();
-
-/**
- * 親編集画面のラッパー
- */
-const ParentEditPageWrapper: React.FC<{ route: any }> = ({ route }) => {
-  const { onConfirm } = route.params || {};
-
-  const handleConfirm = (parentData: any) => {
-    if (onConfirm) {
-      onConfirm(parentData);
-    } else {
-      Alert.alert('確定', '親情報が保存されました');
-    }
-  };
-
-  return <ParentEditPage onConfirm={handleConfirm} />;
-};
 
 /**
  * 親機能関連のナビゲーター
@@ -34,7 +26,7 @@ const ParentEditPageWrapper: React.FC<{ route: any }> = ({ route }) => {
 export function ParentNavigator() {
   return (
     <ParentStack.Navigator
-      initialRouteName="ParentEdit"
+      initialRouteName={StackInfo.screens.parentEdit}
       screenOptions={{
         headerShown: true,
         headerTitle: '親情報編集',
@@ -42,8 +34,8 @@ export function ParentNavigator() {
       {...({} as any)}
     >
       <ParentStack.Screen 
-        name="ParentEdit" 
-        component={ParentEditPageWrapper} 
+        name={StackInfo.screens.parentEdit}
+        component={ParentEditPage} 
       />
     </ParentStack.Navigator>
   );

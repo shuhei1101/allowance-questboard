@@ -90,7 +90,7 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
       password: new Password('demo123456'),
     });
 
-    loginPageStore.updateLoginForm(mockLoginForm);
+    loginPageStore.setLoginForm(mockLoginForm);
 
     console.log('🎯 Demo - Login page mock data set');
   };

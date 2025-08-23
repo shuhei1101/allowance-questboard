@@ -1,4 +1,4 @@
-import { FamilyName } from '@backend/features/family/entity/value-object/familyName';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
 import { BaseModel } from '@backend/core/models/baseModel';
 
 /**

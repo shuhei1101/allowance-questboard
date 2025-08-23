@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { UpdateParentForm, SetBirthdayError, BirthdayError } from '../stores/parentEditPageStore';
+import { SetParentForm, SetBirthdayError, BirthdayError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
 import { Birthday } from '@backend/features/parent/value-object/birthday';
 
@@ -10,7 +10,7 @@ import { Birthday } from '@backend/features/parent/value-object/birthday';
  */
 export const useBirthdayHandler = (params: {
   parentForm: ParentForm,
-  updateParentForm: UpdateParentForm,
+  setParentForm: SetParentForm,
   birthdayError: BirthdayError,
   setBirthdayError: SetBirthdayError
 }) => {
@@ -23,7 +23,7 @@ export const useBirthdayHandler = (params: {
         icon: params.parentForm.icon,
         birthday: new Birthday(birthday),
       });
-      params.updateParentForm(updatedForm);
+      params.setParentForm(updatedForm);
       
       if (params.birthdayError) {
         params.setBirthdayError(null);
@@ -36,7 +36,7 @@ export const useBirthdayHandler = (params: {
     params.parentForm.email, 
     params.parentForm.password, 
     params.parentForm.icon,
-    params.updateParentForm, 
+    params.setParentForm, 
     params.birthdayError, 
     params.setBirthdayError
   ]);

@@ -14,30 +14,33 @@ import { useParentEditPageStore as useParentEditPageStore } from '../stores/pare
  * @param onConfirm 確定ボタン押下時のコールバック関数
  * @param shouldUpdate 更新クエリを送信するかのフラグ (デフォルト: true)
  */
-export const useParentEditPageHandlers = (onConfirm: (parentData: any) => void, shouldUpdate: boolean = true) => {
+export const useParentEditPageHandlers = (params: {
+  shouldUpdate: boolean,
+  parentId?: string,
+}) => {
   const pageStore = useParentEditPageStore();
   const handleNameChange = useNameHandler({
     parentForm: pageStore.parentForm,
-    updateParentForm: pageStore.updateParentForm,
+    setParentForm: pageStore.setParentForm,
     nameError: pageStore.nameError,
     setNameError: pageStore.setNameError,
   });
   const handleEmailChange = useEmailHandler({
     parentForm: pageStore.parentForm,
-    updateParentForm: pageStore.updateParentForm,
+    setParentForm: pageStore.setParentForm,
     emailError: pageStore.emailError,
     setEmailError: pageStore.setEmailError,
   });
   const handlePasswordChange = usePasswordHandler({
     parentForm: pageStore.parentForm,
-    updateParentForm: pageStore.updateParentForm,
+    setParentForm: pageStore.setParentForm,
     passwordError: pageStore.passwordError,
     setPasswordError: pageStore.setPasswordError,
   });
   const handleIconSelect = useIconSelectHandler();
   const handleBirthdayChange = useBirthdayHandler({
     parentForm: pageStore.parentForm,
-    updateParentForm: pageStore.updateParentForm,
+    setParentForm: pageStore.setParentForm,
     birthdayError: pageStore.birthdayError,
     setBirthdayError: pageStore.setBirthdayError,
   });
@@ -49,8 +52,7 @@ export const useParentEditPageHandlers = (onConfirm: (parentData: any) => void, 
     setEmailError: pageStore.setEmailError,
     setPasswordError: pageStore.setPasswordError,
     setBirthdayError: pageStore.setBirthdayError,
-    onConfirm: onConfirm,
-    shouldUpdate: shouldUpdate,
+    shouldUpdate: params.shouldUpdate,
   });
 
   return {

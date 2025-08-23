@@ -1,4 +1,5 @@
 import { LocaleString } from "../messages/localeString";
+import { Hashable } from "../models/baseCollection";
 import { ValueValidateError } from "../validator/validationError";
 import { ValueValidator } from "../validator/valueValidator";
 import { z } from 'zod';

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { UpdateLoginForm, SetPasswordError, PasswordError } from '../stores/loginPageStore';
+import { SetLoginForm, SetPasswordError, PasswordError } from '../stores/loginPageStore';
 import { LoginForm } from '../models/loginForm';
 import { Password } from '@backend/features/auth/value-object/password';
 
@@ -10,7 +10,7 @@ import { Password } from '@backend/features/auth/value-object/password';
  */
 export const usePasswordHandler = (params: {
   loginForm: LoginForm,
-  updateLoginForm: UpdateLoginForm,
+  setLoginForm: SetLoginForm,
   passwordError: PasswordError,
   setPasswordError: SetPasswordError
 }) => {
@@ -20,10 +20,10 @@ export const usePasswordHandler = (params: {
       ...params.loginForm
     });
     
-    params.updateLoginForm(updatedForm);
+    params.setLoginForm(updatedForm);
     
     if (params.passwordError) {
       params.setPasswordError(null);
     }
-  }, [params.loginForm.email, params.updateLoginForm, params.passwordError, params.setPasswordError]);
+  }, [params.loginForm.email, params.setLoginForm, params.passwordError, params.setPasswordError]);
 };

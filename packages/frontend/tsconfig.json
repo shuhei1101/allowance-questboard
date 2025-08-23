@@ -9,7 +9,10 @@
       "@backend/*": ["../backend/src/*"],
       "@/*": ["src/*"],
       "@demo/*": ["demo/*"]
-    }
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,
   },
   "include": ["src/**/*", "demo/**/*", "app/**/*", "__tests__/**/*", "App.tsx", "index.ts"]
 }

@@ -23,14 +23,14 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 export function AuthNavigator() {
   return (
     <AuthStack.Navigator
-      initialRouteName={ StackInfo.screens.login }
+      initialRouteName={StackInfo.screens.login}
       screenOptions={{
         headerShown: false,
       }}
       {...({} as any)}
     >
       <AuthStack.Screen 
-        name={ StackInfo.screens.login }
+        name={StackInfo.screens.login}
         component={LoginPage} 
       />
     </AuthStack.Navigator>

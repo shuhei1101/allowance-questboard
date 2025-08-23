@@ -24,7 +24,7 @@ export const LoginPageSettingsPage: React.FC = () => {
       description: '空のフォーム状態',
       icon: '🔄',
       action: () => {
-        loginPageStore.updateLoginForm(LoginForm.initialize());
+        loginPageStore.setLoginForm(LoginForm.initialize());
         loginPageStore.setLoading(false);
         loginPageStore.hideDialog();
         setIsLoading(false);
@@ -42,7 +42,7 @@ export const LoginPageSettingsPage: React.FC = () => {
             email: new Email('demo@example.com'),
             password: new Password('demo123456'),
           });
-          loginPageStore.updateLoginForm(sampleForm);
+          loginPageStore.setLoginForm(sampleForm);
           Alert.alert('設定完了', 'サンプルデータを設定しました');
         } catch (error) {
           Alert.alert('エラー', `設定に失敗しました: ${error}`);

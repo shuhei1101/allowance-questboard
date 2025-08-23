@@ -25,9 +25,4 @@ export abstract class BaseTransactionEntity extends AppBaseEntity {
   updated_by?: number;
   @Column({ type: "int", nullable: true, comment: "更新元スクリーンID" })
   updated_from?: number;
-
-  // ドメインモデルからエンティティ生成（抽象）
-  static fromModel(model: any): AppBaseEntity {
-    throw new Error("fromModel must be implemented in subclass");
-  }
 }

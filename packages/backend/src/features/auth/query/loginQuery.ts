@@ -4,15 +4,9 @@ import { FamilyMemberEntity } from "@backend/features/family-member/entity/famil
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 import { ParentEntity } from "@backend/features/parent/entity/parentEntity";
 
-/**
- * ログインクエリパラメータ
- */
 export interface LoginQueryParams extends BaseQueryParams {
   userId: string;
 }
-/**
- * ログインクエリ結果
- */
 export interface LoginQueryResult {
   userId: string;
   familyMemberId: number;
@@ -22,15 +16,6 @@ export interface LoginQueryResult {
   childId?: number | null;
 }
 
-/**
- * ログインクエリ
- * 
- * ユーザーIDから認証に必要な情報を取得する
- * 
- * @param params ログインクエリパラメータ
- * @returns ログインクエリ結果
- * @throws Error ユーザーが見つからない場合
- */
 export async function loginQuery(params: LoginQueryParams): Promise<LoginQueryResult> {
   // 家族メンバー、親、子供、家族の情報を1回のクエリで取得
   const queryBuilder = params.session

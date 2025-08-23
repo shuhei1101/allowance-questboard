@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { HideDialog, UpdateLoginForm, SetLoading } from '../stores/loginPageStore';
+import { HideDialog, SetLoginForm, SetLoading } from '../stores/loginPageStore';
 import { UpdateFamilyMemberType } from '@/features/auth/stores/sessionStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
@@ -15,7 +15,7 @@ import { FamilyMemberType } from '@backend/features/family-member/enum/familyMem
 export const useChildLoginHandler = (params: {
   updateFamilyMemberType: UpdateFamilyMemberType,
   hideDialog: HideDialog,
-  updateLoginForm: UpdateLoginForm,
+  setLoginForm: SetLoginForm,
   setLoading: SetLoading
 }) => {
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ export const useChildLoginHandler = (params: {
       params.hideDialog();
       
       // ログイン状態をリセット
-      params.updateLoginForm(LoginForm.initialize());
+      params.setLoginForm(LoginForm.initialize());
       params.setLoading(false);
 
       // 子供用ホーム画面への遷移
@@ -41,5 +41,5 @@ export const useChildLoginHandler = (params: {
       console.error('子供ログインエラー:', error);
       Alert.alert(t('common.error'), t('auth.loginPage.errors.childLoginFailed'));
     }
-  }, [params.updateFamilyMemberType, params.hideDialog, params.updateLoginForm, params.setLoading, t, navigation]);
+  }, [params.updateFamilyMemberType, params.hideDialog, params.setLoginForm, params.setLoading, t, navigation]);
 };

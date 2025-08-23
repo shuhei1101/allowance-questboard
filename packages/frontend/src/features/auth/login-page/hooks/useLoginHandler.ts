@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { ClearErrors, SetEmailError, SetPasswordError, SetLoading, ShowDialog, UpdateSelectFamilyDialog } from '../stores/loginPageStore';
+import { ClearErrors, SetEmailError, SetPasswordError, SetLoading, ShowDialog, SetSelectFamilyDialog } from '../stores/loginPageStore';
 import { supabase } from '@/core/supabase/supabase';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
@@ -23,7 +23,7 @@ export const useLoginHandler = (params: {
   setLoading: SetLoading,
   showDialog: ShowDialog,
   login: Login,
-  updateSelectFamilyDialog: UpdateSelectFamilyDialog,
+  setSelectFamilyDialog: SetSelectFamilyDialog,
   loginRouter: LoginRouter
 }) => {
   return useCallback(async (): Promise<void> => {
@@ -79,7 +79,7 @@ export const useLoginHandler = (params: {
       
       // jwtを元にアプリにログイン
       await params.login({
-        updateSelectFamilyDialog: params.updateSelectFamilyDialog,
+        setSelectFamilyDialog: params.setSelectFamilyDialog,
         router: params.loginRouter
       });
 

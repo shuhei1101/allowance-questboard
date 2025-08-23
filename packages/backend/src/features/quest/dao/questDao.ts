@@ -32,19 +32,11 @@ export class QuestDao extends BaseDao<QuestEntity> {
   }
 
   /**
-   * クエストを作成（キャッシュクリア付き）
-   */
-  @evict("quests:all")
-  async insertWithCache(entity: QuestEntity): Promise<number> {
-    return await super.insert(entity);
-  }
-
-  /**
    * クエストを更新（キャッシュクリア付き）
    */
   @evict("quests:all", "quests:{entity.id}")
   async updateWithCache(entity: QuestEntity): Promise<void> {
-    await super.update(entity);
+    await super.insert(entity);
   }
 
   /**
