@@ -11,10 +11,6 @@ interface Props {
    */
   onIconSelected: (icon: Icon) => void;
   /**
-   * 戻るボタンが押された時のコールバック
-   */
-  onBack: () => void;
-  /**
    * 初期選択されたアイコン
    */
   initialSelectedIcon?: Icon;
@@ -25,7 +21,6 @@ interface Props {
  */
 export const useSelectIconPageHandlers = ({
   onIconSelected,
-  onBack,
   initialSelectedIcon,
 }: Props) => {
   const pageStore = useSelectIconPageStore();
@@ -44,13 +39,6 @@ export const useSelectIconPageHandlers = ({
       pageStore.reset();
     };
   }, [initialSelectedIcon]);
-
-  /**
-   * 戻るボタンハンドラー
-   */
-  const handleBack = () => {
-    onBack();
-  };
 
   /**
    * 確定ボタンハンドラー
@@ -78,7 +66,6 @@ export const useSelectIconPageHandlers = ({
   };
 
   return {
-    handleBack,
     handleConfirm,
     handleCategoryChange,
     handleIconSelect,

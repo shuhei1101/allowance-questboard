@@ -125,7 +125,6 @@ export const IconSelectPageDetailPage: React.FC = () => {
       <IconSelectPage
         initialSelectedIcon={demoState.initialSelectedIcon}
         onIconSelected={handleIconSelected}
-        onBack={handleBack}
       />
     );
   }

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
 import { useSelectIconPageStore as useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
-import { ActionBar } from './components/ActionBar';
 import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
+import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { Icon } from '@backend/features/icon/domain/icon';
 
 interface Props {
@@ -18,10 +19,6 @@ interface Props {
    * @param icon 選択されたアイコン
    */
   onIconSelected: (icon: Icon) => void;
-  /**
-   * 戻るボタンが押された時のコールバック
-   */
-  onBack: () => void;
 }
 
 /**
@@ -31,37 +28,37 @@ interface Props {
 export const IconSelectPage: React.FC<Props> = ({
   initialSelectedIcon,
   onIconSelected,
-  onBack,
 }) => {
   const { colors } = useTheme();
   const pageStore = useIconSelectPageStore();
+  const navigation = useNavigation();
   
   const {
-    handleBack,
     handleConfirm,
     handleCategoryChange,
     handleIconSelect,
   } = useIconSelectPageHandlers({ 
-    onIconSelected, 
-    onBack,
+    onIconSelected,
     initialSelectedIcon
   });
 
+  // 確定ボタンをヘッダーに設置
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ComfirmButton
+          onPress={handleConfirm}
+          disabled={!pageStore.selectedIcon || 
+            (initialSelectedIcon && 
+             pageStore.selectedIcon?.key.equals(initialSelectedIcon.key))}
+          variant="header"
+        />
+      ),
+    });
+  }, [navigation, handleConfirm, pageStore.selectedIcon, initialSelectedIcon]);
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
-      {/* アクションバー */}
-      <ActionBar
-        onBack={handleBack}
-        onConfirm={handleConfirm}
-        isConfirmEnabled={
-          !!pageStore.selectedIcon && 
-          (
-            !initialSelectedIcon || 
-            !pageStore.selectedIcon.key.equals(initialSelectedIcon.key)
-          )
-        }
-      />
-      
       {/* タブバー */}
       <TabBar
         categories={pageStore.iconCategories}

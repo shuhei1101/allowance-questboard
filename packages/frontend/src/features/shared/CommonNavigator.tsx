@@ -26,7 +26,7 @@ export type CommonStackParamList = {
 const CommonStack = createStackNavigator<CommonStackParamList>();
 
 /**
- * アイコン選択画面のラッパー
+ * アイコン選択ページのラッパー
  */
 const IconSelectPageWrapper: React.FC<{ route: any; navigation: any }> = ({ route, navigation }) => {
   const { initialSelectedIcon } = route.params || {};
@@ -35,15 +35,10 @@ const IconSelectPageWrapper: React.FC<{ route: any; navigation: any }> = ({ rout
     Alert.alert('アイコン選択', `${icon} が選択されました`);
   };
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
-
   return (
     <IconSelectPage
       initialSelectedIcon={initialSelectedIcon}
       onIconSelected={handleIconSelected}
-      onBack={handleBack}
     />
   );
 };

@@ -37,10 +37,6 @@ export const IconSelectModal: React.FC<Props> = ({
     onClose();
   };
 
-  const handleBack = () => {
-    onClose();
-  };
-
   return (
     <Modal
       visible={visible}
@@ -52,7 +48,6 @@ export const IconSelectModal: React.FC<Props> = ({
         <IconSelectPage
           initialSelectedIcon={initialSelectedIcon}
           onIconSelected={handleIconSelected}
-          onBack={handleBack}
         />
       </SafeAreaView>
     </Modal>

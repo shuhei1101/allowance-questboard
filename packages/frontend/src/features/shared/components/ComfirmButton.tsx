@@ -18,7 +18,7 @@ export const ComfirmButton: React.FC<Props> = (props) => {
   return (
     <ActionButton
       {...props}
-      iconName="save"
+      iconName="checkmark"
     />
   );
 };
