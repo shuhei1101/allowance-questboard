@@ -11,10 +11,9 @@ import { ParentForm } from '@/features/parent/parent-edit-page/models/parentForm
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
-import { Birthday } from '@backend/features/parent/value-object/birthday';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
-import { Version } from '@backend/features/shared/value-object/version';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 
@@ -104,16 +103,15 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
       name: new ParentName('田中太郎'),
       email: new Email('tanaka@example.com'),
       password: new Password('password123'),
-      icon: new Icon(
-        new IconId(1),
-        new Version(1),
-        new IconName('home'),
-        new SortOrder(1)
-      ),
-      birthday: new Birthday('1985-05-15'),
+      icon: new Icon({
+        id: new IconId(1),
+        name: new IconName('home'),
+        sortOrder: new SortOrder(1)
+      }),
+      birthday: new Birthday(new Date('1985-05-15')),
     });
 
-    parentEditPageStore.updateParentForm(mockParentForm);
+    parentEditPageStore.setParentForm(mockParentForm);
 
     console.log('🎯 Demo - Parent edit page mock data set');
   };

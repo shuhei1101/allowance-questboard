@@ -7,7 +7,6 @@ import { initMasterData } from '@/features/auth/services/initMasterData';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
-import { Version } from '@backend/features/shared/value-object/version';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 
 interface DemoState {
@@ -27,13 +26,12 @@ export const IconSelectPageDetailPage: React.FC = () => {
   
   // モックIcon作成関数
   const createMockIcon = (iconName: string): Icon => {
-    return new Icon(
-      new IconId(Math.floor(Math.random() * 1000)),
-      new Version(1),
-      new IconName(iconName),
-      new SortOrder(0),
-      true
-    );
+    return new Icon({
+      id: new IconId(Math.floor(Math.random() * 1000)),
+      name: new IconName(iconName),
+      sortOrder: new SortOrder(0),
+      isActive: true
+    });
   };
   
   const [demoState, setDemoState] = useState<DemoState>({

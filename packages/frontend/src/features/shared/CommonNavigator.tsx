@@ -5,6 +5,14 @@ import { IconSelectPage } from '../icon/icon-select-page/IconSelectPage';
 import { LoadingPage } from './loading-page/LoadingPage';
 import { Icon } from '@backend/features/icon/domain/icon';
 
+export const StackInfo = {
+  name: 'Common',
+  screens: {
+    iconSelect: "IconSelect",
+    loading: "Loading",
+  },
+} as const;
+
 // 共通機能のナビゲーションパラメータ型定義
 export type CommonStackParamList = {
   IconSelect: { 
@@ -55,21 +63,21 @@ const LoadingPageWrapper: React.FC<{ route: any }> = ({ route }) => {
 export function CommonNavigator() {
   return (
     <CommonStack.Navigator
-      initialRouteName="Loading"
+      initialRouteName={StackInfo.screens.loading}
       screenOptions={{
         headerShown: true,
       }}
       {...({} as any)}
     >
       <CommonStack.Screen 
-        name="IconSelect" 
+        name={StackInfo.screens.iconSelect} 
         component={IconSelectPageWrapper}
         options={{
           headerTitle: 'アイコン選択',
         }}
       />
       <CommonStack.Screen 
-        name="Loading" 
+        name={StackInfo.screens.loading} 
         component={LoadingPageWrapper}
         options={{
           headerShown: false,

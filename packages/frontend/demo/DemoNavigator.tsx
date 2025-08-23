@@ -26,12 +26,27 @@ import { ParentEditPageSettingsPage } from './test-environment/ParentEditPageSet
 export const StackInfo = {
   name: 'Demo',
   screens: {
-    developmentTop: "DevelopmentTopPage",
-    screenList: "ScreenListPage",
-    componentList: "ComponentListPage",
-    screenLauncher: "ScreenLauncherPage",
-    componentDetail: "ComponentDetailPage",
-    dependencyComponentList: "DependencyComponentListPage",
+    developmentTop: "DevelopmentTop",
+    screenList: "ScreenList",
+    componentList: "ComponentList",
+    screenLauncher: "ScreenLauncher",
+    componentDetail: "ComponentDetail",
+    dependencyComponentList: "DependencyComponentList",
+    emailInputDetail: "EmailInputDetail",
+    passwordInputDetail: "PasswordInputDetail",
+    birthdayInputDetail: "BirthdayInputDetail",
+    saveButtonDetail: "SaveButtonDetail",
+    iconSelectButtonDetail: "IconSelectButtonDetail",
+    iconSelectPageDetail: "IconSelectPageDetail",
+    DemoLoginPage: "DemoLoginPage",
+    DemoParentEditPage: "DemoParentEditPage",
+    ComponentShowcase: "ComponentShowcase",
+    StoreInspector: "StoreInspector",
+    SessionSettings: "SessionSettings",
+    PageStateSettings: "PageStateSettings",
+    LoginPageSettings: "LoginPageSettings",
+    ParentEditPageSettings: "ParentEditPageSettings",
+    Main: "Main",
   },
 } as const;
 
@@ -51,12 +66,12 @@ export type DemoStackParamList = {
     }>;
     screenTitle: string;
   };
-  'email-inputDetail': undefined;
-  'password-inputDetail': undefined;
-  'birthday-inputDetail': undefined;
-  'save-buttonDetail': undefined;
-  'icon-select-buttonDetail': undefined;
-  'icon-select-pageDetail': undefined;
+  EmailInputDetail: undefined;
+  PasswordInputDetail: undefined;
+  BirthdayInputDetail: undefined;
+  SaveButtonDetail: undefined;
+  IconSelectButtonDetail: undefined;
+  IconSelectPageDetail: undefined;
   DemoLoginPage: undefined;
   DemoParentEditPage: undefined;
   ComponentShowcase: undefined;
@@ -98,97 +113,97 @@ export function DemoNavigator() {
           options={{ title: '🏠 開発用トップ' }}
         />
         <DemoStack.Screen 
-          name="ScreenList" 
+          name={StackInfo.screens.screenList}
           component={ScreenListPage}
           options={{ title: '📱 画面一覧' }}
         />
         <DemoStack.Screen 
-          name="ComponentList" 
+          name={StackInfo.screens.componentList}
           component={ComponentListPage}
           options={{ title: '🧩 コンポーネント一覧' }}
         />
         <DemoStack.Screen 
-          name="ScreenLauncher" 
+          name={StackInfo.screens.screenLauncher}
           component={ScreenLauncherPage}
           options={{ title: '🚀 画面起動' }}
         />
         <DemoStack.Screen 
-          name="ComponentDetail" 
+          name={StackInfo.screens.componentDetail}
           component={ComponentDetailPage}
           options={{ title: '🔍 コンポーネント詳細' }}
         />
         <DemoStack.Screen 
-          name="DependencyComponentList" 
+          name={StackInfo.screens.dependencyComponentList}
           component={DependencyComponentListPage}
           options={{ title: '🧩 依存コンポーネント一覧' }}
         />
         <DemoStack.Screen 
-          name="email-inputDetail" 
+          name={StackInfo.screens.emailInputDetail}
           component={EmailInputDetailPage}
           options={{ title: '📧 EmailInputField詳細' }}
         />
         <DemoStack.Screen 
-          name="password-inputDetail" 
+          name={StackInfo.screens.passwordInputDetail}
           component={PasswordInputDetailPage}
           options={{ title: '🔒 PasswordInputField詳細' }}
         />
         <DemoStack.Screen 
-          name="birthday-inputDetail" 
+          name={StackInfo.screens.birthdayInputDetail}
           component={BirthdayInputDetailPage}
           options={{ title: '🗓️ BirthdayInputField詳細' }}
         />
         <DemoStack.Screen 
-          name="save-buttonDetail" 
+          name={StackInfo.screens.saveButtonDetail}
           component={SaveButtonDetailPage}
           options={{ title: '💾 SaveButton詳細' }}
         />
         <DemoStack.Screen 
-          name="icon-select-buttonDetail" 
+          name={StackInfo.screens.iconSelectButtonDetail}
           component={IconSelectButtonDetailPage}
           options={{ title: '🎨 IconSelectButton詳細' }}
         />
         <DemoStack.Screen 
-          name="icon-select-pageDetail" 
+          name={StackInfo.screens.iconSelectPageDetail}
           component={IconSelectPageDetailPage}
           options={{ title: '🎨 IconSelectPage詳細' }}
         />
         <DemoStack.Screen 
-          name="DemoLoginPage" 
+          name={StackInfo.screens.DemoLoginPage} 
           component={DemoLoginPageScreen}
           options={{ title: '🔐 ログイン画面' }}
         />
         <DemoStack.Screen 
-          name="DemoParentEditPage" 
+          name={StackInfo.screens.DemoParentEditPage} 
           component={DemoParentEditPageScreen}
           options={{ title: '👤 親編集画面' }}
         />
         <DemoStack.Screen 
-          name="ComponentShowcase" 
+          name={StackInfo.screens.ComponentShowcase} 
           component={ComponentShowcaseScreen}
           options={{ title: '🎨 コンポーネントショーケース' }}
         />
         <DemoStack.Screen 
-          name="StoreInspector" 
+          name={StackInfo.screens.StoreInspector} 
           component={StoreInspectorScreen}
           options={{ title: '🔧 Store Inspector' }}
         />
         <DemoStack.Screen 
-          name="SessionSettings" 
+          name={StackInfo.screens.SessionSettings} 
           component={SessionSettingsPage}
           options={{ title: '⚙️ セッション設定' }}
         />
         <DemoStack.Screen 
-          name="PageStateSettings" 
+          name={StackInfo.screens.PageStateSettings} 
           component={PageStateSettingsPage}
           options={{ title: '📝 ページ状態設定' }}
         />
         <DemoStack.Screen 
-          name="LoginPageSettings" 
+          name={StackInfo.screens.LoginPageSettings} 
           component={LoginPageSettingsPage}
           options={{ title: '🔐 ログイン画面設定' }}
         />
         <DemoStack.Screen 
-          name="ParentEditPageSettings" 
+          name={StackInfo.screens.ParentEditPageSettings} 
           component={ParentEditPageSettingsPage}
           options={{ title: '👤 親編集画面設定' }}
         />
@@ -212,15 +227,9 @@ const DemoLoginPageScreen: React.FC = () => {
  * 親編集画面のデモ
  */
 const DemoParentEditPageScreen: React.FC = () => {
-  const handleConfirm = (parentData: any) => {
-    console.log('🎯 Demo - Parent data confirmed:', parentData);
-    // デモなので実際の処理は行わない
-    alert('✅ 親情報が更新されました（デモ）');
-  };
-
   return (
     <View style={{ flex: 1 }}>
-      <ParentEditPage onConfirm={handleConfirm} />
+      <ParentEditPage shouldUpdate={false} />
     </View>
   );
 };

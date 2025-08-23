@@ -48,7 +48,7 @@ export class ParentForm extends BaseModel {
       email: new Email(''),
       password: new Password(''),
       icon: null,
-      birthday: new Birthday(''),
+      birthday: new Birthday(),
     });
   }
 }

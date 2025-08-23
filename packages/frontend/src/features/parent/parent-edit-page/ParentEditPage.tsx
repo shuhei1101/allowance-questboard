@@ -6,11 +6,13 @@ import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEnt
 import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
 import { IconSelectButtonEntry } from '../../shared/components/IconSelectButtonEntry';
 import { BirthdayInputFieldEntry } from '../../shared/components/BirthdayInputFieldEntry';
-import { SaveButton } from '../../shared/components/SaveButton';
+import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
 import { useParentEditPageHandlers } from './hooks/useParentEditPageHandlers';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { fetchParentForm } from './query/fetchParentForm';
+import { ParentId } from '@backend/features/parent/value-object/parentId';
 
 /**
  * 親情報編集画面
@@ -31,21 +33,25 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
  */
 interface Props {
   shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
-  parentId?: string; // 親ID（オプション）
+  rawParentId?: string; // 親ID（オプション）
 }
 
-export const ParentEditPage: React.FC<Props> = ({
+export const ParentEditPage: React.FC<Props> = async ({
   shouldUpdate = true,
-  parentId,
+  rawParentId: rawParentId,
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
   const navigation = useNavigation();
 
+  const parentId = new ParentId(Number(rawParentId));
+
   // 親情報の取得
-  if (parentId) {
-    pageStore.fetchParentInfo(parentId);
+  if (rawParentId) {
+    pageStore.setParentForm(
+      await fetchParentForm(parentId)
+    )
   }
 
   // 状態を初期化
@@ -64,11 +70,11 @@ export const ParentEditPage: React.FC<Props> = ({
     parentId
   });
 
-  // ナビゲーションヘッダーに保存ボタンを設定
+  // 確定ボタン
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SaveButton
+        <ComfirmButton
           onPress={handleConfirm}
           disabled={!pageStore.parentForm.isValid}
           loading={pageStore.isLoading}
@@ -119,7 +125,7 @@ export const ParentEditPage: React.FC<Props> = ({
           
           {/* 誕生日入力フィールド */}
           <BirthdayInputFieldEntry
-            value={pageStore.parentForm.birthday.value}
+            value={pageStore.parentForm.birthday.toString()}
             onChange={handleBirthdayChange}
             error={pageStore.birthdayError || undefined}
           />

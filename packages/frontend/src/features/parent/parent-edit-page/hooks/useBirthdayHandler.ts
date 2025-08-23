@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { SetParentForm, SetBirthdayError, BirthdayError } from '../stores/parentEditPageStore';
 import { ParentForm } from '../models/parentForm';
-import { Birthday } from '@backend/features/parent/value-object/birthday';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 
 /**
  * 誕生日変更ハンドラーのカスタムフック

@@ -193,7 +193,7 @@ export const LoginPageSettingsPage: React.FC = () => {
               エラー状態
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {(loginPageStore.getEmailError() || loginPageStore.getPasswordError()) ? '❌ エラーあり' : '✅ エラーなし'}
+              {(loginPageStore.emailError || loginPageStore.passwordError) ? '❌ エラーあり' : '✅ エラーなし'}
             </Text>
           </View>
         </View>

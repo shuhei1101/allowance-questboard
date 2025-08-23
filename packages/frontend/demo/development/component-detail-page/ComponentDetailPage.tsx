@@ -5,7 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import { EmailInputField } from '@/features/shared/components/EmailInputField';
 import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
 import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
-import { SaveButton } from '@/features/shared/components/SaveButton';
+import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 
 interface ComponentDetailPageProps {
@@ -62,7 +62,7 @@ export const ComponentDetailPage: React.FC = () => {
         );
       case 'save-button':
         return (
-          <SaveButton
+          <ComfirmButton
             onPress={() => Alert.alert('保存', 'SaveButtonが押されました！')}
             loading={componentProps.loading}
             disabled={componentProps.disabled}

@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 import { useTheme } from '@/core/theme';
 import { EmailInputField } from '@/features/shared/components/EmailInputField';
 import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
-import { SaveButton } from '@/features/shared/components/SaveButton';
+import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 
@@ -102,7 +102,7 @@ export const ComponentShowcase: React.FC = () => {
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             保存ボタン
           </Text>
-          <SaveButton
+          <ComfirmButton
             onPress={() => console.log('保存ボタンが押されました')}
             disabled={false}
           />
@@ -112,7 +112,7 @@ export const ComponentShowcase: React.FC = () => {
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             無効化された保存ボタン
           </Text>
-          <SaveButton
+          <ComfirmButton
             onPress={() => console.log('無効化されたボタン')}
             disabled={true}
           />

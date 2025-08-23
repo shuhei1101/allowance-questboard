@@ -5,6 +5,7 @@ import { useIconSelectHandler } from './useIconSelectHandler';
 import { useBirthdayHandler } from './useBirthdayHandler';
 import { useConfirmHandler } from './useConfirmHandler';
 import { useParentEditPageStore as useParentEditPageStore } from '../stores/parentEditPageStore';
+import { ParentId } from '@backend/features/parent/value-object/parentId';
 
 /**
  * 親情報登録画面の全ハンドラーを統合したカスタムフック
@@ -16,34 +17,40 @@ import { useParentEditPageStore as useParentEditPageStore } from '../stores/pare
  */
 export const useParentEditPageHandlers = (params: {
   shouldUpdate: boolean,
-  parentId?: string,
+  parentId?: ParentId,
 }) => {
   const pageStore = useParentEditPageStore();
+  // 名前変更時のハンドラ
   const handleNameChange = useNameHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
     nameError: pageStore.nameError,
     setNameError: pageStore.setNameError,
   });
+  // メール変更時のハンドラ
   const handleEmailChange = useEmailHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
     emailError: pageStore.emailError,
     setEmailError: pageStore.setEmailError,
   });
+  // パスワード変更時のハンドラ
   const handlePasswordChange = usePasswordHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
     passwordError: pageStore.passwordError,
     setPasswordError: pageStore.setPasswordError,
   });
+  // アイコン選択時のハンドラ
   const handleIconSelect = useIconSelectHandler();
+  // 誕生日変更ハンドラ
   const handleBirthdayChange = useBirthdayHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
     birthdayError: pageStore.birthdayError,
     setBirthdayError: pageStore.setBirthdayError,
   });
+  // 確定ボタン押下時のハンドラ
   const handleConfirm = useConfirmHandler({
     parentForm: pageStore.parentForm,
     setLoading: pageStore.setLoading,

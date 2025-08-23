@@ -10,11 +10,11 @@ interface Props {
 }
 
 /**
- * 保存ボタンコンポーネント
+ * 確定ボタンコンポーネント
  * ActionButtonをラップしてsaveアイコンを提供
  * ナビゲーションバーのアクションボタンとしても使用可能
  */
-export const SaveButton: React.FC<Props> = (props) => {
+export const ComfirmButton: React.FC<Props> = (props) => {
   return (
     <ActionButton
       {...props}

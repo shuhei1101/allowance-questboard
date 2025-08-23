@@ -13,8 +13,14 @@ export const BirthdaySchema = z.object({
  * 誕生日を表す値オブジェクト
  */
 export class Birthday extends BaseValueObject<Date, typeof BirthdaySchema> {
-  constructor(value: Date) {
+  constructor(value?: Date) {
+    // 初期値: 20年前
+    value = value ? value : new Date(new Date().setFullYear(new Date().getFullYear() - 20));  
     super({ value });
+  }
+
+  toString(): string {
+    return this.value.toDateString();
   }
 
   protected validate(): void {

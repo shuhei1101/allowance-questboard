@@ -5,7 +5,6 @@ import { IconSelectButtonEntry } from '@/features/shared/components/IconSelectBu
 import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
-import { Version } from '@backend/features/shared/value-object/version';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 
 /**
@@ -17,13 +16,12 @@ export const IconSelectButtonDetailPage: React.FC = () => {
   
   // モックIcon作成関数
   const createMockIcon = (iconName: string): Icon => {
-    return new Icon(
-      new IconId(Math.floor(Math.random() * 1000)), // ランダムなID
-      new Version(1),
-      new IconName(iconName),
-      new SortOrder(0),
-      true
-    );
+    return new Icon({
+      id: new IconId(Math.floor(Math.random() * 1000)), // ランダムなID
+      name: new IconName(iconName),
+      sortOrder: new SortOrder(0),
+      isActive: true
+    });
   };
   
   // IconSelectButtonのプロパティ状態

@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthNavigator, StackInfo as AuthStackInfo } from '@/features/auth/AuthNavigator';
-import { ParentNavigator } from '@/features/parent/ParentNavigator';
-import { CommonNavigator } from '@/features/shared/CommonNavigator';
-import { DemoNavigator } from '@demo/DemoNavigator';
+import { ParentNavigator, StackInfo as ParentStackInfo } from '@/features/parent/ParentNavigator';
+import { CommonNavigator, StackInfo as CommonStackInfo } from '@/features/shared/CommonNavigator';
+import { DemoNavigator, StackInfo as DemoStackInfo } from '@demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
 
 

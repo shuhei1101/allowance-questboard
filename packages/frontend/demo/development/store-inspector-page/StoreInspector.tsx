@@ -111,7 +111,7 @@ export const StoreInspector: React.FC = () => {
               メールエラー:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.getEmailError() || '無し'}
+              {loginPageStore.emailError || '無し'}
             </Text>
           </View>
         </View>
@@ -156,7 +156,7 @@ export const StoreInspector: React.FC = () => {
               誕生日:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {parentEditPageStore.parentForm.birthday.value || '未入力'}
+              {parentEditPageStore.parentForm.birthday.value.toDateString() || '未入力'}
             </Text>
           </View>
         </View>

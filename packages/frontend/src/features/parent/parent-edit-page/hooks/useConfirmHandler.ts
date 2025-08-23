@@ -60,7 +60,6 @@ export const useConfirmHandler = (params: {
     params.setEmailError,
     params.setPasswordError,
     params.setBirthdayError,
-    params.onConfirm,
     params.shouldUpdate
   ]);
 };

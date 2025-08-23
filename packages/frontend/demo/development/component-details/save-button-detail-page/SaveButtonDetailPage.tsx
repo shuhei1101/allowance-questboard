@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { SaveButton } from '@/features/shared/components/SaveButton';
+import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 
 /**
  * SaveButton詳細ページ
@@ -45,7 +45,7 @@ export const SaveButtonDetailPage: React.FC = () => {
           🎯 コンポーネントプレビュー
         </Text>
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
-          <SaveButton
+          <ComfirmButton
             onPress={handleButtonPress}
             loading={componentProps.loading}
             disabled={componentProps.disabled}
