@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator, NAME as AUTH_STACK_NAME } from '@/features/auth/AuthNavigator';
+import { AuthNavigator, StackInfo as AuthStackInfo } from '@/features/auth/AuthNavigator';
 import { ParentNavigator } from '@/features/parent/ParentNavigator';
 import { CommonNavigator } from '@/features/shared/CommonNavigator';
 import { DemoNavigator } from '@demo/DemoNavigator';
@@ -72,19 +72,19 @@ export function AppNavigator(props: AppNavigatorProps) {
         {...({} as any)}
       >
         <AppStack.Screen 
-          name=AUTH_STACK_NAME
+          name={AuthStackInfo.name}
           component={AuthNavigator} 
         />
         <AppStack.Screen 
-          name="Parent" 
+          name={ParentStackInfo.name}
           component={ParentNavigator} 
         />
         <AppStack.Screen 
-          name="Common" 
+          name={CommonStackInfo.name} 
           component={CommonNavigator} 
         />
         <AppStack.Screen 
-          name="Demo" 
+          name={DemoStackInfo.name} 
           component={DemoNavigator} 
         />
       </AppStack.Navigator>

@@ -10,7 +10,7 @@ import { z } from 'zod';
  * IconのZodスキーマ
  */
 export const IconSchema = z.object({
-  id: BaseIdSchema,
+  id: BaseIdSchema.nullable(),
   name: IconNameSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),
@@ -21,18 +21,27 @@ export const IconSchema = z.object({
  * アイコンドメインモデル
  */
 export class Icon extends BaseMasterModel<IconId> {
+  public readonly name: IconName;
+  public readonly sortOrder: SortOrder;
+  public readonly isActive: boolean;
+  public readonly iconCategoryId?: IconCategoryId;
 
-  constructor(
-    id: IconId,
-    public readonly name: IconName,
-    public readonly sortOrder: SortOrder = new SortOrder(0),
-    public readonly isActive: boolean = true,
-    public readonly iconCategoryId?: IconCategoryId
-  ) {
-    super(id);
+  constructor(params: {
+    id?: IconId,
+    name: IconName,
+    sortOrder?: SortOrder,
+    isActive?: boolean,
+    iconCategoryId?: IconCategoryId
+  }) {
+    super(params.id);
+    this.name = params.name;
+    this.sortOrder = params.sortOrder ? params.sortOrder : new SortOrder(0);
+    this.isActive = params.isActive ? params.isActive : true;
+    this.iconCategoryId = params.iconCategoryId;
   }
+
   hash(): number | string {
-    return this.id.value;
+    return this.id ? this.id.value : '';
   }
 
   /**
@@ -40,7 +49,7 @@ export class Icon extends BaseMasterModel<IconId> {
    */
   toZodData(): z.infer<typeof IconSchema> {
     return {
-      id: this.key.toZodData(),
+      id: this.id ? this.id.toZodData() : null,
       name: this.name.toZodData(),
       sortOrder: this.sortOrder.toZodData(),
       isActive: this.isActive,
@@ -53,13 +62,13 @@ export class Icon extends BaseMasterModel<IconId> {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof IconSchema>): Icon {
-    return new Icon(
-      IconId.fromZodData(data.id),
-      IconName.fromZodData(data.name),
-      SortOrder.fromZodData(data.sortOrder),
-      data.isActive,
-      data.iconCategoryId ? IconCategoryId.fromZodData(data.iconCategoryId) : undefined
-    );
+    return new Icon({
+      id: data.id ? IconId.fromZodData(data.id) : undefined,
+      name: IconName.fromZodData(data.name),
+      sortOrder: data.sortOrder ? SortOrder.fromZodData(data.sortOrder) : undefined,
+      isActive: data.isActive ? data.isActive : true,
+      iconCategoryId: data.iconCategoryId ? IconCategoryId.fromZodData(data.iconCategoryId) : undefined,
+    });
   }
 
   /**

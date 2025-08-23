@@ -10,11 +10,11 @@ import { IconCategoryId } from '@backend/features/icon-category/value-objects/ic
  * @param entity アイコンエンティティ
  */
 export const fromEntity = (params: {entity: IconEntity}): Icon => {
-  return new Icon(
-    new IconId(params.entity.id),
-    new IconName(params.entity.name),
-    new SortOrder(params.entity.sort_order),
-    params.entity.is_active,
-    params.entity.category_id ? new IconCategoryId(params.entity.category_id) : undefined
-  );
+  return new Icon({
+    id: new IconId(params.entity.id),
+    name: new IconName(params.entity.name),
+    sortOrder: new SortOrder(params.entity.sort_order),
+    isActive: params.entity.is_active,
+    iconCategoryId: params.entity.category_id ? new IconCategoryId(params.entity.category_id) : undefined
+  });
 }

@@ -23,6 +23,18 @@ import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage'
 import { LoginPageSettingsPage } from './test-environment/LoginPageSettingsPage';
 import { ParentEditPageSettingsPage } from './test-environment/ParentEditPageSettingsPage';
 
+export const StackInfo = {
+  name: 'Demo',
+  screens: {
+    developmentTop: "DevelopmentTopPage",
+    screenList: "ScreenListPage",
+    componentList: "ComponentListPage",
+    screenLauncher: "ScreenLauncherPage",
+    componentDetail: "ComponentDetailPage",
+    dependencyComponentList: "DependencyComponentListPage",
+  },
+} as const;
+
 // Demo Navigation Types
 export type DemoStackParamList = {
   DevelopmentTop: undefined;
@@ -67,12 +79,12 @@ const DemoStack = createStackNavigator<DemoStackParamList>();
  * - コンポーネントの単体確認
  * - モック状態での動作確認
  */
-export const DemoNavigator: React.FC = () => {
+export function DemoNavigator() {
   return (
     <DemoMockProvider>
       <DemoStack.Navigator
         id={undefined}
-        initialRouteName="DevelopmentTop"
+        initialRouteName={StackInfo.screens.developmentTop}
         screenOptions={{
           headerShown: true,
           headerStyle: { backgroundColor: '#6366f1' },
@@ -81,7 +93,7 @@ export const DemoNavigator: React.FC = () => {
         }}
       >
         <DemoStack.Screen 
-          name="DevelopmentTop" 
+          name={StackInfo.screens.developmentTop}
           component={DevelopmentTopPage}
           options={{ title: '🏠 開発用トップ' }}
         />

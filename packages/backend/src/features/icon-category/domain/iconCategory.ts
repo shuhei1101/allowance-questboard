@@ -9,7 +9,7 @@ import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-objec
  * IconCategoryのZodスキーマ
  */
 export const IconCategorySchema = z.object({
-  id: IconCategoryIdSchema,
+  id: IconCategoryIdSchema.nullable(),
   nameByLanguages: IconCategoryNamesSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),
@@ -22,7 +22,7 @@ export const IconCategorySchema = z.object({
 export class IconCategory extends BaseMasterModel<IconCategoryId> {
 
   constructor(
-    id: IconCategoryId,
+    id?: IconCategoryId,
     public readonly nameByLanguages: IconCategoryNames = new IconCategoryNames([]),
     public readonly sortOrder: SortOrder = new SortOrder(0),
     public readonly isActive: boolean = true,
@@ -54,7 +54,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
    */
   toZodData(): z.infer<typeof IconCategorySchema> {
     return {
-      id: this.key.toZodData(),
+      id: this.key ? this.key.toZodData() : null,
       nameByLanguages: this.nameByLanguages.toZodData(),
       sortOrder: this.sortOrder,
       isActive: this.isActive,
@@ -68,7 +68,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
    */
   static fromZodData(data: z.infer<typeof IconCategorySchema>): IconCategory {
     return new IconCategory(
-      IconCategoryId.fromZodData(data.id),
+      data.id ? IconCategoryId.fromZodData(data.id) : undefined,
       IconCategoryNames.fromZodData(data.nameByLanguages),
       SortOrder.fromZodData(data.sortOrder),
       data.isActive,

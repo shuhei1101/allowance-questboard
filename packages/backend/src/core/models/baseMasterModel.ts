@@ -7,7 +7,7 @@ import { BaseDomainModel } from './baseDomainModel';
 export abstract class BaseMasterModel<IdType extends BaseId> extends BaseDomainModel<IdType> {
 
   constructor(
-    id: IdType,
+    id?: IdType,
   ) {
     super(id);
   }
