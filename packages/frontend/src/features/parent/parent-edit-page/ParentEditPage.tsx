@@ -9,8 +9,8 @@ import { BirthdayInputFieldEntry } from '../../shared/components/BirthdayInputFi
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
 import { useParentEditPageHandlers } from './hooks/useParentEditPageHandlers';
+import { useInitializeParentData } from './hooks/useParentDataInitializer';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
-import { fetchParentForm } from './query/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ComfirmButton } from '@/features/shared/components';
 
@@ -36,7 +36,7 @@ interface Props {
   rawParentId?: string; // 親ID（オプション）
 }
 
-export const ParentEditPage: React.FC<Props> = async ({
+export const ParentEditPage: React.FC<Props> = ({
   shouldUpdate = true,
   rawParentId: rawParentId,
 }) => {
@@ -44,20 +44,14 @@ export const ParentEditPage: React.FC<Props> = async ({
   const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
   const navigation = useNavigation();
+  
+  const parentId = rawParentId ? new ParentId(Number(rawParentId)) : undefined;
 
-  const parentId = new ParentId(Number(rawParentId));
-
-  // 親情報の取得
-  if (rawParentId) {
-    pageStore.setParentForm(
-      await fetchParentForm(parentId)
-    )
-  }
-
-  // 状態を初期化
-  pageStore.reset();
+  // 親データ初期化フック
+  useInitializeParentData(parentId);
   
   // 統合フックで全ハンドラーを取得
+  
   const {
     handleNameChange,
     handleEmailChange,

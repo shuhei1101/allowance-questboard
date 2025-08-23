@@ -13,7 +13,7 @@ import { FamilyMemberEntity } from "@backend/features/family-member/entity/famil
  * 親エンティティ
  */
 @Entity("parents")
-@Unique("uq_parents_family_user", ["family_id", "family_member_id"])
+@Unique("uq_parents_family_user", ["familyId", "familyMemberId"])
 export class ParentEntity extends BaseTransactionEntity {
   @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
   familyMemberId!: number;

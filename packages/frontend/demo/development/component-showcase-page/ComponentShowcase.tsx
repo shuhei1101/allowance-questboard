@@ -5,6 +5,7 @@ import { EmailInputField } from '@/features/shared/components/EmailInputField';
 import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
 import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
+import { ComfirmButton } from '@/features/shared/components';
 
 /**
  * コンポーネントショーケース

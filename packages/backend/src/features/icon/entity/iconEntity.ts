@@ -54,7 +54,7 @@ export class IconEntity extends BaseMasterEntity {
       Object.assign(new IconEntity(), { id: 16, category_id: 2, name: "MessageCircle", sort_order: 8, is_active: true }),
 
       // スポーツ・運動系アイコン (category_id: 3)
-      Object.assign(new IconEntity(), { id: 17, category_id: 3, name: "Football", sort_order: 1, is_active: true }),
+      Object.assign(new IconEntity(), { id: 17, category_id: 3, name: "Zap", sort_order: 1, is_active: true }),
       Object.assign(new IconEntity(), { id: 18, category_id: 3, name: "Dumbbell", sort_order: 2, is_active: true }),
       Object.assign(new IconEntity(), { id: 19, category_id: 3, name: "CircleDot", sort_order: 3, is_active: true }),
       Object.assign(new IconEntity(), { id: 20, category_id: 3, name: "Sailboat", sort_order: 4, is_active: true }),
