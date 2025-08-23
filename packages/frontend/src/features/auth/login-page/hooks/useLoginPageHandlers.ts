@@ -20,6 +20,10 @@ import { createAuthenticatedClient } from '@/core/api/trpcClient';
 export const useLoginPageHandlers = () => {
   const pageStore = useLoginPageStore();
   const sessionStore = useSessionStore();
+  const router = createAuthenticatedClient({
+    jwtToken: sessionStore.jwt,
+    languageType: sessionStore.languageType,
+  });
   const handleEmailChange = useEmailHandler({
     emailError: pageStore.emailError,
     loginForm: pageStore.loginForm,
@@ -42,10 +46,7 @@ export const useLoginPageHandlers = () => {
     setLoading: pageStore.setLoading,
     login: login,
     setSelectFamilyDialog: pageStore.setSelectFamilyDialog,
-    loginHandler: createAuthenticatedClient({
-      jwtToken: sessionStore.jwt,
-      languageType: sessionStore.languageType,
-    }).login.login,
+    loginHandler: router.login.login,
   });
   const handleParentLogin = useParentLoginHandler({
     updateFamilyMemberType: sessionStore.setFamilyMemberType,
