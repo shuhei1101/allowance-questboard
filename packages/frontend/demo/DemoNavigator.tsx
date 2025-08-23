@@ -100,12 +100,6 @@ export function DemoNavigator() {
       <DemoStack.Navigator
         id={undefined}
         initialRouteName={StackInfo.screens.developmentTop}
-        screenOptions={{
-          headerShown: true,
-          headerStyle: { backgroundColor: '#6366f1' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
-        }}
       >
         <DemoStack.Screen 
           name={StackInfo.screens.developmentTop}
