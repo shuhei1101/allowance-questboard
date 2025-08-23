@@ -18,6 +18,7 @@ export type SetBirthdayError = (error: string | null) => void;
 export type ClearErrors = () => void;
 export type SetConfirmed = (confirmed: boolean) => void;
 export type Reset = () => void;
+
 interface ParentEditPageState {
   isLoading: IsLoading;
   parentForm: ParentForm;

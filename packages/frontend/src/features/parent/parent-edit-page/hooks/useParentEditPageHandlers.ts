@@ -6,6 +6,7 @@ import { useBirthdayHandler } from './useBirthdayHandler';
 import { useConfirmHandler } from './useConfirmHandler';
 import { useParentEditPageStore as useParentEditPageStore } from '../stores/parentEditPageStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
+import { useSessionStore } from '@/features/auth/stores/sessionStore';
 
 /**
  * 親情報登録画面の全ハンドラーを統合したカスタムフック
@@ -20,6 +21,7 @@ export const useParentEditPageHandlers = (params: {
   parentId?: ParentId,
 }) => {
   const pageStore = useParentEditPageStore();
+  const sessionStore = useSessionStore();
   // 名前変更時のハンドラ
   const handleNameChange = useNameHandler({
     parentForm: pageStore.parentForm,
@@ -53,6 +55,7 @@ export const useParentEditPageHandlers = (params: {
   // 確定ボタン押下時のハンドラ
   const handleConfirm = useConfirmHandler({
     parentForm: pageStore.parentForm,
+    currentLanguageType: sessionStore.languageType,
     setLoading: pageStore.setLoading,
     clearErrors: pageStore.clearErrors,
     setNameError: pageStore.setNameError,
