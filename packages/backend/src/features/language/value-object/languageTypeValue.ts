@@ -45,8 +45,8 @@ export class LanguageTypeValue extends BaseSimpleEnumValue<LanguageId, LanguageE
   setFromEntity(entity: LanguageEntity): void {
     this._code = new LanguageCode(entity.code);
     this._name = new LanguageName(entity.name);
-    this._isActive = entity.is_active;
-    this._sortOrder = new SortOrder(entity.sort_order);
+    this._isActive = entity.isActive;
+    this._sortOrder = new SortOrder(entity.sortOrder);
   }
 
   /**

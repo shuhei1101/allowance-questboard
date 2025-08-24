@@ -2,10 +2,13 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { AppIcons } from '@/features/icon/models/AppIcons';
 import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
+import { AppIcon } from '@/features/icon/models/AppIcon';
+import { Icon } from '@backend/features/icon/domain/icon';
 
 export type SetIconCategories = (iconCategories: IconCategories) => void;
 export type SetIconByName = (iconByName: AppIcons) => void;
 export type GetAllIcons = () => Map<any, any> | undefined;
+export type GetIconByName = (icon: Icon) => AppIcon | undefined;
 
 interface AppConfigState {
   iconCategories?: IconCategories;
@@ -14,6 +17,7 @@ interface AppConfigState {
   setIconCategories: SetIconCategories;
   setIconByName: SetIconByName;
   getAllIcons: GetAllIcons;
+  getIconByName: GetIconByName;
 }
 
 const initialState = {
@@ -42,6 +46,11 @@ export const useAppConfigStore = create<AppConfigState>()(
       getAllIcons: () => {
         const state = get();
         return state.iconCategories?.getAllIcons();
+      },
+
+      getIconByName: (icon: Icon) => {
+        const state = get();
+        return state.iconByName?.get(icon) || undefined;
       },
     }),
     {

@@ -6,11 +6,11 @@ import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
  */
 @Entity("allowanceable_types")
 export class AllowanceableTypeEntity extends BaseMasterEntity {
-  @PrimaryColumn({ type: "int", comment: "ID" })
+  @PrimaryColumn({ name: "id", type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "varchar", length: 50, nullable: false, unique: true, comment: "お小遣い支給対象テーブル名" })
-  table_name!: string;
-  @Column({ type: "text", nullable: false, comment: "説明" })
+  @Column({ name: "table_name", type: "varchar", length: 50, nullable: false, unique: true, comment: "お小遣い支給対象テーブル名" })
+  tableName!: string;
+  @Column({ name: "description", type: "text", nullable: false, comment: "説明" })
   description!: string;
 
   /**
@@ -18,7 +18,7 @@ export class AllowanceableTypeEntity extends BaseMasterEntity {
    */
   protected static seedData(): AllowanceableTypeEntity[] {
     return [
-      Object.assign(new AllowanceableTypeEntity(), { id: 1, table_name: "quest_members", description: "メンバーのクエストテーブル" }),
+      Object.assign(new AllowanceableTypeEntity(), { id: 1, tableName: "quest_members", description: "メンバーのクエストテーブル" }),
     ];
   }
 }

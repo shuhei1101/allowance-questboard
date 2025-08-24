@@ -4,7 +4,7 @@ import { useTheme } from '@/core/theme';
 import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { Icons } from '@backend/features/icon/domain/icons';
-import { AppIcon } from '@/features/icon/models/AppIcon';
+import { GetIconByName } from '@/features/shared/stores/appConfigStore';
 
 interface Props {
   /** 表示するアイコン一覧 */
@@ -14,7 +14,7 @@ interface Props {
   /** アイコンが選択された時のコールバック */
   onIconSelect: (icon: Icon) => void;
   /** アイコン取得関数 */
-  getIconByName: (icon: Icon) => AppIcon | undefined;
+  getIconByName: GetIconByName;
 }
 
 /** アイコン選択画面のアイコングリッド

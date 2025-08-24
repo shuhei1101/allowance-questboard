@@ -5,29 +5,25 @@ import {
   PrimaryColumn,
 } from "typeorm";
 
-/**
- * 言語マスタエンティティ
- */
+/** 言語マスタエンティティ */
 @Entity("languages")
 export class LanguageEntity extends BaseMasterEntity {
-  @PrimaryColumn({ type: "int", comment: "ID" })
+  @PrimaryColumn({ name: "id", type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "varchar", length: 10, nullable: false, unique: true, comment: "言語コード(選択肢表示用)" })
+  @Column({ name: "code", type: "varchar", length: 10, nullable: false, unique: true, comment: "言語コード(選択肢表示用)" })
   code!: string;
-  @Column({ type: "varchar", length: 100, nullable: false, comment: "言語名(説明用)" })
+  @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "言語名(説明用)" })
   name!: string;
-  @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
-  is_active!: boolean;
-  @Column({ type: "int", nullable: false, default: 0, comment: "表示順序" })
-  sort_order!: number;
+  @Column({ name: "is_active", type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
+  isActive!: boolean;
+  @Column({ name: "sort_order", type: "int", nullable: false, default: 0, comment: "表示順序" })
+  sortOrder!: number;
 
-  /**
-   * シード用データ取得
-   */
+  /** シード用データ取得 */
   protected static seedData(): LanguageEntity[] {
     return [
-      Object.assign(new LanguageEntity(), { id: 1, code: "ja", name: "Japanese", is_active: true, sort_order: 1 }),
-      Object.assign(new LanguageEntity(), { id: 2, code: "en", name: "English", is_active: true, sort_order: 2 }),
+      Object.assign(new LanguageEntity(), { id: 1, code: "ja", name: "Japanese", isActive: true, sortOrder: 1 }),
+      Object.assign(new LanguageEntity(), { id: 2, code: "en", name: "English", isActive: true, sortOrder: 2 }),
     ];
   }
 }

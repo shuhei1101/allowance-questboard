@@ -13,14 +13,14 @@ import { FamilyMemberEntity } from "../../family-member/entity/familyMemberEntit
  * コメントいいねエンティティ
  */
 @Entity("comment_likes")
-@Unique("uq_comment_likes_comment_member", ["comment_id", "family_member_id"])
+@Unique("uq_comment_likes_comment_member", ["commentId", "familyMemberId"])
 export class CommentLikeEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "コメントID" })
-  comment_id!: number;
-  @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
-  family_member_id!: number;
-  @Column({ type: "timestamp", nullable: true, comment: "いいね日時" })
-  liked_at?: Date;
+  @Column({ name: "comment_id", type: "int", nullable: false, comment: "コメントID" })
+  commentId!: number;
+  @Column({ name: "family_member_id", type: "int", nullable: false, comment: "家族メンバーID" })
+  familyMemberId!: number;
+  @Column({ name: "liked_at", type: "timestamp", nullable: true, comment: "いいね日時" })
+  likedAt?: Date;
 
   @ManyToOne(() => CommentEntity)
   @JoinColumn({ name: "comment_id" })

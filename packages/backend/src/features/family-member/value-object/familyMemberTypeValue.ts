@@ -32,7 +32,7 @@ export class FamilyMemberTypeValue extends BaseSimpleEnumValue<FamilyMemberTypeI
    * @param entity 家族メンバータイプエンティティ
    */
   setFromEntity(entity: FamilyMemberTypeEntity): void {
-    this._tableName = entity.table_name;
+    this._tableName = entity.tableName;
     this._description = entity.description;
   }
 

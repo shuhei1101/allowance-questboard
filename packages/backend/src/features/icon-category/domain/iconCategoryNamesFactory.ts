@@ -14,7 +14,7 @@ export const fromEntity = (translationDict: { [languageId: number]: IconCategory
   
   for (const translation of Object.values(translationDict)) {
     if (translation instanceof IconCategoryTranslationEntity) {
-      const languageType = LanguageType.getValueById(new LanguageId(translation.language_id));
+      const languageType = LanguageType.getValueById(new LanguageId(translation.languageId));
       const categoryName = new IconCategoryName(translation.name);
       nameList.push(new IconCategoryNameByLanguage(languageType, categoryName));
     }

@@ -63,9 +63,9 @@ export const IconSelectPageDetailPage: React.FC = () => {
       
       try {
         await initMasterData({
-          getMasterData: router.init,
+          getMasterData: router.init.getMasterData,
           setLanguageTypes: (data: any) => LanguageType.setFromZodData(data),
-          setFamilyMemberTypes: (data: any) => FamilyMemberType.setFromZodData(data),
+          setFamilyMemberType: (data: any) => FamilyMemberType.setFromZodData(data),
           setIconCategories: appConfigStore.setIconCategories,
           setIconByName: appConfigStore.setIconByName,
         });
@@ -117,9 +117,9 @@ export const IconSelectPageDetailPage: React.FC = () => {
     
     try {
       await initMasterData({
-        getMasterData: router.init,
+        getMasterData: router.init.getMasterData,
         setLanguageTypes: (data: any) => LanguageType.setFromZodData(data),
-        setFamilyMemberTypes: (data: any) => FamilyMemberType.setFromZodData(data),
+        setFamilyMemberType: (data: any) => FamilyMemberType.setFromZodData(data),
         setIconCategories: appConfigStore.setIconCategories,
         setIconByName: appConfigStore.setIconByName,
       });
@@ -147,8 +147,6 @@ export const IconSelectPageDetailPage: React.FC = () => {
       <IconSelectPage
         initialSelectedIcon={demoState.initialSelectedIcon}
         onIconSelected={handleIconSelected}
-        getIconCategories={() => appConfigStore.iconCategories}
-        getIconByName={(icon: Icon) => appConfigStore.iconByName?.get(icon)}
       />
     );
   }

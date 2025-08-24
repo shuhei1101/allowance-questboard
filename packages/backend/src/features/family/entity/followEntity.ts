@@ -9,10 +9,10 @@ import { FamilyEntity } from "./familyEntity";
 
 @Entity("follows")
 export class FollowEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "フォロー元の家族メンバーID" })
-  follow_from!: number;
-  @Column({ type: "int", nullable: false, comment: "フォロー先の家族メンバーID" })
-  follow_to!: number;
+  @Column({ name: "follow_from", type: "int", nullable: false, comment: "フォロー元の家族メンバーID" })
+  followFrom!: number;
+  @Column({ name: "follow_to", type: "int", nullable: false, comment: "フォロー先の家族メンバーID" })
+  followTo!: number;
 
   @ManyToOne(() => FamilyEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: "follow_from", referencedColumnName: "id", foreignKeyConstraintName: "fk_follows_follow_from" })

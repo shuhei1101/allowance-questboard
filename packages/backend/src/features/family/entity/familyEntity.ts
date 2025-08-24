@@ -8,16 +8,14 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 
-/**
- * 家族エンティティ
- */
+/** 家族エンティティ */
 @Entity("families")
 export class FamilyEntity extends BaseTransactionEntity {
-  @Column({ type: "varchar", length: 100, nullable: false, comment: "家名" })
+  @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "家名" })
   name!: string;
-  @Column({ type: "int", nullable: true, comment: "アイコンID" })
+  @Column({ name: "icon_id", type: "int", nullable: true, comment: "アイコンID" })
   iconId?: number;
-  @Column({ type: "text", nullable: true, default: "", comment: "説明文" })
+  @Column({ name: "introduction", type: "text", nullable: true, default: "", comment: "説明文" })
   introduction!: string;
 
   @ManyToOne(() => IconEntity, { nullable: true, onDelete: "SET NULL" })
@@ -39,38 +37,32 @@ export class FamilyEntity extends BaseTransactionEntity {
     return entity;
   }
 
-  /**
-   * シード用データ取得
-   */
-  protected static seedData(): FamilyEntity[] {
+  /** シード用データ取得 */
+  protected static seedData(): FamilyEntity[] {1
     return [
       // テンプレートクエスト用の家族データ
-      Object.assign(new FamilyEntity(), { name: "Template", icon_id: 1, introduction: "" }),
+      Object.assign(new FamilyEntity(), { name: "Template", iconId: 1, introduction: "" }),
     ];
   }
 }
 
-/**
- * 家族履歴エンティティ
- */
+/** 家族履歴エンティティ */
 @Entity("families_history")
 export class FamilyHistoryEntity extends BaseHistoryEntity {
   @Column({ type: "int" })
-  family_id!: number;
+  familyId!: number;
   @Column({ type: "varchar" })
   name!: string;
   @Column({ type: "int" })
-  icon_id?: number;
+  iconId?: number;
   @Column({ type: "text" })
   introduction?: string;
 
-  /**
-   * サブクラス固有の属性をセット
-   */
+  /** サブクラス固有の属性をセット */
   protected static setSpecificAttrs(instance: FamilyHistoryEntity, source: FamilyEntity): void {
-    instance.family_id = source.id;
+    instance.familyId = source.id;
     instance.name = source.name;
-    instance.icon_id = source.iconId;
+    instance.iconId = source.iconId;
     instance.introduction = source.introduction;
   }
 }

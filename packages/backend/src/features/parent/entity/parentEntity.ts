@@ -15,9 +15,9 @@ import { FamilyMemberEntity } from "@backend/features/family-member/entity/famil
 @Entity("parents")
 @Unique("uq_parents_family_user", ["familyId", "familyMemberId"])
 export class ParentEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
+  @Column({ name: "family_member_id", type: "int", nullable: false, comment: "家族メンバーID" })
   familyMemberId!: number;
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
+  @Column({ name: "family_id", type: "int", nullable: false, comment: "家族ID" })
   familyId!: number;
 
   @ManyToOne(() => FamilyEntity, { nullable: false, onDelete: "CASCADE" })

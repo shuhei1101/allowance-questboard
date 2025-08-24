@@ -8,19 +8,17 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 import { LevelTableEntity } from "./levelTableEntity";
 import { ChildEntity } from "@backend/features/child/entity/childEntity";
 
-/**
- * 子供用レベルテーブルエンティティ
- */
+/** 子供用レベルテーブルエンティティ */
 @Entity("child_level_tables")
 export class ChildLevelTableEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "親レベルテーブルID" })
-  superclass_id!: number;
-  @Column({ type: "int", nullable: false, comment: "子供ID" })
-  child_id!: number;
+  @Column({ name: "superclass_id", type: "int", nullable: false, comment: "親レベルテーブルID" })
+  superclassId!: number;
+  @Column({ name: "child_id", type: "int", nullable: false, comment: "子供ID" })
+  childId!: number;
 
   @ManyToOne(() => LevelTableEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "superclass_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_level_tables_superclass_id" })
-  level_table!: LevelTableEntity;
+  levelTable!: LevelTableEntity;
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "child_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_level_tables_child_id" })
   child!: ChildEntity;

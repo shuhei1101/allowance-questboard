@@ -8,20 +8,18 @@ import {
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 
-/**
- * 家族メンバーエンティティ
- */
+/** 家族メンバーエンティティ */
 @Entity("family_members")
 @Check("chk_family_members_name_not_empty", "LENGTH(name) > 0")
 @Check("chk_family_members_birthday_not_future", "birthday <= CURRENT_DATE")
 export class FamilyMemberEntity extends BaseTransactionEntity {
-  @Column({ type: "uuid", nullable: false, comment: "ユーザID(外部キー：auth.users.id)" })
+  @Column({ name: "user_id", type: "uuid", nullable: false, comment: "ユーザID(外部キー：auth.users.id)" })
   userId!: string;
-  @Column({ type: "varchar", length: 100, nullable: false, comment: "名前" })
+  @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "名前" })
   name!: string;
-  @Column({ type: "int", nullable: true, comment: "アイコンID(外部キー、NULL許可)" })
+  @Column({ name: "icon_id", type: "int", nullable: true, comment: "アイコンID(外部キー、NULL許可)" })
   iconId?: number;
-  @Column({ type: "date", nullable: false, comment: "誕生日(未来日不可)" })
+  @Column({ name: "birthday", type: "date", nullable: false, comment: "誕生日(未来日不可)" })
   birthday!: Date;
 
   @ManyToOne(() => IconEntity, { nullable: true, onDelete: "SET NULL" })
@@ -44,9 +42,7 @@ export class FamilyMemberEntity extends BaseTransactionEntity {
     return entity;
   }
 
-  /**
-   * シード用データ取得
-   */
+  /** シード用データ取得 */
   protected static seedData(): FamilyMemberEntity[] {
     return [];
   }

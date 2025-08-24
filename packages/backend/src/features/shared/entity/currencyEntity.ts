@@ -16,24 +16,24 @@ import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 export class CurrencyEntity extends BaseMasterEntity {
   @PrimaryColumn({ type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "varchar", nullable: false, unique: true, comment: "通貨コード" })
+  @Column({ name: "code", type: "varchar", nullable: false, unique: true, comment: "通貨コード" })
   code!: string;
-  @Column({ type: "varchar", nullable: false, comment: "通貨名" })
+  @Column({ name: "name", type: "varchar", nullable: false, comment: "通貨名" })
   name!: string;
-  @Column({ type: "varchar", nullable: false, comment: "通貨記号" })
+  @Column({ name: "symbol", type: "varchar", nullable: false, comment: "通貨記号" })
   symbol!: string;
-  @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
-  is_active!: boolean;
-  @Column({ type: "int", nullable: false, default: 0, comment: "表示順序" })
-  sort_order!: number;
+  @Column({ name: "is_active", type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
+  isActive!: boolean;
+  @Column({ name: "sort_order", type: "int", nullable: false, default: 0, comment: "表示順序" })
+  sortOrder!: number;
 
   /**
    * シード用データ取得
    */
   protected static seedData(): CurrencyEntity[] {
     return [
-      Object.assign(new CurrencyEntity(), { id: 1, code: "JPY", name: "Japanese Yen", symbol: "¥", is_active: true, sort_order: 1 }),
-      Object.assign(new CurrencyEntity(), { id: 2, code: "USD", name: "US Dollar", symbol: "$", is_active: true, sort_order: 2 }),
+      Object.assign(new CurrencyEntity(), { id: 1, code: "JPY", name: "Japanese Yen", symbol: "¥", isActive: true, sortOrder: 1 }),
+      Object.assign(new CurrencyEntity(), { id: 2, code: "USD", name: "US Dollar", symbol: "$", isActive: true, sortOrder: 2 }),
     ];
   }
 }

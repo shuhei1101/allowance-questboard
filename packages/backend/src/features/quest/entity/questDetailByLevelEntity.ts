@@ -15,7 +15,7 @@ import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTrans
  * クエスト詳細(レベル別)エンティティ
  */
 @Entity("quest_detail_by_level")
-@Unique("uq_quest_detail_by_level_quest_level", ["quest_id", "level"])
+@Unique("uq_quest_detail_by_level_quest_level", ["questId", "level"])
 @Check("chk_quest_detail_by_level_level_positive", "level > 0")
 @Check("chk_quest_detail_by_level_success_criteria_not_empty", "length(success_criteria) > 0")
 @Check("chk_quest_detail_by_level_target_count_positive", "target_count > 0")
@@ -23,22 +23,22 @@ import { BaseTransactionTranslationEntity } from "@backend/core/entity/baseTrans
 @Check("chk_quest_detail_by_level_child_exp_non_negative", "child_exp >= 0")
 @Check("chk_quest_detail_by_level_quest_exp_non_negative", "quest_exp >= 0")
 export class QuestDetailByLevelEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "クエストID" })
-  quest_id!: number;
-  @Column({ type: "int", nullable: false, comment: "レベル" })
+  @Column({ name: "quest_id", type: "int", nullable: false, comment: "クエストID" })
+  questId!: number;
+  @Column({ name: "level", type: "int", nullable: false, comment: "レベル" })
   level!: number;
-  @Column({ type: "text", nullable: false, comment: "成功条件" })
-  success_criteria!: string;
-  @Column({ type: "int", nullable: false, comment: "目標回数" })
-  target_count!: number;
-  @Column({ type: "int", nullable: false, comment: "報酬金額" })
+  @Column({ name: "success_criteria", type: "text", nullable: false, comment: "成功条件" })
+  successCriteria!: string;
+  @Column({ name: "target_count", type: "int", nullable: false, comment: "目標回数" })
+  targetCount!: number;
+  @Column({ name: "reward", type: "int", nullable: false, comment: "報酬金額" })
   reward!: number;
-  @Column({ type: "int", nullable: false, comment: "通貨ID" })
-  currency_id!: number;
-  @Column({ type: "int", nullable: false, comment: "子供獲得経験値" })
-  child_exp!: number;
-  @Column({ type: "int", nullable: false, comment: "クエスト獲得経験値" })
-  quest_exp!: number;
+  @Column({ name: "currency_id", type: "int", nullable: false, comment: "通貨ID" })
+  currencyId!: number;
+  @Column({ name: "child_exp", type: "int", nullable: false, comment: "子供獲得経験値" })
+  childExp!: number;
+  @Column({ name: "quest_exp", type: "int", nullable: false, comment: "クエスト獲得経験値" })
+  questExp!: number;
 
   @ManyToOne(() => QuestEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_detail_by_level_quest_id" })
@@ -52,12 +52,12 @@ export class QuestDetailByLevelEntity extends BaseTransactionEntity {
  * クエスト詳細翻訳エンティティ
  */
 @Entity("quest_detail_by_level_translation")
-@Unique("uq_quest_detail_by_level_translation_detail_language", ["quest_detail_by_level_id", "language_id"])
+@Unique("uq_quest_detail_by_level_translation_detail_language", ["questDetailByLevelId", "languageId"])
 export class QuestDetailByLevelTranslationEntity extends BaseTransactionTranslationEntity {
-  @Column({ type: "int", nullable: false, comment: "クエスト詳細ID" })
-  quest_detail_by_level_id!: number;
-  @Column({ type: "text", nullable: false, comment: "成功条件の翻訳" })
-  success_criteria!: string;
+  @Column({ name: "quest_detail_by_level_id", type: "int", nullable: false, comment: "クエスト詳細ID" })
+  questDetailByLevelId!: number;
+  @Column({ name: "success_criteria", type: "text", nullable: false, comment: "成功条件の翻訳" })
+  successCriteria!: string;
 
   @ManyToOne(() => QuestDetailByLevelEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ 
@@ -65,12 +65,12 @@ export class QuestDetailByLevelTranslationEntity extends BaseTransactionTranslat
     referencedColumnName: "id", 
     foreignKeyConstraintName: "fk_quest_detail_translation_detail_id" 
   })
-  quest_detail_by_level!: QuestDetailByLevelEntity;
+  questDetailByLevel!: QuestDetailByLevelEntity;
 
   /**
    * 翻訳元レコードのIDを返す
    */
   get sourceId(): number {
-    return this.quest_detail_by_level_id;
+    return this.questDetailByLevelId;
   }
 }

@@ -13,7 +13,7 @@ import { LanguageEntity } from "@backend/features/language/entity/languageEntity
  * 翻訳可能エンティティのインターフェース
  */
 export interface TranslationEntityProtocol extends BaseEntityProtocol {
-  language_id: number;
+  languageId: number;
   language: LanguageEntity;
   get sourceId(): number;
 }
@@ -26,8 +26,8 @@ export abstract class BaseMasterTranslationEntity extends AppBaseEntity implemen
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: "int", nullable: false, comment: "言語ID" })
-  language_id!: number;
+  @Column({ name: "language_id", type: "int", nullable: false, comment: "言語ID" })
+  languageId!: number;
 
   @ManyToOne(() => LanguageEntity, { nullable: false, onDelete: "SET NULL" })
   @JoinColumn({ name: "language_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_language_id" })
@@ -38,15 +38,14 @@ export abstract class BaseMasterTranslationEntity extends AppBaseEntity implemen
    * サブクラスで実装必須
    */
   abstract get sourceId(): number;
-
 }
 
 /**
  * トランザクションテーブル翻訳用の基底クラス
  */
 export abstract class BaseTransactionTranslationEntity extends BaseTransactionEntity implements TranslationEntityProtocol {
-  @Column({ type: "int", nullable: false, comment: "言語ID" })
-  language_id!: number;
+  @Column({ name: "language_id", type: "int", nullable: false, comment: "言語ID" })
+  languageId!: number;
 
   @ManyToOne(() => LanguageEntity, { nullable: false, onDelete: "SET NULL" })
   @JoinColumn({ name: "language_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_language_id" })

@@ -15,26 +15,26 @@ import { BaseTranslationEntities } from "@backend/core/entity/baseTranslationEnt
  */
 @Entity("icon_categories")
 export class IconCategoryEntity extends BaseMasterEntity {
-  @PrimaryColumn({ type: "int", comment: "ID" })
+  @PrimaryColumn({ name: "id", type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "int", default: 0, comment: "表示順序" })
-  sort_order!: number;
-  @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
-  is_active!: boolean;
+  @Column({ name: "sort_order", type: "int", default: 0, comment: "表示順序" })
+  sortOrder!: number;
+  @Column({ name: "is_active", type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
+  isActive!: boolean;
 
   /**
    * シード用データ取得
    */
   protected static seedData(): IconCategoryEntity[] {
     return [
-      Object.assign(new IconCategoryEntity(), { id: 1, sort_order: 1, is_active: true }), // 家事・掃除
-      Object.assign(new IconCategoryEntity(), { id: 2, sort_order: 2, is_active: true }), // 勉強・学習
-      Object.assign(new IconCategoryEntity(), { id: 3, sort_order: 3, is_active: true }), // スポーツ・運動
-      Object.assign(new IconCategoryEntity(), { id: 4, sort_order: 4, is_active: true }), // 料理・食事
-      Object.assign(new IconCategoryEntity(), { id: 5, sort_order: 5, is_active: true }), // お買い物・外出
-      Object.assign(new IconCategoryEntity(), { id: 6, sort_order: 6, is_active: true }), // ペット・動物
-      Object.assign(new IconCategoryEntity(), { id: 7, sort_order: 7, is_active: true }), // 趣味・創作
-      Object.assign(new IconCategoryEntity(), { id: 8, sort_order: 8, is_active: true }), // 健康・美容
+      Object.assign(new IconCategoryEntity(), { id: 1, sortOrder: 1, isActive: true }), // 家事・掃除
+      Object.assign(new IconCategoryEntity(), { id: 2, sortOrder: 2, isActive: true }), // 勉強・学習
+      Object.assign(new IconCategoryEntity(), { id: 3, sortOrder: 3, isActive: true }), // スポーツ・運動
+      Object.assign(new IconCategoryEntity(), { id: 4, sortOrder: 4, isActive: true }), // 料理・食事
+      Object.assign(new IconCategoryEntity(), { id: 5, sortOrder: 5, isActive: true }), // お買い物・外出
+      Object.assign(new IconCategoryEntity(), { id: 6, sortOrder: 6, isActive: true }), // ペット・動物
+      Object.assign(new IconCategoryEntity(), { id: 7, sortOrder: 7, isActive: true }), // 趣味・創作
+      Object.assign(new IconCategoryEntity(), { id: 8, sortOrder: 8, isActive: true }), // 健康・美容
     ];
   }
 }
@@ -43,11 +43,11 @@ export class IconCategoryEntity extends BaseMasterEntity {
  * アイコンカテゴリ翻訳エンティティ
  */
 @Entity("icon_categories_translation")
-@Unique("uq_icon_categories_translation_category_language", ["category_id", "language_id"])
+@Unique("uq_icon_categories_translation_category_language", ["categoryId", "languageId"])
 export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
-  @Column({ type: "int", nullable: false, comment: "アイコンカテゴリID" })
-  category_id!: number;
-  @Column({ type: "varchar", length: 100, nullable: false, comment: "カテゴリ名の翻訳" })
+  @Column({ name: "category_id", type: "int", nullable: false, comment: "アイコンカテゴリID" })
+  categoryId!: number;
+  @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "カテゴリ名の翻訳" })
   name!: string;
 
   @ManyToOne(() => IconCategoryEntity, { nullable: false, onDelete: "RESTRICT" })
@@ -58,7 +58,7 @@ export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
    * 翻訳元レコードのIDを返す
    */
   get sourceId(): number {
-    return this.category_id;
+    return this.categoryId;
   }
 
   /**
@@ -67,24 +67,24 @@ export class IconCategoryTranslationEntity extends BaseMasterTranslationEntity {
   protected static seedData(): IconCategoryTranslationEntity[] {
     return [
       // 日本語翻訳
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 1, name: "家事・掃除" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 1, name: "勉強・学習" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 1, name: "スポーツ・運動" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 4, language_id: 1, name: "料理・食事" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 5, language_id: 1, name: "お買い物・外出" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 6, language_id: 1, name: "ペット・動物" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 7, language_id: 1, name: "趣味・創作" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 8, language_id: 1, name: "健康・美容" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 1, languageId: 1, name: "家事・掃除" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 2, languageId: 1, name: "勉強・学習" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 3, languageId: 1, name: "スポーツ・運動" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 4, languageId: 1, name: "料理・食事" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 5, languageId: 1, name: "お買い物・外出" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 6, languageId: 1, name: "ペット・動物" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 7, languageId: 1, name: "趣味・創作" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 8, languageId: 1, name: "健康・美容" }),
       
       // 英語翻訳
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 1, language_id: 2, name: "Housework & Cleaning" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 2, language_id: 2, name: "Study & Learning" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 3, language_id: 2, name: "Sports & Exercise" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 4, language_id: 2, name: "Cooking & Dining" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 5, language_id: 2, name: "Shopping & Outings" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 6, language_id: 2, name: "Pets & Animals" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 7, language_id: 2, name: "Hobbies & Creativity" }),
-      Object.assign(new IconCategoryTranslationEntity(), { category_id: 8, language_id: 2, name: "Health & Beauty" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 1, languageId: 2, name: "Housework & Cleaning" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 2, languageId: 2, name: "Study & Learning" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 3, languageId: 2, name: "Sports & Exercise" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 4, languageId: 2, name: "Cooking & Dining" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 5, languageId: 2, name: "Shopping & Outings" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 6, languageId: 2, name: "Pets & Animals" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 7, languageId: 2, name: "Hobbies & Creativity" }),
+      Object.assign(new IconCategoryTranslationEntity(), { categoryId: 8, languageId: 2, name: "Health & Beauty" }),
     ];
   }
 }

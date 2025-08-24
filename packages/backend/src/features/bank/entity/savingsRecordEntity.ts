@@ -15,14 +15,14 @@ import { ChildEntity } from "@backend/features/child/entity/childEntity";
 @Check("chk_savings_records_amount_not_zero", "amount != 0")
 @Check("chk_savings_records_balance_positive", "balance >= 0")
 export class SavingsRecordEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "子供ID" })
-  saved_by!: number;
-  @Column({ type: "int", nullable: false, default: 0, comment: "貯金額" })
+  @Column({ name: "saved_by", type: "int", nullable: false, comment: "子供ID" })
+  savedBy!: number;
+  @Column({ name: "amount", type: "int", nullable: false, default: 0, comment: "貯金額" })
   amount!: number;
-  @Column({ type: "int", nullable: false, default: 0, comment: "貯金残高" })
+  @Column({ name: "balance", type: "int", nullable: false, default: 0, comment: "貯金残高" })
   balance!: number;
-  @Column({ type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "貯金記録日時" })
-  recorded_at!: Date;
+  @Column({ name: "recorded_at", type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "貯金記録日時" })
+  recordedAt!: Date;
 
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "saved_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_savings_records_saved_by" })

@@ -21,7 +21,7 @@ class TestTranslationEntity extends BaseMasterTranslationEntity {
     const entity = new TestTranslationEntity();
     entity.id = id;
     entity.test_source_id = sourceId;
-    entity.language_id = languageId;
+    entity.languageId = languageId;
     entity.language = new LanguageEntity();
     entity.language.id = languageId;
     return entity;

@@ -10,37 +10,30 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 import { BaseHistoryEntity } from "@backend/core/entity/baseHistoryEntity";
 import { ChildEntity } from "./childEntity";
 
-/**
- * 子供設定エンティティ
- */
+/** 子供設定エンティティ */
 @Entity("child_settings")
-@Unique("uq_child_settings_child_id", ["child_id"])
 export class ChildSettingEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, unique: true, comment: "子供ID" })
-  child_id!: number;
-  @Column({ type: "int", nullable: false, default: 0, comment: "最低貯金額" })
-  min_savings!: number;
+  @Column({ name: "child_id", type: "int", nullable: false, unique: true, comment: "子供ID" })
+  childId!: number;
+  @Column({ name: "min_savings", type: "int", nullable: false, default: 0, comment: "最低貯金額" })
+  minSavings!: number;
 
   @OneToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "child_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_settings_child_id" })
   child!: ChildEntity;
 }
 
-/**
- * 子供設定履歴エンティティ
- */
+/** 子供設定履歴エンティティ */
 @Entity("child_settings_history")
 export class ChildSettingHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "int" })
-  child_id!: number;
-  @Column({ type: "int" })
-  min_savings!: number;
+  @Column({ name: "child_id", type: "int" })
+  childId!: number;
+  @Column({ name: "min_savings", type: "int" })
+  minSavings!: number;
 
-  /**
-   * サブクラス固有の属性をセット
-   */
+  /** サブクラス固有の属性をセット */
   protected static setSpecificAttrs(instance: ChildSettingHistoryEntity, source: ChildSettingEntity): void {
-    instance.child_id = source.child_id;
-    instance.min_savings = source.min_savings;
+    instance.childId = source.childId;
+    instance.minSavings = source.minSavings;
   }
 }

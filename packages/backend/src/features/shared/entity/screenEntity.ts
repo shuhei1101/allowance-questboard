@@ -1,9 +1,7 @@
 import { Entity, Column, PrimaryColumn } from "typeorm";
 import { BaseMasterEntity } from "@backend/core/entity/baseMasterEntity";
 
-/**
- * スクリーンエンティティ
- */
+/** スクリーンエンティティ */
 @Entity("screens")
 export class ScreenEntity extends BaseMasterEntity {
   @PrimaryColumn({ type: "int", comment: "ID" })
@@ -13,9 +11,7 @@ export class ScreenEntity extends BaseMasterEntity {
   @Column({ type: "text", nullable: true, comment: "スクリーンの説明" })
   description?: string;
 
-  /**
-   * シード用データ取得
-   */
+  /** シード用データ取得 */
   protected static seedData(): ScreenEntity[] {
     return [
       Object.assign(new ScreenEntity(), { id: 1, code: "HOME", description: "ホーム画面" }),

@@ -16,10 +16,7 @@ import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}) => {
   const sessionStore = useSessionStore();
   const appConfigStore = useAppConfigStore();
-  const router = createAuthenticatedClient({
-    jwtToken: sessionStore.jwt,
-    languageType: sessionStore.languageType,
-  });
+  
   const [ready, setReady] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("アプリを初期化しています...");
 
@@ -31,7 +28,10 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("マスタデータを読み込んでいます... 🚀");
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
-          getMasterData: router.init.getMasterData,
+          getMasterData: createAuthenticatedClient({
+            jwtToken: sessionStore.jwt,
+            languageType: sessionStore.languageType,
+          }).init.getMasterData,
           setLanguageTypes: sessionStore.setLanguageType,
           setFamilyMemberType: sessionStore.setFamilyMemberType,
           setIconCategories: appConfigStore.setIconCategories,

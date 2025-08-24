@@ -10,21 +10,16 @@ import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntit
 import { QuestEntity } from "./questEntity";
 import { FamilyEntity } from "../../family/entity/familyEntity";
 
-/**
- * 家族クエストエンティティ
- */
+/** 家族クエストエンティティ */
 @Entity("family_quests")
-@Unique("uq_family_quests", ["family_id", "quest_id"])
+@Unique("uq_family_quests", ["familyId", "questId"])
 export class FamilyQuestEntity extends BaseTransactionEntity {
-  @PrimaryGeneratedColumn({ comment: "ID" })
-  declare id: number;  // BaseTransactionEntityのidを再宣言（既に@PrimaryGeneratedColumnが定義されているため）
-
-  @Column({ type: "int", nullable: false, comment: "クエストID" })
-  quest_id!: number;
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
-  family_id!: number;
-  @Column({ type: "boolean", nullable: false, default: false, comment: "公開フラグ" })
-  is_public!: boolean;
+  @Column({ name: "quest_id", type: "int", nullable: false, comment: "クエストID" })
+  questId!: number;
+  @Column({ name: "family_id", type: "int", nullable: false, comment: "家族ID" })
+  familyId!: number;
+  @Column({ name: "is_public", type: "boolean", nullable: false, default: false, comment: "公開フラグ" })
+  isPublic!: boolean;
 
   @ManyToOne(() => QuestEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_family_quests_quest_id" })

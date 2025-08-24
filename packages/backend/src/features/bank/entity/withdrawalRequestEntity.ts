@@ -10,20 +10,20 @@ import { WithdrawalRequestStatusEntity } from "./withdrawalRequestStatusEntity";
 @Entity("withdrawal_requests")
 @Check("chk_withdrawal_requests_amount_positive", "amount > 0")
 export class WithdrawalRequestEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "申請者の子供ID" })
-  requested_by!: number;
-  @Column({ type: "int", nullable: false, comment: "承認者の家族ID" })
-  approved_by!: number;
-  @Column({ type: "int", nullable: false, comment: "申請ステータスID" })
-  status_id!: number;
-  @Column({ type: "int", nullable: false, comment: "引き落とし金額" })
+  @Column({ name: "requested_by", type: "int", nullable: false, comment: "申請者の子供ID" })
+  requestedBy!: number;
+  @Column({ name: "approved_by", type: "int", nullable: false, comment: "承認者の家族ID" })
+  approvedBy!: number;
+  @Column({ name: "status_id", type: "int", nullable: false, comment: "申請ステータスID" })
+  statusId!: number;
+  @Column({ name: "amount", type: "int", nullable: false, comment: "引き落とし金額" })
   amount!: number;
-  @Column({ type: "varchar", length: 500, nullable: false, comment: "引き落とし理由" })
+  @Column({ name: "reason", type: "varchar", length: 500, nullable: false, comment: "引き落とし理由" })
   reason!: string;
-  @Column({ type: "timestamp", nullable: false, comment: "申請日時" })
-  requested_at!: Date;
-  @Column({ type: "timestamp", nullable: true, comment: "承認日時" })
-  approved_at?: Date;
+  @Column({ name: "requested_at", type: "timestamp", nullable: false, comment: "申請日時" })
+  requestedAt!: Date;
+  @Column({ name: "approved_at", type: "timestamp", nullable: true, comment: "承認日時" })
+  approvedAt?: Date;
 
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "requested_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_withdrawal_requests_requested_by" })

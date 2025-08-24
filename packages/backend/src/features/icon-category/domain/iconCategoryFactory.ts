@@ -21,8 +21,8 @@ export const fromEntity = (params: {
     return new IconCategory(
       new IconCategoryId(params.entity.id),
       nameByLanguages,
-      new SortOrder(params.entity.sort_order),
-      params.entity.is_active,
+      new SortOrder(params.entity.sortOrder),
+      params.entity.isActive,
       params.icons
     );
   }

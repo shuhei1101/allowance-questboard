@@ -16,7 +16,7 @@ import { BaseMasterTranslationEntity } from "@backend/core/entity/baseTranslatio
 export class ReportStatusEntity extends BaseMasterEntity {
   @PrimaryColumn({ type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
+  @Column({ name: "code", type: "varchar", length: 20, nullable: false, unique: true, comment: "ステータスコード" })
   code!: string;
 
   /**
@@ -36,22 +36,22 @@ export class ReportStatusEntity extends BaseMasterEntity {
  * レポートステータス翻訳エンティティ
  */
 @Entity("report_statuses_translation")
-@Unique("uq_report_statuses_translation_status_language", ["report_status_id", "language_id"])
+@Unique("uq_report_statuses_translation_status_language", ["reportStatusId", "languageId"])
 export class ReportStatusTranslationEntity extends BaseMasterTranslationEntity {
-  @Column({ type: "int", nullable: false, comment: "レポートステータスID" })
-  report_status_id!: number;
-  @Column({ type: "varchar", length: 50, nullable: false, comment: "翻訳されたステータス名" })
+  @Column({ name: "report_status_id", type: "int", nullable: false, comment: "レポートステータスID" })
+  reportStatusId!: number;
+  @Column({ name: "status", type: "varchar", length: 50, nullable: false, comment: "翻訳されたステータス名" })
   status!: string;
 
   @ManyToOne(() => ReportStatusEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "report_status_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_report_status_translation_status_id" })
-  report_status!: ReportStatusEntity;
+  reportStatus!: ReportStatusEntity;
 
   /**
    * 翻訳元レコードのIDを返す
    */
   get sourceId(): number {
-    return this.report_status_id;
+    return this.reportStatusId;
   }
 
   /**
@@ -59,14 +59,14 @@ export class ReportStatusTranslationEntity extends BaseMasterTranslationEntity {
    */
   protected static seedData(): ReportStatusTranslationEntity[] {
     return [
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 1, language_id: 1, status: "審査待ち" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 1, language_id: 2, status: "pending" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 2, language_id: 1, status: "承認済み" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 2, language_id: 2, status: "approved" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 3, language_id: 1, status: "却下" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 3, language_id: 2, status: "rejected" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 4, language_id: 1, status: "解決済み" }),
-      Object.assign(new ReportStatusTranslationEntity(), { report_status_id: 4, language_id: 2, status: "resolved" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 1, languageId: 1, status: "審査待ち" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 1, languageId: 2, status: "pending" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 2, languageId: 1, status: "承認済み" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 2, languageId: 2, status: "approved" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 3, languageId: 1, status: "却下" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 3, languageId: 2, status: "rejected" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 4, languageId: 1, status: "解決済み" }),
+      Object.assign(new ReportStatusTranslationEntity(), { reportStatusId: 4, languageId: 2, status: "resolved" }),
     ];
   }
 }

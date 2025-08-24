@@ -9,20 +9,18 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 import { FamilyLevelTableEntity } from "./familyLevelTableEntity";
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 
-/**
- * 保存された共有レベルテーブルエンティティ
- */
+/** 保存された共有レベルテーブルエンティティ */
 @Entity("shared_level_tables")
-@Unique("uq_shared_level_tables_family_level_table_shared_by", ["family_level_table_id", "shared_by"])
+@Unique("uq_shared_level_tables_family_level_table_shared_by", ["familyLevelTableId", "sharedBy"])
 export class SharedLevelTableEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "共有レベルテーブルID(外部キー)" })
-  family_level_table_id!: number;
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
-  shared_by!: number;
+  @Column({ name: "family_level_table_id", type: "int", nullable: false, comment: "共有レベルテーブルID(外部キー)" })
+  familyLevelTableId!: number;
+  @Column({ name: "shared_by", type: "int", nullable: false, comment: "家族ID" })
+  sharedBy!: number;
 
   @ManyToOne(() => FamilyLevelTableEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_level_table_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_shared_level_tables_family_level_table_id" })
-  family_level_table!: FamilyLevelTableEntity;
+  familyLevelTable!: FamilyLevelTableEntity;
   @ManyToOne(() => FamilyEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "shared_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_shared_level_tables_shared_by" })
   family!: FamilyEntity;

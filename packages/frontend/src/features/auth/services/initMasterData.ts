@@ -12,7 +12,7 @@ export type InitMasterDataParams = {
   /** 言語タイプ設定関数 */
   setLanguageTypes: (data: any) => void;
   /** ファミリーメンバータイプ設定関数 */
-  setFamilyMemberTypes: (data: any) => void;
+  setFamilyMemberType: (data: any) => void;
   /** アイコンカテゴリ設定関数 */
   setIconCategories: SetIconCategories;
   /** アイコン名前設定関数 */
@@ -36,7 +36,7 @@ export const initMasterData = async (params: InitMasterDataParams): Promise<void
     params.setLanguageTypes(result.languages);
     
     // 家族メンバータイプ
-    params.setFamilyMemberTypes(result.familyMemberTypes);
+    params.setFamilyMemberType(result.familyMemberTypes);
 
     // アイコンカテゴリ
     const iconCategories = IconCategories.fromZodData(result.iconCategories);

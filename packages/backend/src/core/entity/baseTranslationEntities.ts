@@ -21,7 +21,7 @@ export class BaseTranslationEntities<TEntity extends TranslationEntityProtocol> 
       if (!this._itemsBySourceId[item.sourceId]) {
         this._itemsBySourceId[item.sourceId] = {};
       }
-      this._itemsBySourceId[item.sourceId][item.language_id] = item;
+      this._itemsBySourceId[item.sourceId][item.languageId] = item;
     }
   }
 

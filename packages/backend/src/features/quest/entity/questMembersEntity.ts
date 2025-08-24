@@ -18,26 +18,26 @@ import { QuestMemberStatusEntity } from "./questMemberStatusEntity";
  * 家族クエストに参加している子供の情報を管理するエンティティです。
  */
 @Entity("quest_members")
-@Unique("uq_quest_members", ["family_quest_id", "member_id"])
+@Unique("uq_quest_members", ["familyQuestId", "memberId"])
 @Check("chk_quest_members_current_level_positive", "current_level > 0")
 @Check("chk_quest_members_achieved_after_published", "(achieved_at IS NULL) OR (achieved_at IS NOT NULL AND achieved_at >= published_at)")
 export class QuestMembersEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "家族クエストID" })
-  family_quest_id!: number;
-  @Column({ type: "int", nullable: false, comment: "子供ID" })
-  member_id!: number;
-  @Column({ type: "int", nullable: false, default: 1, comment: "現在のレベル" })
-  current_level!: number;
-  @Column({ type: "int", nullable: false, comment: "クエストステータスID" })
-  status_id!: number;
-  @Column({ type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "クエスト公開日時" })
-  published_at!: Date;
-  @Column({ type: "timestamp", nullable: true, comment: "クエスト達成日時" })
-  achieved_at!: Date | null;
+  @Column({ name: "family_quest_id", type: "int", nullable: false, comment: "家族クエストID" })
+  familyQuestId!: number;
+  @Column({ name: "member_id", type: "int", nullable: false, comment: "子供ID" })
+  memberId!: number;
+  @Column({ name: "current_level", type: "int", nullable: false, default: 1, comment: "現在のレベル" })
+  currentLevel!: number;
+  @Column({ name: "status_id", type: "int", nullable: false, comment: "クエストステータスID" })
+  statusId!: number;
+  @Column({ name: "published_at", type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "クエスト公開日時" })
+  publishedAt!: Date;
+  @Column({ name: "achieved_at", type: "timestamp", nullable: true, comment: "クエスト達成日時" })
+  achievedAt!: Date | null;
 
   @ManyToOne("FamilyQuestEntity", { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_members_family_quest_id" })
-  family_quest!: any;
+  familyQuest!: any;
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "member_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_members_member_id" })
   member!: ChildEntity;
@@ -51,28 +51,28 @@ export class QuestMembersEntity extends BaseTransactionEntity {
  */
 @Entity("quest_members_history")
 export class QuestMembersHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "int" })
-  family_quest_id!: number;
-  @Column({ type: "int" })
-  member_id!: number;
-  @Column({ type: "int" })
-  current_level!: number;
-  @Column({ type: "int" })
-  status_id!: number;
-  @Column({ type: "timestamp" })
-  published_at!: Date;
-  @Column({ type: "timestamp" })
-  achieved_at!: Date | null;
+  @Column({ name: "family_quest_id", type: "int" })
+  familyQuestId!: number;
+  @Column({ name: "member_id", type: "int" })
+  memberId!: number;
+  @Column({ name: "current_level", type: "int" })
+  currentLevel!: number;
+  @Column({ name: "status_id", type: "int" })
+  statusId!: number;
+  @Column({ name: "published_at", type: "timestamp" })
+  publishedAt!: Date;
+  @Column({ name: "achieved_at", type: "timestamp" })
+  achievedAt!: Date | null;
 
   /**
    * サブクラス固有の属性をセット
    */
   protected static setSpecificAttrs(instance: QuestMembersHistoryEntity, source: QuestMembersEntity): void {
-    instance.family_quest_id = source.family_quest_id;
-    instance.member_id = source.member_id;
-    instance.current_level = source.current_level;
-    instance.status_id = source.status_id;
-    instance.published_at = source.published_at;
-    instance.achieved_at = source.achieved_at;
+    instance.familyQuestId = source.familyQuestId;
+    instance.memberId = source.memberId;
+    instance.currentLevel = source.currentLevel;
+    instance.statusId = source.statusId;
+    instance.publishedAt = source.publishedAt;
+    instance.achievedAt = source.achievedAt;
   }
 }

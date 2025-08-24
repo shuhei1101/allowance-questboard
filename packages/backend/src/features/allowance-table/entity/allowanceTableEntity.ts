@@ -9,8 +9,8 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 
 @Entity("allowance_tables")
 export class AllowanceTableEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "サブクラスタイプ" })
-  subclass_type!: number;
+  @Column({ name: "subclass_type", type: "int", nullable: false, comment: "サブクラスタイプ" })
+  subclassType!: number;
 
   @ManyToOne(() => AllowanceTableTypeEntity)
   @JoinColumn({ name: "subclass_type" })

@@ -9,17 +9,15 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 import { ChildEntity } from "./childEntity";
 import { EducationEntity } from "@backend/features/child/entity/educationEntity";
 
-/**
- * 子供の現在の学年を定義するエンティティ
- */
+/** 子供の現在の学年を定義するエンティティ */
 @Entity("child_grades")
 @Check("chk_child_grade_grade_positive", "grade > 0")
 export class ChildGradeEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "子供ID(外部キー)" })
-  child_id!: number;
-  @Column({ type: "int", nullable: false, comment: "学歴ID" })
-  education_id!: number;
-  @Column({ type: "int", nullable: false, comment: "学年" })
+  @Column({ name: "child_id", type: "int", nullable: false, comment: "子供ID(外部キー)" })
+  childId!: number;
+  @Column({ name: "education_id", type: "int", nullable: false, comment: "学歴ID" })
+  educationId!: number;
+  @Column({ name: "grade", type: "int", nullable: false, comment: "学年" })
   grade!: number;
 
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })

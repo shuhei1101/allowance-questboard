@@ -19,13 +19,13 @@ import { EducationEntity } from "@backend/features/child/entity/educationEntity"
  */
 @Entity("education_periods")
 @Check("chk_education_periods_period_positive", "period > 0")
-@Unique("uq_education_periods_child_education", ["child_id", "education_id"])
+@Unique("uq_education_periods_child_education", ["childId", "educationId"])
 export class EducationPeriodEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "子供ID" })
-  child_id!: number;
-  @Column({ type: "int", nullable: false, comment: "学歴ID" })
-  education_id!: number;
-  @Column({ type: "int", nullable: false, comment: "教育期間" })
+  @Column({ name: "child_id", type: "int", nullable: false, comment: "子供ID" })
+  childId!: number;
+  @Column({ name: "education_id", type: "int", nullable: false, comment: "学歴ID" })
+  educationId!: number;
+  @Column({ name: "period", type: "int", nullable: false, comment: "教育期間" })
   period!: number;
 
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })

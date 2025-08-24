@@ -18,26 +18,26 @@ import { CommentableTypeEntity } from "./commentableTypeEntity";
 @Entity("comments")
 @Check("chk_comments_body_not_empty", "LENGTH(body) > 0")
 export class CommentEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "コメント投稿者ID" })
-  commented_by!: number;
-  @Column({ type: "int", nullable: false, comment: "コメント対象タイプID" })
-  commentable_type!: number;
-  @Column({ type: "int", nullable: true, comment: "親コメントID" })
-  parent_comment_id?: number;
-  @Column({ type: "text", nullable: false, comment: "コメント本文" })
+  @Column({ name: "commented_by", type: "int", nullable: false, comment: "コメント投稿者ID" })
+  commentedBy!: number;
+  @Column({ name: "commentable_type", type: "int", nullable: false, comment: "コメント対象タイプID" })
+  commentableType!: number;
+  @Column({ name: "parent_comment_id", type: "int", nullable: true, comment: "親コメントID" })
+  parentCommentId?: number;
+  @Column({ name: "body", type: "text", nullable: false, comment: "コメント本文" })
   body!: string;
-  @Column({ type: "timestamp with time zone", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "コメント投稿日時" })
-  commented_at!: Date;
+  @Column({ name: "commented_at", type: "timestamp with time zone", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "コメント投稿日時" })
+  commentedAt!: Date;
 
   @ManyToOne(() => FamilyMemberEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "commented_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_comment_commented_by" })
-  family_member!: FamilyMemberEntity;
+  familyMember!: FamilyMemberEntity;
   @ManyToOne(() => CommentEntity, { nullable: true, onDelete: "CASCADE" })
   @JoinColumn({ name: "parent_comment_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_comment_parent_comment_id" })
-  parent_comment?: CommentEntity;
+  parentComment?: CommentEntity;
   @ManyToOne(() => CommentableTypeEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "commentable_type", referencedColumnName: "id", foreignKeyConstraintName: "fk_comment_commentable_type" })
-  commentable_type_ref!: CommentableTypeEntity;
+  commentableTypeRef!: CommentableTypeEntity;
 
   /**
    * シード用データ取得
@@ -52,26 +52,26 @@ export class CommentEntity extends BaseTransactionEntity {
  */
 @Entity("comments_history")
 export class CommentHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "int" })
-  commented_by!: number;
-  @Column({ type: "int" })
-  commentable_type!: number;
-  @Column({ type: "int", nullable: true })
-  parent_comment_id?: number;
-  @Column({ type: "text" })
+  @Column({ name: "commented_by", type: "int" })
+  commentedBy!: number;
+  @Column({ name: "commentable_type", type: "int" })
+  commentableType!: number;
+  @Column({ name: "parent_comment_id", type: "int", nullable: true })
+  parentCommentId?: number;
+  @Column({ name: "body", type: "text" })
   body!: string;
-  @Column({ type: "timestamp with time zone" })
-  commented_at!: Date;
+  @Column({ name: "commented_at", type: "timestamp with time zone" })
+  commentedAt!: Date;
 
   /**
    * サブクラス固有の属性をセット
    */
   protected static setSpecificAttrs(instance: CommentHistoryEntity, source: CommentEntity): void {
-    instance.commented_by = source.commented_by;
-    instance.commentable_type = source.commentable_type;
-    instance.parent_comment_id = source.parent_comment_id;
+    instance.commentedBy = source.commentedBy;
+    instance.commentableType = source.commentableType;
+    instance.parentCommentId = source.parentCommentId;
     instance.body = source.body;
-    instance.commented_at = source.commented_at;
+    instance.commentedAt = source.commentedAt;
   }
 }
 
@@ -80,11 +80,11 @@ export class CommentHistoryEntity extends BaseHistoryEntity {
  */
 @Entity("comments_translation")
 @Check("chk_comments_translation_body_not_empty", "LENGTH(body) > 0")
-@Unique("uq_comments_translation_comment_language", ["comment_id", "language_id"])
+@Unique("uq_comments_translation_comment_language", ["commentId", "languageId"])
 export class CommentTranslationEntity extends BaseTransactionTranslationEntity {
-  @Column({ type: "int", nullable: false, comment: "コメントID" })
-  comment_id!: number;
-  @Column({ type: "text", nullable: false, comment: "コメント本文の翻訳" })
+  @Column({ name: "comment_id", type: "int", nullable: false, comment: "コメントID" })
+  commentId!: number;
+  @Column({ name: "body", type: "text", nullable: false, comment: "コメント本文の翻訳" })
   body!: string;
 
   @ManyToOne(() => CommentEntity, { nullable: false, onDelete: "CASCADE" })
@@ -95,7 +95,7 @@ export class CommentTranslationEntity extends BaseTransactionTranslationEntity {
    * 翻訳元レコードのIDを返す
    */
   get sourceId(): number {
-    return this.comment_id;
+    return this.commentId;
   }
 
   /**

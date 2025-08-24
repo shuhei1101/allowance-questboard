@@ -15,10 +15,10 @@ import { LanguageEntity } from "@backend/features/language/entity/languageEntity
  */
 @Entity("user_settings")
 export class UserSettingEntity extends BaseTransactionEntity {
-  @PrimaryColumn({ type: "uuid", comment: "ユーザID" })
-  user_id!: string;
-  @Column({ type: "int", nullable: false, comment: "言語コード" })
-  language_id!: number;
+  @PrimaryColumn({ name: "user_id", type: "uuid", comment: "ユーザID" })
+  userId!: string;
+  @Column({ name: "language_id", type: "int", nullable: false, comment: "言語コード" })
+  languageId!: number;
 
   @ManyToOne(() => LanguageEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "language_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_user_settings_language_id" })
@@ -30,16 +30,16 @@ export class UserSettingEntity extends BaseTransactionEntity {
  */
 @Entity("user_settings_history")
 export class UserSettingHistoryEntity extends BaseHistoryEntity {
-  @Column({ type: "uuid" })
-  user_id!: string;
-  @Column({ type: "int", nullable: false })
-  language_id!: number;
+  @Column({ name: "user_id", type: "uuid" })
+  userId!: string;
+  @Column({ name: "language_id", type: "int", nullable: false })
+  languageId!: number;
 
   /**
    * サブクラス固有の属性をセット
    */
   protected static setSpecificAttrs(instance: UserSettingHistoryEntity, source: UserSettingEntity): void {
-    instance.user_id = source.user_id;
-    instance.language_id = source.language_id;
+    instance.userId = source.userId;
+    instance.languageId = source.languageId;
   }
 }

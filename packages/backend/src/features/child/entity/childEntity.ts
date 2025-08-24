@@ -9,21 +9,19 @@ import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntit
 import { FamilyEntity } from "@backend/features/family/entity/familyEntity";
 import { FamilyMemberEntity } from "@backend/features/family-member/entity/familyMemberEntity";
 
-/**
- * 子供エンティティ
- */
+/** 子供エンティティ */
 @Entity("children")
-@Unique("uq_children_family_user", ["family_id", "family_member_id"])
+@Unique("uq_children_family_user", ["familyId", "familyMemberId"])
 export class ChildEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "家族メンバーID" })
-  family_member_id!: number;
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
-  family_id!: number;
+  @Column({ name: "family_member_id", type: "int", nullable: false, comment: "家族メンバーID" })
+  familyMemberId!: number;
+  @Column({ name: "family_id", type: "int", nullable: false, comment: "家族ID" })
+  familyId!: number;
 
   @ManyToOne(() => FamilyEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_family_id" })
   family!: FamilyEntity;
   @ManyToOne(() => FamilyMemberEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_member_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_child_family_member_id" })
-  family_member!: FamilyMemberEntity;
+  familyMember!: FamilyMemberEntity;
 }

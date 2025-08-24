@@ -13,16 +13,16 @@ import { QuestCategoryEntity } from "./questCategoryEntity";
  * テンプレートクエストカテゴリエンティティ
  */
 @Entity("template_quest_categories")
-@Unique("uq_template_quest_categories_category_id", ["category_id"])
+@Unique("uq_template_quest_categories_category_id", ["categoryId"])
 export class TemplateQuestCategoryEntity extends BaseMasterEntity {
   @PrimaryColumn({ type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "int", nullable: false, unique: true, comment: "クエストカテゴリID" })
-  category_id!: number;
-  @Column({ type: "int", nullable: false, default: 0, comment: "表示順序" })
-  sort_order!: number;
-  @Column({ type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
-  is_active!: boolean;
+  @Column({ name: "category_id", type: "int", nullable: false, unique: true, comment: "クエストカテゴリID" })
+  categoryId!: number;
+  @Column({ name: "sort_order", type: "int", nullable: false, default: 0, comment: "表示順序" })
+  sortOrder!: number;
+  @Column({ name: "is_active", type: "boolean", nullable: false, default: true, comment: "有効フラグ" })
+  isActive!: boolean;
 
   @ManyToOne(() => QuestCategoryEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "category_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_template_quest_categories_category_id" })
@@ -33,9 +33,9 @@ export class TemplateQuestCategoryEntity extends BaseMasterEntity {
    */
   protected static seedData(): TemplateQuestCategoryEntity[] {
     return [
-      Object.assign(new TemplateQuestCategoryEntity(), { id: 1, category_id: 1, sort_order: 1, is_active: true }),
-      Object.assign(new TemplateQuestCategoryEntity(), { id: 2, category_id: 2, sort_order: 2, is_active: true }),
-      Object.assign(new TemplateQuestCategoryEntity(), { id: 3, category_id: 3, sort_order: 3, is_active: true }),
+      Object.assign(new TemplateQuestCategoryEntity(), { id: 1, categoryId: 1, sortOrder: 1, isActive: true }),
+      Object.assign(new TemplateQuestCategoryEntity(), { id: 2, categoryId: 2, sortOrder: 2, isActive: true }),
+      Object.assign(new TemplateQuestCategoryEntity(), { id: 3, categoryId: 3, sortOrder: 3, isActive: true }),
     ];
   }
 }

@@ -9,12 +9,12 @@ import { FamilyEntity } from "./familyEntity";
 
 @Entity("exp_by_level")
 export class ExpByLevelEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
-  family_id!: number;
-  @Column({ type: "int", nullable: false, comment: "レベル" })
+  @Column({ name: "family_id", type: "int", nullable: false, comment: "家族ID" })
+  familyId!: number;
+  @Column({ name: "level", type: "int", nullable: false, comment: "レベル" })
   level!: number;
-  @Column({ type: "int", nullable: false, comment: "必要経験値" })
-  required_exp!: number;
+  @Column({ name: "required_exp", type: "int", nullable: false, comment: "必要経験値" })
+  requiredExp!: number;
 
   @ManyToOne(() => FamilyEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: "family_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_exp_by_level_family_id" })

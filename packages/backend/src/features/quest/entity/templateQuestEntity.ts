@@ -16,21 +16,19 @@ import { QuestEntity } from "./questEntity";
 export class TemplateQuestEntity extends BaseMasterEntity {
   @PrimaryColumn({ type: "int", comment: "ID" })
   id!: number;
-  @Column({ type: "int", nullable: false, unique: true, comment: "クエストID(外部キー、一意制約)" })
-  quest_id!: number;
+  @Column({ name: "quest_id", type: "int", nullable: false, unique: true, comment: "クエストID(外部キー、一意制約)" })
+  questId!: number;
 
   @ManyToOne(() => QuestEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_template_quests_quest_id" })
   quest!: QuestEntity;
 
-  /**
-   * シードデータ
-   */
+  /** シードデータ */
   protected static seedData(): TemplateQuestEntity[] {
     return [
-      Object.assign(new TemplateQuestEntity(), { id: 1, quest_id: 1, template_category_id: 1 }),
-      Object.assign(new TemplateQuestEntity(), { id: 2, quest_id: 2, template_category_id: 2 }),
-      Object.assign(new TemplateQuestEntity(), { id: 3, quest_id: 3, template_category_id: 3 }),
+      Object.assign(new TemplateQuestEntity(), { id: 1, questId: 1 }),
+      Object.assign(new TemplateQuestEntity(), { id: 2, questId: 2 }),
+      Object.assign(new TemplateQuestEntity(), { id: 3, questId: 3 }),
     ];
   }
 }

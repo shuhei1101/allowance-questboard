@@ -8,8 +8,6 @@ import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { ComfirmButton } from '@/features/shared/components/ActionButtons';
-import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
-import { AppIcon } from '@/features/icon/models/AppIcon';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { useEffect } from 'react';
 import { AppError } from '@backend/core/errors/appError';
@@ -101,7 +99,7 @@ export const IconSelectPage: React.FC<Props> = ({
           icons={pageStore.currentCategoryIcons}
           selectedIcon={pageStore.selectedIcon}
           onIconSelect={handleIconSelect}
-          getIconByName={getIconByName}
+          getIconByName={appConfigStore.getIconByName}
         />
       </View>
     </View>

@@ -10,11 +10,11 @@ import { CurrencyEntity } from "@backend/features/shared/entity/currencyEntity";
 
 @Entity("family_settings")
 export class FamilySettingEntity extends BaseTransactionEntity {
-  @Column({ type: "int", nullable: false, comment: "家族ID" })
-  family_id!: number;
+  @Column({ name: "family_id", type: "int", nullable: false, comment: "家族ID" })
+  familyId!: number;
   // 通貨ID
-  @Column({ type: "int", nullable: false, comment: "通貨ID" })
-  currency_id!: number;
+  @Column({ name: "currency_id", type: "int", nullable: false, comment: "通貨ID" })
+  currencyId!: number;
   
   @ManyToOne(() => FamilyEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: "family_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_family_settings_family_id" })
