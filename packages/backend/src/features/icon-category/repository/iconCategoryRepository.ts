@@ -33,7 +33,7 @@ export class IconCategoryRepository {
       const categoryEntities = await this.params.iconCategoryDao.fetchAll();
       
       // アイコンカテゴリ翻訳データを取得
-      const translationEntities = await this.params.iconCategoryTranslationDao.findAllTranslationsWithCache();
+      const translationEntities = await this.params.iconCategoryTranslationDao.findAllTranslations();
       
       // アイコンエンティティを取得
       const iconEntities = await this.params.iconDao.fetchAll();

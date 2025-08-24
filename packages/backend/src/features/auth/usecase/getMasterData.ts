@@ -30,3 +30,55 @@ export async function getMasterData(iconCategoryRepository: IconCategoryReposito
     });
   }
 }
+
+// 動作確認
+if (require.main === module) {
+  (async () => {
+    try {
+      console.log('🚀 getMasterData動作確認開始');
+      
+      // データベース接続を初期化
+      const { AppDataSource } = await import('@backend/core/config/dataSource');
+      await AppDataSource.initialize();
+      console.log('✅ データベース接続完了');
+      
+      // セッション作成
+      const session = AppDataSource.manager;
+      console.log('✅ セッション作成完了');
+      
+      // リポジトリの依存関係を作成
+      const { IconCategoryDao } = await import('@backend/features/icon-category/dao/iconCategoryDao');
+      const { IconCategoryTranslationDao } = await import('@backend/features/icon-category/dao/iconCategoryTranslationDao');
+      const { IconDao } = await import('@backend/features/icon/dao/iconDao');
+      const { IconCategoryRepository } = await import('@backend/features/icon-category/repository/iconCategoryRepository');
+      
+      const iconCategoryDao = new IconCategoryDao(session);
+      const iconCategoryTranslationDao = new IconCategoryTranslationDao(session);
+      const iconDao = new IconDao(session);
+      
+      const iconCategoryRepository = new IconCategoryRepository({
+        iconCategoryDao,
+        iconCategoryTranslationDao,
+        iconDao
+      });
+      console.log('✅ リポジトリ初期化完了');
+      
+      // getMasterDataを実行
+      const result = await getMasterData(iconCategoryRepository);
+      const result2 = await getMasterData(iconCategoryRepository);
+      console.log('✅ getMasterData実行完了');
+      console.log('📋 結果:', JSON.stringify(result, null, 2));
+      console.log('📋 結果2:', JSON.stringify(result2, null, 2));
+
+      // セッション解放
+      await AppDataSource.destroy();
+      console.log('✅ リソース解放完了');
+      console.log('🎉 動作確認完了！');
+      process.exit(0);
+      
+    } catch (error) {
+      console.error('❌ Error fetching master data:', error);
+      process.exit(1);
+    }
+  })();
+}

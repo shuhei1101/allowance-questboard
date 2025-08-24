@@ -10,7 +10,7 @@ import { z } from 'zod';
  * IconのZodスキーマ
  */
 export const IconSchema = z.object({
-  id: BaseIdSchema.nullable(),
+  id: BaseIdSchema.nullable().optional(),
   name: IconNameSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),
@@ -49,7 +49,7 @@ export class Icon extends BaseMasterModel<IconId> {
    */
   toZodData(): z.infer<typeof IconSchema> {
     return {
-      id: this.id ? this.id.toZodData() : null,
+      id: this.id ? this.id.toZodData() : undefined,
       name: this.name.toZodData(),
       sortOrder: this.sortOrder.toZodData(),
       isActive: this.isActive,

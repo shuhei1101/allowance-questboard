@@ -181,7 +181,6 @@ export async function main(): Promise<void> {
     await closeDatabase();
   }
 }
-
 // 直接実行された場合のみmainを実行
 if (require.main === module) {
   main().catch(console.error);

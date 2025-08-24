@@ -45,9 +45,7 @@ export abstract class BaseCollection<
   updateIndex(): void {
     this.itemByIds.clear();
     for (const item of this.items) {
-      if (!item.key) {
-        continue;
-      }
+      if (!item.key) continue;
       // BaseIdのhash()メソッドを使用してMapのキーにする
       const key = item.key.hash().toString();
       this.itemByIds.set(key, item);
@@ -67,6 +65,7 @@ export abstract class BaseCollection<
    * IDでアイテムを取得
    */
   get(itemId: TKey): TItem | null {
+    if (itemId === null) return null;
     const key = itemId.hash().toString();
     return this.itemByIds.get(key) || null;
   }

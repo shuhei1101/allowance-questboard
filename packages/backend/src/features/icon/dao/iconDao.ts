@@ -17,7 +17,7 @@ export class IconDao extends BaseDao<IconEntity> {
   }
 
   @cache("icons:all")
-  async fetchAll(): Promise<IconEntity[]> {
+  async fetchAllWithCache(): Promise<IconEntity[]> {
     return await super.fetchAll();
   }
 }
