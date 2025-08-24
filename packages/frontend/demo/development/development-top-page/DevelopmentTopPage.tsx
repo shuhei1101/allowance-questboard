@@ -6,6 +6,9 @@ import { MainMenuCard } from './components/MainMenuCard';
 import { DevToolCard } from './components/DevToolCard';
 import { EnvironmentInfoCard } from './components/EnvironmentInfoCard';
 import { initMasterData } from '@/features/auth/services/initMasterData';
+import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
+import { createAuthenticatedClient } from '@/core/api/trpcClient';
 
 /**
  * 開発用TOP画面
@@ -15,7 +18,13 @@ export const DevelopmentTopPage: React.FC = () => {
   const { colors } = useTheme();
   const navigation = useNavigation<any>();
   const [isInitializing, setIsInitializing] = useState(false);
-
+  const sessionStore = useSessionStore();
+  const appConfigStore = useAppConfigStore();
+  const router = createAuthenticatedClient({
+    jwtToken: sessionStore.jwt,
+    languageType: sessionStore.languageType,
+  });
+  
   // 初期データ取得ハンドラー
   const handleInitMasterData = async () => {
     if (isInitializing) return;
@@ -24,7 +33,13 @@ export const DevelopmentTopPage: React.FC = () => {
     
     try {
       console.log('🚀 マスタデータ初期化開始...');
-      await initMasterData();
+      await initMasterData({
+        getMasterData: router.init.getMasterData,
+        setLanguageTypes: sessionStore.setLanguageType,
+        setFamilyMemberType: sessionStore.setFamilyMemberType,
+        setIconCategories: appConfigStore.setIconCategories,
+        setIconByName: appConfigStore.setIconByName,
+      });
       console.log('✅ マスタデータ初期化完了！');
       
       Alert.alert(

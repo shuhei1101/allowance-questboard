@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { IconSelectPage } from '@/features/icon/icon-select-page/IconSelectPage';
-import { AppConstants } from '@/core/constants/appConstants';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
+import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
+import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { LanguageType } from '@backend/features/language/enum/languageType';
+import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 
 interface DemoState {
   initialSelectedIcon?: Icon;
@@ -23,7 +27,13 @@ interface DemoState {
  */
 export const IconSelectPageDetailPage: React.FC = () => {
   const { colors } = useTheme();
-  
+  const sessionStore = useSessionStore();
+  const appConfigStore = useAppConfigStore();
+  const router = createAuthenticatedClient({
+    jwtToken: sessionStore.jwt,
+    languageType: sessionStore.languageType,
+  });
+
   // モックIcon作成関数
   const createMockIcon = (iconName: string): Icon => {
     return new Icon({
@@ -52,7 +62,13 @@ export const IconSelectPageDetailPage: React.FC = () => {
       setDemoState(prev => ({ ...prev, masterDataLoading: true }));
       
       try {
-        await initMasterData();
+        await initMasterData({
+          getMasterData: router.init,
+          setLanguageTypes: (data: any) => LanguageType.setFromZodData(data),
+          setFamilyMemberTypes: (data: any) => FamilyMemberType.setFromZodData(data),
+          setIconCategories: appConfigStore.setIconCategories,
+          setIconByName: appConfigStore.setIconByName,
+        });
         setDemoState(prev => ({ 
           ...prev, 
           masterDataLoaded: true, 
@@ -100,7 +116,13 @@ export const IconSelectPageDetailPage: React.FC = () => {
     setDemoState(prev => ({ ...prev, masterDataLoading: true }));
     
     try {
-      await initMasterData();
+      await initMasterData({
+        getMasterData: router.init,
+        setLanguageTypes: (data: any) => LanguageType.setFromZodData(data),
+        setFamilyMemberTypes: (data: any) => FamilyMemberType.setFromZodData(data),
+        setIconCategories: appConfigStore.setIconCategories,
+        setIconByName: appConfigStore.setIconByName,
+      });
       setDemoState(prev => ({ 
         ...prev, 
         masterDataLoaded: true, 
@@ -125,6 +147,8 @@ export const IconSelectPageDetailPage: React.FC = () => {
       <IconSelectPage
         initialSelectedIcon={demoState.initialSelectedIcon}
         onIconSelected={handleIconSelected}
+        getIconCategories={() => appConfigStore.iconCategories}
+        getIconByName={(icon: Icon) => appConfigStore.iconByName?.get(icon)}
       />
     );
   }
@@ -266,24 +290,24 @@ export const IconSelectPageDetailPage: React.FC = () => {
         </Text>
       </View>
 
-      {/* AppConstants.iconCategories の情報 */}
+      {/* AppConfigStore.iconCategories の情報 */}
       <View style={[styles.section, { backgroundColor: colors.background.secondary }]}>
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          📊 AppConstants.iconCategories 情報
+          📊 AppConfigStore.iconCategories 情報
         </Text>
-        {AppConstants.iconCategories ? (
+        {appConfigStore.iconCategories ? (
           <View>
             <Text style={[styles.settingLabel, { color: colors.text.secondary }]}>
-              総カテゴリ数: {AppConstants.iconCategories.getActiveSortedCategories().length}
+              総カテゴリ数: {appConfigStore.iconCategories.getActiveSortedCategories().length}
             </Text>
             <Text style={[styles.settingLabel, { color: colors.text.secondary }]}>
-              アクティブなカテゴリ数: {AppConstants.iconCategories.getActiveCategories().length}
+              アクティブなカテゴリ数: {appConfigStore.iconCategories.getActiveCategories().length}
             </Text>
             
             <Text style={[styles.description, { color: colors.text.primary, marginTop: 12, marginBottom: 8 }]}>
               カテゴリ一覧:
             </Text>
-            {AppConstants.iconCategories.getActiveSortedCategories().map((category, index) => (
+            {appConfigStore.iconCategories.getActiveSortedCategories().map((category, index) => (
               <View key={category.key.value} style={styles.stateRow}>
                 <Text style={[styles.stateLabel, { color: colors.text.primary }]}>
                   {index + 1}. ID: {category.key.value}
@@ -296,7 +320,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
           </View>
         ) : (
           <Text style={[styles.description, { color: colors.text.secondary }]}>
-            AppConstants.iconCategories が読み込まれていません
+            AppConfigStore.iconCategories が読み込まれていません
           </Text>
         )}
       </View>

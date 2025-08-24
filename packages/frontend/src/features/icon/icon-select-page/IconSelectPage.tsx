@@ -8,6 +8,12 @@ import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { ComfirmButton } from '@/features/shared/components/ActionButtons';
+import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
+import { AppIcon } from '@/features/icon/models/AppIcon';
+import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
+import { useEffect } from 'react';
+import { AppError } from '@backend/core/errors/appError';
+import { LocaleString } from '@backend/core/messages/localeString';
 
 interface Props {
   /**
@@ -31,7 +37,31 @@ export const IconSelectPage: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme();
   const pageStore = useIconSelectPageStore();
+  const appConfigStore = useAppConfigStore();
   const navigation = useNavigation();
+  
+  const iconCategories = appConfigStore.iconCategories;
+  if (!iconCategories) {
+    throw new AppError({
+      errorType: 'ICON_CATEGORIES_NOT_FOUND',
+      message: new LocaleString({
+        ja: 'アイコンカテゴリが見つかりませんでした。',
+        en: 'Icon categories not found.',
+      })
+    });
+  }
+  // 初期化
+  useEffect(() => {
+      pageStore.initialize(
+        iconCategories,
+        initialSelectedIcon
+      );
+
+    // クリーンアップ時にストアをリセット
+    return () => {
+      pageStore.reset();
+    };
+  }, [initialSelectedIcon]);
   
   const {
     handleConfirm,
@@ -39,7 +69,6 @@ export const IconSelectPage: React.FC<Props> = ({
     handleIconSelect,
   } = useIconSelectPageHandlers({ 
     onIconSelected,
-    initialSelectedIcon
   });
 
   // 確定ボタンをヘッダーに設置
@@ -72,6 +101,7 @@ export const IconSelectPage: React.FC<Props> = ({
           icons={pageStore.currentCategoryIcons}
           selectedIcon={pageStore.selectedIcon}
           onIconSelect={handleIconSelect}
+          getIconByName={getIconByName}
         />
       </View>
     </View>

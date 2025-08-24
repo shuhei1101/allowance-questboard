@@ -1,69 +1,36 @@
-import { useEffect } from 'react';
+import { useConfirmHandler } from './useConfirmHandler';
+import { useCategoryChangeHandler } from './useCategoryChangeHandler';
+import { useIconSelectHandler } from './useIconSelectHandler';
 import { useSelectIconPageStore } from '../stores/iconSelectPageStore';
-import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
-import { AppConstants } from '@/core/constants/appConstants';
 import { Icon } from '@backend/features/icon/domain/icon';
 
-interface Props {
-  /**
-   * アイコンが選択された時のコールバック
-   * @param icon 選択されたアイコン
-   */
-  onIconSelected: (icon: Icon) => void;
-  /**
-   * 初期選択されたアイコン
-   */
-  initialSelectedIcon?: Icon;
-}
-
 /**
- * アイコン選択ページのイベントハンドラー
+ * アイコン選択ページの全ハンドラーを統合したカスタムフック
+ * 
+ * アイコン選択ページで使用する全てのイベントハンドラーを一括で提供
+ * 
+ * @param onIconSelected アイコン選択時のコールバック関数
  */
-export const useSelectIconPageHandlers = ({
-  onIconSelected,
-  initialSelectedIcon,
-}: Props) => {
+export const useSelectIconPageHandlers = (params: {
+  onIconSelected: (icon: Icon) => void;
+}) => {
   const pageStore = useSelectIconPageStore();
 
-  // 初期化
-  useEffect(() => {
-    if (AppConstants.iconCategories) {
-      pageStore.initialize(
-        AppConstants.iconCategories,
-        initialSelectedIcon
-      );
-    }
+  // 確定ボタン押下時のハンドラ
+  const handleConfirm = useConfirmHandler({
+    selectedIcon: pageStore.selectedIcon,
+    onIconSelected: params.onIconSelected,
+  });
 
-    // クリーンアップ時にストアをリセット
-    return () => {
-      pageStore.reset();
-    };
-  }, [initialSelectedIcon]);
+  // カテゴリ変更時のハンドラ
+  const handleCategoryChange = useCategoryChangeHandler({
+    selectCategory: pageStore.selectCategory,
+  });
 
-  /**
-   * 確定ボタンハンドラー
-   */
-  const handleConfirm = () => {
-    if (pageStore.selectedIcon) {
-      onIconSelected(pageStore.selectedIcon);
-    }
-  };
-
-  /**
-   * カテゴリ変更ハンドラー
-   * @param categoryId 変更先のカテゴリID
-   */
-  const handleCategoryChange = (categoryId: IconCategoryId) => {
-    pageStore.selectCategory(categoryId);
-  };
-
-  /**
-   * アイコン選択ハンドラー
-   * @param icon 選択するアイコン
-   */
-  const handleIconSelect = (icon: Icon) => {
-    pageStore.selectIcon(icon);
-  };
+  // アイコン選択時のハンドラ
+  const handleIconSelect = useIconSelectHandler({
+    selectIcon: pageStore.selectIcon,
+  });
 
   return {
     handleConfirm,

@@ -8,48 +8,13 @@ import { Icons } from '@backend/features/icon/domain/icons';
  * アイコン選択ページの状態管理
  */
 interface SelectIconPageState {
-  /**
-   * 利用可能なアイコンカテゴリ一覧
-   */
   iconCategories: IconCategories;
-  
-  /**
-   * 現在選択されているカテゴリID
-   */
   selectedCategoryId?: IconCategoryId;
-  
-  /**
-   * 現在選択されているアイコン
-   */
   selectedIcon?: Icon;
-  
-  /**
-   * 現在のカテゴリのアイコン一覧
-   */
   currentCategoryIcons: Icons;
-  
-  /**
-   * 初期化処理
-   * @param iconCategories アイコンカテゴリ一覧
-   * @param initialSelectedIcon 初期選択されたアイコン
-   */
   initialize: (iconCategories: IconCategories, initialSelectedIcon?: Icon) => void;
-  
-  /**
-   * カテゴリを変更
-   * @param categoryId 変更先のカテゴリID
-   */
   selectCategory: (categoryId: IconCategoryId) => void;
-  
-  /**
-   * アイコンを選択
-   * @param icon 選択するアイコン
-   */
   selectIcon: (icon: Icon) => void;
-  
-  /**
-   * 状態をリセット
-   */
   reset: () => void;
 }
 
