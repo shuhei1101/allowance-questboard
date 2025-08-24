@@ -5,7 +5,7 @@ import { IconSelectPage } from '../icon/icon-select-page/IconSelectPage';
 import { LoadingPage } from './loading-page/LoadingPage';
 import { Icon } from '@backend/features/icon/domain/icon';
 
-export const StackInfo = {
+export const DemoStackInfo = {
   name: 'Common',
   screens: {
     iconSelect: "IconSelect",
@@ -58,21 +58,21 @@ const LoadingPageWrapper: React.FC<{ route: any }> = ({ route }) => {
 export function CommonNavigator() {
   return (
     <CommonStack.Navigator
-      initialRouteName={StackInfo.screens.loading}
+      initialRouteName={DemoStackInfo.screens.loading}
       screenOptions={{
         headerShown: true,
       }}
       {...({} as any)}
     >
       <CommonStack.Screen 
-        name={StackInfo.screens.iconSelect} 
+        name={DemoStackInfo.screens.iconSelect} 
         component={IconSelectPageWrapper}
         options={{
           headerTitle: 'アイコン選択',
         }}
       />
       <CommonStack.Screen 
-        name={StackInfo.screens.loading} 
+        name={DemoStackInfo.screens.loading} 
         component={LoadingPageWrapper}
         options={{
           headerShown: false,

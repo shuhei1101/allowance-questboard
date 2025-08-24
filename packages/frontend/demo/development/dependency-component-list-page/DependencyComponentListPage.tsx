@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { DemoStackInfo } from '../../constants/demoStackInfo';
 
 interface DependencyComponentListPageProps {
   components: Array<{
@@ -44,7 +45,7 @@ export const DependencyComponentListPage: React.FC = () => {
             <TouchableOpacity
               key={component.id}
               style={[styles.componentCard, { backgroundColor: colors.surface.elevated }]}
-              onPress={() => navigation.navigate(`${component.id}Detail`)}
+              onPress={() => navigation.navigate(DemoStackInfo.name, { screen: `${component.id}Detail` })}
             >
               <View style={styles.componentInfo}>
                 <Text style={[styles.componentName, { color: colors.text.primary }]}>

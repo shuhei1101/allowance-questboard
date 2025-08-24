@@ -9,6 +9,8 @@ import { initMasterData } from '@/features/auth/services/initMasterData';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { AuthStackInfo } from '@/features/auth/AuthNavigator';
+import { DemoStackInfo } from '../../constants/demoStackInfo';
 
 /**
  * 開発用TOP画面
@@ -66,21 +68,21 @@ export const DevelopmentTopPage: React.FC = () => {
       id: 'login',
       title: '🚀通常起動',
       description: 'メインのログイン画面',
-      onPress: () => navigation.navigate('Login'),
+      onPress: () => navigation.navigate(AuthStackInfo.name, { screen: AuthStackInfo.screens.login }),
       color: '#10b981',
       size: 'medium' as const,
     },
     {
       title: '📱 画面一覧',
       description: '各画面の個別起動とテスト',
-      onPress: () => navigation.navigate('ScreenList'),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.screenList }),
       color: '#3b82f6',
       size: 'medium' as const,
     },
     {
       title: '🧩 コンポーネント一覧',
       description: 'コンポーネントの個別確認',
-      onPress: () => navigation.navigate('ComponentList'),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentList }),
       color: '#8b5cf6',
       size: 'medium' as const,
     },
@@ -97,19 +99,19 @@ export const DevelopmentTopPage: React.FC = () => {
     {
       title: '�🔍 ストア状態検査',
       description: 'Zustandストアの状態確認',
-      onPress: () => navigation.navigate('StoreInspector'),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.StoreInspector }),
       color: '#f59e0b',
     },
     {
       title: '⚙️ セッション設定',
       description: 'グローバル状態の設定',
-      onPress: () => navigation.navigate('SessionSettings'),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.SessionSettings }),
       color: '#6366f1',
     },
     {
       title: '📊 画面状態設定',
       description: '各画面の初期状態設定',
-      onPress: () => navigation.navigate('PageStateSettings'),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.PageStateSettings }),
       color: '#8b5cf6',
     },
   ];

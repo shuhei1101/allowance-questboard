@@ -22,33 +22,7 @@ import { SessionSettingsPage } from './test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage';
 import { LoginPageSettingsPage } from './test-environment/LoginPageSettingsPage';
 import { ParentEditPageSettingsPage } from './test-environment/ParentEditPageSettingsPage';
-
-export const StackInfo = {
-  name: 'Demo',
-  screens: {
-    developmentTop: "DevelopmentTop",
-    screenList: "ScreenList",
-    componentList: "ComponentList",
-    screenLauncher: "ScreenLauncher",
-    componentDetail: "ComponentDetail",
-    dependencyComponentList: "DependencyComponentList",
-    emailInputDetail: "EmailInputDetail",
-    passwordInputDetail: "PasswordInputDetail",
-    birthdayInputDetail: "BirthdayInputDetail",
-    saveButtonDetail: "SaveButtonDetail",
-    iconSelectButtonDetail: "IconSelectButtonDetail",
-    iconSelectPageDetail: "IconSelectPageDetail",
-    DemoLoginPage: "DemoLoginPage",
-    DemoParentEditPage: "DemoParentEditPage",
-    ComponentShowcase: "ComponentShowcase",
-    StoreInspector: "StoreInspector",
-    SessionSettings: "SessionSettings",
-    PageStateSettings: "PageStateSettings",
-    LoginPageSettings: "LoginPageSettings",
-    ParentEditPageSettings: "ParentEditPageSettings",
-    Main: "Main",
-  },
-} as const;
+import { DemoStackInfo } from './constants/demoStackInfo';
 
 // Demo Navigation Types
 export type DemoStackParamList = {
@@ -99,105 +73,105 @@ export function DemoNavigator() {
     <DemoMockProvider>
       <DemoStack.Navigator
         id={undefined}
-        initialRouteName={StackInfo.screens.developmentTop}
+        initialRouteName={DemoStackInfo.screens.developmentTop}
       >
         <DemoStack.Screen 
-          name={StackInfo.screens.developmentTop}
+          name={DemoStackInfo.screens.developmentTop}
           component={DevelopmentTopPage}
           options={{ title: '🏠 開発用トップ' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.screenList}
+          name={DemoStackInfo.screens.screenList}
           component={ScreenListPage}
           options={{ title: '📱 画面一覧' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.componentList}
+          name={DemoStackInfo.screens.componentList}
           component={ComponentListPage}
           options={{ title: '🧩 コンポーネント一覧' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.screenLauncher}
+          name={DemoStackInfo.screens.screenLauncher}
           component={ScreenLauncherPage}
           options={{ title: '🚀 画面起動' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.componentDetail}
+          name={DemoStackInfo.screens.componentDetail}
           component={ComponentDetailPage}
           options={{ title: '🔍 コンポーネント詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.dependencyComponentList}
+          name={DemoStackInfo.screens.dependencyComponentList}
           component={DependencyComponentListPage}
           options={{ title: '🧩 依存コンポーネント一覧' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.emailInputDetail}
+          name={DemoStackInfo.screens.emailInputDetail}
           component={EmailInputDetailPage}
           options={{ title: '📧 EmailInputField詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.passwordInputDetail}
+          name={DemoStackInfo.screens.passwordInputDetail}
           component={PasswordInputDetailPage}
           options={{ title: '🔒 PasswordInputField詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.birthdayInputDetail}
+          name={DemoStackInfo.screens.birthdayInputDetail}
           component={BirthdayInputDetailPage}
           options={{ title: '🗓️ BirthdayInputField詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.saveButtonDetail}
+          name={DemoStackInfo.screens.saveButtonDetail}
           component={SaveButtonDetailPage}
           options={{ title: '💾 SaveButton詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.iconSelectButtonDetail}
+          name={DemoStackInfo.screens.iconSelectButtonDetail}
           component={IconSelectButtonDetailPage}
           options={{ title: '🎨 IconSelectButton詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.iconSelectPageDetail}
+          name={DemoStackInfo.screens.iconSelectPageDetail}
           component={IconSelectPageDetailPage}
           options={{ title: '🎨 IconSelectPage詳細' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.DemoLoginPage} 
+          name={DemoStackInfo.screens.DemoLoginPage} 
           component={DemoLoginPageScreen}
           options={{ title: '🔐 ログイン画面' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.DemoParentEditPage} 
+          name={DemoStackInfo.screens.DemoParentEditPage} 
           component={DemoParentEditPageScreen}
           options={{ title: '👤 親編集画面' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.ComponentShowcase} 
+          name={DemoStackInfo.screens.ComponentShowcase} 
           component={ComponentShowcaseScreen}
           options={{ title: '🎨 コンポーネントショーケース' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.StoreInspector} 
+          name={DemoStackInfo.screens.StoreInspector} 
           component={StoreInspectorScreen}
           options={{ title: '🔧 Store Inspector' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.SessionSettings} 
+          name={DemoStackInfo.screens.SessionSettings} 
           component={SessionSettingsPage}
           options={{ title: '⚙️ セッション設定' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.PageStateSettings} 
+          name={DemoStackInfo.screens.PageStateSettings} 
           component={PageStateSettingsPage}
           options={{ title: '📝 ページ状態設定' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.LoginPageSettings} 
+          name={DemoStackInfo.screens.LoginPageSettings} 
           component={LoginPageSettingsPage}
           options={{ title: '🔐 ログイン画面設定' }}
         />
         <DemoStack.Screen 
-          name={StackInfo.screens.ParentEditPageSettings} 
+          name={DemoStackInfo.screens.ParentEditPageSettings} 
           component={ParentEditPageSettingsPage}
           options={{ title: '👤 親編集画面設定' }}
         />

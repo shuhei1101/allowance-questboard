@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
+import { DemoStackInfo } from '../../constants/demoStackInfo';
 
 /**
  * コンポーネント一覧ページ
@@ -19,19 +20,19 @@ export const ComponentListPage: React.FC = () => {
           id: 'email-input',
           name: 'EmailInputField',
           description: 'メールアドレス入力フィールド',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'email-input' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'email-input' } }),
         },
         {
           id: 'password-input',
           name: 'PasswordInputField', 
           description: 'パスワード入力フィールド',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'password-input' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'password-input' } }),
         },
         {
           id: 'birthday-input',
           name: 'BirthdayInputField',
           description: '誕生日入力フィールド',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'birthday-input' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'birthday-input' } }),
         },
       ],
     },
@@ -42,13 +43,13 @@ export const ComponentListPage: React.FC = () => {
           id: 'save-button',
           name: 'SaveButton',
           description: '保存ボタン',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'save-button' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'save-button' } }),
         },
         {
           id: 'icon-select-button',
           name: 'IconSelectButton',
           description: 'アイコン選択ボタン',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'icon-select-button' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'icon-select-button' } }),
         },
       ],
     },
@@ -59,7 +60,7 @@ export const ComponentListPage: React.FC = () => {
           id: 'icon-select-page',
           name: 'IconSelectPage',
           description: 'アイコン選択画面',
-          onPress: () => navigation.navigate('icon-select-pageDetail'),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.iconSelectPageDetail }),
         },
       ],
     },
@@ -70,13 +71,13 @@ export const ComponentListPage: React.FC = () => {
           id: 'loading-spinner',
           name: 'LoadingSpinner',
           description: 'ローディング表示',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'loading-spinner' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'loading-spinner' } }),
         },
         {
           id: 'error-message',
           name: 'ErrorMessage',
           description: 'エラーメッセージ表示',
-          onPress: () => navigation.navigate('ComponentDetail', { componentType: 'error-message' }),
+          onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentDetail, params: { componentType: 'error-message' } }),
         },
       ],
     },
@@ -132,7 +133,7 @@ export const ComponentListPage: React.FC = () => {
           
           <TouchableOpacity
             style={[styles.componentCard, styles.specialCard, { backgroundColor: colors.surface.elevated }]}
-            onPress={() => navigation.navigate('ComponentShowcase')}
+            onPress={() => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.ComponentShowcase })}
           >
             <View style={styles.componentInfo}>
               <Text style={[styles.componentName, { color: colors.text.primary }]}>

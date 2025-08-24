@@ -29,18 +29,33 @@ export const initRouter = t.router({
     .query(async ({ ctx }) => {
       try {
         // リポジトリの依存関係を作成
+        console.log('🔍 DAO初期化開始');
         const iconCategoryDao = new IconCategoryDao(ctx.session);
+        console.log('🔍 IconCategoryDao初期化完了');
         const iconCategoryTranslationDao = new IconCategoryTranslationDao(ctx.session);
+        console.log('🔍 IconCategoryTranslationDao初期化完了');
         const iconDao = new IconDao(ctx.session);
+        console.log('🔍 IconDao初期化完了');
         
         const iconCategoryRepository = new IconCategoryRepository({
           iconCategoryDao,
           iconCategoryTranslationDao,
           iconDao
         });
+        console.log('🔍 Repository初期化完了');
         
-        return await getMasterData(iconCategoryRepository);
+        console.log('🔍 getMasterDataユースケース呼び出し開始');
+        const result = await getMasterData(iconCategoryRepository);
+        console.log('🔍 getMasterDataユースケース完了:', result);
+        return result;
       } catch (error) {
+        console.error('❌ initRouter catchブロック - マスタデータ取得エラー:', error);
+        console.error('❌ エラータイプ:', typeof error);
+        console.error('❌ エラーインスタンス:', error instanceof Error);
+        console.error('❌ エラーメッセージ:', error instanceof Error ? error.message : '不明');
+        console.error('❌ エラースタック:', error instanceof Error ? error.stack : 'スタック情報なし');
+     
+        console.error('❌ マスタデータ取得エラー:', error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'マスタデータ取得中にエラーが発生しました',

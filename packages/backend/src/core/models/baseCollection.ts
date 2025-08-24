@@ -59,9 +59,6 @@ export abstract class BaseCollection<
    * アイテムを追加
    */
   append(item: TItem): void {
-    if (!item || typeof item !== 'object') {
-      throw new TypeError(`Expected item of valid type, got ${typeof item}`);
-    }
     this.items.push(item);
     this.updateIndex();
   }

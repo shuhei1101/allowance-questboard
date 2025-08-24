@@ -30,8 +30,10 @@ export type InitMasterDataParams = {
  */
 export const initMasterData = async (params: InitMasterDataParams): Promise<void> => {
   try {
+    console.log("マスタデータを取得中...");
     const result = await params.getMasterData.query();
     
+    console.log("マスタデータ取得結果:", result);
     // 言語
     params.setLanguageTypes(result.languages);
     

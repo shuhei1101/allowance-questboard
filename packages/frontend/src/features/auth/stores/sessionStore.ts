@@ -17,14 +17,6 @@ interface SessionState {
   setLanguageType: SetLanguageType;
 }
 
-const getStorage = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage;
-  } else {
-    return AsyncStorage;
-  }
-};
-
 /**
  * セッション状態管理ストア
  * Zustandを使用してセッション情報を管理
@@ -56,7 +48,7 @@ export const useSessionStore = create<SessionState>()(
       }),
       {
         name: 'session',
-        storage: createJSONStorage(() => getStorage()), 
+        storage: createJSONStorage(() => AsyncStorage),
       }
     )
   )

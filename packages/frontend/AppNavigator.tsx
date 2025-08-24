@@ -2,10 +2,11 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator, StackInfo as AuthStackInfo } from '@/features/auth/AuthNavigator';
+import { AuthNavigator, AuthStackInfo as AuthStackInfo } from '@/features/auth/AuthNavigator';
 import { ParentNavigator, StackInfo as ParentStackInfo } from '@/features/parent/ParentNavigator';
-import { CommonNavigator, StackInfo as CommonStackInfo } from '@/features/shared/CommonNavigator';
-import { DemoNavigator, StackInfo as DemoStackInfo } from '@demo/DemoNavigator';
+import { CommonNavigator, DemoStackInfo as CommonStackInfo } from '@/features/shared/CommonNavigator';
+import { DemoNavigator } from '@demo/DemoNavigator';
+import { DemoStackInfo } from '@demo/constants/demoStackInfo';
 import { useTheme } from '@/core/theme';
 
 

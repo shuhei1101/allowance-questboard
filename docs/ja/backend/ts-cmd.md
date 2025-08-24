@@ -17,7 +17,7 @@ npm install @trpc/server @trpc/client
 
 #### フロントエンド起動
 ```bash
-npx expo start
+npx expo start --ios
 ```
 
 #### バックエンド起動

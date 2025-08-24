@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from './login-page/LoginPage';
 
-export const StackInfo = {
+export const AuthStackInfo = {
   name: 'Auth',
   screens: {
     login: "Login",
@@ -23,14 +23,14 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 export function AuthNavigator() {
   return (
     <AuthStack.Navigator
-      initialRouteName={StackInfo.screens.login}
+      initialRouteName={AuthStackInfo.screens.login}
       screenOptions={{
         headerShown: false,
       }}
       {...({} as any)}
     >
       <AuthStack.Screen 
-        name={StackInfo.screens.login}
+        name={AuthStackInfo.screens.login}
         component={LoginPage} 
       />
     </AuthStack.Navigator>

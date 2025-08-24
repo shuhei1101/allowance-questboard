@@ -10,6 +10,7 @@ import { IconCategoryId } from '@backend/features/icon-category/value-objects/ic
  * @param entity アイコンエンティティ
  */
 export const fromEntity = (params: {entity: IconEntity}): Icon => {
+
   return new Icon({
     id: new IconId(params.entity.id),
     name: new IconName(params.entity.name),

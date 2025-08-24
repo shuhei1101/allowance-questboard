@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
+import { DemoStackInfo } from '../../constants/demoStackInfo';
 
 /**
  * 画面一覧ページ
@@ -16,35 +17,35 @@ export const ScreenListPage: React.FC = () => {
       id: 'login',
       title: '🔐 ログイン画面',
       description: 'メール・パスワード認証、家族作成、パスワードリセット機能',
-      onPress: () => navigation.navigate('ScreenLauncher', { screenType: 'login' }),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.screenLauncher, params: { screenType: 'login' } }),
       color: '#10b981',
     },
     {
       id: 'parent-edit',
       title: '👤 親編集画面',
       description: '親の基本情報編集（名前、メール、アイコン、誕生日）',
-      onPress: () => navigation.navigate('ScreenLauncher', { screenType: 'parent-edit' }),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.screenLauncher, params: { screenType: 'parent-edit' } }),
       color: '#3b82f6',
     },
     {
       id: 'child-edit',
       title: '👶 子編集画面',
       description: '子の基本情報編集（今後実装予定）',
-      onPress: () => navigation.navigate('ScreenLauncher', { screenType: 'child-edit' }),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.screenLauncher, params: { screenType: 'child-edit' } }),
       color: '#f59e0b',
     },
     {
       id: 'family-member-list',
       title: '👨‍👩‍👧‍👦 家族メンバー一覧',
       description: '家族メンバーの一覧表示（今後実装予定）',
-      onPress: () => navigation.navigate('ScreenLauncher', { screenType: 'family-member-list' }),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.screenLauncher, params: { screenType: 'family-member-list' } }),
       color: '#ef4444',
     },
     {
       id: 'icon-select',
       title: '🎨 アイコン選択画面',
       description: 'カテゴリごとのアイコン選択とプレビュー機能',
-      onPress: () => navigation.navigate('icon-select-pageDetail'),
+      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.iconSelectPageDetail }),
       color: '#8b5cf6',
     },
   ];
