@@ -17,6 +17,7 @@ export interface Context {
  * Fastify contextを作成
  */
 export const createContext = async ({ req }: CreateFastifyContextOptions): Promise<Context> => {
+  try {
   // EntityManagerを取得
   const session = AppDataSource.manager;
 
@@ -48,6 +49,12 @@ export const createContext = async ({ req }: CreateFastifyContextOptions): Promi
     };
   } catch (error) {
     return { session, languageId };
+  }
+  } catch (error) {
+    throw new TRPCError({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'コンテキストの作成中にエラーが発生しました',
+    });
   }
 };
 
