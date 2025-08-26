@@ -1,7 +1,10 @@
 import { IconCategories } from "@backend/features/icon-category/domain/iconCategories";
 import { AppIcons } from "@/features/icon/models/AppIcons";
-import { SetIconCategories, SetIconByName } from "@/features/shared/stores/appConfigStore";
+import { SetIconCategories, SetAppIcons } from "@/features/shared/stores/appConfigStore";
 import { GetMasterDataHandler } from "@backend/features/auth/router/initRouter";
+import { SetFamilyMemberType, SetLanguageType } from "../stores/sessionStore";
+import { LanguageType } from "../../../../../backend/src/features/language/enum/languageType";
+import { FamilyMemberType } from "../../../../../backend/src/features/family-member/enum/familyMemberType";
 
 /**
  * マスタデータ初期化のパラメータ
@@ -9,14 +12,10 @@ import { GetMasterDataHandler } from "@backend/features/auth/router/initRouter";
 export type InitMasterDataParams = {
   /** tRPCルーター */
   getMasterData: GetMasterDataHandler;
-  /** 言語タイプ設定関数 */
-  setLanguageTypes: (data: any) => void;
-  /** ファミリーメンバータイプ設定関数 */
-  setFamilyMemberType: (data: any) => void;
   /** アイコンカテゴリ設定関数 */
   setIconCategories: SetIconCategories;
   /** アイコン名前設定関数 */
-  setIconByName: SetIconByName;
+  setAppIcons: SetAppIcons;
 };
 
 /**
@@ -35,17 +34,15 @@ export const initMasterData = async (params: InitMasterDataParams): Promise<void
     
     console.log("マスタデータ取得結果:", result);
     // 言語
-    params.setLanguageTypes(result.languages);
-    
+    LanguageType.setFromZodData(result.languages);
     // 家族メンバータイプ
-    params.setFamilyMemberType(result.familyMemberTypes);
-
+    FamilyMemberType.setFromZodData(result.familyMemberTypes);
     // アイコンカテゴリ
     const iconCategories = IconCategories.fromZodData(result.iconCategories);
     
     // AppConfigStoreに保存
     params.setIconCategories(iconCategories);
-    params.setIconByName(AppIcons.fromIcons(
+    params.setAppIcons(AppIcons.fromIcons(
       iconCategories.getAllIcons()
     ));
 

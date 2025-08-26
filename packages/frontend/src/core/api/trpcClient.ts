@@ -44,6 +44,7 @@ export const trpcClient = createTRPCClient<AppRouter>({
  * @returns 認証情報付きのtRPCクライアント
  */
 export const createAuthenticatedClient = (params: { jwtToken: string, languageType: LanguageTypeValue }) => {
+  
   return createTRPCClient<AppRouter>({
     links: [
       httpBatchLink({

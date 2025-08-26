@@ -11,6 +11,7 @@ import { BaseTransactionEntity } from "../../../core/entity/baseTransactionEntit
 import { BaseHistoryEntity } from "../../../core/entity/baseHistoryEntity";
 import { ChildEntity } from "../../child/entity/childEntity";
 import { QuestMemberStatusEntity } from "./questMemberStatusEntity";
+import { FamilyQuestEntity } from "./familyQuestEntity";
 
 /**
  * クエストメンバーエンティティ
@@ -37,7 +38,7 @@ export class QuestMembersEntity extends BaseTransactionEntity {
 
   @ManyToOne("FamilyQuestEntity", { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_members_family_quest_id" })
-  familyQuest!: any;
+  familyQuest!: FamilyQuestEntity;
   @ManyToOne(() => ChildEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "member_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_members_member_id" })
   member!: ChildEntity;

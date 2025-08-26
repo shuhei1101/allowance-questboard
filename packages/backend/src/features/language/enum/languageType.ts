@@ -50,8 +50,6 @@ class LanguageTypeEnum extends BaseSimpleEnum<LanguageTypeValue, LanguageId, Lan
       this.ENGLISH.setFromZodData(data.english);
     }
   }
-
-
 }
 
 export const LanguageType = new LanguageTypeEnum()

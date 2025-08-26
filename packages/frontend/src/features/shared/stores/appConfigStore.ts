@@ -6,18 +6,18 @@ import { AppIcon } from '@/features/icon/models/AppIcon';
 import { Icon } from '@backend/features/icon/domain/icon';
 
 export type SetIconCategories = (iconCategories: IconCategories) => void;
-export type SetIconByName = (iconByName: AppIcons) => void;
+export type SetAppIcons = (appIcons: AppIcons) => void;
 export type GetAllIcons = () => Map<any, any> | undefined;
-export type GetIconByName = (icon: Icon) => AppIcon | undefined;
+export type GetAppIcon = (icon: Icon) => AppIcon | undefined;
 
 interface AppConfigState {
   iconCategories: IconCategories;
   appIcons: AppIcons;
 
   setIconCategories: SetIconCategories;
-  setIconByName: SetIconByName;
+  setAppIcons: SetAppIcons;
   getAllIcons: GetAllIcons;
-  getIconByName: GetIconByName;
+  getAppIcon: GetAppIcon;
 }
 
 const initialState = {
@@ -40,7 +40,7 @@ export const useAppConfigStore = create<AppConfigState>()(
       },
 
       setAppIcons: (appIcons: AppIcons) => {
-        set({ appIcons }, false, 'setAppIcons');
+        set({ appIcons }, false, 'setIconByName');
       },
 
       getAllIcons: () => {
@@ -48,7 +48,7 @@ export const useAppConfigStore = create<AppConfigState>()(
         return state.iconCategories?.getAllIcons();
       },
 
-      getIconByName: (icon: Icon): AppIcon | undefined => {
+      getAppIcon: (icon: Icon): AppIcon | undefined => {
         const state = get();
         return state.appIcons.get(icon) || undefined;
       },

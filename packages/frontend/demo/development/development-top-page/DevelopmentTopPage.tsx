@@ -36,10 +36,8 @@ export const DevelopmentTopPage: React.FC = () => {
           jwtToken: sessionStore.jwt,
           languageType: sessionStore.languageType,
         }).init.getMasterData,
-        setLanguageTypes: sessionStore.setLanguageType,
-        setFamilyMemberType: sessionStore.setFamilyMemberType,
         setIconCategories: appConfigStore.setIconCategories,
-        setIconByName: appConfigStore.setIconByName,
+        setAppIcons: appConfigStore.setAppIcons,
       });
       console.log('✅ マスタデータ初期化完了！');
       

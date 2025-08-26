@@ -99,7 +99,7 @@ export const IconSelectPage: React.FC<Props> = ({
           icons={pageStore.currentCategoryIcons}
           selectedIcon={pageStore.selectedIcon}
           onIconSelect={handleIconSelect}
-          getIconByName={appConfigStore.getIconByName}
+          getIconByName={appConfigStore.getAppIcon}
         />
       </View>
     </View>
