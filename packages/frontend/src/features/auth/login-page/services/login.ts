@@ -28,6 +28,16 @@ export const login: Login = async (params: LoginParams): Promise<void> => {
     const response = await params.loginHandler.query();
 
     // responseから状態を更新
+    if (!response.familyName) {
+      throw new AppError({
+        errorType: 'LOGIN_ERROR',
+        message: new LocaleString({
+          ja: 'ファミリー名が取得できませんでした。',
+          en: 'Family name could not be retrieved.',
+        })
+      });
+    }
+    
     params.setSelectFamilyDialog(
       new SelectFamilyDialog({
         familyName: new FamilyName(response.familyName),

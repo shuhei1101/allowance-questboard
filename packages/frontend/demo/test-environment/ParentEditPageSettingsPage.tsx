@@ -217,7 +217,7 @@ export const ParentEditPageSettingsPage: React.FC = () => {
               アイコン
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {parentEditPageStore.parentForm.icon.name.value || '未選択'}
+              {parentEditPageStore.parentForm.icon?.name.value || '未選択'}
             </Text>
           </View>
           

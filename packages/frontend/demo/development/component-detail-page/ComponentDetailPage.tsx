@@ -25,7 +25,7 @@ export const ComponentDetailPage: React.FC = () => {
   const [componentProps, setComponentProps] = useState<any>(componentInfo.defaultProps);
 
   const updateProp = (key: string, value: any) => {
-    setComponentProps(prev => ({ ...prev, [key]: value }));
+    setComponentProps((prev: any) => ({ ...prev, [key]: value }));
   };
 
   const handleReflectProps = () => {

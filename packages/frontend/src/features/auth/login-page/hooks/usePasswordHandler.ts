@@ -16,8 +16,8 @@ export const usePasswordHandler = (params: {
 }) => {
   return useCallback((value: string) => {
     const updatedForm = new LoginForm({ 
-      password: new Password(value),
-      ...params.loginForm
+      ...params.loginForm,
+      password: new Password(value)
     });
     
     params.setLoginForm(updatedForm);

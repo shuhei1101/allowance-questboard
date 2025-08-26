@@ -28,7 +28,7 @@ export const IconGrid: React.FC<Props> = ({
   const { colors } = useTheme();
 
   const renderIcon = ({ item }: { item: Icon }) => {
-    const isSelected = selectedIcon?.key.equals(item.key) === true;
+    const isSelected = selectedIcon?.key?.equals(item.key) === true;
 
     // getIconByName関数から事前に生成されたAppIconを取得
     const appIcon = getIconByName(item);
@@ -68,7 +68,7 @@ export const IconGrid: React.FC<Props> = ({
     <FlatList
       data={icons.items}
       renderItem={renderIcon}
-      keyExtractor={(item) => item.key.value.toString()}
+      keyExtractor={(item) => item.key?.value?.toString() || 'unknown'}
       numColumns={6}
       contentContainerStyle={styles.gridContainer}
       showsVerticalScrollIndicator={false}

@@ -77,7 +77,7 @@ export const IconSelectPage: React.FC<Props> = ({
           onPress={handleConfirm}
           disabled={!pageStore.selectedIcon || 
             (initialSelectedIcon && 
-             pageStore.selectedIcon?.key.equals(initialSelectedIcon.key))}
+             pageStore.selectedIcon?.key?.equals(initialSelectedIcon.key))}
           variant="header"
         />
       ),

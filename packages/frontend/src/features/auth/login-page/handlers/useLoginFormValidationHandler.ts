@@ -30,13 +30,13 @@ export const useLoginFormValidationHandler = (params: {
 
     // メールアドレスのバリデーション
     if (!params.loginForm.email.isValid) {
-      params.setEmailError(params.loginForm.email.errorMessage.getMessage(params.currentLanguageType));
+      params.setEmailError(params.loginForm.email.errorMessage?.getMessage(params.currentLanguageType) || 'メールアドレスが無効です');
       hasValidationError = true;
     }
 
     // パスワードのバリデーション
     if (!params.loginForm.password.isValid) {
-      params.setPasswordError(params.loginForm.password.errorMessage.getMessage(params.currentLanguageType));
+      params.setPasswordError(params.loginForm.password.errorMessage?.getMessage(params.currentLanguageType) || 'パスワードが無効です');
       hasValidationError = true;
     }
 

@@ -22,10 +22,6 @@ export const DevelopmentTopPage: React.FC = () => {
   const [isInitializing, setIsInitializing] = useState(false);
   const sessionStore = useSessionStore();
   const appConfigStore = useAppConfigStore();
-  const router = createAuthenticatedClient({
-    jwtToken: sessionStore.jwt,
-    languageType: sessionStore.languageType,
-  });
   
   // 初期データ取得ハンドラー
   const handleInitMasterData = async () => {
@@ -36,7 +32,10 @@ export const DevelopmentTopPage: React.FC = () => {
     try {
       console.log('🚀 マスタデータ初期化開始...');
       await initMasterData({
-        getMasterData: router.init.getMasterData,
+        getMasterData: createAuthenticatedClient({
+          jwtToken: sessionStore.jwt,
+          languageType: sessionStore.languageType,
+        }).init.getMasterData,
         setLanguageTypes: sessionStore.setLanguageType,
         setFamilyMemberType: sessionStore.setFamilyMemberType,
         setIconCategories: appConfigStore.setIconCategories,

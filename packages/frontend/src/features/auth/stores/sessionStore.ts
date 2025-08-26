@@ -3,19 +3,27 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FamilyMemberType } from '../../../../../backend/src/features/family-member/enum/familyMemberType';
+import { LanguageType } from '../../../../../backend/src/features/language/enum/languageType';
 
 export type SetJwt = (jwt: string) => void;
 export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
 export type SetLanguageType = (languageType: LanguageTypeValue) => void;
 
 interface SessionState {
-  jwt?: string;
-  familyMemberType?: FamilyMemberTypeValue;
-  languageType?: LanguageTypeValue;
+  jwt: string;
+  familyMemberType: FamilyMemberTypeValue;
+  languageType: LanguageTypeValue;
   setJwt: SetJwt;
   setFamilyMemberType: SetFamilyMemberType;
   setLanguageType: SetLanguageType;
 }
+
+const initialState = {
+  jwt: "",
+  familyMemberType: FamilyMemberType.PARENT,
+  languageType: LanguageType.JAPANESE,
+};
 
 /**
  * セッション状態管理ストア
@@ -25,9 +33,7 @@ export const useSessionStore = create<SessionState>()(
   devtools(
     persist(
       (set, get) => ({
-        jwt: undefined,
-        familyMemberType: undefined,
-        languageType: undefined,
+        ...initialState,
 
         setJwt: (jwt: string) => {
           set((_) => ({ jwt }), false, 'updateJwt');
@@ -39,7 +45,7 @@ export const useSessionStore = create<SessionState>()(
           set((_) => ({ languageType }), false, 'setLanguageType');
         },
         clear: () => {
-          set(() => ({ jwt: undefined, familyMemberType: undefined, languageType: undefined }), false, 'clear');
+          set(() => ({ ...initialState }), false, 'clear');
         },
         isAuthenticated: () => {
           const state = get();

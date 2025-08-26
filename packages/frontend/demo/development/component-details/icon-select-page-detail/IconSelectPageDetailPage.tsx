@@ -305,16 +305,21 @@ export const IconSelectPageDetailPage: React.FC = () => {
             <Text style={[styles.description, { color: colors.text.primary, marginTop: 12, marginBottom: 8 }]}>
               カテゴリ一覧:
             </Text>
-            {appConfigStore.iconCategories.getActiveSortedCategories().map((category, index) => (
-              <View key={category.key.value} style={styles.stateRow}>
-                <Text style={[styles.stateLabel, { color: colors.text.primary }]}>
-                  {index + 1}. ID: {category.key.value}
-                </Text>
-                <Text style={[styles.stateValue, { color: colors.text.secondary }]}>
-                  並び順: {category.sortOrder.value}
-                </Text>
-              </View>
-            ))}
+            {appConfigStore.iconCategories.getActiveSortedCategories().map((category, index) => {
+              if (!category.key) {
+                return null;
+              }
+              return (
+                <View key={category.key.value} style={styles.stateRow}>
+                  <Text style={[styles.stateLabel, { color: colors.text.primary }]}>
+                    {index + 1}. ID: {category.key.value}
+                  </Text>
+                  <Text style={[styles.stateValue, { color: colors.text.secondary }]}>
+                    並び順: {category.sortOrder.value}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
         ) : (
           <Text style={[styles.description, { color: colors.text.secondary }]}>

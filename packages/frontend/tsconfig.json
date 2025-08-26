@@ -13,6 +13,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
+    "strict": true,
   },
   "include": ["src/**/*", "demo/**/*", "app/**/*", "__tests__/**/*", "App.tsx", "index.ts"]
 }

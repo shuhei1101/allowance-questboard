@@ -32,25 +32,25 @@ export const useParentFormValidationHandler = (params: {
 
     // 名前のバリデーション
     if (!params.parentForm.name.isValid) {
-      params.setNameError(params.parentForm.name.errorMessage.getMessage(params.currentLanguageType));
+      params.setNameError(params.parentForm.name.errorMessage?.getMessage(params.currentLanguageType) || '名前が無効です');
       hasValidationError = true;
     }
 
     // メールアドレスのバリデーション
     if (!params.parentForm.email.isValid) {
-      params.setEmailError(params.parentForm.email.errorMessage.getMessage(params.currentLanguageType));
+      params.setEmailError(params.parentForm.email.errorMessage?.getMessage(params.currentLanguageType) || 'メールアドレスが無効です');
       hasValidationError = true;
     }
 
     // パスワードのバリデーション
     if (!params.parentForm.password.isValid) {
-      params.setPasswordError(params.parentForm.password.errorMessage.getMessage(params.currentLanguageType));
+      params.setPasswordError(params.parentForm.password.errorMessage?.getMessage(params.currentLanguageType) || 'パスワードが無効です');
       hasValidationError = true;
     }
 
     // 誕生日のバリデーション
     if (!params.parentForm.birthday.isValid) {
-      params.setBirthdayError(params.parentForm.birthday.errorMessage.getMessage(params.currentLanguageType));
+      params.setBirthdayError(params.parentForm.birthday.errorMessage?.getMessage(params.currentLanguageType) || '誕生日が無効です');
       hasValidationError = true;
     }
 

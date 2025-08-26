@@ -33,7 +33,7 @@ export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => 
     // 最初のカテゴリのアクティブでソートされたアイコンを取得
     set({
       iconCategories: new IconCategories(activeCategories),
-      selectedCategoryId: firstCategory?.key,
+      selectedCategoryId: firstCategory?.key || undefined,
       selectedIcon: initialSelectedIcon, // 初期選択されたアイコンを設定
       currentCategoryIcons: firstCategory ? firstCategory.getActiveSortedIcons() : Icons.fromEmpty() as Icons,
     });
@@ -42,6 +42,9 @@ export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => 
   selectCategory: (categoryId) => {
     const { iconCategories } = get();
     const category = iconCategories.get(categoryId);
+    if (!category) {
+      return;
+    }
     set({
       selectedCategoryId: categoryId,
       currentCategoryIcons: category.getActiveSortedIcons(),

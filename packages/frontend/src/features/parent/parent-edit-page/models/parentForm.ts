@@ -12,14 +12,14 @@ export class ParentForm extends BaseModel {
   public readonly name: ParentName;
   public readonly email: Email;
   public readonly password: Password;
-  public readonly icon: Icon | null;
+  public readonly icon?: Icon;
   public readonly birthday: Birthday;
 
   constructor(params: { 
     name: ParentName;
     email: Email;
     password: Password;
-    icon: Icon;
+    icon?: Icon;
     birthday: Birthday;
   }) {
     super();
@@ -47,7 +47,7 @@ export class ParentForm extends BaseModel {
       name: new ParentName(''),
       email: new Email(''),
       password: new Password(''),
-      icon: null,
+      icon: undefined,
       birthday: new Birthday(),
     });
   }
