@@ -28,6 +28,7 @@ npm run dev
 #### db初期化
 ```bash
 npx ts-node -r tsconfig-paths/register src/seed/dbInitializer.ts
+npx tsx -r tsconfig-paths/register src/seed/dbInitializer.ts
 ```
 
 #### ts-nodeのインストール
