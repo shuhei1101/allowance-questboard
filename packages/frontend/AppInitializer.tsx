@@ -24,22 +24,21 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
     // アプリ初期化処理
     const init = async () => {
       try {
-        // 1. マスタデータ初期化
+        // マスタデータ初期化
         setLoadingMessage("マスタデータを読み込んでいます... 🚀");
+        console.log("マスタデータを読み込んでいます... 🚀");
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
           getMasterData: createAuthenticatedClient({
             jwtToken: sessionStore.jwt,
             languageType: sessionStore.languageType,
           }).init.getMasterData,
-          setLanguageTypes: sessionStore.setLanguageType,
-          setFamilyMemberType: sessionStore.setFamilyMemberType,
           setIconCategories: appConfigStore.setIconCategories,
-          setIconByName: appConfigStore.setIconByName,
+          setAppIcons: appConfigStore.setAppIcons,
         });
         console.log('✅ マスタデータ初期化完了！');
-
-        // 2. 言語情報設定
+        
+        // 言語情報設定（マスタデータ取得前に実行）
         setLoadingMessage("言語設定を適用しています... 📱");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
@@ -52,7 +51,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         console.log('languageType.name:', languageType.name.value);
         console.log(' languageType.sortOrder:', languageType.sortOrder);
 
-        // 3. 初期化完了
+        // 初期化完了
         setLoadingMessage("初期化が完了しました! ✨");
         
         // 少し間を置いてから準備完了

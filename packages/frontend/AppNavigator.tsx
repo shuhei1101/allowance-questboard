@@ -21,18 +21,11 @@ export type AppStackParamList = {
 
 const AppStack = createStackNavigator<AppStackParamList>();
 
-export interface AppNavigatorProps {
-  /**
-   * グローバルエラーハンドリング関数
-   */
-  onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
-}
-
 /**
  * アプリケーションのナビゲーション設定
  * 機能別のNavigatorを組み合わせたルーティング管理
  */
-export function AppNavigator(props: AppNavigatorProps) {
+export function AppNavigator() {
   const { colors, colorScheme } = useTheme();
 
   return (

@@ -1,6 +1,5 @@
 module.exports = {
   preset: 'react-native',
-  testEnvironment: 'jsdom',
   displayName: 'frontend',
   roots: ['<rootDir>/src', '<rootDir>/__tests__'],
   testMatch: [
@@ -9,11 +8,6 @@ module.exports = {
     '<rootDir>/**/?(*.)+(spec|test).ts',
     '<rootDir>/**/?(*.)+(spec|test).tsx'
   ],
-  transform: {
-    '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: './tsconfig.json'
-    }],
-  },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@frontend/(.*)$': '<rootDir>/src/$1',
@@ -26,5 +20,7 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.tsx']
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.tsx'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testEnvironment: 'node'
 };

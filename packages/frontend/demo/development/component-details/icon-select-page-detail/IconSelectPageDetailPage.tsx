@@ -64,10 +64,8 @@ export const IconSelectPageDetailPage: React.FC = () => {
       try {
         await initMasterData({
           getMasterData: router.init.getMasterData,
-          setLanguageTypes: (data: any) => LanguageType.setFromZodData(data),
-          setFamilyMemberType: (data: any) => FamilyMemberType.setFromZodData(data),
           setIconCategories: appConfigStore.setIconCategories,
-          setIconByName: appConfigStore.setIconByName,
+          setAppIcons: appConfigStore.setAppIcons,
         });
         setDemoState(prev => ({ 
           ...prev, 
@@ -118,10 +116,8 @@ export const IconSelectPageDetailPage: React.FC = () => {
     try {
       await initMasterData({
         getMasterData: router.init.getMasterData,
-        setLanguageTypes: (data: any) => LanguageType.setFromZodData(data),
-        setFamilyMemberType: (data: any) => FamilyMemberType.setFromZodData(data),
         setIconCategories: appConfigStore.setIconCategories,
-        setIconByName: appConfigStore.setIconByName,
+        setAppIcons: appConfigStore.setAppIcons,
       });
       setDemoState(prev => ({ 
         ...prev, 
