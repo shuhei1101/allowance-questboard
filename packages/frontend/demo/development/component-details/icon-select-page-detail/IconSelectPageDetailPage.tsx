@@ -8,7 +8,7 @@ import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
-import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { createAuthenticatedClient, trpcClient } from '@/core/api/trpcClient';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { LanguageType } from '@backend/features/language/enum/languageType';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
@@ -29,10 +29,6 @@ export const IconSelectPageDetailPage: React.FC = () => {
   const { colors } = useTheme();
   const sessionStore = useSessionStore();
   const appConfigStore = useAppConfigStore();
-  const router = createAuthenticatedClient({
-    jwtToken: sessionStore.jwt,
-    languageType: sessionStore.languageType,
-  });
 
   // モックIcon作成関数
   const createMockIcon = (iconName: string): Icon => {
@@ -63,7 +59,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
       
       try {
         await initMasterData({
-          getMasterData: router.init.getMasterData,
+          getMasterData: trpcClient.init.getMasterData,
           setIconCategories: appConfigStore.setIconCategories,
           setAppIcons: appConfigStore.setAppIcons,
         });
@@ -115,7 +111,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
     
     try {
       await initMasterData({
-        getMasterData: router.init.getMasterData,
+        getMasterData: trpcClient.init.getMasterData,
         setIconCategories: appConfigStore.setIconCategories,
         setAppIcons: appConfigStore.setAppIcons,
       });

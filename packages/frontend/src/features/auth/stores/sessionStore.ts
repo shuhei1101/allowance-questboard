@@ -12,8 +12,8 @@ export type Clear = () => void;
 export type IsAuthenticated = () => boolean;
 
 interface SessionState {
-  jwt: string;
-  familyMemberType: FamilyMemberTypeValue;
+  jwt?: string;
+  familyMemberType?: FamilyMemberTypeValue;
   languageType: LanguageTypeValue;
   setJwt: SetJwt;
   setFamilyMemberType: SetFamilyMemberType;
@@ -22,12 +22,6 @@ interface SessionState {
   isAuthenticated: IsAuthenticated;
 }
 
-const initialState = {
-  jwt: "",
-  familyMemberType: FamilyMemberType.PARENT,
-  languageType: LanguageType.JAPANESE,
-};
-
 /**
  * セッション状態管理ストア
  * Zustandを使用してセッション情報を管理
@@ -35,7 +29,9 @@ const initialState = {
 export const useSessionStore = create<SessionState>()(
   devtools(
     (set, get) => ({
-      ...initialState,
+      jwt: undefined,
+      familyMemberType: undefined,
+      languageType: LanguageType.ENGLISH,
 
       setJwt: (jwt: string) => {
         set((_) => ({ jwt }), false, 'updateJwt');
@@ -46,8 +42,12 @@ export const useSessionStore = create<SessionState>()(
       setLanguageType: (languageType: LanguageTypeValue) => {
         set((_) => ({ languageType }), false, 'setLanguageType');
       },
-      clear: () => {
-        set(() => ({ ...initialState }), false, 'clear');
+      reset: () => {
+        set(() => ({   
+          jwt: undefined,
+          familyMemberType: undefined,
+          languageType: LanguageType.ENGLISH,
+        }), false, 'reset');
       },
       isAuthenticated: () => {
         const state = get();

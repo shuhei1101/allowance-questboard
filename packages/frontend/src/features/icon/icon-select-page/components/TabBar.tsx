@@ -4,21 +4,15 @@ import { useTheme } from '@/core/theme';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
+import { SelectCategory } from '../stores/iconSelectPageStore';
 
 interface Props {
-  /**
-   * アイコンカテゴリ一覧
-   */
+  /** アイコンカテゴリ一覧 */
   categories: IconCategories;
-  /**
-   * 現在選択されているカテゴリID
-   */
+  /** 現在選択されているカテゴリID */
   selectedCategoryId?: IconCategoryId;
-  /**
-   * カテゴリが変更された時のコールバック
-   * @param categoryId 選択されたカテゴリID
-   */
-  onCategoryChange: (categoryId: IconCategoryId) => void;
+  /** カテゴリが変更された時のコールバック */
+  onCategoryChange: SelectCategory;
 }
 
 /**

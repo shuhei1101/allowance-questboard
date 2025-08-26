@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Icon } from '@backend/features/icon/domain/icon';
+import { SelectIcon } from '../stores/iconSelectPageStore';
 
 /**
  * アイコン選択ハンドラーのカスタムフック
@@ -7,7 +8,7 @@ import { Icon } from '@backend/features/icon/domain/icon';
  * アイコンを選択して状態に保存する
  */
 export const useIconSelectHandler = (params: {
-  selectIcon: (icon: Icon) => void;
+  selectIcon: SelectIcon;
 }) => {
   return useCallback((icon: Icon) => {
     params.selectIcon(icon);

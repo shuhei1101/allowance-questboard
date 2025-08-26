@@ -5,6 +5,7 @@ import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { Icons } from '@backend/features/icon/domain/icons';
 import { GetAppIcon } from '@/features/shared/stores/appConfigStore';
+import { SelectIcon } from '../stores/iconSelectPageStore';
 
 interface Props {
   /** 表示するアイコン一覧 */
@@ -12,9 +13,9 @@ interface Props {
   /** 現在選択されているアイコン */
   selectedIcon?: Icon;
   /** アイコンが選択された時のコールバック */
-  onIconSelect: (icon: Icon) => void;
+  onIconSelect: SelectIcon;
   /** アイコン取得関数 */
-  getIconByName: GetAppIcon;
+  getAppIcon: GetAppIcon;
 }
 
 /** アイコン選択画面のアイコングリッド
@@ -23,15 +24,15 @@ export const IconGrid: React.FC<Props> = ({
   icons,
   selectedIcon,
   onIconSelect,
-  getIconByName,
+  getAppIcon: getAppIcon,
 }) => {
   const { colors } = useTheme();
 
   const renderIcon = ({ item }: { item: Icon }) => {
     const isSelected = selectedIcon?.key?.equals(item.key) === true;
 
-    // getIconByName関数から事前に生成されたAppIconを取得
-    const appIcon = getIconByName(item);
+    // getAppIcon関数から事前に生成されたAppIconを取得
+    const appIcon = getAppIcon(item);
     const IconComponent = appIcon?.obj || LucideIcons.HelpCircle;
 
     return (

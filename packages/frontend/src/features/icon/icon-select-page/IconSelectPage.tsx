@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
-import { useSelectIconPageStore as useIconSelectPageStore } from './stores/iconSelectPageStore';
+import { SelectIcon, useSelectIconPageStore as useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
 import { TabBar } from './components/TabBar';
 import { IconGrid } from './components/IconGrid';
@@ -14,15 +14,10 @@ import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 
 interface Props {
-  /**
-   * 初期選択されたアイコン
-   */
+  /** 初期選択されたアイコン */
   initialSelectedIcon?: Icon;
-  /**
-   * アイコンが選択された時のコールバック
-   * @param icon 選択されたアイコン
-   */
-  onIconSelected: (icon: Icon) => void;
+  /** アイコンが選択された時のコールバック */
+  onIconSelected: SelectIcon;
 }
 
 /**
@@ -99,7 +94,7 @@ export const IconSelectPage: React.FC<Props> = ({
           icons={pageStore.currentCategoryIcons}
           selectedIcon={pageStore.selectedIcon}
           onIconSelect={handleIconSelect}
-          getIconByName={appConfigStore.getAppIcon}
+          getAppIcon={appConfigStore.getAppIcon}
         />
       </View>
     </View>

@@ -8,7 +8,7 @@ import { EnvironmentInfoCard } from './components/EnvironmentInfoCard';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
-import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { createAuthenticatedClient, trpcClient } from '@/core/api/trpcClient';
 import { AuthStackInfo } from '@/features/auth/AuthNavigator';
 import { DemoStackInfo } from '../../constants/demoStackInfo';
 
@@ -32,10 +32,7 @@ export const DevelopmentTopPage: React.FC = () => {
     try {
       console.log('🚀 マスタデータ初期化開始...');
       await initMasterData({
-        getMasterData: createAuthenticatedClient({
-          jwtToken: sessionStore.jwt,
-          languageType: sessionStore.languageType,
-        }).init.getMasterData,
+        getMasterData: trpcClient.init.getMasterData,
         setIconCategories: appConfigStore.setIconCategories,
         setAppIcons: appConfigStore.setAppIcons,
       });

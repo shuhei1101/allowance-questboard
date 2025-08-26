@@ -4,6 +4,11 @@ import { Icon } from '@backend/features/icon/domain/icon';
 import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
 import { Icons } from '@backend/features/icon/domain/icons';
 
+export type Initialize = (iconCategories: IconCategories, initialSelectedIcon?: Icon) => void;
+export type SelectCategory = (categoryId: IconCategoryId) => void;
+export type SelectIcon = (icon: Icon) => void;
+export type Reset = () => void;
+
 /**
  * アイコン選択ページの状態管理
  */
@@ -12,10 +17,10 @@ interface SelectIconPageState {
   selectedCategoryId?: IconCategoryId;
   selectedIcon?: Icon;
   currentCategoryIcons: Icons;
-  initialize: (iconCategories: IconCategories, initialSelectedIcon?: Icon) => void;
-  selectCategory: (categoryId: IconCategoryId) => void;
-  selectIcon: (icon: Icon) => void;
-  reset: () => void;
+  initialize: Initialize;
+  selectCategory: SelectCategory;
+  selectIcon: SelectIcon;
+  reset: Reset;
 }
 
 /**

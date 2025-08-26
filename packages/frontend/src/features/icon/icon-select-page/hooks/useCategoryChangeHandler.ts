@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
+import { SelectCategory } from '../stores/iconSelectPageStore';
 
 /**
  * カテゴリ変更ハンドラーのカスタムフック
@@ -7,7 +8,7 @@ import { IconCategoryId } from '@backend/features/icon-category/value-objects/ic
  * カテゴリを選択し、そのカテゴリのアイコンを表示する
  */
 export const useCategoryChangeHandler = (params: {
-  selectCategory: (categoryId: IconCategoryId) => void;
+  selectCategory: SelectCategory;
 }) => {
   return useCallback((categoryId: IconCategoryId) => {
     params.selectCategory(categoryId);

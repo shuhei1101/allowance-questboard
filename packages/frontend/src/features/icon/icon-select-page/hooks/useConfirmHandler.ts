@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Icon } from '@backend/features/icon/domain/icon';
+import { SelectIcon } from '../stores/iconSelectPageStore';
 
 /**
  * 確定ボタンハンドラーのカスタムフック
@@ -8,7 +9,7 @@ import { Icon } from '@backend/features/icon/domain/icon';
  */
 export const useConfirmHandler = (params: {
   selectedIcon?: Icon;
-  onIconSelected: (icon: Icon) => void;
+  onIconSelected: SelectIcon;
 }) => {
   return useCallback(() => {
     if (params.selectedIcon) {

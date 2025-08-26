@@ -6,7 +6,7 @@ import { localeToLanguageType } from './src/features/auth/utils/localeToLanguage
 import { LoadingPage } from './src/features/shared/loading-page/LoadingPage';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { initMasterData } from '@/features/auth/services/initMasterData';
-import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { trpcClient } from '@/core/api/trpcClient';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 
 /**
@@ -29,10 +29,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         console.log("マスタデータを読み込んでいます... 🚀");
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
-          getMasterData: createAuthenticatedClient({
-            jwtToken: sessionStore.jwt,
-            languageType: sessionStore.languageType,
-          }).init.getMasterData,
+          getMasterData: trpcClient.init.getMasterData,
           setIconCategories: appConfigStore.setIconCategories,
           setAppIcons: appConfigStore.setAppIcons,
         });

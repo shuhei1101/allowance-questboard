@@ -5,16 +5,16 @@ import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 
 export type IsLoading = boolean;
 export type IsDialogVisible = boolean;
-export type EmailError = string | null;
-export type PasswordError = string | null;
+export type EmailError = string | undefined;
+export type PasswordError = string | undefined;
 
 export type SetLoginForm = (form: LoginForm) => void;
 export type SetSelectFamilyDialog = (dialog: SelectFamilyDialog) => void;
 export type ShowDialog = () => void;
 export type HideDialog = () => void;
 export type SetLoading = (loading: boolean) => void;
-export type SetEmailError = (error: string | null) => void;
-export type SetPasswordError = (error: string | null) => void;
+export type SetEmailError = (error: string | undefined) => void;
+export type SetPasswordError = (error: string | undefined) => void;
 export type ClearErrors = () => void;
 
 interface LoginPageState {
@@ -22,8 +22,8 @@ interface LoginPageState {
   isDialogVisible: IsDialogVisible;
   loginForm: LoginForm;
   selectFamilyDialog: SelectFamilyDialog;
-  emailError: EmailError;
-  passwordError: PasswordError;
+  emailError?: EmailError;
+  passwordError?: PasswordError;
 
   setLoginForm: SetLoginForm;
   setSelectFamilyDialog: SetSelectFamilyDialog;
@@ -45,8 +45,8 @@ export const useLoginPageStore = create<LoginPageState>()(
       isDialogVisible: false,
       loginForm: LoginForm.initialize(),
       selectFamilyDialog: SelectFamilyDialog.initialize(),
-      emailError: null,
-      passwordError: null,
+      emailError: undefined,
+      passwordError: undefined,
 
       setLoginForm: (loginForm: LoginForm) => {
         set({ loginForm }, false, 'setLoginForm');
@@ -68,16 +68,16 @@ export const useLoginPageStore = create<LoginPageState>()(
         set({ isLoading: loading }, false, 'setLoading');
       },
 
-      setEmailError: (error: string | null) => {
+      setEmailError: (error: string | undefined) => {
         set({ emailError: error }, false, 'setEmailError');
       },
 
-      setPasswordError: (error: string | null) => {
+      setPasswordError: (error: string | undefined) => {
         set({ passwordError: error }, false, 'setPasswordError');
       },
 
       clearErrors: () => {
-        set({ emailError: null, passwordError: null }, false, 'clearErrors');
+        set({ emailError: undefined, passwordError: undefined }, false, 'clearErrors');
       },
     }),
     {

@@ -20,11 +20,6 @@ interface AppConfigState {
   getAppIcon: GetAppIcon;
 }
 
-const initialState = {
-  iconCategories: IconCategories.fromEmpty(),
-  appIcons: AppIcons.fromEmpty(),
-};
-
 /**
  * アプリ設定状態管理ストア
  * 
@@ -33,14 +28,15 @@ const initialState = {
 export const useAppConfigStore = create<AppConfigState>()(
   devtools(
     (set, get) => ({
-      ...initialState,
+      iconCategories: IconCategories.fromEmpty(),
+      appIcons: AppIcons.fromEmpty(),
 
       setIconCategories: (iconCategories: IconCategories) => {
         set({ iconCategories }, false, 'setIconCategories');
       },
 
       setAppIcons: (appIcons: AppIcons) => {
-        set({ appIcons }, false, 'setIconByName');
+        set({ appIcons }, false, 'setAppIcons');
       },
 
       getAllIcons: () => {

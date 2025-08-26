@@ -23,7 +23,7 @@ export const usePasswordHandler = (params: {
     params.setLoginForm(updatedForm);
     
     if (params.passwordError) {
-      params.setPasswordError(null);
+      params.setPasswordError(undefined);
     }
   }, [params.loginForm.email, params.setLoginForm, params.passwordError, params.setPasswordError]);
 };

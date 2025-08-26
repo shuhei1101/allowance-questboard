@@ -23,7 +23,7 @@ export const useEmailHandler = (params: {
     params.setLoginForm(updatedForm);
     
     if (params.emailError) {
-      params.setEmailError(null);
+      params.setEmailError(undefined);
     }
   }, [params.loginForm.password, params.setLoginForm, params.emailError, params.setEmailError]);
 };
