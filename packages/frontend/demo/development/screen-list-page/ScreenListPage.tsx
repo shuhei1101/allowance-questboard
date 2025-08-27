@@ -16,35 +16,30 @@ export const ScreenListPage: React.FC = () => {
     {
       id: 'login',
       title: '🔐 ログイン画面',
-      description: 'メール・パスワード認証、家族作成、パスワードリセット機能',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'login' } }),
       color: '#10b981',
     },
     {
       id: 'parent-edit',
       title: '👤 親編集画面',
-      description: '親の基本情報編集（名前、メール、アイコン、誕生日）',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'parent-edit' } }),
       color: '#3b82f6',
     },
     {
       id: 'child-edit',
       title: '👶 子編集画面',
-      description: '子の基本情報編集（今後実装予定）',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'child-edit' } }),
       color: '#f59e0b',
     },
     {
       id: 'family-member-list',
       title: '👨‍👩‍👧‍👦 家族メンバー一覧',
-      description: '家族メンバーの一覧表示（今後実装予定）',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'family-member-list' } }),
       color: '#ef4444',
     },
     {
       id: 'icon-select',
       title: '🎨 アイコン選択画面',
-      description: 'カテゴリごとのアイコン選択とプレビュー機能',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.iconSelectPageDetail }),
       color: '#8b5cf6',
     },
@@ -53,12 +48,6 @@ export const ScreenListPage: React.FC = () => {
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: colors.text.primary }]}>
-          📱 画面一覧
-        </Text>
-        <Text style={[styles.headerSubtitle, { color: colors.text.secondary }]}>
-          各画面の起動とテストができます
-        </Text>
       </View>
 
       <View style={styles.content}>
@@ -69,18 +58,11 @@ export const ScreenListPage: React.FC = () => {
             onPress={screen.onPress}
           >
             <Text style={styles.screenTitle}>{screen.title}</Text>
-            <Text style={styles.screenDescription}>{screen.description}</Text>
-            <View style={styles.launchButton}>
-              <Text style={styles.launchButtonText}>起動画面へ →</Text>
-            </View>
           </TouchableOpacity>
         ))}
       </View>
 
       <View style={styles.footer}>
-        <Text style={[styles.footerText, { color: colors.text.secondary }]}>
-          💡 各画面をタップして起動画面に移動
-        </Text>
       </View>
     </ScrollView>
   );
@@ -98,11 +80,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 8,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    lineHeight: 24,
   },
   content: {
     paddingHorizontal: 16,
@@ -126,31 +103,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 8,
   },
-  screenDescription: {
-    fontSize: 14,
-    color: '#fff',
-    opacity: 0.9,
-    lineHeight: 20,
-    marginBottom: 16,
-  },
-  launchButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    alignSelf: 'flex-end',
-  },
-  launchButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
   footer: {
     padding: 24,
     alignItems: 'center',
-  },
-  footerText: {
-    fontSize: 14,
-    textAlign: 'center',
   },
 });

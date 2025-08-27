@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/core/theme';
 
-interface Props {
+export interface ActionButtonProps {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
@@ -19,7 +19,7 @@ interface Props {
  * ナビゲーションバーのアクションボタンとしても使用可能
  * ヘッダーバリアントでは、ダーク・ライト共通で白色のアイコンを使用
  */
-export const ActionButton: React.FC<Props> = ({ 
+export const ActionButton: React.FC<ActionButtonProps> = ({ 
   onPress, 
   disabled = false, 
   loading = false,
@@ -48,16 +48,11 @@ export const ActionButton: React.FC<Props> = ({
     if (variant === 'header') {
       return 'transparent';
     }
-    return disabled ? colors.surface.secondary : '#FFFFFF';
+    return disabled ? colors.surface.secondary : colors.surface.elevated;
   };
 
   const getIconColor = () => {
     if (iconColor) return iconColor;
-    
-    if (variant === 'header') {
-      // ヘッダーバリアントでは、ダーク・ライト共通で白色
-      return disabled ? 'rgba(255, 255, 255, 0.5)' : '#FFFFFF';
-    }
     return disabled ? colors.text.disabled : colors.primary;
   };
 

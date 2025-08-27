@@ -59,8 +59,12 @@ export const ParentEditPage: React.FC<Props> = ({
   }).parent.getParent;
 
   // 親データ初期化フック
-  useInitializeParentData(parentId, parentRouter, appConfigStore.getAllIcons);
-  
+  useInitializeParentData({
+    parentId: parentId,
+    parentRouter: parentRouter,
+    getAllIcons: appConfigStore.getAllIcons
+  });
+
   // 統合フックで全ハンドラーを取得
   
   const {

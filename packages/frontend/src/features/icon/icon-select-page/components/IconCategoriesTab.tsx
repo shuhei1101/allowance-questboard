@@ -19,7 +19,7 @@ interface Props {
  * アイコン選択画面のタブバー
  * アイコンカテゴリをタブとして表示し、選択されたカテゴリでアイコン一覧をフィルタリング
  */
-export const TabBar: React.FC<Props> = ({
+export const IconCategoriesTab: React.FC<Props> = ({
   categories,
   selectedCategoryId,
   onCategoryChange,

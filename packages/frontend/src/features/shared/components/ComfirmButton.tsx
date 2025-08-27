@@ -7,4 +7,20 @@ interface Props {
   loading?: boolean;
   size?: 'small' | 'medium' | 'large';
   variant?: 'default' | 'header';
+  backgroundColor?: string;
+  iconColor?: string;
 }
+
+/**
+ * 確定ボタンコンポーネント
+ * ActionButtonをラップしてsaveアイコンを提供
+ * ナビゲーションバーのアクションボタンとしても使用可能
+ */
+export const ComfirmButton: React.FC<Props> = (props) => {
+  return (
+    <ActionButton
+      {...props}
+      iconName="checkmark"
+    />
+  );
+};

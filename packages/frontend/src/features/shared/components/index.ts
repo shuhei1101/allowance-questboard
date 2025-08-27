@@ -1,2 +1,6 @@
-export { EditButton, DeleteButton, AddButton, BackButton, ComfirmButton } from './ActionButtons';
 export { IconSelectButtonEntry } from './IconSelectButtonEntry';
+export { BackButton } from './BackButton';
+export { AddButton } from './AddButton';
+export { EditButton } from './EditButton';
+export { DeleteButton } from './DeleteButton';
+export { ComfirmButton } from './ComfirmButton';

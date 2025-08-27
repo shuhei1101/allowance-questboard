@@ -4,14 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
 import { SelectIcon, useSelectIconPageStore as useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
-import { TabBar } from './components/TabBar';
+import { IconCategoriesTab } from './components/IconCategoriesTab';
 import { IconGrid } from './components/IconGrid';
 import { Icon } from '@backend/features/icon/domain/icon';
-import { ComfirmButton } from '@/features/shared/components/ActionButtons';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { useEffect } from 'react';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
+import { ComfirmButton } from '../../shared/components';
 
 interface Props {
   /** 初期選択されたアイコン */
@@ -82,7 +82,7 @@ export const IconSelectPage: React.FC<Props> = ({
   return (
     <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
       {/* タブバー */}
-      <TabBar
+      <IconCategoriesTab
         categories={pageStore.iconCategories}
         selectedCategoryId={pageStore.selectedCategoryId}
         onCategoryChange={handleCategoryChange}

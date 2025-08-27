@@ -1,9 +1,68 @@
 import { ColorSchemeName } from 'react-native';
 
 /**
+ * カラーテーマの構造タイプ定義
+ */
+export interface ColorTheme {
+  /** プライマリーカラー */
+  primary: string;
+  primaryLight: string;
+  primaryDark: string;
+
+  /** セカンダリーカラー */
+  secondary: string;
+  secondaryLight: string;
+  secondaryDark: string;
+
+  /** システムカラー */
+  danger: string;
+  warning: string;
+  info: string;
+  success: string;
+
+  /** 背景色 */
+  background: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
+
+  /** サーフェス色 */
+  surface: {
+    elevated: string;
+    base: string;
+    secondary: string;
+  };
+
+  /** テキストカラー */
+  text: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    disabled: string;
+    inverse: string;
+  };
+
+  /** ボーダー色 */
+  border: {
+    light: string;
+    medium: string;
+    dark: string;
+  };
+
+  /** 状態色 */
+  state: {
+    active: string;
+    inactive: string;
+    selected: string;
+    hover: string;
+    pressed: string;
+  };
+}
+/**
  * ライトテーマカラー定義
  */
-export const lightColors = {
+export const lightColors: ColorTheme = {
   // プライマリーカラー
   primary: '#007AFF',
   primaryLight: '#5AC8FA',
@@ -63,7 +122,7 @@ export const lightColors = {
 /**
  * ダークテーマカラー定義
  */
-export const darkColors = {
+export const darkColors: ColorTheme = {
   // プライマリーカラー
   primary: '#0A84FF',
   primaryLight: '#64D2FF',
@@ -120,65 +179,6 @@ export const darkColors = {
   },
 } as const;
 
-/**
- * カラーテーマの構造タイプ定義
- */
-export interface ColorTheme {
-  // プライマリーカラー
-  primary: string;
-  primaryLight: string;
-  primaryDark: string;
-
-  // セカンダリーカラー
-  secondary: string;
-  secondaryLight: string;
-  secondaryDark: string;
-
-  // システムカラー
-  danger: string;
-  warning: string;
-  info: string;
-  success: string;
-
-  // 背景色
-  background: {
-    primary: string;
-    secondary: string;
-    tertiary: string;
-  };
-
-  // サーフェス色
-  surface: {
-    elevated: string;
-    base: string;
-    secondary: string;
-  };
-
-  // テキストカラー
-  text: {
-    primary: string;
-    secondary: string;
-    tertiary: string;
-    disabled: string;
-    inverse: string;
-  };
-
-  // ボーダー色
-  border: {
-    light: string;
-    medium: string;
-    dark: string;
-  };
-
-  // 状態色
-  state: {
-    active: string;
-    inactive: string;
-    selected: string;
-    hover: string;
-    pressed: string;
-  };
-}
 
 /**
  * テーマに応じたカラーを取得する関数

@@ -95,7 +95,7 @@ export const useParentEditPageStore = create<ParentEditPageState>()(
       },
 
       reset: () => {
-        set(initialState, false, 'reset');
+        set({ ...initialState }, false, 'reset');
       },
     }),
     {
