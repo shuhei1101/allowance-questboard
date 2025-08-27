@@ -5,9 +5,12 @@ import { FieldWithError } from '@/core/components/FieldWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
-import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { AppIcon } from '@/features/icon/models/AppIcon';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { CommonStackMeta } from '../CommonNavigator';
+import { AppStackParamList } from '../../../../AppNavigator';
+import { useIconSelectPageStore } from '../../icon/icon-select-page/stores/iconSelectPageStore';
 
 interface Props {
   selectedIcon?: Icon;
@@ -23,12 +26,17 @@ interface Props {
 export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSelected, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<AppStackParamList>>();
+
+  const iconSelectPageStore = useIconSelectPageStore();
+  iconSelectPageStore.setIconSelectHandler(onIconSelected);  // アイコン選択ハンドラをセット
 
   const handlePress = () => {
-    // アイコン選択画面に遷移
-    (navigation as any).navigate('IconSelectPage', {
-      initialSelectedIcon: selectedIcon,
+    navigation.navigate(CommonStackMeta.name, { 
+      screen: CommonStackMeta.screens.iconSelect,
+      params: {
+        initialSelectedIcon: selectedIcon,
+      }
     });
   };
 

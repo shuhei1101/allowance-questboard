@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator, AuthStackMeta as AuthStackMeta } from '@/features/auth/AuthNavigator';
-import { ParentNavigator, ParentStackMeta } from '@/features/parent/ParentNavigator';
-import { CommonNavigator, CommonStackMeta } from '@/features/shared/CommonNavigator';
-import { DemoNavigator } from '@demo/DemoNavigator';
+import { AuthNavigator, AuthStackMeta as AuthStackMeta, AuthStackParamList } from '@/features/auth/AuthNavigator';
+import { ParentNavigator, ParentStackMeta, ParentStackParamList } from '@/features/parent/ParentNavigator';
+import { CommonNavigator, CommonStackMeta, CommonStackParamList } from '@/features/shared/CommonNavigator';
+import { DemoNavigator, DemoStackParamList } from '@demo/DemoNavigator';
 import { DemoStackMeta } from '@demo/demoStackMeta';
 import { useTheme } from '@/core/theme';
 
@@ -13,10 +13,10 @@ import { useTheme } from '@/core/theme';
 // Navigation types - 機能別Navigatorを組み合わせる
 export type AppStackParamList = {
   // Navigator 系
-  Auth: undefined;
-  Parent: undefined;
-  Common: undefined;
-  Demo: undefined;
+  Auth: NavigatorScreenParams<AuthStackParamList>;
+  Parent: NavigatorScreenParams<ParentStackParamList>;
+  Common: NavigatorScreenParams<CommonStackParamList>;
+  Demo: NavigatorScreenParams<DemoStackParamList>;
 };
 
 const AppStack = createStackNavigator<AppStackParamList>();

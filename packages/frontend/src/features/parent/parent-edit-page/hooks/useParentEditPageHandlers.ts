@@ -1,12 +1,12 @@
 import { useNameHandler } from './useNameHandler';
 import { useEmailHandler } from './useEmailHandler';
 import { usePasswordHandler } from './usePasswordHandler';
-import { useIconSelectHandler } from './useIconSelectHandler';
 import { useBirthdayHandler } from './useBirthdayHandler';
 import { useConfirmHandler } from './useConfirmHandler';
 import { useParentEditPageStore as useParentEditPageStore } from '../stores/parentEditPageStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { useIconSelectHandler } from './useIconSelectHandler';
 
 /**
  * 親情報登録画面の全ハンドラーを統合したカスタムフック

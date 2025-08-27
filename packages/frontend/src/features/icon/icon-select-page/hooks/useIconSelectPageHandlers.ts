@@ -1,7 +1,7 @@
 import { useConfirmHandler } from './useConfirmHandler';
 import { useCategoryChangeHandler } from './useCategoryChangeHandler';
 import { useIconSelectHandler } from './useIconSelectHandler';
-import { SelectIcon, useSelectIconPageStore } from '../stores/iconSelectPageStore';
+import { SelectIcon, useIconSelectPageStore } from '../stores/iconSelectPageStore';
 import { Icon } from '@backend/features/icon/domain/icon';
 
 /**
@@ -14,7 +14,7 @@ import { Icon } from '@backend/features/icon/domain/icon';
 export const useSelectIconPageHandlers = (params: {
   onIconSelected: SelectIcon;
 }) => {
-  const pageStore = useSelectIconPageStore();
+  const pageStore = useIconSelectPageStore();
 
   // 確定ボタン押下時のハンドラ
   const handleConfirm = useConfirmHandler({

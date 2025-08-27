@@ -62,8 +62,6 @@ export const ScreenListPage: React.FC = () => {
         ))}
       </View>
 
-      <View style={styles.footer}>
-      </View>
     </ScrollView>
   );
 };

@@ -12,21 +12,33 @@ export type Reset = () => void;
 /**
  * アイコン選択ページの状態管理
  */
-interface SelectIconPageState {
+interface IconSelectPageState {
+  /** アイコンカテゴリ */
   iconCategories: IconCategories;
+  /** 選択中のカテゴリID */
   selectedCategoryId?: IconCategoryId;
+  /** 選択中のアイコン */
   selectedIcon?: Icon;
+  /** 現在のカテゴリのアイコン */
   currentCategoryIcons: Icons;
+  /** 初期化 */
   initialize: Initialize;
+  /** カテゴリ選択 */
   selectCategory: SelectCategory;
+  /** アイコン選択 */
   selectIcon: SelectIcon;
+  /** アイコン選択時のハンドラ */
+  handleIconSelect?: (icon: Icon) => void;
+  /** アイコン選択ハンドラーをセット */
+  setIconSelectHandler: (handler: SelectIcon) => void;
+  /** リセット */
   reset: Reset;
 }
 
 /**
  * アイコン選択ページのストア
  */
-export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => ({
+export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => ({
   iconCategories: IconCategories.fromEmpty() as IconCategories,
   selectedCategoryId: undefined,
   selectedIcon: undefined,
@@ -61,13 +73,20 @@ export const useSelectIconPageStore = create<SelectIconPageState>((set, get) => 
       selectedIcon: icon,
     });
   },
-  
+
+  setIconSelectHandler: (handler: SelectIcon) => {
+    set({
+      handleIconSelect: handler,
+    });
+  },
+
   reset: () => {
     set({
       iconCategories: IconCategories.fromEmpty() as IconCategories,
       selectedCategoryId: undefined,
       selectedIcon: undefined,
       currentCategoryIcons: Icons.fromEmpty() as Icons,
+      handleIconSelect: undefined,
     });
   },
 }));
