@@ -26,7 +26,7 @@ export const useEmailHandler = (params: {
       params.setParentForm(updatedForm);
       
       if (params.emailError) {
-        params.setEmailError(null);
+        params.setEmailError(undefined);
       }
     } catch (error: any) {
       params.setEmailError(error.message);

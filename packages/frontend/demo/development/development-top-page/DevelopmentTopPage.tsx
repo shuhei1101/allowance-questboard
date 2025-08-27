@@ -9,8 +9,8 @@ import { initMasterData } from '@/features/auth/services/initMasterData';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { createAuthenticatedClient, trpcClient } from '@/core/api/trpcClient';
-import { AuthStackInfo } from '@/features/auth/AuthNavigator';
-import { DemoStackInfo } from '../../constants/demoStackInfo';
+import { AuthStackMeta } from '@/features/auth/AuthNavigator';
+import { DemoStackMeta } from '../../demoStackMeta';
 
 /**
  * 開発用TOP画面
@@ -62,21 +62,21 @@ export const DevelopmentTopPage: React.FC = () => {
       id: 'login',
       title: '🚀通常起動',
       description: 'メインのログイン画面',
-      onPress: () => navigation.navigate(AuthStackInfo.name, { screen: AuthStackInfo.screens.login }),
+      onPress: () => navigation.navigate(AuthStackMeta.name, { screen: AuthStackMeta.screens.login }),
       color: '#10b981',
       size: 'medium' as const,
     },
     {
       title: '📱 画面一覧',
       description: '各画面の個別起動とテスト',
-      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.screenList }),
+      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenList }),
       color: '#3b82f6',
       size: 'medium' as const,
     },
     {
       title: '🧩 コンポーネント一覧',
       description: 'コンポーネントの個別確認',
-      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.componentList }),
+      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentList }),
       color: '#8b5cf6',
       size: 'medium' as const,
     },
@@ -93,19 +93,19 @@ export const DevelopmentTopPage: React.FC = () => {
     {
       title: '�🔍 ストア状態検査',
       description: 'Zustandストアの状態確認',
-      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.StoreInspector }),
+      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.StoreInspector }),
       color: '#f59e0b',
     },
     {
       title: '⚙️ セッション設定',
       description: 'グローバル状態の設定',
-      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.SessionSettings }),
+      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.SessionSettings }),
       color: '#6366f1',
     },
     {
       title: '📊 画面状態設定',
       description: '各画面の初期状態設定',
-      onPress: () => navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.PageStateSettings }),
+      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.PageStateSettings }),
       color: '#8b5cf6',
     },
   ];

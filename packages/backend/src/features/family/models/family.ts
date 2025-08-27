@@ -6,13 +6,13 @@ import { FamilyIntroduction } from "../value-object/familyIntroduction";
 
 export class Family extends BaseDomainModel<FamilyId> {
   name: FamilyName;
-  iconId: IconId | null;
+  iconId?: IconId;
   introduction: FamilyIntroduction;
 
   constructor(params: {
     id: FamilyId;
     name: FamilyName;
-    iconId: IconId | null;
+    iconId?: IconId;
     introduction: FamilyIntroduction;
   }) {
     super(params.id);

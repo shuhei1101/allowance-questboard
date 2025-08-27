@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
-import { FamilyMemberType } from '../../../../../backend/src/features/family-member/enum/familyMemberType';
 import { LanguageType } from '../../../../../backend/src/features/language/enum/languageType';
 
 export type SetJwt = (jwt: string) => void;

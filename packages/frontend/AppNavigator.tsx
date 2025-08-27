@@ -2,11 +2,11 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator, AuthStackInfo as AuthStackInfo } from '@/features/auth/AuthNavigator';
-import { ParentNavigator, StackInfo as ParentStackInfo } from '@/features/parent/ParentNavigator';
-import { CommonNavigator, DemoStackInfo as CommonStackInfo } from '@/features/shared/CommonNavigator';
+import { AuthNavigator, AuthStackMeta as AuthStackMeta } from '@/features/auth/AuthNavigator';
+import { ParentNavigator, ParentStackMeta } from '@/features/parent/ParentNavigator';
+import { CommonNavigator, CommonStackMeta } from '@/features/shared/CommonNavigator';
 import { DemoNavigator } from '@demo/DemoNavigator';
-import { DemoStackInfo } from '@demo/constants/demoStackInfo';
+import { DemoStackMeta } from '@demo/demoStackMeta';
 import { useTheme } from '@/core/theme';
 
 
@@ -66,19 +66,19 @@ export function AppNavigator() {
         {...({} as any)}
       >
         <AppStack.Screen 
-          name={AuthStackInfo.name}
+          name={AuthStackMeta.name}
           component={AuthNavigator} 
         />
         <AppStack.Screen 
-          name={ParentStackInfo.name}
+          name={ParentStackMeta.name}
           component={ParentNavigator} 
         />
         <AppStack.Screen 
-          name={CommonStackInfo.name} 
+          name={CommonStackMeta.name} 
           component={CommonNavigator} 
         />
         <AppStack.Screen 
-          name={DemoStackInfo.name} 
+          name={DemoStackMeta.name} 
           component={DemoNavigator}
         />
       </AppStack.Navigator>

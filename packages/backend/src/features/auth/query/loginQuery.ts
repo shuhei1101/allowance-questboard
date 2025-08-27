@@ -12,8 +12,8 @@ export interface LoginQueryResult {
   familyMemberId: number;
   familyId: number;
   familyName: string;
-  parentId?: number | null;
-  childId?: number | null;
+  parentId?: number;
+  childId?: number;
 }
 
 export async function loginQuery(params: LoginQueryParams): Promise<LoginQueryResult> {
@@ -44,7 +44,7 @@ export async function loginQuery(params: LoginQueryParams): Promise<LoginQueryRe
     familyMemberId: result.family_member_id,
     familyId: result.family_id,
     familyName: result.family_name,
-    parentId: result.parent_id || null,
-    childId: result.child_id || null
+    parentId: result.parent_id || undefined,
+    childId: result.child_id || undefined
   };
 }

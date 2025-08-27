@@ -48,43 +48,6 @@ export const IconSelectPageDetailPage: React.FC = () => {
     masterDataLoading: false,
   });
 
-  // 初期データ取得処理
-  useEffect(() => {
-    const loadMasterData = async () => {
-      if (demoState.masterDataLoaded || demoState.masterDataLoading) {
-        return; // 既に読み込み済みまたは読み込み中の場合はスキップ
-      }
-
-      setDemoState(prev => ({ ...prev, masterDataLoading: true }));
-      
-      try {
-        await initMasterData({
-          getMasterData: trpcClient.init.getMasterData,
-          setIconCategories: appConfigStore.setIconCategories,
-          setAppIcons: appConfigStore.setAppIcons,
-        });
-        setDemoState(prev => ({ 
-          ...prev, 
-          masterDataLoaded: true, 
-          masterDataLoading: false 
-        }));
-        console.log('マスターデータの初期化が完了しました');
-      } catch (error) {
-        console.error('マスターデータの初期化に失敗しました:', error);
-        setDemoState(prev => ({ 
-          ...prev, 
-          masterDataLoading: false 
-        }));
-        Alert.alert(
-          'エラー', 
-          'マスターデータの読み込みに失敗しました。ネットワーク接続を確認してください。'
-        );
-      }
-    };
-
-    loadMasterData();
-  }, []); // 空の依存配列で初回のみ実行
-
   const handleShowIconSelect = () => {
     setDemoState(prev => ({ ...prev, showingIconSelect: true }));
   };
@@ -299,7 +262,7 @@ export const IconSelectPageDetailPage: React.FC = () => {
             </Text>
             {appConfigStore.iconCategories.getActiveSortedCategories().map((category, index) => {
               if (!category.key) {
-                return null;
+                return undefined;
               }
               return (
                 <View key={category.key.value} style={styles.stateRow}>

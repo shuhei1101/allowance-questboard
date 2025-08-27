@@ -9,8 +9,8 @@ import { z } from 'zod';
  */
 export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.ZodObject<{ value: z.ZodType<TValue> }>> {
   protected readonly _value: TValue;
-  protected _validator: ValueValidator<TValue> | null = null;
-  protected _errorMessage: LocaleString | null = null;
+  protected _validator?: ValueValidator<TValue> = undefined;
+  protected _errorMessage?: LocaleString = undefined;
 
   constructor(params: {
     value: TValue;
@@ -21,7 +21,7 @@ export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.Z
       // 初期化後にバリデーターを作成してバリデーション実行
       this.initValidator();
       this.validate();
-      this._errorMessage = null;
+      this._errorMessage = undefined;
     } catch (error) {
       if (error instanceof ValueValidateError) {
         this._errorMessage = error.localeMessage;
@@ -63,13 +63,13 @@ export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.Z
    * 有効な値かどうかを示す
    */
   get isValid(): boolean {
-    return this._errorMessage === null;
+    return this._errorMessage === undefined;
   }
 
   /**
    * エラーメッセージを取得
    */
-  get errorMessage(): LocaleString | null {
+  get errorMessage(): LocaleString | undefined {
     return this._errorMessage;
   }
 
@@ -106,7 +106,7 @@ export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.Z
    */
   toDebugString(): string {
     return `valueName: ${this.valueName.ja}, value: ${this._value}, errorMessage: ${
-      this._errorMessage ? this._errorMessage.ja : null
+      this._errorMessage ? this._errorMessage.ja : undefined
     }`;
   }
 

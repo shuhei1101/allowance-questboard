@@ -23,7 +23,7 @@ export class QuestRequestsEntity extends BaseTransactionEntity {
   @Column({ name: "approved_by", type: "int", nullable: false, comment: "家族ID" })
   approvedBy!: number;
   @Column({ name: "quest_id", type: "int", nullable: true, comment: "既存クエストID" })
-  questId!: number | null;
+  questId?: number;
   @Column({ name: "title", type: "varchar", length: 200, nullable: false, comment: "リクエストタイトル" })
   title!: string;
   @Column({ name: "description", type: "text", nullable: false, comment: "リクエスト説明" })
@@ -33,11 +33,11 @@ export class QuestRequestsEntity extends BaseTransactionEntity {
   @Column({ name: "status_id", type: "int", nullable: false, comment: "ステータスID" })
   statusId!: number;
   @Column({ name: "answer", type: "text", nullable: true, comment: "回答内容" })
-  answer!: string | null;
+  answer?: string;
   @Column({ name: "answered_at", type: "timestamp", nullable: true, comment: "回答日時" })
-  answeredAt!: Date | null;
+  answeredAt?: Date;
   @Column({ name: "requested_at", type: "timestamp", nullable: true, comment: "リクエスト日時" })
-  requestedAt!: Date | null;
+  requestedAt?: Date;
 
   @ManyToOne(() => FamilyEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "approved_by", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_requests_approved_by" })
@@ -48,7 +48,7 @@ export class QuestRequestsEntity extends BaseTransactionEntity {
   child!: ChildEntity;
   @ManyToOne(() => QuestEntity, { nullable: true, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_requests_quest_id" })
-  quest!: QuestEntity | null;
+  quest?: QuestEntity;
   @ManyToOne(() => QuestRequestStatusEntity, { nullable: false, onDelete: "RESTRICT" })
   @JoinColumn({ name: "status_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_requests_status_id" })
   status!: QuestRequestStatusEntity;
@@ -62,7 +62,7 @@ export class QuestRequestsHistoryEntity extends BaseHistoryEntity {
   @Column({ name: "approved_by", type: "int" })
   approvedBy!: number;
   @Column({ name: "quest_id", type: "int" })
-  questId!: number | null;
+  questId?: number;
   @Column({ name: "title", type: "varchar", length: 200 })
   title!: string;
   @Column({ name: "description", type: "text" })
@@ -72,11 +72,11 @@ export class QuestRequestsHistoryEntity extends BaseHistoryEntity {
   @Column({ name: "status_id", type: "int" })
   statusId!: number;
   @Column({ name: "answer", type: "text" })
-  answer!: string | null;
+  answer?: string;
   @Column({ name: "answered_at", type: "timestamp" })
-  answeredAt!: Date | null;
+  answeredAt?: Date;
   @Column({ name: "requested_at", type: "timestamp" })
-  requestedAt!: Date | null;
+  requestedAt?: Date;
 
   /** サブクラス固有の属性をセット */
   protected static setSpecificAttrs(instance: QuestRequestsHistoryEntity, source: QuestRequestsEntity): void {

@@ -21,7 +21,7 @@ export class IconCategoryDao extends BaseDao<IconCategoryEntity> {
   }
 
   @cache("icon_categories:{id}")
-  async fetchByIdWithCache(id: number): Promise<IconCategoryEntity | null> {
+  async fetchByIdWithCache(id: number): Promise<IconCategoryEntity | undefined> {
     return await super.fetchById(id);
   }
 }

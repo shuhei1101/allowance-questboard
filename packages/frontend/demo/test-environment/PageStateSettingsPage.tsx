@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
-import { DemoStackInfo } from '../constants/demoStackInfo';
+import { DemoStackMeta } from '../demoStackMeta';
 
 /**
  * 画面状態設定メニューページ
@@ -16,7 +16,7 @@ export const PageStateSettingsPage: React.FC = () => {
     {
       title: '🔐 ログイン画面設定',
       description: 'ログイン画面のストア状態を設定・テスト',
-      route: DemoStackInfo.screens.LoginPageSettings,
+      route: DemoStackMeta.screens.LoginPageSettings,
       color: '#10b981',
       features: [
         'ローディング状態の切り替え',
@@ -29,7 +29,7 @@ export const PageStateSettingsPage: React.FC = () => {
     {
       title: '👤 親編集画面設定',
       description: '親編集画面のストア状態を設定・テスト',
-      route: DemoStackInfo.screens.ParentEditPageSettings,
+      route: DemoStackMeta.screens.ParentEditPageSettings,
       color: '#3b82f6',
       features: [
         'ローディング状態の切り替え',
@@ -59,7 +59,7 @@ export const PageStateSettingsPage: React.FC = () => {
           <TouchableOpacity
             key={index}
             style={[styles.pageCard, { borderLeftColor: page.color, backgroundColor: colors.surface.elevated }]}
-            onPress={() => navigation.navigate(DemoStackInfo.name, { screen: page.route })}
+            onPress={() => navigation.navigate(DemoStackMeta.name, { screen: page.route })}
             activeOpacity={0.8}
           >
             <View style={styles.cardHeader}>

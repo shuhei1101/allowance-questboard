@@ -23,7 +23,7 @@ export class SharedQuestEntity extends BaseTransactionEntity {
   @Column({ name: "shared_by", type: "int", nullable: false, comment: "共有元の家族ID" })
   sharedBy!: number;
   @Column({ name: "pinned_comment_id", type: "int", nullable: true, comment: "ピン留めコメントID" })
-  pinnedCommentId!: number | null;
+  pinnedCommentId?: number;
   @Column({ name: "is_shared", type: "boolean", nullable: false, default: false, comment: "共有フラグ" })
   isShared!: boolean;
   @Column({ name: "shared_at", type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "共有日時" })
@@ -40,5 +40,5 @@ export class SharedQuestEntity extends BaseTransactionEntity {
   family!: FamilyEntity;
   @ManyToOne(() => CommentEntity, { nullable: true, onDelete: "SET NULL" })
   @JoinColumn({ name: "pinned_comment_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_shared_quests_pinned_comment_id" })
-  pinnedComment!: CommentEntity | null;
+  pinnedComment?: CommentEntity;
 }

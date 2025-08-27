@@ -27,7 +27,7 @@ export class QuestDao extends BaseDao<QuestEntity> {
    * IDでクエストを取得（キャッシュ付き）
    */
   @cache("quests:{id}")
-  async fetchByIdWithCache(id: number): Promise<QuestEntity | null> {
+  async fetchByIdWithCache(id: number): Promise<QuestEntity | undefined> {
     return await super.fetchById(id);
   }
 

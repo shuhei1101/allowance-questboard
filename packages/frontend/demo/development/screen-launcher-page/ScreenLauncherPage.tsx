@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { DemoStackInfo } from '../../constants/demoStackInfo';
+import { DemoStackMeta } from '../../demoStackMeta';
 
 interface ScreenLauncherPageProps {
   screenType: string;
@@ -23,10 +23,10 @@ export const ScreenLauncherPage: React.FC = () => {
   const handleLaunchScreen = () => {
     switch (screenType) {
       case 'login':
-        navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.DemoLoginPage });
+        navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.DemoLoginPage });
         break;
       case 'parent-edit':
-        navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.DemoParentEditPage });
+        navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.DemoParentEditPage });
         break;
       case 'child-edit':
         Alert.alert('未実装', 'この画面はまだ実装されていません');
@@ -40,17 +40,17 @@ export const ScreenLauncherPage: React.FC = () => {
   };
 
   const handleSessionSettings = () => {
-    navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.SessionSettings });
+    navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.SessionSettings });
   };
 
   const handlePageStateSettings = () => {
-    navigation.navigate(DemoStackInfo.name, { screen: DemoStackInfo.screens.PageStateSettings });
+    navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.PageStateSettings });
   };
 
   const handleComponentList = () => {
     const components = getDependencyComponents(screenType);
-    navigation.navigate(DemoStackInfo.name, { 
-      screen: DemoStackInfo.screens.dependencyComponentList,
+    navigation.navigate(DemoStackMeta.name, { 
+      screen: DemoStackMeta.screens.dependencyComponentList,
       params: {
         components,
         screenTitle: screenInfo.title 

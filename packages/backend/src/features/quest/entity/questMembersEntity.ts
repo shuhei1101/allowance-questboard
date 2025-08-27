@@ -34,7 +34,7 @@ export class QuestMembersEntity extends BaseTransactionEntity {
   @Column({ name: "published_at", type: "timestamp", nullable: false, default: () => "CURRENT_TIMESTAMP", comment: "クエスト公開日時" })
   publishedAt!: Date;
   @Column({ name: "achieved_at", type: "timestamp", nullable: true, comment: "クエスト達成日時" })
-  achievedAt!: Date | null;
+  achievedAt?: Date;
 
   @ManyToOne("FamilyQuestEntity", { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "family_quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_members_family_quest_id" })
@@ -63,7 +63,7 @@ export class QuestMembersHistoryEntity extends BaseHistoryEntity {
   @Column({ name: "published_at", type: "timestamp" })
   publishedAt!: Date;
   @Column({ name: "achieved_at", type: "timestamp" })
-  achievedAt!: Date | null;
+  achievedAt?: Date;
 
   /**
    * サブクラス固有の属性をセット

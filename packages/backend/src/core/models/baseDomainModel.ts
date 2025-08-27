@@ -13,7 +13,7 @@ export abstract class BaseDomainModel<TId extends BaseId> extends BaseModel impl
     super();
   }
 
-  get key(): TId | null {
-    return this.id || null;
+  get key(): TId | undefined {
+    return this.id || undefined;
   }
 }

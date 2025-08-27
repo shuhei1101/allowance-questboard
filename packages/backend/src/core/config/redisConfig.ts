@@ -6,7 +6,7 @@ dotenv.config();
 
 // 型定義（ioredisがインストールされていない場合の代替）
 interface RedisInterface {
-  get(key: string): Promise<string | null>;
+  get(key: string): Promise<string | undefined>;
   setex(key: string, ttl: number, value: string): Promise<string>;
   del(key: string): Promise<number>;
   on(event: string, callback: Function): void;
@@ -18,9 +18,9 @@ interface RedisInterface {
 const createRedisClient = (): RedisInterface => {
   // モック実装（実際の使用時はioredisをインストールしてコメントアウトを削除）
   return {
-    async get(key: string): Promise<string | null> {
+    async get(key: string): Promise<string | undefined> {
       console.log(`[MOCK] Redis GET: ${key}`);
-      return null;
+      return undefined;
     },
     async setex(key: string, ttl: number, value: string): Promise<string> {
       console.log(`[MOCK] Redis SETEX: ${key} TTL:${ttl}`);

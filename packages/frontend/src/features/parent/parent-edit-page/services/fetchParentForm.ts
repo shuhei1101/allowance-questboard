@@ -34,10 +34,10 @@ export const fetchParentForm = async (params: FetchParentFormParams): Promise<Pa
     });
 
     // アイコンデータの取得（iconIdがある場合）
-    let icon = null;
+    let icon = undefined;
     if (response.iconId) {
       const allIcons = params.getAllIcons();
-      icon = allIcons?.get(new IconId(response.iconId)) || null;
+      icon = allIcons?.get(new IconId(response.iconId)) || undefined;
     }
 
     // ParentFormインスタンスを作成

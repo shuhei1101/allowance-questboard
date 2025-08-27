@@ -10,7 +10,7 @@ export interface ParentQueryResult {
   parentId: number;
   familyMemberId: number;
   name: string;
-  iconId: number | null;
+  iconId?: number;
   birthday: string;
 }
 
@@ -38,7 +38,7 @@ export async function parentQuery(params: ParentQueryParams): Promise<ParentQuer
     parentId: result.parent_id,
     familyMemberId: result.family_member_id,
     name: result.name,
-    iconId: result.icon_id || null,
+    iconId: result.icon_id || undefined,
     birthday: result.birthday
   };
 }

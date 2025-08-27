@@ -29,9 +29,9 @@ export class BaseTranslationEntities<TEntity extends TranslationEntityProtocol> 
    * source_idとlanguage_idでアイテムを取得
    * @param sourceId 翻訳元レコードのID
    * @param languageId 言語ID
-   * @returns 該当する翻訳エンティティまたはnull
+   * @returns 該当する翻訳エンティティまたはundefined
    */
-  get(sourceId: number, languageId: number): TEntity | null {
+  get(sourceId: number, languageId: number): TEntity | undefined {
     if (typeof sourceId !== 'number') {
       throw new TypeError(`source_idはnumberである必要があります。実際: ${typeof sourceId}`);
     }
@@ -41,10 +41,10 @@ export class BaseTranslationEntities<TEntity extends TranslationEntityProtocol> 
 
     const sourceItems = this._itemsBySourceId[sourceId];
     if (!sourceItems) {
-      return null;
+      return undefined;
     }
 
-    return sourceItems[languageId] || null;
+    return sourceItems[languageId] || undefined;
   }
 
   /**
@@ -110,7 +110,7 @@ export class BaseTranslationEntities<TEntity extends TranslationEntityProtocol> 
    * @returns 存在する場合true
    */
   has(sourceId: number, languageId: number): boolean {
-    return this.get(sourceId, languageId) !== null;
+    return this.get(sourceId, languageId) !== undefined;
   }
 
   /**

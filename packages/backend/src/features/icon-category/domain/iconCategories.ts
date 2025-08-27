@@ -68,7 +68,7 @@ export class IconCategories extends BaseCollection<IconCategory, IconCategoryId>
    */
   setIcons(icons: Icons): void {
     for (const category of this.items) {
-      if (category.key === null ) continue; // keyがnullのカテゴリはスキップ
+      if (category.key === undefined ) continue; // keyがundefinedのカテゴリはスキップ
       // このカテゴリに属するアイコンを抽出
       const categoryIcons = icons.getByCategory(category.key);
       category.icons = new Icons(categoryIcons);

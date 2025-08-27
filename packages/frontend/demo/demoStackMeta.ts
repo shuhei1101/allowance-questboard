@@ -2,7 +2,7 @@
  * Demo Navigator のスタック情報定数
  * 循環参照を避けるため、別ファイルに分離
  */
-export const DemoStackInfo = {
+export const DemoStackMeta = {
   name: 'Demo',
   screens: {
     developmentTop: "DevelopmentTop",

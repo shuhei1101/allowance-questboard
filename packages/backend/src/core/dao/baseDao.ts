@@ -8,7 +8,7 @@ import { DatabaseError } from '../errors/databaseError';
  */
 export abstract class BaseDao<TEntity extends AppBaseEntity> {
   protected session: EntityManager;
-  private _repository: Repository<TEntity> | null = null;
+  private _repository?: Repository<TEntity> = undefined;
 
   constructor(session: EntityManager) {
     this.session = session;
@@ -69,12 +69,12 @@ export abstract class BaseDao<TEntity extends AppBaseEntity> {
   /**
    * IDでエンティティを取得する
    * @param id エンティティのID
-   * @returns エンティティオブジェクト（見つからない場合はnull）
+   * @returns エンティティオブジェクト（見つからない場合はundefined）
    */
-  async fetchById(id: number): Promise<TEntity | null> {
+  async fetchById(id: number): Promise<TEntity | undefined> {
     return await this.repository.findOne({ 
       where: { id } as any 
-    });
+    }) || undefined;
   }
 
   /**

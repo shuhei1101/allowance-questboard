@@ -19,7 +19,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({ error }) => {
 
   // 開発環境でのみ表示
   if (!__DEV__) {
-    return null;
+    return undefined;
   }
 
   return (

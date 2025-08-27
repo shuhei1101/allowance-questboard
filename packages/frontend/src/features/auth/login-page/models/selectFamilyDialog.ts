@@ -22,7 +22,7 @@ export class SelectFamilyDialog extends BaseModel {
    * @returns 家族名が設定されていて有効な場合true
    */
   public hasSelectedFamily(): boolean {
-    return this.familyName !== null && this.familyName.value.length > 0;
+    return this.familyName !== undefined && this.familyName.value.length > 0;
   }
 
   /**

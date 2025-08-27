@@ -26,7 +26,7 @@ export const useNameHandler = (params: {
       params.setParentForm(updatedForm);
       
       if (params.nameError) {
-        params.setNameError(null);
+        params.setNameError(undefined);
       }
     } catch (error: any) {
       params.setNameError(error.message);

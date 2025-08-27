@@ -21,7 +21,7 @@ export class ParentDao extends BaseDao<ParentEntity> {
   }
 
   @cache("parents:{id}")
-  async fetchByIdWithCache(id: number): Promise<ParentEntity | null> {
+  async fetchByIdWithCache(id: number): Promise<ParentEntity | undefined> {
     return await super.fetchById(id);
   }
 

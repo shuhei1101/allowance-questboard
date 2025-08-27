@@ -23,7 +23,7 @@ export class ValueValidator<T = any> {
    * 必須チェック - 値が存在するかどうかを確認
    */
   required(optionMessage?: LocaleString): ValueValidator<T> {
-    if (this.value == null || (typeof this.value === 'string' && this.value.trim() === '')) {
+    if (this.value == undefined || (typeof this.value === 'string' && this.value.trim() === '')) {
       throw new ValueValidateError({
         valueName: this.valueName,
         errorType: "required",

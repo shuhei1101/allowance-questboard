@@ -15,7 +15,7 @@ export interface CollectionItemProtocol<TKey extends Hashable> {
   /**
    * アイテムのIDを返す
    */
-  readonly key: TKey | null;
+  readonly key?: TKey;
 }
 
 /**
@@ -64,10 +64,10 @@ export abstract class BaseCollection<
   /**
    * IDでアイテムを取得
    */
-  get(itemId: TKey): TItem | null {
-    if (itemId === null) return null;
+  get(itemId: TKey): TItem | undefined {
+    if (itemId === undefined) return undefined;
     const key = itemId.hash().toString();
-    return this.itemByIds.get(key) || null;
+    return this.itemByIds.get(key) || undefined;
   }
 
   /**

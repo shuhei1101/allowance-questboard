@@ -58,7 +58,7 @@ describe('parentQuery', () => {
       expect(result).toEqual(expected);
     });
 
-    it('アイコンIDがnullの場合もnullで返却できること', async () => {
+    it('アイコンIDがundefinedの場合もundefinedで返却できること', async () => {
       // 準備
       const mockSession = createMockSession();
       const mockQueryBuilder = {
@@ -69,7 +69,7 @@ describe('parentQuery', () => {
           parent_id: 2,
           family_member_id: 20,
           name: '田中花子',
-          icon_id: null,
+          icon_id: undefined,
           birthday: '1985-05-15'
         })
       };
@@ -89,7 +89,7 @@ describe('parentQuery', () => {
         parentId: 2,
         familyMemberId: 20,
         name: '田中花子',
-        iconId: null,
+        iconId: undefined,
         birthday: '1985-05-15'
       };
       expect(result).toEqual(expected);
@@ -104,7 +104,7 @@ describe('parentQuery', () => {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         select: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
-        getRawOne: jest.fn().mockResolvedValue(null)
+        getRawOne: jest.fn().mockResolvedValue(undefined)
       };
       
       mockSession.createQueryBuilder.mockReturnValue(mockQueryBuilder);

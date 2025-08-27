@@ -26,7 +26,7 @@ export const usePasswordHandler = (params: {
       params.setParentForm(updatedForm);
       
       if (params.passwordError) {
-        params.setPasswordError(null);
+        params.setPasswordError(undefined);
       }
     } catch (error: any) {
       params.setPasswordError(error.message);

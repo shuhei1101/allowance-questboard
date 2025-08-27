@@ -26,7 +26,7 @@ export const useBirthdayHandler = (params: {
       params.setParentForm(updatedForm);
       
       if (params.birthdayError) {
-        params.setBirthdayError(null);
+        params.setBirthdayError(undefined);
       }
     } catch (error: any) {
       params.setBirthdayError(error.message);

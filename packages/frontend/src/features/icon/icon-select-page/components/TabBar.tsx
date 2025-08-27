@@ -28,7 +28,7 @@ export const TabBar: React.FC<Props> = ({
   const { languageType } = useSessionStore();
 
   if (categories.length === 0) {
-    return null;
+    return undefined;
   }
 
   return (
@@ -39,9 +39,9 @@ export const TabBar: React.FC<Props> = ({
         contentContainerStyle={styles.scrollContent}
       >
         {categories.map((category, index) => {
-          // category.keyがnullの場合はスキップ
+          // category.keyがundefinedの場合はスキップ
           if (!category.key) {
-            return null;
+            return undefined;
           }
           
           const categoryKey = category.key;

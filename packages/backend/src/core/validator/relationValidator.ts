@@ -198,7 +198,7 @@ class RelationValidator {
     requiredFieldName: LocaleString, 
     optionMessage?: LocaleString
   ): RelationValidator {
-    if (dependentValue != null && requiredValue == null) {
+    if (dependentValue != undefined && requiredValue == undefined) {
       throw new RelationValidateError({
         errorType: "dependency_invalid",
         message: optionMessage ?? ValidationErrorMessages.dependencyInvalid(dependentFieldName, requiredFieldName)
@@ -217,7 +217,7 @@ class RelationValidator {
     field2Name: LocaleString, 
     optionMessage?: LocaleString
   ): RelationValidator {
-    if (value1 != null && value2 != null) {
+    if (value1 != undefined && value2 != undefined) {
       throw new RelationValidateError({
         errorType: "mutual_exclusion_invalid",
         message: optionMessage ?? ValidationErrorMessages.mutualExclusionInvalid(field1Name, field2Name)

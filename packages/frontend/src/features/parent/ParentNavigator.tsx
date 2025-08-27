@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Alert } from 'react-native';
 import { ParentEditPage } from './parent-edit-page/ParentEditPage'
 
-export const StackInfo = {
+export const ParentStackMeta = {
   name: 'Parent',
   screens: {
     parentEdit: 'ParentEdit',
@@ -26,7 +26,7 @@ const ParentStack = createStackNavigator<ParentStackParamList>();
 export function ParentNavigator() {
   return (
     <ParentStack.Navigator
-      initialRouteName={StackInfo.screens.parentEdit}
+      initialRouteName={ParentStackMeta.screens.parentEdit}
       screenOptions={{
         headerShown: true,
         headerTitle: '親情報編集',
@@ -34,7 +34,7 @@ export function ParentNavigator() {
       {...({} as any)}
     >
       <ParentStack.Screen 
-        name={StackInfo.screens.parentEdit}
+        name={ParentStackMeta.screens.parentEdit}
         component={ParentEditPage} 
       />
     </ParentStack.Navigator>

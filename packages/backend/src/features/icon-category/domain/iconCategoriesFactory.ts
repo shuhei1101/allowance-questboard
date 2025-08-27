@@ -21,7 +21,7 @@ export const fromEntity = (params: {
         translationDict: translations,
         icons: params.icons
       });
-      if (iconCategory.key === null) continue; // keyがnullのカテゴリはスキップ
+      if (iconCategory.key === undefined) continue; // keyがundefinedのカテゴリはスキップ
       const categoryIcons = params.icons.getByCategory(iconCategory.key);
       iconCategory.icons = new Icons(categoryIcons);
       iconCategoryList.push(iconCategory);

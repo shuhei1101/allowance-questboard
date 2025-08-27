@@ -3,13 +3,13 @@ import { createHash } from 'crypto';
 
 // 型定義（ioredisがインストールされていない場合の代替）
 interface RedisInterface {
-  get(key: string): Promise<string | null>;
+  get(key: string): Promise<string | undefined>;
   setex(key: string, ttl: number, value: string): Promise<string>;
   del(key: string): Promise<number>;
 }
 
 // Redisクライアントのインスタンス（外部から設定）
-let redisClient: RedisInterface | null = null;
+let redisClient: RedisInterface | undefined = undefined;
 
 /**
  * Redisクライアントを設定する
@@ -79,17 +79,17 @@ function makeCacheKey(
 /**
  * 手動でキャッシュを取得
  */
-export async function getCacheValue(key: string): Promise<any | null> {
+export async function getCacheValue(key: string): Promise<any | undefined> {
   try {
     const cached = await getRedisClient().get(key);
     if (cached) {
       console.log(`✨ HIT: ${key}`);
       return JSON.parse(cached);
     }
-    return null;
+    return undefined;
   } catch (error) {
     console.warn(`⚠️ Cache get failed for ${key}:`, error);
-    return null;
+    return undefined;
   }
 }
 
@@ -131,7 +131,7 @@ export function cache(key: string, ttl: number = 60 * 60 * 24 * 7) {
       
       // キャッシュから取得
       const cachedResult = await getCacheValue(cacheKey);
-      if (cachedResult !== null) {
+      if (cachedResult !== undefined) {
         return cachedResult;
       }
 

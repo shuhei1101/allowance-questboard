@@ -67,8 +67,8 @@ if (require.main === module) {
       const result = await getMasterData(iconCategoryRepository);
       const result2 = await getMasterData(iconCategoryRepository);
       console.log('✅ getMasterData実行完了');
-      console.log('📋 結果:', JSON.stringify(result, null, 2));
-      console.log('📋 結果2:', JSON.stringify(result2, null, 2));
+      console.log('📋 結果:', JSON.stringify(result, undefined, 2));
+      console.log('📋 結果2:', JSON.stringify(result2, undefined, 2));
 
       // セッション解放
       await AppDataSource.destroy();

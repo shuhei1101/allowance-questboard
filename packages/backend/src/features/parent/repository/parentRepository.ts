@@ -29,7 +29,7 @@ export class ParentRepository extends BaseRepository {
     this.familyMemberDao = deps.familyMemberDao;
   }
 
-  async findById(params: {id: ParentId}): Promise<Parent | null> {
+  async findById(params: {id: ParentId}): Promise<Parent | undefined> {
     const result = await this.session
       .createQueryBuilder(ParentEntity, "p")
       .leftJoinAndSelect("p.familyMember", "fm")
@@ -37,7 +37,7 @@ export class ParentRepository extends BaseRepository {
       .getOne();
 
     if (!result) {
-      return null;
+      return undefined;
     }
     
     return new Parent({
@@ -50,14 +50,14 @@ export class ParentRepository extends BaseRepository {
     });
   }
 
-  async findByUserId(params: { userId: UserId }): Promise<Parent | null> {
+  async findByUserId(params: { userId: UserId }): Promise<Parent | undefined> {
     const result = await this.session
       .createQueryBuilder(ParentEntity, "p")
       .leftJoinAndSelect("p.familyMember", "fm")
       .where("fm.userId = :userId", { userId: params.userId.value })
       .getOne();
     if (!result) {
-      return null;
+      return undefined;
     }
     return new Parent({
       id: new ParentId(result.id),

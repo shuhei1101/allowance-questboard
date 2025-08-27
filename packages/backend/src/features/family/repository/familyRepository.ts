@@ -18,15 +18,15 @@ export class FamilyRepository extends BaseRepository {
     super( deps );
     this.familyDao = deps.familyDao;
   }
-  async findById(id: number) : Promise<Family | null> {
+  async findById(id: number) : Promise<Family | undefined> {
     const result = await this.familyDao.fetchById(id);
     if (!result) {
-      return null;
+      return undefined;
     }
     return new Family({
       id: new FamilyId(result.id),
       name: new FamilyName(result.name),
-      iconId: result.iconId ? new IconId(result.iconId) : null,
+      iconId: result.iconId ? new IconId(result.iconId) : undefined,
       introduction: new FamilyIntroduction(result.introduction),
     });
   }

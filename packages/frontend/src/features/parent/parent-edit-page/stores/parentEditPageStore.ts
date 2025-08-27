@@ -3,18 +3,18 @@ import { devtools } from 'zustand/middleware';
 import { ParentForm } from '../models/parentForm';
 
 export type IsLoading = boolean;
-export type NameError = string | null;
-export type EmailError = string | null;
-export type PasswordError = string | null;
-export type BirthdayError = string | null;
+export type NameError = string | undefined;
+export type EmailError = string | undefined;
+export type PasswordError = string | undefined;
+export type BirthdayError = string | undefined;
 export type IsConfirmed = boolean;
 
 export type SetParentForm = (form: ParentForm) => void;
 export type SetLoading = (loading: boolean) => void;
-export type SetNameError = (error: string | null) => void;
-export type SetEmailError = (error: string | null) => void;
-export type SetPasswordError = (error: string | null) => void;
-export type SetBirthdayError = (error: string | null) => void;
+export type SetNameError = (error: string | undefined) => void;
+export type SetEmailError = (error: string | undefined) => void;
+export type SetPasswordError = (error: string | undefined) => void;
+export type SetBirthdayError = (error: string | undefined) => void;
 export type ClearErrors = () => void;
 export type SetConfirmed = (confirmed: boolean) => void;
 export type Reset = () => void;
@@ -22,10 +22,10 @@ export type Reset = () => void;
 interface ParentEditPageState {
   isLoading: IsLoading;
   parentForm: ParentForm;
-  nameError: NameError;
-  emailError: EmailError;
-  passwordError: PasswordError;
-  birthdayError: BirthdayError;
+  nameError?: NameError;
+  emailError?: EmailError;
+  passwordError?: PasswordError;
+  birthdayError?: BirthdayError;
   isConfirmed: IsConfirmed;
 
   setParentForm: SetParentForm;
@@ -42,10 +42,10 @@ interface ParentEditPageState {
 const initialState = {
   isLoading: false,
   parentForm: ParentForm.initialize(),
-  nameError: null,
-  emailError: null,
-  passwordError: null,
-  birthdayError: null,
+  nameError: undefined,
+  emailError: undefined,
+  passwordError: undefined,
+  birthdayError: undefined,
   isConfirmed: false,
 };
 
@@ -65,28 +65,28 @@ export const useParentEditPageStore = create<ParentEditPageState>()(
         set({ isLoading: loading }, false, 'setLoading');
       },
 
-      setNameError: (error: string | null) => {
+      setNameError: (error: string | undefined) => {
         set({ nameError: error }, false, 'setNameError');
       },
 
-      setEmailError: (error: string | null) => {
+      setEmailError: (error: string | undefined) => {
         set({ emailError: error }, false, 'setEmailError');
       },
 
-      setPasswordError: (error: string | null) => {
+      setPasswordError: (error: string | undefined) => {
         set({ passwordError: error }, false, 'setPasswordError');
       },
 
-      setBirthdayError: (error: string | null) => {
+      setBirthdayError: (error: string | undefined) => {
         set({ birthdayError: error }, false, 'setBirthdayError');
       },
 
       clearErrors: () => {
         set({ 
-          nameError: null, 
-          emailError: null, 
-          passwordError: null, 
-          birthdayError: null 
+          nameError: undefined, 
+          emailError: undefined, 
+          passwordError: undefined, 
+          birthdayError: undefined 
         }, false, 'clearErrors');
       },
 
