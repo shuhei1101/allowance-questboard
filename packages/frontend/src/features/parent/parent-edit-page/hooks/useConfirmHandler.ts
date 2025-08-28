@@ -3,6 +3,7 @@ import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError,
 import { ParentForm } from '../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { useParentFormValidationHandler as useParentFormValidationHandler } from '../handlers/useParentFormValidationHandler';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * 確定ボタン押下ハンドラーのカスタムフック
@@ -20,6 +21,7 @@ export const useConfirmHandler = (params: {
   setBirthdayError: SetBirthdayError,
   shouldUpdate?: boolean
 }) => {
+  const navigation = useNavigation();
   // バリデーションハンドラーを取得
   const validateParentForm = useParentFormValidationHandler({
     parentForm: params.parentForm,
@@ -45,7 +47,10 @@ export const useConfirmHandler = (params: {
       if (params.shouldUpdate !== false) {
         // 親情報の登録API呼び出し（今後実装予定）
         // await registerParent(params.parentForm);
+
       }
+    // 前画面に遷移する
+    navigation.goBack();
     } catch (error: any) {
       // API呼び出し時のエラー処理
       console.error('親情報登録エラー:', error);

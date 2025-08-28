@@ -24,14 +24,12 @@ export const PasswordInputFieldEntry: React.FC<Props> = ({ value, onChange, erro
       title={t('common.fields.password')}
       required={true}
     >
-      <FieldWithError error={error}>
-        <PasswordInputField
-          value={value}
-          onChange={onChange}
-          error={error}
-          placeholder={placeholder}
-        />
-      </FieldWithError>
+      <PasswordInputField
+        value={value}
+        onChange={onChange}
+        error={error}
+        placeholder={placeholder}
+      />
     </EntryField>
   );
 };

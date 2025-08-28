@@ -24,14 +24,12 @@ export const EmailInputFieldEntry: React.FC<Props> = ({ value, onChange, error, 
       title={t('common.fields.email')}
       required={true}
     >
-      <FieldWithError error={error}>
-        <EmailInputField
-          value={value}
-          onChange={onChange}
-          error={error}
-          placeholder={placeholder}
-        />
-      </FieldWithError>
+      <EmailInputField
+        value={value}
+        onChange={onChange}
+        error={error}
+        placeholder={placeholder}
+      />
     </EntryField>
   );
 };

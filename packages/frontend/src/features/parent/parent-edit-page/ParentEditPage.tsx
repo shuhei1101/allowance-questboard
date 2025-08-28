@@ -66,7 +66,6 @@ export const ParentEditPage: React.FC<Props> = ({
   });
 
   // 統合フックで全ハンドラーを取得
-  
   const {
     handleNameChange,
     handleEmailChange,

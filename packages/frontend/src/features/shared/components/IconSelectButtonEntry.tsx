@@ -10,10 +10,11 @@ import { AppIcon } from '@/features/icon/models/AppIcon';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { CommonStackMeta } from '../CommonNavigator';
 import { AppStackParamList } from '../../../../AppNavigator';
+import { OnIconSelected } from '../../icon/icon-select-page/hooks/useConfirmHandler';
 
 interface Props {
   selectedIcon?: Icon;
-  onIconSelected: (icon: Icon) => void;
+  onIconSelected: OnIconSelected;
   error?: string;
 }
 

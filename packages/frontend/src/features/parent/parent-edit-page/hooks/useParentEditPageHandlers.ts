@@ -44,7 +44,10 @@ export const useParentEditPageHandlers = (params: {
     setPasswordError: pageStore.setPasswordError,
   });
   // アイコン選択時のハンドラ
-  const handleIconSelect = useIconSelectHandler();
+  const handleIconSelect = useIconSelectHandler({
+    parentForm: pageStore.parentForm,
+    setParentForm: pageStore.setParentForm,
+  });
   // 誕生日変更ハンドラ
   const handleBirthdayChange = useBirthdayHandler({
     parentForm: pageStore.parentForm,
