@@ -4,7 +4,7 @@ import { FamilyMemberEntity } from '../features/family-member/entity/familyMembe
 import { ChildEntity } from '../features/child/entity/childEntity';
 import { QuestEntity, QuestTranslationEntity } from '../features/quest/entity/questEntity';
 import { FamilyQuestEntity } from '../features/quest/entity/familyQuestEntity';
-import { QuestMembersEntity } from '../features/quest/entity/questMembersEntity';
+import { QuestMemberEntity } from '../features/quest/entity/questMemberEntity';
 import { SharedQuestEntity } from '../features/quest/entity/sharedQuestEntity';
 
 /**
@@ -94,13 +94,13 @@ export async function seedSampleData(dataSource: DataSource): Promise<void> {
     }
 
     // クエストメンバーのサンプルデータ
-    const questMemberRepo = dataSource.getRepository(QuestMembersEntity);
+    const questMemberRepo = dataSource.getRepository(QuestMemberEntity);
     const existingQuestMembers = await questMemberRepo.find();
     if (existingQuestMembers.length === 0) {
       const questMembers = [
-        Object.assign(new QuestMembersEntity(), { id: 1, familyQuestId: 1, memberId: 1, statusId: 1, currentLevel: 1 }),
-        Object.assign(new QuestMembersEntity(), { id: 2, familyQuestId: 3, memberId: 1, statusId: 1, currentLevel: 1 }),
-        Object.assign(new QuestMembersEntity(), { id: 3, familyQuestId: 2, memberId: 2, statusId: 1, currentLevel: 1 })
+        Object.assign(new QuestMemberEntity(), { id: 1, familyQuestId: 1, memberId: 1, statusId: 1, currentLevel: 1 }),
+        Object.assign(new QuestMemberEntity(), { id: 2, familyQuestId: 3, memberId: 1, statusId: 1, currentLevel: 1 }),
+        Object.assign(new QuestMemberEntity(), { id: 3, familyQuestId: 2, memberId: 2, statusId: 1, currentLevel: 1 })
       ];
       await questMemberRepo.save(questMembers);
       console.log('クエストメンバーサンプルデータを投入しました');

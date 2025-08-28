@@ -17,7 +17,7 @@ import { QuestRequestStatusEntity } from "./questRequestStatusEntity";
 @Entity("quest_requests")
 @Check("chk_quest_requests_title_not_empty", "length(title) > 0")
 @Check("chk_quest_requests_description_not_empty", "length(description) > 0")
-export class QuestRequestsEntity extends BaseTransactionEntity {
+export class QuestRequestEntity extends BaseTransactionEntity {
   @Column({ name: "requested_by", type: "int", nullable: false, comment: "リクエスト者の子供ID" })
   requestedBy!: number;
   @Column({ name: "approved_by", type: "int", nullable: false, comment: "家族ID" })
@@ -79,7 +79,7 @@ export class QuestRequestsHistoryEntity extends BaseHistoryEntity {
   requestedAt?: Date;
 
   /** サブクラス固有の属性をセット */
-  protected static setSpecificAttrs(instance: QuestRequestsHistoryEntity, source: QuestRequestsEntity): void {
+  protected static setSpecificAttrs(instance: QuestRequestsHistoryEntity, source: QuestRequestEntity): void {
     instance.requestedBy = source.requestedBy;
     instance.approvedBy = source.approvedBy;
     instance.questId = source.questId;
