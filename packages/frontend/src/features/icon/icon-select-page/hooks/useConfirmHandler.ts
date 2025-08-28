@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { Icon } from '@backend/features/icon/domain/icon';
-import { SelectIcon } from '../stores/iconSelectPageStore';
+import { useNavigation } from '@react-navigation/native';
+
+export type OnIconSelected = (icon: Icon) => void;
 
 /**
  * 確定ボタンハンドラーのカスタムフック
@@ -9,11 +11,15 @@ import { SelectIcon } from '../stores/iconSelectPageStore';
  */
 export const useConfirmHandler = (params: {
   selectedIcon?: Icon;
-  onIconSelected: SelectIcon;
+  onIconSelected: OnIconSelected;
 }) => {
+  const navigation = useNavigation();
+
   return useCallback(() => {
     if (params.selectedIcon) {
       params.onIconSelected(params.selectedIcon);
     }
+    // 前画面に戻る
+    navigation.goBack();
   }, [params.selectedIcon, params.onIconSelected]);
 };

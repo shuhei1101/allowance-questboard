@@ -1,8 +1,7 @@
-import { useConfirmHandler } from './useConfirmHandler';
+import { OnIconSelected, useConfirmHandler } from './useConfirmHandler';
 import { useCategoryChangeHandler } from './useCategoryChangeHandler';
 import { useIconSelectHandler } from './useIconSelectHandler';
-import { SelectIcon, useIconSelectPageStore } from '../stores/iconSelectPageStore';
-import { Icon } from '@backend/features/icon/domain/icon';
+import { useIconSelectPageStore } from '../stores/iconSelectPageStore';
 
 /**
  * アイコン選択ページの全ハンドラーを統合したカスタムフック
@@ -12,7 +11,7 @@ import { Icon } from '@backend/features/icon/domain/icon';
  * @param onIconSelected アイコン選択時のコールバック関数
  */
 export const useSelectIconPageHandlers = (params: {
-  onIconSelected: SelectIcon;
+  onIconSelected: OnIconSelected;
 }) => {
   const pageStore = useIconSelectPageStore();
 

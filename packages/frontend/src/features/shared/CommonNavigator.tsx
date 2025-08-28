@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { IconSelectPage, IconSelectPageProps } from '../icon/icon-select-page/IconSelectPage';
 import { LoadingPage } from './loading-page/LoadingPage';
-import { Icon } from '@backend/features/icon/domain/icon';
 
 export const CommonStackMeta = {
   name: 'Common',
@@ -23,12 +22,13 @@ const CommonStack = createStackNavigator<CommonStackParamList>();
 /**
  * アイコン選択ページのラッパー
  */
-const IconSelectPageWrapper: React.FC<{ route: any; navigation: any }> = ({ route, navigation }) => {
-  const { initialSelectedIcon } = route.params || {};
+const IconSelectPageWrapper: React.FC<{ route: any }> = ({ route }) => {
+  const { initialSelectedIcon, onIconSelected } = route.params || {};
 
   return (
     <IconSelectPage
       initialSelectedIcon={initialSelectedIcon}
+      onIconSelected={onIconSelected}
     />
   );
 };
@@ -52,7 +52,6 @@ export function CommonNavigator() {
       screenOptions={{
         headerShown: true,
       }}
-      {...({} as any)}
     >
       <CommonStack.Screen 
         name={CommonStackMeta.screens.iconSelect} 

@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
-import { useIconSelectPageStore } from './stores/iconSelectPageStore';
+import { SelectIcon, useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
 import { IconCategoriesTab } from './components/IconCategoriesTab';
 import { IconGrid } from './components/IconGrid';
@@ -12,10 +12,13 @@ import { useEffect } from 'react';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { ComfirmButton } from '../../shared/components';
+import { OnIconSelected } from './hooks/useConfirmHandler';
 
 export interface IconSelectPageProps {
   /** 初期選択されたアイコン */
   initialSelectedIcon?: Icon;
+  /** アイコンが選択されたときのコールバック */
+  onIconSelected: OnIconSelected;
 }
 
 /**
@@ -24,6 +27,7 @@ export interface IconSelectPageProps {
  */
 export const IconSelectPage: React.FC<IconSelectPageProps> = ({
   initialSelectedIcon,
+  onIconSelected,
 }) => {
   const { colors } = useTheme();
   const pageStore = useIconSelectPageStore();
@@ -53,22 +57,12 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
     };
   }, [initialSelectedIcon]);
 
-  if (!pageStore.handleIconSelect) {
-    throw new AppError({
-      errorType: 'ICON_SELECT_HANDLER_NOT_FOUND',
-      message: new LocaleString({
-        ja: 'アイコン選択ハンドラがセットされていません。',
-        en: 'Icon select handler not found.',
-      })
-    });
-  }
-
   const {
     handleConfirm,
     handleCategoryChange,
     handleIconSelect,
   } = useIconSelectPageHandlers({ 
-    onIconSelected: pageStore.handleIconSelect
+    onIconSelected
   });
 
   // 確定ボタンをヘッダーに設置

@@ -8,10 +8,8 @@ import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
-import { createAuthenticatedClient, trpcClient } from '@/core/api/trpcClient';
+import { trpcClient } from '@/core/api/trpcClient';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
-import { LanguageType } from '@backend/features/language/enum/languageType';
-import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 
 interface DemoState {
   initialSelectedIcon?: Icon;

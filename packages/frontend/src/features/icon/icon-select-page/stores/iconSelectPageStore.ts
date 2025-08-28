@@ -27,10 +27,6 @@ interface IconSelectPageState {
   selectCategory: SelectCategory;
   /** アイコン選択 */
   selectIcon: SelectIcon;
-  /** アイコン選択時のハンドラ */
-  handleIconSelect?: (icon: Icon) => void;
-  /** アイコン選択ハンドラーをセット */
-  setIconSelectHandler: (handler: SelectIcon) => void;
   /** リセット */
   reset: Reset;
 }
@@ -74,19 +70,12 @@ export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => 
     });
   },
 
-  setIconSelectHandler: (handler: SelectIcon) => {
-    set({
-      handleIconSelect: handler,
-    });
-  },
-
   reset: () => {
     set({
       iconCategories: IconCategories.fromEmpty() as IconCategories,
       selectedCategoryId: undefined,
       selectedIcon: undefined,
       currentCategoryIcons: Icons.fromEmpty() as Icons,
-      handleIconSelect: undefined,
     });
   },
 }));

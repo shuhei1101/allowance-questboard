@@ -10,7 +10,6 @@ import { AppIcon } from '@/features/icon/models/AppIcon';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { CommonStackMeta } from '../CommonNavigator';
 import { AppStackParamList } from '../../../../AppNavigator';
-import { useIconSelectPageStore } from '../../icon/icon-select-page/stores/iconSelectPageStore';
 
 interface Props {
   selectedIcon?: Icon;
@@ -28,14 +27,12 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSel
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProp<AppStackParamList>>();
 
-  const iconSelectPageStore = useIconSelectPageStore();
-  iconSelectPageStore.setIconSelectHandler(onIconSelected);  // アイコン選択ハンドラをセット
-
   const handlePress = () => {
     navigation.navigate(CommonStackMeta.name, { 
       screen: CommonStackMeta.screens.iconSelect,
       params: {
         initialSelectedIcon: selectedIcon,
+        onIconSelected: onIconSelected,
       }
     });
   };
