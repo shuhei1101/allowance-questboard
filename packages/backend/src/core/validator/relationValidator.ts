@@ -7,6 +7,10 @@ import { ValidationErrorMessages } from '../messages/validationErrorMessages';
  */
 class RelationValidator {
 
+  valuesEmpty(...objects: BaseValueObject[]): boolean {
+    return objects.some(obj => obj.Value.length > 0);
+  }
+
   /**
    * 確認一致チェック（パスワード確認など）
    */
