@@ -39,10 +39,13 @@ class PcJwtStorage implements IJwtStorage {
   }
 }
 
+const mobileJwtStorage = new MobileJwtStorage();
+const pcJwtStorage = new PcJwtStorage();
+
 export function createJwtStorage(): IJwtStorage {
   if (Platform.OS === "web") {
-    return new PcJwtStorage();
+    return pcJwtStorage;
   } else {
-    return new MobileJwtStorage();
+    return mobileJwtStorage;
   }
 }
