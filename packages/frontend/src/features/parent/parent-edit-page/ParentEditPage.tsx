@@ -35,19 +35,17 @@ import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
  */
 interface Props {
   shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
-  rawParentId?: string; // 親ID（オプション）
+  parentId?: ParentId; // 親ID（オプション）
 }
 
 export const ParentEditPage: React.FC<Props> = ({
-  shouldUpdate = true,
-  rawParentId: rawParentId,
+  shouldUpdate = shouldUpdate || true,
+  parentId: parentId,
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
   const navigation = useNavigation();
-  
-  const parentId = rawParentId ? new ParentId(Number(rawParentId)) : undefined;
 
   // アプリ設定ストア
   const appConfigStore = useAppConfigStore();
