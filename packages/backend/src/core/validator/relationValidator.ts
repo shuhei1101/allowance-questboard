@@ -7,8 +7,13 @@ import { ValidationErrorMessages } from '../messages/validationErrorMessages';
  */
 class RelationValidator {
 
-  valuesEmpty(...objects: BaseValueObject[]): boolean {
-    return objects.some(obj => obj.Value.length > 0);
+  valuesEmpty(...objects: BaseValueObject[]): RelationValidator {
+    if (objects.some(obj => obj.Value.length > 0)) {
+      throw new RelationValidateError({
+        errorType: "",
+        message: optionMessage ?? ValidationErrorMessages.
+      });
+    }
   }
 
   /**
