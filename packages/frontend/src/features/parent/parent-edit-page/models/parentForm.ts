@@ -35,18 +35,10 @@ export class ParentForm extends BaseModel {
    * モデルの値を検証する
    */
   protected validate(): void {
-    if (this.name.value.length === 0 || 
-      this.email.value.length === 0 ||
-
-    ) {
-      throw new RelationValidateError({
-        errorType: 'LoginFormValidationError',
-        message: new LocaleString({
-          ja: 'メールアドレスとパスワードの両方を入力してください',
-          en: 'Please enter both email and password',
-        })
-      })
-    }
+    this.validator.valuesEmpty(
+      this.name, this.email, this.password,
+      this.birthday,
+    )
   }
 
   /**
