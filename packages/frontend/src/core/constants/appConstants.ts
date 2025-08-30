@@ -2,9 +2,9 @@ export type GetAllIcons = () => Map<any, any> | undefined;
 export type GetAppIcon = (icon: Icon) => AppIcon | undefined;
 
 class Constants {
-  constract(params: {
-    pubilc iconCategories: IconCategories,
-    pubilc appIcon?: AppIcon,
+  constructor(params: {
+    public iconCategories: IconCategories,
+    public appIcon?: AppIcon,
   }){}
 
   static initialize(): Constants{
