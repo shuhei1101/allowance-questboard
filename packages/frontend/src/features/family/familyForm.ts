@@ -5,15 +5,17 @@ import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { BaseModel } from '@backend/core/models/baseModel';
 import { Icon } from '@backend/features/icon/domain/icon';
 
+
+
 /** 家族登録フォームモデル */
 export class FamilyForm extends BaseModel {
   public readonly name: FamilyName;
   public readonly iconId?: IconId;
   public readonly introduction: FamilyIntroduction;
-  public readonly parentForm?: ParentForm;
+  public readonly parents?: ParentForm[];
 
   constructor(params: { 
-    parentForm?: ParentForm;
+    parentForm?: ParentForm[];
   }) {
     super();
     this.parentForm = params.parentForm;
@@ -28,6 +30,10 @@ export class FamilyForm extends BaseModel {
     this.validator.valuesEmpty(
       // オブジェクトを登録
     )
+  }
+
+  appendParent(parent: ParentForm){
+    this.parents.append(parent);
   }
 
   /**
