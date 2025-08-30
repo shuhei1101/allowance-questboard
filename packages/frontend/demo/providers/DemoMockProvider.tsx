@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect } from 'react';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useLoginPageStore } from '@/features/auth/login-page/stores/loginPageStore';
 import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
@@ -16,6 +15,7 @@ import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
+import { Session } from '../../src/core/constants/sessionVariables';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +31,6 @@ interface Props {
  * - デモ用のサンプルデータ提供
  */
 export const DemoMockProvider: React.FC<Props> = ({ children }) => {
-  const sessionStore = useSessionStore();
   const loginPageStore = useLoginPageStore();
   const parentEditPageStore = useParentEditPageStore();
 
@@ -70,11 +69,11 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
     // モック家族メンバータイプ（親）
     const mockFamilyMemberType = new FamilyMemberTypeValue(new FamilyMemberTypeId(1));
 
-    sessionStore.setLanguageType(mockLanguageType);
-    sessionStore.setFamilyMemberType(mockFamilyMemberType);
+    Session.setLanguageType(mockLanguageType);
+    Session.setFamilyMemberType(mockFamilyMemberType);
     
     // モックJWT（デモ用）
-    sessionStore.setJwt('demo-jwt-token-12345');
+    Session.setJwt('demo-jwt-token-12345');
 
     console.log('🎯 Demo - Session mock data set');
   };

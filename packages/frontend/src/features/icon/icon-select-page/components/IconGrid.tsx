@@ -4,8 +4,8 @@ import { useTheme } from '@/core/theme';
 import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { Icons } from '@backend/features/icon/domain/icons';
-import { GetAppIcon } from '@/features/shared/stores/appConfigStore';
 import { SelectIcon } from '../stores/iconSelectPageStore';
+import { GetAppIcon } from '../../../../core/constants/appConstants';
 
 interface Props {
   /** 表示するアイコン一覧 */

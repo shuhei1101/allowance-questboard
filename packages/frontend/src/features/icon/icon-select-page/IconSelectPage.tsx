@@ -2,17 +2,17 @@ import React, { useLayoutEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
-import { SelectIcon, useIconSelectPageStore } from './stores/iconSelectPageStore';
+import { useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
 import { IconCategoriesTab } from './components/IconCategoriesTab';
 import { IconGrid } from './components/IconGrid';
 import { Icon } from '@backend/features/icon/domain/icon';
-import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { useEffect } from 'react';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { ComfirmButton } from '../../shared/components';
 import { OnIconSelected } from './hooks/useConfirmHandler';
+import { Constants } from '../../../core/constants/appConstants';
 
 export interface IconSelectPageProps {
   /** 初期選択されたアイコン */
@@ -31,10 +31,9 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
 }) => {
   const { colors } = useTheme();
   const pageStore = useIconSelectPageStore();
-  const appConfigStore = useAppConfigStore();
   const navigation = useNavigation();
   
-  const iconCategories = appConfigStore.iconCategories;
+  const iconCategories = Constants.iconCategories;
   if (!iconCategories) {
     throw new AppError({
       errorType: 'ICON_CATEGORIES_NOT_FOUND',
@@ -95,7 +94,7 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
           icons={pageStore.currentCategoryIcons}
           selectedIcon={pageStore.selectedIcon}
           onIconSelect={handleIconSelect}
-          getAppIcon={appConfigStore.getAppIcon}
+          getAppIcon={Constants.getAppIcon}
         />
       </View>
     </View>

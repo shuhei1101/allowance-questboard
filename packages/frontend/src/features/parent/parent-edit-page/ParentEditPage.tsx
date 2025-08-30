@@ -14,8 +14,8 @@ import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ComfirmButton } from '@/features/shared/components';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
-import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { ParentForm } from './models/parentForm';
+import { Constants } from '../../../core/constants/appConstants';
 
 export type HandleParentForm = (form: ParentForm) => void;
 
@@ -52,9 +52,6 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = ({
   const sessionStore = useSessionStore();
   const navigation = useNavigation();
 
-  // アプリ設定ストア
-  const appConfigStore = useAppConfigStore();
-
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
     jwtToken: sessionStore.jwt,
@@ -65,7 +62,7 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = ({
   useInitializeParentData({
     parentId: parentId,
     parentRouter: parentRouter,
-    getAllIcons: appConfigStore.getAllIcons
+    getAllIcons: Constants.getAllIcons
   });
 
   // 統合フックで全ハンドラーを取得

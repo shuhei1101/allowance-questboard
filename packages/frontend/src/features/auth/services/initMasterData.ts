@@ -1,10 +1,9 @@
 import { IconCategories } from "@backend/features/icon-category/domain/iconCategories";
 import { AppIcons } from "@/features/icon/models/AppIcons";
-import { SetIconCategories, SetAppIcons } from "@/features/shared/stores/appConfigStore";
 import { GetMasterDataHandler } from "@backend/features/auth/router/initRouter";
-import { SetFamilyMemberType, SetLanguageType } from "../stores/sessionStore";
 import { LanguageType } from "../../../../../backend/src/features/language/enum/languageType";
 import { FamilyMemberType } from "../../../../../backend/src/features/family-member/enum/familyMemberType";
+import { SetAppIcons, SetIconCategories } from "../../../core/constants/appConstants";
 
 /**
  * マスタデータ初期化のパラメータ

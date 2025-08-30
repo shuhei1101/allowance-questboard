@@ -6,9 +6,9 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
-import { GetAllIcons } from '@/features/shared/stores/appConfigStore';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { AppError } from '@backend/core/errors/appError';
+import { GetAllIcons } from '../../../../core/constants/appConstants';
 
 interface FetchParentFormParams {
   parentId: ParentId;

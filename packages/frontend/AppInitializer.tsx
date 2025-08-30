@@ -7,7 +7,7 @@ import { LoadingPage } from './src/features/shared/loading-page/LoadingPage';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { trpcClient } from '@/core/api/trpcClient';
-import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
+import { Constants } from './src/core/constants/appConstants';
 
 /**
  * アプリ初期化コンポーネント
@@ -15,7 +15,6 @@ import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
  */
 export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}) => {
   const sessionStore = useSessionStore();
-  const appConfigStore = useAppConfigStore();
   
   const [ready, setReady] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("アプリを初期化しています...");
@@ -30,8 +29,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
           getMasterData: trpcClient.init.getMasterData,
-          setIconCategories: appConfigStore.setIconCategories,
-          setAppIcons: appConfigStore.setAppIcons,
+          setIconCategories: Constants.setIconCategories,
+          setAppIcons: Constants.setAppIcons,
         });
         console.log('✅ マスタデータ初期化完了！');
         

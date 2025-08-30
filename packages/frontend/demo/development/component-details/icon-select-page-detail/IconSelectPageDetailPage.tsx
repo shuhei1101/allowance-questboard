@@ -7,9 +7,8 @@ import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
-import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
 import { trpcClient } from '@/core/api/trpcClient';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { Constants } from '../../../../src/core/constants/appConstants';
 
 interface DemoState {
   initialSelectedIcon?: Icon;
@@ -25,8 +24,6 @@ interface DemoState {
  */
 export const IconSelectPageDetailPage: React.FC = () => {
   const { colors } = useTheme();
-  const sessionStore = useSessionStore();
-  const appConfigStore = useAppConfigStore();
 
   // モックIcon作成関数
   const createMockIcon = (iconName: string): Icon => {
@@ -73,8 +70,8 @@ export const IconSelectPageDetailPage: React.FC = () => {
     try {
       await initMasterData({
         getMasterData: trpcClient.init.getMasterData,
-        setIconCategories: appConfigStore.setIconCategories,
-        setAppIcons: appConfigStore.setAppIcons,
+        setIconCategories: Constants.setIconCategories,
+        setAppIcons: Constants.setAppIcons,
       });
       setDemoState(prev => ({ 
         ...prev, 
@@ -246,19 +243,19 @@ export const IconSelectPageDetailPage: React.FC = () => {
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
           📊 AppConfigStore.iconCategories 情報
         </Text>
-        {appConfigStore.iconCategories ? (
+        {Constants.iconCategories ? (
           <View>
             <Text style={[styles.settingLabel, { color: colors.text.secondary }]}>
-              総カテゴリ数: {appConfigStore.iconCategories.getActiveSortedCategories().length}
+              総カテゴリ数: {Constants.iconCategories.getActiveSortedCategories().length}
             </Text>
             <Text style={[styles.settingLabel, { color: colors.text.secondary }]}>
-              アクティブなカテゴリ数: {appConfigStore.iconCategories.getActiveCategories().length}
+              アクティブなカテゴリ数: {Constants.iconCategories.getActiveCategories().length}
             </Text>
             
             <Text style={[styles.description, { color: colors.text.primary, marginTop: 12, marginBottom: 8 }]}>
               カテゴリ一覧:
             </Text>
-            {appConfigStore.iconCategories.getActiveSortedCategories().map((category, index) => {
+            {Constants.iconCategories.getActiveSortedCategories().map((category, index) => {
               if (!category.key) {
                 return undefined;
               }

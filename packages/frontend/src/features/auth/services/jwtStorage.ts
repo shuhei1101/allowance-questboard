@@ -2,11 +2,15 @@
 import { Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
+export type SaveToken = (token: string) => Promise<void>;
+export type GetToken = () => Promise<string | null>;
+export type DeleteToken = () => Promise<void>;
+
 // 共通インターフェース
 export interface IJwtStorage {
-  saveToken(token: string): Promise<void>;
-  getToken(): Promise<string | null>;
-  deleteToken(): Promise<void>;
+  saveToken: SaveToken;
+  getToken: GetToken;
+  deleteToken: DeleteToken;
 }
 
 // モバイル実装 (expo-secure-store)

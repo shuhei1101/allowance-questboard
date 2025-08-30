@@ -1,60 +1,60 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
-import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
-import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
-import { LanguageType } from '../../../../../backend/src/features/language/enum/languageType';
+// import { create } from 'zustand';
+// import { devtools } from 'zustand/middleware';
+// import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
+// import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+// import { LanguageType } from '../../../../../backend/src/features/language/enum/languageType';
 
-export type SetJwt = (jwt: string) => void;
-export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
-export type SetLanguageType = (languageType: LanguageTypeValue) => void;
-export type Clear = () => void;
-export type IsAuthenticated = () => boolean;
+// export type SetJwt = (jwt: string) => void;
+// export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
+// export type SetLanguageType = (languageType: LanguageTypeValue) => void;
+// export type Clear = () => void;
+// export type IsAuthenticated = () => boolean;
 
-interface SessionState {
-  jwt?: string;
-  familyMemberType?: FamilyMemberTypeValue;
-  languageType: LanguageTypeValue;
-  setJwt: SetJwt;
-  setFamilyMemberType: SetFamilyMemberType;
-  setLanguageType: SetLanguageType;
-  clear: Clear;
-  isAuthenticated: IsAuthenticated;
-}
+// interface SessionState {
+//   jwt?: string;
+//   familyMemberType?: FamilyMemberTypeValue;
+//   languageType: LanguageTypeValue;
+//   setJwt: SetJwt;
+//   setFamilyMemberType: SetFamilyMemberType;
+//   setLanguageType: SetLanguageType;
+//   clear: Clear;
+//   isAuthenticated: IsAuthenticated;
+// }
 
-/**
- * セッション状態管理ストア
- * Zustandを使用してセッション情報を管理
- */
-export const useSessionStore = create<SessionState>()(
-  devtools(
-    (set, get) => ({
-      jwt: undefined,
-      familyMemberType: undefined,
-      languageType: LanguageType.ENGLISH,
+// /**
+//  * セッション状態管理ストア
+//  * Zustandを使用してセッション情報を管理
+//  */
+// export const useSessionStore = create<SessionState>()(
+//   devtools(
+//     (set, get) => ({
+//       jwt: undefined,
+//       familyMemberType: undefined,
+//       languageType: LanguageType.ENGLISH,
 
-      setJwt: (jwt: string) => {
-        set((_) => ({ jwt }), false, 'updateJwt');
-      },
-      setFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => {
-        set((_) => ({ familyMemberType }), false, 'updateFamilyMemberType');
-      },
-      setLanguageType: (languageType: LanguageTypeValue) => {
-        set((_) => ({ languageType }), false, 'setLanguageType');
-      },
-      reset: () => {
-        set(() => ({   
-          jwt: undefined,
-          familyMemberType: undefined,
-          languageType: LanguageType.ENGLISH,
-        }), false, 'reset');
-      },
-      isAuthenticated: () => {
-        const state = get();
-        return Boolean(state.jwt);
-      },
-    }),
-    {
-      name: 'session-store',
-    }
-  )
-);
+//       setJwt: (jwt: string) => {
+//         set((_) => ({ jwt }), false, 'updateJwt');
+//       },
+//       setFamilyMemberType: (familyMemberType: FamilyMemberTypeValue) => {
+//         set((_) => ({ familyMemberType }), false, 'updateFamilyMemberType');
+//       },
+//       setLanguageType: (languageType: LanguageTypeValue) => {
+//         set((_) => ({ languageType }), false, 'setLanguageType');
+//       },
+//       reset: () => {
+//         set(() => ({   
+//           jwt: undefined,
+//           familyMemberType: undefined,
+//           languageType: LanguageType.ENGLISH,
+//         }), false, 'reset');
+//       },
+//       isAuthenticated: () => {
+//         const state = get();
+//         return Boolean(state.jwt);
+//       },
+//     }),
+//     {
+//       name: 'session-store',
+//     }
+//   )
+// );

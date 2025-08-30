@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useLoginPageStore } from '@/features/auth/login-page/stores/loginPageStore';
 import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
+import { Session } from '../../../src/core/constants/sessionVariables';
 
 /**
  * ストア状態の確認画面
@@ -11,9 +11,17 @@ import { useParentEditPageStore } from '@/features/parent/parent-edit-page/store
  */
 export const StoreInspector: React.FC = () => {
   const { colors } = useTheme();
-  const sessionStore = useSessionStore();
   const loginPageStore = useLoginPageStore();
   const parentEditPageStore = useParentEditPageStore();
+  const [jwt, setJwt] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchJwt = async () => {
+      const token = await Session.getJwt();
+      setJwt(token);
+    };
+    fetchJwt();
+  }, []);
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
@@ -39,7 +47,7 @@ export const StoreInspector: React.FC = () => {
               JWT:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {sessionStore.jwt ? `${sessionStore.jwt.substring(0, 20)}...` : '未設定'}
+              {jwt ? `${jwt.substring(0, 20)}...` : '未設定'}
             </Text>
           </View>
           
@@ -48,7 +56,7 @@ export const StoreInspector: React.FC = () => {
               言語:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {sessionStore.languageType ? sessionStore.languageType.code.value : '未設定'}
+              {Session.languageType ? Session.languageType.code.value : '未設定'}
             </Text>
           </View>
           
@@ -57,7 +65,7 @@ export const StoreInspector: React.FC = () => {
               メンバータイプ:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {sessionStore.familyMemberType ? sessionStore.familyMemberType.tableName : '未設定'}
+              {Session.familyMemberType ? Session.familyMemberType.tableName : '未設定'}
             </Text>
           </View>
         </View>

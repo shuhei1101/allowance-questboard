@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, TextInput } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { FamilyMemberTypeId } from '@backend/features/family-member/value-object/familyMemberTypeId';
+import { Session } from '../../src/core/constants/sessionVariables';
 
 /**
  * セッション設定画面
@@ -13,14 +13,31 @@ import { FamilyMemberTypeId } from '@backend/features/family-member/value-object
  */
 export const SessionSettingsPage: React.FC = () => {
   const { colors } = useTheme();
-  const sessionStore = useSessionStore();
   
-  const [customJwt, setCustomJwt] = useState(sessionStore.jwt || '');
+  const [customJwt, setCustomJwt] = useState('');
+  const [currentJwt, setCurrentJwt] = useState<string | null>(null);
+
+  // JWTトークンを非同期で取得
+  useEffect(() => {
+    const loadJwt = async () => {
+      try {
+        const jwt = await Session.getJwt();
+        setCurrentJwt(jwt);
+        setCustomJwt(jwt || '');
+      } catch (error) {
+        console.error('JWT取得エラー:', error);
+        setCurrentJwt(null);
+        setCustomJwt('');
+      }
+    };
+    
+    loadJwt();
+  }, []);
 
   const handleLanguageChange = (languageId: number) => {
     try {
       const languageType = new LanguageTypeValue(new LanguageId(languageId));
-      sessionStore.setLanguageType(languageType);
+      Session.setLanguageType(languageType);
       Alert.alert('成功', `言語を変更しました (ID: ${languageId})`);
     } catch (error) {
       Alert.alert('エラー', `言語変更に失敗しました: ${error}`);
@@ -30,16 +47,21 @@ export const SessionSettingsPage: React.FC = () => {
   const handleFamilyMemberTypeChange = (typeId: number) => {
     try {
       const memberType = new FamilyMemberTypeValue(new FamilyMemberTypeId(typeId));
-      sessionStore.setFamilyMemberType(memberType);
+      Session.setFamilyMemberType(memberType);
       Alert.alert('成功', `家族メンバータイプを変更しました (ID: ${typeId})`);
     } catch (error) {
       Alert.alert('エラー', `家族メンバータイプ変更に失敗しました: ${error}`);
     }
   };
 
-  const handleJwtUpdate = () => {
-    sessionStore.setJwt(customJwt);
-    Alert.alert('成功', 'JWTトークンを更新しました');
+  const handleJwtUpdate = async () => {
+    try {
+      await Session.setJwt(customJwt);
+      setCurrentJwt(customJwt);
+      Alert.alert('成功', 'JWTトークンを更新しました');
+    } catch (error) {
+      Alert.alert('エラー', `JWT更新に失敗しました: ${error}`);
+    }
   };
 
   const handleClearSession = () => {
@@ -51,13 +73,18 @@ export const SessionSettingsPage: React.FC = () => {
         {
           text: 'クリア',
           style: 'destructive',
-          onPress: () => {
-            // セッションストアの内容をクリア
-            sessionStore.setJwt('');
-            sessionStore.setLanguageType(undefined as any);
-            sessionStore.setFamilyMemberType(undefined as any);
-            setCustomJwt('');
-            Alert.alert('完了', 'セッション情報をクリアしました');
+          onPress: async () => {
+            try {
+              // セッションストアの内容をクリア
+              await Session.setJwt('');
+              Session.setLanguageType(undefined as any);
+              Session.setFamilyMemberType(undefined as any);
+              setCurrentJwt('');
+              setCustomJwt('');
+              Alert.alert('完了', 'セッション情報をクリアしました');
+            } catch (error) {
+              Alert.alert('エラー', `セッションクリアに失敗しました: ${error}`);
+            }
           },
         },
       ]
@@ -98,7 +125,7 @@ export const SessionSettingsPage: React.FC = () => {
               JWT:
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {sessionStore.jwt ? `${sessionStore.jwt.substring(0, 20)}...` : '未設定'}
+              {currentJwt ? `${currentJwt.substring(0, 20)}...` : '未設定'}
             </Text>
           </View>
           
@@ -107,8 +134,8 @@ export const SessionSettingsPage: React.FC = () => {
               言語:
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {sessionStore.languageType ? 
-                `${sessionStore.languageType.code.value} (ID: ${sessionStore.languageType.id.value})` : 
+              {Session.languageType ? 
+                `${Session.languageType.code.value} (ID: ${Session.languageType.id.value})` : 
                 '未設定'
               }
             </Text>
@@ -119,8 +146,8 @@ export const SessionSettingsPage: React.FC = () => {
               メンバータイプ:
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {sessionStore.familyMemberType ? 
-                `${sessionStore.familyMemberType.tableName} (ID: ${sessionStore.familyMemberType.id.value})` : 
+              {Session.familyMemberType ? 
+                `${Session.familyMemberType.tableName} (ID: ${Session.familyMemberType.id.value})` : 
                 '未設定'
               }
             </Text>
@@ -140,14 +167,14 @@ export const SessionSettingsPage: React.FC = () => {
             style={[
               styles.optionButton,
               { backgroundColor: colors.surface.elevated },
-              sessionStore.languageType?.id.value === option.id && styles.selectedOption
+              Session.languageType?.id.value === option.id && styles.selectedOption
             ]}
             onPress={() => handleLanguageChange(option.id)}
           >
             <Text style={[
               styles.optionText,
               { color: colors.text.primary },
-              sessionStore.languageType?.id.value === option.id && styles.selectedOptionText
+              Session.languageType?.id.value === option.id && styles.selectedOptionText
             ]}>
               {option.name} (ID: {option.id})
             </Text>
@@ -167,14 +194,14 @@ export const SessionSettingsPage: React.FC = () => {
             style={[
               styles.optionButton,
               { backgroundColor: colors.surface.elevated },
-              sessionStore.familyMemberType?.id.value === option.id && styles.selectedOption
+              Session.familyMemberType?.id.value === option.id && styles.selectedOption
             ]}
             onPress={() => handleFamilyMemberTypeChange(option.id)}
           >
             <Text style={[
               styles.optionText,
               { color: colors.text.primary },
-              sessionStore.familyMemberType?.id.value === option.id && styles.selectedOptionText
+              Session.familyMemberType?.id.value === option.id && styles.selectedOptionText
             ]}>
               {option.name} (ID: {option.id})
             </Text>

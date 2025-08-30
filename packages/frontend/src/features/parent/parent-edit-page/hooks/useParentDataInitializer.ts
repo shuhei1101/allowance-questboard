@@ -3,7 +3,7 @@ import { useParentEditPageStore } from '../stores/parentEditPageStore';
 import { fetchParentForm } from '../services/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ParentRouter } from '@backend/features/parent/router/parentRouter';
-import { GetAllIcons } from '@/features/shared/stores/appConfigStore';
+import { GetAllIcons } from '../../../../core/constants/appConstants';
 
 /**
  * 親データ初期化フック
