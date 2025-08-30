@@ -15,6 +15,9 @@ import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ComfirmButton } from '@/features/shared/components';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
 import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
+import { ParentForm } from './models/parentForm';
+
+export type HandleParentForm = (form: ParentForm) => void;
 
 /**
  * 親情報編集画面
@@ -33,14 +36,16 @@ import { useAppConfigStore } from '@/features/shared/stores/appConfigStore';
  * - 入力値のバリデーション
  * - 必須項目が未入力時の確定ボタン無効化
  */
-interface Props {
+export interface ParentEditPageProps {
   shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
   parentId?: ParentId; // 親ID（オプション）
+  handleParentForm?: HandleParentForm;
 }
 
-export const ParentEditPage: React.FC<Props> = ({
-  shouldUpdate = shouldUpdate || true,
-  parentId: parentId,
+export const ParentEditPage: React.FC<ParentEditPageProps> = ({
+  shouldUpdate: shouldUpdate = true,
+  parentId,
+  handleParentForm,
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
@@ -73,7 +78,8 @@ export const ParentEditPage: React.FC<Props> = ({
     handleConfirm,
   } = useParentEditPageHandlers({
     shouldUpdate,
-    parentId
+    parentId,
+    handleParentForm
   });
 
   // 確定ボタン

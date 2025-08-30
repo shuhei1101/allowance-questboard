@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Alert } from 'react-native';
-import { ParentEditPage } from './parent-edit-page/ParentEditPage'
+import { ParentEditPage, ParentEditPageProps } from './parent-edit-page/ParentEditPage'
 
 export const ParentStackMeta = {
   name: 'Parent',
@@ -12,9 +11,7 @@ export const ParentStackMeta = {
 
 // 親機能関連のナビゲーションパラメータ型定義
 export type ParentStackParamList = {
-  ParentEdit: {
-    shouldShowBackButton?: boolean;
-  }
+  ParentEdit: ParentEditPageProps
 };
 
 const ParentStack = createStackNavigator<ParentStackParamList>();

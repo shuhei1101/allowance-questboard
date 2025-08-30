@@ -2,18 +2,23 @@ import { LocaleString } from '../messages/localeString';
 import { RelationValidateError } from './validationError';
 import { ValidationErrorMessages } from '../messages/validationErrorMessages';
 
+export interface ValuesEmptyDelegate {
+  isEmpty(): boolean;
+}
+
 /**
  * 関連バリデーションを提供するクラス（BaseModelで使用）
  */
 class RelationValidator {
 
-  valuesEmpty(...objects: BaseValueObject[]): RelationValidator {
-    if (objects.some(obj => obj.Value.length > 0)) {
+  valuesEmpty(...objects: ValuesEmptyDelegate[]): RelationValidator {
+    if (objects.some(obj => obj.isEmpty())) {
       throw new RelationValidateError({
         errorType: "",
-        message: optionMessage ?? ValidationErrorMessages.
+        message: ValidationErrorMessages.valuesEmpty()
       });
     }
+    return this;
   }
 
   /**

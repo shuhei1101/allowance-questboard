@@ -146,7 +146,12 @@ class Messages {
   quantityConsistencyInvalid(totalFieldName: LocaleString, partFieldNames: LocaleString): LocaleString { return new LocaleString({
     ja: `${totalFieldName.ja}と${partFieldNames.ja}の合計が一致しません`,
     en: `${totalFieldName.en} and the sum of ${partFieldNames.en} do not match`});}
-}
+
+  valuesEmpty(): LocaleString { return new LocaleString({
+    ja: '必須項目が入力されていません',
+    en: 'Required fields are not filled in'});}
+
+  }
 
 // グローバルインスタンス（APサーバ側のerror_messagesと同様）
 export const ValidationErrorMessages = new Messages();

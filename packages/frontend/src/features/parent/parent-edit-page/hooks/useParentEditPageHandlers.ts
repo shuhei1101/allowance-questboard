@@ -7,6 +7,7 @@ import { useParentEditPageStore as useParentEditPageStore } from '../stores/pare
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useIconSelectHandler } from './useIconSelectHandler';
+import { HandleParentForm } from '../ParentEditPage';
 
 /**
  * 親情報登録画面の全ハンドラーを統合したカスタムフック
@@ -19,6 +20,7 @@ import { useIconSelectHandler } from './useIconSelectHandler';
 export const useParentEditPageHandlers = (params: {
   shouldUpdate: boolean,
   parentId?: ParentId,
+  handleParentForm?: HandleParentForm
 }) => {
   const pageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
@@ -66,6 +68,7 @@ export const useParentEditPageHandlers = (params: {
     setPasswordError: pageStore.setPasswordError,
     setBirthdayError: pageStore.setBirthdayError,
     shouldUpdate: params.shouldUpdate,
+    handleParentForm: params.handleParentForm,
   });
 
   return {

@@ -4,12 +4,10 @@ import { ParentForm } from '../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { useParentFormValidationHandler as useParentFormValidationHandler } from '../handlers/useParentFormValidationHandler';
 import { useNavigation } from '@react-navigation/native';
+import { HandleParentForm } from '../ParentEditPage';
 
-/**
- * 確定ボタン押下ハンドラーのカスタムフック
- * 
- * 親情報の登録を実行する
- */
+/** 確定ボタン押下ハンドラーのカスタムフック
+ * 親情報の登録を実行する */
 export const useConfirmHandler = (params: {
   parentForm: ParentForm,
   currentLanguageType: LanguageTypeValue,
@@ -19,7 +17,9 @@ export const useConfirmHandler = (params: {
   setEmailError: SetEmailError,
   setPasswordError: SetPasswordError,
   setBirthdayError: SetBirthdayError,
-  shouldUpdate?: boolean
+  shouldUpdate?: boolean,
+  handleParentForm?: HandleParentForm
+  
 }) => {
   const navigation = useNavigation();
   // バリデーションハンドラーを取得
@@ -49,8 +49,13 @@ export const useConfirmHandler = (params: {
         // await registerParent(params.parentForm);
 
       }
-    // 前画面に遷移する
-    navigation.goBack();
+
+      // 親情報登録後の処理
+      if (params.handleParentForm) {
+        params.handleParentForm(params.parentForm);
+      }
+      // 前画面に遷移する
+      navigation.goBack();
     } catch (error: any) {
       // API呼び出し時のエラー処理
       console.error('親情報登録エラー:', error);

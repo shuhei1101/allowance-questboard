@@ -1,5 +1,5 @@
 import { LocaleString } from "../messages/localeString";
-import { Hashable } from "../models/baseCollection";
+import { ValuesEmptyDelegate } from "../validator/relationValidator";
 import { ValueValidateError } from "../validator/validationError";
 import { ValueValidator } from "../validator/valueValidator";
 import { z } from 'zod';
@@ -7,7 +7,7 @@ import { z } from 'zod';
 /**
  * 値オブジェクトの基底クラス
  */
-export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.ZodObject<{ value: z.ZodType<TValue> }>> {
+export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.ZodObject<{ value: z.ZodType<TValue> }>> implements ValuesEmptyDelegate {
   protected readonly _value: TValue;
   protected _validator?: ValueValidator<TValue> = undefined;
   protected _errorMessage?: LocaleString = undefined;
@@ -30,6 +30,11 @@ export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.Z
         throw error;
       }
     }
+  }
+  isEmpty(): boolean {
+    return this._value === undefined || 
+    this._value === null ||
+    this.toString().trim().length === 0;
   }
 
   /**
