@@ -1,16 +1,16 @@
 class Constants {
   constract(params: {
-    pubilc iconCategories?: IconCategories,
+    pubilc iconCategories: IconCategories,
     pubilc appIcon?: AppIcon,
   }){}
 
   static initialize(): Constants{
     return new Constants(
       iconCategories: IconCategories.fromEmpty(),
-      appIcon: AppIcon.
+      appIcon: AppIcon
     )
   }
 
 }
 
-export AppConstants = new Constants();
+export AppConstants = Constants.initialize()
