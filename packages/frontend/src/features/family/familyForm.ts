@@ -7,7 +7,9 @@ import { Icon } from '@backend/features/icon/domain/icon';
 
 /** 家族登録フォームモデル */
 export class FamilyForm extends BaseModel {
-  public readonly 
+  public readonly name: FamilyName;
+  public readonly iconId?: IconId;
+  public readonly introduction: FamilyIntroduction;
   public readonly parentForm?: ParentForm;
 
   constructor(params: { 
