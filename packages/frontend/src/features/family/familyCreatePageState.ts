@@ -19,9 +19,9 @@ export type ClearErrors = () => void;
 export type SetConfirmed = (confirmed: boolean) => void;
 export type Reset = () => void;
 
-interface ParentEditPageState {
+interface FamilyEditPageState {
   isLoading: IsLoading;
-  parentForm: ParentForm;
+  familyForm: FamilyForm;
   nameError?: NameError;
   emailError?: EmailError;
   passwordError?: PasswordError;
