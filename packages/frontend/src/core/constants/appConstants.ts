@@ -14,11 +14,11 @@ class Constants {
     )
   }
 
-  getAllIcons: GetAllIcons => {
+  getAllIcons: GetAllIcons = () => {
     return this.iconCategories?.getAllIcons();
   },
 
-  getAppIcon: GetAppIcon => {
+  getAppIcon: GetAppIcon = (icon) => {
     return this.appIcons.get(icon) || undefined;
   },
 }
