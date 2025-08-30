@@ -1,3 +1,8 @@
+export type SetIconCategories = (iconCategories: IconCategories) => void;
+export type SetAppIcons = (appIcons: AppIcons) => void;
+export type GetAllIcons = () => Map<any, any> | undefined;
+export type GetAppIcon = (icon: Icon) => AppIcon | undefined;
+
 class Constants {
   constract(params: {
     pubilc iconCategories: IconCategories,
