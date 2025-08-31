@@ -32,6 +32,20 @@
         "forgotPassword": "Navigate to password reset screen.",
         "termsOfService": "Navigate to terms of service screen."
       }
+    },
+    "createUser": {
+      "title": "Sign Up",
+      "submit": "Register",
+      "emailPlaceholder": "Enter email address",
+      "passwordPlaceholder": "Enter password",
+      "success": {
+        "title": "Registration Complete",
+        "message": "A confirmation email has been sent to your email address. Please click the link in the email to complete your registration."
+      },
+      "errors": {
+        "signUpFailed": "Sign up failed. Please try again.",
+        "title": "Registration Error"
+      }
     }
   },
   "common": {

@@ -12,7 +12,7 @@ interface CreateFamilyButtonProps {
  * 新規家族作成ボタン
  * 新規家族登録画面へ遷移するボタン
  */
-export const CreateFamilyButton: React.FC<CreateFamilyButtonProps> = ({
+export const CreateUserButton: React.FC<CreateFamilyButtonProps> = ({
   onPress,
 }) => {
   const { colors } = useTheme();
@@ -24,7 +24,7 @@ export const CreateFamilyButton: React.FC<CreateFamilyButtonProps> = ({
       onPress={onPress}
     >
       <Text style={[styles.buttonText, { color: colors.text.inverse }]}>
-        {t('auth.loginPage.createFamilyButton')}
+        {t('auth.loginPage.createUserButton')}
       </Text>
     </TouchableOpacity>
   );

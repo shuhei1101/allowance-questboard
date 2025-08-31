@@ -4,7 +4,7 @@ import { useLoginHandler } from './useLoginHandler';
 import { useParentLoginHandler } from './useParentLoginHandler';
 import { useChildLoginHandler } from './useChildLoginHandler';
 import { useCloseDialogHandler } from './useCloseDialogHandler';
-import { useCreateFamilyHandler } from './useCreateFamilyHandler';
+import { useCreateUserHandler } from './useCreateFamilyHandler';
 import { useForgotPasswordHandler } from './useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { login } from '../services/login';
@@ -60,7 +60,7 @@ export const loginPageHandlers = async () => {
   const handleCloseDialog = useCloseDialogHandler({
     hideDialog: pageStore.hideDialog,
   });
-  const handleCreateFamily = useCreateFamilyHandler({
+  const handleUserFamily = useCreateUserHandler({
     languageType: Session.languageType,
   });
   const handleForgotPassword = useForgotPasswordHandler({
@@ -77,7 +77,7 @@ export const loginPageHandlers = async () => {
     handleParentLogin,
     handleChildLogin,
     handleCloseDialog,
-    handleCreateFamily,
+    handleCreateFamily: handleUserFamily,
     handleForgotPassword,
     handleTermsOfService,
   };

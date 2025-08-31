@@ -25,15 +25,6 @@ class Messages {
     ja: '内部サーバーエラーが発生しました',
     en: 'An internal server error occurred'});}
 
-  // 家族作成関連
-  createFamilyTitle(): LocaleString { return new LocaleString({
-    ja: '新規家族作成',
-    en: 'Create New Family'});}
-
-  createFamilyMessage(): LocaleString { return new LocaleString({
-    ja: '新しい家族を作成するための画面へ遷移します。',
-    en: 'Navigate to the screen to create a new family.'});}
-
   // パスワードリセット関連
   forgotPasswordTitle(): LocaleString { return new LocaleString({
     ja: 'パスワードリセット',
@@ -60,6 +51,15 @@ class Messages {
   internalError(): LocaleString { return new LocaleString({
     ja: '内部エラーが発生しました',
     en: 'An internal error occurred'});}
+
+  // 新規登録関連
+  signUpFailed(): LocaleString { return new LocaleString({
+    ja: '新規登録に失敗しました。入力内容を確認してください。',
+    en: 'Sign up failed. Please check your input.'});}
+
+  signUpErrorTitle(): LocaleString { return new LocaleString({
+    ja: '登録エラー',
+    en: 'Registration Error'});}
 }
 
 export const AuthErrorMessages = new Messages();

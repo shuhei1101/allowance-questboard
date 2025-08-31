@@ -9,7 +9,7 @@
       "emailPlaceholder": "メールアドレスを入力",
       "passwordPlaceholder": "パスワードを入力",
       "loginButton": "ログイン",
-      "createFamilyButton": "新規家族を作成",
+      "createUserButton": "新規登録",
       "forgotPassword": "パスワードをお忘れですか？",
       "termsOfService": "利用規約を確認する",
       "selectLoginType": "ログインタイプを選択",
@@ -31,6 +31,20 @@
         "createFamily": "新規家族作成画面へ遷移します。",
         "forgotPassword": "パスワードリセット画面へ遷移します。",
         "termsOfService": "利用規約画面へ遷移します。"
+      }
+    },
+    "createUser": {
+      "title": "新規登録",
+      "submit": "登録",
+      "emailPlaceholder": "メールアドレスを入力",
+      "passwordPlaceholder": "パスワードを入力",
+      "success": {
+        "title": "登録完了",
+        "message": "メールアドレスに確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。"
+      },
+      "errors": {
+        "signUpFailed": "新規登録に失敗しました。もう一度お試しください。",
+        "title": "登録エラー"
       }
     }
   },

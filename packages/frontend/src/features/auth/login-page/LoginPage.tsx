@@ -4,7 +4,7 @@ import { AppTitleLabel } from './components/AppTitleLabel';
 import { EmailInputField } from '../../shared/components/EmailInputField';
 import { PasswordInputField } from '../../shared/components/PasswordInputField';
 import { LoginButton } from './components/LoginButton';
-import { CreateFamilyButton } from './components/CreateFamilyButton';
+import { CreateUserButton } from './components/CreateUserButton';
 import { ForgotPasswordLink } from './components/ForgotPasswordLink';
 import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/SelectFamilyDialog';
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
@@ -82,8 +82,8 @@ export const LoginPage: React.FC = async () => {
             onPress={handleLogin}
           />
           
-          {/* 新規家族作成ボタン */}
-          <CreateFamilyButton
+          {/* 新規ユーザー作成ボタン */}
+          <CreateUserButton
             onPress={handleCreateFamily}
           />
           

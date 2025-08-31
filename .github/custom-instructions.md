@@ -17,6 +17,8 @@ git push origin main
 
 - 実装完了後に`expo start`や`npm run dev`などの動作確認コマンドはしないこと
   - こちらで実行します。
+- コーディング規約を読むこと
+  - `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja/common/コーディング規約.md`
 
 ## おすすめコンテキスト
 - 作業内容に応じて以下フォルダをコンテキストに追加すると便利です。
