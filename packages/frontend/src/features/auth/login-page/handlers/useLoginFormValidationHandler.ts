@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ClearErrors, SetEmailError, SetPasswordError } from '../stores/loginPageStore';
+import { ClearErrors, SetEmailError, SetPasswordError } from '../loginPageStore';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 

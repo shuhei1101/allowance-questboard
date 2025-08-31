@@ -6,9 +6,7 @@ import { z } from 'zod';
 /**
  * SortOrderのZodスキーマ
  */
-export const SortOrderSchema = z.object({
-  value: z.number()
-});
+export const SortOrderSchema = z.number();
 
 export class SortOrder extends BaseValueObject<number, typeof SortOrderSchema> {
   constructor(value: number) {
@@ -39,6 +37,6 @@ export class SortOrder extends BaseValueObject<number, typeof SortOrderSchema> {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof SortOrderSchema>): SortOrder {
-    return new SortOrder(data.value);
+    return new SortOrder(data);
   }
 }

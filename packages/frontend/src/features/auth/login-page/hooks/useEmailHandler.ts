@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { SetLoginForm, SetEmailError, EmailError } from '../stores/loginPageStore';
+import { SetLoginForm, SetEmailError, EmailError } from '../loginPageStore';
 import { LoginForm } from '../models/loginForm';
 import { Email } from '@backend/features/auth/value-object/email';
 

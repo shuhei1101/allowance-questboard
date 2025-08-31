@@ -3,14 +3,14 @@ import { BaseValueObject } from "@backend/core/value-object/baseValueObject";
 import { z } from 'zod';
 
 /**
- * FamilyNameのZodスキーマ
+ * TableNameのZodスキーマ
  */
-export const FamilyNameSchema = z.string();
+export const TableNameSchema = z.string();
 
 /**
- * 家族名を表す値オブジェクト
+ * テーブル名を表す値オブジェクト
  */
-export class FamilyName extends BaseValueObject<string, typeof FamilyNameSchema> {
+export class TableName extends BaseValueObject<string, typeof TableNameSchema> {
   constructor(value: string) {
     super({ value });
   }
@@ -18,22 +18,20 @@ export class FamilyName extends BaseValueObject<string, typeof FamilyNameSchema>
   protected validate(): void {
     this.validator
       .required()
-      .minLength(3)
-      .maxLength(20);
   }
 
   protected get valueName(): LocaleString {
     return new LocaleString({
-      ja: "家族名",
-      en: "Family Name"
+      ja: "テーブル名",
+      en: "Table Name"
     });
   }
 
   /**
-   * Zodスキーマから新しいFamilyNameインスタンスを作成
+   * Zodスキーマから新しいTableNameインスタンスを作成
    * @param data Zodスキーマに準拠したデータ
    */
-  static fromZodData(data: z.infer<typeof FamilyNameSchema>): FamilyName {
-    return new FamilyName(data);
+  static fromZodData(data: z.infer<typeof TableNameSchema>): TableName {
+    return new TableName(data);
   }
 }

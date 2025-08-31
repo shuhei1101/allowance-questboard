@@ -25,6 +25,6 @@ export class LanguageId extends BaseId {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof BaseIdSchema>): LanguageId {
-    return new LanguageId(data.value);
+    return new LanguageId(data);
   }
 }

@@ -11,6 +11,6 @@ export class ParentId extends BaseId {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof BaseIdSchema>): ParentId {
-    return new ParentId(data.value);
+    return new ParentId(data);
   }
 }

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { SetLoginForm, SetPasswordError, PasswordError } from '../stores/loginPageStore';
+import { SetLoginForm, SetPasswordError, PasswordError } from '../loginPageStore';
 import { LoginForm } from '../models/loginForm';
 import { Password } from '@backend/features/auth/value-object/password';
 

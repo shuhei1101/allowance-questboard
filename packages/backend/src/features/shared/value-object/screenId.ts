@@ -26,6 +26,6 @@ export class ScreenId extends BaseId {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof BaseIdSchema>): ScreenId {
-    return new ScreenId(data.value);
+    return new ScreenId(data);
   }
 }

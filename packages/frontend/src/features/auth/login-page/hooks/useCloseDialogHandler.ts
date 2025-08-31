@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { HideDialog } from '../stores/loginPageStore';
+import { HideDialog } from '../loginPageStore';
 
 /**
  * ダイアログクローズハンドラーのカスタムフック

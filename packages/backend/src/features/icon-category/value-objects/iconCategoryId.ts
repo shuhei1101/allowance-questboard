@@ -26,6 +26,6 @@ export class IconCategoryId extends BaseId {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof BaseIdSchema>): IconCategoryId {
-    return new IconCategoryId(data.value);
+    return new IconCategoryId(data);
   }
 }

@@ -26,6 +26,6 @@ export class FamilyMemberTypeId extends BaseId {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof BaseIdSchema>): FamilyMemberTypeId {
-    return new FamilyMemberTypeId(data.value);
+    return new FamilyMemberTypeId(data);
   }
 }

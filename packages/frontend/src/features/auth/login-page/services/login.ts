@@ -1,10 +1,10 @@
-import { SetSelectFamilyDialog } from '../stores/loginPageStore';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 import { FamilyName } from '@backend/features/family/value-object/familyName';
 import { LoginHandler } from '@backend/features/auth/router/loginRouter';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
+import { SetSelectFamilyDialog } from '../loginPageStore';
 
 interface LoginParams {
   setSelectFamilyDialog: SetSelectFamilyDialog,

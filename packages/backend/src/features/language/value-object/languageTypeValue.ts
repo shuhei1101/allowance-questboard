@@ -1,17 +1,18 @@
 import { LanguageId } from './languageId';
-import { LanguageCode } from './languageCode';
-import { LanguageName } from './languageName';
-import { SortOrder } from '../../shared/value-object/sortOrder';
+import { LanguageCode, LanguageCodeSchema } from './languageCode';
+import { LanguageName, LanguageNameSchema } from './languageName';
+import { SortOrder, SortOrderSchema } from '../../shared/value-object/sortOrder';
 import z from 'zod';
 import { LanguageEntity } from '../entity/languageEntity';
 import { BaseSimpleEnumValue } from '@backend/core/enum/baseEnum';
+import { BaseIdSchema } from '@backend/core/value-object/base_id';
 
 export const LanguageTypeValueSchema = z.object({
-  id: z.number(),
-  code: z.string().optional(),
-  name: z.string().optional(),
+  id: BaseIdSchema,
+  code: LanguageCodeSchema.optional(),
+  name: LanguageNameSchema.optional(),
   isActive: z.boolean().optional(),
-  sortOrder: z.number().optional(),
+  sortOrder: SortOrderSchema.optional(),
 });
 
 /**

@@ -56,7 +56,7 @@ export class IconCategory extends BaseMasterModel<IconCategoryId> {
     return {
       id: this.key ? this.key.toZodData() : undefined,
       nameByLanguages: this.nameByLanguages.toZodData(),
-      sortOrder: this.sortOrder,
+      sortOrder: this.sortOrder.toZodData(),
       isActive: this.isActive,
       icons: this.icons.toZodData()
     };

@@ -6,9 +6,7 @@ import { z } from 'zod';
 /**
  * BaseIdのZodスキーマ
  */
-export const BaseIdSchema = z.object({
-  value: z.number()
-});
+export const BaseIdSchema = z.number();
 
 /**
  * ドメインモデルのIDを表す基底クラス

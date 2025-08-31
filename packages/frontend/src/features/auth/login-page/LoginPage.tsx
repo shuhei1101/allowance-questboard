@@ -9,8 +9,8 @@ import { ForgotPasswordLink } from './components/ForgotPasswordLink';
 import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/SelectFamilyDialog';
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
-import { useLoginPageStore } from './stores/loginPageStore';
 import { loginPageHandlers } from './hooks/loginPageHandlers';
+import { useLoginPageStore } from './loginPageStore';
 
 /**
  * ログインページ

@@ -119,9 +119,7 @@ export abstract class BaseValueObject<TValue, TZodSchema extends z.ZodType = z.Z
    * Zodスキーマに準拠したデータを返す
    */
   toZodData(): z.infer<TZodSchema> {
-    return {
-      value: this._value
-    } as z.infer<TZodSchema>;
+    return this._value as z.infer<TZodSchema>;
   }
 
   /**

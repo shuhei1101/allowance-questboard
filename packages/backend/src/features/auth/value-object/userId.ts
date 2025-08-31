@@ -5,9 +5,7 @@ import { z } from 'zod';
 /**
  * UserIdのZodスキーマ
  */
-export const UserIdSchema = z.object({
-  value: z.string()
-});
+export const UserIdSchema = z.string();
 
 /**
  * ユーザーIDを表す値オブジェクト(UUID)
@@ -36,6 +34,6 @@ export class UserId extends BaseValueObject<string, typeof UserIdSchema> {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof UserIdSchema>): UserId {
-    return new UserId(data.value);
+    return new UserId(data);
   }
 }

@@ -5,9 +5,7 @@ import { z } from 'zod';
 /**
  * EmailのZodスキーマ
  */
-export const EmailSchema = z.object({
-  value: z.string()
-});
+export const EmailSchema = z.string();
 
 /**
  * メールアドレスを表す値オブジェクト
@@ -37,6 +35,6 @@ export class Email extends BaseValueObject<string, typeof EmailSchema> {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof EmailSchema>): Email {
-    return new Email(data.value);
+    return new Email(data);
   }
 }

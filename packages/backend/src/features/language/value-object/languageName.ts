@@ -5,9 +5,7 @@ import { z } from 'zod';
 /**
  * LanguageNameのZodスキーマ
  */
-export const LanguageNameSchema = z.object({
-  value: z.string()
-});
+export const LanguageNameSchema = z.string();
 
 /**
  * 言語名の値オブジェクト
@@ -34,6 +32,6 @@ export class LanguageName extends BaseValueObject<string, typeof LanguageNameSch
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof LanguageNameSchema>): LanguageName {
-    return new LanguageName(data.value);
+    return new LanguageName(data);
   }
 }

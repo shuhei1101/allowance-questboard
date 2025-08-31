@@ -2,10 +2,12 @@ import z from 'zod';
 import { BaseSimpleEnumValue } from '../../../core/enum/baseEnum';
 import { FamilyMemberTypeEntity } from '../entity/familyMemberTypeEntity';
 import { FamilyMemberTypeId } from './familyMemberTypeId';
+import { TableName, TableNameSchema } from '@backend/features/shared/value-object/tableName';
+import { BaseIdSchema } from '@backend/core/value-object/base_id';
 
 export const FamilyMemberTypeValueSchema = z.object({
-  id: z.number(),
-  tableName: z.string().optional(),
+  id: BaseIdSchema,
+  tableName: TableNameSchema.optional(),
   description: z.string().optional(),
 });
 
@@ -14,12 +16,12 @@ export const FamilyMemberTypeValueSchema = z.object({
  * PythonのFamilyMemberTypeValueクラスのTypeScript版
  */
 export class FamilyMemberTypeValue extends BaseSimpleEnumValue<FamilyMemberTypeId, FamilyMemberTypeEntity, typeof FamilyMemberTypeValueSchema> {
-  private _tableName: string;
+  private _tableName: TableName;
   private _description: string;
 
   constructor(
     id: FamilyMemberTypeId,
-    tableName: string = 'unknown',
+    tableName: TableName = new TableName('unknown'),
     description: string = 'Unknown'
   ) {
     super(id);
@@ -32,7 +34,7 @@ export class FamilyMemberTypeValue extends BaseSimpleEnumValue<FamilyMemberTypeI
    * @param entity 家族メンバータイプエンティティ
    */
   setFromEntity(entity: FamilyMemberTypeEntity): void {
-    this._tableName = entity.tableName;
+    this._tableName = new TableName(entity.tableName);
     this._description = entity.description;
   }
 
@@ -40,7 +42,7 @@ export class FamilyMemberTypeValue extends BaseSimpleEnumValue<FamilyMemberTypeI
    * テーブル名を返す
    */
   get tableName(): string {
-    return this._tableName;
+    return this._tableName.toString();
   }
 
   /**
@@ -56,7 +58,7 @@ export class FamilyMemberTypeValue extends BaseSimpleEnumValue<FamilyMemberTypeI
   toZodData(): z.infer<typeof FamilyMemberTypeValueSchema> {
     return {
       id: this._id.value,
-      tableName: this._tableName,
+      tableName: this._tableName.toZodData(),
       description: this._description,
     };
   }
@@ -69,7 +71,7 @@ export class FamilyMemberTypeValue extends BaseSimpleEnumValue<FamilyMemberTypeI
     if (data.id !== this._id.value) {
       throw new Error(`ID mismatch: expected ${this._id.value}, got ${data.id}`);
     }
-    this._tableName = data.tableName || 'unknown';
+    this._tableName = TableName.fromZodData(data.tableName || 'unknown');
     this._description = data.description || 'Unknown';
   }
 }
