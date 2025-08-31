@@ -3,8 +3,7 @@ import { FamilyInviteDao } from "../dao/familyInviteDao";
 import { FamilyInvite } from "../models/familyInvite";
 import { FamilyInviteId } from "../value-object/familyInviteId";
 import { FamilyId } from "../value-object/familyId";
-import { Email } from "@backend/features/auth/value-object/email";
-import { InviteToken } from "../value-object/inviteToken";
+import { InviteCode } from "../value-object/inviteCode";
 import { FamilyInviteFactory } from "../models/familyInviteFactory";
 
 /**
@@ -37,11 +36,11 @@ export class FamilyInviteRepository extends BaseRepository {
     return FamilyInviteFactory.fromEntity(entity);
   }
 
-  /**
-   * トークンで招待を取得
+    /**
+   * 招待コードで招待を取得
    */
-  async findByToken(token: InviteToken): Promise<FamilyInvite | undefined> {
-    const entity = await this.familyInviteDao.findByToken(token.value);
+  async findByInviteCode(inviteCode: InviteCode): Promise<FamilyInvite | undefined> {
+    const entity = await this.familyInviteDao.findByInviteCode(inviteCode.value);
 
     if (!entity) {
       return undefined;
@@ -51,10 +50,10 @@ export class FamilyInviteRepository extends BaseRepository {
   }
 
   /**
-   * 家族IDとメールアドレスで招待を取得（重複チェック用）
+   * 家族IDで有効な招待を取得（複数発行防止用）
    */
-  async findByFamilyAndEmail(familyId: FamilyId, email: Email): Promise<FamilyInvite | undefined> {
-    const entity = await this.familyInviteDao.findByFamilyAndEmail(familyId.value, email.value);
+  async findActiveByFamilyId(familyId: FamilyId): Promise<FamilyInvite | undefined> {
+    const entity = await this.familyInviteDao.findActiveByFamilyId(familyId.value);
 
     if (!entity) {
       return undefined;

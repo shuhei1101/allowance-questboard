@@ -12,25 +12,24 @@ export class FamilyInviteDao extends BaseDao<FamilyInviteEntity> {
   }
 
   /**
-   * トークンで招待を検索
+   * 招待コードで招待を検索
    */
-  async findByToken(token: string): Promise<FamilyInviteEntity | undefined> {
+  async findByInviteCode(inviteCode: string): Promise<FamilyInviteEntity | undefined> {
     const result = await this.session
       .createQueryBuilder(FamilyInviteEntity, "fi")
-      .where("fi.token = :token", { token })
+      .where("fi.inviteCode = :inviteCode", { inviteCode })
       .getOne();
     
     return result || undefined;
   }
 
   /**
-   * 家族IDとメールアドレスで有効な招待を検索（重複チェック用）
+   * 家族IDで有効な招待を検索（複数発行防止用）
    */
-  async findByFamilyAndEmail(familyId: number, email: string): Promise<FamilyInviteEntity | undefined> {
+  async findActiveByFamilyId(familyId: number): Promise<FamilyInviteEntity | undefined> {
     const result = await this.session
       .createQueryBuilder(FamilyInviteEntity, "fi")
       .where("fi.familyId = :familyId", { familyId })
-      .andWhere("fi.email = :email", { email })
       .andWhere("fi.isUsed = false")
       .andWhere("fi.expiresAt > :now", { now: new Date() })
       .getOne();

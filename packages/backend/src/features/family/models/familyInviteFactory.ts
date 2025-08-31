@@ -2,8 +2,7 @@ import { FamilyInviteEntity } from "../entity/familyInviteEntity";
 import { FamilyInvite } from "./familyInvite";
 import { FamilyInviteId } from "../value-object/familyInviteId";
 import { FamilyId } from "../value-object/familyId";
-import { Email } from "@backend/features/auth/value-object/email";
-import { InviteToken } from "../value-object/inviteToken";
+import { InviteCode } from "../value-object/inviteCode";
 
 /**
  * FamilyInvite ファクトリークラス
@@ -17,8 +16,7 @@ export class FamilyInviteFactory {
     return new FamilyInvite({
       id: new FamilyInviteId(entity.id),
       familyId: new FamilyId(entity.familyId),
-      email: new Email(entity.email),
-      token: new InviteToken(entity.token),
+      inviteCode: new InviteCode(entity.inviteCode),
       expiresAt: entity.expiresAt,
       isUsed: entity.isUsed,
     });
@@ -31,8 +29,7 @@ export class FamilyInviteFactory {
     return FamilyInviteEntity.fromRaw({
       id: model.id?.value,
       familyId: model.familyId.value,
-      email: model.email.value,
-      token: model.token.value,
+      inviteCode: model.inviteCode.value,
       expiresAt: model.expiresAt,
       isUsed: model.isUsed,
     });

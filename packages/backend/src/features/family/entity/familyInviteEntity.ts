@@ -10,16 +10,14 @@ import { FamilyEntity } from "./familyEntity";
 
 /** 家族招待エンティティ */
 @Entity("family_invites")
-@Index("idx_family_invites_token", ["token"], { unique: true })
-@Index("idx_family_invites_family_email", ["familyId", "email"])
+@Index("idx_family_invites_invite_code", ["inviteCode"], { unique: true })
+@Index("idx_family_invites_family_id", ["familyId"])
 @Index("idx_family_invites_expires_at", ["expiresAt"])
 export class FamilyInviteEntity extends BaseTransactionEntity {
   @Column({ name: "family_id", type: "int", nullable: false, comment: "招待元の家族ID" })
   familyId!: number;
-  @Column({ name: "email", type: "varchar", length: 254, nullable: false, comment: "招待対象メールアドレス" })
-  email!: string;
-  @Column({ name: "token", type: "varchar", length: 256, nullable: false, unique: true, comment: "招待トークン（64文字以上）" })
-  token!: string;
+  @Column({ name: "invite_code", type: "varchar", length: 8, nullable: false, unique: true, comment: "招待コード（6〜8桁英数字）" })
+  inviteCode!: string;
   @Column({ name: "expires_at", type: "timestamptz", nullable: false, comment: "有効期限" })
   expiresAt!: Date;
   @Column({ name: "is_used", type: "boolean", nullable: false, default: false, comment: "使用済みフラグ" })
@@ -35,16 +33,14 @@ export class FamilyInviteEntity extends BaseTransactionEntity {
   static fromRaw(params: {
     id?: number;
     familyId: number;
-    email: string;
-    token: string;
+    inviteCode: string;
     expiresAt: Date;
     isUsed?: boolean;
   }): FamilyInviteEntity {
     const entity = new FamilyInviteEntity();
     if (params.id !== undefined) entity.id = params.id;
     entity.familyId = params.familyId;
-    entity.email = params.email;
-    entity.token = params.token;
+    entity.inviteCode = params.inviteCode;
     entity.expiresAt = params.expiresAt;
     entity.isUsed = params.isUsed ?? false;
     return entity;

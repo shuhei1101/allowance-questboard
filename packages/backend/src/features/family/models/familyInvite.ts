@@ -1,7 +1,6 @@
 import { BaseDomainModel } from "@backend/core/models/baseDomainModel";
 import { FamilyId } from "../value-object/familyId";
-import { Email } from "@backend/features/auth/value-object/email";
-import { InviteToken } from "../value-object/inviteToken";
+import { InviteCode } from "../value-object/inviteCode";
 import { FamilyInviteId } from "../value-object/familyInviteId";
 
 /**
@@ -9,23 +8,20 @@ import { FamilyInviteId } from "../value-object/familyInviteId";
  */
 export class FamilyInvite extends BaseDomainModel<FamilyInviteId> {
   public readonly familyId: FamilyId;
-  public readonly email: Email;
-  public readonly token: InviteToken;
+  public readonly inviteCode: InviteCode;
   public readonly expiresAt: Date;
   public readonly isUsed: boolean;
 
   constructor(params: {
     id?: FamilyInviteId;
     familyId: FamilyId;
-    email: Email;
-    token: InviteToken;
+    inviteCode: InviteCode;
     expiresAt: Date;
     isUsed?: boolean;
   }) {
     super(params.id);
     this.familyId = params.familyId;
-    this.email = params.email;
-    this.token = params.token;
+    this.inviteCode = params.inviteCode;
     this.expiresAt = params.expiresAt;
     this.isUsed = params.isUsed ?? false;
   }
@@ -51,27 +47,24 @@ export class FamilyInvite extends BaseDomainModel<FamilyInviteId> {
     return new FamilyInvite({
       id: this.id,
       familyId: this.familyId,
-      email: this.email,
-      token: this.token,
+      inviteCode: this.inviteCode,
       expiresAt: this.expiresAt,
       isUsed: true,
     });
   }
 
   /**
-   * 新しい招待を作成（24時間後に期限切れ）
+   * 新しい招待を作成（7日後に期限切れ）
    */
   static createNew(params: {
     familyId: FamilyId;
-    email: Email;
   }): FamilyInvite {
-    const token = InviteToken.generate();
-    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24時間後
+    const inviteCode = InviteCode.generate();
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7日後
 
     return new FamilyInvite({
       familyId: params.familyId,
-      email: params.email,
-      token,
+      inviteCode,
       expiresAt,
       isUsed: false,
     });
