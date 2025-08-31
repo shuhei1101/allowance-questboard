@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { t } from '@backend/core/trpc/trpcContext';
-import { getMasterData } from '../usecase/getMasterData';
+import { getMasterData } from '../services/getMasterData';
 import { IconCategoryRepository } from '@backend/features/icon-category/repository/iconCategoryRepository';
 import { IconCategoryDao } from '@backend/features/icon-category/dao/iconCategoryDao';
 import { IconCategoryTranslationDao } from '@backend/features/icon-category/dao/iconCategoryTranslationDao';

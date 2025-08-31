@@ -7,7 +7,7 @@ import { createContext } from './core/trpc/trpcContext' // 認証とか共通情
 import { AppDataSource } from './core/config/dataSource' // TypeORM DataSource
 import { setRedisClient } from './core/cache/redisCache' // Redis キャッシュ管理
 import { redisClient } from './core/config/redisConfig'   // Redis クライアント
-import { initMasterData } from './features/auth/usecase/initMasterData' // マスタデータ初期化
+import { initMasterData } from './features/auth/services/initMasterData' // マスタデータ初期化
 import { LanguageDao } from './features/language/dao/languageDao' // 言語DAO
 import { FamilyMemberTypeDao } from './features/family-member/dao/familyMemberTypeDao' // 家族メンバータイプDAO
 import { LanguageRepository } from './features/language/repository/languageRepository'
