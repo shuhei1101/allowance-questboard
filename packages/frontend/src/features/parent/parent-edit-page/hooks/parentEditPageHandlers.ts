@@ -5,25 +5,18 @@ import { useBirthdayHandler } from './useBirthdayHandler';
 import { useConfirmHandler } from './useConfirmHandler';
 import { useParentEditPageStore as useParentEditPageStore } from '../stores/parentEditPageStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { useIconSelectHandler } from './useIconSelectHandler';
 import { HandleParentForm } from '../ParentEditPage';
+import { Session } from '../../../../core/constants/sessionVariables';
 
-/**
- * 親情報登録画面の全ハンドラーを統合したカスタムフック
- * 
- * 親情報登録画面で使用する全てのイベントハンドラーを一括で提供
- * 
- * @param onConfirm 確定ボタン押下時のコールバック関数
- * @param shouldUpdate 更新クエリを送信するかのフラグ (デフォルト: true)
- */
-export const useParentEditPageHandlers = (params: {
+/** 親情報登録画面の全ハンドラーを統合したカスタムフック
+ * 親情報登録画面で使用する全てのイベントハンドラーを一括で提供 */
+export const parentEditPageHandlers = (params: {
   shouldUpdate: boolean,
   parentId?: ParentId,
   handleParentForm?: HandleParentForm
 }) => {
   const pageStore = useParentEditPageStore();
-  const sessionStore = useSessionStore();
   // 名前変更時のハンドラ
   const handleNameChange = useNameHandler({
     parentForm: pageStore.parentForm,
@@ -60,7 +53,7 @@ export const useParentEditPageHandlers = (params: {
   // 確定ボタン押下時のハンドラ
   const handleConfirm = useConfirmHandler({
     parentForm: pageStore.parentForm,
-    currentLanguageType: sessionStore.languageType,
+    currentLanguageType: Session.languageType,
     setLoading: pageStore.setLoading,
     clearErrors: pageStore.clearErrors,
     setNameError: pageStore.setNameError,

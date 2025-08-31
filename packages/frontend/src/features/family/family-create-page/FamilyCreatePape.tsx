@@ -1,50 +1,31 @@
+import { FamilyId } from '@backend/features/family/value-object/familyId';
+import { useTheme } from '@react-navigation/native';
+import { useFamilyCreatePageStore } from './familyCreatePageStore';
+export type HandleFamilyForm = (form: FamilyForm) => void;
 
-export type HandleParentForm = (form: ParentForm) => void;
-
-/**
- * 親情報編集画面
- * 家族の親情報を編集するためのページ
- * 
- * Props:
- * - onConfirm: 確定ボタンが押された時のコールバック
- * - shouldUpdate: 更新クエリを送信するかのフラグ（デフォルト: true）
- * 
- * 機能:
- * - 親の名前入力
- * - メールアドレス入力
- * - パスワード入力
- * - アイコン選択（一旦は画面遷移のメッセージ表示）
- * - 誕生日入力
- * - 入力値のバリデーション
- * - 必須項目が未入力時の確定ボタン無効化
- */
-export interface FamilyEditPageProps {
-  parentId?: ParentId; // 親ID（オプション）
+/** 親情報編集画面 */
+export interface FamilyCreatePageProps {
+  familyId?: FamilyId; // 親ID（オプション）
 }
 
-export const ParentEditPage: React.FC<ParentEditPageProps> = ({
-  shouldUpdate: shouldUpdate = true,
-  parentId,
-  handleParentForm,
+export const FamilyCreatePage: React.FC<FamilyCreatePageProps> = ({
+  familyId,
 }) => {
   const { colors } = useTheme();
-  const pageStore = useParentEditPageStore();
+  const pageStore = useFamilyCreatePageStore();
   const sessionStore = useSessionStore();
   const navigation = useNavigation();
 
-  // アプリ設定ストア
-  const appConfigStore = useAppConfigStore();
-
   // 親ルーターの作成
-  const parentRouter = createAuthenticatedClient({
+  const familyRouter = createAuthenticatedClient({
     jwtToken: sessionStore.jwt,
     languageType: sessionStore.languageType,
-  }).parent.getParent;
+  }).family.getFamily;
 
   // 親データ初期化フック
-  useInitializeParentData({
-    parentId: parentId,
-    parentRouter: parentRouter,
+  useInitializeFamilyData({
+    familyId: familyId,
+    familyRouter: familyRouter,
     getAllIcons: appConfigStore.getAllIcons
   });
 
@@ -56,10 +37,10 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = ({
     handleIconSelect,
     handleBirthdayChange,
     handleConfirm,
-  } = useParentEditPageHandlers({
+  } = useFamilyEditPageHandlers({
     shouldUpdate,
-    parentId,
-    handleParentForm
+    familyId,
+    handleFamilyForm
   });
 
   // 確定ボタン
@@ -68,13 +49,13 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = ({
       headerRight: () => (
         <ComfirmButton
           onPress={handleConfirm}
-          disabled={!pageStore.parentForm.isValid}
+          disabled={!pageStore.familyForm.isValid}
           loading={pageStore.isLoading}
           variant="header"
         />
       ),
     });
-  }, [navigation, handleConfirm, pageStore.parentForm.isValid, pageStore.isLoading]);
+  }, [navigation, handleConfirm, pageStore.familyForm.isValid, pageStore.isLoading]);
   
   return (
     <KeyboardAvoidingView 
@@ -89,35 +70,35 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = ({
         {/* フォームコンテナ */}
         <View style={styles.formContainer}>
           {/* 名前入力フィールド */}
-          <ParentNameInputFieldEntry
-            value={pageStore.parentForm.name.value}
+          <FamilyNameInputFieldEntry
+            value={pageStore.familyForm.name.value}
             onChange={handleNameChange}
             error={pageStore.nameError || undefined}
           />
           
           {/* メールアドレス入力フィールド */}
           <EmailInputFieldEntry
-            value={pageStore.parentForm.email.value}
+            value={pageStore.familyForm.email.value}
             onChange={handleEmailChange}
             error={pageStore.emailError || undefined}
           />
           
           {/* パスワード入力フィールド */}
           <PasswordInputFieldEntry
-            value={pageStore.parentForm.password.value}
+            value={pageStore.familyForm.password.value}
             onChange={handlePasswordChange}
             error={pageStore.passwordError || undefined}
           />
           
           {/* アイコン選択ボタン */}
           <IconSelectButtonEntry
-            selectedIcon={pageStore.parentForm.icon}
+            selectedIcon={pageStore.familyForm.icon}
             onIconSelected={handleIconSelect}
           />
           
           {/* 誕生日入力フィールド */}
           <BirthdayInputFieldEntry
-            value={pageStore.parentForm.birthday.toISOString()}
+            value={pageStore.familyForm.birthday.toISOString()}
             onChange={handleBirthdayChange}
             error={pageStore.birthdayError || undefined}
           />

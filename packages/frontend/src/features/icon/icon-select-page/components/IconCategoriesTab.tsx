@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
 import { SelectCategory } from '../stores/iconSelectPageStore';
+import { Session } from '../../../../core/constants/sessionVariables';
 
 interface Props {
   /** アイコンカテゴリ一覧 */
@@ -25,7 +25,7 @@ export const IconCategoriesTab: React.FC<Props> = ({
   onCategoryChange,
 }) => {
   const { colors } = useTheme();
-  const { languageType } = useSessionStore();
+  const languageType = Session.languageType;
 
   if (categories.length === 0) {
     return undefined;

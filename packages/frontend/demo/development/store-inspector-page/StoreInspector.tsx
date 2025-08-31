@@ -4,6 +4,7 @@ import { useTheme } from '@/core/theme';
 import { useLoginPageStore } from '@/features/auth/login-page/stores/loginPageStore';
 import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
 import { Session } from '../../../src/core/constants/sessionVariables';
+import { JwtStorage } from '../../../src/features/auth/services/jwtStorage';
 
 /**
  * ストア状態の確認画面
@@ -13,11 +14,11 @@ export const StoreInspector: React.FC = () => {
   const { colors } = useTheme();
   const loginPageStore = useLoginPageStore();
   const parentEditPageStore = useParentEditPageStore();
-  const [jwt, setJwt] = useState<string | null>(null);
+  const [jwt, setJwt] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const fetchJwt = async () => {
-      const token = await Session.getJwt();
+      const token = await JwtStorage.getToken();
       setJwt(token);
     };
     fetchJwt();

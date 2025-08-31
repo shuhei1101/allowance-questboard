@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { ParentForm } from '../models/parentForm';
+import { FamilyForm } from './models/familyForm';
 
 export type IsLoading = boolean;
-export type NameError = string | undefined;
+export type DisplayId = string | undefined;
 export type EmailError = string | undefined;
 export type PasswordError = string | undefined;
 export type BirthdayError = string | undefined;
 export type IsConfirmed = boolean;
 
-export type SetParentForm = (form: ParentForm) => void;
+export type SetFamilyForm = (form: FamilyForm) => void;
 export type SetLoading = (loading: boolean) => void;
-export type SetNameError = (error: string | undefined) => void;
+export type SetDisplayId = (error: string | undefined) => void;
 export type SetEmailError = (error: string | undefined) => void;
 export type SetPasswordError = (error: string | undefined) => void;
 export type SetBirthdayError = (error: string | undefined) => void;
@@ -19,18 +19,18 @@ export type ClearErrors = () => void;
 export type SetConfirmed = (confirmed: boolean) => void;
 export type Reset = () => void;
 
-interface FamilyEditPageState {
+interface FamilyCreatePageState {
   isLoading: IsLoading;
   familyForm: FamilyForm;
-  nameError?: NameError;
+  nameError?: DisplayId;
   emailError?: EmailError;
   passwordError?: PasswordError;
   birthdayError?: BirthdayError;
   isConfirmed: IsConfirmed;
 
-  setParentForm: SetParentForm;
+  setFamilyForm: SetFamilyForm;
   setLoading: SetLoading;
-  setNameError: SetNameError;
+  setDisplayId: SetDisplayId;
   setEmailError: SetEmailError;
   setPasswordError: SetPasswordError;
   setBirthdayError: SetBirthdayError;
@@ -41,8 +41,8 @@ interface FamilyEditPageState {
 
 const initialState = {
   isLoading: false,
-  parentForm: ParentForm.initialize(),
-  nameError: undefined,
+  parentForm: FamilyForm.initialize(),
+  displayIdError: undefined,
   emailError: undefined,
   passwordError: undefined,
   birthdayError: undefined,
@@ -52,21 +52,21 @@ const initialState = {
 /**
  * 親情報登録画面状態管理ストア
  */
-export const useParentEditPageStore = create<ParentEditPageState>()(
+export const useFamilyCreatePageStore = create<FamilyCreatePageState>()(
   devtools(
     (set) => ({
       ...initialState,
 
-      setParentForm: (parentForm: ParentForm) => {
-        set({ parentForm }, false, 'setParentForm');
+      setFamilyForm: (familyForm: FamilyForm) => {
+        set({ familyForm }, false, 'setFamilyForm');
       },
 
       setLoading: (loading: boolean) => {
         set({ isLoading: loading }, false, 'setLoading');
       },
 
-      setNameError: (error: string | undefined) => {
-        set({ nameError: error }, false, 'setNameError');
+      setDisplayId: (error: string | undefined) => {
+        set({ nameError: error }, false, 'setDisplayId');
       },
 
       setEmailError: (error: string | undefined) => {
@@ -99,7 +99,7 @@ export const useParentEditPageStore = create<ParentEditPageState>()(
       },
     }),
     {
-      name: 'parent-edit-page-store',
+      name: 'family-create-page-store',
     }
   )
 );

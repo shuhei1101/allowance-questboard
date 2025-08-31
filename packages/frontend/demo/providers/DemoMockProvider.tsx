@@ -16,6 +16,7 @@ import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 import { Session } from '../../src/core/constants/sessionVariables';
+import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
 
 interface Props {
   children: ReactNode;
@@ -73,7 +74,7 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
     Session.setFamilyMemberType(mockFamilyMemberType);
     
     // モックJWT（デモ用）
-    Session.setJwt('demo-jwt-token-12345');
+    JwtStorage.setToken('demo-jwt-token-12345');
 
     console.log('🎯 Demo - Session mock data set');
   };

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { LoginForm } from '../models/loginForm';
-import { SelectFamilyDialog } from '../models/selectFamilyDialog';
+import { LoginForm } from './models/loginForm';
+import { SelectFamilyDialog } from './models/selectFamilyDialog';
 
 export type IsLoading = boolean;
 export type IsDialogVisible = boolean;

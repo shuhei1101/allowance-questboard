@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParentEditPageStore } from '../stores/parentEditPageStore';
+import { SetParentForm, useParentEditPageStore } from '../stores/parentEditPageStore';
 import { fetchParentForm } from '../services/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ParentRouter } from '@backend/features/parent/router/parentRouter';
@@ -11,12 +11,10 @@ import { GetAllIcons } from '../../../../core/constants/appConstants';
 export const useInitializeParentData = (params: {
   parentId?: ParentId,
   parentRouter?: ParentRouter,
-  getAllIcons?: GetAllIcons
+  getAllIcons?: GetAllIcons,
+  setParentForm: SetParentForm
 }) => {
-  const pageStore = useParentEditPageStore();
-  
   useEffect(() => {
-    
     const initializeParentData = async () => {
       if (!params.parentId || !params.parentRouter || !params.getAllIcons) return;
       try {
@@ -25,7 +23,7 @@ export const useInitializeParentData = (params: {
           router: params.parentRouter,
           getAllIcons: params.getAllIcons
         });
-        pageStore.setParentForm(parentForm);
+        params.setParentForm(parentForm);
       } catch (error) {
         console.error('親情報の取得に失敗しました:', error);
       }

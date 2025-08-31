@@ -4,18 +4,16 @@ import * as Localization from 'expo-localization';
 import i18n from 'i18next';
 import { localeToLanguageType } from './src/features/auth/utils/localeToLanguageType';
 import { LoadingPage } from './src/features/shared/loading-page/LoadingPage';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { trpcClient } from '@/core/api/trpcClient';
 import { Constants } from './src/core/constants/appConstants';
+import { Session } from './src/core/constants/sessionVariables';
 
 /**
  * アプリ初期化コンポーネント
  * マスタデータの読み込みと言語設定を行い、完了後に子コンポーネントを表示
  */
 export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}) => {
-  const sessionStore = useSessionStore();
-  
   const [ready, setReady] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("アプリを初期化しています...");
 
@@ -38,7 +36,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("言語設定を適用しています... 📱");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        sessionStore.setLanguageType(languageType);
+        Session.setLanguageType(languageType);
         
         // i18nの言語も同期
         await i18n.changeLanguage(locale);
@@ -69,7 +67,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("エラーが発生しましたが、続行します... ⚠️");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        sessionStore.setLanguageType(languageType);
+        Session.setLanguageType(languageType);
         
         // i18nの言語も同期（フォールバック）
         try {

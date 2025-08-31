@@ -11,6 +11,8 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 /** 家族エンティティ */
 @Entity("families")
 export class FamilyEntity extends BaseTransactionEntity {
+  @Column({ name: "display_id", type: "string", unique: true, nullable: false, comment: "表示用家族ID" })
+  displayId!: string;
   @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "家名" })
   name!: string;
   @Column({ name: "icon_id", type: "int", nullable: true, comment: "アイコンID" })
@@ -25,12 +27,14 @@ export class FamilyEntity extends BaseTransactionEntity {
   
   static fromRaw(params: {
     id?: number;
+    displayId: string;
     name: string;
     iconId?: number;
     introduction: string;
   }): FamilyEntity {
     const entity = new FamilyEntity();
     if (params.id) entity.id = params.id;
+    entity.displayId = params.displayId;
     entity.name = params.name;
     if (params.iconId) entity.iconId = params.iconId;
     entity.introduction = params.introduction;

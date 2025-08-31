@@ -3,22 +3,26 @@ import { FamilyId } from "../value-object/familyId";
 import { FamilyName } from "../value-object/familyName";
 import { IconId } from "@backend/features/icon/value-objects/iconId";
 import { FamilyIntroduction } from "../value-object/familyIntroduction";
+import { FamilyDisplayId } from "../value-object/familyDisplayId";
 
 export class Family extends BaseDomainModel<FamilyId> {
+  displayId: FamilyDisplayId;
   name: FamilyName;
   iconId?: IconId;
   introduction: FamilyIntroduction;
 
   constructor(params: {
     id: FamilyId;
+    displayId: FamilyDisplayId;
     name: FamilyName;
     iconId?: IconId;
-    introduction: FamilyIntroduction;
+    introduction?: FamilyIntroduction;
   }) {
     super(params.id);
+    this.displayId = params.displayId;
     this.name = params.name;
     this.iconId = params.iconId;
-    this.introduction = params.introduction;
+    this.introduction = params.introduction || new FamilyIntroduction("");
   }
 
   protected validate(): void {

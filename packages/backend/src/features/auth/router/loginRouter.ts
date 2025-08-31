@@ -4,14 +4,17 @@ import z from 'zod';
 import { LocalizedTRPCError } from '@backend/core/errors/localizedTRPCError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
+import { UserIdSchema } from '../value-object/userId';
+import { FamilyNameSchema } from '../../family/value-object/familyName';
+import { BaseIdSchema } from '../../../core/value-object/base_id';
 
-export const loginResponseSchema = z.object({
-  userId: z.string().optional(),
-  familyMemberId: z.number().optional(),
-  familyId: z.number().optional(),
-  familyName: z.string().optional(),
-  parentId: z.number().nullable().optional(),
-  childId: z.number().nullable().optional(),
+export const loginOutput = z.object({
+  userId: UserIdSchema,
+  familyMemberId: BaseIdSchema.optional(),
+  familyId: BaseIdSchema.optional(),
+  familyName: FamilyNameSchema.optional(),
+  parentId: BaseIdSchema.optional(),
+  childId: BaseIdSchema.optional(),
 });
 
 /**
@@ -25,7 +28,7 @@ export const loginRouter = t.router({
    * 認証情報を返します。
    */
   login: authenticatedProcedure
-    .output(loginResponseSchema)
+    .output(loginOutput)
     .query(async ({ ctx }) => {
       try {
         const queryResult = await loginQuery({ 
@@ -33,7 +36,7 @@ export const loginRouter = t.router({
           userId: ctx.userId
         });
         
-        return loginResponseSchema.parse({
+        return loginOutput.parse({
           userId: queryResult.userId,
           familyMemberId: queryResult.familyMemberId,
           familyId: queryResult.familyId,
@@ -66,7 +69,7 @@ export const loginRouter = t.router({
     }),
 });
 
-export type LoginResponse = z.infer<typeof loginResponseSchema>;
+export type LoginResponse = z.infer<typeof loginOutput>;
 export interface LoginHandler {
   query(): Promise<LoginResponse>;
 }

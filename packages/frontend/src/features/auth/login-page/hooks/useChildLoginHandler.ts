@@ -2,10 +2,10 @@ import { useCallback } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HideDialog, SetLoginForm, SetLoading } from '../stores/loginPageStore';
-import { SetFamilyMemberType } from '@/features/auth/stores/sessionStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
+import { SetFamilyMemberType } from '../../../../core/constants/sessionVariables';
 
 /**
  * 子供ログインハンドラーのカスタムフック

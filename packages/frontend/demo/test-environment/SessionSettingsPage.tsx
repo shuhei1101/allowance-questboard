@@ -6,6 +6,7 @@ import { FamilyMemberTypeValue } from '@backend/features/family-member/value-obj
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { FamilyMemberTypeId } from '@backend/features/family-member/value-object/familyMemberTypeId';
 import { Session } from '../../src/core/constants/sessionVariables';
+import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
 
 /**
  * セッション設定画面
@@ -15,18 +16,18 @@ export const SessionSettingsPage: React.FC = () => {
   const { colors } = useTheme();
   
   const [customJwt, setCustomJwt] = useState('');
-  const [currentJwt, setCurrentJwt] = useState<string | null>(null);
+  const [currentJwt, setCurrentJwt] = useState<string | undefined>(undefined);
 
   // JWTトークンを非同期で取得
   useEffect(() => {
     const loadJwt = async () => {
       try {
-        const jwt = await Session.getJwt();
+        const jwt = await JwtStorage.getToken();
         setCurrentJwt(jwt);
         setCustomJwt(jwt || '');
       } catch (error) {
         console.error('JWT取得エラー:', error);
-        setCurrentJwt(null);
+        setCurrentJwt(undefined);
         setCustomJwt('');
       }
     };
@@ -56,7 +57,7 @@ export const SessionSettingsPage: React.FC = () => {
 
   const handleJwtUpdate = async () => {
     try {
-      await Session.setJwt(customJwt);
+      await JwtStorage.setToken(customJwt);
       setCurrentJwt(customJwt);
       Alert.alert('成功', 'JWTトークンを更新しました');
     } catch (error) {
@@ -76,7 +77,7 @@ export const SessionSettingsPage: React.FC = () => {
           onPress: async () => {
             try {
               // セッションストアの内容をクリア
-              await Session.setJwt('');
+              await JwtStorage.setToken('');
               Session.setLanguageType(undefined as any);
               Session.setFamilyMemberType(undefined as any);
               setCurrentJwt('');

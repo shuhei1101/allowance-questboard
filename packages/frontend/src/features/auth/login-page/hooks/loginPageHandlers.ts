@@ -8,21 +8,18 @@ import { useCreateFamilyHandler } from './useCreateFamilyHandler';
 import { useForgotPasswordHandler } from './useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { useLoginPageStore } from '../stores/loginPageStore';
-import { useSessionStore } from '../../stores/sessionStore';
 import { login } from '../services/login';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
+import { JwtStorage } from '../../services/jwtStorage';
+import { Session } from '../../../../core/constants/sessionVariables';
 
-/**
- * ログインページの全ハンドラーを統合したカスタムフック
- * 
- * ログインページで使用する全てのイベントハンドラーを一括で提供
- */
-export const useLoginPageHandlers = () => {
+/** ログインページの全ハンドラーを統合したカスタムフック
+ * ログインページで使用する全てのイベントハンドラーを一括で提供 */
+export const loginPageHandlers = async () => {
   const pageStore = useLoginPageStore();
-  const sessionStore = useSessionStore();
   const router = createAuthenticatedClient({
-    jwtToken: sessionStore.jwt,
-    languageType: sessionStore.languageType,
+    jwtToken: await JwtStorage.getToken(),
+    languageType: Session.languageType,
   });
   const handleEmailChange = useEmailHandler({
     emailError: pageStore.emailError,
@@ -39,7 +36,7 @@ export const useLoginPageHandlers = () => {
   const handleLogin = useLoginHandler({
     clearErrors: pageStore.clearErrors,
     loginForm: pageStore.loginForm,
-    currentLanguageType: sessionStore.languageType,
+    currentLanguageType: Session.languageType,
     setEmailError: pageStore.setEmailError,
     setPasswordError: pageStore.setPasswordError,
     showDialog: pageStore.showDialog,
@@ -49,13 +46,13 @@ export const useLoginPageHandlers = () => {
     loginHandler: router.login.login,
   });
   const handleParentLogin = useParentLoginHandler({
-    updateFamilyMemberType: sessionStore.setFamilyMemberType,
+    updateFamilyMemberType: Session.setFamilyMemberType,
     hideDialog: pageStore.hideDialog,
     setLoginForm: pageStore.setLoginForm,
     setLoading: pageStore.setLoading,
   });
   const handleChildLogin = useChildLoginHandler({
-    updateFamilyMemberType: sessionStore.setFamilyMemberType,
+    updateFamilyMemberType: Session.setFamilyMemberType,
     hideDialog: pageStore.hideDialog,
     setLoginForm: pageStore.setLoginForm,
     setLoading: pageStore.setLoading,
@@ -63,9 +60,15 @@ export const useLoginPageHandlers = () => {
   const handleCloseDialog = useCloseDialogHandler({
     hideDialog: pageStore.hideDialog,
   });
-  const handleCreateFamily = useCreateFamilyHandler();
-  const handleForgotPassword = useForgotPasswordHandler();
-  const handleTermsOfService = useTermsOfServiceHandler();
+  const handleCreateFamily = useCreateFamilyHandler({
+    languageType: Session.languageType,
+  });
+  const handleForgotPassword = useForgotPasswordHandler({
+    languageType: Session.languageType,
+  });
+  const handleTermsOfService = useTermsOfServiceHandler({
+    languageType: Session.languageType,
+  });
 
   return {
     handleEmailChange,

@@ -3,11 +3,9 @@ import { LanguageType } from "../../../../backend/src/features/language/enum/lan
 import { LanguageTypeValue } from "../../../../backend/src/features/language/value-object/languageTypeValue";
 import { createJwtStorage, GetToken, IJwtStorage } from "../../features/auth/services/jwtStorage";
 
-export type SetJwt = (jwt: string) => void;
 export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
 export type SetLanguageType = (languageType: LanguageTypeValue) => void;
 export type Clear = () => void;
-export type IsAuthenticated = () => boolean;
 
 class SessionVariables {
   familyMemberType?: FamilyMemberTypeValue;
@@ -16,18 +14,18 @@ class SessionVariables {
 
   constructor(params: {
     familyMemberType?: FamilyMemberTypeValue,
-    languageType: LanguageTypeValue,
+    languageType?: LanguageTypeValue,
     jwtStorage: IJwtStorage
   }) {
     this.familyMemberType = params.familyMemberType;
-    this.languageType = params.languageType;
+    this.languageType = params.languageType || LanguageType.ENGLISH;
     this.jwtStorage = params.jwtStorage;
   }
 
   static initialize(): SessionVariables {
     return new SessionVariables({
       familyMemberType: undefined,
-      languageType: LanguageType.ENGLISH,
+      languageType: undefined,
       jwtStorage: createJwtStorage()
     });
   }
@@ -39,19 +37,6 @@ class SessionVariables {
   setLanguageType: SetLanguageType = (languageType: LanguageTypeValue) => {
     this.languageType = languageType;
   }
-
-  getJwt: GetToken = async () => {
-    return await this.jwtStorage.getToken();
-  }
-
-  setJwt: SetJwt = async (jwt: string) => {
-    await this.jwtStorage.saveToken(jwt);
-  }
-
-  isAuthenticated: IsAuthenticated = () => {
-    return this.jwtStorage.getToken() !== null;
-  }
-
 }
 
 export const Session = SessionVariables.initialize();

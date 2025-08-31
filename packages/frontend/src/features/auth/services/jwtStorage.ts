@@ -2,45 +2,41 @@
 import { Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
-export type SaveToken = (token: string) => Promise<void>;
-export type GetToken = () => Promise<string | null>;
+export type SetToken = (token: string) => Promise<void>;
+export type GetToken = () => Promise<string | undefined>;
 export type DeleteToken = () => Promise<void>;
 
 // 共通インターフェース
 export interface IJwtStorage {
-  saveToken: SaveToken;
+  setToken: SetToken;
   getToken: GetToken;
   deleteToken: DeleteToken;
 }
 
 // モバイル実装 (expo-secure-store)
 class MobileJwtStorage implements IJwtStorage {
-  async saveToken(token: string): Promise<void> {
+  setToken: SetToken = async (token: string) => {
     await SecureStore.setItemAsync("jwt", token);
-  }
-
-  async getToken(): Promise<string | null> {
-    return await SecureStore.getItemAsync("jwt");
-  }
-
-  async deleteToken(): Promise<void> {
+  };
+  getToken: GetToken = async () => {
+    return await SecureStore.getItemAsync("jwt") ?? undefined;
+  };
+  deleteToken: DeleteToken = async () => {
     await SecureStore.deleteItemAsync("jwt");
-  }
+  };
 }
 
 // PC実装 (localStorage)
 class PcJwtStorage implements IJwtStorage {
-  async saveToken(token: string): Promise<void> {
-    localStorage.setItem("jwt", token);
-  }
-
-  async getToken(): Promise<string | null> {
-    return localStorage.getItem("jwt");
-  }
-
-  async deleteToken(): Promise<void> {
+  getToken: GetToken = async () => {
+    return localStorage.getItem("jwt") ?? undefined;
+  };
+  deleteToken: DeleteToken = async () => {
     localStorage.removeItem("jwt");
-  }
+  };
+  setToken: SetToken = async (token: string) => {
+    localStorage.setItem("jwt", token);
+  };
 }
 
 const mobileJwtStorage = new MobileJwtStorage();
@@ -53,3 +49,5 @@ export function createJwtStorage(): IJwtStorage {
     return mobileJwtStorage;
   }
 }
+
+export const JwtStorage = createJwtStorage();

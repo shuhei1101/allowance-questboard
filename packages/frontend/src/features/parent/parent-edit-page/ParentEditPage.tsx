@@ -8,61 +8,47 @@ import { IconSelectButtonEntry } from '../../shared/components/IconSelectButtonE
 import { BirthdayInputFieldEntry } from '../../shared/components/BirthdayInputFieldEntry';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
-import { useParentEditPageHandlers } from './hooks/useParentEditPageHandlers';
-import { useInitializeParentData } from './hooks/useParentDataInitializer';
-import { useSessionStore } from '@/features/auth/stores/sessionStore';
+import { parentEditPageHandlers } from './hooks/parentEditPageHandlers';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ComfirmButton } from '@/features/shared/components';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
 import { ParentForm } from './models/parentForm';
 import { Constants } from '../../../core/constants/appConstants';
+import { JwtStorage } from '../../auth/services/jwtStorage';
+import { Session } from '../../../core/constants/sessionVariables';
+import { useInitializeParentData } from './hooks/useParentDataInitializer';
 
 export type HandleParentForm = (form: ParentForm) => void;
 
-/**
- * 親情報編集画面
- * 家族の親情報を編集するためのページ
- * 
- * Props:
- * - onConfirm: 確定ボタンが押された時のコールバック
- * - shouldUpdate: 更新クエリを送信するかのフラグ（デフォルト: true）
- * 
- * 機能:
- * - 親の名前入力
- * - メールアドレス入力
- * - パスワード入力
- * - アイコン選択（一旦は画面遷移のメッセージ表示）
- * - 誕生日入力
- * - 入力値のバリデーション
- * - 必須項目が未入力時の確定ボタン無効化
- */
+/** 親情報編集画面
+ * 家族の親情報を編集するためのページ */
 export interface ParentEditPageProps {
   shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
   parentId?: ParentId; // 親ID（オプション）
   handleParentForm?: HandleParentForm;
 }
 
-export const ParentEditPage: React.FC<ParentEditPageProps> = ({
+export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
   shouldUpdate: shouldUpdate = true,
   parentId,
   handleParentForm,
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
-  const sessionStore = useSessionStore();
   const navigation = useNavigation();
 
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
-    jwtToken: sessionStore.jwt,
-    languageType: sessionStore.languageType,
+    jwtToken: await JwtStorage.getToken(),
+    languageType: Session.languageType,
   }).parent.getParent;
 
   // 親データ初期化フック
   useInitializeParentData({
     parentId: parentId,
     parentRouter: parentRouter,
-    getAllIcons: Constants.getAllIcons
+    getAllIcons: Constants.getAllIcons,
+    setParentForm: pageStore.setParentForm
   });
 
   // 統合フックで全ハンドラーを取得
@@ -73,7 +59,7 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = ({
     handleIconSelect,
     handleBirthdayChange,
     handleConfirm,
-  } = useParentEditPageHandlers({
+  } = parentEditPageHandlers({
     shouldUpdate,
     parentId,
     handleParentForm

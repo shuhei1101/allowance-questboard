@@ -8,9 +8,9 @@ export abstract class BaseModel {
 
   constructor() {}
 
-  /**
-   * _validateの実行
-   */
+  /** validateの実行
+   * 
+   * コンストラクタでメンバ初期化後に呼び出すこと */
   protected runValidate(): void {
     try {
       this.validate();
@@ -24,9 +24,9 @@ export abstract class BaseModel {
     }
   }
 
-  /**
-   * モデルの値を検証する（サブクラスで実装必須）
-   */
+  /** モデルの値を検証する（サブクラスで実装必須）
+   * 
+   * コンストラクタでrunValidateを呼び出すこと */
   protected abstract validate(): void;
 
   /**

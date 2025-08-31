@@ -5,9 +5,7 @@ import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { BaseModel } from '@backend/core/models/baseModel';
 import { Icon } from '@backend/features/icon/domain/icon';
 
-/**
- * 親登録フォームモデル
- */
+/** 親登録フォームモデル */
 export class ParentForm extends BaseModel {
   public readonly name: ParentName;
   public readonly email: Email;
@@ -31,9 +29,7 @@ export class ParentForm extends BaseModel {
     this.runValidate();
   }
 
-  /**
-   * モデルの値を検証する
-   */
+  /** モデルの値を検証する */
   protected validate(): void {
     this.validator.valuesEmpty(
       this.name, this.email, this.password,
@@ -41,10 +37,7 @@ export class ParentForm extends BaseModel {
     )
   }
 
-  /**
-   * 初期状態のフォームを作成
-   * @returns 初期状態のParentFormインスタンス
-   */
+  /** 初期状態のフォームを作成 */
   public static initialize(): ParentForm {
     return new ParentForm({
       name: new ParentName(''),

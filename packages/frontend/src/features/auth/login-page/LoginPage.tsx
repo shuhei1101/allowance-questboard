@@ -10,7 +10,7 @@ import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { useLoginPageStore } from './stores/loginPageStore';
-import { useLoginPageHandlers } from './hooks/useLoginPageHandlers';
+import { loginPageHandlers } from './hooks/loginPageHandlers';
 
 /**
  * ログインページ
@@ -23,7 +23,7 @@ import { useLoginPageHandlers } from './hooks/useLoginPageHandlers';
  * - 親・子ログインの選択
  * - 利用規約への遷移
  */
-export const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = async () => {
   const { colors } = useTheme();
   const pageStore = useLoginPageStore();
   
@@ -38,7 +38,7 @@ export const LoginPage: React.FC = () => {
     handleChildLogin,
     handleTermsOfService,
     handleCloseDialog,
-  } = useLoginPageHandlers();
+  } = await loginPageHandlers();
   
   return (
     <KeyboardAvoidingView 

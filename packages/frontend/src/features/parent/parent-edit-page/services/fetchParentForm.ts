@@ -16,16 +16,10 @@ interface FetchParentFormParams {
   getAllIcons: GetAllIcons;
 }
 
-/**
- * 親フォーム情報取得ユースケース
+/** 親フォーム情報取得ユースケース
  * 
  * JWTトークンを使用して親情報を取得し、
- * ParentFormモデルに変換する
- * 
- * @param params 親フォーム取得パラメータ
- * @returns 親フォーム情報
- * @throws AppError 親情報の取得に失敗した場合
- */
+ * ParentFormモデルに変換する */
 export const fetchParentForm = async (params: FetchParentFormParams): Promise<ParentForm> => {
   try {
     // 親情報取得APIを実行

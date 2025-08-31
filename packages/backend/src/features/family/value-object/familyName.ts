@@ -20,7 +20,7 @@ export class FamilyName extends BaseValueObject<string, typeof FamilyNameSchema>
   protected validate(): void {
     this.validator
       .required()
-      .minLength(1)
+      .minLength(3)
       .maxLength(20);
   }
 

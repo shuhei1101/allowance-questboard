@@ -6,7 +6,7 @@ import { z } from 'zod';
  * EmailのZodスキーマ
  */
 export const EmailSchema = z.object({
-  value: z.string().email()
+  value: z.string()
 });
 
 /**
