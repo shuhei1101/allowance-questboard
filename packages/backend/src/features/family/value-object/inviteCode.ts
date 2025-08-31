@@ -3,14 +3,10 @@ import { BaseValueObject } from "../../../core/value-object/baseValueObject";
 import { z } from 'zod';
 import * as crypto from 'crypto';
 
-/**
- * InviteCodeのZodスキーマ
- */
+/** InviteCodeのZodスキーマ */
 export const InviteCodeSchema = z.string();
 
-/**
- * 招待コードを表す値オブジェクト
- */
+/** 招待コードを表す値オブジェクト */
 export class InviteCode extends BaseValueObject<string, typeof InviteCodeSchema> {
   constructor(value: string) {
     super({ value });
@@ -34,10 +30,7 @@ export class InviteCode extends BaseValueObject<string, typeof InviteCodeSchema>
     });
   }
 
-  /**
-   * ランダムな招待コードを生成する
-   * @returns 生成された招待コード
-   */
+  /** ランダムな招待コードを生成する */
   static generate(): InviteCode {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const length = 6; // 6桁固定
@@ -49,12 +42,5 @@ export class InviteCode extends BaseValueObject<string, typeof InviteCodeSchema>
     }
     
     return new InviteCode(result);
-  }
-
-  /**
-   * 招待コードの値を取得する
-   */
-  get code(): string {
-    return this.value;
   }
 }

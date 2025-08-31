@@ -4,33 +4,32 @@ import { verifyAndUseInviteCode } from "./verifyInviteCode";
 import { AppError } from "@backend/core/errors/appError";
 import { LocaleString } from "@backend/core/messages/localeString";
 
-/**
- * 家族参加サービスのパラメータ
- */
+export type JoinFamilyWithCode = (params: JoinFamilyWithCodeParams) => Promise<JoinFamilyWithCodeResult>;
+
+/** 家族参加サービスのパラメータ */
 export interface JoinFamilyWithCodeParams {
+  /** 招待コード */
   inviteCode: InviteCode;
+  /** 子供のユーザーID */
   childUserId: string; // Supabase Auth User ID
+  /** 招待コードリポジトリ */
   familyInviteRepository: FamilyInviteRepository;
   // 他のリポジトリ（ChildRepository, FamilyMemberRepository等）は後で追加
 }
 
-/**
- * 家族参加サービスの結果
- */
+/** 家族参加サービスの結果 */
 export interface JoinFamilyWithCodeResult {
   familyId: number;
   success: boolean;
 }
 
-/**
- * 家族参加ビジネスロジック
+/** 家族参加ビジネスロジック
  * 
  * 招待コードを検証し、子供を家族に参加させる。
  * 1. 招待コードを検証・使用済みにマーク
  * 2. 子供のfamilyIdを設定
- * 3. FamilyMemberとして登録
- */
-export async function joinFamilyWithCode(params: JoinFamilyWithCodeParams): Promise<JoinFamilyWithCodeResult> {
+ * 3. FamilyMemberとして登録 */
+export const joinFamilyWithCode: JoinFamilyWithCode = async (params: JoinFamilyWithCodeParams): Promise<JoinFamilyWithCodeResult> => {
   try {
     // 招待コードを検証し、使用済みにマーク
     const { invite } = await verifyAndUseInviteCode({

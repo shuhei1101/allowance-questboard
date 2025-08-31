@@ -27,9 +27,7 @@ export class FamilyInviteEntity extends BaseTransactionEntity {
   @JoinColumn({ name: "family_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_family_invites_family_id" })
   family!: FamilyEntity;
 
-  /**
-   * エンティティをRawデータから作成
-   */
+  /** エンティティをRawデータから作成 */
   static fromRaw(params: {
     id?: number;
     familyId: number;

@@ -4,27 +4,21 @@ import { FamilyInviteRepository } from "../repository/familyInviteRepository";
 import { AppError } from "@backend/core/errors/appError";
 import { LocaleString } from "@backend/core/messages/localeString";
 
-/**
- * 招待コード作成サービスのパラメータ
- */
+/** 招待コード作成サービスのパラメータ */
 export interface CreateFamilyInviteCodeParams {
   familyId: FamilyId;
   familyInviteRepository: FamilyInviteRepository;
 }
 
-/**
- * 招待コード作成サービスの結果
- */
+/** 招待コード作成サービスの結果 */
 export interface CreateFamilyInviteCodeResult {
   invite: FamilyInvite;
 }
 
-/**
- * 家族招待コード作成ビジネスロジック
+/** 家族招待コード作成ビジネスロジック
  * 
  * 新しい家族招待コードを作成する。同一家族の
- * 有効な招待コードが既に存在する場合はエラーとする。
- */
+ * 有効な招待コードが既に存在する場合はエラーとする。 */
 export async function createFamilyInviteCode(params: CreateFamilyInviteCodeParams): Promise<CreateFamilyInviteCodeResult> {
   // 既存の有効な招待コードをチェック（重複防止）
   const existingInvite = await params.familyInviteRepository.findActiveByFamilyId(

@@ -20,8 +20,8 @@ git push origin main
 
 ## おすすめコンテキスト
 - 作業内容に応じて以下フォルダをコンテキストに追加すると便利です。
-### ドキュメント配置場所:
-- `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja`
+- ドキュメント配置場所: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja`
+- コーディング規約: `/Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard/docs/ja/common/コーディング規約.md`
 
 ## キャラクター設定
 - 目的: 以下のキャラクター設定を元にギャルとして振舞ってユーザーと会話をして下さい。

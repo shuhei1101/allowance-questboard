@@ -2,6 +2,7 @@ import { BaseDomainModel } from "@backend/core/models/baseDomainModel";
 import { FamilyId } from "../value-object/familyId";
 import { InviteCode } from "../value-object/inviteCode";
 import { FamilyInviteId } from "../value-object/familyInviteId";
+import { ExpiresAt } from "../value-object/expiresAt";
 
 /**
  * 家族招待ドメインモデル
@@ -9,14 +10,14 @@ import { FamilyInviteId } from "../value-object/familyInviteId";
 export class FamilyInvite extends BaseDomainModel<FamilyInviteId> {
   public readonly familyId: FamilyId;
   public readonly inviteCode: InviteCode;
-  public readonly expiresAt: Date;
+  public readonly expiresAt: ExpiresAt;
   public readonly isUsed: boolean;
 
   constructor(params: {
     id?: FamilyInviteId;
     familyId: FamilyId;
     inviteCode: InviteCode;
-    expiresAt: Date;
+    expiresAt: ExpiresAt;
     isUsed?: boolean;
   }) {
     super(params.id);
@@ -25,19 +26,11 @@ export class FamilyInvite extends BaseDomainModel<FamilyInviteId> {
     this.expiresAt = params.expiresAt;
     this.isUsed = params.isUsed ?? false;
   }
-
-  /**
-   * 招待が期限切れかどうかを判定
-   */
-  isExpired(): boolean {
-    return new Date() > this.expiresAt;
-  }
-
   /**
    * 招待が利用可能かどうかを判定（未使用かつ有効期限内）
    */
   isAvailable(): boolean {
-    return !this.isUsed && !this.isExpired();
+    return !this.isUsed && !this.expiresAt.isExpired();
   }
 
   /**
@@ -60,7 +53,7 @@ export class FamilyInvite extends BaseDomainModel<FamilyInviteId> {
     familyId: FamilyId;
   }): FamilyInvite {
     const inviteCode = InviteCode.generate();
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7日後
+    const expiresAt = ExpiresAt.createDefault(); // 7日後
 
     return new FamilyInvite({
       familyId: params.familyId,

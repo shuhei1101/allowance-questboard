@@ -4,6 +4,8 @@ import { FamilyInviteRepository } from "../repository/familyInviteRepository";
 import { AppError } from "@backend/core/errors/appError";
 import { LocaleString } from "@backend/core/messages/localeString";
 
+export type CreateFamilyInviteCode = (params: CreateFamilyInviteCodeParams) => Promise<CreateFamilyInviteCodeResult>;
+
 /**
  * 招待コード作成サービスのパラメータ
  */
@@ -25,7 +27,7 @@ export interface CreateFamilyInviteCodeResult {
  * 新しい家族招待コードを作成する。同一家族の
  * 有効な招待コードが既に存在する場合はエラーとする。
  */
-export async function createFamilyInviteCode(params: CreateFamilyInviteCodeParams): Promise<CreateFamilyInviteCodeResult> {
+export const createFamilyInviteCode: CreateFamilyInviteCode = async (params: CreateFamilyInviteCodeParams): Promise<CreateFamilyInviteCodeResult> => {
   // 既存の有効な招待コードをチェック（重複防止）
   const existingInvite = await params.familyInviteRepository.findActiveByFamilyId(
     params.familyId
