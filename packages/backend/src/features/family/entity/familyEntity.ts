@@ -11,7 +11,7 @@ import { IconEntity } from "@backend/features/icon/entity/iconEntity";
 /** 家族エンティティ */
 @Entity("families")
 export class FamilyEntity extends BaseTransactionEntity {
-  @Column({ name: "display_id", type: "string", unique: true, nullable: false, comment: "表示用家族ID" })
+  @Column({ name: "display_id", type: "varchar", unique: true, nullable: false, comment: "表示用家族ID" })
   displayId!: string;
   @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "家名" })
   name!: string;

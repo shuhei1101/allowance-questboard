@@ -8,7 +8,7 @@ import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { Login } from '../services/login';
 import { LoginHandler } from '@backend/features/auth/router/loginRouter';
 import { AppError } from '@backend/core/errors/appError';
-import { useLoginFormValidationHandler } from '../handlers/useLoginFormValidationHandler';
+import { useLoginFormValidationHandler } from '../validations/useLoginFormValidationHandler';
 
 /**
  * ログインハンドラーのカスタムフック
