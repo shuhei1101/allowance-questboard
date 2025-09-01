@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { LanguageTypeValue } from '../../../../../../backend/src/features/language/value-object/languageTypeValue';
+import { useAppNavigation } from '../../../../../AppNavigator';
 
 /**
  * 利用規約ハンドラーのカスタムフック
@@ -12,15 +13,15 @@ import { LanguageTypeValue } from '../../../../../../backend/src/features/langua
 export const useTermsOfServiceHandler = (params: {
   languageType: LanguageTypeValue
 }) => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   
   return useCallback((): void => {
     // 利用規約画面への遷移
     console.log('利用規約画面への遷移');
-    navigation.navigate('TermsOfService' as never);
+    // TODO: 利用規約画面を実装したら、そちらに遷移するように修正する
     Alert.alert(
       AuthErrorMessages.termsOfServiceTitle().getMessage(params.languageType),
       AuthErrorMessages.termsOfServiceMessage().getMessage(params.languageType)
     );
-  }, [params.languageType, navigation]);
+  }, [params.languageType]);
 };

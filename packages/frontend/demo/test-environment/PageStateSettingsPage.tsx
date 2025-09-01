@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
 import { DemoStackMeta } from '../demoStackMeta';
+import { useAppNavigation } from '../../AppNavigator';
 
 /**
  * 画面状態設定メニューページ
@@ -10,7 +11,7 @@ import { DemoStackMeta } from '../demoStackMeta';
  */
 export const PageStateSettingsPage: React.FC = () => {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useAppNavigation();
 
   const settingsPages = [
     {

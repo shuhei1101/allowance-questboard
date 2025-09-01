@@ -6,6 +6,7 @@ import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 import { SetFamilyMemberType } from '../../../../core/constants/sessionVariables';
+import { useAppNavigation } from '../../../../../AppNavigator';
 
 /**
  * 親ログインハンドラーのカスタムフック
@@ -19,7 +20,7 @@ export const useParentLoginHandler = (params: {
   setLoading: SetLoading
 }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation<any>();
+  const navigation = useAppNavigation();
   
   return useCallback((): void => {
     try {
@@ -35,11 +36,11 @@ export const useParentLoginHandler = (params: {
 
       // 親用ホーム画面への遷移
       console.log('親用ホーム画面への遷移');
-      navigation.navigate('ParentHome');
+      // TODO: 親用ホーム画面を実装したら、そちらに遷移するように修正する
       Alert.alert(t('common.success'), t('auth.loginPage.success.parentLogin'));
     } catch (error) {
       console.error('親ログインエラー:', error);
       Alert.alert(t('common.error'), t('auth.loginPage.errors.parentLoginFailed'));
     }
-  }, [params.updateFamilyMemberType, params.hideDialog, params.setLoginForm, params.setLoading, t, navigation]);
+  }, [params.updateFamilyMemberType, params.hideDialog, params.setLoginForm, params.setLoading, t]);
 };

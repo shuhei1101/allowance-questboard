@@ -21,21 +21,21 @@ export const parentEditPageHandlers = (params: {
   const handleNameChange = useNameHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
-    nameError: pageStore.nameError,
+    nameError: pageStore.errors.name,
     setNameError: pageStore.setNameError,
   });
   // メール変更時のハンドラ
   const handleEmailChange = useEmailHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
-    emailError: pageStore.emailError,
+    emailError: pageStore.errors.email,
     setEmailError: pageStore.setEmailError,
   });
   // パスワード変更時のハンドラ
   const handlePasswordChange = usePasswordHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
-    passwordError: pageStore.passwordError,
+    passwordError: pageStore.errors.password,
     setPasswordError: pageStore.setPasswordError,
   });
   // アイコン選択時のハンドラ
@@ -47,7 +47,7 @@ export const parentEditPageHandlers = (params: {
   const handleBirthdayChange = useBirthdayHandler({
     parentForm: pageStore.parentForm,
     setParentForm: pageStore.setParentForm,
-    birthdayError: pageStore.birthdayError,
+    birthdayError: pageStore.errors.birthday,
     setBirthdayError: pageStore.setBirthdayError,
   });
   // 確定ボタン押下時のハンドラ

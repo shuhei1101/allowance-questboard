@@ -19,15 +19,33 @@ export type ClearErrors = () => void;
 export type SetConfirmed = (confirmed: boolean) => void;
 export type Reset = () => void;
 
-interface ParentEditPageState {
+interface FormErrors {
+  name?: NameError;
+  email?: EmailError;
+  password?: PasswordError;
+  birthday?: BirthdayError;
+}
+
+interface Properties {
   isLoading: IsLoading;
   parentForm: ParentForm;
-  nameError?: NameError;
-  emailError?: EmailError;
-  passwordError?: PasswordError;
-  birthdayError?: BirthdayError;
+  errors: FormErrors;
   isConfirmed: IsConfirmed;
+}
 
+const defaultProperties: Properties = {
+  isLoading: false,
+  parentForm: ParentForm.initialize(),
+  errors: {
+    name: undefined,
+    email: undefined,
+    password: undefined,
+    birthday: undefined,
+  },
+  isConfirmed: false,
+};
+
+interface ParentEditPageState extends Properties {
   setParentForm: SetParentForm;
   setLoading: SetLoading;
   setNameError: SetNameError;
@@ -39,23 +57,11 @@ interface ParentEditPageState {
   reset: Reset;
 }
 
-const initialState = {
-  isLoading: false,
-  parentForm: ParentForm.initialize(),
-  nameError: undefined,
-  emailError: undefined,
-  passwordError: undefined,
-  birthdayError: undefined,
-  isConfirmed: false,
-};
-
-/**
- * 親情報登録画面状態管理ストア
- */
+/** 親情報登録画面状態管理ストア */
 export const useParentEditPageStore = create<ParentEditPageState>()(
   devtools(
     (set) => ({
-      ...initialState,
+      ...defaultProperties,
 
       setParentForm: (parentForm: ParentForm) => {
         set({ parentForm }, false, 'setParentForm');
@@ -66,28 +72,23 @@ export const useParentEditPageStore = create<ParentEditPageState>()(
       },
 
       setNameError: (error: string | undefined) => {
-        set({ nameError: error }, false, 'setNameError');
+        set((state) => ({ errors: { ...state.errors, name: error } }), false, 'setNameError');
       },
 
       setEmailError: (error: string | undefined) => {
-        set({ emailError: error }, false, 'setEmailError');
+        set((state) => ({ errors: { ...state.errors, email: error } }), false, 'setEmailError');
       },
 
       setPasswordError: (error: string | undefined) => {
-        set({ passwordError: error }, false, 'setPasswordError');
+        set((state) => ({ errors: { ...state.errors, password: error } }), false, 'setPasswordError');
       },
 
       setBirthdayError: (error: string | undefined) => {
-        set({ birthdayError: error }, false, 'setBirthdayError');
+        set((state) => ({ errors: { ...state.errors, birthday: error } }), false, 'setBirthdayError');
       },
 
       clearErrors: () => {
-        set({ 
-          nameError: undefined, 
-          emailError: undefined, 
-          passwordError: undefined, 
-          birthdayError: undefined 
-        }, false, 'clearErrors');
+        set({ errors: {} }, false, 'clearErrors');
       },
 
       setConfirmed: (confirmed: boolean) => {
@@ -95,7 +96,7 @@ export const useParentEditPageStore = create<ParentEditPageState>()(
       },
 
       reset: () => {
-        set({ ...initialState }, false, 'reset');
+        set({ ...defaultProperties }, false, 'reset');
       },
     }),
     {

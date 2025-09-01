@@ -14,7 +14,7 @@
 //   const { colors } = useTheme();
 //   const pageStore = useFamilyCreatePageStore();
 //   const sessionStore = useSessionStore();
-//   const navigation = useNavigation();
+//   const navigation = useAppNavigation();
 
 //   // 親ルーターの作成
 //   const familyRouter = createAuthenticatedClient({

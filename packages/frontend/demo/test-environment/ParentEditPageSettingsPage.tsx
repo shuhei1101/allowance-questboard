@@ -244,8 +244,8 @@ export const ParentEditPageSettingsPage: React.FC = () => {
               エラー状態
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {(parentEditPageStore.nameError || parentEditPageStore.emailError || 
-                parentEditPageStore.passwordError || parentEditPageStore.birthdayError) ? '❌ エラーあり' : '✅ エラーなし'}
+              {(parentEditPageStore.errors.name || parentEditPageStore.errors.email || 
+                parentEditPageStore.errors.password || parentEditPageStore.errors.birthday) ? '❌ エラーあり' : '✅ エラーなし'}
             </Text>
           </View>
         </View>

@@ -120,7 +120,7 @@ export const StoreInspector: React.FC = () => {
               メールエラー:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.emailError || '無し'}
+              {loginPageStore.errors.email || '無し'}
             </Text>
           </View>
         </View>

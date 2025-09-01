@@ -19,15 +19,33 @@ export type ClearErrors = () => void;
 export type SetConfirmed = (confirmed: boolean) => void;
 export type Reset = () => void;
 
-interface FamilyCreatePageState {
+interface FormErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+  birthday?: string;
+}
+
+interface Properties {
   isLoading: IsLoading;
   familyForm: FamilyForm;
-  nameError?: DisplayId;
-  emailError?: EmailError;
-  passwordError?: PasswordError;
-  birthdayError?: BirthdayError;
+  errors: FormErrors;
   isConfirmed: IsConfirmed;
+}
 
+const defaultProperties: Properties = {
+  isLoading: false,
+  familyForm: FamilyForm.initialize(),
+  errors: {
+    name: undefined,
+    email: undefined,
+    password: undefined,
+    birthday: undefined,
+  },
+  isConfirmed: false,
+};
+
+interface FamilyCreatePageState extends Properties {
   setFamilyForm: SetFamilyForm;
   setLoading: SetLoading;
   setDisplayId: SetDisplayId;
@@ -39,23 +57,13 @@ interface FamilyCreatePageState {
   reset: Reset;
 }
 
-const initialState = {
-  isLoading: false,
-  parentForm: FamilyForm.initialize(),
-  displayIdError: undefined,
-  emailError: undefined,
-  passwordError: undefined,
-  birthdayError: undefined,
-  isConfirmed: false,
-};
-
 /**
  * 親情報登録画面状態管理ストア
  */
 export const useFamilyCreatePageStore = create<FamilyCreatePageState>()(
   devtools(
     (set) => ({
-      ...initialState,
+      ...defaultProperties,
 
       setFamilyForm: (familyForm: FamilyForm) => {
         set({ familyForm }, false, 'setFamilyForm');
@@ -66,28 +74,23 @@ export const useFamilyCreatePageStore = create<FamilyCreatePageState>()(
       },
 
       setDisplayId: (error: string | undefined) => {
-        set({ nameError: error }, false, 'setDisplayId');
+        set((state) => ({ errors: { ...state.errors, displayId: error } }), false, 'setDisplayId');
       },
 
       setEmailError: (error: string | undefined) => {
-        set({ emailError: error }, false, 'setEmailError');
+        set((state) => ({ errors: { ...state.errors, email: error } }), false, 'setEmailError');
       },
 
       setPasswordError: (error: string | undefined) => {
-        set({ passwordError: error }, false, 'setPasswordError');
+        set((state) => ({ errors: { ...state.errors, password: error } }), false, 'setPasswordError');
       },
 
       setBirthdayError: (error: string | undefined) => {
-        set({ birthdayError: error }, false, 'setBirthdayError');
+        set((state) => ({ errors: { ...state.errors, birthday: error } }), false, 'setBirthdayError');
       },
 
       clearErrors: () => {
-        set({ 
-          nameError: undefined, 
-          emailError: undefined, 
-          passwordError: undefined, 
-          birthdayError: undefined 
-        }, false, 'clearErrors');
+        set({ errors: {} }, false, 'clearErrors');
       },
 
       setConfirmed: (confirmed: boolean) => {
@@ -95,7 +98,7 @@ export const useFamilyCreatePageStore = create<FamilyCreatePageState>()(
       },
 
       reset: () => {
-        set({ ...initialState }, false, 'reset');
+        set({ ...defaultProperties }, false, 'reset');
       },
     }),
     {

@@ -1,42 +1,63 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEntry';
 import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
+import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { createUserPageHandlers } from './hooks/createUserPageHandlers';
 import { useCreateUserPageStore } from './createUserPageStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { useAppNavigation } from '../../../../AppNavigator';
 
 /** 新規登録画面
  *
- * 新規ユーザー登録機能を提供するメインページ
- * 
- * 機能:
- * - メール・パスワード入力
- * - 新規登録処理
- * - バリデーション・エラー表示 */
+ * 新規ユーザー登録機能を提供するメインページ */
 export const CreateUserPage: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const pageStore = useCreateUserPageStore();
-  
-  // 統合フックで全ハンドラーを取得
+  const navigation = useAppNavigation();
+
+  // ページ状態をリセット
+  useLayoutEffect(() => {
+    pageStore.reset();
+  }, [pageStore]);
+
+  // 統合フックで全ハンドラを取得
   const {
     handleEmailChange,
     handlePasswordChange,
-    handleCreateUser,
+    handleUserCreate,
   } = createUserPageHandlers();
+
+  // ヘッダーボタンを設定
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ComfirmButton
+          onPress={handleUserCreate}
+          disabled={!pageStore.userCreateForm.isValid}
+          loading={pageStore.isLoading}
+          variant="header"
+        />
+      ),
+    });
+  }, [navigation, handleUserCreate, pageStore.isLoading, pageStore.userCreateForm]);
   
   return (
-    <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
-      
+    <ScrollView 
+      style={[styles.container, { backgroundColor: colors.background.primary }]}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps="handled"
+    >
       {/* フォームコンテナ */}
       <View style={styles.formContainer}>
         {/* Email入力フィールド */}
         <EmailInputFieldEntry
           value={pageStore.userCreateForm.email.value}
           onChange={handleEmailChange}
-          error={pageStore.emailError}
+          error={pageStore.errors.email}
           placeholder={t('auth.createUser.emailPlaceholder')}
         />
         
@@ -44,22 +65,24 @@ export const CreateUserPage: React.FC = () => {
         <PasswordInputFieldEntry
           value={pageStore.userCreateForm.password.value}
           onChange={handlePasswordChange}
-          error={pageStore.passwordError}
+          error={pageStore.errors.password}
           placeholder={t('auth.createUser.passwordPlaceholder')}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContent: {
     paddingHorizontal: 24,
-    paddingVertical: 40,
+    paddingTop: 30,
+    paddingBottom: 30,
   },
   formContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    gap: 1,
   },
 });

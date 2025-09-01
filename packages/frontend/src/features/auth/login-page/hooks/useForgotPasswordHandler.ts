@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { LanguageTypeValue } from '../../../../../../backend/src/features/language/value-object/languageTypeValue';
+import { useAppNavigation } from '../../../../../AppNavigator';
 
 /**
  * パスワードリセットハンドラーのカスタムフック
@@ -12,15 +13,15 @@ import { LanguageTypeValue } from '../../../../../../backend/src/features/langua
 export const useForgotPasswordHandler = (params: {
   languageType: LanguageTypeValue
 }) => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   
   return useCallback((): void => {
     // パスワードリセット画面への遷移
     console.log('パスワードリセット画面への遷移');
-    navigation.navigate('PasswordReset' as never);
+    // TODO: パスワードリセット画面を実装したら、そちらに遷移するように修正する
     Alert.alert(
       AuthErrorMessages.forgotPasswordTitle().getMessage(params.languageType),
       AuthErrorMessages.forgotPasswordMessage().getMessage(params.languageType)
     );
-  }, [params.languageType, navigation]);
+  }, [params.languageType]);
 };

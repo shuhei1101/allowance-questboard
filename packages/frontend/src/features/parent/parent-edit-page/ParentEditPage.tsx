@@ -1,6 +1,5 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { useLayoutEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { ParentNameInputFieldEntry } from './components/ParentNameInputFieldEntry';
 import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEntry';
 import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
@@ -17,6 +16,7 @@ import { Constants } from '../../../core/constants/appConstants';
 import { JwtStorage } from '../../auth/services/jwtStorage';
 import { Session } from '../../../core/constants/sessionVariables';
 import { useInitializeParentData } from './hooks/useParentDataInitializer';
+import { useAppNavigation } from '../../../../AppNavigator';
 
 export type HandleParentForm = (form: ParentForm) => void;
 
@@ -35,7 +35,7 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
@@ -95,21 +95,21 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
           <ParentNameInputFieldEntry
             value={pageStore.parentForm.name.value}
             onChange={handleNameChange}
-            error={pageStore.nameError || undefined}
+            error={pageStore.errors.name || undefined}
           />
           
           {/* メールアドレス入力フィールド */}
           <EmailInputFieldEntry
             value={pageStore.parentForm.email.value}
             onChange={handleEmailChange}
-            error={pageStore.emailError || undefined}
+            error={pageStore.errors.email || undefined}
           />
           
           {/* パスワード入力フィールド */}
           <PasswordInputFieldEntry
             value={pageStore.parentForm.password.value}
             onChange={handlePasswordChange}
-            error={pageStore.passwordError || undefined}
+            error={pageStore.errors.password || undefined}
           />
           
           {/* アイコン選択ボタン */}
@@ -122,7 +122,7 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
           <BirthdayInputFieldEntry
             value={pageStore.parentForm.birthday.toISOString()}
             onChange={handleBirthdayChange}
-            error={pageStore.birthdayError || undefined}
+            error={pageStore.errors.birthday || undefined}
           />
         </View>
       </ScrollView>

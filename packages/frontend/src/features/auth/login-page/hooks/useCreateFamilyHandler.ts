@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { LanguageTypeValue } from '../../../../../../backend/src/features/language/value-object/languageTypeValue';
+import { AuthStackMeta, AuthStackParamList } from '../../AuthNavigator';
 
 /** 新規ユーザー作成ハンドラーのカスタムフック
  * 
@@ -9,15 +10,10 @@ import { LanguageTypeValue } from '../../../../../../backend/src/features/langua
 export const useCreateUserHandler = (params: {
   languageType: LanguageTypeValue
 }) => {
-  const navigation = useNavigation();
-  
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
+
   return useCallback((): void => {
     // 新規ユーザ作成画面への遷移
-    console.log('新規ユーザ作成画面への遷移');
-    navigation.navigate('CreateUser' as never);
-    Alert.alert(
-      "新規ユーザー作成",
-      "新規登録画面へ遷移します。",
-    );
+    navigation.navigate(AuthStackMeta.screens.createUser);
   }, [params.languageType, navigation]);
 };

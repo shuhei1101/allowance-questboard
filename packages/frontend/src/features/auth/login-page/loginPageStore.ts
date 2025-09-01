@@ -16,15 +16,33 @@ export type SetLoading = (loading: boolean) => void;
 export type SetEmailError = (error: string | undefined) => void;
 export type SetPasswordError = (error: string | undefined) => void;
 export type ClearErrors = () => void;
+export type Reset = () => void;
 
-interface LoginPageState {
+interface FormErrors {
+  email?: string;
+  password?: string;
+}
+
+interface Properties {
   isLoading: IsLoading;
   isDialogVisible: IsDialogVisible;
   loginForm: LoginForm;
   selectFamilyDialog: SelectFamilyDialog;
-  emailError?: EmailError;
-  passwordError?: PasswordError;
+  errors: FormErrors;
+}
 
+const defaultProperties: Properties = {
+  isLoading: false,
+  isDialogVisible: false,
+  loginForm: LoginForm.initialize(),
+  selectFamilyDialog: SelectFamilyDialog.initialize(),
+  errors: {
+    email: undefined,
+    password: undefined,
+  },
+};
+
+interface LoginPageState extends Properties {
   setLoginForm: SetLoginForm;
   setSelectFamilyDialog: SetSelectFamilyDialog;
   showDialog: ShowDialog;
@@ -33,7 +51,9 @@ interface LoginPageState {
   setEmailError: SetEmailError;
   setPasswordError: SetPasswordError;
   clearErrors: ClearErrors;
+  reset: Reset;
 }
+
 
 /**
  * ログイン画面状態管理ストア
@@ -41,12 +61,7 @@ interface LoginPageState {
 export const useLoginPageStore = create<LoginPageState>()(
   devtools(
     (set) => ({
-      isLoading: false,
-      isDialogVisible: false,
-      loginForm: LoginForm.initialize(),
-      selectFamilyDialog: SelectFamilyDialog.initialize(),
-      emailError: undefined,
-      passwordError: undefined,
+      ...defaultProperties,
 
       setLoginForm: (loginForm: LoginForm) => {
         set({ loginForm }, false, 'setLoginForm');
@@ -69,15 +84,19 @@ export const useLoginPageStore = create<LoginPageState>()(
       },
 
       setEmailError: (error: string | undefined) => {
-        set({ emailError: error }, false, 'setEmailError');
+        set((state) => ({ errors: { ...state.errors, email: error } }), false, 'setEmailError');
       },
 
       setPasswordError: (error: string | undefined) => {
-        set({ passwordError: error }, false, 'setPasswordError');
+        set((state) => ({ errors: { ...state.errors, password: error } }), false, 'setPasswordError');
       },
 
       clearErrors: () => {
-        set({ emailError: undefined, passwordError: undefined }, false, 'clearErrors');
+        set({ errors: {} }, false, 'clearErrors');
+      },
+
+      reset: () => {
+        set({ ...defaultProperties }, false, 'reset');
       },
     }),
     {

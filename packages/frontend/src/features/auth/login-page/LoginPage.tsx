@@ -24,7 +24,7 @@ export const LoginPage: React.FC = () => {
     handleEmailChange,
     handlePasswordChange,
     handleLogin,
-    handleCreateFamily,
+    handleUserCreate,
     handleForgotPassword,
     handleParentLogin,
     handleChildLogin,
@@ -57,14 +57,14 @@ export const LoginPage: React.FC = () => {
           <EmailInputField
             value={pageStore.loginForm.email.value}
             onChange={handleEmailChange}
-            error={pageStore.emailError || undefined}
+            error={pageStore.errors.email || undefined}
           />
           
           {/* Password入力フィールド */}
           <PasswordInputField
             value={pageStore.loginForm.password.value}
             onChange={handlePasswordChange}
-            error={pageStore.passwordError || undefined}
+            error={pageStore.errors.password || undefined}
           />
           
           {/* ログインボタン */}
@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
           
           {/* 新規ユーザー作成ボタン */}
           <CreateUserButton
-            onPress={handleCreateFamily}
+            onPress={handleUserCreate}
           />
           
           {/* パスワードリセットリンク */}

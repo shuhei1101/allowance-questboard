@@ -10,6 +10,7 @@ import { trpcClient } from '@/core/api/trpcClient';
 import { AuthStackMeta } from '@/features/auth/AuthNavigator';
 import { DemoStackMeta } from '../../demoStackMeta';
 import { Constants } from '../../../src/core/constants/appConstants';
+import { useAppNavigation } from '../../../AppNavigator';
 
 /**
  * 開発用TOP画面
@@ -17,7 +18,7 @@ import { Constants } from '../../../src/core/constants/appConstants';
  */
 export const DevelopmentTopPage: React.FC = () => {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useAppNavigation();
   const [isInitializing, setIsInitializing] = useState(false);
   
   // 初期データ取得ハンドラー

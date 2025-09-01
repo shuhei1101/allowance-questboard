@@ -6,6 +6,7 @@ import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 import { SetFamilyMemberType } from '../../../../core/constants/sessionVariables';
+import { useAppNavigation } from '../../../../../AppNavigator';
 
 /**
  * 子供ログインハンドラーのカスタムフック
@@ -19,7 +20,7 @@ export const useChildLoginHandler = (params: {
   setLoading: SetLoading
 }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   
   return useCallback((): void => {
     try {
@@ -35,7 +36,7 @@ export const useChildLoginHandler = (params: {
 
       // 子供用ホーム画面への遷移
       console.log('子供用ホーム画面への遷移');
-      navigation.navigate('ChildHome' as never);
+      // TODO: 子供用ホーム画面を実装したら、そちらに遷移するように修正する
       Alert.alert(t('common.success'), t('auth.loginPage.success.childLogin'));
     } catch (error) {
       console.error('子供ログインエラー:', error);

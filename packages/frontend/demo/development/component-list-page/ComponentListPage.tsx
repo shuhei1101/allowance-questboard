@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useNavigation } from '@react-navigation/native';
 import { DemoStackMeta } from '../../demoStackMeta';
+import { useAppNavigation } from '../../../AppNavigator';
 
 /**
  * コンポーネント一覧ページ
@@ -10,7 +10,7 @@ import { DemoStackMeta } from '../../demoStackMeta';
  */
 export const ComponentListPage: React.FC = () => {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useAppNavigation();
 
   const componentCategories = [
     {

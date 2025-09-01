@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
+import { NavigationContainer, NavigationProp, NavigatorScreenParams, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthNavigator, AuthStackMeta as AuthStackMeta, AuthStackParamList } from '@/features/auth/AuthNavigator';
 import { ParentNavigator, ParentStackMeta, ParentStackParamList } from '@/features/parent/ParentNavigator';
@@ -9,6 +9,7 @@ import { DemoNavigator, DemoStackParamList } from '@demo/DemoNavigator';
 import { DemoStackMeta } from '@demo/demoStackMeta';
 import { useTheme } from '@/core/theme';
 
+export const useAppNavigation = () => useNavigation<NavigationProp<AppStackParamList>>();
 
 // Navigation types - 機能別Navigatorを組み合わせる
 export type AppStackParamList = {

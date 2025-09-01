@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'rea
 import { useTheme } from '@/core/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { DemoStackMeta } from '../../demoStackMeta';
+import { useAppNavigation } from '../../../AppNavigator';
 
 interface ScreenLauncherPageProps {
   screenType: string;
@@ -14,7 +15,7 @@ interface ScreenLauncherPageProps {
  */
 export const ScreenLauncherPage: React.FC = () => {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useAppNavigation();
   const route = useRoute();
   const { screenType } = route.params as ScreenLauncherPageProps;
 

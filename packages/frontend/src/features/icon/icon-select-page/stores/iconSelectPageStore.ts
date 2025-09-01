@@ -9,10 +9,7 @@ export type SelectCategory = (categoryId: IconCategoryId) => void;
 export type SelectIcon = (icon: Icon) => void;
 export type Reset = () => void;
 
-/**
- * アイコン選択ページの状態管理
- */
-interface IconSelectPageState {
+interface Properties {
   /** アイコンカテゴリ */
   iconCategories: IconCategories;
   /** 選択中のカテゴリID */
@@ -21,6 +18,17 @@ interface IconSelectPageState {
   selectedIcon?: Icon;
   /** 現在のカテゴリのアイコン */
   currentCategoryIcons: Icons;
+}
+
+const defaultProperties: Properties = {
+  iconCategories: IconCategories.fromEmpty() as IconCategories,
+  selectedCategoryId: undefined,
+  selectedIcon: undefined,
+  currentCategoryIcons: Icons.fromEmpty() as Icons,
+};
+
+/** アイコン選択ページの状態管理 */
+interface IconSelectPageState extends Properties {
   /** 初期化 */
   initialize: Initialize;
   /** カテゴリ選択 */
@@ -31,14 +39,9 @@ interface IconSelectPageState {
   reset: Reset;
 }
 
-/**
- * アイコン選択ページのストア
- */
+/** アイコン選択ページのストア */
 export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => ({
-  iconCategories: IconCategories.fromEmpty() as IconCategories,
-  selectedCategoryId: undefined,
-  selectedIcon: undefined,
-  currentCategoryIcons: Icons.fromEmpty() as Icons,
+  ...defaultProperties,
   
   initialize: (iconCategories, initialSelectedIcon) => {
     const activeCategories = iconCategories.getActiveSortedCategories();
@@ -71,11 +74,6 @@ export const useIconSelectPageStore = create<IconSelectPageState>((set, get) => 
   },
 
   reset: () => {
-    set({
-      iconCategories: IconCategories.fromEmpty() as IconCategories,
-      selectedCategoryId: undefined,
-      selectedIcon: undefined,
-      currentCategoryIcons: Icons.fromEmpty() as Icons,
-    });
+    set({ ...defaultProperties });
   },
 }));

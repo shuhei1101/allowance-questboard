@@ -1,5 +1,4 @@
 export { IconSelectButtonEntry } from './IconSelectButtonEntry';
-export { BackButton } from './BackButton';
 export { AddButton } from './AddButton';
 export { EditButton } from './EditButton';
 export { DeleteButton } from './DeleteButton';

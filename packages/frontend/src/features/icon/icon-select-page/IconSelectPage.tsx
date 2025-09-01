@@ -13,6 +13,7 @@ import { LocaleString } from '@backend/core/messages/localeString';
 import { ComfirmButton } from '../../shared/components';
 import { OnIconSelected } from './hooks/useConfirmHandler';
 import { Constants } from '../../../core/constants/appConstants';
+import { useAppNavigation } from '../../../../AppNavigator';
 
 export interface IconSelectPageProps {
   /** 初期選択されたアイコン */
@@ -31,7 +32,7 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
 }) => {
   const { colors } = useTheme();
   const pageStore = useIconSelectPageStore();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   
   const iconCategories = Constants.iconCategories;
   if (!iconCategories) {

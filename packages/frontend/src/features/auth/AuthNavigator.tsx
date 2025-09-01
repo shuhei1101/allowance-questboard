@@ -37,7 +37,11 @@ export function AuthNavigator() {
       />
       <AuthStack.Screen 
         name={AuthStackMeta.screens.createUser}
-        component={CreateUserPage} 
+        component={CreateUserPage}
+        options={{
+          headerShown: true,
+          title: '新規登録',
+        }}
       />
     </AuthStack.Navigator>
   );

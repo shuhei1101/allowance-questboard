@@ -3,8 +3,8 @@ import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError,
 import { ParentForm } from '../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { useParentFormValidationHandler as useParentFormValidationHandler } from '../handlers/useParentFormValidationHandler';
-import { useNavigation } from '@react-navigation/native';
 import { HandleParentForm } from '../ParentEditPage';
+import { useAppNavigation } from '../../../../../AppNavigator';
 
 /** 確定ボタン押下ハンドラーのカスタムフック
  * 親情報の登録を実行する */
@@ -21,7 +21,7 @@ export const useConfirmHandler = (params: {
   handleParentForm?: HandleParentForm
   
 }) => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   // バリデーションハンドラーを取得
   const validateParentForm = useParentFormValidationHandler({
     parentForm: params.parentForm,

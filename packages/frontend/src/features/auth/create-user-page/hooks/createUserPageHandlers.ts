@@ -7,7 +7,7 @@ import { Session } from '../../../../core/constants/sessionVariables';
 export type CreateUserPageHandlers = {
   handleEmailChange: (text: string) => void;
   handlePasswordChange: (text: string) => void;
-  handleCreateUser: () => Promise<void>;
+  handleUserCreate: () => Promise<void>;
 };
 
 /** 新規登録ページの全ハンドラーを統合したカスタムフック
@@ -17,20 +17,20 @@ export const createUserPageHandlers = (): CreateUserPageHandlers => {
   const pageStore = useCreateUserPageStore();
 
   const handleEmailChange = useEmailHandler({
-    emailError: pageStore.emailError,
+    emailError: pageStore.errors.email,
     userCreateForm: pageStore.userCreateForm,
     setUserCreateForm: pageStore.setUserCreateForm,
     setEmailError: pageStore.setEmailError,
   });
 
   const handlePasswordChange = usePasswordHandler({
-    passwordError: pageStore.passwordError,
+    passwordError: pageStore.errors.password,
     userCreateForm: pageStore.userCreateForm,
     setUserCreateForm: pageStore.setUserCreateForm,
     setPasswordError: pageStore.setPasswordError,
   });
 
-  const handleCreateUser = useCreateUserHandler({
+  const handleUserCreate = useCreateUserHandler({
     clearErrors: pageStore.clearErrors,
     userCreateForm: pageStore.userCreateForm,
     currentLanguageType: Session.languageType,
@@ -42,6 +42,6 @@ export const createUserPageHandlers = (): CreateUserPageHandlers => {
   return {
     handleEmailChange,
     handlePasswordChange,
-    handleCreateUser,
+    handleUserCreate,
   };
 };
