@@ -1,7 +1,7 @@
 import { FamilyMemberTypeValue } from "../../../../backend/src/features/family-member/value-object/familyMemberTypeValue";
 import { LanguageType } from "../../../../backend/src/features/language/enum/languageType";
 import { LanguageTypeValue } from "../../../../backend/src/features/language/value-object/languageTypeValue";
-import { createJwtStorage, GetToken, IJwtStorage } from "../../features/auth/services/jwtStorage";
+import { createJwtStorage, GetJwtToken, IJwtStorage } from "../../features/auth/services/jwtStorage";
 
 export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
 export type SetLanguageType = (languageType: LanguageTypeValue) => void;

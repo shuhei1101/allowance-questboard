@@ -1,5 +1,5 @@
 import { createTRPCReact } from '@trpc/react-query';
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
+import { createTRPCClient, httpBatchLink, TRPCClient } from '@trpc/client';
 import { QueryClient } from '@tanstack/react-query';
 import { AppRouter } from '@backend/router';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
@@ -30,8 +30,10 @@ export const trpcClient = createTRPCClient<AppRouter>({
   links: [httpLink],
 });
 
+export type CreateAuthenticatedClient = (params: { jwtToken?: string, languageType: LanguageTypeValue }) => TRPCClient<AppRouter>;
+
 /** 認証トークン付きのtRPCクライアントを作成 */
-export const createAuthenticatedClient = (params: { jwtToken?: string, languageType: LanguageTypeValue }) => {
+export const createAuthenticatedClient: CreateAuthenticatedClient = (params: { jwtToken?: string, languageType: LanguageTypeValue }) => {
   if (!params.jwtToken) {
     throw new AppError({
       errorType: "UNAUTHORIZED",

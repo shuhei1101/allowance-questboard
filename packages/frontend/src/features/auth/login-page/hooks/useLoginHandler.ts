@@ -6,9 +6,10 @@ import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { Login } from '../services/login';
-import { LoginHandler } from '@backend/features/auth/router/loginRouter';
 import { AppError } from '@backend/core/errors/appError';
 import { useLoginFormValidationHandler } from '../validations/useLoginFormValidationHandler';
+import { CreateAuthenticatedClient } from '../../../../core/api/trpcClient';
+import { GetJwtToken } from '../../services/jwtStorage';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -25,7 +26,8 @@ export const useLoginHandler = (params: {
   showDialog: ShowDialog,
   login: Login,
   setSelectFamilyDialog: SetSelectFamilyDialog,
-  loginHandler: LoginHandler
+  createAuthenticatedClient: CreateAuthenticatedClient,
+  getJwtToken: GetJwtToken,
 }) => {
   // バリデーションハンドラーを取得
   const validateLoginForm = useLoginFormValidationHandler({
@@ -69,11 +71,16 @@ export const useLoginHandler = (params: {
           message: AuthErrorMessages.tokenRetrievalFailed(),
         });
       }
+
+      const router = params.createAuthenticatedClient({
+        jwtToken: await params.getJwtToken(),
+        languageType: params.currentLanguageType,
+      });
       
       // jwtを元にアプリにログイン
       await params.login({
         setSelectFamilyDialog: params.setSelectFamilyDialog,
-        loginHandler: params.loginHandler
+        loginHandler: router.login.login,
       });
 
       // ダイアログの表示
@@ -96,7 +103,8 @@ export const useLoginHandler = (params: {
     params.showDialog,
     params.login,
     params.setSelectFamilyDialog,
-    params.loginHandler,
-    validateLoginForm
+    validateLoginForm,
+    params.createAuthenticatedClient,
+    params.getJwtToken,
   ]);
 };

@@ -10,14 +10,12 @@ import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { login } from '../services/login';
 import { Session } from '../../../../core/constants/sessionVariables';
 import { useLoginPageStore } from '../loginPageStore';
-import { AppRouter } from '../../../../../../backend/src/router';
-import { TRPCClient } from '@trpc/client';
+import { createAuthenticatedClient } from '../../../../core/api/trpcClient';
 
 /** ログインページの全ハンドラーを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドラーを一括で提供 */
-export const loginPageHandlers = (params: {
-  router: TRPCClient<AppRouter>,
-}) => {
+export const loginPageHandlers = () => {
+  
   const pageStore = useLoginPageStore();
 
   const handleEmailChange = useEmailHandler({
@@ -42,7 +40,8 @@ export const loginPageHandlers = (params: {
     setLoading: pageStore.setLoading,
     login: login,
     setSelectFamilyDialog: pageStore.setSelectFamilyDialog,
-    loginHandler: params.router.login.login,
+    createAuthenticatedClient: createAuthenticatedClient,
+    getJwtToken: Session.jwtStorage.getToken,
   });
   const handleParentLogin = useParentLoginHandler({
     updateFamilyMemberType: Session.setFamilyMemberType,

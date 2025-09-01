@@ -11,23 +11,11 @@ import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { loginPageHandlers } from './hooks/loginPageHandlers';
 import { useLoginPageStore } from './loginPageStore';
-import { WithAuthenticatedRouter } from '@/core/components';
-import { TRPCClient } from '@trpc/client';
-import { AppRouter } from '../../../../../backend/src/router';
 
 /** ログインページ
  * 
  * ログイン機能全体を統合管理するメインページ */
 export const LoginPage: React.FC = () => {
-  return (
-    <WithAuthenticatedRouter loadingMessage="ログイン画面を準備しています...">
-      {(router) => <LoginPageContent router={router} />}
-    </WithAuthenticatedRouter>
-  );
-};
-
-/** ログインページのメインコンテンツ */
-const LoginPageContent: React.FC<{ router: TRPCClient<AppRouter> }> = ({ router }) => {
   const { colors } = useTheme();
   const pageStore = useLoginPageStore();
 
@@ -42,7 +30,7 @@ const LoginPageContent: React.FC<{ router: TRPCClient<AppRouter> }> = ({ router 
     handleChildLogin,
     handleTermsOfService,
     handleCloseDialog,
-  } = loginPageHandlers({ router });
+  } = loginPageHandlers();
 
   return (
     <KeyboardAvoidingView 
