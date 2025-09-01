@@ -15,7 +15,6 @@ import { createAuthenticatedClient } from '../../../../core/api/trpcClient';
 /** ログインページの全ハンドラーを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドラーを一括で提供 */
 export const loginPageHandlers = () => {
-  
   const pageStore = useLoginPageStore();
 
   const handleEmailChange = useEmailHandler({
