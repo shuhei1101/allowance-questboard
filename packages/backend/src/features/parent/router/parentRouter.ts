@@ -9,7 +9,7 @@ export const parentResponseSchema = z.object({
   parentId: z.number(),
   familyMemberId: z.number(),
   name: z.string(),
-  iconId: z.number().nullable(),
+  iconId: z.number().optional(),
   birthday: z.string(),
 });
 

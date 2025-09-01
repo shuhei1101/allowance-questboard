@@ -9,7 +9,7 @@ import { SortOrder, SortOrderSchema } from '@backend/features/shared/value-objec
  * IconCategoryのZodスキーマ
  */
 export const IconCategorySchema = z.object({
-  id: IconCategoryIdSchema.nullable().optional(),
+  id: IconCategoryIdSchema.optional(),
   nameByLanguages: IconCategoryNamesSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),

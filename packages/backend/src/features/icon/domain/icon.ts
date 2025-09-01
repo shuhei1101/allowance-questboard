@@ -10,7 +10,7 @@ import { z } from 'zod';
  * IconのZodスキーマ
  */
 export const IconSchema = z.object({
-  id: BaseIdSchema.nullable().optional(),
+  id: BaseIdSchema.optional(),
   name: IconNameSchema,
   sortOrder: SortOrderSchema,
   isActive: z.boolean(),
