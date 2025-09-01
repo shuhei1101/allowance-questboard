@@ -47,7 +47,34 @@ export const initRouter = t.router({
         console.log('🔍 getMasterDataユースケース呼び出し開始');
         const result = await getMasterData(iconCategoryRepository);
         console.log('🔍 getMasterDataユースケース完了:', result);
-        return result;
+        
+        // スキーマ検証前に詳細なデータをログ出力
+        console.log('🔍 languages:', JSON.stringify(result.languages, null, 2));
+        console.log('🔍 familyMemberTypes:', JSON.stringify(result.familyMemberTypes, null, 2));
+        console.log('🔍 iconCategories構造:', {
+          type: typeof result.iconCategories,
+          hasItems: 'items' in result.iconCategories,
+          itemsLength: result.iconCategories.items?.length
+        });
+        
+        // 最初のiconCategoryを詳細チェック
+        if (result.iconCategories.items && result.iconCategories.items.length > 0) {
+          console.log('🔍 最初のiconCategory:', JSON.stringify(result.iconCategories.items[0], null, 2));
+        }
+        
+        // 実際にスキーマ検証を試してみる
+        try {
+          console.log('🔍 スキーマ検証開始...');
+          const validationResult = GetMasterDataResponseScheme.parse(result);
+          console.log('✅ スキーマ検証成功');
+          return validationResult;
+        } catch (validationError) {
+          console.error('❌ スキーマ検証エラー詳細:', validationError);
+          if (validationError instanceof z.ZodError) {
+            console.error('❌ Zodエラー詳細:', validationError.issues);
+          }
+          throw validationError;
+        }
       } catch (error) {
         console.error('❌ initRouter catchブロック - マスタデータ取得エラー:', error);
         console.error('❌ エラータイプ:', typeof error);

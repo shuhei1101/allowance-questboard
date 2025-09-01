@@ -7,9 +7,7 @@ import { Hashable } from '@backend/core/models/baseCollection';
 /**
  * IconNameのZodスキーマ
  */
-export const IconNameSchema = z.object({
-  value: z.string()
-});
+export const IconNameSchema = z.string();
 
 /**
  * アイコン名を表すクラス
@@ -58,6 +56,6 @@ export class IconName extends BaseValueObject<string, typeof IconNameSchema> imp
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof IconNameSchema>): IconName {
-    return new IconName(data.value);
+    return new IconName(data);
   }
 }

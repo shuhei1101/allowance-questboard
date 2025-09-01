@@ -5,9 +5,7 @@ import { z } from 'zod';
 /**
  * IconCategoryNameのZodスキーマ
  */
-export const IconCategoryNameSchema = z.object({
-  value: z.string()
-});
+export const IconCategoryNameSchema = z.string();
 
 /**
  * アイコンカテゴリ名の値オブジェクト
@@ -52,6 +50,6 @@ export class IconCategoryName extends BaseValueObject<string, typeof IconCategor
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof IconCategoryNameSchema>): IconCategoryName {
-    return new IconCategoryName(data.value);
+    return new IconCategoryName(data);
   }
 }
