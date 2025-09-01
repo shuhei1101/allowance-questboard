@@ -26,6 +26,9 @@ export class QuestProgress extends BaseTransactionEntity {
   @ManyToOne(() => QuestMemberEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_member_id" })
   questMember!: QuestMemberEntity;
+  @ManyToOne(() => QuestStatusEntity, { nullable: false, onDelete: "CASCADE" })
+  @JoinColumn({ name: "quest_status_id" })
+  questStatus!: QuestStatusEntity;
 }
 
 /** クエスト進捗履歴エンティティ */
