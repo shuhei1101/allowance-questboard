@@ -3,3 +3,4 @@ export { EntryField } from './EntryField';
 export { FieldWithError } from './FieldWithError';
 export { SubEntryField } from './SubEntryField';
 export { WithAuthenticatedRouter } from './WithAuthenticatedRouter';
+export { WithAsyncInitialization } from './WithAsyncInitialization';

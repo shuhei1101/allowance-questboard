@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuthenticatedRouter } from '../hooks/useAuthenticatedRouter';
-import { LoadingPage } from '../../features/shared/loading-page/LoadingPage';
+import { WithAsyncInitialization } from './WithAsyncInitialization';
 import { AppRouter } from '../../../../backend/src/router';
 import { TRPCClient } from '@trpc/client';
 
@@ -19,13 +19,12 @@ export const WithAuthenticatedRouter: React.FC<WithAuthenticatedRouterProps> = (
   children,
   loadingMessage = "アプリを初期化しています..."
 }) => {
-  const { router, isInitializing } = useAuthenticatedRouter();
-
-  // router初期化中はローディング表示
-  if (isInitializing || router === undefined) {
-    return <LoadingPage message={loadingMessage} />;
-  }
-
-  // 初期化完了後にchildrenを描画
-  return <>{children(router)}</>;
+  return (
+    <WithAsyncInitialization
+      useInitialization={useAuthenticatedRouter}
+      loadingMessage={loadingMessage}
+    >
+      {children}
+    </WithAsyncInitialization>
+  );
 };

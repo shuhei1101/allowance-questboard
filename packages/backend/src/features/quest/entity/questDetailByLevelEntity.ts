@@ -29,7 +29,7 @@ export class QuestDetailByLevelEntity extends BaseTransactionEntity {
   level!: number;
   @Column({ name: "success_criteria", type: "text", nullable: false, comment: "成功条件" })
   successCriteria!: string;
-  @Column({ name: "target_count", type: "int", nullable: false, comment: "目標回数" })
+  @Column({ name: "target_count", type: "int", nullable: false, comment: "報酬獲得までの目標達成回数" })
   targetCount!: number;
   @Column({ name: "reward", type: "int", nullable: false, comment: "報酬金額" })
   reward!: number;
@@ -39,6 +39,8 @@ export class QuestDetailByLevelEntity extends BaseTransactionEntity {
   childExp!: number;
   @Column({ name: "quest_exp", type: "int", nullable: false, comment: "クエスト獲得経験値" })
   questExp!: number;
+  @Column({ name: "required_exp", type: "int", nullable: false, comment: "レベル解放に必要なクエスト経験値" })
+  requiredExp!: number;
 
   @ManyToOne(() => QuestEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_id", referencedColumnName: "id", foreignKeyConstraintName: "fk_quest_detail_by_level_quest_id" })

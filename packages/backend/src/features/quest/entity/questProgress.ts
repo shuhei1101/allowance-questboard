@@ -10,6 +10,7 @@ import {
 import { BaseHistoryEntity } from "../../../core/entity/baseHistoryEntity";
 import { BaseTransactionEntity } from "@backend/core/entity/baseTransactionEntity";
 import { QuestMemberEntity } from "./questMemberEntity";
+import { QuestMemberStatusEntity } from "./questMemberStatusEntity";
 
 /** クエスト進捗エンティティ */
 @Entity("quest_progresses")
@@ -26,9 +27,9 @@ export class QuestProgress extends BaseTransactionEntity {
   @ManyToOne(() => QuestMemberEntity, { nullable: false, onDelete: "CASCADE" })
   @JoinColumn({ name: "quest_member_id" })
   questMember!: QuestMemberEntity;
-  @ManyToOne(() => QuestStatusEntity, { nullable: false, onDelete: "CASCADE" })
-  @JoinColumn({ name: "quest_status_id" })
-  questStatus!: QuestStatusEntity;
+  @ManyToOne(() => QuestMemberStatusEntity, { nullable: false, onDelete: "CASCADE" })
+  @JoinColumn({ name: "status_id" })
+  questMemberStatus!: QuestMemberStatusEntity;
 }
 
 /** クエスト進捗履歴エンティティ */

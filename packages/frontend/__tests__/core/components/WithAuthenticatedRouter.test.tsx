@@ -16,8 +16,9 @@ describe('WithAuthenticatedRouter', () => {
   it('初期化中はLoadingPageを表示すること', () => {
     // 準備
     mockUseAuthenticatedRouter.mockReturnValue({
-      router: undefined,
+      data: undefined,
       isInitializing: true,
+      error: undefined,
     });
 
     const TestChild = jest.fn(() => <Text>テストコンテンツ</Text>);
@@ -37,8 +38,9 @@ describe('WithAuthenticatedRouter', () => {
   it('カスタムローディングメッセージを表示すること', () => {
     // 準備
     mockUseAuthenticatedRouter.mockReturnValue({
-      router: undefined,
+      data: undefined,
       isInitializing: true,
+      error: undefined,
     });
 
     const customMessage = "ログイン画面を準備しています...";
@@ -60,8 +62,9 @@ describe('WithAuthenticatedRouter', () => {
     // 準備
     const mockRouter = { query: jest.fn() } as any;
     mockUseAuthenticatedRouter.mockReturnValue({
-      router: mockRouter,
+      data: mockRouter,
       isInitializing: false,
+      error: undefined,
     });
 
     const TestChild = jest.fn((router) => <Text testID="test-content">テストコンテンツ: {router.query ? 'routerあり' : 'routerなし'}</Text>);

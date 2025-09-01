@@ -32,13 +32,14 @@ describe('useAuthenticatedRouter', () => {
 
     // 検証
     expect(result.current.isInitializing).toBe(true);
-    expect(result.current.router).toBeUndefined();
+    expect(result.current.data).toBeUndefined();
 
     await waitFor(() => {
       expect(result.current.isInitializing).toBe(false);
     });
 
-    expect(result.current.router).toBe(mockRouter);
+    expect(result.current.data).toBe(mockRouter);
+    expect(result.current.error).toBeUndefined();
     expect(mockJwtStorage.getToken).toHaveBeenCalledTimes(1);
     expect(mockCreateAuthenticatedClient).toHaveBeenCalledWith({
       jwtToken: mockToken,
@@ -46,14 +47,20 @@ describe('useAuthenticatedRouter', () => {
     });
   });
 
-  it('JWTStorage取得エラー時にエラーをthrowすること', async () => {
+  it('JWTStorage取得エラー時にエラーを設定すること', async () => {
     // 準備
     const mockError = new Error('JWT取得エラー');
     mockJwtStorage.getToken.mockRejectedValue(mockError);
 
-    // 実行と検証
-    expect(() => {
-      renderHook(() => useAuthenticatedRouter());
-    }).toThrow();
+    // 実行
+    const { result } = renderHook(() => useAuthenticatedRouter());
+
+    // 検証
+    await waitFor(() => {
+      expect(result.current.isInitializing).toBe(false);
+    });
+
+    expect(result.current.data).toBeUndefined();
+    expect(result.current.error).toEqual(mockError);
   });
 });

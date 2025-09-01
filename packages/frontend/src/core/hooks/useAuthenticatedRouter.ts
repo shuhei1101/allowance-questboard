@@ -7,9 +7,11 @@ import { TRPCClient } from '@trpc/client';
 
 interface UseAuthenticatedRouterResult {
   /** tRPCクライアントルーター */
-  router?: TRPCClient<AppRouter>;
+  data?: TRPCClient<AppRouter>;
   /** router初期化のローディング状態 */
   isInitializing: boolean;
+  /** 初期化エラー */
+  error?: Error;
 }
 
 /** 認証済みtRPCルーター初期化フック
@@ -19,11 +21,13 @@ interface UseAuthenticatedRouterResult {
 export const useAuthenticatedRouter = (): UseAuthenticatedRouterResult => {
   const [router, setRouter] = useState<TRPCClient<AppRouter> | undefined>(undefined);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [error, setError] = useState<Error | undefined>(undefined);
 
   useEffect(() => {
     const initializeRouter = async () => {
       try {
         setIsInitializing(true);
+        setError(undefined);
         
         const jwtToken = await JwtStorage.getToken();
         const authenticatedClient = createAuthenticatedClient({
@@ -32,10 +36,9 @@ export const useAuthenticatedRouter = (): UseAuthenticatedRouterResult => {
         });
         
         setRouter(authenticatedClient);
-      } catch (error) {
-        // ErrorBoundaryでキャッチされるようにthrowする
-        const errorInstance = error instanceof Error ? error : new Error('Router initialization failed');
-        throw errorInstance;
+      } catch (err) {
+        const errorInstance = err instanceof Error ? err : new Error('Router initialization failed');
+        setError(errorInstance);
       } finally {
         setIsInitializing(false);
       }
@@ -45,7 +48,8 @@ export const useAuthenticatedRouter = (): UseAuthenticatedRouterResult => {
   }, []);
 
   return {
-    router,
+    data: router,
     isInitializing,
+    error,
   };
 };
