@@ -8,19 +8,18 @@ import { useCreateUserHandler } from './useCreateFamilyHandler';
 import { useForgotPasswordHandler } from './useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { login } from '../services/login';
-import { createAuthenticatedClient } from '@/core/api/trpcClient';
-import { JwtStorage } from '../../services/jwtStorage';
 import { Session } from '../../../../core/constants/sessionVariables';
 import { useLoginPageStore } from '../loginPageStore';
+import { AppRouter } from '../../../../../../backend/src/router';
+import { TRPCClient } from '@trpc/client';
 
 /** ログインページの全ハンドラーを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドラーを一括で提供 */
-export const loginPageHandlers = async () => {
+export const loginPageHandlers = (params: {
+  router: TRPCClient<AppRouter>,
+}) => {
   const pageStore = useLoginPageStore();
-  const router = createAuthenticatedClient({
-    jwtToken: await JwtStorage.getToken(),
-    languageType: Session.languageType,
-  });
+
   const handleEmailChange = useEmailHandler({
     emailError: pageStore.emailError,
     loginForm: pageStore.loginForm,
@@ -43,7 +42,7 @@ export const loginPageHandlers = async () => {
     setLoading: pageStore.setLoading,
     login: login,
     setSelectFamilyDialog: pageStore.setSelectFamilyDialog,
-    loginHandler: router.login.login,
+    loginHandler: params.router.login.login,
   });
   const handleParentLogin = useParentLoginHandler({
     updateFamilyMemberType: Session.setFamilyMemberType,

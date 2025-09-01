@@ -6,9 +6,7 @@ import { LanguageTypeValue } from '@backend/features/language/value-object/langu
 import { AppError } from '../../../../backend/src/core/errors/appError';
 import { LocaleString } from '../../../../backend/src/core/messages/localeString';
 
-/**
- * 共通設定
- */
+/** 共通設定 */
 const TRPC_SERVER_URL = process.env.EXPO_PUBLIC_TRPC_SERVER_URL || 'http://localhost:3000/trpc';
 
 const commonHeaders = () => ({
@@ -21,30 +19,18 @@ const httpLink = httpBatchLink({
   headers: commonHeaders,
 });
 
-/**
- * React Query クライアント設定
- */
+/** React Query クライアント設定 */
 export const queryClient = new QueryClient();
 
-/**
- * React用tRPCクライアント（useQueryとかで使う）
- */
+/** React用tRPCクライアント（useQueryとかで使う） */
 export const trpc = createTRPCReact<AppRouter>();
 
-/**
- * バニラtRPCクライアント（React外で使用）
- */
+/** バニラtRPCクライアント（React外で使用） */
 export const trpcClient = createTRPCClient<AppRouter>({
   links: [httpLink],
 });
 
-/**
- * 認証トークン付きのtRPCクライアントを作成
- * 
- * @param jwtToken JWTトークン
- * @param languageId 言語ID（デフォルト: '1'）
- * @returns 認証情報付きのtRPCクライアント
- */
+/** 認証トークン付きのtRPCクライアントを作成 */
 export const createAuthenticatedClient = (params: { jwtToken?: string, languageType: LanguageTypeValue }) => {
   if (!params.jwtToken) {
     throw new AppError({

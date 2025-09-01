@@ -11,22 +11,26 @@ import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { loginPageHandlers } from './hooks/loginPageHandlers';
 import { useLoginPageStore } from './loginPageStore';
+import { WithAuthenticatedRouter } from '@/core/components';
+import { TRPCClient } from '@trpc/client';
+import { AppRouter } from '../../../../../backend/src/router';
 
-/**
- * ログインページ
- * ログイン機能全体を統合管理するメインページ
+/** ログインページ
  * 
- * 機能:
- * - メール・パスワード認証
- * - 新規家族作成への遷移
- * - パスワードリセットへの遷移  
- * - 親・子ログインの選択
- * - 利用規約への遷移
- */
-export const LoginPage: React.FC = async () => {
+ * ログイン機能全体を統合管理するメインページ */
+export const LoginPage: React.FC = () => {
+  return (
+    <WithAuthenticatedRouter loadingMessage="ログイン画面を準備しています...">
+      {(router) => <LoginPageContent router={router} />}
+    </WithAuthenticatedRouter>
+  );
+};
+
+/** ログインページのメインコンテンツ */
+const LoginPageContent: React.FC<{ router: TRPCClient<AppRouter> }> = ({ router }) => {
   const { colors } = useTheme();
   const pageStore = useLoginPageStore();
-  
+
   // 統合フックで全ハンドラーを取得
   const {
     handleEmailChange,
@@ -38,8 +42,8 @@ export const LoginPage: React.FC = async () => {
     handleChildLogin,
     handleTermsOfService,
     handleCloseDialog,
-  } = await loginPageHandlers();
-  
+  } = loginPageHandlers({ router });
+
   return (
     <KeyboardAvoidingView 
       style={[styles.container, { backgroundColor: colors.background.primary }]} 
