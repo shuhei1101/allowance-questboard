@@ -23,8 +23,6 @@ export interface BaseFormActions<
   TForm extends BaseForm,
   TErrors extends FormErrors
 > extends BaseStoreActions {
-  setForm: SetForm<TForm>;
-  setError: SetError<TErrors>;
   clearErrors: ClearErrors;
   resetForm: ResetForm;
 }
@@ -35,6 +33,20 @@ export abstract class BaseFormStore<
   TProps extends BaseFormProperties<TForm, TErrors> = BaseFormProperties<TForm, TErrors>,
   TActions extends BaseFormActions<TForm, TErrors> = BaseFormActions<TForm, TErrors>,
 > extends BaseStore<TProps, TActions> {
+
+  /** フォームのエラークリア */
+  protected clearErrors(set: any): ClearErrors {
+    return () => set({ errors: {} as TErrors }, false, 'clearErrors');
+  }
+
+  /** フォームのリセット */
+  protected resetForm(set: any): ResetForm {
+    return () => {
+      const initialForm = this.initializeForm();
+      set({ form: initialForm, errors: {} as TErrors }, false, 'resetForm');
+      return initialForm;
+    };
+  }
 
   /** フォームの初期化
    * 
@@ -54,6 +66,8 @@ export abstract class BaseFormStore<
   ): TActions {
     return {
       ...super.buildActions(set),
+      clearErrors: this.clearErrors(set),
+      resetForm: this.resetForm(set),
     } as TActions;
   }
 }

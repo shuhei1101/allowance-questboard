@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-import { ClearErrors, SetEmailError, SetPasswordError } from '../loginPageStore';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+import { SetEmailError, SetPasswordError } from '../loginFormStore';
+import { ClearErrors } from '../../../../core/stores/baseFormStore';
 
 /**
  * バリデーション結果

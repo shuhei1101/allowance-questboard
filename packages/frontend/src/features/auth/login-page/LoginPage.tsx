@@ -10,14 +10,17 @@ import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { loginPageHandlers } from './hooks/loginPageHandlers';
-import { useLoginPageStore } from './loginPageStore';
+import { useRef } from 'react';
+import { createLoginPageStore } from './loginPageStoreNew';
+import { createLoginFormStore } from './loginFormStore';
 
 /** ログインページ
  * 
  * ログイン機能全体を統合管理するメインページ */
 export const LoginPage: React.FC = () => {
   const { colors } = useTheme();
-  const pageStore = useLoginPageStore();
+  const formStore = useRef(createLoginFormStore()).current();
+  const pageStore = useRef(createLoginPageStore()).current();
 
   // 統合フックで全ハンドラーを取得
   const {
@@ -55,21 +58,21 @@ export const LoginPage: React.FC = () => {
         <View style={styles.formContainer}>
           {/* Email入力フィールド */}
           <EmailInputField
-            value={pageStore.loginForm.email.value}
+            value={formStore.form.email.value}
             onChange={handleEmailChange}
-            error={pageStore.errors.email || undefined}
+            error={formStore.errors.email || undefined}
           />
           
           {/* Password入力フィールド */}
           <PasswordInputField
-            value={pageStore.loginForm.password.value}
+            value={formStore.form.password.value}
             onChange={handlePasswordChange}
-            error={pageStore.errors.password || undefined}
+            error={formStore.errors.password || undefined}
           />
           
           {/* ログインボタン */}
           <LoginButton
-            disabled={!pageStore.loginForm.isValid}
+            disabled={!formStore.form.isValid}
             loading={pageStore.isLoading}
             onPress={handleLogin}
           />
