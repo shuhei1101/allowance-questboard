@@ -58,7 +58,7 @@ interface LoginPageState extends Properties {
 /**
  * ログイン画面状態管理ストア
  */
-export const createLoginPageStore = () = create<LoginPageState>()(
+export const createLoginPageStore = create<LoginPageState>()(
   devtools(
     (set) => ({
       ...defaultProperties,

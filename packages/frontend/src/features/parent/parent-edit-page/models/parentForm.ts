@@ -2,11 +2,11 @@ import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
-import { BaseModel } from '@backend/core/models/baseModel';
+import { BaseForm } from '@backend/core/models/baseForm';
 import { Icon } from '@backend/features/icon/domain/icon';
 
 /** 親登録フォームモデル */
-export class ParentForm extends BaseModel {
+export class ParentForm extends BaseForm {
   public readonly name: ParentName;
   public readonly email: Email;
   public readonly password: Password;

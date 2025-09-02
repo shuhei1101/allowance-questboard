@@ -1,4 +1,4 @@
-import { BaseModel } from '@backend/core/models/baseModel';
+import { BaseForm } from '@backend/core/models/baseForm';
 import { FamilyDisplayId } from '@backend/features/family/value-object/familyDisplayId';
 import { FamilyName } from '../../../../../../backend/src/features/family/value-object/familyName';
 import { IconId } from '../../../../../../backend/src/features/icon/value-objects/iconId';
@@ -8,7 +8,7 @@ import { ParentForm } from '../../../parent/parent-edit-page/models/parentForm';
 
 
 /** 家族登録フォームモデル */
-export class FamilyForm extends BaseModel {
+export class FamilyForm extends BaseForm {
   public readonly displayId: FamilyDisplayId;
   public readonly name: FamilyName;
   public readonly iconId?: IconId;

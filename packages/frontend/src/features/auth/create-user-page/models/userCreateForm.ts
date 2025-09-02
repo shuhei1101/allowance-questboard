@@ -1,9 +1,9 @@
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
-import { BaseModel } from '@backend/core/models/baseModel';
+import { BaseForm } from '@backend/core/models/baseForm';
 
 /** 新規登録フォームモデル */
-export class UserCreateForm extends BaseModel {
+export class UserCreateForm extends BaseForm {
   public readonly email: Email;
   public readonly password: Password;
 
@@ -19,7 +19,6 @@ export class UserCreateForm extends BaseModel {
     this.validator.valuesEmpty(this.email, this.password);
   }
 
-  /** 初期状態のフォームを作成 */
   public static initialize(): UserCreateForm {
     return new UserCreateForm({
       email: new Email(''),

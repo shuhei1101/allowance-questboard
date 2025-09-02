@@ -1,13 +1,11 @@
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
-import { BaseModel } from '@backend/core/models/baseModel';
-import { LocaleString } from '@backend/core/messages/localeString';
-import { RelationValidateError } from '@backend/core/validator/validationError';
+import { BaseForm } from '@backend/core/models/baseForm';
 
 /**
  * ログインフォームモデル
  */
-export class LoginForm extends BaseModel {
+export class LoginForm extends BaseForm {
   public readonly email: Email;
   public readonly password: Password;
 
