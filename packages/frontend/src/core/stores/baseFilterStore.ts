@@ -24,6 +24,8 @@ export abstract class BaseFilterStore<
   TActions extends BaseFilterActions<TFilters> = BaseFilterActions<TFilters>
 > extends BaseStore<TProps, TActions> {
 
+  protected abstract setFilters();
+
   /** 全ての条件を空にする */
   protected clearFilters(set: any): ClearFilters {
     return () => {
