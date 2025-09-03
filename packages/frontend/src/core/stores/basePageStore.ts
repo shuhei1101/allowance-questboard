@@ -13,7 +13,7 @@ export interface BasePageProperties extends BaseStoreProperties {
 
 export interface BasePageActions extends BaseStoreActions {
   setLoading: SetLoading;
-  getToken: LoadToken;
+  loadToken: LoadToken;
 }
 
 export abstract class BasePageStore<
@@ -32,15 +32,15 @@ export abstract class BasePageStore<
   /** JWTトークンを取得してストアに保存 */
   protected loadToken(set: any): LoadToken {
     return async () => {
-      set({ isLoading: true }, false, 'getToken:start');
+      set({ isLoading: true }, false, 'loadToken:start');
       try {
         const token = await JwtStorage.getToken();
-        set({ jwt: token }, false, 'getToken:success');
+        set({ jwt: token }, false, 'loadToken:success');
       } catch (error) {
         console.error('JWT取得エラー:', error);
-        set({ jwt: undefined }, false, 'getToken:error');
+        set({ jwt: undefined }, false, 'loadToken:error');
       } finally {
-        set({ isLoading: false }, false, 'getToken:end');
+        set({ isLoading: false }, false, 'loadToken:end');
       }
     };
   }
@@ -60,7 +60,7 @@ export abstract class BasePageStore<
     return {
       ...super.buildActions(set),
       setLoading: this.setLoading(set),
-      getToken: this.loadToken(set),
+      loadToken: this.loadToken(set),
     } as TActions;
   }
 }
