@@ -3,8 +3,6 @@ import { BaseStore, BaseStoreActions, BaseStoreProperties } from './BaseStore';
 import { BaseForm } from '../../../../backend/src/core/models/baseForm';
 
 // シグネチャ
-export type SetForm<TForm extends BaseForm> = (form: TForm) => void;
-export type SetError<TErrors extends FormErrors> = <K extends keyof TErrors>(field: K, error: TErrors[K]) => void;
 export type ClearErrors = () => void;
 export type ResetForm = () => BaseForm;
 
