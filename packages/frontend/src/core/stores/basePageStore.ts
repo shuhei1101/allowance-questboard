@@ -64,3 +64,19 @@ export abstract class BasePageStore<
     } as TActions;
   }
 }
+
+/** 初回画面表示時のトークン読み込み */
+export const useLoadToken = (
+  store: StoreApi<BasePageProperties & BasePageActions>
+) => {
+  const jwt = store((s) => s.jwt);
+  const isLoading = store((s) => s.isLoading);
+  const loadToken = store((s) => s.loadToken);
+
+  // 初期表示で JWT を取得
+  useEffect(() => {
+    loadToken();
+  }, [loadToken]);
+
+  return { jwt, isLoading };
+};
