@@ -32,6 +32,9 @@ export abstract class BaseFormStore<
   TActions extends BaseFormActions<TForm, TErrors> = BaseFormActions<TForm, TErrors>,
 > extends BaseStore<TProps, TActions> {
 
+  protected abstract setForm();
+  protected abstract setErrors();
+
   /** フォームのエラークリア */
   protected clearErrors(set: any): ClearErrors {
     return () => set({ errors: {} as TErrors }, false, 'clearErrors');
