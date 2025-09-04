@@ -4,7 +4,7 @@ import { useTheme } from '@/core/theme';
 import { LoginForm } from '@/features/auth/login-page/models/loginForm';
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
-import { useLoginPageStore } from '../../src/features/auth/login-page/loginPageStore';
+import { useLoginPageStore } from '../../src/features/auth/login-page/stores/loginPageStore';
 
 /**
  * ログイン画面状態設定ページ

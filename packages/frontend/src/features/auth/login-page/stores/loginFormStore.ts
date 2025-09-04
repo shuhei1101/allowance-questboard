@@ -1,10 +1,6 @@
 import { create } from 'zustand';
-import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm } from '../../../core/stores/baseFormStore';
-import { LoginForm } from './models/loginForm';
-
-// 関数シグネチャ
-export type SetEmailError = (error: string | undefined) => void;
-export type SetPasswordError = (error: string | undefined) => void;
+import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetError } from '../../../../core/stores/baseFormStore';
+import { LoginForm } from '../models/loginForm';
 
 // フォーム固有のエラー型
 export interface LoginFormErrors extends FormErrors {
@@ -16,8 +12,8 @@ interface LoginFormProperties extends BaseFormProperties<LoginForm, LoginFormErr
 
 interface LoginFormActions extends BaseFormActions<LoginForm, LoginFormErrors> {
   setForm: SetForm<LoginForm>;
-  setEmailError: SetEmailError;
-  setPasswordError: SetPasswordError;
+  setEmailError: SetError;
+  setPasswordError: SetError;
 }
 
 class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, LoginFormProperties, LoginFormActions> {
@@ -27,12 +23,12 @@ class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, Logi
   }
 
   /** setEmailErrorアクションを生成 */
-  protected setEmailError(set: any): SetEmailError {
+  protected setEmailError(set: any): SetError {
     return (error) => set((state: LoginFormProperties) => ({ errors: { ...state.errors, email: error } }));
   }
 
   /** setPasswordErrorアクションを生成 */
-  protected setPasswordError(set: any): SetPasswordError {
+  protected setPasswordError(set: any): SetError {
     return (error) => set((state: LoginFormProperties) => ({ errors: { ...state.errors, password: error } }));
   }
 
@@ -61,8 +57,9 @@ class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, Logi
 }
 
 const loginFormStore = new LoginFormStoreClass();
+export type LoginFormStore = LoginFormProperties & LoginFormActions;
 
 /** ログインフォーム状態管理ストア */
-export const createLoginFormStore = () => create<LoginFormProperties & LoginFormActions>()(
+export const useLoginFormStore = create<LoginFormStore>()(
   (set) => loginFormStore.createStore(set)
 );

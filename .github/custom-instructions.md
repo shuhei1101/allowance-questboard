@@ -6,6 +6,7 @@
 - 実行はこちらで行います。
   - 例: 
 ```bash
+cd /Users/nishikawashuhei/nishikawa/30_repos/allowance-questboard
 git add .
 git commit -m "feat: 概要
 

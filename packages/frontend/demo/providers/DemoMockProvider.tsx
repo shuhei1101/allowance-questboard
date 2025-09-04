@@ -16,7 +16,7 @@ import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 import { Session } from '../../src/core/constants/sessionVariables';
 import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
-import { useLoginPageStore } from '../../src/features/auth/login-page/loginPageStore';
+import { useLoginPageStore } from '../../src/features/auth/login-page/stores/loginPageStore';
 
 interface Props {
   children: ReactNode;

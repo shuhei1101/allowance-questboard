@@ -9,59 +9,61 @@ import { useForgotPasswordHandler } from './useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { login } from '../services/login';
 import { Session } from '../../../../core/constants/sessionVariables';
-import { useLoginPageStore } from '../loginPageStore';
+import { LoginPageStore } from '../stores/loginPageStore';
 import { createAuthenticatedClient } from '../../../../core/api/trpcClient';
+import { LoginFormStore } from '../stores/loginFormStore';
 
 /** ログインページの全ハンドルを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドルを一括で提供 */
-export const loginPageHandlers = () => {
-  const pageStore = useLoginPageStore();
-
+export const createLoginPageHandlers = (params: {
+  pageStore: LoginPageStore,
+  loginFormStore: LoginFormStore,
+}) => {
   /** Email変更時のハンドル */
   const handleEmailChange = useEmailHandler({
-    emailError: pageStore.errors.email,
-    loginForm: pageStore.loginForm,
-    setLoginForm: pageStore.setLoginForm,
-    setEmailError: pageStore.setEmailError,
+    emailError: params.loginFormStore.errors.email,
+    loginForm: params.loginFormStore.form,
+    setLoginForm: params.loginFormStore.setLoginForm,
+    setEmailError: params.loginFormStore.setEmailError,
   });
   /** パスワード変更時のハンドル */
   const handlePasswordChange = usePasswordHandler({
-    passwordError: pageStore.errors.password,
-    loginForm: pageStore.loginForm,
-    setLoginForm: pageStore.setLoginForm,
-    setPasswordError: pageStore.setPasswordError,
+    passwordError: params.loginFormStore.errors.password,
+    loginForm: params.loginFormStore.form,
+    setLoginForm: params.loginFormStore.setLoginForm,
+    setPasswordError: params.loginFormStore.setPasswordError,
   });
   /** ログイン押下時のハンドル */
   const handleLogin = useLoginHandler({
-    clearErrors: pageStore.clearErrors,
-    loginForm: pageStore.loginForm,
+    clearErrors: params.pageStore.clearErrors,
+    loginForm: params.loginFormStore.form,
     currentLanguageType: Session.languageType,
-    setEmailError: pageStore.setEmailError,
-    setPasswordError: pageStore.setPasswordError,
-    showDialog: pageStore.showDialog,
-    setLoading: pageStore.setLoading,
+    setEmailError: params.pageStore.setEmailError,
+    setPasswordError: params.pageStore.setPasswordError,
+    showDialog: params.pageStore.showDialog,
+    setLoading: params.pageStore.setLoading,
     login: login,
-    setSelectFamilyDialog: pageStore.setSelectFamilyDialog,
+    setSelectFamilyDialog: params.pageStore.setSelectFamilyDialog,
     createAuthenticatedClient: createAuthenticatedClient,
-    getJwtToken: Session.jwtStorage.getToken,
+    Jwt: params.pageStore.jwt,
   });
   /** 親ログイン時のハンドル */
   const handleParentLogin = useParentLoginHandler({
     updateFamilyMemberType: Session.setFamilyMemberType,
-    hideDialog: pageStore.hideDialog,
-    setLoginForm: pageStore.setLoginForm,
-    setLoading: pageStore.setLoading,
+    hideDialog: params.pageStore.hideDialog,
+    setLoginForm: params.pageStore.setLoginForm,
+    setLoading: params.pageStore.setLoading,
   });
   /** 子ログイン時のハンドル */
   const handleChildLogin = useChildLoginHandler({
     updateFamilyMemberType: Session.setFamilyMemberType,
-    hideDialog: pageStore.hideDialog,
-    setLoginForm: pageStore.setLoginForm,
-    setLoading: pageStore.setLoading,
+    hideDialog: params.pageStore.hideDialog,
+    setLoginForm: params.pageStore.setLoginForm,
+    setLoading: params.pageStore.setLoading,
   });
   /** ダイアログを閉じた時のハンドル */
   const handleCloseDialog = useCloseDialogHandler({
-    hideDialog: pageStore.hideDialog,
+    hideDialog: params.pageStore.hideDialog,
   });
   /** ユーザー作成時のハンドル */
   const handleUserCreate = useCreateUserHandler({

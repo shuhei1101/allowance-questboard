@@ -4,7 +4,7 @@ import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
 import { Session } from '../../../src/core/constants/sessionVariables';
 import { JwtStorage } from '../../../src/features/auth/services/jwtStorage';
-import { useLoginPageStore } from '../../../src/features/auth/login-page/loginPageStore';
+import { useLoginPageStore } from '../../../src/features/auth/login-page/stores/loginPageStore';
 
 /**
  * ストア状態の確認画面

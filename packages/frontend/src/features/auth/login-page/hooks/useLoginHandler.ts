@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { ClearErrors, SetEmailError, SetPasswordError, SetLoading, ShowDialog, SetSelectFamilyDialog } from '../loginPageStore';
+import { ShowDialog, SetSelectFamilyDialog } from '../stores/loginPageStore';
 import { supabase } from '@/core/supabase/supabase';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
@@ -9,7 +9,8 @@ import { Login } from '../services/login';
 import { AppError } from '@backend/core/errors/appError';
 import { useLoginFormValidationHandler } from '../validations/useLoginFormValidationHandler';
 import { CreateAuthenticatedClient } from '../../../../core/api/trpcClient';
-import { GetJwtToken } from '../../services/jwtStorage';
+import { Jwt, SetLoading } from '../../../../core/stores/basePageStore';
+import { ClearErrors, SetError } from '../../../../core/stores/baseFormStore';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -20,14 +21,14 @@ export const useLoginHandler = (params: {
   loginForm: LoginForm,
   currentLanguageType: LanguageTypeValue,
   clearErrors: ClearErrors,
-  setEmailError: SetEmailError,
-  setPasswordError: SetPasswordError,
+  setEmailError: SetError,
+  setPasswordError: SetError,
   setLoading: SetLoading,
   showDialog: ShowDialog,
   login: Login,
   setSelectFamilyDialog: SetSelectFamilyDialog,
   createAuthenticatedClient: CreateAuthenticatedClient,
-  getJwtToken: GetJwtToken,
+  Jwt: Jwt,
 }) => {
   // バリデーションハンドラーを取得
   const validateLoginForm = useLoginFormValidationHandler({
@@ -73,7 +74,7 @@ export const useLoginHandler = (params: {
       }
 
       const router = params.createAuthenticatedClient({
-        jwtToken: await params.getJwtToken(),
+        jwtToken: params.Jwt,
         languageType: params.currentLanguageType,
       });
       
@@ -105,6 +106,6 @@ export const useLoginHandler = (params: {
     params.setSelectFamilyDialog,
     validateLoginForm,
     params.createAuthenticatedClient,
-    params.getJwtToken,
+    params.Jwt,
   ]);
 };

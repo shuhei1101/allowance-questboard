@@ -8,19 +8,23 @@ import { CreateUserButton } from './components/CreateUserButton';
 import { ForgotPasswordLink } from './components/ForgotPasswordLink';
 import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/SelectFamilyDialog';
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
+import { LoadingPage } from '../../shared/loading-page/LoadingPage';
 import { useTheme } from '@/core/theme';
-import { loginPageHandlers } from './hooks/loginPageHandlers';
-import { useRef } from 'react';
-import { createLoginPageStore } from './loginPageStore';
-import { createLoginFormStore } from './loginFormStore';
+import { createLoginPageHandlers } from './hooks/createloginPageHandlers';
+import { useLoginPageStore } from './stores/loginPageStore';
+import { useLoginFormStore } from './stores/loginFormStore';
+import { useLoadToken } from '../../../core/stores/basePageStore';
 
 /** ログインページ
  * 
  * ログイン機能全体を統合管理するメインページ */
 export const LoginPage: React.FC = () => {
   const { colors } = useTheme();
-  const formStore = useRef(createLoginFormStore()).current();
-  const pageStore = useRef(createLoginPageStore()).current();
+  const pageStore = useLoginPageStore();
+  const loginFormStore = useLoginFormStore();
+
+  // JWTトークンの取得
+  const { jwt, isLoading } = useLoadToken(pageStore);
 
   // 統合フックで全ハンドラーを取得
   const {
@@ -33,7 +37,15 @@ export const LoginPage: React.FC = () => {
     handleChildLogin,
     handleTermsOfService,
     handleCloseDialog,
-  } = loginPageHandlers();
+  } = createLoginPageHandlers({
+    pageStore,
+    loginFormStore
+  });
+
+  // JWT読み込み中はローディング画面を表示
+  if (isLoading) {
+    return <LoadingPage message="認証情報を読み込んでいます..." />;
+  }
 
   return (
     <KeyboardAvoidingView 
@@ -58,21 +70,21 @@ export const LoginPage: React.FC = () => {
         <View style={styles.formContainer}>
           {/* Email入力フィールド */}
           <EmailInputField
-            value={formStore.form.email.value}
+            value={loginFormStore.form.email.value}
             onChange={handleEmailChange}
-            error={formStore.errors.email || undefined}
+            error={loginFormStore.errors.email || undefined}
           />
           
           {/* Password入力フィールド */}
           <PasswordInputField
-            value={formStore.form.password.value}
+            value={loginFormStore.form.password.value}
             onChange={handlePasswordChange}
-            error={formStore.errors.password || undefined}
+            error={loginFormStore.errors.password || undefined}
           />
           
           {/* ログインボタン */}
           <LoginButton
-            disabled={!formStore.form.isValid}
+            disabled={!loginFormStore.form.isValid}
             loading={pageStore.isLoading}
             onPress={handleLogin}
           />

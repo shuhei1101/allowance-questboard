@@ -6,10 +6,11 @@ import { useEffect } from 'react';
 // シグネチャ
 export type SetLoading = (loading: boolean) => void;
 export type LoadToken = () => Promise<void>;
+export type Jwt = string | undefined;
 
 export interface BasePageProperties extends BaseStoreProperties {
   isLoading: boolean;
-  jwt?: string;
+  jwt: Jwt;
 }
 
 export interface BasePageActions extends BaseStoreActions {
@@ -68,11 +69,11 @@ export abstract class BasePageStore<
 
 /** 初回画面表示時のトークン読み込み */
 export const useLoadToken = <T extends BasePageProperties & BasePageActions>(
-  useStore: () => T
+  store:  T
 ) => {
-  const jwt = useStore().jwt;
-  const isLoading = useStore().isLoading;
-  const loadToken = useStore().loadToken;
+  const jwt = store.jwt;
+  const isLoading = store.isLoading;
+  const loadToken = store.loadToken;
 
   // 初期表示で JWT を取得
   useEffect(() => {

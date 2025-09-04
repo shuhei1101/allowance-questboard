@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { BasePageStore, BasePageProperties, BasePageActions } from '../../../core/stores/basePageStore';
-import { SelectFamilyDialog } from './models/selectFamilyDialog';
+import { BasePageStore, BasePageProperties, BasePageActions } from '../../../../core/stores/basePageStore';
+import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 
 // シグネチャ
 export type IsDialogVisible = boolean;
@@ -55,8 +55,9 @@ class LoginPageStoreClass extends BasePageStore<LoginPageProperties, LoginPageAc
 }
 
 const loginPageStore = new LoginPageStoreClass();
+export type LoginPageStore = LoginPageProperties & LoginPageActions;
 
 /** ログインページ状態管理ストア */
-export const createLoginPageStore = () => create<LoginPageProperties & LoginPageActions>()(
+export const useLoginPageStore = create<LoginPageStore>()(
     (set) => loginPageStore.createStore(set)
 );
