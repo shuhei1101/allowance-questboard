@@ -1,6 +1,7 @@
 import { StoreApi } from 'zustand';
 import { BaseStore, BaseStoreActions, BaseStoreProperties } from './BaseStore';
 import { JwtStorage } from '../../features/auth/services/jwtStorage';
+import { useEffect } from 'react';
 
 // シグネチャ
 export type SetLoading = (loading: boolean) => void;
@@ -66,12 +67,12 @@ export abstract class BasePageStore<
 }
 
 /** 初回画面表示時のトークン読み込み */
-export const useLoadToken = (
-  store: StoreApi<BasePageProperties & BasePageActions>
+export const useLoadToken = <T extends BasePageProperties & BasePageActions>(
+  useStore: () => T
 ) => {
-  const jwt = store((s) => s.jwt);
-  const isLoading = store((s) => s.isLoading);
-  const loadToken = store((s) => s.loadToken);
+  const jwt = useStore().jwt;
+  const isLoading = useStore().isLoading;
+  const loadToken = useStore().loadToken;
 
   // 初期表示で JWT を取得
   useEffect(() => {

@@ -11,7 +11,7 @@ import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { useTheme } from '@/core/theme';
 import { loginPageHandlers } from './hooks/loginPageHandlers';
 import { useRef } from 'react';
-import { createLoginPageStore } from './loginPageStoreNew';
+import { createLoginPageStore } from './loginPageStore';
 import { createLoginFormStore } from './loginFormStore';
 
 /** ログインページ

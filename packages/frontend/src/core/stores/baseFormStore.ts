@@ -2,9 +2,11 @@ import { StoreApi } from 'zustand';
 import { BaseStore, BaseStoreActions, BaseStoreProperties } from './BaseStore';
 import { BaseForm } from '../../../../backend/src/core/models/baseForm';
 
-// シグネチャ
+// 関数シグネチャ
 export type ClearErrors = () => void;
 export type ResetForm = () => BaseForm;
+export type SetForm<TForm extends BaseForm> = (form: TForm) => void;
+export type SetErrors<TErrors extends FormErrors> = (errors: TErrors) => void;
 
 /** フォーム内エントリのエラー */
 export interface FormErrors extends Record<string, string | undefined> {}
@@ -32,8 +34,7 @@ export abstract class BaseFormStore<
   TActions extends BaseFormActions<TForm, TErrors> = BaseFormActions<TForm, TErrors>,
 > extends BaseStore<TProps, TActions> {
 
-  protected abstract setForm();
-  protected abstract setErrors();
+  protected abstract setForm(set: any): SetForm<TForm>;
 
   /** フォームのエラークリア */
   protected clearErrors(set: any): ClearErrors {

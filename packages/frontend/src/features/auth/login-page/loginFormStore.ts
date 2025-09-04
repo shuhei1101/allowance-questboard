@@ -2,10 +2,9 @@ import { create } from 'zustand';
 import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm } from '../../../core/stores/baseFormStore';
 import { LoginForm } from './models/loginForm';
 
-// シグネチャ
+// 関数シグネチャ
 export type SetEmailError = (error: string | undefined) => void;
 export type SetPasswordError = (error: string | undefined) => void;
-export type SetLoginForm = (form: LoginForm) => void;
 
 // フォーム固有のエラー型
 export interface LoginFormErrors extends FormErrors {
@@ -16,14 +15,14 @@ export interface LoginFormErrors extends FormErrors {
 interface LoginFormProperties extends BaseFormProperties<LoginForm, LoginFormErrors> {}
 
 interface LoginFormActions extends BaseFormActions<LoginForm, LoginFormErrors> {
-  setLoginForm: SetLoginForm;
+  setForm: SetForm<LoginForm>;
   setEmailError: SetEmailError;
   setPasswordError: SetPasswordError;
 }
 
 class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, LoginFormProperties, LoginFormActions> {
   /** setLoginFormアクションを生成 */
-  protected setLoginForm(set: any): SetLoginForm {
+  protected setForm(set: any): SetForm<LoginForm> {
     return (form) => set({ form });
   }
 
@@ -56,7 +55,7 @@ class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, Logi
       ...super.buildActions(set),
       setEmailError: this.setEmailError(set),
       setPasswordError: this.setPasswordError(set),
-      setLoginForm: this.setLoginForm(set),
+      setForm: this.setForm(set),
     };
   }
 }
