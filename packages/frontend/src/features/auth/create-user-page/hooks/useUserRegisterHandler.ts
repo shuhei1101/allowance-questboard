@@ -48,6 +48,9 @@ export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
         password: params.userRegisterForm.password.value,
       });
 
+      // デバッグログを追加
+      console.log('Supabase signup response:', { data, error });
+
       // エラーが発生した場合は例外をスロー
       if (error) {
         console.error('Supabase signup error:', error);
@@ -59,12 +62,22 @@ export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
 
       // 成功時の処理
       if (data.user) {
-        Alert.alert(
-          '登録完了',
-          'メールアドレスに確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。',
-          [{ text: 'OK' }]
-        );
-        // TODO: メール認証画面への遷移処理を追加
+        // メール確認が必要かどうかをチェック
+        if (data.user.email_confirmed_at) {
+          // メール確認済みの場合
+          Alert.alert(
+            '登録完了',
+            'アカウントが正常に作成されました！',
+            [{ text: 'OK' }]
+          );
+        } else {
+          // メール確認が必要な場合
+          Alert.alert(
+            '登録完了',
+            'メールアドレスに確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。',
+            [{ text: 'OK' }]
+          );
+        }
       }
 
     } catch (error) {

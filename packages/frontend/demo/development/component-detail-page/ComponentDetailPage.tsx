@@ -6,7 +6,7 @@ import { EmailInput } from '@/features/shared/components/EmailInput';
 import { PasswordInputField } from '@/features/shared/components/PasswordInput';
 import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
-import { ComfirmButton } from '@/features/shared/components';
+import { ComfirmButton } from '../../../src/features/shared/components/ComfirmButton';
 
 interface ComponentDetailPageProps {
   componentType: string;
