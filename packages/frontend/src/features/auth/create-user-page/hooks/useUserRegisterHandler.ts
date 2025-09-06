@@ -51,9 +51,25 @@ export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
       // デバッグログを追加
       console.log('Supabase signup response:', { data, error });
 
-      // エラーが発生した場合は例外をスロー
+      // エラーが発生した場合の処理
       if (error) {
         console.error('Supabase signup error:', error);
+        
+        // 既存ユーザーのエラーかどうかをチェック
+        if (error.message.includes('User already registered') || 
+            error.message.includes('already been registered') ||
+            error.code === 'email_taken' ||
+            error.code === 'user_already_exists') {
+          // 既存ユーザーの場合は情報メッセージを表示
+          Alert.alert(
+            '登録済みメールアドレス',
+            AuthErrorMessages.emailAlreadyExists().getMessage(params.currentLanguageType),
+            [{ text: 'OK' }]
+          );
+          return; // 処理を終了
+        }
+        
+        // その他のエラーの場合はエラーとして扱う
         throw new AppError({
           errorType: 'SignUpError',
           message: AuthErrorMessages.signUpFailed(),

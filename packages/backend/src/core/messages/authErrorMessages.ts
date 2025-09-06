@@ -1,7 +1,10 @@
 import { LocaleString } from "./localeString";
 
 /**
- * AuthErrorMessages クラスは、認証関連のエラーメッセージを管理します。
+ * AuthErro  emailAlreadyExists(): LocaleString { return new LocaleString({
+    ja: 'このメールアドレスは既に登録されています。',
+    en: 'This email address is already registered.'});}
+}ssages クラスは、認証関連のエラーメッセージを管理します。
  */
 class Messages {
   loginFailed(): LocaleString { return new LocaleString({
@@ -60,6 +63,10 @@ class Messages {
   signUpErrorTitle(): LocaleString { return new LocaleString({
     ja: '登録エラー',
     en: 'Registration Error'});}
+
+  emailAlreadyExists(): LocaleString { return new LocaleString({
+    ja: 'このメールアドレスは既に登録されています。',
+    en: 'This email address is already registered.'});}
 }
 
 export const AuthErrorMessages = new Messages();
