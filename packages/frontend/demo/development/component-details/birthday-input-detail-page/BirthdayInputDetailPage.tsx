@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
+import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 
 /**
  * BirthdayInputField詳細ページ
@@ -41,7 +41,7 @@ export const BirthdayInputDetailPage: React.FC = () => {
           🎯 コンポーネントプレビュー
         </Text>
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
-          <BirthdayInputField
+          <BirthdayInput
             value={componentProps.value}
             onChange={(value) => updateProp('value', value)}
             error={componentProps.error}

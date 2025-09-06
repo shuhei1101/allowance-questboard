@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { EntryField } from '@/core/components/EntryField';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
  * 誕生日入力フィールドコンポーネント
  * DateTimePickerを使用したカレンダー式誕生日選択
  */
-export const BirthdayInputField: React.FC<Props> = ({ value, onChange, error }) => {
+export const BirthdayInput: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
   const [showPicker, setShowPicker] = useState(false);
 
@@ -39,8 +39,8 @@ export const BirthdayInputField: React.FC<Props> = ({ value, onChange, error }) 
   };
 
   return (
-    <FieldWithError error={error}>
-      <EntryField
+    <EntryWithError error={error}>
+      <EntryFrame
         icon="diamond"
         title="誕生日"
         required={true}
@@ -69,8 +69,8 @@ export const BirthdayInputField: React.FC<Props> = ({ value, onChange, error }) 
             maximumDate={new Date()}
           />
         )}
-      </EntryField>
-    </FieldWithError>
+      </EntryFrame>
+    </EntryWithError>
   );
 };
 

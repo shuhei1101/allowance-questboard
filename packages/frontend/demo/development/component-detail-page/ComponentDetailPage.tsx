@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useRoute } from '@react-navigation/native';
-import { EmailInputField } from '@/features/shared/components/EmailInputField';
-import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
-import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
+import { EmailInput } from '@/features/shared/components/EmailInput';
+import { PasswordInputField } from '@/features/shared/components/PasswordInput';
+import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 import { ComfirmButton } from '@/features/shared/components';
 
@@ -36,7 +36,7 @@ export const ComponentDetailPage: React.FC = () => {
     switch (componentType) {
       case 'email-input':
         return (
-          <EmailInputField
+          <EmailInput
             value={componentProps.value}
             onChange={(value) => updateProp('value', value)}
             placeholder={componentProps.placeholder}
@@ -54,7 +54,7 @@ export const ComponentDetailPage: React.FC = () => {
         );
       case 'birthday-input':
         return (
-          <BirthdayInputField
+          <BirthdayInput
             value={componentProps.value}
             onChange={(value) => updateProp('value', value)}
             error={componentProps.errorMessage}

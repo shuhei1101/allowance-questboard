@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { IconSelectButtonEntry } from '@/features/shared/components/IconSelectButtonEntry';
+import { IconSelectButtonWithTitle } from '@/features/shared/components/IconSelectButtonWithTitle';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
@@ -64,7 +64,7 @@ export const IconSelectButtonDetailPage: React.FC = () => {
           🎯 コンポーネントプレビュー
         </Text>
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
-          <IconSelectButtonEntry
+          <IconSelectButtonWithTitle
             selectedIcon={componentProps.selectedIcon}
             onIconSelected={(icon) => {
               setComponentProps(prev => ({

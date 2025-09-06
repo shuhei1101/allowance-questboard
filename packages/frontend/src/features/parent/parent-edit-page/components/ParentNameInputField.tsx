@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { EntryField } from '@/core/components/EntryField';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 
 interface Props {
@@ -17,8 +17,8 @@ export const ParentNameInputField: React.FC<Props> = ({ value, onChange, error }
   const { colors } = useTheme();
 
   return (
-    <FieldWithError error={error}>
-      <EntryField
+    <EntryWithError error={error}>
+      <EntryFrame
         icon="diamond"
         title="名前"
         required={true}
@@ -36,8 +36,8 @@ export const ParentNameInputField: React.FC<Props> = ({ value, onChange, error }
           autoCapitalize="words"
           autoCorrect={false}
         />
-      </EntryField>
-    </FieldWithError>
+      </EntryFrame>
+    </EntryWithError>
   );
 };
 

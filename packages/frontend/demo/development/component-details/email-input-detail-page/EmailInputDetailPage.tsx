@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { EmailInputField } from '@/features/shared/components/EmailInputField';
+import { EmailInput } from '@/features/shared/components/EmailInput';
 
 /**
  * EmailInputField詳細ページ
@@ -42,7 +42,7 @@ export const EmailInputDetailPage: React.FC = () => {
           🎯 コンポーネントプレビュー
         </Text>
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
-          <EmailInputField
+          <EmailInput
             value={componentProps.value}
             onChange={(value) => updateProp('value', value)}
             placeholder={componentProps.placeholder}

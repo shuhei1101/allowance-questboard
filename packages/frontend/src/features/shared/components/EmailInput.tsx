@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 
@@ -15,11 +15,10 @@ interface EmailInputFieldProps {
   error?: string;
 }
 
-/**
- * メールアドレス入力フィールド
- * メールアドレスを入力するテキストフィールド
- */
-export const EmailInputField: React.FC<EmailInputFieldProps> = ({
+/** メールアドレス入力フィールド
+ * 
+ * メールアドレスを入力するテキストフィールド */
+export const EmailInput: React.FC<EmailInputFieldProps> = ({
   value,
   onChange,
   placeholder,
@@ -33,7 +32,7 @@ export const EmailInputField: React.FC<EmailInputFieldProps> = ({
   const defaultPlaceholder = placeholder || t('auth.loginPage.emailPlaceholder');
 
   return (
-    <FieldWithError error={error}>
+    <EntryWithError error={error}>
       <TextInput
         style={[
           styles.input,
@@ -54,7 +53,7 @@ export const EmailInputField: React.FC<EmailInputFieldProps> = ({
         textContentType="none"
         autoComplete="off"
       />
-    </FieldWithError>
+    </EntryWithError>
   );
 };
 

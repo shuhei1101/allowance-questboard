@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 
@@ -39,7 +39,7 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
   };
 
   return (
-    <FieldWithError error={error}>
+    <EntryWithError error={error}>
       <View style={[
         styles.inputContainer,
         {
@@ -71,7 +71,7 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
           />
         </TouchableOpacity>
       </View>
-    </FieldWithError>
+    </EntryWithError>
   );
 };
 

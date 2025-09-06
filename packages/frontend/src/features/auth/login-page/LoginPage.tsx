@@ -1,8 +1,8 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { AppIcon } from './components/AppIcon';
 import { AppTitleLabel } from './components/AppTitleLabel';
-import { EmailInputField } from '../../shared/components/EmailInputField';
-import { PasswordInputField } from '../../shared/components/PasswordInputField';
+import { EmailInput } from '../../shared/components/EmailInput';
+import { PasswordInputField } from '../../shared/components/PasswordInput';
 import { LoginButton } from './components/LoginButton';
 import { CreateUserButton } from './components/CreateUserButton';
 import { ForgotPasswordLink } from './components/ForgotPasswordLink';
@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () => {
         {/* フォームコンテナ */}
         <View style={styles.formContainer}>
           {/* Email入力フィールド */}
-          <EmailInputField
+          <EmailInput
             value={formStore.form.email.value}
             onChange={handleEmailChange}
             error={formStore.errors.email || undefined}

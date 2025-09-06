@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { EntryField } from '@/core/components/EntryField';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 
@@ -20,12 +20,12 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
   const { t } = useTranslation();
 
   return (
-    <EntryField
+    <EntryFrame
       icon="person"
       title={t('parent.parentEditPage.components.parentNameInputFieldEntry.fieldTitle')}
       required={true}
     >
-      <FieldWithError error={error}>
+      <EntryWithError error={error}>
         <TextInput
           style={[styles.input, { 
             borderColor: error ? colors.danger : colors.border.light,
@@ -39,8 +39,8 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
           autoCapitalize="words"
           autoCorrect={false}
         />
-      </FieldWithError>
-    </EntryField>
+      </EntryWithError>
+    </EntryFrame>
   );
 };
 

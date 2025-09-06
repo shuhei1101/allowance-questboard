@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEntry';
-import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
+import { EmailInputWithTitle } from '../../shared/components/EmailInputWithTitle';
+import { PasswordInputWithTitle } from '../../shared/components/PasswordInputWithTitle';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { createUserRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
@@ -67,7 +67,7 @@ export const UserRegisterPage: React.FC = () => {
       {/* フォームコンテナ */}
       <View style={styles.formContainer}>
         {/* Email入力フィールド */}
-        <EmailInputFieldEntry
+        <EmailInputWithTitle
           value={formStore.form.email.value}
           onChange={handleEmailChange}
           error={formStore.errors.email}
@@ -75,7 +75,7 @@ export const UserRegisterPage: React.FC = () => {
         />
         
         {/* Password入力フィールド */}
-        <PasswordInputFieldEntry
+        <PasswordInputWithTitle
           value={formStore.form.password.value}
           onChange={handlePasswordChange}
           error={formStore.errors.password}

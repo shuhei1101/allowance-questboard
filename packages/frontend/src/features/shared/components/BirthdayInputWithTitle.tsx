@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { EntryField } from '@/core/components/EntryField';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 
@@ -12,11 +12,10 @@ interface Props {
   error?: string;
 }
 
-/**
- * 誕生日入力エントリーコンポーネント
- * EntryFieldとFieldWithErrorでラップした誕生日入力フィールド
- */
-export const BirthdayInputFieldEntry: React.FC<Props> = ({ value, onChange, error }) => {
+/** 誕生日入力コンポーネント（タイトル付き）
+ * 
+ * EntryFrameでラップしたBirthdayInput*/
+export const BirthdayInputWithTitle: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const [showPicker, setShowPicker] = useState(false);
@@ -41,12 +40,12 @@ export const BirthdayInputFieldEntry: React.FC<Props> = ({ value, onChange, erro
   };
 
   return (
-    <EntryField
+    <EntryFrame
       icon="calendar"
       title={t('common.fields.birthday')}
       required={true}
     >
-      <FieldWithError error={error}>
+      <EntryWithError error={error}>
         <TouchableOpacity 
           style={[styles.input, { 
             borderColor: error ? colors.danger : colors.border.light,
@@ -71,8 +70,8 @@ export const BirthdayInputFieldEntry: React.FC<Props> = ({ value, onChange, erro
             maximumDate={new Date()}
           />
         )}
-      </FieldWithError>
-    </EntryField>
+      </EntryWithError>
+    </EntryFrame>
   );
 };
 

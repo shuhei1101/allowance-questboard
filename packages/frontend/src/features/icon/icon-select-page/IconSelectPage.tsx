@@ -9,10 +9,10 @@ import { Icon } from '@backend/features/icon/domain/icon';
 import { useEffect } from 'react';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
-import { ComfirmButton } from '../../shared/components';
 import { OnIconSelected } from './hooks/useConfirmHandler';
 import { Constants } from '../../../core/constants/appConstants';
 import { useAppNavigation } from '../../../../AppNavigator';
+import { ComfirmButton } from '../../shared/components/ComfirmButton';
 
 export interface IconSelectPageProps {
   /** 初期選択されたアイコン */

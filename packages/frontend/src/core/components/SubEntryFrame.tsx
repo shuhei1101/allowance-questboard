@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 
-interface SubEntryFieldProps {
+interface SubEntryFrameProps {
   /** 左側のタイトル */
   title: string;
   /** 必須アイコン（*マーク）を表示するか */
@@ -15,7 +15,7 @@ interface SubEntryFieldProps {
  * サブエントリーフィールド
  * 左側にタイトル、右側に入力要素を配置する横並びレイアウトコンポーネント
  */
-export const SubEntryField: React.FC<SubEntryFieldProps> = ({
+export const SubEntryFrame: React.FC<SubEntryFrameProps> = ({
   title,
   required = false,
   children,

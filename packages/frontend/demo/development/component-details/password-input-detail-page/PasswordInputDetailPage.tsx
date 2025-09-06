@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
+import { PasswordInputField } from '@/features/shared/components/PasswordInput';
 
 /**
  * PasswordInputField詳細ページ

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { EntryField } from '@/core/components/EntryField';
-import { FieldWithError } from '@/core/components/FieldWithError';
+import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -18,12 +18,10 @@ interface Props {
   error?: string;
 }
 
-/**
- * アイコン選択エントリーコンポーネント
- * EntryFieldとFieldWithErrorでラップしたアイコン選択ボタン
- * react-native-vector-icons (Ionicons) を使用してアイコンを表示
- */
-export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSelected, error }) => {
+/** アイコン選択ボタンコンポーネント（タイトル付き）
+ * 
+ * EntryFrameでラップしたTouchableOpacityボタン */
+export const IconSelectButtonWithTitle: React.FC<Props> = ({ selectedIcon, onIconSelected, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProp<AppStackParamList>>();
@@ -39,12 +37,12 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSel
   };
 
   return (
-    <EntryField
+    <EntryFrame
       icon="happy"
       title={t('shared.components.iconSelectButtonEntry.fieldTitle')}
       required={false}
     >
-      <FieldWithError error={error}>
+      <EntryWithError error={error}>
         <TouchableOpacity 
           style={styles.button}
           onPress={handlePress}
@@ -97,8 +95,8 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ selectedIcon, onIconSel
             )}
           </View>
         </TouchableOpacity>
-      </FieldWithError>
-    </EntryField>
+      </EntryWithError>
+    </EntryFrame>
   );
 };
 

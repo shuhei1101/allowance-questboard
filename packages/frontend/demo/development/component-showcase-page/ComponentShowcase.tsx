@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { EmailInputField } from '@/features/shared/components/EmailInputField';
-import { PasswordInputField } from '@/features/shared/components/PasswordInputField';
-import { BirthdayInputField } from '@/features/shared/components/BirthdayInputField';
+import { EmailInput } from '@/features/shared/components/EmailInput';
+import { PasswordInputField } from '@/features/shared/components/PasswordInput';
+import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 import { ComfirmButton } from '@/features/shared/components';
 
@@ -40,7 +40,7 @@ export const ComponentShowcase: React.FC = () => {
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             メールアドレス入力フィールド
           </Text>
-          <EmailInputField
+          <EmailInput
             value={email}
             onChange={setEmail}
             placeholder="demo@example.com"
@@ -64,7 +64,7 @@ export const ComponentShowcase: React.FC = () => {
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             誕生日入力フィールド
           </Text>
-          <BirthdayInputField
+          <BirthdayInput
             value={birthday}
             onChange={setBirthday}
             error=""

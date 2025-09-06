@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/core/theme';
 
-interface EntryFieldProps {
+interface EntryFrameProps {
   /** タイトルの左のアイコン */
   icon: keyof typeof Ionicons.glyphMap;
   /** タイトル部分 */
@@ -14,11 +14,10 @@ interface EntryFieldProps {
   children: ReactNode;
 }
 
-/**
- * エントリーフィールド
- * アイコン付きタイトルと必須マーク、内部要素を含むフィールドコンテナ
- */
-export const EntryField: React.FC<EntryFieldProps> = ({
+/** エントリー用の枠組みコンポーネント
+ * 
+ * アイコン付きタイトルと必須マーク、内部要素を含むフィールドコンテナ */
+export const EntryFrame: React.FC<EntryFrameProps> = ({
   icon,
   title,
   required = false,
