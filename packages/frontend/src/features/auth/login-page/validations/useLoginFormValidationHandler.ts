@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 import { LoginForm } from '../models/loginForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
-import { SetEmailError, SetPasswordError } from '../stores/loginFormStore';
-import { ClearErrors } from '../../../../core/stores/baseFormStore';
+import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
 
 /**
  * バリデーション結果
@@ -20,8 +19,8 @@ export const useLoginFormValidationHandler = (params: {
   loginForm: LoginForm;
   currentLanguageType: LanguageTypeValue;
   clearErrors: ClearErrors;
-  setEmailError: SetEmailError;
-  setPasswordError: SetPasswordError;
+  setEmailError: SetFormError;
+  setPasswordError: SetFormError;
 }) => {
   return useCallback((): ValidationResult => {
     // エラーをクリア

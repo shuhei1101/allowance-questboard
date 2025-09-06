@@ -51,6 +51,8 @@ export const EmailInputField: React.FC<EmailInputFieldProps> = ({
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
+        textContentType="none"
+        autoComplete="off"
       />
     </FieldWithError>
   );

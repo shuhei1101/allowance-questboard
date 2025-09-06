@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import { SetUserCreateForm, SetEmailError, EmailError } from '../createUserPageStore';
-import { UserCreateForm } from '../models/userCreateForm';
+import { UserRegisterForm } from '../models/userRegisterForm';
 import { Email } from '@backend/features/auth/value-object/email';
+import { FormError, SetForm, SetFormError } from '../../../../core/stores/baseFormStore';
 
 export type UseEmailHandler = (params: {
-  userCreateForm: UserCreateForm,
-  setUserCreateForm: SetUserCreateForm,
-  emailError: EmailError,
-  setEmailError: SetEmailError
+  userRegisterForm: UserRegisterForm,
+  setUserRegisterForm: SetForm<UserRegisterForm>,
+  emailError: FormError,
+  setEmailError: SetFormError
 }) => (value: string) => void;
 
 /** メール変更ハンドラーのカスタムフック
@@ -15,15 +15,15 @@ export type UseEmailHandler = (params: {
  * メールアドレスの値を更新し、エラーをクリアする */
 export const useEmailHandler: UseEmailHandler = (params) => {
   return useCallback((value: string) => {
-    const updatedForm = new UserCreateForm({ 
+    const updatedForm = new UserRegisterForm({ 
       email: new Email(value), 
-      password: params.userCreateForm.password 
+      password: params.userRegisterForm.password 
     });
-    
-    params.setUserCreateForm(updatedForm);
-    
+
+    params.setUserRegisterForm(updatedForm);
+
     if (params.emailError) {
       params.setEmailError(undefined);
     }
-  }, [params.userCreateForm.password, params.setUserCreateForm, params.emailError, params.setEmailError]);
+  }, [params.userRegisterForm.password, params.setUserRegisterForm, params.emailError, params.setEmailError]);
 };

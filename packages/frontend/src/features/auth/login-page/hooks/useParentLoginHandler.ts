@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { HideDialog, SetLoginForm, SetLoading } from '../stores/loginPageStore';
+import { HideDialog } from '../stores/loginPageStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 import { SetFamilyMemberType } from '../../../../core/constants/sessionVariables';
 import { useAppNavigation } from '../../../../../AppNavigator';
+import { SetForm } from '../../../../core/stores/baseFormStore';
+import { SetLoading } from '../../../../core/stores/basePageStore';
 
 /**
  * 親ログインハンドラーのカスタムフック
@@ -16,7 +17,7 @@ import { useAppNavigation } from '../../../../../AppNavigator';
 export const useParentLoginHandler = (params: {
   updateFamilyMemberType: SetFamilyMemberType,
   hideDialog: HideDialog,
-  setLoginForm: SetLoginForm,
+  setLoginForm: SetForm<LoginForm>,
   setLoading: SetLoading
 }) => {
   const { t } = useTranslation();

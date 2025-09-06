@@ -57,6 +57,8 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
           secureTextEntry={secureTextEntry}
           autoCapitalize="none"
           autoCorrect={false}
+          textContentType="none"
+          autoComplete="off"
         />
         <TouchableOpacity
           style={styles.eyeButton}

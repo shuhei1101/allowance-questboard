@@ -10,7 +10,7 @@ import { AppError } from '@backend/core/errors/appError';
 import { useLoginFormValidationHandler } from '../validations/useLoginFormValidationHandler';
 import { CreateAuthenticatedClient } from '../../../../core/api/trpcClient';
 import { Jwt, SetLoading } from '../../../../core/stores/basePageStore';
-import { ClearErrors, SetError } from '../../../../core/stores/baseFormStore';
+import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -21,8 +21,8 @@ export const useLoginHandler = (params: {
   loginForm: LoginForm,
   currentLanguageType: LanguageTypeValue,
   clearErrors: ClearErrors,
-  setEmailError: SetError,
-  setPasswordError: SetError,
+  setEmailError: SetFormError,
+  setPasswordError: SetFormError,
   setLoading: SetLoading,
   showDialog: ShowDialog,
   login: Login,

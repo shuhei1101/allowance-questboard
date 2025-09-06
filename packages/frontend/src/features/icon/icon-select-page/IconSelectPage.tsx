@@ -1,6 +1,5 @@
 import React, { useLayoutEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
 import { useIconSelectPageStore } from './stores/iconSelectPageStore';
 import { useSelectIconPageHandlers as useIconSelectPageHandlers } from './hooks/useIconSelectPageHandlers';
@@ -55,7 +54,7 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
     return () => {
       pageStore.reset();
     };
-  }, [initialSelectedIcon]);
+  }, []);
 
   const {
     handleConfirm,

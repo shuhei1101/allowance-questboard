@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
-import { ClearErrors, SetEmailError, SetPasswordError } from '../createUserPageStore';
-import { UserCreateForm } from '../models/userCreateForm';
+import { UserRegisterForm } from '../models/userRegisterForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
 
 export type UseUserCreateFormValidationHandler = (params: {
-  userCreateForm: UserCreateForm;
+  userCreateForm: UserRegisterForm;
   currentLanguageType: LanguageTypeValue;
   clearErrors: ClearErrors;
-  setEmailError: SetEmailError;
-  setPasswordError: SetPasswordError;
+  setEmailError: SetFormError;
+  setPasswordError: SetFormError;
 }) => () => ValidationResult;
 
 /** バリデーション結果 */

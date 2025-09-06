@@ -14,6 +14,6 @@ export const useCreateUserHandler = (params: {
 
   return useCallback((): void => {
     // 新規ユーザ作成画面への遷移
-    navigation.navigate(AuthStackMeta.screens.createUser);
+    navigation.navigate(AuthStackMeta.screens.userRegister);
   }, [params.languageType, navigation]);
 };

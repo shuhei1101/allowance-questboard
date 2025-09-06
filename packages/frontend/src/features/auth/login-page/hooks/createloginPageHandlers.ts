@@ -17,29 +17,29 @@ import { LoginFormStore } from '../stores/loginFormStore';
  * ログインページで使用する全てのイベントハンドルを一括で提供 */
 export const createLoginPageHandlers = (params: {
   pageStore: LoginPageStore,
-  loginFormStore: LoginFormStore,
+  formStore: LoginFormStore,
 }) => {
   /** Email変更時のハンドル */
   const handleEmailChange = useEmailHandler({
-    emailError: params.loginFormStore.errors.email,
-    loginForm: params.loginFormStore.form,
-    setLoginForm: params.loginFormStore.setLoginForm,
-    setEmailError: params.loginFormStore.setEmailError,
+    emailError: params.formStore.errors.email,
+    loginForm: params.formStore.form,
+    setLoginForm: params.formStore.setForm,
+    setEmailError: params.formStore.setEmailError,
   });
   /** パスワード変更時のハンドル */
   const handlePasswordChange = usePasswordHandler({
-    passwordError: params.loginFormStore.errors.password,
-    loginForm: params.loginFormStore.form,
-    setLoginForm: params.loginFormStore.setLoginForm,
-    setPasswordError: params.loginFormStore.setPasswordError,
+    passwordError: params.formStore.errors.password,
+    loginForm: params.formStore.form,
+    setLoginForm: params.formStore.setForm,
+    setPasswordError: params.formStore.setPasswordError,
   });
   /** ログイン押下時のハンドル */
   const handleLogin = useLoginHandler({
-    clearErrors: params.pageStore.clearErrors,
-    loginForm: params.loginFormStore.form,
+    clearErrors: params.formStore.clearErrors,
+    loginForm: params.formStore.form,
     currentLanguageType: Session.languageType,
-    setEmailError: params.pageStore.setEmailError,
-    setPasswordError: params.pageStore.setPasswordError,
+    setEmailError: params.formStore.setEmailError,
+    setPasswordError: params.formStore.setPasswordError,
     showDialog: params.pageStore.showDialog,
     setLoading: params.pageStore.setLoading,
     login: login,
@@ -51,14 +51,14 @@ export const createLoginPageHandlers = (params: {
   const handleParentLogin = useParentLoginHandler({
     updateFamilyMemberType: Session.setFamilyMemberType,
     hideDialog: params.pageStore.hideDialog,
-    setLoginForm: params.pageStore.setLoginForm,
+    setLoginForm: params.formStore.setForm,
     setLoading: params.pageStore.setLoading,
   });
   /** 子ログイン時のハンドル */
   const handleChildLogin = useChildLoginHandler({
     updateFamilyMemberType: Session.setFamilyMemberType,
     hideDialog: params.pageStore.hideDialog,
-    setLoginForm: params.pageStore.setLoginForm,
+    setLoginForm: params.formStore.setForm,
     setLoading: params.pageStore.setLoading,
   });
   /** ダイアログを閉じた時のハンドル */

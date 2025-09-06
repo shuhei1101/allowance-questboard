@@ -1,49 +1,62 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { EmailInputFieldEntry } from '../../shared/components/EmailInputFieldEntry';
 import { PasswordInputFieldEntry } from '../../shared/components/PasswordInputFieldEntry';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
-import { createUserPageHandlers } from './hooks/createUserPageHandlers';
-import { useCreateUserPageStore } from './createUserPageStore';
+import { createUserRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useAppNavigation } from '../../../../AppNavigator';
+import { useUserRegisterPageStore } from './stores/userRegisterPageStore';
+import { useUserRegisterFormStore } from './stores/userRegisterFormStore';
 
 /** 新規登録画面
  *
  * 新規ユーザー登録機能を提供するメインページ */
-export const CreateUserPage: React.FC = () => {
+export const UserRegisterPage: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const pageStore = useCreateUserPageStore();
+  const pageStore = useUserRegisterPageStore();
+  const formStore = useUserRegisterFormStore();
   const navigation = useAppNavigation();
 
-  // ページ状態をリセット
-  useLayoutEffect(() => {
+  // 画面描画後
+  useEffect(() => {
     pageStore.reset();
-  }, [pageStore]);
-
+    formStore.reset();
+  }, []);
+  
   // 統合フックで全ハンドラを取得
   const {
     handleEmailChange,
     handlePasswordChange,
-    handleUserCreate,
-  } = createUserPageHandlers();
-
-  // ヘッダーボタンを設定
+    handleUserRegister,
+    handleBeforeRemove,
+  } = createUserRegisterPageHandlers({
+    formStore,
+    pageStore,
+  });
+  
+  
+  // 戻るボタンのインターセプト設定
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', handleBeforeRemove);
+    return unsubscribe;
+  }, [navigation, handleBeforeRemove]);
+  
   useLayoutEffect(() => {
+    // ヘッダーボタンを設定
     navigation.setOptions({
       headerRight: () => (
         <ComfirmButton
-          onPress={handleUserCreate}
-          disabled={!pageStore.userCreateForm.isValid}
+          onPress={handleUserRegister}
+          disabled={!formStore.form.isValid}
           loading={pageStore.isLoading}
           variant="header"
         />
       ),
     });
-  }, [navigation, handleUserCreate, pageStore.isLoading, pageStore.userCreateForm]);
+  }, [navigation, handleUserRegister, pageStore.isLoading, formStore.form.isValid]);
   
   return (
     <ScrollView 
@@ -55,17 +68,17 @@ export const CreateUserPage: React.FC = () => {
       <View style={styles.formContainer}>
         {/* Email入力フィールド */}
         <EmailInputFieldEntry
-          value={pageStore.userCreateForm.email.value}
+          value={formStore.form.email.value}
           onChange={handleEmailChange}
-          error={pageStore.errors.email}
+          error={formStore.errors.email}
           placeholder={t('auth.createUser.emailPlaceholder')}
         />
         
         {/* Password入力フィールド */}
         <PasswordInputFieldEntry
-          value={pageStore.userCreateForm.password.value}
+          value={formStore.form.password.value}
           onChange={handlePasswordChange}
-          error={pageStore.errors.password}
+          error={formStore.errors.password}
           placeholder={t('auth.createUser.passwordPlaceholder')}
         />
       </View>

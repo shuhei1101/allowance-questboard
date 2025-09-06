@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { SetLoginForm, SetEmailError, EmailError } from '../stores/loginPageStore';
 import { LoginForm } from '../models/loginForm';
 import { Email } from '@backend/features/auth/value-object/email';
+import { FormError, SetFormError, SetForm } from '../../../../core/stores/baseFormStore';
 
 /**
  * メール変更ハンドラーのカスタムフック
@@ -10,9 +10,9 @@ import { Email } from '@backend/features/auth/value-object/email';
  */
 export const useEmailHandler = (params: {
   loginForm: LoginForm,
-  setLoginForm: SetLoginForm,
-  emailError: EmailError,
-  setEmailError: SetEmailError
+  setLoginForm: SetForm<LoginForm>,
+  emailError: FormError,
+  setEmailError: SetFormError
 }) => {
   return useCallback((value: string) => {
     const updatedForm = new LoginForm({ 

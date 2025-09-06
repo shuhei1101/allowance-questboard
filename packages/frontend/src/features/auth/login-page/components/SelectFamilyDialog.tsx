@@ -23,10 +23,9 @@ interface SelectFamilyDialogProps {
   onClose: () => void;
 }
 
-/**
- * 家族選択ダイアログ
- * 認証後に表示される家族選択モーダル
- */
+/** 家族選択ダイアログ
+ * 
+ * 認証後に表示される家族選択モーダル */
 export const SelectFamilyDialog: React.FC<SelectFamilyDialogProps> = ({
   isVisible,
   familyName,

@@ -6,11 +6,12 @@ import { BaseForm } from '../../../../backend/src/core/models/baseForm';
 export type ClearErrors = () => void;
 export type ResetForm = () => BaseForm;
 export type SetForm<TForm extends BaseForm> = (form: TForm) => void;
-export type SetError = (error: string | undefined) => void;
+export type SetFormError = (error: FormError) => void;
 
 /** フォーム内エントリのエラー */
 // 関数シグネチャ
-export interface FormErrors extends Record<string, string | undefined> {}
+export type FormError = string | undefined;
+export interface FormErrors extends Record<string, FormError> {}
 
 export interface BaseFormProperties<
   TForm extends BaseForm,

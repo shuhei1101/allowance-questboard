@@ -3,7 +3,7 @@ import { Password } from '@backend/features/auth/value-object/password';
 import { BaseForm } from '@backend/core/models/baseForm';
 
 /** 新規登録フォームモデル */
-export class UserCreateForm extends BaseForm {
+export class UserRegisterForm extends BaseForm {
   public readonly email: Email;
   public readonly password: Password;
 
@@ -19,8 +19,13 @@ export class UserCreateForm extends BaseForm {
     this.validator.valuesEmpty(this.email, this.password);
   }
 
-  public static initialize(): UserCreateForm {
-    return new UserCreateForm({
+  /** フォームに入力値があるかチェック */
+  public hasInput(): boolean {
+    return this.email.value.trim() !== '' || this.password.value.trim() !== '';
+  }
+
+  public static initialize(): UserRegisterForm {
+    return new UserRegisterForm({
       email: new Email(''),
       password: new Password(''),
     });

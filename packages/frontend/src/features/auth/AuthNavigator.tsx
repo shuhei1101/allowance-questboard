@@ -1,20 +1,20 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from './login-page/LoginPage';
-import { CreateUserPage } from './create-user-page/CreateUserPage';
+import { UserRegisterPage } from './create-user-page/UserRegisterPage';
 
 export const AuthStackMeta = {
   name: 'Auth',
   screens: {
     login: "Login",
-    createUser: "CreateUser",
+    userRegister: "UserRegister",
   },
 } as const;
 
 // 認証関連のナビゲーションパラメータ型定義
 export type AuthStackParamList = {
   Login: undefined;
-  CreateUser: undefined;
+  UserRegister: undefined;
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -36,8 +36,8 @@ export function AuthNavigator() {
         component={LoginPage} 
       />
       <AuthStack.Screen 
-        name={AuthStackMeta.screens.createUser}
-        component={CreateUserPage}
+        name={AuthStackMeta.screens.userRegister}
+        component={UserRegisterPage}
         options={{
           headerShown: true,
           title: '新規登録',

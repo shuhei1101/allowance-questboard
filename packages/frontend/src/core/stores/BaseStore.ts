@@ -4,7 +4,7 @@ import { StoreApi } from 'zustand';
 export type Reset = () => void;
 
 export interface BaseStoreProperties {}
-export interface BaseStoreActions extends Record<string, (...args: any[]) => void> {
+export interface BaseStoreActions {
   reset: Reset;
 }
 

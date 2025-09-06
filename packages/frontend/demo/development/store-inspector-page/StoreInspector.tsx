@@ -5,6 +5,7 @@ import { useParentEditPageStore } from '@/features/parent/parent-edit-page/store
 import { Session } from '../../../src/core/constants/sessionVariables';
 import { JwtStorage } from '../../../src/features/auth/services/jwtStorage';
 import { useLoginPageStore } from '../../../src/features/auth/login-page/stores/loginPageStore';
+import { useLoginFormStore } from '../../../src/features/auth/login-page/stores/loginFormStore';
 
 /**
  * ストア状態の確認画面
@@ -13,6 +14,7 @@ import { useLoginPageStore } from '../../../src/features/auth/login-page/stores/
 export const StoreInspector: React.FC = () => {
   const { colors } = useTheme();
   const loginPageStore = useLoginPageStore();
+  const loginFormStore = useLoginFormStore();
   const parentEditPageStore = useParentEditPageStore();
   const [jwt, setJwt] = useState<string | undefined>(undefined);
 
@@ -102,7 +104,7 @@ export const StoreInspector: React.FC = () => {
               メール:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.loginForm.email.value || '未入力'}
+              {loginFormStore.form.email.value || '未入力'}
             </Text>
           </View>
           
@@ -111,7 +113,7 @@ export const StoreInspector: React.FC = () => {
               パスワード:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.loginForm.password.value ? '●'.repeat(loginPageStore.loginForm.password.value.length) : '未入力'}
+              {loginFormStore.form.password.value ? '●'.repeat(loginFormStore.form.password.value.length) : '未入力'}
             </Text>
           </View>
           
@@ -120,7 +122,7 @@ export const StoreInspector: React.FC = () => {
               メールエラー:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.errors.email || '無し'}
+              {loginFormStore.errors.email || '無し'}
             </Text>
           </View>
         </View>

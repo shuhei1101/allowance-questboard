@@ -1,29 +1,30 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { ClearErrors, SetEmailError, SetPasswordError, SetLoading } from '../createUserPageStore';
 import { supabase } from '@/core/supabase/supabase';
-import { UserCreateForm } from '../models/userCreateForm';
+import { UserRegisterForm } from '../models/userRegisterForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
 import { useUserCreateFormValidationHandler } from '../validations/useUserCreateFormValidationHandler';
+import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
+import { SetLoading } from '../../../../core/stores/basePageStore';
 
-export type UseCreateUserHandler = (params: {
-  userCreateForm: UserCreateForm,
+export type UseUserRegisterHandler = (params: {
+  userRegisterForm: UserRegisterForm,
   currentLanguageType: LanguageTypeValue,
   clearErrors: ClearErrors,
-  setEmailError: SetEmailError,
-  setPasswordError: SetPasswordError,
+  setEmailError: SetFormError,
+  setPasswordError: SetFormError,
   setLoading: SetLoading
 }) => () => Promise<void>;
 
 /** 新規登録ハンドラーのカスタムフック
  *
  * Supabaseの認証を実行し、成功時はメール認証画面へ遷移 */
-export const useCreateUserHandler: UseCreateUserHandler = (params) => {
+export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
   // バリデーションハンドラーを取得
   const validateUserCreateForm = useUserCreateFormValidationHandler({
-    userCreateForm: params.userCreateForm,
+    userCreateForm: params.userRegisterForm,
     currentLanguageType: params.currentLanguageType,
     clearErrors: params.clearErrors,
     setEmailError: params.setEmailError,
@@ -43,8 +44,8 @@ export const useCreateUserHandler: UseCreateUserHandler = (params) => {
     try {
       // Supabaseで新規登録処理
       const { data, error } = await supabase.auth.signUp({
-        email: params.userCreateForm.email.value,
-        password: params.userCreateForm.password.value,
+        email: params.userRegisterForm.email.value,
+        password: params.userRegisterForm.password.value,
       });
 
       // エラーが発生した場合は例外をスロー
@@ -81,7 +82,7 @@ export const useCreateUserHandler: UseCreateUserHandler = (params) => {
       params.setLoading(false);
     }
   }, [
-    params.userCreateForm,
+    params.userRegisterForm,
     params.currentLanguageType,
     params.setLoading,
     validateUserCreateForm

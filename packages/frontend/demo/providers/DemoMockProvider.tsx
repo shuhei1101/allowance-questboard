@@ -17,6 +17,7 @@ import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 import { Session } from '../../src/core/constants/sessionVariables';
 import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
 import { useLoginPageStore } from '../../src/features/auth/login-page/stores/loginPageStore';
+import { useLoginFormStore } from '../../src/features/auth/login-page/stores/loginFormStore';
 
 interface Props {
   children: ReactNode;
@@ -33,6 +34,7 @@ interface Props {
  */
 export const DemoMockProvider: React.FC<Props> = ({ children }) => {
   const loginPageStore = useLoginPageStore();
+  const loginFormStore = useLoginFormStore();
   const parentEditPageStore = useParentEditPageStore();
 
   useEffect(() => {
@@ -89,7 +91,7 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
       password: new Password('demo123456'),
     });
 
-    loginPageStore.setLoginForm(mockLoginForm);
+    loginFormStore.setForm(mockLoginForm);
 
     console.log('🎯 Demo - Login page mock data set');
   };

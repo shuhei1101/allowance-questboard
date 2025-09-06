@@ -75,10 +75,14 @@ export type TranslationKey =
   | 'login.navigation.createFamily'
   | 'login.navigation.forgotPassword'
   | 'login.navigation.termsOfService'
+  | 'auth.createUser.confirmBackTitle'
+  | 'auth.createUser.confirmBackMessage'
   | 'common.loading'
   | 'common.error'
   | 'common.success'
   | 'common.confirm'
   | 'common.ok'
   | 'common.yes'
-  | 'common.no';
+  | 'common.no'
+  | 'common.cancel'
+  | 'common.discard';

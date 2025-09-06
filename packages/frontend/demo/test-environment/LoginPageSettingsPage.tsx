@@ -5,6 +5,7 @@ import { LoginForm } from '@/features/auth/login-page/models/loginForm';
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { useLoginPageStore } from '../../src/features/auth/login-page/stores/loginPageStore';
+import { useLoginFormStore } from '../../src/features/auth/login-page/stores/loginFormStore';
 
 /**
  * ログイン画面状態設定ページ
@@ -13,7 +14,8 @@ import { useLoginPageStore } from '../../src/features/auth/login-page/stores/log
 export const LoginPageSettingsPage: React.FC = () => {
   const { colors } = useTheme();
   const loginPageStore = useLoginPageStore();
-  
+  const loginFormStore = useLoginFormStore();
+
   // 現在の状態を取得
   const [isLoading, setIsLoading] = useState(loginPageStore.isLoading);
   const [isDialogVisible, setIsDialogVisible] = useState(loginPageStore.isDialogVisible);
@@ -24,7 +26,7 @@ export const LoginPageSettingsPage: React.FC = () => {
       description: '空のフォーム状態',
       icon: '🔄',
       action: () => {
-        loginPageStore.setLoginForm(LoginForm.initialize());
+        loginFormStore.setForm(LoginForm.initialize());
         loginPageStore.setLoading(false);
         loginPageStore.hideDialog();
         setIsLoading(false);
@@ -42,7 +44,7 @@ export const LoginPageSettingsPage: React.FC = () => {
             email: new Email('demo@example.com'),
             password: new Password('demo123456'),
           });
-          loginPageStore.setLoginForm(sampleForm);
+          loginFormStore.setForm(sampleForm);
           Alert.alert('設定完了', 'サンプルデータを設定しました');
         } catch (error) {
           Alert.alert('エラー', `設定に失敗しました: ${error}`);
@@ -166,7 +168,7 @@ export const LoginPageSettingsPage: React.FC = () => {
               Email
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {loginPageStore.loginForm.email.value || '未入力'}
+              {loginFormStore.form.email.value || '未入力'}
             </Text>
           </View>
           
@@ -175,7 +177,7 @@ export const LoginPageSettingsPage: React.FC = () => {
               Password
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {loginPageStore.loginForm.password.value ? '●●●●●●' : '未入力'}
+              {loginFormStore.form.password.value ? '●●●●●●' : '未入力'}
             </Text>
           </View>
           
@@ -183,8 +185,8 @@ export const LoginPageSettingsPage: React.FC = () => {
             <Text style={[styles.statusLabel, { color: colors.text.secondary }]}>
               フォーム状態
             </Text>
-            <Text style={[styles.statusValue, { color: loginPageStore.loginForm.isValid ? '#10b981' : '#ef4444' }]}>
-              {loginPageStore.loginForm.isValid ? '✅ 有効' : '❌ 無効'}
+            <Text style={[styles.statusValue, { color: loginFormStore.form.isValid ? '#10b981' : '#ef4444' }]}>
+              {loginFormStore.form.isValid ? '✅ 有効' : '❌ 無効'}
             </Text>
           </View>
           
@@ -193,7 +195,7 @@ export const LoginPageSettingsPage: React.FC = () => {
               エラー状態
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {(loginPageStore.errors.email || loginPageStore.errors.password) ? '❌ エラーあり' : '✅ エラーなし'}
+              {(loginFormStore.errors.email || loginFormStore.errors.password) ? '❌ エラーあり' : '✅ エラーなし'}
             </Text>
           </View>
         </View>

@@ -5,6 +5,7 @@ import { BaseStore, BaseStoreActions, BaseStoreProperties } from './BaseStore';
 export type ClearFilters = () => void;
 // フィルターを初期値に戻す
 export type ResetFilters = () => void;
+export type SetFilter<TFilters extends Record<string, any>> = <K extends keyof TFilters>(key: K, value: TFilters[K]) => void;
 
 // フィルター用のプロパティ型
 export interface BaseFilterProperties<TFilters extends Record<string, any>> extends BaseStoreProperties {
@@ -15,7 +16,7 @@ export interface BaseFilterProperties<TFilters extends Record<string, any>> exte
 export interface BaseFilterActions<TFilters extends Record<string, any>> extends BaseStoreActions {
   clearFilters: ClearFilters; // 全条件を空にする
   resetFilters: ResetFilters; // 初期値に戻す
-  setFilter: <K extends keyof TFilters>(key: K, value: TFilters[K]) => void; // 個別条件をセット
+  setFilter: SetFilter<TFilters>; // 個別条件をセット
 }
 
 export abstract class BaseFilterStore<
@@ -24,7 +25,7 @@ export abstract class BaseFilterStore<
   TActions extends BaseFilterActions<TFilters> = BaseFilterActions<TFilters>
 > extends BaseStore<TProps, TActions> {
 
-  protected abstract setFilters();
+  protected abstract setFilters(): SetFilter<TFilters>;
 
   /** 全ての条件を空にする */
   protected clearFilters(set: any): ClearFilters {
@@ -54,11 +55,12 @@ export abstract class BaseFilterStore<
   protected abstract initializeFilters(): TFilters;
 
   /** アクションをまとめる */
-  protected buildActions(set: StoreApi<TProps & BaseFilterActions & TActions>['setState']): TActions {
+  protected buildActions(set: StoreApi<TProps & BaseFilterActions<TFilters> & TActions>['setState']): TActions {
     return {
       ...super.buildActions(set),
       clearFilters: this.clearFilters(set),
       resetFilters: this.resetFilters(set),
+      setFilter: this.setFilters(),
     } as TActions;
   }
 }

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { LoginForm } from '../models/loginForm';
 import { Password } from '@backend/features/auth/value-object/password';
-import { SetForm } from '../../../../core/stores/baseFormStore';
+import { FormError, SetForm, SetFormError } from '../../../../core/stores/baseFormStore';
 
 /**
  * パスワード変更ハンドラーのカスタムフック
@@ -10,9 +10,9 @@ import { SetForm } from '../../../../core/stores/baseFormStore';
  */
 export const usePasswordHandler = (params: {
   loginForm: LoginForm,
-  setLoginForm: SetForm,
-  passwordError: PasswordError,
-  setPasswordError: SetPasswordError
+  setLoginForm: SetForm<LoginForm>,
+  passwordError: FormError,
+  setPasswordError: SetFormError
 }) => {
   return useCallback((value: string) => {
     const updatedForm = new LoginForm({ 

@@ -38,6 +38,8 @@
       "submit": "Register",
       "emailPlaceholder": "Enter email address",
       "passwordPlaceholder": "Enter password",
+      "confirmBackTitle": "Discard input?",
+      "confirmBackMessage": "Your input will be lost. Are you sure you want to go back?",
       "success": {
         "title": "Registration Complete",
         "message": "A confirmation email has been sent to your email address. Please click the link in the email to complete your registration."
@@ -58,6 +60,7 @@
     "no": "No",
     "save": "Save",
     "cancel": "Cancel",
+    "discard": "Discard",
     "fields": {
       "email": "Email",
       "password": "Password",

@@ -38,6 +38,8 @@
       "submit": "登録",
       "emailPlaceholder": "メールアドレスを入力",
       "passwordPlaceholder": "パスワードを入力",
+      "confirmBackTitle": "入力内容を破棄しますか？",
+      "confirmBackMessage": "入力した内容が失われます。本当に戻りますか？",
       "success": {
         "title": "登録完了",
         "message": "メールアドレスに確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。"
@@ -58,6 +60,7 @@
     "no": "いいえ",
     "save": "保存",
     "cancel": "キャンセル",
+    "discard": "破棄",
     "fields": {
       "email": "メールアドレス",
       "password": "パスワード",

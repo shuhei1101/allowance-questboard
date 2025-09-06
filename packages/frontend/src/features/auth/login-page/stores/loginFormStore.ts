@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetError } from '../../../../core/stores/baseFormStore';
+import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetFormError } from '../../../../core/stores/baseFormStore';
 import { LoginForm } from '../models/loginForm';
 
 // フォーム固有のエラー型
@@ -12,8 +12,8 @@ interface LoginFormProperties extends BaseFormProperties<LoginForm, LoginFormErr
 
 interface LoginFormActions extends BaseFormActions<LoginForm, LoginFormErrors> {
   setForm: SetForm<LoginForm>;
-  setEmailError: SetError;
-  setPasswordError: SetError;
+  setEmailError: SetFormError;
+  setPasswordError: SetFormError;
 }
 
 class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, LoginFormProperties, LoginFormActions> {
@@ -23,12 +23,12 @@ class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, Logi
   }
 
   /** setEmailErrorアクションを生成 */
-  protected setEmailError(set: any): SetError {
+  protected setEmailError(set: any): SetFormError {
     return (error) => set((state: LoginFormProperties) => ({ errors: { ...state.errors, email: error } }));
   }
 
   /** setPasswordErrorアクションを生成 */
-  protected setPasswordError(set: any): SetError {
+  protected setPasswordError(set: any): SetFormError {
     return (error) => set((state: LoginFormProperties) => ({ errors: { ...state.errors, password: error } }));
   }
 
