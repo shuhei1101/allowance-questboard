@@ -30,6 +30,8 @@ export type SetError = (message: string) => void;
 export type ClearError = () => void;
 export type ResetPage = () => void;
 export type CanResend = () => boolean;
+export type CanAutoLogin = () => boolean;
+export type ShouldCheckVerification = () => boolean;
 
 interface EmailVerifyPageProperties extends BasePageProperties {
   /** 登録時のメールアドレス */
@@ -87,6 +89,10 @@ interface EmailVerifyPageActions extends BasePageActions {
   clearError: ClearError;
   /** 再送可能かどうかの判定 */
   canResend: CanResend;
+  /** 自動ログイン可能かどうかの判定 */
+  canAutoLogin: CanAutoLogin;
+  /** 認証状態チェックが必要かどうかの判定 */
+  shouldCheckVerification: ShouldCheckVerification;
 }
 
 class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties, EmailVerifyPageActions> {
@@ -176,6 +182,38 @@ class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties,
     };
   }
 
+  /** 自動ログイン可能かどうかの判定 */
+  protected canAutoLogin(set: any, get: any): CanAutoLogin {
+    return () => {
+      const state = get();
+      return state.emailVerifyStatus === EmailVerifyStatus.VERIFIED && 
+             !state.isAutoLoginInProgress;
+    };
+  }
+
+  /** 認証状態チェックが必要かどうかの判定 */
+  protected shouldCheckVerification(set: any, get: any): ShouldCheckVerification {
+    return () => {
+      const state = get();
+      const MIN_CHECK_INTERVAL = 5000; // 5秒
+      const currentTime = Date.now();
+      
+      // 前回チェックから十分時間が経過していない場合はfalse
+      const lastCheckTimestamp = state.lastCheckTime?.getTime() ?? 0;
+      if (currentTime - lastCheckTimestamp < MIN_CHECK_INTERVAL) {
+        return false;
+      }
+      
+      // 既にチェック中または認証完了済みの場合はfalse
+      if (state.emailVerifyStatus === EmailVerifyStatus.CHECKING || 
+          state.emailVerifyStatus === EmailVerifyStatus.VERIFIED) {
+        return false;
+      }
+      
+      return true;
+    };
+  }
+
   protected buildDefaultProperties(): EmailVerifyPageProperties {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // 今日の開始時刻
@@ -214,6 +252,8 @@ class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties,
       setError: this.setError(set),
       clearError: this.clearError(set),
       canResend: this.canResend(set, get),
+      canAutoLogin: this.canAutoLogin(set, get),
+      shouldCheckVerification: this.shouldCheckVerification(set, get),
     };
   }
 }

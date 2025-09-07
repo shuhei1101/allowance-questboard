@@ -1,13 +1,15 @@
 import { useCallback, useEffect } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { CheckEmailVerifyStatus } from '../services/checkEmailVerifyStatus';
-import { EmailVerifyStatus, SetCheckingAuth, SetStatus, SetError, ClearError, SetAutoLoginInProgress, UpdateLastCheckTime } from '../stores/emailVerifyPageStore';
+import { EmailVerifyStatus, SetCheckingAuth, SetStatus, SetError, ClearError, SetAutoLoginInProgress, UpdateLastCheckTime, ShouldCheckVerification } from '../stores/emailVerifyPageStore';
 import { AppError } from '@backend/core/errors/appError';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 
 export type UseEmailVerificationChecker = (params: {
-  /** 現在のメール認証状態 */
+  /** 現在の認証ステータス */
   emailVerifyStatus: EmailVerifyStatus;
+  /** 認証チェック中状態 */
+  isCheckingAuth: boolean;
   /** 最後の認証チェック時刻 */
   lastCheckTime?: Date;
   /** 認証チェック状態設定関数 */
@@ -22,6 +24,8 @@ export type UseEmailVerificationChecker = (params: {
   setError: SetError;
   /** エラークリア関数 */
   clearError: ClearError;
+  /** 認証状態チェックが必要かどうかの判定関数 */
+  shouldCheckVerification: ShouldCheckVerification;
   /** 現在の言語タイプ */
   languageType: LanguageTypeValue;
   /** メール認証状態チェックサービス関数 */
@@ -29,7 +33,7 @@ export type UseEmailVerificationChecker = (params: {
   /** 認証完了時のコールバック */
   onVerificationComplete?: () => void;
 }) => {
-  /** メール認証チェック実行関数 */
+  /** メール認証状態チェック処理実行関数 */
   checkEmailVerification: () => Promise<void>;
 };
 
@@ -39,24 +43,12 @@ export type UseEmailVerificationChecker = (params: {
  * アプリがフォアグラウンドに戻った際に認証状態をチェックし、
  * 認証完了時にはコールバック処理を実行する */
 export const useEmailVerificationChecker: UseEmailVerificationChecker = (params) => {
-  const minCheckInterval = 5000; // 5秒間隔での重複実行防止
   
-  // 認証状態チェック処理
+  // メール認証状態をチェック
   const checkEmailVerification = useCallback(async (): Promise<void> => {
-    // 現在時刻を取得
-    const currentTime = Date.now();
-    
-    // 前回チェックから十分時間が経過していない場合はスキップ
-    const lastCheckTimestamp = params.lastCheckTime?.getTime() ?? 0;
-    if (currentTime - lastCheckTimestamp < minCheckInterval) {
-      console.log('📅 認証チェック: 前回チェックから間もないためスキップ');
-      return;
-    }
-    
-    // 既にチェック中または認証完了済みの場合はスキップ
-    if (params.emailVerifyStatus === EmailVerifyStatus.CHECKING || 
-        params.emailVerifyStatus === EmailVerifyStatus.VERIFIED) {
-      console.log(`📋 認証チェック: 現在の状態(${params.emailVerifyStatus})によりスキップ`);
+    // チェックが必要かどうかを判定
+    if (!params.shouldCheckVerification()) {
+      console.log('📅 認証チェック: チェック条件に該当しないためスキップ');
       return;
     }
 
@@ -109,8 +101,7 @@ export const useEmailVerificationChecker: UseEmailVerificationChecker = (params)
       params.setCheckingAuth(false);
     }
   }, [
-    params.emailVerifyStatus,
-    params.lastCheckTime,
+    params.shouldCheckVerification,
     params.setCheckingAuth, 
     params.setEmailVerifyStatus,
     params.setAutoLoginInProgress,
