@@ -33,7 +33,7 @@
         "termsOfService": "Navigate to terms of service screen."
       }
     },
-    "createUser": {
+    "userRegister": {
       "title": "Sign Up",
       "submit": "Register",
       "emailPlaceholder": "Enter email address",

@@ -7,7 +7,7 @@ import { AuthStackMeta, AuthStackParamList } from '../../AuthNavigator';
 /** 新規ユーザー作成ハンドラーのカスタムフック
  * 
  * 新規ユーザー作成画面への遷移を行う */
-export const useCreateUserHandler = (params: {
+export const useRegisterUserHandler = (params: {
   languageType: LanguageTypeValue
 }) => {
   const navigation = useNavigation<NavigationProp<AuthStackParamList>>();

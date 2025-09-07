@@ -57,10 +57,11 @@ export abstract class BasePageStore<
   }
 
   protected buildActions(
-    set: StoreApi<TProps & BasePageActions & TActions>['setState']
+    set: StoreApi<TProps & BasePageActions & TActions>['setState'],
+    get: StoreApi<TProps & BasePageActions & TActions>['getState']
   ): TActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setLoading: this.setLoading(set),
       loadToken: this.loadToken(set),
     } as TActions;

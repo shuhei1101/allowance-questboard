@@ -9,7 +9,7 @@ import { useBeforeRemoveHandler } from './useBeforeRemoveHandler';
 /** 新規登録ページの全ハンドラーを統合したカスタムフック
  *
  * 新規登録ページで使用する全てのイベントハンドラーを一括で提供 */
-export const createUserRegisterPageHandlers = (params: {
+export const userRegisterRegisterPageHandlers = (params: {
   formStore: UserRegisterFormStore,
   pageStore: UserRegisterPageStore
 }) => {

@@ -66,10 +66,11 @@ export abstract class BaseFormStore<
   }
 
   protected buildActions(
-    set: StoreApi<TProps & BaseFormActions<BaseForm, FormErrors> & TActions>['setState']
+    set: StoreApi<TProps & BaseFormActions<BaseForm, FormErrors> & TActions>['setState'],
+    get: StoreApi<TProps & BaseFormActions<BaseForm, FormErrors> & TActions>['getState']
   ): TActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       clearErrors: this.clearErrors(set),
       resetForm: this.resetForm(set),
     } as TActions;

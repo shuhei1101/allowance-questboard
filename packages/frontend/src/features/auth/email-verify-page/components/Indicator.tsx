@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
-import { VerificationStatus } from '../stores/emailVerifyPageStore';
+import { EmailVerifyStatus } from '../stores/emailVerifyPageStore';
 
 interface Props {
   /** 現在の認証ステータス */
-  status: VerificationStatus;
+  status: EmailVerifyStatus;
   /** カスタムメッセージ（オプション） */
   customMessage?: string;
 }

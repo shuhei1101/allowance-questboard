@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, StoreApi } from 'zustand';
 import { BasePageStore, BasePageProperties, BasePageActions } from '../../../../core/stores/basePageStore';
 import { SelectFamilyDialog } from '../models/selectFamilyDialog';
 
@@ -44,9 +44,12 @@ class LoginPageStoreClass extends BasePageStore<LoginPageProperties, LoginPageAc
     return () => set({ isDialogVisible: false }, false, 'hideDialog');
   }
 
-  protected buildActions(set: any): LoginPageActions {
+  protected buildActions(
+    set: StoreApi<LoginPageProperties & BasePageActions & LoginPageActions>['setState'],
+    get: StoreApi<LoginPageProperties & BasePageActions & LoginPageActions>['getState']
+  ): LoginPageActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setSelectFamilyDialog: this.setSelectFamilyDialog(set),
       showDialog: this.showDialog(set),
       hideDialog: this.hideDialog(set),
@@ -59,5 +62,5 @@ export type LoginPageStore = LoginPageProperties & LoginPageActions;
 
 /** ログインページ状態管理ストア */
 export const useLoginPageStore = create<LoginPageStore>()(
-    (set) => loginPageStore.createStore(set)
+    (set, get) => loginPageStore.createStore(set, get)
 );

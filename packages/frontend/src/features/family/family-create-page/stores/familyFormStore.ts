@@ -62,9 +62,9 @@ class FamilyFormStoreClass extends BaseFormStore<FamilyForm, FamilyFormErrors, F
     };
   }
 
-  protected buildActions(set: any): FamilyFormActions {
+  protected buildActions(set: any, get: any): FamilyFormActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setNameError: this.setNameError(set),
       setEmailError: this.setEmailError(set),
       setPasswordError: this.setPasswordError(set),
@@ -79,5 +79,5 @@ export type FamilyFormStore = FamilyFormProperties & FamilyFormActions;
 
 /** 家族フォーム状態管理ストア */
 export const useFamilyFormStore = create<FamilyFormStore>()(
-  (set) => familyFormStore.createStore(set)
+  (set, get) => familyFormStore.createStore(set, get)
 );

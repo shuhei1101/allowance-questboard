@@ -9,7 +9,7 @@
       "emailPlaceholder": "メールアドレスを入力",
       "passwordPlaceholder": "パスワードを入力",
       "loginButton": "ログイン",
-      "createUserButton": "新規登録",
+      "userRegisterButton": "新規登録",
       "forgotPassword": "パスワードをお忘れですか？",
       "termsOfService": "利用規約を確認する",
       "selectLoginType": "ログインタイプを選択",
@@ -33,7 +33,7 @@
         "termsOfService": "利用規約画面へ遷移します。"
       }
     },
-    "createUser": {
+    "userRegister": {
       "title": "新規登録",
       "submit": "登録",
       "emailPlaceholder": "メールアドレスを入力",

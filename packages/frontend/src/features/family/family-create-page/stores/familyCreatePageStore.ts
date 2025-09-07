@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, StoreApi } from 'zustand';
 import { BasePageStore, BasePageProperties, BasePageActions } from '../../../../core/stores/basePageStore';
 
 // ページ固有の状態シグネチャ
@@ -27,9 +27,12 @@ class FamilyCreatePageStoreClass extends BasePageStore<FamilyCreatePagePropertie
     return (confirmed: boolean) => set({ isConfirmed: confirmed }, false, 'setConfirmed');
   }
 
-  protected buildActions(set: any): FamilyCreatePageActions {
+  protected buildActions(
+    set: StoreApi<FamilyCreatePageProperties & BasePageActions & FamilyCreatePageActions>['setState'],
+    get: StoreApi<FamilyCreatePageProperties & BasePageActions & FamilyCreatePageActions>['getState']
+  ): FamilyCreatePageActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setConfirmed: this.setConfirmed(set),
     };
   }
@@ -40,5 +43,5 @@ export type FamilyCreatePageStore = FamilyCreatePageProperties & FamilyCreatePag
 
 /** 家族登録ページ状態管理ストア */
 export const useFamilyCreatePageStore = create<FamilyCreatePageStore>()(
-    (set) => familyCreatePageStore.createStore(set)
+    (set, get) => familyCreatePageStore.createStore(set, get)
 );

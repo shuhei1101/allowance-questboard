@@ -30,7 +30,8 @@ export abstract class BaseStore<
    *
    * 子クラスで override */
   protected buildActions(
-    set: StoreApi<TProps & BaseStoreActions & TActions>['setState']
+    set: StoreApi<TProps & BaseStoreActions & TActions>['setState'],
+    get: StoreApi<TProps & BaseStoreActions & TActions>['getState']
   ): TActions {
     return {
       reset: this.reset(set),
@@ -39,11 +40,12 @@ export abstract class BaseStore<
 
   /** ストア生成: テンプレートメソッド */
   createStore(
-    set: StoreApi<TProps & BaseStoreActions & TActions>['setState']
+    set: StoreApi<TProps & BaseStoreActions & TActions>['setState'],
+    get: StoreApi<TProps & BaseStoreActions & TActions>['getState']
   ): TProps & BaseStoreActions & TActions {
     return {
       ...this.buildDefaultProperties(),
-      ...this.buildActions(set),
+      ...this.buildActions(set, get),
     };
   }
 }

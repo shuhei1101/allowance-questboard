@@ -64,9 +64,12 @@ export abstract class BaseViewStore<
   }
 
   /** アクションまとめ */
-  protected buildActions(set: StoreApi<TProps & BaseViewActions<TItem> & TActions>['setState']): TActions {
+  protected buildActions(
+    set: StoreApi<TProps & BaseViewActions<TItem> & TActions>['setState'],
+    get: StoreApi<TProps & BaseViewActions<TItem> & TActions>['getState']
+  ): TActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setData: this.setData(set),
       setPagination: this.setPagination(set),
       resetPagination: this.resetPagination(set),

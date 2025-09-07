@@ -4,7 +4,7 @@ import { useLoginHandler } from './useLoginHandler';
 import { useParentLoginHandler } from './useParentLoginHandler';
 import { useChildLoginHandler } from './useChildLoginHandler';
 import { useCloseDialogHandler } from './useCloseDialogHandler';
-import { useCreateUserHandler } from './useCreateFamilyHandler';
+import { useRegisterUserHandler } from './useCreateFamilyHandler';
 import { useForgotPasswordHandler } from './useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { login } from '../services/login';
@@ -66,7 +66,7 @@ export const createLoginPageHandlers = (params: {
     hideDialog: params.pageStore.hideDialog,
   });
   /** ユーザー作成時のハンドル */
-  const handleUserCreate = useCreateUserHandler({
+  const handleUserCreate = useRegisterUserHandler({
     languageType: Session.languageType,
   });
   /** パスワードリセット押下時ハンドル */

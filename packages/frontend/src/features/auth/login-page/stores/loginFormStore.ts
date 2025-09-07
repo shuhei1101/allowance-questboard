@@ -46,9 +46,9 @@ class LoginFormStoreClass extends BaseFormStore<LoginForm, LoginFormErrors, Logi
     };
   }
 
-  protected buildActions(set: any): LoginFormActions {
+  protected buildActions(set: any, get: any): LoginFormActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setEmailError: this.setEmailError(set),
       setPasswordError: this.setPasswordError(set),
       setForm: this.setForm(set),
@@ -61,5 +61,5 @@ export type LoginFormStore = LoginFormProperties & LoginFormActions;
 
 /** ログインフォーム状態管理ストア */
 export const useLoginFormStore = create<LoginFormStore>()(
-  (set) => loginFormStore.createStore(set)
+  (set, get) => loginFormStore.createStore(set, get)
 );

@@ -4,11 +4,11 @@ import { EmailInputWithTitle } from '../../shared/components/EmailInputWithTitle
 import { PasswordInputWithTitle } from '../../shared/components/PasswordInputWithTitle';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
-import { createUserRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useAppNavigation } from '../../../../AppNavigator';
 import { useUserRegisterPageStore } from './stores/userRegisterPageStore';
 import { useUserRegisterFormStore } from './stores/userRegisterFormStore';
+import { userRegisterRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
 
 /** 新規登録画面
  *
@@ -32,7 +32,7 @@ export const UserRegisterPage: React.FC = () => {
     handlePasswordChange,
     handleUserRegister,
     handleBeforeRemove,
-  } = createUserRegisterPageHandlers({
+  } = userRegisterRegisterPageHandlers({
     formStore,
     pageStore,
   });
@@ -71,7 +71,7 @@ export const UserRegisterPage: React.FC = () => {
           value={formStore.form.email.value}
           onChange={handleEmailChange}
           error={formStore.errors.email}
-          placeholder={t('auth.createUser.emailPlaceholder')}
+          placeholder={t('auth.userRegister.emailPlaceholder')}
         />
         
         {/* Password入力フィールド */}
@@ -79,7 +79,7 @@ export const UserRegisterPage: React.FC = () => {
           value={formStore.form.password.value}
           onChange={handlePasswordChange}
           error={formStore.errors.password}
-          placeholder={t('auth.createUser.passwordPlaceholder')}
+          placeholder={t('auth.userRegister.passwordPlaceholder')}
         />
       </View>
     </ScrollView>

@@ -3,7 +3,7 @@ import { BasePageStore, BasePageProperties, BasePageActions } from '../../../../
 import { Email } from '../../../../../../backend/src/features/auth/value-object/email';
 
 /** 認証ステータス列挙型 */
-export enum VerificationStatus {
+export enum EmailVerifyStatus {
   /** メール認証待ち（初期状態） */
   WAITING = 'WAITING',
   /** 認証状態確認中（AppState復帰時など） */
@@ -19,15 +19,17 @@ export type SetEmail = (email: Email) => void;
 export type SetCheckingAuth = (isChecking: boolean) => void;
 export type SetResending = (isResending: boolean) => void;
 export type SetAutoLoginInProgress = (inProgress: boolean) => void;
-export type SetVerificationStatus = (status: VerificationStatus) => void;
+export type SetStatus = (status: EmailVerifyStatus) => void;
 export type SetResendCooldown = (seconds: number) => void;
 export type IncrementResendCount = () => void;
 export type UpdateLastResendTime = () => void;
+export type UpdateLastCheckTime = () => void;
 export type ResetResendState = () => void;
 export type ToggleHelpSection = () => void;
 export type SetError = (message: string) => void;
 export type ClearError = () => void;
 export type ResetPage = () => void;
+export type CanResend = () => boolean;
 
 interface EmailVerifyPageProperties extends BasePageProperties {
   /** 登録時のメールアドレス */
@@ -39,7 +41,7 @@ interface EmailVerifyPageProperties extends BasePageProperties {
   /** 自動ログイン処理中 */
   isAutoLoginInProgress: boolean;
   /** 認証状態（VerificationStatus型） */
-  verificationStatus: VerificationStatus;
+  emailVerifyStatus: EmailVerifyStatus;
   /** 再送までの残り秒数 */
   resendCooldown: number;
   /** 本日の再送回数 */
@@ -48,6 +50,8 @@ interface EmailVerifyPageProperties extends BasePageProperties {
   maxResendCount: number;
   /** 最後の再送時刻 */
   lastResendTime?: Date;
+  /** 最後の認証チェック時刻 */
+  lastCheckTime?: Date;
   /** ヘルプセクションの展開状態 */
   isHelpSectionExpanded: boolean;
   /** エラーメッセージ */
@@ -60,7 +64,7 @@ interface EmailVerifyPageActions extends BasePageActions {
   /** 認証チェック状態設定 */
   setCheckingAuth: SetCheckingAuth;
   /** 認証状態設定 */
-  setVerificationStatus: SetVerificationStatus;
+  setEmailVerifyStatus: SetStatus;
   /** 自動ログイン状態設定 */
   setAutoLoginInProgress: SetAutoLoginInProgress;
   /** 再送状態設定 */
@@ -71,6 +75,8 @@ interface EmailVerifyPageActions extends BasePageActions {
   incrementResendCount: IncrementResendCount;
   /** 最後の再送時刻更新 */
   updateLastResendTime: UpdateLastResendTime;
+  /** 最後の認証チェック時刻更新 */
+  updateLastCheckTime: UpdateLastCheckTime;
   /** 再送状態リセット */
   resetResendState: ResetResendState;
   /** ヘルプセクション開閉 */
@@ -79,6 +85,8 @@ interface EmailVerifyPageActions extends BasePageActions {
   setError: SetError;
   /** エラークリア */
   clearError: ClearError;
+  /** 再送可能かどうかの判定 */
+  canResend: CanResend;
 }
 
 class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties, EmailVerifyPageActions> {
@@ -94,8 +102,8 @@ class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties,
   }
 
   /** 認証状態設定 */
-  protected setVerificationStatus(set: any): SetVerificationStatus {
-    return (status: VerificationStatus) => set({ verificationStatus: status }, false, 'setVerificationStatus');
+  protected setEmailVerifyStatus(set: any): SetStatus {
+    return (status: EmailVerifyStatus) => set({ emailVerifyStatus: status }, false, 'setEmailVerifyStatus');
   }
 
   /** 自動ログイン状態設定 */
@@ -125,6 +133,11 @@ class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties,
     return () => set({ lastResendTime: new Date() }, false, 'updateLastResendTime');
   }
 
+  /** 最後の認証チェック時刻更新 */
+  protected updateLastCheckTime(set: any): UpdateLastCheckTime {
+    return () => set({ lastCheckTime: new Date() }, false, 'updateLastCheckTime');
+  }
+
   /** 再送状態リセット */
   protected resetResendState(set: any): ResetResendState {
     return () => set({ 
@@ -144,13 +157,23 @@ class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties,
   protected setError(set: any): SetError {
     return (message: string) => set({ 
       errorMessage: message,
-      verificationStatus: VerificationStatus.FAILED 
+      verificationStatus: EmailVerifyStatus.FAILED 
     }, false, 'setError');
   }
 
   /** エラークリア */
   protected clearError(set: any): ClearError {
     return () => set({ errorMessage: '' }, false, 'clearError');
+  }
+
+  /** 再送可能かどうかの判定 */
+  protected canResend(set: any, get: any): CanResend {
+    return () => {
+      const state = get();
+      return state.resendCooldown <= 0 && 
+             state.resendCount < state.maxResendCount && 
+             !state.isResending;
+    };
   }
 
   protected buildDefaultProperties(): EmailVerifyPageProperties {
@@ -163,31 +186,34 @@ class EmailVerifyPageStoreClass extends BasePageStore<EmailVerifyPageProperties,
       isCheckingAuth: false,
       isResending: false,
       isAutoLoginInProgress: false,
-      verificationStatus: VerificationStatus.WAITING,
+      emailVerifyStatus: EmailVerifyStatus.WAITING,
       resendCooldown: 0,
       resendCount: 0,
       maxResendCount: 5,
       lastResendTime: undefined,
+      lastCheckTime: undefined,
       isHelpSectionExpanded: false,
       errorMessage: '',
     };
   }
 
-  protected buildActions(set: any): EmailVerifyPageActions {
+  protected buildActions(set: any, get: any): EmailVerifyPageActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setEmail: this.setEmail(set),
       setCheckingAuth: this.setCheckingAuth(set),
-      setVerificationStatus: this.setVerificationStatus(set),
+      setEmailVerifyStatus: this.setEmailVerifyStatus(set),
       setAutoLoginInProgress: this.setAutoLoginInProgress(set),
       setResending: this.setResending(set),
       setResendCooldown: this.setResendCooldown(set),
       incrementResendCount: this.incrementResendCount(set),
       updateLastResendTime: this.updateLastResendTime(set),
+      updateLastCheckTime: this.updateLastCheckTime(set),
       resetResendState: this.resetResendState(set),
       toggleHelpSection: this.toggleHelpSection(set),
       setError: this.setError(set),
       clearError: this.clearError(set),
+      canResend: this.canResend(set, get),
     };
   }
 }
@@ -197,5 +223,5 @@ export type EmailVerifyPageStore = EmailVerifyPageProperties & EmailVerifyPageAc
 
 /** メール認証ページ状態管理ストア */
 export const useEmailVerifyPageStore = create<EmailVerifyPageStore>()(
-    (set) => emailVerifyPageStore.createStore(set)
+  (set, get) => emailVerifyPageStore.createStore(set, get)
 );

@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
-import { VerificationStatus } from '../stores/emailVerifyPageStore';
+import { EmailVerifyStatus } from '../stores/emailVerifyPageStore';
 import { Email } from '../../../../../../backend/src/features/auth/value-object/email';
 
 interface Props {
   /** 現在のステップ表示 */
-  verificationStatus: VerificationStatus;
+  status: EmailVerifyStatus;
   /** ユーザーのメールアドレス */
   userEmail?: Email;
 }
@@ -19,7 +19,7 @@ interface Props {
  * 多言語対応および段階的な説明表示に対応
  */
 export const DescriptionText: React.FC<Props> = ({ 
-  verificationStatus,
+  status: verificationStatus,
   userEmail,
 }) => {
   const { colors } = useTheme();
@@ -27,11 +27,11 @@ export const DescriptionText: React.FC<Props> = ({
 
   const getMainMessage = () => {
     switch (verificationStatus) {
-      case VerificationStatus.CHECKING:
+      case EmailVerifyStatus.CHECKING:
         return t('emailVerify.instruction.checking', '認証状態を確認しています...');
-      case VerificationStatus.VERIFIED:
+      case EmailVerifyStatus.VERIFIED:
         return t('emailVerify.instruction.verified', '認証完了！自動ログインしています...');
-      case VerificationStatus.FAILED:
+      case EmailVerifyStatus.FAILED:
         return t('emailVerify.instruction.failed', '認証に失敗しました。');
       default:
         return t('emailVerify.instruction.main', '確認メールを送信しました。');
@@ -40,11 +40,11 @@ export const DescriptionText: React.FC<Props> = ({
 
   const getSubMessage = () => {
     switch (verificationStatus) {
-      case VerificationStatus.CHECKING:
+      case EmailVerifyStatus.CHECKING:
         return t('emailVerify.instruction.checkingSub', 'しばらくお待ちください');
-      case VerificationStatus.VERIFIED:
+      case EmailVerifyStatus.VERIFIED:
         return t('emailVerify.instruction.verifiedSub', 'ホーム画面へ移動します');
-      case VerificationStatus.FAILED:
+      case EmailVerifyStatus.FAILED:
         return t('emailVerify.instruction.failedSub', '再度お試しいただくか、サポートにお問い合わせください');
       default:
         const emailText = userEmail?.value ? ` (${userEmail.value})` : '';

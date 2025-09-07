@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage } from './login-page/LoginPage';
-import { UserRegisterPage } from './create-user-page/UserRegisterPage';
+import { UserRegisterPage } from './register-user-page/UserRegisterPage';
 
 export const AuthStackMeta = {
   name: 'Auth',

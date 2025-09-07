@@ -46,9 +46,9 @@ class UserRegisterFormStoreClass extends BaseFormStore<UserRegisterForm, UserReg
     };
   }
 
-  protected buildActions(set: any): UserRegisterFormActions {
+  protected buildActions(set: any, get: any): UserRegisterFormActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       setEmailError: this.setEmailError(set),
       setPasswordError: this.setPasswordError(set),
       setForm: this.setForm(set),
@@ -61,5 +61,5 @@ export type UserRegisterFormStore = UserRegisterFormProperties & UserRegisterFor
 
 /** 新規登録フォーム状態管理ストア */
 export const useUserRegisterFormStore = create<UserRegisterFormStore>()(
-  (set) => userRegisterFormStore.createStore(set)
+  (set, get) => userRegisterFormStore.createStore(set, get)
 );

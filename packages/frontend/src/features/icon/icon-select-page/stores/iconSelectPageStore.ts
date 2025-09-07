@@ -86,10 +86,11 @@ class IconSelectPageStoreClass extends BasePageStore<IconSelectPageProperties, I
   }
 
   protected buildActions(
-    set: StoreApi<IconSelectPageProperties & BasePageActions & IconSelectPageActions>['setState']
+    set: StoreApi<IconSelectPageProperties & BasePageActions & IconSelectPageActions>['setState'],
+    get: StoreApi<IconSelectPageProperties & BasePageActions & IconSelectPageActions>['getState']
   ): IconSelectPageActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       initialize: this.initialize(set),
       selectCategory: this.selectCategory(set),
       selectIcon: this.selectIcon(set),
@@ -102,5 +103,5 @@ export type IconSelectPageStore = IconSelectPageProperties & IconSelectPageActio
 
 /** アイコン選択ページ状態管理ストア */
 export const useIconSelectPageStore = create<IconSelectPageStore>()(
-  (set) => iconSelectPageStore.createStore(set)
+  (set, get) => iconSelectPageStore.createStore(set, get)
 );

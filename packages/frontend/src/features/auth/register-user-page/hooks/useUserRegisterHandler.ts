@@ -5,7 +5,7 @@ import { UserRegisterForm } from '../models/userRegisterForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
-import { useUserCreateFormValidationHandler } from '../validations/useUserCreateFormValidationHandler';
+import { useUserCreateFormValidationHandler } from '../validations/useUserRegisterFormValidationHandler';
 import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
 import { SetLoading } from '../../../../core/stores/basePageStore';
 

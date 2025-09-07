@@ -23,8 +23,8 @@ export const useBeforeRemoveHandler = (params: {
     e.preventDefault();
 
     Alert.alert(
-      t('auth.createUser.confirmBackTitle'),
-      t('auth.createUser.confirmBackMessage'),
+      t('auth.userRegister.confirmBackTitle'),
+      t('auth.userRegister.confirmBackMessage'),
       [
         {
           text: t('common.cancel'),

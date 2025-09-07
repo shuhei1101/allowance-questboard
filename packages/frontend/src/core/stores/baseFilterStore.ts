@@ -55,9 +55,12 @@ export abstract class BaseFilterStore<
   protected abstract initializeFilters(): TFilters;
 
   /** アクションをまとめる */
-  protected buildActions(set: StoreApi<TProps & BaseFilterActions<TFilters> & TActions>['setState']): TActions {
+  protected buildActions(
+    set: StoreApi<TProps & BaseFilterActions<TFilters> & TActions>['setState'],
+    get: StoreApi<TProps & BaseFilterActions<TFilters> & TActions>['getState']
+  ): TActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
       clearFilters: this.clearFilters(set),
       resetFilters: this.resetFilters(set),
       setFilter: this.setFilters(),

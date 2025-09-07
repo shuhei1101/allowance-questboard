@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, StoreApi } from 'zustand';
 import { BasePageStore, BasePageProperties, BasePageActions } from '../../../../core/stores/basePageStore';
 
 interface UserRegisterPageProperties extends BasePageProperties {}
@@ -13,9 +13,12 @@ class UserRegisterPageStoreClass extends BasePageStore<UserRegisterPagePropertie
     };
   }
 
-  protected buildActions(set: any): UserRegisterPageActions {
+  protected buildActions(
+    set: StoreApi<UserRegisterPageProperties & BasePageActions & UserRegisterPageActions>['setState'],
+    get: StoreApi<UserRegisterPageProperties & BasePageActions & UserRegisterPageActions>['getState']
+  ): UserRegisterPageActions {
     return {
-      ...super.buildActions(set),
+      ...super.buildActions(set, get),
     };
   }
 }
@@ -25,5 +28,5 @@ export type UserRegisterPageStore = UserRegisterPageProperties & UserRegisterPag
 
 /** 新規登録ページ状態管理ストア */
 export const useUserRegisterPageStore = create<UserRegisterPageStore>()(
-    (set) => userRegisterPageStore.createStore(set)
+    (set, get) => userRegisterPageStore.createStore(set, get)
 );
