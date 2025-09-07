@@ -10,10 +10,10 @@ import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
 import { LoadingPage } from '../../shared/loading-page/LoadingPage';
 import { useTheme } from '@/core/theme';
-import { createLoginPageHandlers } from './hooks/createloginPageHandlers';
 import { useLoginPageStore } from './stores/loginPageStore';
 import { useLoginFormStore } from './stores/loginFormStore';
 import { useLoadToken } from '../../../core/stores/basePageStore';
+import { createLoginPageHandlers } from './hooks/createloginPageHandlers';
 
 /** ログインページ
  * 
