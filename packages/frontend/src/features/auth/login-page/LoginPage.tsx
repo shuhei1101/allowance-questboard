@@ -4,7 +4,7 @@ import { AppTitleLabel } from './components/AppTitleLabel';
 import { EmailInput } from '../../shared/components/EmailInput';
 import { PasswordInputField } from '../../shared/components/PasswordInput';
 import { LoginButton } from './components/LoginButton';
-import { RegisterUserButton } from './components/RegisterUserButton';
+import { RegisterUserButton } from './components/CreateUserButton';
 import { ForgotPasswordLink } from './components/ForgotPasswordLink';
 import { SelectFamilyDialog as SelectFamilyDialogComponent } from './components/SelectFamilyDialog';
 import { TermsOfServiceLink } from './components/TermsOfServiceLink';
