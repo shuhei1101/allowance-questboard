@@ -4,7 +4,7 @@ import { useTheme } from '@/core/theme';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
 import { SelectCategory } from '../stores/iconSelectPageStore';
-import { Session } from '../../../../core/constants/sessionVariables';
+import { useSessionStore } from '../../../../core/constants/sessionStore';
 
 interface Props {
   /** アイコンカテゴリ一覧 */
@@ -25,7 +25,8 @@ export const IconCategoriesTab: React.FC<Props> = ({
   onCategoryChange,
 }) => {
   const { colors } = useTheme();
-  const languageType = Session.languageType;
+  const sessionStore = useSessionStore();
+  const languageType = sessionStore.languageType;
 
   if (categories.length === 0) {
     return undefined;

@@ -4,7 +4,7 @@ import { HideDialog } from '../stores/loginPageStore';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { LoginForm } from '../models/loginForm';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
-import { SetFamilyMemberType } from '../../../../core/constants/sessionVariables';
+import { SetFamilyMemberType } from '../../../../core/constants/sessionStore';
 import { useAppNavigation } from '../../../../../AppNavigator';
 import { SetForm } from '../../../../core/stores/baseFormStore';
 import { SetLoading } from '../../../../core/stores/basePageStore';

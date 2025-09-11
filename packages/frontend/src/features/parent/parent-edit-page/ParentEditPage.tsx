@@ -11,12 +11,12 @@ import { parentEditPageHandlers } from './hooks/parentEditPageHandlers';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
 import { ParentForm } from './models/parentForm';
-import { Constants } from '../../../core/constants/appConstants';
 import { JwtStorage } from '../../auth/services/jwtStorage';
-import { Session } from '../../../core/constants/sessionVariables';
 import { useInitializeParentData } from './hooks/useParentDataInitializer';
 import { useAppNavigation } from '../../../../AppNavigator';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
+import { useSessionStore } from '../../../core/constants/sessionStore';
+import { useIconStore } from '../../../core/constants/iconStore';
 
 export type HandleParentForm = (form: ParentForm) => void;
 
@@ -35,19 +35,21 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();
+  const sessionStore = useSessionStore();
+  const iconStore = useIconStore();
   const navigation = useAppNavigation();
 
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
     jwtToken: await JwtStorage.getToken(),
-    languageType: Session.languageType,
+    languageType: sessionStore.languageType,
   }).parent.getParent;
 
   // 親データ初期化フック
   useInitializeParentData({
     parentId: parentId,
     parentRouter: parentRouter,
-    getAllIcons: Constants.getAllIcons,
+    getAllIcons: iconStore.getAllIcons,
     setParentForm: pageStore.setParentForm
   });
 
@@ -62,7 +64,8 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
   } = parentEditPageHandlers({
     shouldUpdate,
     parentId,
-    handleParentForm
+    handleParentForm,
+    sessionStore
   });
 
   // 確定ボタン

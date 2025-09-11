@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { JwtStorage } from '../../features/auth/services/jwtStorage';
 import { createAuthenticatedClient } from '../api/trpcClient';
-import { Session } from '../constants/sessionVariables';
 import { AppRouter } from '../../../../backend/src/router';
 import { TRPCClient } from '@trpc/client';
+import { useSessionStore } from '../constants/sessionStore';
 
 interface UseAuthenticatedRouterResult {
   /** tRPCクライアントルーター */
@@ -22,6 +22,7 @@ export const useAuthenticatedRouter = (): UseAuthenticatedRouterResult => {
   const [router, setRouter] = useState<TRPCClient<AppRouter> | undefined>(undefined);
   const [isInitializing, setIsInitializing] = useState(true);
   const [error, setError] = useState<Error | undefined>(undefined);
+  const sessionStore = useSessionStore();
 
   useEffect(() => {
     const initializeRouter = async () => {
@@ -32,7 +33,7 @@ export const useAuthenticatedRouter = (): UseAuthenticatedRouterResult => {
         const jwtToken = await JwtStorage.getToken();
         const authenticatedClient = createAuthenticatedClient({
           jwtToken,
-          languageType: Session.languageType,
+          languageType: sessionStore.languageType,
         });
         
         setRouter(authenticatedClient);

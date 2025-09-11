@@ -1,17 +1,18 @@
 import { useEmailHandler } from './useEmailHandler';
 import { usePasswordHandler } from './usePasswordHandler';
 import { useUserRegisterHandler } from './useUserRegisterHandler';
-import { Session } from '../../../../core/constants/sessionVariables';
 import { UserRegisterFormStore } from '../stores/userRegisterFormStore';
 import { UserRegisterPageStore } from '../stores/userRegisterPageStore';
 import { useBeforeRemoveHandler } from './useBeforeRemoveHandler';
+import { SessionStore } from '../../../../core/constants/sessionStore';
 
 /** 新規登録ページの全ハンドラーを統合したカスタムフック
  *
  * 新規登録ページで使用する全てのイベントハンドラーを一括で提供 */
 export const userRegisterRegisterPageHandlers = (params: {
   formStore: UserRegisterFormStore,
-  pageStore: UserRegisterPageStore
+  pageStore: UserRegisterPageStore,
+  sessionStore: SessionStore
 }) => {
 
   const handleEmailChange = useEmailHandler({
@@ -30,7 +31,7 @@ export const userRegisterRegisterPageHandlers = (params: {
 
   const handleUserRegister = useUserRegisterHandler({
     clearErrors: params.formStore.clearErrors,
-    currentLanguageType: Session.languageType,
+    currentLanguageType: params.sessionStore.languageType,
     setEmailError: params.formStore.setEmailError,
     setPasswordError: params.formStore.setPasswordError,
     setLoading: params.pageStore.setLoading,

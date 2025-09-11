@@ -9,8 +9,8 @@ import { initMasterData } from '@/features/auth/services/initMasterData';
 import { trpcClient } from '@/core/api/trpcClient';
 import { AuthStackMeta } from '@/features/auth/AuthNavigator';
 import { DemoStackMeta } from '../../demoStackMeta';
-import { Constants } from '../../../src/core/constants/appConstants';
 import { useAppNavigation } from '../../../AppNavigator';
+import { useIconStore } from '../../../src/core/constants/iconStore';
 
 /**
  * 開発用TOP画面
@@ -18,6 +18,7 @@ import { useAppNavigation } from '../../../AppNavigator';
  */
 export const DevelopmentTopPage: React.FC = () => {
   const { colors } = useTheme();
+  const iconStore = useIconStore();
   const navigation = useAppNavigation();
   const [isInitializing, setIsInitializing] = useState(false);
   
@@ -31,8 +32,8 @@ export const DevelopmentTopPage: React.FC = () => {
       console.log('🚀 マスタデータ初期化開始...');
       await initMasterData({
         getMasterData: trpcClient.init.getMasterData,
-        setIconCategories: Constants.setIconCategories,
-        setAppIcons: Constants.setAppIcons,
+        setIconCategories: iconStore.setIconCategories,
+        setAppIcons: iconStore.setAppIcons,
       });
       console.log('✅ マスタデータ初期化完了！');
       

@@ -7,14 +7,15 @@ import { useParentEditPageStore as useParentEditPageStore } from '../stores/pare
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { useIconSelectHandler } from './useIconSelectHandler';
 import { HandleParentForm } from '../ParentEditPage';
-import { Session } from '../../../../core/constants/sessionVariables';
+import { SessionStore } from '../../../../core/constants/sessionStore';
 
 /** 親情報登録画面の全ハンドラーを統合したカスタムフック
  * 親情報登録画面で使用する全てのイベントハンドラーを一括で提供 */
 export const parentEditPageHandlers = (params: {
   shouldUpdate: boolean,
   parentId?: ParentId,
-  handleParentForm?: HandleParentForm
+  handleParentForm?: HandleParentForm,
+  sessionStore: SessionStore
 }) => {
   const pageStore = useParentEditPageStore();
   // 名前変更時のハンドラ
@@ -53,7 +54,7 @@ export const parentEditPageHandlers = (params: {
   // 確定ボタン押下時のハンドラ
   const handleConfirm = useConfirmHandler({
     parentForm: pageStore.parentForm,
-    currentLanguageType: Session.languageType,
+    currentLanguageType: params.sessionStore.languageType,
     setLoading: pageStore.setLoading,
     clearErrors: pageStore.clearErrors,
     setNameError: pageStore.setNameError,

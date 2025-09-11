@@ -6,8 +6,8 @@ import { localeToLanguageType } from './src/features/auth/utils/localeToLanguage
 import { LoadingPage } from './src/features/shared/loading-page/LoadingPage';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { trpcClient } from '@/core/api/trpcClient';
-import { Constants } from './src/core/constants/appConstants';
-import { Session } from './src/core/constants/sessionVariables';
+import { useSessionStore } from './src/core/constants/sessionStore';
+import { useIconStore } from './src/core/constants/iconStore';
 
 /**
  * アプリ初期化コンポーネント
@@ -16,6 +16,8 @@ import { Session } from './src/core/constants/sessionVariables';
 export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}) => {
   const [ready, setReady] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("アプリを初期化しています...");
+  const sessionStore = useSessionStore();
+  const iconStore = useIconStore();
 
   useEffect(() => {
     // アプリ初期化処理
@@ -27,8 +29,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
           getMasterData: trpcClient.init.getMasterData,
-          setIconCategories: Constants.setIconCategories,
-          setAppIcons: Constants.setAppIcons,
+          setIconCategories: iconStore.setIconCategories,
+          setAppIcons: iconStore.setAppIcons,
         });
         console.log('✅ マスタデータ初期化完了！');
         
@@ -36,8 +38,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("言語設定を適用しています... 📱");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        Session.setLanguageType(languageType);
-        
+        sessionStore.setLanguageType(languageType);
+
         // i18nの言語も同期
         await i18n.changeLanguage(locale);
         
@@ -67,8 +69,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("エラーが発生しましたが、続行します... ⚠️");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        Session.setLanguageType(languageType);
-        
+        sessionStore.setLanguageType(languageType);
+
         // i18nの言語も同期（フォールバック）
         try {
           await i18n.changeLanguage(locale);

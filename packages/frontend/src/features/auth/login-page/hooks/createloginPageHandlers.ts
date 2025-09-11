@@ -8,16 +8,17 @@ import { useRegisterUserHandler } from './useCreateFamilyHandler';
 import { useForgotPasswordHandler } from './useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
 import { login } from '../services/login';
-import { Session } from '../../../../core/constants/sessionVariables';
 import { LoginPageStore } from '../stores/loginPageStore';
 import { createAuthenticatedClient } from '../../../../core/api/trpcClient';
 import { LoginFormStore } from '../stores/loginFormStore';
+import { SessionStore } from '../../../../core/constants/sessionStore';
 
 /** ログインページの全ハンドルを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドルを一括で提供 */
 export const createLoginPageHandlers = (params: {
   pageStore: LoginPageStore,
   formStore: LoginFormStore,
+  sessionStore: SessionStore
 }) => {
   /** Email変更時のハンドル */
   const handleEmailChange = useEmailHandler({
@@ -37,7 +38,7 @@ export const createLoginPageHandlers = (params: {
   const handleLogin = useLoginHandler({
     clearErrors: params.formStore.clearErrors,
     loginForm: params.formStore.form,
-    currentLanguageType: Session.languageType,
+    currentLanguageType: params.sessionStore.languageType,
     setEmailError: params.formStore.setEmailError,
     setPasswordError: params.formStore.setPasswordError,
     showDialog: params.pageStore.showDialog,
@@ -49,14 +50,14 @@ export const createLoginPageHandlers = (params: {
   });
   /** 親ログイン時のハンドル */
   const handleParentLogin = useParentLoginHandler({
-    updateFamilyMemberType: Session.setFamilyMemberType,
+    updateFamilyMemberType: params.sessionStore.setFamilyMemberType,
     hideDialog: params.pageStore.hideDialog,
     setLoginForm: params.formStore.setForm,
     setLoading: params.pageStore.setLoading,
   });
   /** 子ログイン時のハンドル */
   const handleChildLogin = useChildLoginHandler({
-    updateFamilyMemberType: Session.setFamilyMemberType,
+    updateFamilyMemberType: params.sessionStore.setFamilyMemberType,
     hideDialog: params.pageStore.hideDialog,
     setLoginForm: params.formStore.setForm,
     setLoading: params.pageStore.setLoading,
@@ -67,15 +68,15 @@ export const createLoginPageHandlers = (params: {
   });
   /** ユーザー作成時のハンドル */
   const handleUserCreate = useRegisterUserHandler({
-    languageType: Session.languageType,
+    languageType: params.sessionStore.languageType,
   });
   /** パスワードリセット押下時ハンドル */
   const handleForgotPassword = useForgotPasswordHandler({
-    languageType: Session.languageType,
+    languageType: params.sessionStore.languageType,
   });
   /** 利用規約押下時ハンドル */
   const handleTermsOfService = useTermsOfServiceHandler({
-    languageType: Session.languageType,
+    languageType: params.sessionStore.languageType,
   });
 
   return {

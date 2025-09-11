@@ -5,7 +5,7 @@ import * as LucideIcons from 'lucide-react-native';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { Icons } from '@backend/features/icon/domain/icons';
 import { SelectIcon } from '../stores/iconSelectPageStore';
-import { GetAppIcon } from '../../../../core/constants/appConstants';
+import { GetAppIcon } from '../../../../core/constants/iconStore';
 
 interface Props {
   /** 表示するアイコン一覧 */

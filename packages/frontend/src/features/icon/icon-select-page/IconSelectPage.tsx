@@ -10,9 +10,9 @@ import { useEffect } from 'react';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { OnIconSelected } from './hooks/useConfirmHandler';
-import { Constants } from '../../../core/constants/appConstants';
 import { useAppNavigation } from '../../../../AppNavigator';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
+import { useIconStore } from '../../../core/constants/iconStore';
 
 export interface IconSelectPageProps {
   /** 初期選択されたアイコン */
@@ -31,9 +31,10 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
 }) => {
   const { colors } = useTheme();
   const pageStore = useIconSelectPageStore();
+  const iconStore = useIconStore();
   const navigation = useAppNavigation();
-  
-  const iconCategories = Constants.iconCategories;
+
+  const iconCategories = iconStore.iconCategories;
   if (!iconCategories) {
     throw new AppError({
       errorType: 'ICON_CATEGORIES_NOT_FOUND',
@@ -94,7 +95,7 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
           icons={pageStore.currentCategoryIcons}
           selectedIcon={pageStore.selectedIcon}
           onIconSelect={handleIconSelect}
-          getAppIcon={Constants.getAppIcon}
+          getAppIcon={iconStore.getAppIcon}
         />
       </View>
     </View>

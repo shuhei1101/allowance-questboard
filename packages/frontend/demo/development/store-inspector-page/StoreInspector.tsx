@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
-import { Session } from '../../../src/core/constants/sessionVariables';
 import { JwtStorage } from '../../../src/features/auth/services/jwtStorage';
 import { useLoginPageStore } from '../../../src/features/auth/login-page/stores/loginPageStore';
 import { useLoginFormStore } from '../../../src/features/auth/login-page/stores/loginFormStore';
+import { useSessionStore } from '../../../src/core/constants/sessionStore';
 
 /**
  * ストア状態の確認画面
@@ -15,6 +15,7 @@ export const StoreInspector: React.FC = () => {
   const { colors } = useTheme();
   const loginPageStore = useLoginPageStore();
   const loginFormStore = useLoginFormStore();
+  const sessionStore = useSessionStore();
   const parentEditPageStore = useParentEditPageStore();
   const [jwt, setJwt] = useState<string | undefined>(undefined);
 
@@ -59,7 +60,7 @@ export const StoreInspector: React.FC = () => {
               言語:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {Session.languageType ? Session.languageType.code.value : '未設定'}
+              {sessionStore.languageType ? sessionStore.languageType.code.value : '未設定'}
             </Text>
           </View>
           
@@ -68,7 +69,7 @@ export const StoreInspector: React.FC = () => {
               メンバータイプ:
             </Text>
             <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {Session.familyMemberType ? Session.familyMemberType.tableName : '未設定'}
+              {sessionStore.familyMemberType ? sessionStore.familyMemberType.tableName : '未設定'}
             </Text>
           </View>
         </View>

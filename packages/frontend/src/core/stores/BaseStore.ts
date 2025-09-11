@@ -1,6 +1,6 @@
 import { StoreApi } from 'zustand';
 
-// シグネチャ
+// シグネチャ定義
 export type Reset = () => void;
 
 export interface BaseStoreProperties {}

@@ -13,7 +13,7 @@ import { Indicator } from './components/Indicator';
 import { ResendEmailButton } from './components/ResendEmailButton';
 import { HelpSection } from './components/HelpSection';
 import { Email } from '../../../../../backend/src/features/auth/value-object/email';
-import { Session } from '../../../core/constants/sessionVariables';
+import { useSessionStore } from '../../../core/constants/sessionStore';
 
 // ルートパラメータの型定義
 type EmailVerifyPageRouteProp = RouteProp<{
@@ -36,6 +36,7 @@ export const EmailVerifyPage: React.FC = () => {
   const route = useRoute<EmailVerifyPageRouteProp>();
   const navigation = useAppNavigation();
   const store = useEmailVerifyPageStore();
+  const sessionStore = useSessionStore();
 
   // ルートパラメータから登録時のメールアドレスを取得
   const registeredEmailString = route.params?.email;
@@ -62,7 +63,7 @@ export const EmailVerifyPage: React.FC = () => {
   // ページハンドラーの統合設定
   const handlers = createPageHandlers({
     store,
-    languageType: Session.languageType,
+    languageType: sessionStore.languageType,
     onVerificationComplete: () => {
       // 認証完了時に自動ログインハンドラーを呼び出し
       handlers.autoLoginHandler.handleAutoLogin();

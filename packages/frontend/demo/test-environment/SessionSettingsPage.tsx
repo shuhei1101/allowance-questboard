@@ -5,8 +5,8 @@ import { LanguageTypeValue } from '@backend/features/language/value-object/langu
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
 import { FamilyMemberTypeId } from '@backend/features/family-member/value-object/familyMemberTypeId';
-import { Session } from '../../src/core/constants/sessionVariables';
 import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
+import { useSessionStore } from '../../src/core/constants/sessionStore';
 
 /**
  * セッション設定画面
@@ -14,7 +14,8 @@ import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
  */
 export const SessionSettingsPage: React.FC = () => {
   const { colors } = useTheme();
-  
+  const sessionStore = useSessionStore();
+
   const [customJwt, setCustomJwt] = useState('');
   const [currentJwt, setCurrentJwt] = useState<string | undefined>(undefined);
 
@@ -38,7 +39,7 @@ export const SessionSettingsPage: React.FC = () => {
   const handleLanguageChange = (languageId: number) => {
     try {
       const languageType = new LanguageTypeValue(new LanguageId(languageId));
-      Session.setLanguageType(languageType);
+      sessionStore.setLanguageType(languageType);
       Alert.alert('成功', `言語を変更しました (ID: ${languageId})`);
     } catch (error) {
       Alert.alert('エラー', `言語変更に失敗しました: ${error}`);
@@ -48,7 +49,7 @@ export const SessionSettingsPage: React.FC = () => {
   const handleFamilyMemberTypeChange = (typeId: number) => {
     try {
       const memberType = new FamilyMemberTypeValue(new FamilyMemberTypeId(typeId));
-      Session.setFamilyMemberType(memberType);
+      sessionStore.setFamilyMemberType(memberType);
       Alert.alert('成功', `家族メンバータイプを変更しました (ID: ${typeId})`);
     } catch (error) {
       Alert.alert('エラー', `家族メンバータイプ変更に失敗しました: ${error}`);
@@ -78,8 +79,8 @@ export const SessionSettingsPage: React.FC = () => {
             try {
               // セッションストアの内容をクリア
               await JwtStorage.setToken('');
-              Session.setLanguageType(undefined as any);
-              Session.setFamilyMemberType(undefined as any);
+              sessionStore.setLanguageType(undefined as any);
+              sessionStore.setFamilyMemberType(undefined as any);
               setCurrentJwt('');
               setCustomJwt('');
               Alert.alert('完了', 'セッション情報をクリアしました');
@@ -135,8 +136,8 @@ export const SessionSettingsPage: React.FC = () => {
               言語:
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {Session.languageType ? 
-                `${Session.languageType.code.value} (ID: ${Session.languageType.id.value})` : 
+              {sessionStore.languageType ? 
+                `${sessionStore.languageType.code.value} (ID: ${sessionStore.languageType.id.value})` : 
                 '未設定'
               }
             </Text>
@@ -147,8 +148,8 @@ export const SessionSettingsPage: React.FC = () => {
               メンバータイプ:
             </Text>
             <Text style={[styles.statusValue, { color: colors.text.primary }]}>
-              {Session.familyMemberType ? 
-                `${Session.familyMemberType.tableName} (ID: ${Session.familyMemberType.id.value})` : 
+              {sessionStore.familyMemberType ? 
+                `${sessionStore.familyMemberType.tableName} (ID: ${sessionStore.familyMemberType.id.value})` : 
                 '未設定'
               }
             </Text>
@@ -168,14 +169,14 @@ export const SessionSettingsPage: React.FC = () => {
             style={[
               styles.optionButton,
               { backgroundColor: colors.surface.elevated },
-              Session.languageType?.id.value === option.id && styles.selectedOption
+              sessionStore.languageType?.id.value === option.id && styles.selectedOption
             ]}
             onPress={() => handleLanguageChange(option.id)}
           >
             <Text style={[
               styles.optionText,
               { color: colors.text.primary },
-              Session.languageType?.id.value === option.id && styles.selectedOptionText
+              sessionStore.languageType?.id.value === option.id && styles.selectedOptionText
             ]}>
               {option.name} (ID: {option.id})
             </Text>
@@ -195,14 +196,14 @@ export const SessionSettingsPage: React.FC = () => {
             style={[
               styles.optionButton,
               { backgroundColor: colors.surface.elevated },
-              Session.familyMemberType?.id.value === option.id && styles.selectedOption
+              sessionStore.familyMemberType?.id.value === option.id && styles.selectedOption
             ]}
             onPress={() => handleFamilyMemberTypeChange(option.id)}
           >
             <Text style={[
               styles.optionText,
               { color: colors.text.primary },
-              Session.familyMemberType?.id.value === option.id && styles.selectedOptionText
+              sessionStore.familyMemberType?.id.value === option.id && styles.selectedOptionText
             ]}>
               {option.name} (ID: {option.id})
             </Text>

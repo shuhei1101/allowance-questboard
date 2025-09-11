@@ -14,6 +14,7 @@ import { useLoginPageStore } from './stores/loginPageStore';
 import { useLoginFormStore } from './stores/loginFormStore';
 import { useLoadToken } from '../../../core/stores/basePageStore';
 import { createLoginPageHandlers } from './hooks/createloginPageHandlers';
+import { useSessionStore } from '../../../core/constants/sessionStore';
 
 /** ログインページ
  * 
@@ -22,6 +23,7 @@ export const LoginPage: React.FC = () => {
   const { colors } = useTheme();
   const pageStore = useLoginPageStore();
   const formStore = useLoginFormStore();
+  const sessionStore = useSessionStore();
 
   // JWTトークンのロード
   const { isLoading } = useLoadToken(pageStore);
@@ -39,7 +41,8 @@ export const LoginPage: React.FC = () => {
     handleCloseDialog,
   } = createLoginPageHandlers({
     pageStore,
-    formStore
+    formStore,
+    sessionStore
   });
 
   // JWT読み込み中はローディング画面を表示

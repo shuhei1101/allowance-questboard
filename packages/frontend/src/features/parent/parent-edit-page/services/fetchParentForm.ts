@@ -8,7 +8,7 @@ import { Birthday } from '@backend/features/shared/value-object/birthday';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { AppError } from '@backend/core/errors/appError';
-import { GetAllIcons } from '../../../../core/constants/appConstants';
+import { GetAllIcons } from '../../../../core/constants/iconStore';
 
 interface FetchParentFormParams {
   parentId: ParentId;

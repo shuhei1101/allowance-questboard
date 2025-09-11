@@ -3,7 +3,7 @@ import { AppIcons } from "@/features/icon/models/AppIcons";
 import { GetMasterDataHandler } from "@backend/features/auth/router/initRouter";
 import { LanguageType } from "../../../../../backend/src/features/language/enum/languageType";
 import { FamilyMemberType } from "../../../../../backend/src/features/family-member/enum/familyMemberType";
-import { SetAppIcons, SetIconCategories } from "../../../core/constants/appConstants";
+import { SetAppIcons, SetIconCategories } from "../../../core/constants/iconStore";
 
 /**
  * マスタデータ初期化のパラメータ
