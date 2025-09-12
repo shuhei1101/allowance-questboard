@@ -1,13 +1,16 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { LoginPage } from './login-page/LoginPage';
 import { UserRegisterPage } from './create-user-page/UserRegisterPage';
+import { EmailVerifyPage } from './email-verify-page/EmailVerifyPage';
 
 export const AuthStackMeta = {
   name: 'Auth',
   screens: {
     login: "Login",
     userRegister: "UserRegister",
+    emailVerify: "EmailVerify",
   },
 } as const;
 
@@ -15,9 +18,20 @@ export const AuthStackMeta = {
 export type AuthStackParamList = {
   Login: undefined;
   UserRegister: undefined;
+  EmailVerify: {
+    email: string;
+  };
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
+
+/** EmailVerifyPageのナビゲーションラッパー
+ *
+ * ルートパラメータをpropsに変換してEmailVerifyPageに渡す */
+const EmailVerifyPageWrapper: React.FC = () => {
+  const route = useRoute<RouteProp<AuthStackParamList, typeof AuthStackMeta.screens.emailVerify>>();
+  return <EmailVerifyPage email={route.params.email} />;
+};
 
 /** 認証関連のナビゲーター
  *
@@ -41,6 +55,14 @@ export function AuthNavigator() {
         options={{
           headerShown: true,
           title: '新規登録',
+        }}
+      />
+      <AuthStack.Screen 
+        name={AuthStackMeta.screens.emailVerify}
+        component={EmailVerifyPageWrapper}
+        options={{
+          headerShown: true,
+          title: 'メール認証',
         }}
       />
     </AuthStack.Navigator>

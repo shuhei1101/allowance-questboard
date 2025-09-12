@@ -8,6 +8,22 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "scheme": "allowance-questboard",
+    "linking": {
+      "prefixes": [
+        "allowance-questboard://",
+        "https://allowance-questboard.com",
+        "https://*.allowance-questboard.com"
+      ],
+      "config": {
+        "screens": {
+          "Auth": {
+            "screens": {
+              "EmailVerify": "auth/email-verify"
+            }
+          }
+        }
+      }
+    },
     "plugins": [
       "expo-system-ui"
     ],
@@ -24,7 +40,27 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "allowance-questboard.com",
+              "pathPrefix": "/auth/email-verify"
+            },
+            {
+              "scheme": "allowance-questboard"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

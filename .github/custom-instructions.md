@@ -231,6 +231,28 @@ interface SampleInterface {
 
 
 ### ページ
+#### 画面引数の渡し方
+- 画面コンポーネントは普通のpropsで引数を受け取ること
+- ナビゲーションのルートパラメータは、ラッパーコンポーネントでpropsに変換すること
+- 例:
+  ```tsx
+  // 画面コンポーネント（props型式）
+  export interface PageProps {
+    param1: string;
+    param2?: number;
+  }
+  
+  export const Page: React.FC<PageProps> = ({ param1, param2 }) => {
+    // ...
+  };
+  
+  // ナビゲーターでのラッパー
+  const PageWrapper: React.FC = () => {
+    const route = useRoute<RouteProp<StackParamList, 'ScreenName'>>();
+    return <Page param1={route.params.param1} param2={route.params.param2} />;
+  };
+  ```
+- 理由: テスタブルで依存関係が明確になるため
 
 ### UIコンポーネント
 - 戻るボタンはexpo標準のものを使用すること
@@ -286,6 +308,12 @@ export const sampleResponseSchema = z.object({
 - ページ名は`ドメイン名 + 動詞 + Page`の形式で記述すること
   - 例: `auth + create + Page` → `AuthCreatePage`
   - 例: `user + register + Page` → `UserRegisterPage`
+
+#### UI系
+- 基盤となるコンポーネント部品は`XxxLayout`とすること
+  - 例: ナビゲーションタブ -> `NavigationTabLayout`
+    - 使う側: `ParentNavigationTab`として、内部で`NavigationTabLayout`を使用する
+  - 
 
 
 #### TypeScriptの命名規則

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useAppNavigation } from '../../../../AppNavigator';
@@ -15,13 +14,6 @@ import { HelpSection } from './components/HelpSection';
 import { Email } from '../../../../../backend/src/features/auth/value-object/email';
 import { useSessionStore } from '../../../core/constants/sessionStore';
 
-// ルートパラメータの型定義
-type EmailVerifyPageRouteProp = RouteProp<{
-  EmailVerifyPage: {
-    email: string;
-  };
-}, 'EmailVerifyPage'>;
-
 /** メール認証画面
  *
  * 新規登録後のメール認証フローを提供するメインページ
@@ -30,16 +22,18 @@ type EmailVerifyPageRouteProp = RouteProp<{
  * - 認証完了時の自動ログインとホーム画面遷移
  * - メール再送機能
  * - ヘルプセクションによるトラブルシューティング */
-export const EmailVerifyPage: React.FC = () => {
+export interface EmailVerifyPageProps {
+  email: string; // 認証対象のメールアドレス
+}
+
+export const EmailVerifyPage: React.FC<EmailVerifyPageProps> = ({
+  email: registeredEmailString,
+}) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const route = useRoute<EmailVerifyPageRouteProp>();
   const navigation = useAppNavigation();
   const store = useEmailVerifyPageStore();
   const sessionStore = useSessionStore();
-
-  // ルートパラメータから登録時のメールアドレスを取得
-  const registeredEmailString = route.params?.email;
 
   // コンポーネント初期化処理
   useEffect(() => {
