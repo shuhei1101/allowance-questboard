@@ -48,6 +48,51 @@
         "signUpFailed": "Sign up failed. Please try again.",
         "title": "Registration Error"
       }
+    },
+    "emailVerify": {
+      "instruction": {
+        "main": "Confirmation email has been sent.",
+        "sub": "Please click the link in the email to complete your registration.",
+        "checking": "Checking authentication status...",
+        "checkingSub": "Please wait a moment",
+        "verified": "Authentication complete! Logging you in automatically...",
+        "verifiedSub": "Redirecting to home screen",
+        "failed": "Authentication failed.",
+        "failedSub": "Please try again or contact support"
+      },
+      "status": {
+        "waiting": "Checking authentication...",
+        "checking": "Checking authentication status...",
+        "verified": "Authentication complete!",
+        "failed": "Authentication failed"
+      },
+      "resend": {
+        "button": "Resend confirmation email",
+        "remaining": "{{count}} attempts remaining",
+        "cooldown": "Can resend in {{seconds}} seconds",
+        "success": "Confirmation email has been resent",
+        "failed": "Failed to resend email",
+        "limitReached": "Daily resend limit reached. Please try again tomorrow."
+      },
+      "help": {
+        "title": "Email not received?",
+        "spam": {
+          "title": "Check spam folder",
+          "description": "The confirmation email might be in your spam or junk folder."
+        },
+        "settings": {
+          "title": "Check email settings",
+          "description": "Please check your email app's reception settings and domain blocking settings."
+        },
+        "wait": {
+          "title": "Wait a little longer",
+          "description": "Email delivery may take some time. Please wait 5-10 minutes."
+        },
+        "support": {
+          "title": "Contact support",
+          "description": "If the email still doesn't arrive after trying the above, please contact support."
+        }
+      }
     }
   },
   "common": {

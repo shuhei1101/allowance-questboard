@@ -8,6 +8,8 @@ import { AppError } from '@backend/core/errors/appError';
 import { useUserCreateFormValidationHandler } from '../validations/useUserCreateFormValidationHandler';
 import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
 import { SetLoading } from '../../../../core/stores/basePageStore';
+import { useAppNavigation } from '../../../../../AppNavigator';
+import { AuthStackMeta } from '../../AuthNavigator';
 
 export type UseUserRegisterHandler = (params: {
   userRegisterForm: UserRegisterForm,
@@ -22,6 +24,8 @@ export type UseUserRegisterHandler = (params: {
  *
  * Supabaseの認証を実行し、成功時はメール認証画面へ遷移 */
 export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
+  const navigation = useAppNavigation();
+  
   // バリデーションハンドラーを取得
   const validateUserCreateForm = useUserCreateFormValidationHandler({
     userCreateForm: params.userRegisterForm,
@@ -80,19 +84,21 @@ export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
       if (data.user) {
         // メール確認が必要かどうかをチェック
         if (data.user.email_confirmed_at) {
-          // メール確認済みの場合
+          // メール確認済みの場合（通常は発生しない）
           Alert.alert(
             '登録完了',
             'アカウントが正常に作成されました！',
             [{ text: 'OK' }]
           );
         } else {
-          // メール確認が必要な場合
-          Alert.alert(
-            '登録完了',
-            'メールアドレスに確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。',
-            [{ text: 'OK' }]
-          );
+          // メール確認が必要な場合（通常のフロー）
+          console.log('新規登録成功、メール認証画面へ遷移:', params.userRegisterForm.email.value);
+          
+          // EmailVerifyPageへ遷移（登録したメールアドレスをパラメータで渡す）
+          navigation.navigate(AuthStackMeta.name, {
+            screen: AuthStackMeta.screens.emailVerify,
+            params: { email: params.userRegisterForm.email.value },
+          });
         }
       }
 
@@ -114,6 +120,7 @@ export const useUserRegisterHandler: UseUserRegisterHandler = (params) => {
     params.userRegisterForm,
     params.currentLanguageType,
     params.setLoading,
-    validateUserCreateForm
+    validateUserCreateForm,
+    navigation
   ]);
 };

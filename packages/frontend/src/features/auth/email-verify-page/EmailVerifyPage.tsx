@@ -43,8 +43,29 @@ export const EmailVerifyPage: React.FC<EmailVerifyPageProps> = ({
         const emailValue = new Email(registeredEmailString);
         store.setEmail(emailValue);
       } catch (error) {
-        console.error('Invalid email format:', registeredEmailString);
-        // 無効なメールアドレスの場合は前の画面に戻る
+        // バリデーションエラーの詳細を判定
+        if (error && typeof error === 'object' && 'name' in error) {
+          if (error.name === 'ValueError') {
+            const errorMessage = 'message' in error && typeof error.message === 'string' 
+              ? error.message 
+              : 'Invalid email format';
+            console.error('❌ Email validation failed:', {
+              email: registeredEmailString,
+              error: errorMessage
+            });
+            // バリデーションエラーの場合はエラー状態をストアに設定
+            store.setError(`メールアドレスの形式が正しくありません: ${registeredEmailString}`);
+            return;
+          }
+        }
+        
+        // その他の予期しないエラー
+        console.error('❌ Unexpected error creating Email object:', {
+          email: registeredEmailString,
+          error: error
+        });
+        store.setError('メールアドレスの処理中にエラーが発生しました');
+        // 予期しないエラーの場合は前の画面に戻る
         navigation.goBack();
         return;
       }
