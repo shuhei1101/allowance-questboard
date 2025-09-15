@@ -1,14 +1,10 @@
-import { LocaleString } from '@backend/core/messages/localeString';
-import { SelectFamilyDialog } from '../models/selectFamilyDialog';
-import { FamilyName } from '@backend/features/family/value-object/familyName';
-import { LoginHandler } from '@backend/features/auth/router/loginRouter';
+import { LoginHandler, LoginResponse } from '@backend/features/auth/router/loginRouter';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
-import { SetSelectFamilyDialog } from '../stores/loginPageStore';
+import { LocaleString } from '../../../../../../backend/src/core/messages/localeString';
 
 interface LoginParams {
-  setSelectFamilyDialog: SetSelectFamilyDialog,
-  loginHandler: LoginHandler
+  loginHandler: LoginHandler,
 }
 export type Login = (params: LoginParams) => Promise<void>;
 
@@ -16,16 +12,25 @@ export type Login = (params: LoginParams) => Promise<void>;
  * ログインユースケース
  * 
  * JWTトークンを使用してログインAPIを呼び出し、
- * 認証情報をセッションストアに保存する
  * 
  * @param params ログインパラメータ
  * @returns ログイン結果
  * @throws BaseAppException ログインに失敗した場合
  */
 export const login: Login = async (params: LoginParams): Promise<void> => {
+  let response: LoginResponse;
   try {
     // ログインAPIを実行
-    const response = await params.loginHandler.query();
+    response = await params.loginHandler.query();
+    console.log('ログイン成功:', response);
+  } catch (error) {
+    // tRPCエラーをBaseAppExceptionに変換して再スロー
+    throw AppError.fromTRPCError({
+      error,
+      fallbackErrorType: 'LOGIN_ERROR',
+      fallbackMessage: AuthErrorMessages.internalServerError()
+    });
+  }
 
     // responseから状態を更新
     if (!response.familyName) {
@@ -37,21 +42,4 @@ export const login: Login = async (params: LoginParams): Promise<void> => {
         })
       });
     }
-    
-    params.setSelectFamilyDialog(
-      new SelectFamilyDialog({
-        familyName: new FamilyName(response.familyName),
-      })
-    )
-  } catch (error) {
-    // tRPCエラーをBaseAppExceptionに変換して再スロー
-    throw AppError.fromTRPCError({
-      error,
-      fallbackErrorType: 'LOGIN_ERROR',
-      fallbackMessage: new LocaleString({
-        ja: AuthErrorMessages.internalServerError().ja,
-        en: AuthErrorMessages.internalServerError().en,
-      })
-    });
-  }
 };

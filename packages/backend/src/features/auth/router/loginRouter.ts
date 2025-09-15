@@ -2,14 +2,11 @@ import { t, authenticatedProcedure } from '@backend/core/trpc/trpcContext';
 import { loginQuery } from '../query/loginQuery';
 import z from 'zod';
 import { LocalizedTRPCError } from '@backend/core/errors/localizedTRPCError';
-import { LocaleString } from '@backend/core/messages/localeString';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
-import { UserIdSchema } from '../value-object/userId';
 import { FamilyNameSchema } from '../../family/value-object/familyName';
 import { BaseIdSchema } from '../../../core/value-object/base_id';
 
 export const loginOutput = z.object({
-  userId: UserIdSchema,
   familyMemberId: BaseIdSchema.optional(),
   familyId: BaseIdSchema.optional(),
   familyName: FamilyNameSchema.optional(),
@@ -37,7 +34,6 @@ export const loginRouter = t.router({
         });
         
         return loginOutput.parse({
-          userId: queryResult.userId,
           familyMemberId: queryResult.familyMemberId,
           familyId: queryResult.familyId,
           familyName: queryResult.familyName,
@@ -46,24 +42,21 @@ export const loginRouter = t.router({
         });
         
       } catch (error) {
+        console.error('loginRouter.loginでエラー:', error);
         if (error instanceof Error && error.message.includes('が見つかりません')) {
-          throw new LocalizedTRPCError({
-            code: 'NOT_FOUND',
-            errorType: 'USER_NOT_FOUND',
-            localeMessage: new LocaleString({
-              ja: AuthErrorMessages.userNotFoundError().ja,
-              en: AuthErrorMessages.userNotFoundError().en,
-            }),
+          return loginOutput.parse({
+            familyMemberId: undefined,
+            familyId: undefined,
+            familyName: undefined,
+            parentId: undefined,
+            childId: undefined,
           });
         }
-        
+        console.error('loginRouter.loginで予期せぬエラー:', error);
         throw new LocalizedTRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           errorType: 'INTERNAL_ERROR',
-          localeMessage: new LocaleString({
-            ja: AuthErrorMessages.internalError().ja,
-            en: AuthErrorMessages.internalError().en,
-          }),
+          localeMessage: AuthErrorMessages.internalError(),
         })
       }
     }),

@@ -1,17 +1,14 @@
-import { useEmailHandler } from './useEmailHandler';
-import { usePasswordHandler } from './usePasswordHandler';
-import { useLoginHandler } from './useLoginHandler';
-import { useParentLoginHandler } from './useParentLoginHandler';
-import { useChildLoginHandler } from './useChildLoginHandler';
-import { useCloseDialogHandler } from './useCloseDialogHandler';
-import { useRegisterUserHandler } from './useCreateFamilyHandler';
-import { useForgotPasswordHandler } from './useForgotPasswordHandler';
-import { useTermsOfServiceHandler } from './useTermsOfServiceHandler';
+import { useEmailHandler } from './handlers/useEmailHandler';
+import { useLoginHandler } from './handlers/useLoginHandler';
+import { useRegisterUserHandler } from './handlers/useRegisterUserHandler';
+import { useForgotPasswordHandler } from './handlers/useForgotPasswordHandler';
+import { useTermsOfServiceHandler } from './handlers/useTermsOfServiceHandler';
 import { login } from '../services/login';
 import { LoginPageStore } from '../stores/loginPageStore';
 import { createAuthenticatedClient } from '../../../../core/api/trpcClient';
 import { LoginFormStore } from '../stores/loginFormStore';
 import { SessionStore } from '../../../../core/constants/sessionStore';
+import { usePasswordHandler } from './handlers/usePasswordHandler';
 
 /** ログインページの全ハンドルを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドルを一括で提供 */
@@ -41,30 +38,10 @@ export const createLoginPageHandlers = (params: {
     currentLanguageType: params.sessionStore.languageType,
     setEmailError: params.formStore.setEmailError,
     setPasswordError: params.formStore.setPasswordError,
-    showDialog: params.pageStore.showDialog,
     setLoading: params.pageStore.setLoading,
     login: login,
-    setSelectFamilyDialog: params.pageStore.setSelectFamilyDialog,
     createAuthenticatedClient: createAuthenticatedClient,
-    Jwt: params.pageStore.jwt,
-  });
-  /** 親ログイン時のハンドル */
-  const handleParentLogin = useParentLoginHandler({
-    updateFamilyMemberType: params.sessionStore.setFamilyMemberType,
-    hideDialog: params.pageStore.hideDialog,
-    setLoginForm: params.formStore.setForm,
-    setLoading: params.pageStore.setLoading,
-  });
-  /** 子ログイン時のハンドル */
-  const handleChildLogin = useChildLoginHandler({
-    updateFamilyMemberType: params.sessionStore.setFamilyMemberType,
-    hideDialog: params.pageStore.hideDialog,
-    setLoginForm: params.formStore.setForm,
-    setLoading: params.pageStore.setLoading,
-  });
-  /** ダイアログを閉じた時のハンドル */
-  const handleCloseDialog = useCloseDialogHandler({
-    hideDialog: params.pageStore.hideDialog,
+    setJwtToken: params.sessionStore.jwtStorage.setToken
   });
   /** ユーザー作成時のハンドル */
   const handleUserCreate = useRegisterUserHandler({
@@ -83,9 +60,6 @@ export const createLoginPageHandlers = (params: {
     handleEmailChange,
     handlePasswordChange,
     handleLogin,
-    handleParentLogin,
-    handleChildLogin,
-    handleCloseDialog,
     handleUserCreate,
     handleForgotPassword,
     handleTermsOfService,

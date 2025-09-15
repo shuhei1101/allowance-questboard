@@ -10,6 +10,7 @@ import { useUserRegisterPageStore } from './stores/userRegisterPageStore';
 import { useUserRegisterFormStore } from './stores/userRegisterFormStore';
 import { userRegisterRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
 import { useSessionStore } from '../../../core/constants/sessionStore';
+import { useLoginFormStore } from '../login-page/stores/loginFormStore';
 
 /** 新規登録画面
  *
@@ -19,6 +20,7 @@ export const UserRegisterPage: React.FC = () => {
   const { t } = useTranslation();
   const pageStore = useUserRegisterPageStore();
   const formStore = useUserRegisterFormStore();
+  const loginFormStore = useLoginFormStore();
   const sessionStore = useSessionStore();
   const navigation = useAppNavigation();
 
@@ -37,7 +39,8 @@ export const UserRegisterPage: React.FC = () => {
   } = userRegisterRegisterPageHandlers({
     formStore,
     pageStore,
-    sessionStore
+    sessionStore,
+    loginFormStore
   });
   
   

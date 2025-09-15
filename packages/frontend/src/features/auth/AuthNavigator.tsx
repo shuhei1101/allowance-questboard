@@ -3,13 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { LoginPage } from './login-page/LoginPage';
 import { UserRegisterPage } from './create-user-page/UserRegisterPage';
+import { RoleSelectPage, RoleSelectPageProps } from './role-select-page/RoleSelectPage';
 
 export const AuthStackMeta = {
   name: 'Auth',
   screens: {
     login: "Login",
     userRegister: "UserRegister",
-    emailVerify: "EmailVerify",
+    roleSelect: "RoleSelect",
+    familyCreate: "FamilyCreate",
   },
 } as const;
 
@@ -17,6 +19,8 @@ export const AuthStackMeta = {
 export type AuthStackParamList = {
   Login: undefined;
   UserRegister: undefined;
+  RoleSelect: RoleSelectPageProps;
+  FamilyCreate: undefined;
   EmailVerify: {
     email: string;
   };
@@ -46,6 +50,14 @@ export function AuthNavigator() {
         options={{
           headerShown: true,
           title: '新規登録',
+        }}
+      />
+      <AuthStack.Screen 
+        name={AuthStackMeta.screens.roleSelect}
+        component={RoleSelectPage}
+        options={{
+          headerShown: true,
+          title: 'ロール選択',
         }}
       />
     </AuthStack.Navigator>

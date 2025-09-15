@@ -1,10 +1,11 @@
-import { useEmailHandler } from './useEmailHandler';
-import { usePasswordHandler } from './usePasswordHandler';
-import { useUserRegisterHandler } from './useUserRegisterHandler';
+import { useEmailHandler } from './handlers/useEmailHandler';
+import { usePasswordHandler } from './handlers/usePasswordHandler';
+import { useUserRegisterHandler } from './handlers/useUserRegisterHandler';
 import { UserRegisterFormStore } from '../stores/userRegisterFormStore';
 import { UserRegisterPageStore } from '../stores/userRegisterPageStore';
-import { useBeforeRemoveHandler } from './useBeforeRemoveHandler';
+import { useBeforeRemoveHandler } from './handlers/useBeforeRemoveHandler';
 import { SessionStore } from '../../../../core/constants/sessionStore';
+import { LoginFormStore } from '../../login-page/stores/loginFormStore';
 
 /** 新規登録ページの全ハンドラーを統合したカスタムフック
  *
@@ -12,7 +13,8 @@ import { SessionStore } from '../../../../core/constants/sessionStore';
 export const userRegisterRegisterPageHandlers = (params: {
   formStore: UserRegisterFormStore,
   pageStore: UserRegisterPageStore,
-  sessionStore: SessionStore
+  sessionStore: SessionStore,
+  loginFormStore: LoginFormStore
 }) => {
 
   const handleEmailChange = useEmailHandler({
@@ -36,6 +38,7 @@ export const userRegisterRegisterPageHandlers = (params: {
     setPasswordError: params.formStore.setPasswordError,
     setLoading: params.pageStore.setLoading,
     userRegisterForm: params.formStore.form,
+    setLoginForm: params.loginFormStore.setForm
   });
 
   const handleBeforeRemove = useBeforeRemoveHandler({

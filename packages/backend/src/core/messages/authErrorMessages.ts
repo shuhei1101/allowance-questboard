@@ -128,7 +128,9 @@ class Messages {
   autoLoginFailed(): LocaleString { return new LocaleString({
     ja: '自動ログインに失敗しました',
     en: 'Auto login failed'});}
-
+  emailNotConfirmed(): LocaleString { return new LocaleString({
+    ja: 'メール認証が完了していません。確認メール内のリンクをクリックして登録を完了してください。',
+    en: 'Email verification is not completed. Please click the link in the verification email to complete your registration.'});}
   autoLoginSuccess(): LocaleString { return new LocaleString({
     ja: 'ログインしました',
     en: 'Successfully logged in'});}

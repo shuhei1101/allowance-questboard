@@ -7,12 +7,12 @@ import { IconSelectButtonWithTitle } from '../../shared/components/IconSelectBut
 import { BirthdayInputWithTitle } from '../../shared/components/BirthdayInputWithTitle';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
-import { parentEditPageHandlers } from './hooks/parentEditPageHandlers';
+import { parentEditPageHandlers } from './handlers/parentEditPageHandlers';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
 import { ParentForm } from './models/parentForm';
 import { JwtStorage } from '../../auth/services/jwtStorage';
-import { useInitializeParentData } from './hooks/useParentDataInitializer';
+import { useInitializeParentData } from './handlers/useParentDataInitializer';
 import { useAppNavigation } from '../../../../AppNavigator';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useSessionStore } from '../../../core/constants/sessionStore';
