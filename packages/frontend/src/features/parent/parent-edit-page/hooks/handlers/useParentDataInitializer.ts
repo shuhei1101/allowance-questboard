@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { SetParentForm, useParentEditPageStore } from '../stores/parentEditPageStore';
-import { fetchParentForm } from '../services/fetchParentForm';
+import { SetParentForm, useParentEditPageStore } from '../../stores/parentEditPageStore';
+import { fetchParentForm } from '../../services/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ParentRouter } from '@backend/features/parent/router/parentRouter';
-import { GetAllIcons } from '../../../../core/constants/iconStore';
+import { GetAllIcons } from '../../../../../core/constants/iconStore';
 
 /**
  * 親データ初期化フック

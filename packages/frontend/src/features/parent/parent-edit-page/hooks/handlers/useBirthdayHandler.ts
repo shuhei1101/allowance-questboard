@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetBirthdayError, BirthdayError } from '../stores/parentEditPageStore';
-import { ParentForm } from '../models/parentForm';
+import { SetParentForm, SetBirthdayError, BirthdayError } from '../../stores/parentEditPageStore';
+import { ParentForm } from '../../models/parentForm';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
 
 /**

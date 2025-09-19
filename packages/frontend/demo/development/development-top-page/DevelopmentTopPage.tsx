@@ -32,8 +32,8 @@ export const DevelopmentTopPage: React.FC = () => {
       console.log('🚀 マスタデータ初期化開始...');
       await initMasterData({
         getMasterData: trpcClient.init.getMasterData,
-        setIconCategories: iconStore.setIconCategories,
-        setAppIcons: iconStore.setAppIcons,
+        setIconCategories: iconStore.updateIconCategories,
+        setAppIcons: iconStore.updateAppIcons,
       });
       console.log('✅ マスタデータ初期化完了！');
       

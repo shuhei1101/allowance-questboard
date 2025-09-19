@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Icon } from '@backend/features/icon/domain/icon';
-import { SelectIcon } from '../stores/iconSelectPageStore';
+import { SelectIcon } from '../../stores/iconSelectPageStore';
 
 /**
  * アイコン選択ハンドラーのカスタムフック

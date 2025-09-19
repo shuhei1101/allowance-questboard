@@ -1,11 +1,11 @@
-import { useNameHandler } from './useNameHandler';
-import { useEmailHandler } from './useEmailHandler';
-import { usePasswordHandler } from './usePasswordHandler';
-import { useBirthdayHandler } from './useBirthdayHandler';
-import { useConfirmHandler } from './useConfirmHandler';
-import { useParentEditPageStore as useParentEditPageStore } from '../stores/parentEditPageStore';
+import { useNameHandler } from './handlers/useNameHandler';
+import { useEmailHandler } from './handlers/useEmailHandler';
+import { usePasswordHandler } from './handlers/usePasswordHandler';
+import { useBirthdayHandler } from './handlers/useBirthdayHandler';
+import { useConfirmHandler } from './handlers/useConfirmHandler';
+import { useParentEditPageStore } from '../stores/parentEditPageStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
-import { useIconSelectHandler } from './useIconSelectHandler';
+import { useIconSelectHandler } from './handlers/useIconSelectHandler';
 import { HandleParentForm } from '../ParentEditPage';
 import { SessionStore } from '../../../../core/constants/sessionStore';
 

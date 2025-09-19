@@ -12,6 +12,6 @@ export const useParentCreateHandler = () => {
   
   return useCallback((): void => {
     // 親編集画面への遷移
-    navigation.navigate(ParentStackMeta.name, { screen: ParentStackMeta.screens.parentEdit });
+    navigation.navigate(ParentStackMeta.name, { screen: ParentStackMeta.screens.parentEdit, params: {} });
   }, [navigation]);
 };

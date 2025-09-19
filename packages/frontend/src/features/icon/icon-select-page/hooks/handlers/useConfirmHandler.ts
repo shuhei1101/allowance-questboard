@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { useNavigation } from '@react-navigation/native';
-import { useAppNavigation } from '../../../../../AppNavigator';
+import { useAppNavigation } from '../../../../../../AppNavigator';
 
 export type OnIconSelected = (icon: Icon) => void;
 

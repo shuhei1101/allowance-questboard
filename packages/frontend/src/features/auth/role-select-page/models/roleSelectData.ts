@@ -1,28 +1,31 @@
 import { BaseModel } from '@backend/core/models/baseModel';
 import { FamilyName } from '@backend/features/family/value-object/familyName';
-import { BaseId } from '@backend/core/value-object/base_id';
+import { FamilyMemberId } from '../../../../../../backend/src/features/family-member/value-object/familyMemberId';
+import { FamilyId } from '../../../../../../backend/src/features/family/value-object/familyId';
+import { ParentId } from '../../../../../../backend/src/features/parent/value-object/parentId';
+import { ChildId } from '../../../../../../backend/src/features/child/value-object/childId';
 
 /** ロール選択画面データモデル
  *
  * loginRouter.loginのレスポンスから得られるデータを管理 */
 export class RoleSelectData extends BaseModel {
   /** 家族メンバーID */
-  public readonly familyMemberId?: BaseId;
+  public readonly familyMemberId?: FamilyMemberId;
   /** 家族ID */
-  public readonly familyId?: BaseId;
+  public readonly familyId?: FamilyId;
   /** 家族名 */
   public readonly familyName?: FamilyName;
   /** 親ID */
-  public readonly parentId?: BaseId;
+  public readonly parentId?: ParentId;
   /** 子供ID */
-  public readonly childId?: BaseId;
+  public readonly childId?: ChildId;
 
   constructor(params: {
-    familyMemberId?: BaseId;
-    familyId?: BaseId;
+    familyMemberId?: FamilyMemberId;
+    familyId?: FamilyId;
     familyName?: FamilyName;
-    parentId?: BaseId;
-    childId?: BaseId;
+    parentId?: ParentId;
+    childId?: ChildId;
   }) {
     super();
     this.familyMemberId = params.familyMemberId;
@@ -52,31 +55,6 @@ export class RoleSelectData extends BaseModel {
     return this.childId !== undefined;
   }
 
-  /** 家族作成ボタンを表示するか判定 */
-  public shouldShowFamilyCreateButton(): boolean {
-    return !this.hasFamily();
-  }
-
-  /** 親ログインボタンを表示するか判定 */
-  public shouldShowParentLoginButton(): boolean {
-    return this.hasParent();
-  }
-
-  /** 親ユーザ作成ボタンを表示するか判定 */
-  public shouldShowParentCreateButton(): boolean {
-    return this.hasFamily() && !this.hasParent();
-  }
-
-  /** 子ログインボタンを表示するか判定 */
-  public shouldShowChildLoginButton(): boolean {
-    return this.hasChild();
-  }
-
-  /** 子供ユーザ作成ボタンを表示するか判定 */
-  public shouldShowChildCreateButton(): boolean {
-    return !this.hasChild();
-  }
-
   /** 家族名の文字列表現を取得 */
   public getFamilyNameString(): string {
     return this.familyName?.value ?? '';
@@ -96,11 +74,11 @@ export class RoleSelectData extends BaseModel {
     childId?: number;
   }): RoleSelectData {
     return new RoleSelectData({
-      familyMemberId: response.familyMemberId ? new BaseId(response.familyMemberId) : undefined,
-      familyId: response.familyId ? new BaseId(response.familyId) : undefined,
+      familyMemberId: response.familyMemberId ? new FamilyMemberId(response.familyMemberId) : undefined,
+      familyId: response.familyId ? new FamilyId(response.familyId) : undefined,
       familyName: response.familyName ? new FamilyName(response.familyName) : undefined,
-      parentId: response.parentId ? new BaseId(response.parentId) : undefined,
-      childId: response.childId ? new BaseId(response.childId) : undefined,
+      parentId: response.parentId ? new ParentId(response.parentId) : undefined,
+      childId: response.childId ? new ChildId(response.childId) : undefined,
     });
   }
 }

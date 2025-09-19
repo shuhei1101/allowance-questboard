@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useRoleSelectPageStore } from './stores/roleSelectPageStore';
 import { useRoleSelectDataInitializer } from './hooks/useRoleSelectDataInitializer';
-import { useRoleSelectPageHandlers } from './hooks/useRoleSelectPageHandlers';
+import { createRoleSelectPageHandlers } from './hooks/createRoleSelectPageHandlers';
 import { FamilyNameLabel } from './components/FamilyNameLabel';
 import { FamilyCreateButton } from './components/FamilyCreateButton';
 import { ParentLoginButton } from './components/ParentLoginButton';
@@ -11,6 +11,9 @@ import { ParentCreateButton } from './components/ParentCreateButton';
 import { ChildLoginButton } from './components/ChildLoginButton';
 import { ChildCreateButton } from './components/ChildCreateButton';
 import { LoadingSpinner } from '../../shared/loading-page/components/LoadingSpinner';
+import { createAuthenticatedClient } from '../../../core/api/trpcClient';
+import { useSessionStore } from '../../../core/constants/sessionStore';
+import { useLoadToken } from '../../../core/stores/basePageStore';
 
 export interface RoleSelectPageProps {
   // 現在はpropsなし
@@ -22,21 +25,34 @@ export interface RoleSelectPageProps {
 export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
   const { colors } = useTheme();
   const pageStore = useRoleSelectPageStore();
+  const sessionStore = useSessionStore();
+  
+  // トークンを読み込む
+  const { jwtToken, isLoading } = useLoadToken(pageStore);
+  
+  // ルーターを作成（トークンがない場合はundefined）
+  const router = jwtToken ? createAuthenticatedClient({
+    jwtToken,
+    languageType: sessionStore.languageType,
+  }) : undefined;
 
-  // データ初期化フック
-  useRoleSelectDataInitializer();
+  // データ初期化
+  useRoleSelectDataInitializer({
+    setRoleSelectData: pageStore.setRoleSelectData,
+    loginRouter: router?.login.login,
+  });
 
-  // 統合ハンドラーフック
+  // ハンドラーの取得
   const {
     handleFamilyCreate,
     handleParentLogin,
     handleParentCreate,
     handleChildLogin,
     handleChildCreate,
-  } = useRoleSelectPageHandlers();
+  } = createRoleSelectPageHandlers();
 
   // ローディング中の表示
-  if (pageStore.isLoading || !pageStore.roleSelectData) {
+  if (isLoading || !pageStore.roleSelectData) {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: colors.background.primary }]}>
         <LoadingSpinner />
@@ -68,7 +84,7 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
 
       {/* 家族作成セクション */}
       <View style={styles.section}>
-        {pageStore.roleSelectData.shouldShowFamilyCreateButton() && (
+        {pageStore.roleSelectData.hasFamily() && (
           <FamilyCreateButton onPress={handleFamilyCreate} />
         )}
       </View>
@@ -76,14 +92,14 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
       {/* 親セクション */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          👥 親として利用
+          👥 親としてログイン
         </Text>
-        
-        {pageStore.roleSelectData.shouldShowParentLoginButton() && (
+
+        {pageStore.roleSelectData.hasParent() && (
           <ParentLoginButton onPress={handleParentLogin} />
         )}
-        
-        {pageStore.roleSelectData.shouldShowParentCreateButton() && (
+
+        {pageStore.roleSelectData.hasFamily() && !pageStore.roleSelectData.hasParent() && (
           <ParentCreateButton onPress={handleParentCreate} />
         )}
       </View>
@@ -91,14 +107,14 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
       {/* 子供セクション */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          👶 子供として利用
+          👶 子供としてログイン
         </Text>
         
-        {pageStore.roleSelectData.shouldShowChildLoginButton() && (
+        {pageStore.roleSelectData.hasChild() && (
           <ChildLoginButton onPress={handleChildLogin} />
         )}
         
-        {pageStore.roleSelectData.shouldShowChildCreateButton() && (
+        {pageStore.roleSelectData.hasChild() && (
           <ChildCreateButton onPress={handleChildCreate} />
         )}
       </View>

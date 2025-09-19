@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetPasswordError, PasswordError } from '../stores/parentEditPageStore';
-import { ParentForm } from '../models/parentForm';
+import { SetParentForm, SetPasswordError, PasswordError } from '../../stores/parentEditPageStore';
+import { ParentForm } from '../../models/parentForm';
 import { Password } from '@backend/features/auth/value-object/password';
 
 /**

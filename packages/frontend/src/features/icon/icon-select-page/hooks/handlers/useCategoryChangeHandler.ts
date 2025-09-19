@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
-import { SelectCategory } from '../stores/iconSelectPageStore';
+import { SelectCategory } from '../../stores/iconSelectPageStore';
 
 /**
  * カテゴリ変更ハンドラーのカスタムフック

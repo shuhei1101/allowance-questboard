@@ -1,10 +1,10 @@
-import { LoginHandler, LoginResponse } from '@backend/features/auth/router/loginRouter';
+import { LoginRouter, LoginResponse } from '@backend/features/auth/router/loginRouter';
 import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '../../../../../../backend/src/core/messages/localeString';
 
 interface LoginParams {
-  loginHandler: LoginHandler,
+  loginRouter: LoginRouter,
 }
 export type Login = (params: LoginParams) => Promise<void>;
 
@@ -21,7 +21,7 @@ export const login: Login = async (params: LoginParams): Promise<void> => {
   let response: LoginResponse;
   try {
     // ログインAPIを実行
-    response = await params.loginHandler.query();
+    response = await params.loginRouter.query();
     console.log('ログイン成功:', response);
   } catch (error) {
     // tRPCエラーをBaseAppExceptionに変換して再スロー

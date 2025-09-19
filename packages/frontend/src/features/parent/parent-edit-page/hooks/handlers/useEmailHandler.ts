@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetEmailError, EmailError } from '../stores/parentEditPageStore';
-import { ParentForm } from '../models/parentForm';
+import { SetParentForm, SetEmailError, EmailError } from '../../stores/parentEditPageStore';
+import { ParentForm } from '../../models/parentForm';
 import { Email } from '@backend/features/auth/value-object/email';
 
 /**

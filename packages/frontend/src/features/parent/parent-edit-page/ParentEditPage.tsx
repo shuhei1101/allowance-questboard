@@ -7,12 +7,12 @@ import { IconSelectButtonWithTitle } from '../../shared/components/IconSelectBut
 import { BirthdayInputWithTitle } from '../../shared/components/BirthdayInputWithTitle';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
-import { parentEditPageHandlers } from './handlers/parentEditPageHandlers';
+import { parentEditPageHandlers } from './hooks/parentEditPageHandlers';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
 import { ParentForm } from './models/parentForm';
 import { JwtStorage } from '../../auth/services/jwtStorage';
-import { useInitializeParentData } from './handlers/useParentDataInitializer';
+import { useInitializeParentData } from './hooks/handlers/useParentDataInitializer';
 import { useAppNavigation } from '../../../../AppNavigator';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useSessionStore } from '../../../core/constants/sessionStore';
@@ -29,7 +29,7 @@ export interface ParentEditPageProps {
 }
 
 export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
-  shouldUpdate: shouldUpdate = true,
+  shouldUpdate = true,
   parentId,
   handleParentForm,
 }) => {

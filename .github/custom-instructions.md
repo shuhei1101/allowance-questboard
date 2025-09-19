@@ -16,8 +16,10 @@ git commit -m "feat: 概要
 - 
 - "
 git push origin main
+
 ```
 - 絶対にコミット&プッシュはしないこと。コマンドの出力のみ行うこと
+- 最後に改行を入れること
 
 - 実装完了後に`expo start`や`npm run dev`などの動作確認コマンドはしないこと
   - こちらで実行します。
@@ -268,6 +270,7 @@ export const AuthStackMeta = {
 
 - 画面遷移の例
 ```ts
+const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
 navigation.navigate(AuthStackMeta.screens.emailVerify, { email: 'user@example.com' });
 ```
 

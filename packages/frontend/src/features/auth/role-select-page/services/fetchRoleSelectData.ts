@@ -1,7 +1,7 @@
-import { LoginRouter } from '@backend/features/auth/router/loginRouter';
 import { RoleSelectData } from '../models/roleSelectData';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { AppError } from '@backend/core/errors/appError';
+import { LoginRouter } from '../../../../../../backend/src/features/auth/router/loginRouter';
 
 interface FetchRoleSelectDataParams {
   /** loginRouter */

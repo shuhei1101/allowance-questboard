@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAppNavigation } from '../../../../../../AppNavigator';
-import { SetFamilyMemberType } from '../../../../../core/constants/sessionStore';
+import { UpdateFamilyMemberType } from '../../../../../core/constants/sessionStore';
 import { FamilyMemberType } from '@backend/features/family-member/enum/familyMemberType';
 
 /**
@@ -9,7 +9,7 @@ import { FamilyMemberType } from '@backend/features/family-member/enum/familyMem
  * 親としてログインし、親用ホーム画面へ遷移する
  */
 export const useParentLoginHandler = (params: {
-  updateFamilyMemberType: SetFamilyMemberType;
+  updateFamilyMemberType: UpdateFamilyMemberType;
 }) => {
   const navigation = useAppNavigation();
   

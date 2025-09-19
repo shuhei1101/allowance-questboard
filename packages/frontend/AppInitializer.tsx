@@ -29,8 +29,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
           getMasterData: trpcClient.init.getMasterData,
-          setIconCategories: iconStore.setIconCategories,
-          setAppIcons: iconStore.setAppIcons,
+          setIconCategories: iconStore.updateIconCategories,
+          setAppIcons: iconStore.updateAppIcons,
         });
         console.log('✅ マスタデータ初期化完了！');
         
@@ -38,7 +38,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("言語設定を適用しています... 📱");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        sessionStore.setLanguageType(languageType);
+        sessionStore.updateLanguageType(languageType);
 
         // i18nの言語も同期
         await i18n.changeLanguage(locale);
@@ -69,7 +69,7 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         setLoadingMessage("エラーが発生しましたが、続行します... ⚠️");
         const locale = Localization.getLocales()[0]?.languageCode || 'ja';
         const languageType = localeToLanguageType(locale);
-        sessionStore.setLanguageType(languageType);
+        sessionStore.updateLanguageType(languageType);
 
         // i18nの言語も同期（フォールバック）
         try {

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../stores/parentEditPageStore';
-import { ParentForm } from '../models/parentForm';
+import { ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../../stores/parentEditPageStore';
+import { ParentForm } from '../../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 
 /**

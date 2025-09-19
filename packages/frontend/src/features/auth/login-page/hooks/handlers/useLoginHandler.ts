@@ -11,6 +11,8 @@ import { CreateAuthenticatedClient } from '../../../../../core/api/trpcClient';
 import { Jwt, SetLoading } from '../../../../../core/stores/basePageStore';
 import { ClearErrors, SetFormError } from '../../../../../core/stores/baseFormStore';
 import { SetJwtToken } from '../../../services/jwtStorage';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { AuthStackMeta, AuthStackParamList } from '../../../AuthNavigator';
 
 /**
  * ログインハンドラーのカスタムフック
@@ -29,6 +31,8 @@ export const useLoginHandler = (params: {
   createAuthenticatedClient: CreateAuthenticatedClient,
   setJwtToken: SetJwtToken
 }) => {
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
+
   // バリデーションハンドラーを取得
   const validateLoginForm = useLoginFormValidationHandler({
     loginForm: params.loginForm,
@@ -80,16 +84,8 @@ export const useLoginHandler = (params: {
       // JWTトークンをストアに保存
       params.setJwtToken(jwtToken);
 
-      const router = params.createAuthenticatedClient({
-        jwtToken: jwtToken,
-        languageType: params.currentLanguageType,
-      });
-      
-      
-      // jwtを元にアプリにログインし、アプリ側のロール等を取得
-      await params.login({
-        loginHandler: router.login.login,
-      });
+      // ロール選択画面へ遷移
+      navigation.navigate(AuthStackMeta.screens.roleSelect, {});
 
     } catch (error) {
       if (error instanceof AppError) {
@@ -109,5 +105,6 @@ export const useLoginHandler = (params: {
     params.login,
     validateLoginForm,
     params.createAuthenticatedClient,
+    navigation
   ]);
 };

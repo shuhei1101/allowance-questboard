@@ -63,6 +63,6 @@ export const loginRouter = t.router({
 });
 
 export type LoginResponse = z.infer<typeof loginOutput>;
-export interface LoginHandler {
+export interface LoginRouter {
   query(): Promise<LoginResponse>;
 }

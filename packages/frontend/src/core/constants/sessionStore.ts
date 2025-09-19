@@ -6,8 +6,8 @@ import { createJwtStorage, GetJwtToken, IJwtStorage } from "../../features/auth/
 import { BaseStore, BaseStoreProperties, BaseStoreActions } from '../stores/BaseStore';
 
 // シグネチャ定義
-export type SetFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
-export type SetLanguageType = (languageType: LanguageTypeValue) => void;
+export type UpdateFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
+export type UpdateLanguageType = (languageType: LanguageTypeValue) => void;
 export type Clear = () => void;
 
 interface SessionProperties extends BaseStoreProperties {
@@ -21,9 +21,9 @@ interface SessionProperties extends BaseStoreProperties {
 
 interface SessionActions extends BaseStoreActions {
   /** 家族メンバータイプ設定 */
-  setFamilyMemberType: SetFamilyMemberType;
+  updateFamilyMemberType: UpdateFamilyMemberType;
   /** 言語タイプ設定 */
-  setLanguageType: SetLanguageType;
+  updateLanguageType: UpdateLanguageType;
   /** セッション変数クリア */
   clear: Clear;
 }
@@ -33,16 +33,16 @@ export type SessionStore = SessionProperties & SessionActions;
 class SessionStoreClass extends BaseStore<SessionProperties, SessionActions> {
   
   /** 家族メンバータイプ設定 */
-  protected setFamilyMemberType(set: any): SetFamilyMemberType {
+  protected updateFamilyMemberType(set: any): UpdateFamilyMemberType {
     return (familyMemberType: FamilyMemberTypeValue) => {
-      set({ familyMemberType }, false, 'setFamilyMemberType');
+      set({ familyMemberType }, false, 'updateFamilyMemberType');
     };
   }
 
   /** 言語タイプ設定 */
-  protected setLanguageType(set: any): SetLanguageType {
+  protected updateLanguageType(set: any): UpdateLanguageType {
     return (languageType: LanguageTypeValue) => {
-      set({ languageType }, false, 'setLanguageType');
+      set({ languageType }, false, 'updateLanguageType');
     };
   }
 
@@ -67,8 +67,8 @@ class SessionStoreClass extends BaseStore<SessionProperties, SessionActions> {
   protected buildActions(set: any, get: any): SessionActions {
     return {
       ...super.buildActions(set, get),
-      setFamilyMemberType: this.setFamilyMemberType(set),
-      setLanguageType: this.setLanguageType(set),
+      updateFamilyMemberType: this.updateFamilyMemberType(set),
+      updateLanguageType: this.updateLanguageType(set),
       clear: this.clear(set),
     };
   }

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetNameError, NameError } from '../stores/parentEditPageStore';
-import { ParentForm } from '../models/parentForm';
+import { SetParentForm, SetNameError, NameError } from '../../stores/parentEditPageStore';
+import { ParentForm } from '../../models/parentForm';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
 
 /**

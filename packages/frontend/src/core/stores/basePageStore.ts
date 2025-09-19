@@ -10,7 +10,7 @@ export type Jwt = string | undefined;
 
 export interface BasePageProperties extends BaseStoreProperties {
   isLoading: boolean;
-  jwt: Jwt;
+  jwtToken: Jwt;
 }
 
 export interface BasePageActions extends BaseStoreActions {
@@ -37,10 +37,10 @@ export abstract class BasePageStore<
       set({ isLoading: true }, false, 'loadToken:start');
       try {
         const token = await JwtStorage.getToken();
-        set({ jwt: token }, false, 'loadToken:success');
+        set({ jwtToken: token }, false, 'loadToken:success');
       } catch (error) {
         console.error('JWT取得エラー:', error);
-        set({ jwt: undefined }, false, 'loadToken:error');
+        set({ jwtToken: undefined }, false, 'loadToken:error');
       } finally {
         set({ isLoading: false }, false, 'loadToken:end');
       }
@@ -52,7 +52,7 @@ export abstract class BasePageStore<
     return {
       ...super.buildDefaultProperties(),
       isLoading: false,
-      jwt: undefined,
+      jwtToken: undefined,
     };
   }
 
@@ -72,14 +72,14 @@ export abstract class BasePageStore<
 export const useLoadToken = <T extends BasePageProperties & BasePageActions>(
   store:  T
 ) => {
-  const jwt = store.jwt;
+  const jwtToken = store.jwtToken;
   const isLoading = store.isLoading;
   const loadToken = store.loadToken;
 
   // 初期表示で JWT を取得
   useEffect(() => {
     loadToken();
-  }, [loadToken]);
+  }, []);
 
-  return { jwt, isLoading };
+  return { jwtToken, isLoading };
 };

@@ -25,9 +25,9 @@ interface IconActions extends BaseStoreActions {
   /** アプリアイコン取得 */
   getAppIcon: GetAppIcon;
   /** アイコンカテゴリ設定 */
-  setIconCategories: SetIconCategories;
+  updateIconCategories: SetIconCategories;
   /** アプリアイコン設定 */
-  setAppIcons: SetAppIcons;
+  updateAppIcons: SetAppIcons;
 }
 
 export type IconStore = IconProperties & IconActions;
@@ -51,16 +51,16 @@ class IconStoreClass extends BaseStore<IconProperties, IconActions> {
   }
 
   /** アイコンカテゴリ設定 */
-  protected setIconCategories(set: any): SetIconCategories {
+  protected updateIconCategories(set: any): SetIconCategories {
     return (iconCategories: IconCategories) => {
-      set({ iconCategories }, false, 'setIconCategories');
+      set({ iconCategories }, false, 'updateIconCategories');
     };
   }
 
   /** アプリアイコン設定 */
-  protected setAppIcons(set: any): SetAppIcons {
+  protected updateAppIcons(set: any): SetAppIcons {
     return (appIcons: AppIcons) => {
-      set({ appIcons }, false, 'setAppIcons');
+      set({ appIcons }, false, 'updateAppIcons');
     };
   }
 
@@ -79,8 +79,8 @@ class IconStoreClass extends BaseStore<IconProperties, IconActions> {
       ...super.buildActions(set, get),
       getAllIcons: this.getAllIcons(get),
       getAppIcon: this.getAppIcon(get),
-      setIconCategories: this.setIconCategories(set),
-      setAppIcons: this.setAppIcons(set),
+      updateIconCategories: this.updateIconCategories(set),
+      updateAppIcons: this.updateAppIcons(set),
     };
   }
 }

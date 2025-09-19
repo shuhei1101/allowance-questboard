@@ -1,29 +1,36 @@
 import { useEffect } from 'react';
-import { useRoleSelectPageStore } from '../stores/roleSelectPageStore';
 import { fetchRoleSelectData } from '../services/fetchRoleSelectData';
+import { LoginRouter } from '@backend/features/auth/router/loginRouter';
+import { SetRoleSelectData } from '../stores/roleSelectPageStore';
 
-/**
- * ロール選択データ初期化フック
- * 
- * ページ表示時にログイン後のデータを取得する
- */
-export const useRoleSelectDataInitializer = () => {
-  const pageStore = useRoleSelectPageStore();
+interface UseRoleSelectDataInitializerParams {
+  /** loginRouter */
+  loginRouter?: LoginRouter;
+  /** ロール選択データ設定関数 */
+  setRoleSelectData: SetRoleSelectData;
+}
 
+/** ロール選択データ初期化フック
+ *
+ * JWTトークンを使用してloginRouter.loginを呼び出し、
+ * ユーザーに紐づく家族・親・子情報を取得してstoreに設定する */
+export const useRoleSelectDataInitializer = (params: UseRoleSelectDataInitializerParams) => {
   useEffect(() => {
     const initializeRoleSelectData = async () => {
+      if (!params.loginRouter) return;
+      
       try {
-        pageStore.setLoading(true);
-        const roleSelectData = await fetchRoleSelectData();
-        pageStore.setRoleSelectData(roleSelectData);
+        const roleSelectData = await fetchRoleSelectData({
+          loginRouter: params.loginRouter,
+        });
+        params.setRoleSelectData(roleSelectData);
       } catch (error) {
         console.error('ロール選択データの取得に失敗しました:', error);
-        // TODO: エラーハンドリングを実装
-      } finally {
-        pageStore.setLoading(false);
+        // エラーは ErrorBoundary に委譲
+        throw error;
       }
     };
-
+    
     initializeRoleSelectData();
-  }, []); // 初回のみ実行
+  }, []);
 };

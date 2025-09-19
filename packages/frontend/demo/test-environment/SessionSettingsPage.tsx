@@ -39,7 +39,7 @@ export const SessionSettingsPage: React.FC = () => {
   const handleLanguageChange = (languageId: number) => {
     try {
       const languageType = new LanguageTypeValue(new LanguageId(languageId));
-      sessionStore.setLanguageType(languageType);
+      sessionStore.updateLanguageType(languageType);
       Alert.alert('成功', `言語を変更しました (ID: ${languageId})`);
     } catch (error) {
       Alert.alert('エラー', `言語変更に失敗しました: ${error}`);
@@ -49,7 +49,7 @@ export const SessionSettingsPage: React.FC = () => {
   const handleFamilyMemberTypeChange = (typeId: number) => {
     try {
       const memberType = new FamilyMemberTypeValue(new FamilyMemberTypeId(typeId));
-      sessionStore.setFamilyMemberType(memberType);
+      sessionStore.updateFamilyMemberType(memberType);
       Alert.alert('成功', `家族メンバータイプを変更しました (ID: ${typeId})`);
     } catch (error) {
       Alert.alert('エラー', `家族メンバータイプ変更に失敗しました: ${error}`);
@@ -79,8 +79,8 @@ export const SessionSettingsPage: React.FC = () => {
             try {
               // セッションストアの内容をクリア
               await JwtStorage.setToken('');
-              sessionStore.setLanguageType(undefined as any);
-              sessionStore.setFamilyMemberType(undefined as any);
+              sessionStore.updateLanguageType(undefined as any);
+              sessionStore.updateFamilyMemberType(undefined as any);
               setCurrentJwt('');
               setCustomJwt('');
               Alert.alert('完了', 'セッション情報をクリアしました');

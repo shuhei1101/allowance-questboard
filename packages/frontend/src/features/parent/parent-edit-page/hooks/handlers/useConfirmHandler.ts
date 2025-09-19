@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
-import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../stores/parentEditPageStore';
-import { ParentForm } from '../models/parentForm';
+import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../../stores/parentEditPageStore';
+import { ParentForm } from '../../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { useParentFormValidationHandler as useParentFormValidationHandler } from './useParentFormValidationHandler';
-import { HandleParentForm } from '../ParentEditPage';
-import { useAppNavigation } from '../../../../../AppNavigator';
+import { HandleParentForm } from '../../ParentEditPage';
+import { useAppNavigation } from '../../../../../../AppNavigator';
 
 /** 確定ボタン押下ハンドラーのカスタムフック
  * 親情報の登録を実行する */
