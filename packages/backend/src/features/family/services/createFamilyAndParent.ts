@@ -85,36 +85,21 @@ export const createFamilyAndParent: CreateFamilyAndParent = async (params: Creat
     // 1. 家族を作成
     const familyId = await params.familyRepository.create(family);
 
-    // 2. 親ドメインモデルの構築（作成された家族IDを使用）
-    const parentWithFamilyId = Parent.createNew({
+    // 2. 親を作成
+    const parentId = await params.parentRepository.create({
+      parent: Parent.createNew({
       name: new ParentName(params.parent.name),
       birthday: new Birthday(params.parent.birthday),
       iconId: params.parent.iconId ? new IconId(params.parent.iconId) : undefined,
       familyId: familyId,
       familyMemberId: params.parent.familyMemberId ? new FamilyMemberId(params.parent.familyMemberId) : undefined
-    });
-
-    // 3. 親を作成
-    await params.parentRepository.create({
-      parent: parentWithFamilyId,
+    }),
       userId: userId
     });
 
-    // 4. 作成された親のIDを取得（家族メンバーとして登録されたものから取得）
-    const createdParent = await params.parentRepository.findByUserId({ userId: userId });
-    if (!createdParent || !createdParent.id) {
-      throw new AppError({
-        errorType: "PARENT_CREATION_FAILED",
-        message: new LocaleString({
-          ja: "親の作成に失敗しました",
-          en: "Failed to create parent"
-        })
-      });
-    }
-
     return {
       familyId,
-      parentId: createdParent.id
+      parentId
     };
   } catch (error) {
     if (error instanceof AppError) {

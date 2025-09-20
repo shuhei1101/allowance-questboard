@@ -72,7 +72,7 @@ export class ParentRepository extends BaseRepository {
   async create(params: {
     parent: Parent,
     userId: UserId
-  }): Promise<void> {
+  }): Promise<ParentId> {
     const familyMemberId = new FamilyMemberId(
       await this.familyMemberDao.insertWithCache(
         FamilyMemberEntity.fromRaw({
@@ -83,12 +83,15 @@ export class ParentRepository extends BaseRepository {
         })
       )
     );
-    await this.parentDao.insertWithCache(
-      ParentEntity.fromRaw({
-        familyId: params.parent.familyId.value,
-        familyMemberId: familyMemberId.value
-      })
+    const parentId = new ParentId(
+      await this.parentDao.insertWithCache(
+        ParentEntity.fromRaw({
+          familyId: params.parent.familyId.value,
+          familyMemberId: familyMemberId.value
+        })
+      )
     );
+    return parentId;
   }
 
   async update(params: {
