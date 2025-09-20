@@ -29,6 +29,29 @@ export class Family extends BaseDomainModel<FamilyId> {
     this.introduction = params.introduction || new FamilyIntroduction("");
   }
 
+  /**
+   * 新しい家族を作成（IDは自動で採番される）
+   */
+  static createNew(params: {
+    displayId: FamilyDisplayId;
+    name: FamilyName;
+    onlineName: FamilyOnlineName;
+    iconId?: IconId;
+    introduction?: FamilyIntroduction;
+  }): Family {
+    // 新規作成時は一時的なIDを使用（リポジトリで実際のIDが割り当てられる）
+    const tempId = new FamilyId(0);
+    
+    return new Family({
+      id: tempId,
+      displayId: params.displayId,
+      name: params.name,
+      onlineName: params.onlineName,
+      iconId: params.iconId,
+      introduction: params.introduction,
+    });
+  }
+
   protected validate(): void {
     throw new Error("Method not implemented.");
   }

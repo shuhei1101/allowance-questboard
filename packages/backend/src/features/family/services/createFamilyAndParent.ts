@@ -74,8 +74,7 @@ export const createFamilyAndParent: CreateFamilyAndParent = async (params: Creat
     const userId = new UserId(params.userId);
 
     // 家族ドメインモデルの構築
-    const family = new Family({
-      id: new FamilyId(0), // 新規作成時は一時ID、リポジトリで実際のIDが割り当てられる
+    const family = Family.createNew({
       displayId: new FamilyDisplayId(params.family.displayId),
       name: new FamilyName(params.family.name),
       onlineName: new FamilyOnlineName(params.family.onlineName),
