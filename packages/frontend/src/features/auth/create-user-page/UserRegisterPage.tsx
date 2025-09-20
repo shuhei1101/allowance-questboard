@@ -1,7 +1,5 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { EmailInputEntry } from '../../shared/components/EmailInputEntry';
-import { PasswordInputEntry } from '../../shared/components/PasswordInputEntry';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -11,6 +9,8 @@ import { useUserRegisterFormStore } from './stores/userRegisterFormStore';
 import { userRegisterRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
 import { useSessionStore } from '../../../core/constants/sessionStore';
 import { useLoginFormStore } from '../login-page/stores/loginFormStore';
+import { EmailInputEntry } from '../../shared/components/EmailInputEntry';
+import { PasswordInputEntry } from '../../shared/components/PasswordInputEntry';
 
 /** 新規登録画面
  *

@@ -16,4 +16,8 @@ export abstract class BaseDomainModel<TId extends BaseId> extends BaseModel impl
   get key(): TId | undefined {
     return this.id || undefined;
   }
+
+  static createNew(params: any): any {
+    throw new Error("Method not implemented.");
+  }
 }
