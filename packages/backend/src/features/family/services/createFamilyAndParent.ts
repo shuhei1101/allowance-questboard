@@ -70,39 +70,6 @@ export type CreateFamilyAndParent = (params: CreateFamilyAndParentParams) => Pro
  */
 export const createFamilyAndParent: CreateFamilyAndParent = async (params: CreateFamilyAndParentParams): Promise<CreateFamilyAndParentResult> => {
   try {
-    // 家族情報のバリデーション
-    if (!params.family) {
-      throw new AppError({
-        errorType: "INVALID_FAMILY_DATA",
-        message: new LocaleString({
-          ja: "家族情報が指定されていません",
-          en: "Family information is not specified"
-        })
-      });
-    }
-
-    // 親情報のバリデーション
-    if (!params.parent) {
-      throw new AppError({
-        errorType: "INVALID_PARENT_DATA",
-        message: new LocaleString({
-          ja: "親情報が指定されていません",
-          en: "Parent information is not specified"
-        })
-      });
-    }
-
-    // ユーザIDのバリデーション
-    if (!params.userId) {
-      throw new AppError({
-        errorType: "INVALID_USER_ID",
-        message: new LocaleString({
-          ja: "ユーザIDが指定されていません",
-          en: "User ID is not specified"
-        })
-      });
-    }
-
     // 値オブジェクトの変換
     const userId = new UserId(params.userId);
 
