@@ -2,6 +2,7 @@ import { useSessionStore } from '../../../../core/constants/sessionStore';
 import { useChildCreateHandler } from './handlers/useChildCreateHandler';
 import { useChildLoginHandler } from './handlers/useChildLoginHandler';
 import { useFamilyCreateHandler } from './handlers/useFamilyCreateHandler';
+import { useFamilyJoinHandler } from './handlers/useFamilyJoinHandler';
 import { useParentCreateHandler } from './handlers/useParentCreateHandler';
 import { useParentLoginHandler } from './handlers/useParentLoginHandler';
 
@@ -13,6 +14,9 @@ export const createRoleSelectPageHandlers = () => {
 
   // 家族作成ハンドラー
   const handleFamilyCreate = useFamilyCreateHandler();
+
+  // 家族参加ハンドラー
+  const handleFamilyJoin = useFamilyJoinHandler();
 
   // 親ログインハンドラー
   const handleParentLogin = useParentLoginHandler({
@@ -32,6 +36,7 @@ export const createRoleSelectPageHandlers = () => {
 
   return {
     handleFamilyCreate,
+    handleFamilyJoin,
     handleParentLogin,
     handleParentCreate,
     handleChildLogin,

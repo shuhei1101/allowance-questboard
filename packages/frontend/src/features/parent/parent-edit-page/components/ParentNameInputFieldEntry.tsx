@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -20,7 +20,7 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
   const { t } = useTranslation();
 
   return (
-    <EntryFrame
+    <EntryLayout
       icon="person"
       title={t('parent.parentEditPage.components.parentNameInputFieldEntry.fieldTitle')}
       required={true}
@@ -40,7 +40,7 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
           autoCorrect={false}
         />
       </EntryWithError>
-    </EntryFrame>
+    </EntryLayout>
   );
 };
 

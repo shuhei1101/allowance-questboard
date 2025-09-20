@@ -6,6 +6,7 @@ import { useRoleSelectDataInitializer } from './hooks/useRoleSelectDataInitializ
 import { createRoleSelectPageHandlers } from './hooks/createRoleSelectPageHandlers';
 import { FamilyNameLabel } from './components/FamilyNameLabel';
 import { FamilyCreateButton } from './components/FamilyCreateButton';
+import { FamilyJoinButton } from './components/FamilyJoinButton';
 import { ParentLoginButton } from './components/ParentLoginButton';
 import { ParentCreateButton } from './components/ParentCreateButton';
 import { ChildLoginButton } from './components/ChildLoginButton';
@@ -45,6 +46,7 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
   // ハンドラーの取得
   const {
     handleFamilyCreate,
+    handleFamilyJoin,
     handleParentLogin,
     handleParentCreate,
     handleChildLogin,
@@ -64,68 +66,44 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
   }
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
-      {/* ヘッダー */}
-      <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: colors.text.primary }]}>
-          ようこそ！
-        </Text>
-        <Text style={[styles.headerSubtitle, { color: colors.text.secondary }]}>
-          利用方法を選択してください
-        </Text>
-      </View>
-
-      {/* 家族情報セクション */}
-      <View style={styles.familySection}>
-        {pageStore.roleSelectData.hasFamily() && (
-          <FamilyNameLabel familyName={pageStore.roleSelectData.familyName!} />
-        )}
-      </View>
-
-      {/* 家族作成セクション */}
-      <View style={styles.section}>
-        {pageStore.roleSelectData.hasFamily() && (
-          <FamilyCreateButton onPress={handleFamilyCreate} />
-        )}
-      </View>
-
-      {/* 親セクション */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          👥 親としてログイン
-        </Text>
-
-        {pageStore.roleSelectData.hasParent() && (
-          <ParentLoginButton onPress={handleParentLogin} />
-        )}
-
-        {pageStore.roleSelectData.hasFamily() && !pageStore.roleSelectData.hasParent() && (
-          <ParentCreateButton onPress={handleParentCreate} />
-        )}
-      </View>
-
-      {/* 子供セクション */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          👶 子供としてログイン
-        </Text>
+    <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
+      <View style={styles.content}>
         
-        {pageStore.roleSelectData.hasChild() && (
-          <ChildLoginButton onPress={handleChildLogin} />
+        {/* パターン1: 家族情報がある場合 */}
+        {pageStore.roleSelectData.hasFamily() ? (
+          <>
+            {/* 家族名ラベル */}
+            <View style={styles.familyNameSection}>
+              <FamilyNameLabel familyName={pageStore.roleSelectData.familyName!} />
+            </View>
+
+            {/* 親ユーザでログインボタン */}
+            <View style={styles.buttonSection}>
+              <ParentLoginButton onPress={handleParentLogin} />
+            </View>
+
+            {/* 子ユーザでログインボタン */}
+            <View style={styles.buttonSection}>
+              <ChildLoginButton onPress={handleChildLogin} />
+            </View>
+          </>
+        ) : (
+          /* パターン2: 家族情報がない場合 */
+          <>
+            {/* 新規家族を作成ボタン */}
+            <View style={styles.buttonSection}>
+              <FamilyCreateButton onPress={handleFamilyCreate} />
+            </View>
+
+            {/* 家族に参加ボタン */}
+            <View style={styles.buttonSection}>
+              <FamilyJoinButton onPress={handleFamilyJoin} />
+            </View>
+          </>
         )}
         
-        {pageStore.roleSelectData.hasChild() && (
-          <ChildCreateButton onPress={handleChildCreate} />
-        )}
       </View>
-
-      {/* フッター */}
-      <View style={styles.footer}>
-        <Text style={[styles.footerText, { color: colors.text.secondary }]}>
-          💡 利用方法に応じてボタンを選択してください
-        </Text>
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -144,40 +122,17 @@ const styles = StyleSheet.create({
     marginTop: 16,
     textAlign: 'center',
   },
-  header: {
-    padding: 24,
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+  },
+  familyNameSection: {
     alignItems: 'center',
+    marginBottom: 40,
   },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    lineHeight: 24,
-  },
-  familySection: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  section: {
-    marginBottom: 32,
-    paddingHorizontal: 20,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  buttonSection: {
     marginBottom: 16,
-  },
-  footer: {
-    padding: 24,
-    alignItems: 'center',
-  },
-  footerText: {
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
   },
 });

@@ -1,5 +1,4 @@
-import { ActionButton } from "../../../core/components";
-import { ActionButtonProps } from "../../../core/components/ActionButton";
+import { ActionButton } from "../../../core/components/ActionButton";
 
 interface Props {
   onPress: () => void;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 
@@ -40,7 +40,7 @@ export const BirthdayInput: React.FC<Props> = ({ value, onChange, error }) => {
 
   return (
     <EntryWithError error={error}>
-      <EntryFrame
+      <EntryLayout
         icon="diamond"
         title="誕生日"
         required={true}
@@ -69,7 +69,7 @@ export const BirthdayInput: React.FC<Props> = ({ value, onChange, error }) => {
             maximumDate={new Date()}
           />
         )}
-      </EntryFrame>
+      </EntryLayout>
     </EntryWithError>
   );
 };

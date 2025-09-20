@@ -7,6 +7,7 @@ import { IconId } from "@backend/features/icon/value-objects/iconId";
 import { FamilyIntroduction } from "../value-object/familyIntroduction";
 import { FamilyEntity } from "../entity/familyEntity";
 import { FamilyDisplayId } from "../value-object/familyDisplayId";
+import { FamilyOnlineName } from "../value-object/familyOnlineName";
 
 export interface FamilyRepositoryDependencies extends BaseRepositoryDependencies {
   familyDao: FamilyDao;
@@ -27,6 +28,7 @@ export class FamilyRepository extends BaseRepository {
       id: new FamilyId(result.id),
       displayId: new FamilyDisplayId(result.displayId),
       name: new FamilyName(result.name),
+      onlineName: new FamilyOnlineName(result.onlineName),
       iconId: result.iconId ? new IconId(result.iconId) : undefined,
       introduction: new FamilyIntroduction(result.introduction),
     });
@@ -37,6 +39,7 @@ export class FamilyRepository extends BaseRepository {
       id: family.id ? family.id.value : undefined,
       displayId: family.displayId.value,
       name: family.name.value,
+      onlineName: family.onlineName.value,
       iconId: family.iconId ? family.iconId.value : undefined,
       introduction: family.introduction.value,
     });

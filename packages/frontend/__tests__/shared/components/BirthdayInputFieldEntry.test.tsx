@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { BirthdayInputWithTitle } from '../../../src/features/shared/components/BirthdayInputWithTitle';
+import { BirthdayInputEntry } from '../../../src/features/shared/components/BirthdayInputEntry';
 
 // モック設定
 jest.mock('../../../src/core/i18n/useTranslation', () => ({
@@ -38,13 +38,13 @@ describe('BirthdayInputFieldEntry', () => {
   });
 
   it('プレースホルダーテキストが表示される', () => {
-    const { getByText } = render(<BirthdayInputWithTitle {...defaultProps} />);
+    const { getByText } = render(<BirthdayInputEntry {...defaultProps} />);
     expect(getByText('YYYY/MM/DD')).toBeTruthy();
   });
 
   it('日付が設定されている場合、フォーマット済みの日付が表示される', () => {
     const testDate = '2000-01-15T00:00:00.000Z';
-    const { getByText } = render(<BirthdayInputWithTitle {...defaultProps} value={testDate} />);
+    const { getByText } = render(<BirthdayInputEntry {...defaultProps} value={testDate} />);
     expect(getByText('2000/01/15')).toBeTruthy();
   });
 });

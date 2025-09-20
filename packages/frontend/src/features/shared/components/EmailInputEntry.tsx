@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { EmailInput } from './EmailInput';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -13,12 +13,12 @@ interface Props {
 
 /** メールアドレス入力コンポーネント（タイトル付き）
  * 
- * EntryFrameでラップしたEmailInput */
-export const EmailInputWithTitle: React.FC<Props> = ({ value, onChange, error, placeholder }) => {
+ * EntryLayoutでラップしたEmailInput */
+export const EmailInputEntry: React.FC<Props> = ({ value, onChange, error, placeholder }) => {
   const { t } = useTranslation();
   
   return (
-    <EntryFrame
+    <EntryLayout
       icon="mail"
       title={t('common.fields.email')}
       required={true}
@@ -29,6 +29,6 @@ export const EmailInputWithTitle: React.FC<Props> = ({ value, onChange, error, p
         error={error}
         placeholder={placeholder}
       />
-    </EntryFrame>
+    </EntryLayout>
   );
 };

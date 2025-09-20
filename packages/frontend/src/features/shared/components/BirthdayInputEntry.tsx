@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -14,8 +14,8 @@ interface Props {
 
 /** 誕生日入力コンポーネント（タイトル付き）
  * 
- * EntryFrameでラップしたBirthdayInput*/
-export const BirthdayInputWithTitle: React.FC<Props> = ({ value, onChange, error }) => {
+ * EntryLayoutでラップしたBirthdayInput*/
+export const BirthdayInputEntry: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const [showPicker, setShowPicker] = useState(false);
@@ -40,7 +40,7 @@ export const BirthdayInputWithTitle: React.FC<Props> = ({ value, onChange, error
   };
 
   return (
-    <EntryFrame
+    <EntryLayout
       icon="calendar"
       title={t('common.fields.birthday')}
       required={true}
@@ -71,7 +71,7 @@ export const BirthdayInputWithTitle: React.FC<Props> = ({ value, onChange, error
           />
         )}
       </EntryWithError>
-    </EntryFrame>
+    </EntryLayout>
   );
 };
 

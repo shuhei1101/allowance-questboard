@@ -1,10 +1,6 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { useLayoutEffect } from 'react';
 import { ParentNameInputFieldEntry } from './components/ParentNameInputFieldEntry';
-import { EmailInputWithTitle } from '../../shared/components/EmailInputWithTitle';
-import { PasswordInputWithTitle } from '../../shared/components/PasswordInputWithTitle';
-import { IconSelectButtonWithTitle } from '../../shared/components/IconSelectButtonWithTitle';
-import { BirthdayInputWithTitle } from '../../shared/components/BirthdayInputWithTitle';
 import { useTheme } from '@/core/theme';
 import { useParentEditPageStore } from './stores/parentEditPageStore';
 import { parentEditPageHandlers } from './hooks/parentEditPageHandlers';
@@ -17,6 +13,11 @@ import { useAppNavigation } from '../../../../AppNavigator';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useSessionStore } from '../../../core/constants/sessionStore';
 import { useIconStore } from '../../../core/constants/iconStore';
+import { useTranslation } from 'react-i18next';
+import { EmailInputEntry } from '../../shared/components/EmailInputEntry';
+import { PasswordInputEntry } from '../../shared/components/PasswordInputEntry';
+import { IconSelectButtonEntry } from '../../shared/components/IconSelectButtonEntry';
+import { BirthdayInputEntry } from '../../shared/components/BirthdayInputEntry';
 
 export type HandleParentForm = (form: ParentForm) => void;
 
@@ -38,6 +39,8 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
   const sessionStore = useSessionStore();
   const iconStore = useIconStore();
   const navigation = useAppNavigation();
+  const { t } = useTranslation();
+  
 
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
@@ -102,27 +105,28 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
           />
           
           {/* メールアドレス入力フィールド */}
-          <EmailInputWithTitle
+          <EmailInputEntry
             value={pageStore.parentForm.email.value}
             onChange={handleEmailChange}
             error={pageStore.errors.email || undefined}
           />
           
           {/* パスワード入力フィールド */}
-          <PasswordInputWithTitle
+          <PasswordInputEntry
             value={pageStore.parentForm.password.value}
             onChange={handlePasswordChange}
             error={pageStore.errors.password || undefined}
           />
           
           {/* アイコン選択ボタン */}
-          <IconSelectButtonWithTitle
+          <IconSelectButtonEntry
             selectedIcon={pageStore.parentForm.icon}
             onIconSelected={handleIconSelect}
+            title={t('shared.components.iconSelectButtonEntry.fieldTitle')}
           />
           
           {/* 誕生日入力フィールド */}
-          <BirthdayInputWithTitle
+          <BirthdayInputEntry
             value={pageStore.parentForm.birthday.toISOString()}
             onChange={handleBirthdayChange}
             error={pageStore.errors.birthday || undefined}

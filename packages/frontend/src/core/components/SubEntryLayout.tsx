@@ -1,12 +1,15 @@
 import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
+import { InformationButton } from './InformationButton';
 
-interface SubEntryFrameProps {
+interface SubEntryLayoutProps {
   /** 左側のタイトル */
   title: string;
   /** 必須アイコン（*マーク）を表示するか */
   required?: boolean;
+  /** ヘルプテキスト（指定時にインフォメーションボタンを表示） */
+  helpText?: string;
   /** 右側部分（ドロップダウン、テキストフィールドなど） */
   children: ReactNode;
 }
@@ -15,9 +18,10 @@ interface SubEntryFrameProps {
  * サブエントリーフィールド
  * 左側にタイトル、右側に入力要素を配置する横並びレイアウトコンポーネント
  */
-export const SubEntryFrame: React.FC<SubEntryFrameProps> = ({
+export const SubEntryLayout: React.FC<SubEntryLayoutProps> = ({
   title,
   required = false,
+  helpText,
   children,
 }) => {
   const { colors } = useTheme();
@@ -34,6 +38,7 @@ export const SubEntryFrame: React.FC<SubEntryFrameProps> = ({
             *
           </Text>
         )}
+        {helpText && <InformationButton text={helpText} />}
       </View>
       
       {/* 右側の入力要素 */}

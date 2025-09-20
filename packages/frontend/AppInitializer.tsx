@@ -29,8 +29,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
           getMasterData: trpcClient.init.getMasterData,
-          setIconCategories: iconStore.updateIconCategories,
-          setAppIcons: iconStore.updateAppIcons,
+          setIconCategories: iconStore.setIconCategories,
+          setAppIcons: iconStore.setAppIcons,
         });
         console.log('✅ マスタデータ初期化完了！');
         

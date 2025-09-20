@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,6 +13,7 @@ import { AppStackParamList } from '../../../../AppNavigator';
 import { OnIconSelected } from '../../icon/icon-select-page/hooks/handlers/useConfirmHandler';
 
 interface Props {
+  title: string;
   selectedIcon?: Icon;
   onIconSelected: OnIconSelected;
   error?: string;
@@ -20,8 +21,8 @@ interface Props {
 
 /** アイコン選択ボタンコンポーネント（タイトル付き）
  * 
- * EntryFrameでラップしたTouchableOpacityボタン */
-export const IconSelectButtonWithTitle: React.FC<Props> = ({ selectedIcon, onIconSelected, error }) => {
+ * EntryLayoutでラップしたTouchableOpacityボタン */
+export const IconSelectButtonEntry: React.FC<Props> = ({ title, selectedIcon, onIconSelected, error }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProp<AppStackParamList>>();
@@ -37,9 +38,9 @@ export const IconSelectButtonWithTitle: React.FC<Props> = ({ selectedIcon, onIco
   };
 
   return (
-    <EntryFrame
+    <EntryLayout
       icon="happy"
-      title={t('shared.components.iconSelectButtonEntry.fieldTitle')}
+      title={title}
       required={false}
     >
       <EntryWithError error={error}>
@@ -96,7 +97,7 @@ export const IconSelectButtonWithTitle: React.FC<Props> = ({ selectedIcon, onIco
           </View>
         </TouchableOpacity>
       </EntryWithError>
-    </EntryFrame>
+    </EntryLayout>
   );
 };
 

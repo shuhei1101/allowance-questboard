@@ -15,6 +15,8 @@ export class FamilyEntity extends BaseTransactionEntity {
   displayId!: string;
   @Column({ name: "name", type: "varchar", length: 100, nullable: false, comment: "家名" })
   name!: string;
+  @Column({ name: "online_name", type: "varchar", length: 100, nullable: false, comment: "オンライン家族名" })
+  onlineName!: string;
   @Column({ name: "icon_id", type: "int", nullable: true, comment: "アイコンID" })
   iconId?: number;
   @Column({ name: "introduction", type: "text", nullable: true, default: "", comment: "説明文" })
@@ -29,6 +31,7 @@ export class FamilyEntity extends BaseTransactionEntity {
     id?: number;
     displayId: string;
     name: string;
+    onlineName: string;
     iconId?: number;
     introduction: string;
   }): FamilyEntity {
@@ -36,6 +39,7 @@ export class FamilyEntity extends BaseTransactionEntity {
     if (params.id) entity.id = params.id;
     entity.displayId = params.displayId;
     entity.name = params.name;
+    entity.onlineName = params.onlineName;
     if (params.iconId) entity.iconId = params.iconId;
     entity.introduction = params.introduction;
     return entity;

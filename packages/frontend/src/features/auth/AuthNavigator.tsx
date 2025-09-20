@@ -56,8 +56,9 @@ export function AuthNavigator() {
         name={AuthStackMeta.screens.roleSelect}
         component={RoleSelectPage}
         options={{
-          headerShown: true,
-          title: 'ロール選択',
+          presentation: 'modal',
+          headerShown: false,
+          gestureEnabled: true,
         }}
       />
     </AuthStack.Navigator>

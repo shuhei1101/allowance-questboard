@@ -2,14 +2,17 @@ import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/core/theme';
+import { InformationButton } from './InformationButton';
 
-interface EntryFrameProps {
+interface EntryLayoutProps {
   /** タイトルの左のアイコン */
   icon: keyof typeof Ionicons.glyphMap;
   /** タイトル部分 */
   title: string;
   /** 必須アイコン（*マーク）を表示するか */
   required?: boolean;
+  /** ヘルプテキスト（指定時にインフォメーションボタンを表示） */
+  helpText?: string;
   /** 内部の要素（入力フィールドなど） */
   children: ReactNode;
 }
@@ -17,10 +20,11 @@ interface EntryFrameProps {
 /** エントリー用の枠組みコンポーネント
  * 
  * アイコン付きタイトルと必須マーク、内部要素を含むフィールドコンテナ */
-export const EntryFrame: React.FC<EntryFrameProps> = ({
+export const EntryLayout: React.FC<EntryLayoutProps> = ({
   icon,
   title,
   required = false,
+  helpText,
   children,
 }) => {
   const { colors } = useTheme();
@@ -44,6 +48,7 @@ export const EntryFrame: React.FC<EntryFrameProps> = ({
               *
             </Text>
           )}
+          {helpText && <InformationButton text={helpText} />}
         </View>
       </View>
       

@@ -71,8 +71,8 @@ export const IconSelectPageDetailPage: React.FC = () => {
     try {
       await initMasterData({
         getMasterData: trpcClient.init.getMasterData,
-        setIconCategories: iconStore.updateIconCategories,
-        setAppIcons: iconStore.updateAppIcons,
+        setIconCategories: iconStore.setIconCategories,
+        setAppIcons: iconStore.setAppIcons,
       });
       setDemoState(prev => ({ 
         ...prev, 

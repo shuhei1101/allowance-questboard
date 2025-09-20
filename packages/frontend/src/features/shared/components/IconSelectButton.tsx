@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
@@ -21,7 +21,7 @@ export const IconSelectButton: React.FC<Props> = ({ selectedIcon, onPress, error
 
   return (
     <EntryWithError error={error}>
-      <EntryFrame
+      <EntryLayout
         icon="diamond"
         title="アイコン"
         required={false}
@@ -53,7 +53,7 @@ export const IconSelectButton: React.FC<Props> = ({ selectedIcon, onPress, error
             />
           </View>
         </TouchableOpacity>
-      </EntryFrame>
+      </EntryLayout>
     </EntryWithError>
   );
 };

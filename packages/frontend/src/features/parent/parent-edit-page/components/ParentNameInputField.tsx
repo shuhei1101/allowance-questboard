@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 
@@ -18,7 +18,7 @@ export const ParentNameInputField: React.FC<Props> = ({ value, onChange, error }
 
   return (
     <EntryWithError error={error}>
-      <EntryFrame
+      <EntryLayout
         icon="diamond"
         title="名前"
         required={true}
@@ -36,7 +36,7 @@ export const ParentNameInputField: React.FC<Props> = ({ value, onChange, error }
           autoCapitalize="words"
           autoCorrect={false}
         />
-      </EntryFrame>
+      </EntryLayout>
     </EntryWithError>
   );
 };

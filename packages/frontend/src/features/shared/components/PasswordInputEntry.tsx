@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntryFrame } from '@/core/components/EntryFrame';
+import { EntryLayout } from '@/core/components/EntryLayout';
 import { PasswordInputField } from './PasswordInput';
 import { useTranslation } from '@/core/i18n/useTranslation';
 
@@ -14,11 +14,11 @@ interface Props {
  * パスワード入力エントリーコンポーネント
  * EntryFieldとFieldWithErrorでラップしたPasswordInputField
  */
-export const PasswordInputWithTitle: React.FC<Props> = ({ value, onChange, error, placeholder }) => {
+export const PasswordInputEntry: React.FC<Props> = ({ value, onChange, error, placeholder }) => {
   const { t } = useTranslation();
   
   return (
-    <EntryFrame
+    <EntryLayout
       icon="lock-closed"
       title={t('common.fields.password')}
       required={true}
@@ -29,6 +29,6 @@ export const PasswordInputWithTitle: React.FC<Props> = ({ value, onChange, error
         error={error}
         placeholder={placeholder}
       />
-    </EntryFrame>
+    </EntryLayout>
   );
 };
