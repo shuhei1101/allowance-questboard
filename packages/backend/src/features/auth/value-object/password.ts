@@ -5,9 +5,7 @@ import { z } from 'zod';
 /**
  * PasswordのZodスキーマ
  */
-export const PasswordSchema = z.object({
-  value: z.string()
-});
+export const PasswordSchema = z.string();
 
 /**
  * パスワードを表す値オブジェクト
@@ -37,6 +35,6 @@ export class Password extends BaseValueObject<string, typeof PasswordSchema> {
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof PasswordSchema>): Password {
-    return new Password(data.value);
+    return new Password(data);
   }
 }

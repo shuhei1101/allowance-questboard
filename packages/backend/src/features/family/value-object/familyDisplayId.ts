@@ -2,9 +2,7 @@ import { LocaleString } from "@backend/core/messages/localeString";
 import { BaseValueObject } from "@backend/core/value-object/baseValueObject";
 import z from "zod";
 
-export const FamilyDisplayIdSchema = z.object({
-  value: z.string()
-});
+export const FamilyDisplayIdSchema = z.string();
 
 
 export class FamilyDisplayId extends BaseValueObject<string, typeof FamilyDisplayIdSchema> {
@@ -23,6 +21,6 @@ export class FamilyDisplayId extends BaseValueObject<string, typeof FamilyDispla
     });
   }
   static fromZodData(data: z.infer<typeof FamilyDisplayIdSchema>): FamilyDisplayId {
-    return new FamilyDisplayId(data.value);
+    return new FamilyDisplayId(data);
   }
 }

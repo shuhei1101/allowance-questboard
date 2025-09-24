@@ -5,9 +5,7 @@ import { z } from 'zod';
 /**
  * ParentNameのZodスキーマ
  */
-export const ParentNameSchema = z.object({
-  value: z.string()
-});
+export const ParentNameSchema = z.string();
 
 /**
  * 親の名前を表す値オブジェクト
@@ -36,6 +34,6 @@ export class ParentName extends BaseValueObject<string, typeof ParentNameSchema>
    * @param data Zodスキーマに準拠したデータ
    */
   static fromZodData(data: z.infer<typeof ParentNameSchema>): ParentName {
-    return new ParentName(data.value);
+    return new ParentName(data);
   }
 }
