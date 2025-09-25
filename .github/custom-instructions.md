@@ -10,6 +10,7 @@
   - [UIコンポーネント](#uiコンポーネント)
   - [状態管理](#状態管理)
   - [モデル](#モデル)
+  - [値オブジェクト](#値オブジェクト)
   - [ハンドラー](#ハンドラー)
   - [サービス層](#サービス層)
   - [ルータ](#ルータ)
@@ -69,10 +70,10 @@ git push origin main
 ```markdown
 ### 1. バックエンド (値オブジェクト)
 - [ ] {モジュール名を記載}
-  - ファイルパス: `@frontend/src/features/xxx/.../xxx.ts`(line:50, {関数名やクラス名})
+  - ファイルパス: `@frontend/src/features/xxx/.../xxx.ts`(50行目, {関数名やクラス名})
   - 概要: 
     - xxx
-    - yyy
+    - yyy(10-30行目)
   - 参考: {参考にするファイルパスを記載}
   - {任意の補足情報を記載}（極力このセクションは増やさず、概要に書くこと）
 ```
@@ -80,6 +81,7 @@ git push origin main
 - 上記以外のルールは、最新のイシューを参考にすること
 - イシューは依存度の低いものから順に記載すること
   - 例: 値オブジェクト→バックエンド→...→フロントエンド→...
+- 概要で具体的な箇所が分かる場合は、行数や関数名、クラス名を記載すること
 
 - 画面がある場合は、「画面レイアウト」セクションを追加すること
 - 画面レイアウトはテキストで２次元的に表現すること
@@ -218,7 +220,7 @@ test(params: TestParams): void {
   // ...
 }
 ```
-- 戻り値は必ず型を指定すること
+- 戻り値は型を指定すること
 ```ts
 export interface TestResult {
   success: boolean;
@@ -232,6 +234,7 @@ test(params: TestParams): TestResult {
   };
 }
 ``` 
+- ただし、戻り値が一つの場合は、型指定はせず、直接プリミティブやオブジェクトを返すこと
 
 
 #### nullとundefinedの使い分け
@@ -298,10 +301,11 @@ navigation.navigate(AuthStackMeta.screens.emailVerify, { email: 'user@example.co
 - 部品を作成する前にshared/componentsに同じものがないか確認すること
 
 ### 状態管理
--関数名:
+- 関数名:
   - 更新系: `setXxx`
   - 参照系: `getXxx`
 
+- useStateなどは極力使わず、zustandなどの状態管理ライブラリを使用すること
 
 ### モデル
 #### フォーム
@@ -318,6 +322,12 @@ navigation.navigate(AuthStackMeta.screens.emailVerify, { email: 'user@example.co
 - ビューとは、ユーザに表示するためのデータを管理するためのモデル
 - ファイル名は`xxxView.ts`とすること
 - モデルは`BaseView`を継承すること
+
+### 値オブジェクト
+- バックエンド、フロントエンド共通で使用する
+- routerの引数にするときは、toZodData()を使用してプリミティブな型に変換すること
+- routerの戻り値から値オブジェクトを生成するときは、fromZodData()を使用すること
+- 
 
 ### ハンドラー
 - ボタンやインプットボックスのイベントハンドラーは必ずハンドラーとして分離すること

@@ -9,7 +9,7 @@ import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { FamilyMemberId } from '@backend/features/family-member/value-object/familyMemberId';
 
 /** 家族登録フォームデータモデル */
-export class FamilyRegisterFormData extends BaseForm {
+export class familyRegisterForm extends BaseForm {
   /** 家族情報 */
   public readonly family: {
     /** 家族表示ID */
@@ -80,8 +80,8 @@ export class FamilyRegisterFormData extends BaseForm {
   }
 
   /** 初期状態のフォームデータを作成 */
-  public static initialize(): FamilyRegisterFormData {
-    return new FamilyRegisterFormData({
+  public static initialize(): familyRegisterForm {
+    return new familyRegisterForm({
       family: {
         displayId: new FamilyDisplayId(""),
         name: new FamilyName(""),
@@ -105,8 +105,8 @@ export class FamilyRegisterFormData extends BaseForm {
     onlineName: FamilyOnlineName;
     iconId?: IconId;
     introduction?: FamilyIntroduction;
-  }>): FamilyRegisterFormData {
-    return new FamilyRegisterFormData({
+  }>): familyRegisterForm {
+    return new familyRegisterForm({
       family: {
         ...this.family,
         ...familyData,
@@ -121,8 +121,8 @@ export class FamilyRegisterFormData extends BaseForm {
     birthday: Birthday;
     iconId?: IconId;
     familyMemberId?: FamilyMemberId;
-  }>): FamilyRegisterFormData {
-    return new FamilyRegisterFormData({
+  }>): familyRegisterForm {
+    return new familyRegisterForm({
       family: this.family,
       parent: {
         ...this.parent,
@@ -131,42 +131,4 @@ export class FamilyRegisterFormData extends BaseForm {
     });
   }
 
-  /** 家族名の文字列表現を取得 */
-  public getFamilyNameString(): string {
-    return this.family.name.value || "(未設定)";
-  }
-
-  /** 家族オンライン名の文字列表現を取得 */
-  public getFamilyOnlineNameString(): string {
-    return this.family.onlineName.value || "(未設定)";
-  }
-
-  /** 家族表示IDの文字列表現を取得 */
-  public getFamilyDisplayIdString(): string {
-    return this.family.displayId.value || "(未設定)";
-  }
-
-  /** 親名の文字列表現を取得 */
-  public getParentNameString(): string {
-    return this.parent.name.value || "(未設定)";
-  }
-
-  /** authRouter.registerFamilyの入力形式に変換 */
-  public toRegisterFamilyInput() {
-    return {
-      family: {
-        displayId: this.family.displayId.value,
-        name: this.family.name.value,
-        onlineName: this.family.onlineName.value,
-        iconId: this.family.iconId?.value,
-        introduction: this.family.introduction?.value,
-      },
-      parent: {
-        name: this.parent.name.value,
-        birthday: this.parent.birthday.value,
-        iconId: this.parent.iconId?.value,
-        familyMemberId: this.parent.familyMemberId?.value,
-      },
-    };
-  }
 }
