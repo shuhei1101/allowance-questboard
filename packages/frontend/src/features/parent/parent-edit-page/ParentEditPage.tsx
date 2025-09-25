@@ -27,12 +27,14 @@ export interface ParentEditPageProps {
   shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
   parentId?: ParentId; // 親ID（オプション）
   handleParentForm?: HandleParentForm;
+  initialParentForm?: ParentForm; // 初期フォームデータ（オプション）
 }
 
 export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
   shouldUpdate = true,
   parentId,
   handleParentForm,
+  initialParentForm,
 }) => {
   const { colors } = useTheme();
   const pageStore = useParentEditPageStore();

@@ -1,9 +1,9 @@
 import { trpcClient } from '../../../../core/api/trpcClient';
-import { familyRegisterForm } from '../models/familyRegisterForm';
+import { FamilyRegisterForm } from '../models/familyRegisterForm';
 
 export type RegisterFamily = (params: {
   /** 登録フォームデータ */
-  form: familyRegisterForm;
+  form: FamilyRegisterForm;
 }) => Promise<RegisterFamilyResult>;
 
 export interface RegisterFamilyResult {

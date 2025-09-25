@@ -1,5 +1,5 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { familyRegisterForm } from '../models/familyRegisterForm';
+import { FamilyRegisterForm } from '../models/familyRegisterForm';
 import { CheckFamilyIdDuplicate } from '../../services/checkFamilyIdDuplicate';
 import { FamilyDisplayId } from '@backend/features/family/value-object/familyDisplayId';
 import { LocaleString } from '../../../../../../backend/src/core/messages/localeString';
@@ -21,9 +21,9 @@ export interface UseFamilyIdInputHandlerResult {
  * 家族ID入力時のフォーム更新と重複チェックを行う */
 export const useFamilyIdInputHandler = (params: {
   /** 現在のフォーム */
-  currentForm: familyRegisterForm;
+  currentForm: FamilyRegisterForm;
   /** フォーム更新関数 */
-  setForm: (form: familyRegisterForm) => void;
+  setForm: (form: FamilyRegisterForm) => void;
   /** 現在の言語タイプ */
   currentLanguageType: LanguageTypeValue;
   /** 家族ID重複チェックサービス関数 */

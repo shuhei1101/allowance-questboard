@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { familyRegisterForm } from '../models/familyRegisterForm';
+import { FamilyRegisterForm } from '../models/familyRegisterForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { ClearErrors, SetFormError } from '../../../../core/stores/baseFormStore';
 import { FamilyRegisterFormErrors } from '../stores/familyRegisterFormStore';
@@ -23,7 +23,7 @@ export interface ValidationResult {
  * フォームの入力内容をバリデーションし、エラーメッセージを設定する */
 export const useFamilyRegisterFormValidator = (params: {
   /** 家族登録フォームデータ */
-  familyRegisterForm: familyRegisterForm;
+  familyRegisterForm: FamilyRegisterForm;
   /** 現在の言語設定 */
   currentLanguageType: LanguageTypeValue;
   /** エラーをクリア */

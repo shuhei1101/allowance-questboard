@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { familyRegisterForm } from '../models/familyRegisterForm';
+import { FamilyRegisterForm } from '../models/familyRegisterForm';
 import { ParentForm } from '../../../parent/parent-edit-page/models/parentForm';
 import { AppStackParamList } from '../../../../../AppNavigator';
 import { ParentStackMeta } from '../../../parent/ParentNavigator';
@@ -17,9 +17,9 @@ export interface UseParentEditHandlerResult {
  * 親編集画面への遷移を行う */
 export const useParentEditHandler = (params: {
   /** 現在のフォーム */
-  currentForm: familyRegisterForm;
+  currentForm: FamilyRegisterForm;
   /** フォーム更新関数 */
-  setForm: (form: familyRegisterForm) => void;
+  setForm: (form: FamilyRegisterForm) => void;
 }): UseParentEditHandlerResult => {
   const navigation = useNavigation<NavigationProp<AppStackParamList>>();
 

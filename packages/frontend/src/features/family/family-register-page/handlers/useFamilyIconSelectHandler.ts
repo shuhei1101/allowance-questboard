@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { familyRegisterForm } from '../models/familyRegisterForm';
+import { FamilyRegisterForm } from '../models/familyRegisterForm';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { AppStackParamList } from '../../../../../AppNavigator';
 import { CommonStackMeta } from '../../../shared/CommonNavigator';
@@ -18,9 +18,9 @@ export interface UseFamilyIconSelectHandlerResult {
  * 家紋選択画面への遷移を行う */
 export const useFamilyIconSelectHandler = (params: {
   /** 現在のフォーム */
-  currentForm: familyRegisterForm;
+  currentForm: FamilyRegisterForm;
   /** フォーム更新関数 */
-  setForm: (form: familyRegisterForm) => void;
+  setForm: (form: FamilyRegisterForm) => void;
 }): UseFamilyIconSelectHandlerResult => {
   const navigation = useNavigation<NavigationProp<AppStackParamList>>();
   const iconStore = useIconStore();

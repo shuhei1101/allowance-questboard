@@ -9,7 +9,7 @@ import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { FamilyMemberId } from '@backend/features/family-member/value-object/familyMemberId';
 
 /** 家族登録フォームデータモデル */
-export class familyRegisterForm extends BaseForm {
+export class FamilyRegisterForm extends BaseForm {
   /** 家族情報 */
   public readonly family: {
     /** 家族表示ID */
@@ -80,8 +80,8 @@ export class familyRegisterForm extends BaseForm {
   }
 
   /** 初期状態のフォームデータを作成 */
-  public static initialize(): familyRegisterForm {
-    return new familyRegisterForm({
+  public static initialize(): FamilyRegisterForm {
+    return new FamilyRegisterForm({
       family: {
         displayId: new FamilyDisplayId(""),
         name: new FamilyName(""),
@@ -105,8 +105,8 @@ export class familyRegisterForm extends BaseForm {
     onlineName: FamilyOnlineName;
     iconId?: IconId;
     introduction?: FamilyIntroduction;
-  }>): familyRegisterForm {
-    return new familyRegisterForm({
+  }>): FamilyRegisterForm {
+    return new FamilyRegisterForm({
       family: {
         ...this.family,
         ...familyData,
@@ -121,8 +121,8 @@ export class familyRegisterForm extends BaseForm {
     birthday: Birthday;
     iconId?: IconId;
     familyMemberId?: FamilyMemberId;
-  }>): familyRegisterForm {
-    return new familyRegisterForm({
+  }>): FamilyRegisterForm {
+    return new FamilyRegisterForm({
       family: this.family,
       parent: {
         ...this.parent,
