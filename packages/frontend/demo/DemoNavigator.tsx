@@ -8,16 +8,17 @@ import { ComponentShowcase } from './development/component-showcase-page/Compone
 import { StoreInspector } from './development/store-inspector-page/StoreInspector';
 import { DevelopmentTopPage } from './development/development-top-page/DevelopmentTopPage';
 import { ScreenListPage } from './development/screen-list-page/ScreenListPage';
-import { ComponentListPage } from './development/component-list-page/ComponentListPage';
+import { ComponentListPage } from './development/component/ComponentListPage';
 import { ScreenLauncherPage } from './development/screen-launcher-page/ScreenLauncherPage';
-import { ComponentDetailPage } from './development/component-detail-page/ComponentDetailPage';
 import { DependencyComponentListPage } from './development/dependency-component-list-page/DependencyComponentListPage';
-import { EmailInputDetailPage } from './development/component-details/email-input-detail-page/EmailInputDetailPage';
-import { PasswordInputDetailPage } from './development/component-details/password-input-detail-page/PasswordInputDetailPage';
-import { BirthdayInputDetailPage } from './development/component-details/birthday-input-detail-page/BirthdayInputDetailPage';
-import { SaveButtonDetailPage } from './development/component-details/save-button-detail-page/SaveButtonDetailPage';
-import { IconSelectButtonDetailPage } from './development/component-details/icon-select-button-detail-page/IconSelectButtonDetailPage';
-import { IconSelectPageDetailPage } from './development/component-details/icon-select-page-detail/IconSelectPageDetailPage';
+// 新しいコンポーネント詳細ページ
+import { EmailInputPage } from './development/component/components/EmailInputPage';
+import { PasswordInputPage } from './development/component/components/PasswordInputPage';
+import { BirthdayInputPage } from './development/component/components/BirthdayInputPage';
+import { SaveButtonPage } from './development/component/components/SaveButtonPage';
+import { IconSelectButtonPage } from './development/component/components/IconSelectButtonPage';
+import { FamilyNameInputPage } from './development/component/components/FamilyNameInputPage';
+import { NavigationEntryLayoutPage } from './development/component/components/NavigationEntryLayoutPage';
 import { SessionSettingsPage } from './test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage';
 import { LoginPageSettingsPage } from './test-environment/LoginPageSettingsPage';
@@ -30,7 +31,6 @@ export type DemoStackParamList = {
   ScreenList: undefined;
   ComponentList: undefined;
   ScreenLauncher: { screenType: string };
-  ComponentDetail: { componentType: string };
   DependencyComponentList: { 
     components: Array<{
       id: string;
@@ -40,12 +40,14 @@ export type DemoStackParamList = {
     }>;
     screenTitle: string;
   };
-  EmailInputDetail: undefined;
-  PasswordInputDetail: undefined;
-  BirthdayInputDetail: undefined;
-  SaveButtonDetail: undefined;
-  IconSelectButtonDetail: undefined;
-  IconSelectPageDetail: undefined;
+  // 新しいコンポーネント詳細ページ
+  EmailInputPage: undefined;
+  PasswordInputPage: undefined;
+  BirthdayInputPage: undefined;
+  SaveButtonPage: undefined;
+  IconSelectButtonPage: undefined;
+  FamilyNameInputPage: undefined;
+  NavigationEntryLayoutPage: undefined;
   DemoLoginPage: undefined;
   DemoParentEditPage: undefined;
   ComponentShowcase: undefined;
@@ -96,44 +98,44 @@ export function DemoNavigator() {
           options={{ title: '🚀 画面起動' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.componentDetail}
-          component={ComponentDetailPage}
-          options={{ title: '🔍 コンポーネント詳細' }}
-        />
-        <DemoStack.Screen 
           name={DemoStackMeta.screens.dependencyComponentList}
           component={DependencyComponentListPage}
           options={{ title: '🧩 依存コンポーネント一覧' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.emailInputDetail}
-          component={EmailInputDetailPage}
+          name={DemoStackMeta.screens.emailInputPage}
+          component={EmailInputPage}
           options={{ title: '📧 EmailInputField詳細' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.passwordInputDetail}
-          component={PasswordInputDetailPage}
+          name={DemoStackMeta.screens.passwordInputPage}
+          component={PasswordInputPage}
           options={{ title: '🔒 PasswordInputField詳細' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.birthdayInputDetail}
-          component={BirthdayInputDetailPage}
+          name={DemoStackMeta.screens.birthdayInputPage}
+          component={BirthdayInputPage}
           options={{ title: '🗓️ BirthdayInputField詳細' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.saveButtonDetail}
-          component={SaveButtonDetailPage}
+          name={DemoStackMeta.screens.saveButtonPage}
+          component={SaveButtonPage}
           options={{ title: '💾 SaveButton詳細' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.iconSelectButtonDetail}
-          component={IconSelectButtonDetailPage}
+          name={DemoStackMeta.screens.iconSelectButtonPage}
+          component={IconSelectButtonPage}
           options={{ title: '🎨 IconSelectButton詳細' }}
         />
         <DemoStack.Screen 
-          name={DemoStackMeta.screens.iconSelectPageDetail}
-          component={IconSelectPageDetailPage}
-          options={{ title: '🎨 IconSelectPage詳細' }}
+          name={DemoStackMeta.screens.familyNameInputPage}
+          component={FamilyNameInputPage}
+          options={{ title: '👤 FamilyNameInput詳細' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.navigationEntryLayoutPage}
+          component={NavigationEntryLayoutPage}
+          options={{ title: '📱 NavigationEntryLayout詳細' }}
         />
         <DemoStack.Screen 
           name={DemoStackMeta.screens.DemoLoginPage} 
