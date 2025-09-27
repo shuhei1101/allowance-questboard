@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
-import { DemoStackMeta } from '../../demoStackMeta';
+import { DemoStackMeta } from '../../DemoNavigator';
 import { useAppNavigation } from '../../../AppNavigator';
 
 /**
@@ -37,12 +37,6 @@ export const ScreenListPage: React.FC = () => {
       title: '👨‍👩‍👧‍👦 家族メンバー一覧',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'family-member-list' } }),
       color: '#ef4444',
-    },
-    {
-      id: 'icon-select',
-      title: '🎨 アイコン選択画面',
-      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.iconSelectPageDetail }),
-      color: '#8b5cf6',
     },
   ];
 

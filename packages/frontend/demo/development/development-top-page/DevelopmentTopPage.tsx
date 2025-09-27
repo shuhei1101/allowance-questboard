@@ -8,9 +8,9 @@ import { EnvironmentInfoCard } from './components/EnvironmentInfoCard';
 import { initMasterData } from '@/features/auth/services/initMasterData';
 import { trpcClient } from '@/core/api/trpcClient';
 import { AuthStackMeta } from '@/features/auth/AuthNavigator';
-import { DemoStackMeta } from '../../demoStackMeta';
 import { useAppNavigation } from '../../../AppNavigator';
 import { useIconStore } from '../../../src/core/constants/iconStore';
+import { DemoStackMeta } from '../../DemoNavigator';
 
 /**
  * 開発用TOP画面

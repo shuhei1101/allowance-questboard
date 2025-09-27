@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { DemoStackMeta } from '../../demoStackMeta';
 import { useAppNavigation } from '../../../AppNavigator';
+import { DemoStackMeta } from '../../DemoNavigator';
 
 interface ScreenLauncherPageProps {
   screenType: string;

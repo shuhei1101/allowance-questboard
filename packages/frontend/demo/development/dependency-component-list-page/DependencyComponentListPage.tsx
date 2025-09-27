@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { DemoStackMeta } from '../../demoStackMeta';
+import { DemoStackMeta } from '../../DemoNavigator';
 
 interface DependencyComponentListPageProps {
   components: Array<{

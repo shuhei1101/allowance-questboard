@@ -23,7 +23,33 @@ import { SessionSettingsPage } from './test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage';
 import { LoginPageSettingsPage } from './test-environment/LoginPageSettingsPage';
 import { ParentEditPageSettingsPage } from './test-environment/ParentEditPageSettingsPage';
-import { DemoStackMeta } from './demoStackMeta';
+
+export const DemoStackMeta = {
+  name: 'Demo',
+  screens: {
+    developmentTop: "DevelopmentTop",
+    screenList: "ScreenList",
+    componentList: "ComponentList",
+    screenLauncher: "ScreenLauncher",
+    dependencyComponentList: "DependencyComponentList",
+    emailInputPage: "EmailInputPage",
+    passwordInputPage: "PasswordInputPage",
+    birthdayInputPage: "BirthdayInputPage",
+    saveButtonPage: "SaveButtonPage",
+    iconSelectButtonPage: "IconSelectButtonPage",
+    familyNameInputPage: "FamilyNameInputPage",
+    navigationEntryLayoutPage: "NavigationEntryLayoutPage",
+    DemoLoginPage: "DemoLoginPage",
+    DemoParentEditPage: "DemoParentEditPage",
+    ComponentShowcase: "ComponentShowcase",
+    StoreInspector: "StoreInspector",
+    SessionSettings: "SessionSettings",
+    PageStateSettings: "PageStateSettings",
+    LoginPageSettings: "LoginPageSettings",
+    ParentEditPageSettings: "ParentEditPageSettings",
+    Main: "Main",
+  },
+} as const;
 
 // Demo Navigation Types
 export type DemoStackParamList = {

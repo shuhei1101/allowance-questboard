@@ -5,8 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { AuthNavigator, AuthStackMeta as AuthStackMeta, AuthStackParamList } from '@/features/auth/AuthNavigator';
 import { ParentNavigator, ParentStackMeta, ParentStackParamList } from '@/features/parent/ParentNavigator';
 import { CommonNavigator, CommonStackMeta, CommonStackParamList } from '@/features/shared/CommonNavigator';
-import { DemoNavigator, DemoStackParamList } from '@demo/DemoNavigator';
-import { DemoStackMeta } from '@demo/demoStackMeta';
+import { DemoNavigator, DemoStackMeta, DemoStackParamList } from '@demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
 
 export const useAppNavigation = () => useNavigation<NavigationProp<AppStackParamList>>();

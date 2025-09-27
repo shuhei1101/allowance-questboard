@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useAppNavigation } from '../../../AppNavigator';
+import { DemoStackMeta } from '../../DemoNavigator';
 
 /**
  * コンポーネント一覧ページ
@@ -34,68 +35,68 @@ export const ComponentListPage: React.FC = () => {
 
   const componentCategories = [
     {
-      key: 'inputs',
-      title: '📝 入力コンポーネント',
-      path: 'features/shared/components',
-      description: '各種入力フィールドコンポーネント',
+      key: 'shared-components',
+      title: '📝 共通コンポーネント',
+      path: 'src/features/shared/components',
+      description: '各種入力フィールド・ボタンコンポーネント',
       components: [
         {
           id: 'email-input',
           name: 'EmailInputField',
           description: 'メールアドレス入力フィールド',
-          screen: 'EmailInputPage',
+          screen: DemoStackMeta.screens.emailInputPage,
         },
         {
           id: 'password-input',
           name: 'PasswordInputField', 
           description: 'パスワード入力フィールド',
-          screen: 'PasswordInputPage',
+          screen: DemoStackMeta.screens.passwordInputPage,
         },
         {
           id: 'birthday-input',
           name: 'BirthdayInputField',
           description: '誕生日入力フィールド',
-          screen: 'BirthdayInputPage',
+          screen: DemoStackMeta.screens.birthdayInputPage,
         },
-        {
-          id: 'family-name-input',
-          name: 'FamilyNameInput',
-          description: '家族名入力フィールド（後ろに"家"付き）',
-          screen: 'FamilyNameInputPage',
-        },
-      ],
-    },
-    {
-      key: 'buttons',
-      title: '🔘 ボタンコンポーネント',
-      path: 'features/shared/components',
-      description: 'アクション実行用ボタンコンポーネント',
-      components: [
         {
           id: 'save-button',
           name: 'SaveButton',
           description: '保存ボタン',
-          screen: 'SaveButtonPage',
+          screen: DemoStackMeta.screens.saveButtonPage,
         },
         {
           id: 'icon-select-button',
           name: 'IconSelectButton',
           description: 'アイコン選択ボタン',
-          screen: 'IconSelectButtonPage',
+          screen: DemoStackMeta.screens.iconSelectButtonPage,
         },
       ],
     },
     {
-      key: 'layouts',
-      title: '🧩 レイアウトコンポーネント',
-      path: 'core/components',
+      key: 'family-register-page',
+      title: '👪 家族登録画面コンポーネント',
+      path: 'src/features/familyRegister/components',
+      description: '家族登録画面で使用されているコンポーネント',
+      components: [
+        {
+          id: 'family-name-input',
+          name: 'FamilyNameInput',
+          description: '家族名入力フィールド（後ろに"家"付き）',
+          screen: DemoStackMeta.screens.familyNameInputPage,
+        },
+      ],
+    },
+    {
+      key: 'core-components',
+      title: '🧩 コアコンポーネント',
+      path: 'src/core/components',
       description: 'UI構造・レイアウト用コンポーネント',
       components: [
         {
           id: 'navigation-entry-layout',
           name: 'NavigationEntryLayout',
           description: '右矢印付きナビゲーションレイアウト',
-          screen: 'NavigationEntryLayoutPage',
+          screen: DemoStackMeta.screens.navigationEntryLayoutPage,
         },
       ],
     },
@@ -147,7 +148,7 @@ export const ComponentListPage: React.FC = () => {
                 {category.title}
               </Text>
               <Text style={[styles.categoryPath, { color: colors.text.tertiary }]}>
-                src/{category.path}
+                {category.path}
               </Text>
               <Text style={[styles.categoryDescription, { color: colors.text.secondary }]}>
                 {category.description}
@@ -159,9 +160,8 @@ export const ComponentListPage: React.FC = () => {
                 key={component.id}
                 style={[styles.componentCard, { backgroundColor: colors.surface.elevated }]}
                 onPress={() => {
-                  // TODO: 各コンポーネントの詳細ページに遷移
-                  // navigation.navigate('ComponentDemo', { screen: component.screen });
-                  console.log(`Navigate to ${component.screen}`);
+                  // 各コンポーネントの詳細ページに遷移
+                  navigation.navigate(component.screen as any);
                 }}
               >
                 <View style={styles.componentInfo}>
