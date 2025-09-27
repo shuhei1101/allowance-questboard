@@ -1,7 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
+import { NavigationEntryLayout, NavigationEntryText } from '@/core/components/NavigationEntryLayout';
 import { useTheme } from '@/core/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@/core/i18n/useTranslation';
@@ -44,90 +45,60 @@ export const IconSelectButtonEntry: React.FC<Props> = ({ title, selectedIcon, on
       required={false}
     >
       <EntryWithError error={error}>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={handlePress}
-        >
-          <View style={styles.content}>
-            {selectedIcon ? (
-              <>
-                <View style={styles.leftSpacer} />
-                <View style={[styles.iconContainer, { backgroundColor: colors.surface.secondary }]}>
-                  {(() => {
-                    try {
-                      const appIcon = AppIcon.fromName(selectedIcon);
-                      const IconComponent = appIcon.obj;
-                      return (
-                        <IconComponent 
-                          size={24} 
-                          color={colors.text.primary} 
-                        />
-                      );
-                    } catch (error) {
-                      // アイコンが見つからない場合はデフォルトアイコンを表示
-                      return (
-                        <Ionicons 
-                          name="help-circle-outline"
-                          size={24} 
-                          color={colors.text.primary} 
-                        />
-                      );
-                    }
-                  })()}
-                </View>
-                <Ionicons 
-                  name="chevron-forward" 
-                  size={20} 
-                  color={colors.text.secondary} 
-                />
-              </>
-            ) : (
-              <>
-                <View style={styles.leftSpacer} />
-                <Text style={[styles.noSelectionText, { color: colors.text.secondary }]}>
-                  {t('shared.components.iconSelectButtonEntry.noSelection')}
-                </Text>
-                <Ionicons 
-                  name="chevron-forward" 
-                  size={20} 
-                  color={colors.text.secondary} 
-                />
-              </>
-            )}
-          </View>
-        </TouchableOpacity>
+        <NavigationEntryLayout onPress={handlePress}>
+          {selectedIcon ? (
+            <View style={styles.content}>
+              <View style={[styles.iconContainer, { backgroundColor: colors.surface.secondary }]}>
+                {(() => {
+                  try {
+                    const appIcon = AppIcon.fromName(selectedIcon);
+                    const IconComponent = appIcon.obj;
+                    return (
+                      <IconComponent 
+                        size={24} 
+                        color={colors.text.primary} 
+                      />
+                    );
+                  } catch (error) {
+                    // アイコンが見つからない場合はデフォルトアイコンを表示
+                    return (
+                      <Ionicons 
+                        name="help-circle-outline"
+                        size={24} 
+                        color={colors.text.primary} 
+                      />
+                    );
+                  }
+                })()}
+              </View>
+            </View>
+          ) : (
+            <NavigationEntryText>
+              {t('shared.components.iconSelectButtonEntry.noSelection')}
+            </NavigationEntryText>
+          )}
+        </NavigationEntryLayout>
       </EntryWithError>
     </EntryLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
   content: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  leftSpacer: {
-    flex: 1,
+    justifyContent: 'center',
+    paddingVertical: 8,
   },
   iconContainer: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 8,
-  },
-  iconText: {
-    fontSize: 24,
-    marginRight: 8,
+    alignItems: 'center',
   },
   noSelectionText: {
-    fontSize: 16,
-    marginRight: 8,
+    fontSize: 14,
+    textAlign: 'center',
+    paddingVertical: 8,
   },
 });

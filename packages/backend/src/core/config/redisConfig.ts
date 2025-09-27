@@ -9,7 +9,7 @@ interface RedisInterface {
   get(key: string): Promise<string | undefined>;
   setex(key: string, ttl: number, value: string): Promise<string>;
   del(key: string): Promise<number>;
-  on(event: string, callback: Function): void;
+  on(event: string, callback: (...args: any[]) => void): void;
 }
 
 /**
@@ -30,7 +30,7 @@ const createRedisClient = (): RedisInterface => {
       console.log(`[MOCK] Redis DEL: ${key}`);
       return 1;
     },
-    on(event: string, callback: Function): void {
+    on(event: string, callback: (...args: any[]) => void): void {
       console.log(`[MOCK] Redis event: ${event}`);
       // 接続成功を模擬
       if (event === 'connect') {

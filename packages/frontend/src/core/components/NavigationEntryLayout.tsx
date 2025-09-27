@@ -17,7 +17,7 @@ interface NavigationEntryLayoutProps {
  * 右端に矢印アイコンを表示し、タップで画面遷移を行うためのレイアウトコンポーネント
  * EntryLayoutの子要素として使用することを前提とする */
 export const NavigationEntryLayout: React.FC<NavigationEntryLayoutProps> = ({
-  children: currentValue,
+  children,
   onPress,
   disabled = false,
 }) => {
@@ -39,7 +39,7 @@ export const NavigationEntryLayout: React.FC<NavigationEntryLayoutProps> = ({
     >
       {/* 現在の値（右側の矢印の左に表示） */}
       <View style={styles.valueContainer}>
-        {currentValue}
+        {children}
       </View>
       
       {/* 右側の矢印アイコン */}
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
     marginRight: 8,
+    
   },
   arrowContainer: {
     flexShrink: 0,
@@ -81,3 +82,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+interface NavigationEntryTextProps {
+  /** 表示するテキスト */
+  children: string;
+}
+
+/** NavigationEntryLayout内で使用するテキストコンポーネント
+ * 
+ * 文字色を少し薄くして表示する */
+export const NavigationEntryText: React.FC<NavigationEntryTextProps> = ({
+  children,
+}) => {
+  const { colors } = useTheme();
+  
+  return (
+    <Text style={[{ fontSize: 16, color: colors.text.secondary }]}>
+      {children}
+    </Text>
+  );
+};

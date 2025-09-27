@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { DemoStackMeta } from '../../demoStackMeta';
@@ -11,10 +11,34 @@ import { useAppNavigation } from '../../../AppNavigator';
 export const ComponentListPage: React.FC = () => {
   const { colors } = useTheme();
   const navigation = useAppNavigation();
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  // セクション位置を記録するためのstate
+  const sectionPositions = useRef<{ [key: string]: number }>({});
+
+  // セクションにスクロールする関数
+  const scrollToSection = (sectionKey: string) => {
+    const position = sectionPositions.current[sectionKey];
+    if (position !== undefined && scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ 
+        y: Math.max(0, position - 20), // 20px上にオフセット
+        animated: true 
+      });
+    }
+  };
+
+  // セクション位置を記録する関数
+  const handleSectionLayout = (sectionKey: string, event: any) => {
+    const { y } = event.nativeEvent.layout;
+    sectionPositions.current[sectionKey] = y;
+  };
 
   const componentCategories = [
     {
-      title: '📝 入力コンポーネント',
+      key: 'shared',
+      title: '📝 共有コンポーネント',
+      path: 'features/shared',
+      description: '共通入力コンポーネント',
       components: [
         {
           id: 'email-input',
@@ -35,17 +59,6 @@ export const ComponentListPage: React.FC = () => {
           onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'birthday-input' } }),
         },
         {
-          id: 'family-name-input',
-          name: 'FamilyNameInput',
-          description: '家族名入力フィールド（後ろに"家"付き）',
-          onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'family-name-input' } }),
-        },
-      ],
-    },
-    {
-      title: '🔘 ボタンコンポーネント',
-      components: [
-        {
           id: 'save-button',
           name: 'SaveButton',
           description: '保存ボタン',
@@ -57,22 +70,6 @@ export const ComponentListPage: React.FC = () => {
           description: 'アイコン選択ボタン',
           onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'icon-select-button' } }),
         },
-      ],
-    },
-    {
-      title: '📄 ページコンポーネント',
-      components: [
-        {
-          id: 'icon-select-page',
-          name: 'IconSelectPage',
-          description: 'アイコン選択画面',
-          onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.iconSelectPageDetail }),
-        },
-      ],
-    },
-    {
-      title: '🎨 表示コンポーネント',
-      components: [
         {
           id: 'loading-spinner',
           name: 'LoadingSpinner',
@@ -88,7 +85,24 @@ export const ComponentListPage: React.FC = () => {
       ],
     },
     {
-      title: '🧩 レイアウトコンポーネント',
+      key: 'family-register-page',
+      title: '🏠 家族登録ページ',
+      path: 'features/family/family-register-page',
+      description: '家族登録ページ専用コンポーネント',
+      components: [
+        {
+          id: 'family-name-input',
+          name: 'FamilyNameInput',
+          description: '家族名入力フィールド（後ろに"家"付き）',
+          onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'family-name-input' } }),
+        },
+      ],
+    },
+    {
+      key: 'core',
+      title: '🧩 コア',
+      path: 'core/components',
+      description: 'コア・レイアウトコンポーネント',
       components: [
         {
           id: 'navigation-entry-layout',
@@ -98,10 +112,27 @@ export const ComponentListPage: React.FC = () => {
         },
       ],
     },
+    {
+      key: 'icon-select-page',
+      title: '📄 アイコン選択ページ',
+      path: 'features/icon-select/icon-select-page',
+      description: 'ページコンポーネント',
+      components: [
+        {
+          id: 'icon-select-page',
+          name: 'IconSelectPage',
+          description: 'アイコン選択画面',
+          onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.iconSelectPageDetail }),
+        },
+      ],
+    },
   ];
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
+    <ScrollView 
+      ref={scrollViewRef}
+      style={[styles.container, { backgroundColor: colors.background.primary }]}
+    >
       <View style={styles.header}>
         <Text style={[styles.headerTitle, { color: colors.text.primary }]}>
           🧩 コンポーネント一覧
@@ -111,12 +142,52 @@ export const ComponentListPage: React.FC = () => {
         </Text>
       </View>
 
+      {/* セクションジャンプリンク */}
+      <View style={[styles.sectionLinksContainer, { backgroundColor: colors.surface.elevated }]}>
+        <Text style={[styles.sectionLinksTitle, { color: colors.text.primary }]}>
+          📍 セクションジャンプ
+        </Text>
+        <View style={styles.sectionLinks}>
+          {componentCategories.map((category) => (
+            <TouchableOpacity
+              key={category.key}
+              style={[styles.sectionLink, { backgroundColor: colors.background.secondary }]}
+              onPress={() => scrollToSection(category.key)}
+            >
+              <Text style={[styles.sectionLinkText, { color: colors.primary }]}>
+                {category.title}
+              </Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity
+            style={[styles.sectionLink, { backgroundColor: colors.background.secondary }]}
+            onPress={() => scrollToSection('test')}
+          >
+            <Text style={[styles.sectionLinkText, { color: colors.primary }]}>
+              🧪 総合テスト
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <View style={styles.content}>
         {componentCategories.map((category, categoryIndex) => (
-          <View key={categoryIndex} style={styles.categorySection}>
-            <Text style={[styles.categoryTitle, { color: colors.text.primary }]}>
-              {category.title}
-            </Text>
+          <View 
+            key={categoryIndex} 
+            style={styles.categorySection}
+            onLayout={(event) => handleSectionLayout(category.key, event)}
+          >
+            <View style={styles.categoryHeader}>
+              <Text style={[styles.categoryTitle, { color: colors.text.primary }]}>
+                {category.title}
+              </Text>
+              <Text style={[styles.categoryPath, { color: colors.text.tertiary }]}>
+                src/{category.path}
+              </Text>
+              <Text style={[styles.categoryDescription, { color: colors.text.secondary }]}>
+                {category.description}
+              </Text>
+            </View>
             
             {category.components.map((component) => (
               <TouchableOpacity
@@ -143,10 +214,21 @@ export const ComponentListPage: React.FC = () => {
         ))}
 
         {/* 総合テストセクション */}
-        <View style={styles.categorySection}>
-          <Text style={[styles.categoryTitle, { color: colors.text.primary }]}>
-            🧪 総合テスト
-          </Text>
+        <View 
+          style={styles.categorySection}
+          onLayout={(event) => handleSectionLayout('test', event)}
+        >
+          <View style={styles.categoryHeader}>
+            <Text style={[styles.categoryTitle, { color: colors.text.primary }]}>
+              🧪 総合テスト
+            </Text>
+            <Text style={[styles.categoryPath, { color: colors.text.tertiary }]}>
+              demo/
+            </Text>
+            <Text style={[styles.categoryDescription, { color: colors.text.secondary }]}>
+              全コンポーネントの動作テスト
+            </Text>
+          </View>
           
           <TouchableOpacity
             style={[styles.componentCard, styles.specialCard, { backgroundColor: colors.surface.elevated }]}
@@ -196,17 +278,65 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 24,
   },
+  sectionLinksContainer: {
+    margin: 16,
+    padding: 16,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  sectionLinksTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  sectionLinks: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  sectionLink: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  sectionLinkText: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
   content: {
     paddingHorizontal: 16,
   },
   categorySection: {
     marginBottom: 32,
   },
+  categoryHeader: {
+    marginBottom: 16,
+  },
   categoryTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 4,
     paddingLeft: 4,
+  },
+  categoryPath: {
+    fontSize: 12,
+    fontFamily: 'monospace',
+    paddingLeft: 4,
+    marginBottom: 6,
+  },
+  categoryDescription: {
+    fontSize: 14,
+    paddingLeft: 4,
+    marginBottom: 8,
   },
   componentCard: {
     borderRadius: 12,

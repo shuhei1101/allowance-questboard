@@ -2,21 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { useRoute } from '@react-navigation/native';
-import { EmailInput } from '@/features/shared/components/EmailInput';
-import { PasswordInputField } from '@/features/shared/components/PasswordInput';
-import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
-import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
-import { ComfirmButton } from '../../../src/features/shared/components/ComfirmButton';
-import { NavigationEntryLayout } from '@/core/components/NavigationEntryLayout';
-import { NavigationEntryText } from '../../../src/core/components/NavigationEntryText';
-import { FamilyNameInput } from '@/features/family/family-register-page/components/FamilyNameInput';
+import { getComponentDemo } from './components/componentRegistry';
+import { ComponentPropConfig } from './components/types';
 
 interface ComponentDetailPageProps {
   componentType: string;
 }
 
 /**
- * コンポーネントX画面
+ * コンポーネント詳細画面
  * 個別コンポーネントの詳細表示とプロパティ設定
  */
 export const ComponentDetailPage: React.FC = () => {
@@ -24,8 +18,12 @@ export const ComponentDetailPage: React.FC = () => {
   const route = useRoute();
   const { componentType } = route.params as ComponentDetailPageProps;
 
-  const componentInfo = getComponentInfo(componentType);
-  const [componentProps, setComponentProps] = useState<any>(componentInfo.defaultProps);
+  // デモコンポーネントを取得
+  const componentDemo = getComponentDemo(componentType);
+  
+  const [componentProps, setComponentProps] = useState<any>(
+    componentDemo?.info.defaultProps || {}
+  );
 
   const updateProp = (key: string, value: any) => {
     setComponentProps((prev: any) => ({ ...prev, [key]: value }));
@@ -35,83 +33,23 @@ export const ComponentDetailPage: React.FC = () => {
     Alert.alert('プロパティ反映', 'コンポーネントのプロパティが反映されました！');
   };
 
-  const renderComponent = () => {
-    switch (componentType) {
-      case 'email-input':
-        return (
-          <EmailInput
-            value={componentProps.value}
-            onChange={(value) => updateProp('value', value)}
-            placeholder={componentProps.placeholder}
-            error={componentProps.errorMessage}
-          />
-        );
-      case 'password-input':
-        return (
-          <PasswordInputField
-            value={componentProps.value}
-            onChange={(value) => updateProp('value', value)}
-            placeholder={componentProps.placeholder}
-            error={componentProps.errorMessage}
-          />
-        );
-      case 'birthday-input':
-        return (
-          <BirthdayInput
-            value={componentProps.value}
-            onChange={(value) => updateProp('value', value)}
-            error={componentProps.errorMessage}
-          />
-        );
-      case 'save-button':
-        return (
-          <ComfirmButton
-            onPress={() => Alert.alert('保存', 'SaveButtonが押されました！')}
-            loading={componentProps.loading}
-            disabled={componentProps.disabled}
-          />
-        );
-      case 'icon-select-button':
-        return (
-          <IconSelectButton
-            selectedIcon={componentProps.selectedIcon}
-            onPress={() => Alert.alert('アイコン選択', 'IconSelectButtonが押されました！')}
-          />
-        );
-      case 'navigation-entry-layout':
-        return (
-          <NavigationEntryLayout
-            onPress={() => Alert.alert('ナビゲーション', 'NavigationEntryLayoutが押されました！')}
-            disabled={componentProps.disabled}
-          >
-            <NavigationEntryText>
-              {componentProps.contentText}
-            </NavigationEntryText>
-          </NavigationEntryLayout>
-        );
-      case 'family-name-input':
-        return (
-          <FamilyNameInput
-            value={componentProps.value}
-            onChange={(value) => updateProp('value', value)}
-            placeholder={componentProps.placeholder}
-            error={componentProps.errorMessage}
-            disabled={componentProps.disabled}
-          />
-        );
-      default:
-        return (
+  // コンポーネントが見つからない場合
+  if (!componentDemo) {
+    return (
+      <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
+        <View style={styles.header}>
           <Text style={[styles.errorText, { color: colors.text.secondary }]}>
-            このコンポーネントはまだ実装されていません
+            ❓ このコンポーネントはまだ実装されていません
           </Text>
-        );
-    }
-  };
+        </View>
+      </View>
+    );
+  }
 
   const renderPropsEditor = () => {
     return (
       <View style={[styles.propsEditor, { backgroundColor: colors.surface.elevated }]}>
-        {componentInfo.props.map((prop) => (
+        {componentDemo.info.props.map((prop) => (
           <View key={prop.name} style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
               {prop.label} ({prop.type})
@@ -123,7 +61,7 @@ export const ComponentDetailPage: React.FC = () => {
     );
   };
 
-  const renderPropEditor = (prop: any, value: any, onChange: (value: any) => void) => {
+  const renderPropEditor = (prop: ComponentPropConfig, value: any, onChange: (value: any) => void) => {
     switch (prop.type) {
       case 'string':
         return (
@@ -141,6 +79,16 @@ export const ComponentDetailPage: React.FC = () => {
             onValueChange={onChange}
           />
         );
+      case 'number':
+        return (
+          <TextInput
+            style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
+            value={String(value)}
+            onChangeText={(text) => onChange(Number(text) || 0)}
+            placeholder={prop.placeholder || `${prop.label}を入力`}
+            keyboardType="numeric"
+          />
+        );
       default:
         return (
           <Text style={[styles.propValue, { color: colors.text.secondary }]}>
@@ -154,10 +102,10 @@ export const ComponentDetailPage: React.FC = () => {
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <View style={styles.header}>
         <Text style={[styles.headerTitle, { color: colors.text.primary }]}>
-          {componentInfo.icon} {componentInfo.name}
+          {componentDemo.info.icon} {componentDemo.info.name}
         </Text>
         <Text style={[styles.headerSubtitle, { color: colors.text.secondary }]}>
-          {componentInfo.description}
+          {componentDemo.info.description}
         </Text>
       </View>
 
@@ -167,7 +115,7 @@ export const ComponentDetailPage: React.FC = () => {
           🎯 コンポーネントプレビュー
         </Text>
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
-          {renderComponent()}
+          {componentDemo.renderComponent({ componentProps, updateProp })}
         </View>
       </View>
 
@@ -195,142 +143,13 @@ export const ComponentDetailPage: React.FC = () => {
         </Text>
         <View style={[styles.codeBlock, { backgroundColor: colors.surface.elevated }]}>
           <Text style={[styles.codeText, { color: colors.text.secondary }]}>
-            {componentInfo.usage}
+            {componentDemo.info.usage}
           </Text>
         </View>
       </View>
     </ScrollView>
   );
 };
-
-/**
- * コンポーネントタイプから情報を取得
- */
-function getComponentInfo(componentType: string) {
-  const componentInfoMap = {
-    'email-input': {
-      name: 'EmailInputField',
-      icon: '📧',
-      description: 'メールアドレス入力用のフィールドコンポーネント',
-      defaultProps: {
-        value: 'test@example.com',
-        placeholder: 'メールアドレスを入力',
-        errorMessage: '',
-        disabled: false,
-      },
-      props: [
-        { name: 'value', label: '入力値', type: 'string', placeholder: 'メールアドレス' },
-        { name: 'placeholder', label: 'プレースホルダー', type: 'string' },
-        { name: 'errorMessage', label: 'エラーメッセージ', type: 'string' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<EmailInputField\n  value={email}\n  onChangeText={setEmail}\n  placeholder="メールアドレスを入力"\n  errorMessage={emailError}\n/>'
-    },
-    'password-input': {
-      name: 'PasswordInputField',
-      icon: '🔒',
-      description: 'パスワード入力用のフィールドコンポーネント',
-      defaultProps: {
-        value: 'password123',
-        placeholder: 'パスワードを入力',
-        errorMessage: '',
-        disabled: false,
-      },
-      props: [
-        { name: 'value', label: '入力値', type: 'string', placeholder: 'パスワード' },
-        { name: 'placeholder', label: 'プレースホルダー', type: 'string' },
-        { name: 'errorMessage', label: 'エラーメッセージ', type: 'string' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<PasswordInputField\n  value={password}\n  onChangeText={setPassword}\n  placeholder="パスワードを入力"\n  errorMessage={passwordError}\n/>'
-    },
-    'birthday-input': {
-      name: 'BirthdayInputField',
-      icon: '🎂',
-      description: '誕生日入力用のフィールドコンポーネント',
-      defaultProps: {
-        value: '1990-01-01',
-        errorMessage: '',
-        disabled: false,
-      },
-      props: [
-        { name: 'value', label: '入力値', type: 'string', placeholder: 'YYYY-MM-DD' },
-        { name: 'errorMessage', label: 'エラーメッセージ', type: 'string' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<BirthdayInputField\n  value={birthday}\n  onChange={setBirthday}\n  errorMessage={birthdayError}\n/>'
-    },
-    'save-button': {
-      name: 'SaveButton',
-      icon: '💾',
-      description: '保存処理用のボタンコンポーネント',
-      defaultProps: {
-        loading: false,
-        disabled: false,
-      },
-      props: [
-        { name: 'loading', label: 'ローディング状態', type: 'boolean' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<SaveButton\n  onPress={handleSave}\n  loading={isLoading}\n  disabled={!isValid}\n/>'
-    },
-    'icon-select-button': {
-      name: 'IconSelectButton',
-      icon: '🎨',
-      description: 'アイコン選択用のボタンコンポーネント',
-      defaultProps: {
-        selectedIcon: 'icon-001',
-        disabled: false,
-      },
-      props: [
-        { name: 'selectedIcon', label: '選択アイコン', type: 'string', placeholder: 'icon-001' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<IconSelectButton\n  selectedIcon={icon}\n  onSelectIcon={setIcon}\n  disabled={false}\n/>'
-    },
-    'navigation-entry-layout': {
-      name: 'NavigationEntryLayout',
-      icon: '🧩',
-      description: '右矢印付きナビゲーション用レイアウトコンポーネント',
-      defaultProps: {
-        contentText: '親情報設定',
-        disabled: false,
-      },
-      props: [
-        { name: 'contentText', label: '表示テキスト', type: 'string', placeholder: '表示するテキスト' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<NavigationEntryLayout\n  onPress={handlePress}\n  disabled={false}\n  currentValue={<Text>表示テキスト</Text>}\n/>'
-    },
-    'family-name-input': {
-      name: 'FamilyNameInput',
-      icon: '🏠',
-      description: '家族名入力用のコンポーネント（後ろに"家"の固定文字付き）',
-      defaultProps: {
-        value: '田中',
-        placeholder: '例: 田中',
-        errorMessage: '',
-        disabled: false,
-      },
-      props: [
-        { name: 'value', label: '入力値', type: 'string', placeholder: '家族名' },
-        { name: 'placeholder', label: 'プレースホルダー', type: 'string' },
-        { name: 'errorMessage', label: 'エラーメッセージ', type: 'string' },
-        { name: 'disabled', label: '無効化', type: 'boolean' },
-      ],
-      usage: '<FamilyNameInput\n  value={familyName}\n  onChange={setFamilyName}\n  placeholder="例: 田中"\n  error={familyNameError}\n/>'
-    },
-  };
-
-  return componentInfoMap[componentType as keyof typeof componentInfoMap] || {
-    name: '不明なコンポーネント',
-    icon: '❓',
-    description: 'コンポーネント情報が見つかりません',
-    defaultProps: {},
-    props: [],
-    usage: 'コンポーネントが見つかりません'
-  };
-}
 
 const styles = StyleSheet.create({
   container: {
