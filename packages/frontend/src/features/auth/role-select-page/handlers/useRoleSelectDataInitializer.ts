@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { fetchRoleSelectData } from '../services/fetchRoleSelectData';
 import { LoginRouter } from '@backend/features/auth/router/loginRouter';
-import { SetRoleSelectData } from '../stores/roleSelectPageStore';
+import { RoleSelectData } from '../models/roleSelectData';
 
 interface UseRoleSelectDataInitializerParams {
   /** loginRouter */
   loginRouter?: LoginRouter;
   /** ロール選択データ設定関数 */
-  setRoleSelectData: SetRoleSelectData;
+  setRoleSelectData: (roleSelectData: RoleSelectData) => void;
 }
 
 /** ロール選択データ初期化フック

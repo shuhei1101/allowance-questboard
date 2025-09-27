@@ -2,12 +2,14 @@ import { create } from 'zustand';
 import { FamilyMemberTypeValue } from "../../../../backend/src/features/family-member/value-object/familyMemberTypeValue";
 import { LanguageType } from "../../../../backend/src/features/language/enum/languageType";
 import { LanguageTypeValue } from "../../../../backend/src/features/language/value-object/languageTypeValue";
-import { createJwtStorage, GetJwtToken, IJwtStorage } from "../../features/auth/services/jwtStorage";
 import { BaseStore, BaseStoreProperties, BaseStoreActions } from '../stores/BaseStore';
+import { useEffect, useState } from 'react';
+import { JwtStorage } from '../../features/auth/services/jwtStorage';
 
 // シグネチャ定義
 export type UpdateFamilyMemberType = (familyMemberType: FamilyMemberTypeValue) => void;
 export type UpdateLanguageType = (languageType: LanguageTypeValue) => void;
+export type SetJwtToken = (token?: string) => void;
 export type Clear = () => void;
 
 interface SessionProperties extends BaseStoreProperties {
@@ -15,8 +17,8 @@ interface SessionProperties extends BaseStoreProperties {
   familyMemberType?: FamilyMemberTypeValue;
   /** 言語タイプ */
   languageType: LanguageTypeValue;
-  /** JWTストレージ */
-  jwtStorage: IJwtStorage;
+  /** JWTトークン */
+  jwtToken?: string;
 }
 
 interface SessionActions extends BaseStoreActions {
@@ -24,6 +26,8 @@ interface SessionActions extends BaseStoreActions {
   updateFamilyMemberType: UpdateFamilyMemberType;
   /** 言語タイプ設定 */
   updateLanguageType: UpdateLanguageType;
+  /** JWTトークン設定 */
+  setJwtToken: SetJwtToken;
   /** セッション変数クリア */
   clear: Clear;
 }
@@ -46,6 +50,13 @@ class SessionStoreClass extends BaseStore<SessionProperties, SessionActions> {
     };
   }
 
+  /** JWTトークン設定 */
+  protected setJwtToken(set: any): SetJwtToken {
+    return (token?: string) => {
+      set({ jwtToken: token }, false, 'setJwtToken');
+    };
+  }
+
   /** セッション変数クリア */
   protected clear(set: any): Clear {
     return () => {
@@ -59,7 +70,7 @@ class SessionStoreClass extends BaseStore<SessionProperties, SessionActions> {
       ...super.buildDefaultProperties(),
       familyMemberType: undefined,
       languageType: LanguageType.ENGLISH,
-      jwtStorage: createJwtStorage(),
+      jwtToken: undefined,
     };
   }
 
@@ -69,6 +80,7 @@ class SessionStoreClass extends BaseStore<SessionProperties, SessionActions> {
       ...super.buildActions(set, get),
       updateFamilyMemberType: this.updateFamilyMemberType(set),
       updateLanguageType: this.updateLanguageType(set),
+      setJwtToken: this.setJwtToken(set),
       clear: this.clear(set),
     };
   }
@@ -77,3 +89,28 @@ class SessionStoreClass extends BaseStore<SessionProperties, SessionActions> {
 export const useSessionStore = create<SessionStore>((set, get) =>
   new SessionStoreClass().createStore(set, get)
 );
+
+
+/** jwtトークン読み込みフック */
+export const useLoadToken = (params: {
+  setLoading: (loading: boolean) => void;
+}): void => {
+  const sessionStore = useSessionStore();
+
+  useEffect(() => {
+    const loadToken = async () => {
+      params.setLoading(true);
+      try {
+        const token = await JwtStorage.getToken();
+        sessionStore.setJwtToken(token);  // sessionStoreにトークンを設定
+      } catch (error) {
+        console.error('JWT初期化エラー:', error);
+        sessionStore.setJwtToken(undefined);
+      } finally {
+        params.setLoading(false);
+      }
+    };
+
+    loadToken();
+  }, []); // 空の依存配列で初回のみ実行
+};

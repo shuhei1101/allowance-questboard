@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetEmailError, EmailError } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
 import { Email } from '@backend/features/auth/value-object/email';
+import { FormError, SetForm, SetFormError } from '../../../../../core/stores/baseFormStore';
 
 /**
  * メールアドレス変更ハンドラーのカスタムフック
@@ -10,9 +10,9 @@ import { Email } from '@backend/features/auth/value-object/email';
  */
 export const useEmailHandler = (params: {
   parentForm: ParentForm,
-  setParentForm: SetParentForm,
-  emailError: EmailError,
-  setEmailError: SetEmailError
+  setParentForm: SetForm<ParentForm>,
+  emailError: FormError,
+  setEmailError: SetFormError
 }) => {
   return useCallback((email: string) => {
     try {

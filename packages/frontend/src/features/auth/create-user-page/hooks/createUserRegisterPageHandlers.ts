@@ -2,7 +2,6 @@ import { useEmailHandler } from './handlers/useEmailHandler';
 import { usePasswordHandler } from './handlers/usePasswordHandler';
 import { useUserRegisterHandler } from './handlers/useUserRegisterHandler';
 import { UserRegisterFormStore } from '../stores/userRegisterFormStore';
-import { UserRegisterPageStore } from '../stores/userRegisterPageStore';
 import { useBeforeRemoveHandler } from './handlers/useBeforeRemoveHandler';
 import { SessionStore } from '../../../../core/constants/sessionStore';
 import { LoginFormStore } from '../../login-page/stores/loginFormStore';
@@ -12,9 +11,9 @@ import { LoginFormStore } from '../../login-page/stores/loginFormStore';
  * 新規登録ページで使用する全てのイベントハンドラーを一括で提供 */
 export const userRegisterRegisterPageHandlers = (params: {
   formStore: UserRegisterFormStore,
-  pageStore: UserRegisterPageStore,
   sessionStore: SessionStore,
-  loginFormStore: LoginFormStore
+  loginFormStore: LoginFormStore,
+  setLoading: (loading: boolean) => void;
 }) => {
 
   const handleEmailChange = useEmailHandler({
@@ -36,7 +35,7 @@ export const userRegisterRegisterPageHandlers = (params: {
     currentLanguageType: params.sessionStore.languageType,
     setEmailError: params.formStore.setEmailError,
     setPasswordError: params.formStore.setPasswordError,
-    setLoading: params.pageStore.setLoading,
+    setLoading: params.setLoading,
     userRegisterForm: params.formStore.form,
     setLoginForm: params.loginFormStore.setForm
   });

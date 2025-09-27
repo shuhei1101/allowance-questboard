@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useRoleSelectPageStore } from './stores/roleSelectPageStore';
 import { useRoleSelectDataInitializer } from './hooks/useRoleSelectDataInitializer';
 import { createRoleSelectPageHandlers } from './hooks/createRoleSelectPageHandlers';
 import { FamilyNameLabel } from './components/FamilyNameLabel';
 import { FamilyCreateButton } from './components/FamilyCreateButton';
 import { FamilyJoinButton } from './components/FamilyJoinButton';
 import { ParentLoginButton } from './components/ParentLoginButton';
-import { ParentCreateButton } from './components/ParentCreateButton';
 import { ChildLoginButton } from './components/ChildLoginButton';
-import { ChildCreateButton } from './components/ChildCreateButton';
 import { LoadingSpinner } from '../../shared/loading-page/components/LoadingSpinner';
 import { createAuthenticatedClient } from '../../../core/api/trpcClient';
 import { useSessionStore } from '../../../core/constants/sessionStore';
-import { useLoadToken } from '../../../core/stores/basePageStore';
+import { RoleSelectData } from './models/roleSelectData';
 
 export interface RoleSelectPageProps {
   // 現在はpropsなし
@@ -25,22 +22,27 @@ export interface RoleSelectPageProps {
  * ログイン後に表示される、家族情報と親・子のログイン/作成ボタンを表示する画面 */
 export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
   const { colors } = useTheme();
-  const pageStore = useRoleSelectPageStore();
   const sessionStore = useSessionStore();
-  
-  // トークンを読み込む
-  const { jwtToken, isLoading } = useLoadToken(pageStore);
-  
+  const [roleSelectData, setRoleSelectData] = useState<RoleSelectData>(RoleSelectData.initialize());
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+  if (!sessionStore.jwtToken) {
+    throw new Error('JWTトークンが存在しません。ログイン状態を確認してください。');
+  }
+
   // ルーターを作成（トークンがない場合はundefined）
-  const router = jwtToken ? createAuthenticatedClient({
-    jwtToken,
+  const router = createAuthenticatedClient({
+    jwtToken: sessionStore.jwtToken,
     languageType: sessionStore.languageType,
-  }) : undefined;
+  });
+
+
 
   // データ初期化
   useRoleSelectDataInitializer({
-    setRoleSelectData: pageStore.setRoleSelectData,
-    loginRouter: router?.login.login,
+    loginRouter: router.login.login,
+    setRoleSelectData,
+    setLoading
   });
 
   // ハンドラーの取得
@@ -54,7 +56,7 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
   } = createRoleSelectPageHandlers();
 
   // ローディング中の表示
-  if (isLoading || !pageStore.roleSelectData) {
+  if (isLoading) {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: colors.background.primary }]}>
         <LoadingSpinner />
@@ -65,46 +67,6 @@ export const RoleSelectPage: React.FC<RoleSelectPageProps> = () => {
     );
   }
 
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
-      <View style={styles.content}>
-        
-        {/* パターン1: 家族情報がある場合 */}
-        {pageStore.roleSelectData.hasFamily() ? (
-          <>
-            {/* 家族名ラベル */}
-            <View style={styles.familyNameSection}>
-              <FamilyNameLabel familyName={pageStore.roleSelectData.familyName!} />
-            </View>
-
-            {/* 親ユーザでログインボタン */}
-            <View style={styles.buttonSection}>
-              <ParentLoginButton onPress={handleParentLogin} />
-            </View>
-
-            {/* 子ユーザでログインボタン */}
-            <View style={styles.buttonSection}>
-              <ChildLoginButton onPress={handleChildLogin} />
-            </View>
-          </>
-        ) : (
-          /* パターン2: 家族情報がない場合 */
-          <>
-            {/* 新規家族を作成ボタン */}
-            <View style={styles.buttonSection}>
-              <FamilyCreateButton onPress={handleFamilyCreate} />
-            </View>
-
-            {/* 家族に参加ボタン */}
-            <View style={styles.buttonSection}>
-              <FamilyJoinButton onPress={handleFamilyJoin} />
-            </View>
-          </>
-        )}
-        
-      </View>
-    </View>
-  );
 };
 
 const styles = StyleSheet.create({

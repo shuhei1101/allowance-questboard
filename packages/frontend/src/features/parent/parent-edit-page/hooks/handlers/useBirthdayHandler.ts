@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetBirthdayError, BirthdayError } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
+import { FormError, SetForm, SetFormError } from '../../../../../core/stores/baseFormStore';
 
 /**
  * 誕生日変更ハンドラーのカスタムフック
@@ -10,9 +10,9 @@ import { Birthday } from '@backend/features/shared/value-object/birthday';
  */
 export const useBirthdayHandler = (params: {
   parentForm: ParentForm,
-  setParentForm: SetParentForm,
-  birthdayError: BirthdayError,
-  setBirthdayError: SetBirthdayError
+  setParentForm: SetForm<ParentForm>,
+  birthdayError: FormError,
+  setBirthdayError: SetFormError
 }) => {
   return useCallback((birthday: string) => {
     try {

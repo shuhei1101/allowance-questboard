@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Icon } from '../../../../../../../backend/src/features/icon/domain/icon';
-import { SetParentForm } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
+import { SetForm } from '../../../../../core/stores/baseFormStore';
 
 /**
  * アイコン選択ハンドラーのカスタムフック
@@ -10,7 +10,7 @@ import { ParentForm } from '../../models/parentForm';
  */
 export const useIconSelectHandler = (params: {
   parentForm: ParentForm,
-  setParentForm: SetParentForm
+  setParentForm: SetForm<ParentForm>,
 }) => {
   return useCallback((icon: Icon) => {
     const updatedForm = new ParentForm({

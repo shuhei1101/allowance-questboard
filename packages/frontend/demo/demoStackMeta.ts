@@ -17,6 +17,7 @@ export const DemoStackMeta = {
     saveButtonDetail: "SaveButtonDetail",
     iconSelectButtonDetail: "IconSelectButtonDetail",
     iconSelectPageDetail: "IconSelectPageDetail",
+    navigationEntryLayoutDetail: "NavigationEntryLayoutDetail",
     DemoLoginPage: "DemoLoginPage",
     DemoParentEditPage: "DemoParentEditPage",
     ComponentShowcase: "ComponentShowcase",

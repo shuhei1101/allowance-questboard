@@ -1,26 +1,26 @@
 import { create } from 'zustand';
-import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetFormError } from '../../../../core/stores/baseFormStore';
-import { familyRegisterForm } from '../models/familyRegisterFormData';
+import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetFormError, FormError } from '../../../../core/stores/baseFormStore';
+import { FamilyRegisterForm } from '../models/familyRegisterForm';
 
 // フォーム固有のエラー型
 export interface FamilyRegisterFormErrors extends FormErrors {
   /** 家族表示ID エラー */
-  familyDisplayId?: string;
+  familyDisplayId: FormError;
   /** 家族名 エラー */
-  familyName?: string;
+  familyName: FormError;
   /** 家族オンライン名 エラー */
-  familyOnlineName?: string;
+  familyOnlineName: FormError;
   /** 親名 エラー */
-  parentName?: string;
+  parentName: FormError;
   /** 親誕生日 エラー */
-  parentBirthday?: string;
+  parentBirthday: FormError;
 }
 
-interface FamilyRegisterFormProperties extends BaseFormProperties<familyRegisterForm, FamilyRegisterFormErrors> {}
+interface FamilyRegisterFormProperties extends BaseFormProperties<FamilyRegisterForm, FamilyRegisterFormErrors> {}
 
-interface FamilyRegisterFormActions extends BaseFormActions<familyRegisterForm, FamilyRegisterFormErrors> {
+interface FamilyRegisterFormActions extends BaseFormActions<FamilyRegisterForm, FamilyRegisterFormErrors> {
   /** フォームを設定 */
-  setForm: SetForm<familyRegisterForm>;
+  setForm: SetForm<FamilyRegisterForm>;
   /** 家族表示IDエラーを設定 */
   setFamilyDisplayIdError: SetFormError;
   /** 家族名エラーを設定 */
@@ -33,9 +33,9 @@ interface FamilyRegisterFormActions extends BaseFormActions<familyRegisterForm, 
   setParentBirthdayError: SetFormError;
 }
 
-class FamilyRegisterFormStoreClass extends BaseFormStore<familyRegisterForm, FamilyRegisterFormErrors, FamilyRegisterFormProperties, FamilyRegisterFormActions> {
+class FamilyRegisterFormStoreClass extends BaseFormStore<FamilyRegisterForm, FamilyRegisterFormErrors, FamilyRegisterFormProperties, FamilyRegisterFormActions> {
   /** setFormアクションを生成 */
-  protected setForm(set: any): SetForm<familyRegisterForm> {
+  protected setForm(set: any): SetForm<FamilyRegisterForm> {
     return (form) => set({ form }, false, 'setForm');
   }
 
@@ -74,8 +74,8 @@ class FamilyRegisterFormStoreClass extends BaseFormStore<familyRegisterForm, Fam
     }), false, 'setParentBirthdayError');
   }
 
-  protected initializeForm(): familyRegisterForm {
-    return familyRegisterForm.initialize();
+  protected initializeForm(): FamilyRegisterForm {
+    return FamilyRegisterForm.initialize();
   }
 
   protected buildDefaultProperties(): FamilyRegisterFormProperties {

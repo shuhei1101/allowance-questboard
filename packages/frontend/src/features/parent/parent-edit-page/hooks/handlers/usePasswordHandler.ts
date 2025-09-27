@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetPasswordError, PasswordError } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
 import { Password } from '@backend/features/auth/value-object/password';
+import { FormError, SetForm, SetFormError } from '../../../../../core/stores/baseFormStore';
 
 /**
  * パスワード変更ハンドラーのカスタムフック
@@ -10,9 +10,9 @@ import { Password } from '@backend/features/auth/value-object/password';
  */
 export const usePasswordHandler = (params: {
   parentForm: ParentForm,
-  setParentForm: SetParentForm,
-  passwordError: PasswordError,
-  setPasswordError: SetPasswordError
+  setParentForm: SetForm<ParentForm>,
+  passwordError: FormError,
+  setPasswordError: SetFormError
 }) => {
   return useCallback((password: string) => {
     try {

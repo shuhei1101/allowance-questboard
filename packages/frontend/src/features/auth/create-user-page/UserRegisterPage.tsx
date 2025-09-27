@@ -1,10 +1,9 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { ComfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useAppNavigation } from '../../../../AppNavigator';
-import { useUserRegisterPageStore } from './stores/userRegisterPageStore';
 import { useUserRegisterFormStore } from './stores/userRegisterFormStore';
 import { userRegisterRegisterPageHandlers } from './hooks/createUserRegisterPageHandlers';
 import { useSessionStore } from '../../../core/constants/sessionStore';
@@ -18,15 +17,14 @@ import { PasswordInputEntry } from '../../shared/components/PasswordInputEntry';
 export const UserRegisterPage: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const pageStore = useUserRegisterPageStore();
   const formStore = useUserRegisterFormStore();
   const loginFormStore = useLoginFormStore();
   const sessionStore = useSessionStore();
   const navigation = useAppNavigation();
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   // 画面描画後
   useEffect(() => {
-    pageStore.reset();
     formStore.reset();
   }, []);
   
@@ -38,9 +36,9 @@ export const UserRegisterPage: React.FC = () => {
     handleBeforeRemove,
   } = userRegisterRegisterPageHandlers({
     formStore,
-    pageStore,
     sessionStore,
-    loginFormStore
+    loginFormStore,
+    setLoading
   });
   
   
@@ -57,12 +55,12 @@ export const UserRegisterPage: React.FC = () => {
         <ComfirmButton
           onPress={handleUserRegister}
           disabled={!formStore.form.isValid}
-          loading={pageStore.isLoading}
+          loading={isLoading}
           variant="header"
         />
       ),
     });
-  }, [navigation, handleUserRegister, pageStore.isLoading, formStore.form.isValid]);
+  }, [navigation, handleUserRegister, isLoading, formStore.form.isValid]);
   
   return (
     <ScrollView 

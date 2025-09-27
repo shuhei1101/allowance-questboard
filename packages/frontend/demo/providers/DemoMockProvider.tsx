@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect } from 'react';
-import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
 import { FamilyMemberTypeValue } from '@backend/features/family-member/value-object/familyMemberTypeValue';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { LanguageId } from '@backend/features/language/value-object/languageId';
@@ -15,9 +14,9 @@ import { IconId } from '@backend/features/icon/value-objects/iconId';
 import { IconName } from '@backend/features/icon/value-objects/iconName';
 import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
 import { JwtStorage } from '../../src/features/auth/services/jwtStorage';
-import { useLoginPageStore } from '../../src/features/auth/login-page/stores/loginPageStore';
 import { useLoginFormStore } from '../../src/features/auth/login-page/stores/loginFormStore';
 import { useSessionStore } from '../../src/core/constants/sessionStore';
+import { useParentFormStore } from '../../src/features/parent/parent-edit-page/stores/parentFormStore';
 
 interface Props {
   children: ReactNode;
@@ -33,10 +32,9 @@ interface Props {
  * - デモ用のサンプルデータ提供
  */
 export const DemoMockProvider: React.FC<Props> = ({ children }) => {
-  const loginPageStore = useLoginPageStore();
   const loginFormStore = useLoginFormStore();
-  const parentEditPageStore = useParentEditPageStore();
   const sessionStore = useSessionStore();
+  const parentFormStore = useParentFormStore(); // 親編集ページストア（仮）
 
   useEffect(() => {
     // デモ用のモックデータを設定
@@ -114,7 +112,7 @@ export const DemoMockProvider: React.FC<Props> = ({ children }) => {
       birthday: new Birthday(new Date('1985-05-15')),
     });
 
-    parentEditPageStore.setParentForm(mockParentForm);
+    parentFormStore.setForm(mockParentForm);
 
     console.log('🎯 Demo - Parent edit page mock data set');
   };

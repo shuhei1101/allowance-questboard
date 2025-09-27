@@ -8,7 +8,6 @@ import { Login } from '../../services/login';
 import { AppError } from '@backend/core/errors/appError';
 import { useLoginFormValidationHandler } from '../../validations/useLoginFormValidationHandler';
 import { CreateAuthenticatedClient } from '../../../../../core/api/trpcClient';
-import { Jwt, SetLoading } from '../../../../../core/stores/basePageStore';
 import { ClearErrors, SetFormError } from '../../../../../core/stores/baseFormStore';
 import { SetJwtToken } from '../../../services/jwtStorage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -26,7 +25,7 @@ export const useLoginHandler = (params: {
   clearErrors: ClearErrors,
   setEmailError: SetFormError,
   setPasswordError: SetFormError,
-  setLoading: SetLoading,
+  setLoading: (loading: boolean) => void,
   login: Login,
   createAuthenticatedClient: CreateAuthenticatedClient,
   setJwtToken: SetJwtToken

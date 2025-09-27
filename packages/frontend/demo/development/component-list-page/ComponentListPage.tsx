@@ -34,6 +34,12 @@ export const ComponentListPage: React.FC = () => {
           description: '誕生日入力フィールド',
           onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'birthday-input' } }),
         },
+        {
+          id: 'family-name-input',
+          name: 'FamilyNameInput',
+          description: '家族名入力フィールド（後ろに"家"付き）',
+          onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'family-name-input' } }),
+        },
       ],
     },
     {
@@ -78,6 +84,17 @@ export const ComponentListPage: React.FC = () => {
           name: 'ErrorMessage',
           description: 'エラーメッセージ表示',
           onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'error-message' } }),
+        },
+      ],
+    },
+    {
+      title: '🧩 レイアウトコンポーネント',
+      components: [
+        {
+          id: 'navigation-entry-layout',
+          name: 'NavigationEntryLayout',
+          description: '右矢印付きナビゲーションレイアウト',
+          onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.componentDetail, params: { componentType: 'navigation-entry-layout' } }),
         },
       ],
     },

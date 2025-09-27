@@ -65,6 +65,7 @@ export const IconSelectButtonDetailPage: React.FC = () => {
         </Text>
         <View style={[styles.componentPreview, { backgroundColor: colors.surface.elevated }]}>
           <IconSelectButtonEntry
+            title='アイコン'
             selectedIcon={componentProps.selectedIcon}
             onIconSelected={(icon) => {
               setComponentProps(prev => ({

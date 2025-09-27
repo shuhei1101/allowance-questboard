@@ -7,6 +7,9 @@ import { PasswordInputField } from '@/features/shared/components/PasswordInput';
 import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 import { ComfirmButton } from '../../../src/features/shared/components/ComfirmButton';
+import { NavigationEntryLayout } from '@/core/components/NavigationEntryLayout';
+import { NavigationEntryText } from '../../../src/core/components/NavigationEntryText';
+import { FamilyNameInput } from '@/features/family/family-register-page/components/FamilyNameInput';
 
 interface ComponentDetailPageProps {
   componentType: string;
@@ -73,6 +76,27 @@ export const ComponentDetailPage: React.FC = () => {
           <IconSelectButton
             selectedIcon={componentProps.selectedIcon}
             onPress={() => Alert.alert('アイコン選択', 'IconSelectButtonが押されました！')}
+          />
+        );
+      case 'navigation-entry-layout':
+        return (
+          <NavigationEntryLayout
+            onPress={() => Alert.alert('ナビゲーション', 'NavigationEntryLayoutが押されました！')}
+            disabled={componentProps.disabled}
+          >
+            <NavigationEntryText>
+              {componentProps.contentText}
+            </NavigationEntryText>
+          </NavigationEntryLayout>
+        );
+      case 'family-name-input':
+        return (
+          <FamilyNameInput
+            value={componentProps.value}
+            onChange={(value) => updateProp('value', value)}
+            placeholder={componentProps.placeholder}
+            error={componentProps.errorMessage}
+            disabled={componentProps.disabled}
           />
         );
       default:
@@ -263,6 +287,38 @@ function getComponentInfo(componentType: string) {
         { name: 'disabled', label: '無効化', type: 'boolean' },
       ],
       usage: '<IconSelectButton\n  selectedIcon={icon}\n  onSelectIcon={setIcon}\n  disabled={false}\n/>'
+    },
+    'navigation-entry-layout': {
+      name: 'NavigationEntryLayout',
+      icon: '🧩',
+      description: '右矢印付きナビゲーション用レイアウトコンポーネント',
+      defaultProps: {
+        contentText: '親情報設定',
+        disabled: false,
+      },
+      props: [
+        { name: 'contentText', label: '表示テキスト', type: 'string', placeholder: '表示するテキスト' },
+        { name: 'disabled', label: '無効化', type: 'boolean' },
+      ],
+      usage: '<NavigationEntryLayout\n  onPress={handlePress}\n  disabled={false}\n  currentValue={<Text>表示テキスト</Text>}\n/>'
+    },
+    'family-name-input': {
+      name: 'FamilyNameInput',
+      icon: '🏠',
+      description: '家族名入力用のコンポーネント（後ろに"家"の固定文字付き）',
+      defaultProps: {
+        value: '田中',
+        placeholder: '例: 田中',
+        errorMessage: '',
+        disabled: false,
+      },
+      props: [
+        { name: 'value', label: '入力値', type: 'string', placeholder: '家族名' },
+        { name: 'placeholder', label: 'プレースホルダー', type: 'string' },
+        { name: 'errorMessage', label: 'エラーメッセージ', type: 'string' },
+        { name: 'disabled', label: '無効化', type: 'boolean' },
+      ],
+      usage: '<FamilyNameInput\n  value={familyName}\n  onChange={setFamilyName}\n  placeholder="例: 田中"\n  error={familyNameError}\n/>'
     },
   };
 

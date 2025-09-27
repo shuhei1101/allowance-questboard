@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetFormError } from '../../../../core/stores/baseFormStore';
+import { BaseFormStore, BaseFormProperties, BaseFormActions, FormErrors, SetForm, SetFormError, FormError } from '../../../../core/stores/baseFormStore';
 import { LoginForm } from '../models/loginForm';
 
 // フォーム固有のエラー型
 export interface LoginFormErrors extends FormErrors {
-  email?: string;
-  password?: string;
+  email: FormError;
+  password: FormError;
 }
 
 interface LoginFormProperties extends BaseFormProperties<LoginForm, LoginFormErrors> {}

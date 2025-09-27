@@ -15,12 +15,12 @@ npm install fastify
 npm install @trpc/server @trpc/client
 ```
 
-#### フロントエンド起動
+#### ★フロントエンド起動★
 ```bash
 npx expo start --ios
 ```
 
-#### バックエンド起動
+#### ★バックエンド起動★
 ```bash
 npm run dev
 ```

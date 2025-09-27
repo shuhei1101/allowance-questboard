@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
+import { ClearErrors, SetFormError } from '../../../../../core/stores/baseFormStore';
 
 /**
  * バリデーション結果
@@ -19,10 +19,10 @@ export const useParentFormValidationHandler = (params: {
   parentForm: ParentForm;
   currentLanguageType: LanguageTypeValue;
   clearErrors: ClearErrors;
-  setNameError: SetNameError;
-  setEmailError: SetEmailError;
-  setPasswordError: SetPasswordError;
-  setBirthdayError: SetBirthdayError;
+  setNameError: SetFormError;
+  setEmailError: SetFormError;
+  setPasswordError: SetFormError;
+  setBirthdayError: SetFormError;
 }) => {
   return useCallback((): ValidationResult => {
     // エラーをクリア

@@ -3,11 +3,11 @@ import { useEmailHandler } from './handlers/useEmailHandler';
 import { usePasswordHandler } from './handlers/usePasswordHandler';
 import { useBirthdayHandler } from './handlers/useBirthdayHandler';
 import { useConfirmHandler } from './handlers/useConfirmHandler';
-import { useParentEditPageStore } from '../stores/parentEditPageStore';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { useIconSelectHandler } from './handlers/useIconSelectHandler';
 import { HandleParentForm } from '../ParentEditPage';
 import { SessionStore } from '../../../../core/constants/sessionStore';
+import { ParentFormStore } from '../stores/parentFormStore';
 
 /** 親情報登録画面の全ハンドラーを統合したカスタムフック
  * 親情報登録画面で使用する全てのイベントハンドラーを一括で提供 */
@@ -15,52 +15,53 @@ export const parentEditPageHandlers = (params: {
   shouldUpdate: boolean,
   parentId?: ParentId,
   handleParentForm?: HandleParentForm,
-  sessionStore: SessionStore
+  sessionStore: SessionStore,
+  formStore: ParentFormStore,
+  setLoading: (loading: boolean) => void,
 }) => {
-  const pageStore = useParentEditPageStore();
   // 名前変更時のハンドラ
   const handleNameChange = useNameHandler({
-    parentForm: pageStore.parentForm,
-    setParentForm: pageStore.setParentForm,
-    nameError: pageStore.errors.name,
-    setNameError: pageStore.setNameError,
+    parentForm: params.formStore.form,
+    setParentForm: params.formStore.setForm,
+    nameError: params.formStore.errors.name,
+    setNameError: params.formStore.setNameError,
   });
   // メール変更時のハンドラ
   const handleEmailChange = useEmailHandler({
-    parentForm: pageStore.parentForm,
-    setParentForm: pageStore.setParentForm,
-    emailError: pageStore.errors.email,
-    setEmailError: pageStore.setEmailError,
+    parentForm: params.formStore.form,
+    setParentForm: params.formStore.setForm,
+    emailError: params.formStore.errors.email,
+    setEmailError: params.formStore.setEmailError,
   });
   // パスワード変更時のハンドラ
   const handlePasswordChange = usePasswordHandler({
-    parentForm: pageStore.parentForm,
-    setParentForm: pageStore.setParentForm,
-    passwordError: pageStore.errors.password,
-    setPasswordError: pageStore.setPasswordError,
+    parentForm: params.formStore.form,
+    setParentForm: params.formStore.setForm,
+    passwordError: params.formStore.errors.password,
+    setPasswordError: params.formStore.setPasswordError,
   });
   // アイコン選択時のハンドラ
   const handleIconSelect = useIconSelectHandler({
-    parentForm: pageStore.parentForm,
-    setParentForm: pageStore.setParentForm,
+    parentForm: params.formStore.form,
+    setParentForm: params.formStore.setForm,
   });
   // 誕生日変更ハンドラ
   const handleBirthdayChange = useBirthdayHandler({
-    parentForm: pageStore.parentForm,
-    setParentForm: pageStore.setParentForm,
-    birthdayError: pageStore.errors.birthday,
-    setBirthdayError: pageStore.setBirthdayError,
+    parentForm: params.formStore.form,
+    setParentForm: params.formStore.setForm,
+    birthdayError: params.formStore.errors.birthday,
+    setBirthdayError: params.formStore.setBirthdayError,
   });
   // 確定ボタン押下時のハンドラ
   const handleConfirm = useConfirmHandler({
-    parentForm: pageStore.parentForm,
+    parentForm: params.formStore.form,
     currentLanguageType: params.sessionStore.languageType,
-    setLoading: pageStore.setLoading,
-    clearErrors: pageStore.clearErrors,
-    setNameError: pageStore.setNameError,
-    setEmailError: pageStore.setEmailError,
-    setPasswordError: pageStore.setPasswordError,
-    setBirthdayError: pageStore.setBirthdayError,
+    setLoading: params.setLoading,
+    clearErrors: params.formStore.clearErrors,
+    setNameError: params.formStore.setNameError,
+    setEmailError: params.formStore.setEmailError,
+    setPasswordError: params.formStore.setPasswordError,
+    setBirthdayError: params.formStore.setBirthdayError,
     shouldUpdate: params.shouldUpdate,
     handleParentForm: params.handleParentForm,
   });

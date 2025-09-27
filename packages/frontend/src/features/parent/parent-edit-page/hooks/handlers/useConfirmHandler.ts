@@ -1,22 +1,22 @@
 import { useCallback } from 'react';
-import { SetLoading, ClearErrors, SetNameError, SetEmailError, SetPasswordError, SetBirthdayError } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
 import { LanguageTypeValue } from '@backend/features/language/value-object/languageTypeValue';
 import { useParentFormValidationHandler as useParentFormValidationHandler } from './useParentFormValidationHandler';
 import { HandleParentForm } from '../../ParentEditPage';
 import { useAppNavigation } from '../../../../../../AppNavigator';
+import { ClearErrors, SetFormError } from '../../../../../core/stores/baseFormStore';
 
 /** 確定ボタン押下ハンドラーのカスタムフック
  * 親情報の登録を実行する */
 export const useConfirmHandler = (params: {
   parentForm: ParentForm,
   currentLanguageType: LanguageTypeValue,
-  setLoading: SetLoading,
+  setLoading: (loading: boolean) => void,
   clearErrors: ClearErrors,
-  setNameError: SetNameError,
-  setEmailError: SetEmailError,
-  setPasswordError: SetPasswordError,
-  setBirthdayError: SetBirthdayError,
+  setNameError: SetFormError,
+  setEmailError: SetFormError,
+  setPasswordError: SetFormError,
+  setBirthdayError: SetFormError,
   shouldUpdate?: boolean,
   handleParentForm?: HandleParentForm
   

@@ -4,7 +4,6 @@ import { useTheme } from '@/core/theme';
 import { LoginForm } from '@/features/auth/login-page/models/loginForm';
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
-import { useLoginPageStore } from '../../src/features/auth/login-page/stores/loginPageStore';
 import { useLoginFormStore } from '../../src/features/auth/login-page/stores/loginFormStore';
 
 /**
@@ -13,12 +12,8 @@ import { useLoginFormStore } from '../../src/features/auth/login-page/stores/log
  */
 export const LoginPageSettingsPage: React.FC = () => {
   const { colors } = useTheme();
-  const loginPageStore = useLoginPageStore();
   const loginFormStore = useLoginFormStore();
 
-  // 現在の状態を取得
-  const [isLoading, setIsLoading] = useState(loginPageStore.isLoading);
-  const [isDialogVisible, setIsDialogVisible] = useState(loginPageStore.isDialogVisible);
 
   const presets = [
     {
@@ -27,10 +22,6 @@ export const LoginPageSettingsPage: React.FC = () => {
       icon: '🔄',
       action: () => {
         loginFormStore.setForm(LoginForm.initialize());
-        loginPageStore.setLoading(false);
-        loginPageStore.hideDialog();
-        setIsLoading(false);
-        setIsDialogVisible(false);
         Alert.alert('設定完了', 'ログイン画面を初期状態にリセットしました');
       },
     },
@@ -61,20 +52,6 @@ export const LoginPageSettingsPage: React.FC = () => {
     },
   ];
 
-  const handleLoadingToggle = (value: boolean) => {
-    setIsLoading(value);
-    loginPageStore.setLoading(value);
-  };
-
-  const handleDialogToggle = (value: boolean) => {
-    setIsDialogVisible(value);
-    if (value) {
-      loginPageStore.showDialog();
-    } else {
-      loginPageStore.hideDialog();
-    }
-  };
-
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       {/* ヘッダー */}
@@ -85,47 +62,6 @@ export const LoginPageSettingsPage: React.FC = () => {
         <Text style={[styles.headerSubtitle, { color: colors.text.secondary }]}>
           ログイン画面のストア状態を設定・テスト
         </Text>
-      </View>
-
-      {/* boolean状態設定 */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          ⚡ 状態設定
-        </Text>
-        
-        <View style={[styles.toggleContainer, { backgroundColor: colors.surface.elevated }]}>
-          <View style={styles.toggleItem}>
-            <Text style={[styles.toggleLabel, { color: colors.text.primary }]}>
-              ローディング状態
-            </Text>
-            <Switch
-              value={isLoading}
-              onValueChange={handleLoadingToggle}
-              trackColor={{ false: '#d1d5db', true: '#10b981' }}
-              thumbColor={isLoading ? '#ffffff' : '#ffffff'}
-            />
-          </View>
-          <Text style={[styles.toggleDescription, { color: colors.text.secondary }]}>
-            {isLoading ? '🔄 読み込み中表示' : '⏸️ 通常状態'}
-          </Text>
-        </View>
-
-        <View style={[styles.toggleContainer, { backgroundColor: colors.surface.elevated }]}>
-          <View style={styles.toggleItem}>
-            <Text style={[styles.toggleLabel, { color: colors.text.primary }]}>
-              家族選択ダイアログ
-            </Text>
-            <Switch
-              value={isDialogVisible}
-              onValueChange={handleDialogToggle}
-              trackColor={{ false: '#d1d5db', true: '#3b82f6' }}
-              thumbColor={isDialogVisible ? '#ffffff' : '#ffffff'}
-            />
-          </View>
-          <Text style={[styles.toggleDescription, { color: colors.text.secondary }]}>
-            {isDialogVisible ? '💬 ダイアログ表示中' : '📱 画面表示中'}
-          </Text>
-        </View>
       </View>
 
       {/* プリセット設定 */}

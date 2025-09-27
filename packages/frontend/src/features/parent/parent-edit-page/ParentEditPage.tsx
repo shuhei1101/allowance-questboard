@@ -1,8 +1,8 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useEffect, useState } from 'react';
 import { ParentNameInputFieldEntry } from './components/ParentNameInputFieldEntry';
 import { useTheme } from '@/core/theme';
-import { useParentEditPageStore } from './stores/parentEditPageStore';
+import { useParentFormStore } from './stores/parentFormStore';
 import { parentEditPageHandlers } from './hooks/parentEditPageHandlers';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { createAuthenticatedClient } from '@/core/api/trpcClient';
@@ -37,12 +37,17 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
   initialParentForm,
 }) => {
   const { colors } = useTheme();
-  const pageStore = useParentEditPageStore();
+  const formStore = useParentFormStore();
   const sessionStore = useSessionStore();
   const iconStore = useIconStore();
   const navigation = useAppNavigation();
   const { t } = useTranslation();
-  
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  // 画面離脱時のクリーンアップ
+  useEffect(() => {
+      formStore.resetForm(); // フォームストアのリセット
+  }, []);
 
   // 親ルーターの作成
   const parentRouter = createAuthenticatedClient({
@@ -50,13 +55,21 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
     languageType: sessionStore.languageType,
   }).parent.getParent;
 
-  // 親データ初期化フック
+  // 親データ初期化フック（initialParentFormがない場合のみ実行される）
   useInitializeParentData({
-    parentId: parentId,
+    parentId: initialParentForm ? undefined : parentId, // initialParentFormがある場合はparentIdを無効化
     parentRouter: parentRouter,
     getAllIcons: iconStore.getAllIcons,
-    setParentForm: pageStore.setParentForm
+    setParentForm: formStore.setForm,
   });
+
+  // initialParentFormによる初期化
+  useEffect(() => {
+    if (initialParentForm) {
+      // 引数で渡された初期フォームデータをストアに設定
+      formStore.setForm(initialParentForm);
+    }
+  }, [initialParentForm, formStore]);
 
   // 統合フックで全ハンドラーを取得
   const {
@@ -70,7 +83,9 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
     shouldUpdate,
     parentId,
     handleParentForm,
-    sessionStore
+    sessionStore,
+    formStore,
+    setLoading
   });
 
   // 確定ボタン
@@ -79,13 +94,13 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
       headerRight: () => (
         <ComfirmButton
           onPress={handleConfirm}
-          disabled={!pageStore.parentForm.isValid}
-          loading={pageStore.isLoading}
+          disabled={!formStore.form.isValid}
+          loading={isLoading}
           variant="header"
         />
       ),
     });
-  }, [navigation, handleConfirm, pageStore.parentForm.isValid, pageStore.isLoading]);
+  }, [navigation, handleConfirm, formStore.form.isValid, isLoading]);
   
   return (
     <KeyboardAvoidingView 
@@ -101,37 +116,37 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
         <View style={styles.formContainer}>
           {/* 名前入力フィールド */}
           <ParentNameInputFieldEntry
-            value={pageStore.parentForm.name.value}
+            value={formStore.form.name.value}
             onChange={handleNameChange}
-            error={pageStore.errors.name || undefined}
+            error={formStore.errors.name || undefined}
           />
           
           {/* メールアドレス入力フィールド */}
           <EmailInputEntry
-            value={pageStore.parentForm.email.value}
+            value={formStore.form.email.value}
             onChange={handleEmailChange}
-            error={pageStore.errors.email || undefined}
+            error={formStore.errors.email || undefined}
           />
           
           {/* パスワード入力フィールド */}
           <PasswordInputEntry
-            value={pageStore.parentForm.password.value}
+            value={formStore.form.password.value}
             onChange={handlePasswordChange}
-            error={pageStore.errors.password || undefined}
+            error={formStore.errors.password || undefined}
           />
           
           {/* アイコン選択ボタン */}
           <IconSelectButtonEntry
-            selectedIcon={pageStore.parentForm.icon}
+            selectedIcon={formStore.form.icon}
             onIconSelected={handleIconSelect}
             title={t('shared.components.iconSelectButtonEntry.fieldTitle')}
           />
           
           {/* 誕生日入力フィールド */}
           <BirthdayInputEntry
-            value={pageStore.parentForm.birthday.toISOString()}
+            value={formStore.form.birthday.toISOString()}
             onChange={handleBirthdayChange}
-            error={pageStore.errors.birthday || undefined}
+            error={formStore.errors.birthday || undefined}
           />
         </View>
       </ScrollView>

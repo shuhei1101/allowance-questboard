@@ -4,18 +4,19 @@ import { useRegisterUserHandler } from './handlers/useRegisterUserHandler';
 import { useForgotPasswordHandler } from './handlers/useForgotPasswordHandler';
 import { useTermsOfServiceHandler } from './handlers/useTermsOfServiceHandler';
 import { login } from '../services/login';
-import { LoginPageStore } from '../stores/loginPageStore';
 import { createAuthenticatedClient } from '../../../../core/api/trpcClient';
 import { LoginFormStore } from '../stores/loginFormStore';
 import { SessionStore } from '../../../../core/constants/sessionStore';
 import { usePasswordHandler } from './handlers/usePasswordHandler';
+import { SetJwtToken } from '../../services/jwtStorage';
 
 /** ログインページの全ハンドルを統合したカスタムフック
  * ログインページで使用する全てのイベントハンドルを一括で提供 */
 export const createLoginPageHandlers = (params: {
-  pageStore: LoginPageStore,
   formStore: LoginFormStore,
-  sessionStore: SessionStore
+  sessionStore: SessionStore,
+  setJwtToken: SetJwtToken,
+  setLoading: (loading: boolean) => void,
 }) => {
   /** Email変更時のハンドル */
   const handleEmailChange = useEmailHandler({
@@ -38,10 +39,10 @@ export const createLoginPageHandlers = (params: {
     currentLanguageType: params.sessionStore.languageType,
     setEmailError: params.formStore.setEmailError,
     setPasswordError: params.formStore.setPasswordError,
-    setLoading: params.pageStore.setLoading,
+    setLoading: params.setLoading,
     login: login,
     createAuthenticatedClient: createAuthenticatedClient,
-    setJwtToken: params.sessionStore.jwtStorage.setToken
+    setJwtToken: params.setJwtToken
   });
   /** ユーザー作成時のハンドル */
   const handleUserCreate = useRegisterUserHandler({

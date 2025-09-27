@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { SetParentForm, SetNameError, NameError } from '../../stores/parentEditPageStore';
 import { ParentForm } from '../../models/parentForm';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
+import { FormError, SetForm, SetFormError } from '../../../../../core/stores/baseFormStore';
 
 /**
  * 名前変更ハンドラーのカスタムフック
@@ -10,9 +10,9 @@ import { ParentName } from '@backend/features/parent/value-object/parentName';
  */
 export const useNameHandler = (params: {
   parentForm: ParentForm,
-  setParentForm: SetParentForm,
-  nameError: NameError,
-  setNameError: SetNameError
+  setParentForm: SetForm<ParentForm>,
+  nameError: FormError,
+  setNameError: SetFormError
 }) => {
   return useCallback((name: string) => {
     try {

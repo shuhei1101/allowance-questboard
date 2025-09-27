@@ -7,7 +7,6 @@ import { AuthErrorMessages } from '@backend/core/messages/authErrorMessages';
 import { AppError } from '@backend/core/errors/appError';
 import { useUserCreateFormValidationHandler } from '../../validations/useUserCreateFormValidationHandler';
 import { ClearErrors, SetForm, SetFormError } from '../../../../../core/stores/baseFormStore';
-import { SetLoading } from '../../../../../core/stores/basePageStore';
 import { useAppNavigation } from '../../../../../../AppNavigator';
 import { AuthStackMeta } from '../../../AuthNavigator';
 import { LoginForm } from '../../../login-page/models/loginForm';
@@ -18,7 +17,7 @@ export type UseUserRegisterHandler = (params: {
   clearErrors: ClearErrors,
   setEmailError: SetFormError,
   setPasswordError: SetFormError,
-  setLoading: SetLoading,
+  setLoading: (loading: boolean) => void,
   setLoginForm: SetForm<LoginForm>
 }) => () => Promise<void>;
 

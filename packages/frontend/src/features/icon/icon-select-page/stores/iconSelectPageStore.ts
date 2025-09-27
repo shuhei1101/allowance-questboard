@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 import { StoreApi } from 'zustand';
-import { BasePageStore, BasePageProperties, BasePageActions } from '../../../../core/stores/basePageStore';
 import { IconCategoryId } from '@backend/features/icon-category/value-objects/iconCategoryId';
 import { Icon } from '@backend/features/icon/domain/icon';
 import { IconCategories } from '@backend/features/icon-category/domain/iconCategories';
 import { Icons } from '@backend/features/icon/domain/icons';
+import { BaseStore, BaseStoreActions, BaseStoreProperties } from '../../../../core/stores/BaseStore';
 
 // 関数シグネチャ
 export type Initialize = (iconCategories: IconCategories, initialSelectedIcon?: Icon) => void;
 export type SelectCategory = (categoryId: IconCategoryId) => void;
 export type SelectIcon = (icon: Icon) => void;
 
-interface IconSelectPageProperties extends BasePageProperties {
+interface IconSelectPageProperties extends BaseStoreProperties {
   /** アイコンカテゴリ */
   iconCategories: IconCategories;
   /** 選択中のカテゴリID */
@@ -22,7 +22,7 @@ interface IconSelectPageProperties extends BasePageProperties {
   currentCategoryIcons: Icons;
 }
 
-interface IconSelectPageActions extends BasePageActions {
+interface IconSelectPageActions extends BaseStoreActions {
   /** 初期化 */
   initialize: Initialize;
   /** カテゴリ選択 */
@@ -31,7 +31,7 @@ interface IconSelectPageActions extends BasePageActions {
   selectIcon: SelectIcon;
 }
 
-class IconSelectPageStoreClass extends BasePageStore<IconSelectPageProperties, IconSelectPageActions> {
+class IconSelectPageStoreClass extends BaseStore<IconSelectPageProperties, IconSelectPageActions> {
   
   protected buildDefaultProperties(): IconSelectPageProperties {
     return {
@@ -86,8 +86,8 @@ class IconSelectPageStoreClass extends BasePageStore<IconSelectPageProperties, I
   }
 
   protected buildActions(
-    set: StoreApi<IconSelectPageProperties & BasePageActions & IconSelectPageActions>['setState'],
-    get: StoreApi<IconSelectPageProperties & BasePageActions & IconSelectPageActions>['getState']
+    set: StoreApi<IconSelectPageProperties & BaseStoreActions & IconSelectPageActions>['setState'],
+    get: StoreApi<IconSelectPageProperties & BaseStoreActions & IconSelectPageActions>['getState']
   ): IconSelectPageActions {
     return {
       ...super.buildActions(set, get),

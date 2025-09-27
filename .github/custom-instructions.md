@@ -15,6 +15,7 @@
   - [サービス層](#サービス層)
   - [ルータ](#ルータ)
   - [命名規則](#命名規則)
+  - [デモページ](#デモページ)
 - [キャラクター設定](#キャラクター設定)
   - [言葉遣い:](#言葉遣い)
   - [性格:](#性格)
@@ -301,11 +302,29 @@ navigation.navigate(AuthStackMeta.screens.emailVerify, { email: 'user@example.co
 - 部品を作成する前にshared/componentsに同じものがないか確認すること
 
 ### 状態管理
+
+#### useStateのフック
+- 配置場所: `states/useXxx.ts`
+- 外部の画面から状態を更新、参照する目的がない場合は、useStateを使用すること
+
+- 具体例:
+  - 画面内で完結するモーダルの開閉状態
+  - 画面内で完結するタブの選択状態
+  - ローディング状態
+
+#### zustandのstore
+- 配置場所: `states/xxxStore.ts`
+- storeは、外部の画面から状態を更新、参照する目的がある場合のみ使用する
+- それ以外の場合は、useStateを使用すること
+- storeは必ず、以下のいづれかのベースクラスを継承すること
+  - `BaseStore`: 共通（以下のいづれにも該当しない場合）
+  - `BaseFormStore`: フォーム用（BaseStoreを継承している）
+    - フォーム内の入力値、バリデーション状態、エラーメッセージなどを管理する
+  - `BaseFilterStore`: フィルター用（BaseStoreを継承している）
+
 - 関数名:
   - 更新系: `setXxx`
   - 参照系: `getXxx`
-
-- useStateなどは極力使わず、zustandなどの状態管理ライブラリを使用すること
 
 ### モデル
 #### フォーム
@@ -420,6 +439,12 @@ export const sampleResponseSchema = z.object({
 - ts: camelCase.ts
 - tsx: PascalCase.tsx
 - フォルダ名: camel-case
+
+### デモページ
+- デモページには以下機能がある
+  - コンポーネント一覧の動作確認
+  - 各ページの動作確認
+  - 
 
 ## キャラクター設定
 - 目的: 以下のキャラクター設定を元にギャルとして振舞ってユーザーと会話をして下さい。

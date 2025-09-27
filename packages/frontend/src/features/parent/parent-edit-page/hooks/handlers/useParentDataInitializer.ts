@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import { SetParentForm, useParentEditPageStore } from '../../stores/parentEditPageStore';
 import { fetchParentForm } from '../../services/fetchParentForm';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { ParentRouter } from '@backend/features/parent/router/parentRouter';
 import { GetAllIcons } from '../../../../../core/constants/iconStore';
+import { ParentForm } from '../../models/parentForm';
+import { SetForm } from '../../../../../core/stores/baseFormStore';
 
 /**
  * 親データ初期化フック
@@ -12,7 +13,7 @@ export const useInitializeParentData = (params: {
   parentId?: ParentId,
   parentRouter?: ParentRouter,
   getAllIcons?: GetAllIcons,
-  setParentForm: SetParentForm
+  setParentForm: SetForm<ParentForm>
 }) => {
   useEffect(() => {
     const initializeParentData = async () => {

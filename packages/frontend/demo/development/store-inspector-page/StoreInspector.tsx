@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useParentEditPageStore } from '@/features/parent/parent-edit-page/stores/parentEditPageStore';
 import { JwtStorage } from '../../../src/features/auth/services/jwtStorage';
-import { useLoginPageStore } from '../../../src/features/auth/login-page/stores/loginPageStore';
 import { useLoginFormStore } from '../../../src/features/auth/login-page/stores/loginFormStore';
 import { useSessionStore } from '../../../src/core/constants/sessionStore';
 
@@ -13,10 +11,7 @@ import { useSessionStore } from '../../../src/core/constants/sessionStore';
  */
 export const StoreInspector: React.FC = () => {
   const { colors } = useTheme();
-  const loginPageStore = useLoginPageStore();
-  const loginFormStore = useLoginFormStore();
   const sessionStore = useSessionStore();
-  const parentEditPageStore = useParentEditPageStore();
   const [jwt, setJwt] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -73,137 +68,6 @@ export const StoreInspector: React.FC = () => {
             </Text>
           </View>
         </View>
-      </View>
-
-      {/* ログインページストア */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          🔑 ログインページストア
-        </Text>
-        
-        <View style={[styles.storeContainer, { backgroundColor: colors.surface.elevated }]}>
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              ローディング中:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.isLoading ? 'はい' : 'いいえ'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              ダイアログ表示:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginPageStore.isDialogVisible ? 'はい' : 'いいえ'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              メール:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginFormStore.form.email.value || '未入力'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              パスワード:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginFormStore.form.password.value ? '●'.repeat(loginFormStore.form.password.value.length) : '未入力'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              メールエラー:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {loginFormStore.errors.email || '無し'}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      {/* 親編集ページストア */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          👤 親編集ページストア
-        </Text>
-        
-        <View style={[styles.storeContainer, { backgroundColor: colors.surface.elevated }]}>
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              ローディング中:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {parentEditPageStore.isLoading ? 'はい' : 'いいえ'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              名前:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {parentEditPageStore.parentForm.name.value || '未入力'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              メール:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {parentEditPageStore.parentForm.email.value || '未入力'}
-            </Text>
-          </View>
-          
-          <View style={styles.storeRow}>
-            <Text style={[styles.storeLabel, { color: colors.text.secondary }]}>
-              誕生日:
-            </Text>
-            <Text style={[styles.storeValue, { color: colors.text.primary }]}>
-              {parentEditPageStore.parentForm.birthday.value.toDateString() || '未入力'}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      {/* アクション */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-          ⚡ アクション
-        </Text>
-        
-        <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: '#ef4444' }]}
-          onPress={() => {
-            console.log('🎯 Demo - Clearing all errors...');
-            parentEditPageStore.clearErrors();
-          }}
-        >
-          <Text style={styles.actionButtonText}>エラーをクリア</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: '#3b82f6' }]}
-          onPress={() => {
-            console.log('🎯 Demo - Setting loading states...');
-            loginPageStore.setLoading(true);
-            parentEditPageStore.setLoading(true);
-            setTimeout(() => {
-              loginPageStore.setLoading(false);
-              parentEditPageStore.setLoading(false);
-            }, 2000);
-          }}
-        >
-          <Text style={styles.actionButtonText}>ローディング状態テスト</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.footer}>
