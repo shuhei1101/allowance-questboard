@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 
 /**
  * BirthdayInputコンポーネント詳細ページ
@@ -10,9 +11,16 @@ export const BirthdayInputPage: React.FC = () => {
   const { colors } = useTheme();
 
   // プロパティの状態管理
-  const [value, setValue] = useState('1990-01-01');
+  const [value, setValue] = useState(Birthday.fromString('1990-01-01'));
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(false);
+
+  /** 誕生日を表示用の文字列にフォーマット */
+  const formatDisplayDate = (birthday: Birthday) => {
+    if (!birthday) return '';
+    const date = birthday.value;
+    return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+  };
 
   const handleReflectProps = () => {
     Alert.alert('プロパティ反映', 'BirthdayInputのプロパティが反映されました！');
@@ -51,13 +59,17 @@ export const BirthdayInputPage: React.FC = () => {
         <View style={[styles.propsEditor, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
-              入力値 (string)
+              入力値 (Birthday)
             </Text>
             <TextInput
               style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
-              value={value}
-              onChangeText={setValue}
-              placeholder="YYYY-MM-DD"
+              value={formatDisplayDate(value)}
+              onChangeText={(text) => {
+                // YYYY/MM/DD形式からYYYY-MM-DD形式に変換
+                const isoDateString = text.replace(/\//g, '-');
+                setValue(Birthday.fromString(isoDateString));
+              }}
+              placeholder="YYYY/MM/DD"
             />
           </View>
 

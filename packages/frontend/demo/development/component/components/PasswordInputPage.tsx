@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { PasswordInputField } from '@/features/shared/components/PasswordInput';
+import { Password } from '@backend/features/auth/value-object/password';
 
 /**
  * PasswordInputコンポーネント詳細ページ
@@ -10,7 +11,7 @@ export const PasswordInputPage: React.FC = () => {
   const { colors } = useTheme();
 
   // プロパティの状態管理
-  const [value, setValue] = useState('password123');
+  const [value, setValue] = useState(new Password('password123'));
   const [placeholder, setPlaceholder] = useState('パスワードを入力');
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(false);
@@ -53,12 +54,12 @@ export const PasswordInputPage: React.FC = () => {
         <View style={[styles.propsEditor, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
-              入力値 (string)
+              入力値 (Password)
             </Text>
             <TextInput
               style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
-              value={value}
-              onChangeText={setValue}
+              value={value.value}
+              onChangeText={(text) => setValue(new Password(text))}
               placeholder="パスワード"
               secureTextEntry={true}
             />
