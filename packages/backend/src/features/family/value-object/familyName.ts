@@ -1,18 +1,18 @@
 import { LocaleString } from "@backend/core/messages/localeString";
-import { BaseValueObject } from "@backend/core/value-object/baseValueObject";
+import { BaseFamilyName, BaseFamilyNameSchema } from "./baseFamilyName";
 import { z } from 'zod';
 
 /**
  * FamilyNameのZodスキーマ
  */
-export const FamilyNameSchema = z.string();
+export const FamilyNameSchema = BaseFamilyNameSchema;
 
 /**
  * 家族名を表す値オブジェクト
  */
-export class FamilyName extends BaseValueObject<string, typeof FamilyNameSchema> {
+export class FamilyName extends BaseFamilyName {
   constructor(value: string) {
-    super({ value });
+    super(value);
   }
 
   protected validate(): void {

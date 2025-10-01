@@ -1,12 +1,15 @@
 import React from 'react';
 import { EntryLayout } from '@/core/components/EntryLayout';
 import { FamilyNameInput } from './FamilyNameInput';
+import { FamilyOnlineName } from '@backend/features/family/value-object/familyOnlineName';
+import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
 
 export interface OnlineFamilyNameInputEntryProps {
   /** 入力値 */
-  value: string;
+  value: FamilyOnlineName;
   /** 値変更時のコールバック */
-  onChange: (value: string) => void;
+  onChange: (value: FamilyOnlineName) => void;
   /** プレースホルダー */
   placeholder?: string;
   /** エラーメッセージ */
@@ -26,6 +29,12 @@ export const OnlineFamilyNameInputEntry: React.FC<OnlineFamilyNameInputEntryProp
   error,
   disabled,
 }) => {
+  /** BaseFamilyName変更時にFamilyOnlineNameに変換してonChangeに渡す */
+  const handleFamilyNameChange = (familyName: BaseFamilyName) => {
+    const familyOnlineName = new FamilyOnlineName(familyName.value);
+    onChange(familyOnlineName);
+  };
+
   return (
     <EntryLayout
       title="オンライン家族名"
@@ -35,7 +44,7 @@ export const OnlineFamilyNameInputEntry: React.FC<OnlineFamilyNameInputEntryProp
     >
       <FamilyNameInput
         value={value}
-        onChange={onChange}
+        onChange={handleFamilyNameChange}
         placeholder={placeholder}
         error={error}
         disabled={disabled}

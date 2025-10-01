@@ -3,12 +3,13 @@ import { TextInput, StyleSheet } from 'react-native';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { Email } from '@backend/features/auth/value-object/email';
 
 interface EmailInputFieldProps {
   /** メールアドレスの値 */
-  value: string;
+  value: Email;
   /** 値変更時のコールバック */
-  onChange: (value: string) => void;
+  onChange: (value: Email) => void;
   /** プレースホルダーテキスト */
   placeholder?: string;
   /** エラーメッセージ */
@@ -28,6 +29,12 @@ export const EmailInput: React.FC<EmailInputFieldProps> = ({
   const { t } = useTranslation();
   const hasError = !!error;
   
+  /** TextInputからの文字列入力をEmailに変換してonChangeに渡す */
+  const handleTextChange = (text: string) => {
+    const email = new Email(text);
+    onChange(email);
+  };
+
   // プレースホルダーのデフォルト値を翻訳
   const defaultPlaceholder = placeholder || t('auth.loginPage.emailPlaceholder');
 
@@ -43,8 +50,8 @@ export const EmailInput: React.FC<EmailInputFieldProps> = ({
           },
           hasError && { borderColor: colors.danger }
         ]}
-        value={value}
-        onChangeText={onChange}
+        value={value.value}
+        onChangeText={handleTextChange}
         placeholder={defaultPlaceholder}
         placeholderTextColor={colors.text.tertiary}
         keyboardType="email-address"

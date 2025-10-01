@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
+import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
 import { FamilyName } from '@backend/features/family/value-object/familyName';
 
 export interface FamilyNameInputProps {
   /** 入力値 */
-  value: FamilyName;
+  value: BaseFamilyName;
   /** 値変更時のコールバック */
-  onChange: (value: FamilyName) => void;
+  onChange: (value: BaseFamilyName) => void;
   /** プレースホルダー */
   placeholder?: string;
   /** エラーメッセージ */

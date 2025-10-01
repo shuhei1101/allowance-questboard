@@ -4,12 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { Password } from '@backend/features/auth/value-object/password';
 
 interface PasswordInputFieldProps {
   /** パスワードの値 */
-  value: string;
+  value: Password;
   /** 値変更時のコールバック */
-  onChange: (value: string) => void;
+  onChange: (value: Password) => void;
   /** プレースホルダーテキスト */
   placeholder?: string;
   /** エラーメッセージ */
@@ -31,6 +32,12 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const hasError = !!error;
   
+  /** TextInputからの文字列入力をPasswordに変換してonChangeに渡す */
+  const handleTextChange = (text: string) => {
+    const password = new Password(text);
+    onChange(password);
+  };
+
   // プレースホルダーのデフォルト値を翻訳
   const defaultPlaceholder = placeholder || t('auth.loginPage.passwordPlaceholder');
 
@@ -50,8 +57,8 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
       ]}>
         <TextInput
           style={[styles.input, { color: colors.text.primary }]}
-          value={value}
-          onChangeText={onChange}
+          value={value.value}
+          onChangeText={handleTextChange}
           placeholder={defaultPlaceholder}
           placeholderTextColor={colors.text.tertiary}
           secureTextEntry={secureTextEntry}
