@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { FamilyNameInput } from '@/features/family/family-register-page/components/FamilyNameInput';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
 
 /**
  * FamilyNameInputコンポーネント詳細ページ
@@ -10,7 +11,7 @@ export const FamilyNameInputPage: React.FC = () => {
   const { colors } = useTheme();
 
   // プロパティの状態管理
-  const [value, setValue] = useState('田中');
+  const [value, setValue] = useState(new FamilyName('田中'));
   const [placeholder, setPlaceholder] = useState('例: 田中');
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(false);
@@ -54,12 +55,12 @@ export const FamilyNameInputPage: React.FC = () => {
         <View style={[styles.propsEditor, { backgroundColor: colors.surface.elevated }]}>
           <View style={styles.propRow}>
             <Text style={[styles.propLabel, { color: colors.text.primary }]}>
-              入力値 (string)
+              入力値 (FamilyName)
             </Text>
             <TextInput
               style={[styles.textInput, { borderColor: colors.border.light, color: colors.text.primary }]}
-              value={value}
-              onChangeText={setValue}
+              value={value.value}
+              onChangeText={(text) => setValue(new FamilyName(text))}
               placeholder="家族名"
             />
           </View>

@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
 
 export interface FamilyNameInputProps {
   /** 入力値 */
-  value: string;
+  value: FamilyName;
   /** 値変更時のコールバック */
-  onChange: (value: string) => void;
+  onChange: (value: FamilyName) => void;
   /** プレースホルダー */
   placeholder?: string;
   /** エラーメッセージ */
@@ -27,6 +28,12 @@ export const FamilyNameInput: React.FC<FamilyNameInputProps> = ({
 }) => {
   const { colors } = useTheme();
 
+  /** TextInputからの文字列入力をFamilyNameに変換してonChangeに渡す */
+  const handleTextChange = (text: string) => {
+    const familyName = new FamilyName(text);
+    onChange(familyName);
+  };
+
   return (
     <View style={styles.container}>
       <View style={[
@@ -42,8 +49,8 @@ export const FamilyNameInput: React.FC<FamilyNameInputProps> = ({
             styles.textInput,
             { color: colors.text.primary },
           ]}
-          value={value}
-          onChangeText={onChange}
+          value={value.value}
+          onChangeText={handleTextChange}
           placeholder={placeholder}
           placeholderTextColor={colors.text.tertiary}
           editable={!disabled}
