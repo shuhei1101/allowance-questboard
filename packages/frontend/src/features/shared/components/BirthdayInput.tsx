@@ -4,10 +4,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 
 interface Props {
-  value: string;
-  onChange: (date: string) => void;
+  value: Birthday;
+  onChange: (value: Birthday) => void;
   error?: string;
 }
 
@@ -19,12 +20,14 @@ export const BirthdayInput: React.FC<Props> = ({ value, onChange, error }) => {
   const { colors } = useTheme();
   const [showPicker, setShowPicker] = useState(false);
 
-  const currentDate = value ? new Date(value) : new Date();
+  const currentDate = value ? value.value : new Date();
 
+  /** DateTimePickerからの日付選択をBirthdayに変換してonChangeに渡す */
   const handleDateChange = (event: any, selectedDate?: Date) => {
     setShowPicker(Platform.OS === 'ios');
     if (selectedDate) {
-      onChange(selectedDate.toISOString());
+      const birthday = new Birthday(selectedDate);
+      onChange(birthday);
     }
   };
 
@@ -32,9 +35,9 @@ export const BirthdayInput: React.FC<Props> = ({ value, onChange, error }) => {
     setShowPicker(true);
   };
 
-  const formatDisplayDate = (dateString: string) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
+  const formatDisplayDate = (birthday: Birthday) => {
+    if (!birthday) return '';
+    const date = birthday.value;
     return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
   };
 
