@@ -5,11 +5,13 @@ import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { Email } from '@backend/features/auth/value-object/email';
 
+export type OnEmailChange = (value: Email) => void;
+
 interface EmailInputFieldProps {
   /** メールアドレスの値 */
   value: Email;
   /** 値変更時のコールバック */
-  onChange: (value: Email) => void;
+  onChange: OnEmailChange;
   /** プレースホルダーテキスト */
   placeholder?: string;
   /** エラーメッセージ */

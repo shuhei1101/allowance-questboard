@@ -8,15 +8,15 @@ export type UseEmailHandler = (params: {
   setUserRegisterForm: SetForm<UserRegisterForm>,
   emailError: FormError,
   setEmailError: SetFormError
-}) => (value: string) => void;
+}) => (value: Email) => void;
 
 /** メール変更ハンドラーのカスタムフック
  *
  * メールアドレスの値を更新し、エラーをクリアする */
 export const useEmailHandler: UseEmailHandler = (params) => {
-  return useCallback((value: string) => {
+  return useCallback((value: Email) => {
     const updatedForm = new UserRegisterForm({ 
-      email: new Email(value), 
+      email: value, 
       password: params.userRegisterForm.password 
     });
 

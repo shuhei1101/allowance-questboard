@@ -1,12 +1,13 @@
 import React from 'react';
 import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
-import { EmailInput } from './EmailInput';
+import { EmailInput, OnEmailChange } from './EmailInput';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { Email } from '../../../../../backend/src/features/auth/value-object/email';
 
 interface Props {
-  value: string;
-  onChange: (text: string) => void;
+  value: Email;
+  onChange: OnEmailChange;
   error?: string;
   placeholder?: string;
 }

@@ -8,16 +8,16 @@ export type UsePasswordHandler = (params: {
   setUserRegisterForm: SetForm<UserRegisterForm>,
   passwordError: FormError,
   setPasswordError: SetFormError
-}) => (value: string) => void;
+}) => (value: Password) => void;
 
 /** パスワード変更ハンドラーのカスタムフック
  *
  * パスワードの値を更新し、エラーをクリアする */
 export const usePasswordHandler: UsePasswordHandler = (params) => {
-  return useCallback((value: string) => {
+  return useCallback((value: Password) => {
     const updatedForm = new UserRegisterForm({
       email: params.userRegisterForm.email,
-      password: new Password(value)
+      password: value
     });
 
     params.setUserRegisterForm(updatedForm);

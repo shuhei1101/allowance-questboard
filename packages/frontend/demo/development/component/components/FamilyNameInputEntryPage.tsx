@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { FamilyNameInputEntry } from '@/features/family/family-register-page/components/FamilyNameInputEntry';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
+import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
 
 /**
  * FamilyNameInputEntry デモページ
@@ -9,18 +11,18 @@ import { FamilyNameInputEntry } from '@/features/family/family-register-page/com
  */
 export const FamilyNameInputEntryPage: React.FC = () => {
   const { colors } = useTheme();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<BaseFamilyName>(new FamilyName(''));
   const [error, setError] = useState<string | undefined>();
   const [disabled, setDisabled] = useState(false);
 
   // バリデーション例
-  const handleChange = (newValue: string) => {
+  const handleChange = (newValue: BaseFamilyName) => {
     setValue(newValue);
     
     // エラーの例
-    if (newValue.length > 10) {
+    if (newValue.value.length > 10) {
       setError('家族名は10文字以内で入力してください');
-    } else if (newValue.includes(' ')) {
+    } else if (newValue.value.includes(' ')) {
       setError('家族名にスペースは使用できません');
     } else {
       setError(undefined);
@@ -66,7 +68,7 @@ export const FamilyNameInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <FamilyNameInputEntry
-              value="とても長い家族名"
+              value={new FamilyName('とても長い家族名')}
               onChange={() => {}}
               error="家族名は10文字以内で入力してください"
             />
@@ -80,7 +82,7 @@ export const FamilyNameInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <FamilyNameInputEntry
-              value="田中"
+              value={new FamilyName('田中')}
               onChange={() => {}}
               disabled
             />
@@ -95,7 +97,7 @@ export const FamilyNameInputEntryPage: React.FC = () => {
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <FamilyNameInputEntry
               title="ご家族名"
-              value="山田"
+              value={new FamilyName('山田')}
               onChange={() => {}}
               placeholder="ご家族名を入力してください"
             />
@@ -109,7 +111,7 @@ export const FamilyNameInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.debugInfo, { backgroundColor: colors.surface.elevated }]}>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
-              入力値: "{value}"
+              入力値: "{value.value}"
             </Text>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
               エラー: {error || 'なし'}

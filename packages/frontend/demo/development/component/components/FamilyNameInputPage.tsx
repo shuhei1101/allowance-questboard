@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Switch
 import { useTheme } from '@/core/theme';
 import { FamilyNameInput } from '@/features/family/family-register-page/components/FamilyNameInput';
 import { FamilyName } from '@backend/features/family/value-object/familyName';
+import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
 
 /**
  * FamilyNameInputコンポーネント詳細ページ
@@ -11,7 +12,7 @@ export const FamilyNameInputPage: React.FC = () => {
   const { colors } = useTheme();
 
   // プロパティの状態管理
-  const [value, setValue] = useState(new FamilyName('田中'));
+  const [value, setValue] = useState<BaseFamilyName>(new FamilyName('田中'));
   const [placeholder, setPlaceholder] = useState('例: 田中');
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(false);

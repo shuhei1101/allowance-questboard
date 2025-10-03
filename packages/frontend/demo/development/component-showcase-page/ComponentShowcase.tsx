@@ -6,6 +6,9 @@ import { PasswordInputField } from '@/features/shared/components/PasswordInput';
 import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
 import { ComfirmButton } from '../../../src/features/shared/components/ComfirmButton';
+import { Email } from '@backend/features/auth/value-object/email';
+import { Password } from '@backend/features/auth/value-object/password';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 
 /**
  * コンポーネントショーケース
@@ -13,9 +16,9 @@ import { ComfirmButton } from '../../../src/features/shared/components/ComfirmBu
  */
 export const ComponentShowcase: React.FC = () => {
   const { colors } = useTheme();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [birthday, setBirthday] = React.useState('');
+  const [email, setEmail] = React.useState(new Email(''));
+  const [password, setPassword] = React.useState(new Password(''));
+  const [birthday, setBirthday] = React.useState(Birthday.fromString('2000-01-01'));
   const [selectedIcon, setSelectedIcon] = React.useState('star'); // Ioniconsアイコン名
 
   return (
@@ -127,13 +130,13 @@ export const ComponentShowcase: React.FC = () => {
         
         <View style={styles.stateContainer}>
           <Text style={[styles.stateLabel, { color: colors.text.secondary }]}>
-            メール: {email || '未入力'}
+            メール: {email.value || '未入力'}
           </Text>
           <Text style={[styles.stateLabel, { color: colors.text.secondary }]}>
-            パスワード: {password ? '●'.repeat(password.length) : '未入力'}
+            パスワード: {password.value ? '●'.repeat(password.value.length) : '未入力'}
           </Text>
           <Text style={[styles.stateLabel, { color: colors.text.secondary }]}>
-            誕生日: {birthday || '未入力'}
+            誕生日: {birthday ? `${birthday.value.getFullYear()}/${String(birthday.value.getMonth() + 1).padStart(2, '0')}/${String(birthday.value.getDate()).padStart(2, '0')}` : '未入力'}
           </Text>
           <Text style={[styles.stateLabel, { color: colors.text.secondary }]}>
             選択アイコン: {selectedIcon || '未選択'}

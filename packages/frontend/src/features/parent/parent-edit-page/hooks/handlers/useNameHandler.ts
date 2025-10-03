@@ -14,10 +14,10 @@ export const useNameHandler = (params: {
   nameError: FormError,
   setNameError: SetFormError
 }) => {
-  return useCallback((name: string) => {
+  return useCallback((name: ParentName) => {
     try {
       const updatedForm = new ParentForm({
-        name: new ParentName(name),
+        name: name,
         email: params.parentForm.email,
         password: params.parentForm.password,
         icon: params.parentForm.icon,

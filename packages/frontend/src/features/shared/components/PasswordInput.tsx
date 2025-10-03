@@ -6,11 +6,13 @@ import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { Password } from '@backend/features/auth/value-object/password';
 
+export type OnPasswordChange = (value: Password) => void;
+
 interface PasswordInputFieldProps {
   /** パスワードの値 */
   value: Password;
   /** 値変更時のコールバック */
-  onChange: (value: Password) => void;
+  onChange: OnPasswordChange;
   /** プレースホルダーテキスト */
   placeholder?: string;
   /** エラーメッセージ */

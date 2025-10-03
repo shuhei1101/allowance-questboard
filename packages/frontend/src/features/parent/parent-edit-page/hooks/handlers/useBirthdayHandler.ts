@@ -14,14 +14,14 @@ export const useBirthdayHandler = (params: {
   birthdayError: FormError,
   setBirthdayError: SetFormError
 }) => {
-  return useCallback((birthday: string) => {
+  return useCallback((birthday: Birthday) => {
     try {
       const updatedForm = new ParentForm({
         name: params.parentForm.name,
         email: params.parentForm.email,
         password: params.parentForm.password,
         icon: params.parentForm.icon,
-        birthday: Birthday.fromString(birthday),
+        birthday: birthday,
       });
       params.setParentForm(updatedForm);
       

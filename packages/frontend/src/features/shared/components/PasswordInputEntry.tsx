@@ -1,11 +1,12 @@
 import React from 'react';
 import { EntryLayout } from '@/core/components/EntryLayout';
-import { PasswordInputField } from './PasswordInput';
+import { OnPasswordChange, PasswordInputField } from './PasswordInput';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { Password } from '../../../../../backend/src/features/auth/value-object/password';
 
 interface Props {
-  value: string;
-  onChange: (text: string) => void;
+  value: Password;
+  onChange: OnPasswordChange;
   error?: string;
   placeholder?: string;
 }

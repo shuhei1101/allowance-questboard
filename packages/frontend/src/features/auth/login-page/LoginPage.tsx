@@ -68,14 +68,14 @@ export const LoginPage: React.FC = () => {
         <View style={styles.formContainer}>
           {/* Email入力フィールド */}
           <EmailInput
-            value={formStore.form.email.value}
+            value={formStore.form.email}
             onChange={handleEmailChange}
             error={formStore.errors.email || undefined}
           />
           
           {/* Password入力フィールド */}
           <PasswordInputField
-            value={formStore.form.password.value}
+            value={formStore.form.password}
             onChange={handlePasswordChange}
             error={formStore.errors.password || undefined}
           />

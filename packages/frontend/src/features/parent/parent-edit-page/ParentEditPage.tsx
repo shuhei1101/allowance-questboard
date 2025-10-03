@@ -116,21 +116,21 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
         <View style={styles.formContainer}>
           {/* 名前入力フィールド */}
           <ParentNameInputFieldEntry
-            value={formStore.form.name.value}
+            value={formStore.form.name}
             onChange={handleNameChange}
             error={formStore.errors.name || undefined}
           />
           
           {/* メールアドレス入力フィールド */}
           <EmailInputEntry
-            value={formStore.form.email.value}
+            value={formStore.form.email}
             onChange={handleEmailChange}
             error={formStore.errors.email || undefined}
           />
           
           {/* パスワード入力フィールド */}
           <PasswordInputEntry
-            value={formStore.form.password.value}
+            value={formStore.form.password}
             onChange={handlePasswordChange}
             error={formStore.errors.password || undefined}
           />
@@ -144,7 +144,7 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
           
           {/* 誕生日入力フィールド */}
           <BirthdayInputEntry
-            value={formStore.form.birthday.toISOString()}
+            value={formStore.form.birthday}
             onChange={handleBirthdayChange}
             error={formStore.errors.birthday || undefined}
           />

@@ -72,7 +72,7 @@ export const UserRegisterPage: React.FC = () => {
       <View style={styles.formContainer}>
         {/* Email入力フィールド */}
         <EmailInputEntry
-          value={formStore.form.email.value}
+          value={formStore.form.email}
           onChange={handleEmailChange}
           error={formStore.errors.email}
           placeholder={t('auth.userRegister.emailPlaceholder')}
@@ -80,7 +80,7 @@ export const UserRegisterPage: React.FC = () => {
         
         {/* Password入力フィールド */}
         <PasswordInputEntry
-          value={formStore.form.password.value}
+          value={formStore.form.password}
           onChange={handlePasswordChange}
           error={formStore.errors.password}
           placeholder={t('auth.userRegister.passwordPlaceholder')}

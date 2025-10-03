@@ -14,9 +14,9 @@ export const useEmailHandler = (params: {
   emailError: FormError,
   setEmailError: SetFormError
 }) => {
-  return useCallback((value: string) => {
+  return useCallback((value: Email) => {
     const updatedForm = new LoginForm({ 
-      email: new Email(value), 
+      email: value, 
       password: params.loginForm.password 
     });
     

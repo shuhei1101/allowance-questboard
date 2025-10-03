@@ -6,9 +6,11 @@ import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { ParentName } from '@backend/features/parent/value-object/parentName';
 
+export type OnParentNameChange = (value: ParentName) => void;
+
 interface Props {
   value: ParentName;
-  onChange: (value: ParentName) => void;
+  onChange: OnParentNameChange;
   error?: string;
 }
 

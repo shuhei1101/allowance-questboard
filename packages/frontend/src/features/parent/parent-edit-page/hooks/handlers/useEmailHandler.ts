@@ -14,11 +14,11 @@ export const useEmailHandler = (params: {
   emailError: FormError,
   setEmailError: SetFormError
 }) => {
-  return useCallback((email: string) => {
+  return useCallback((email: Email) => {
     try {
       const updatedForm = new ParentForm({
         name: params.parentForm.name,
-        email: new Email(email),
+        email: email,
         password: params.parentForm.password,
         icon: params.parentForm.icon,
         birthday: params.parentForm.birthday,
