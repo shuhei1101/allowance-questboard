@@ -21,6 +21,12 @@ export const ScreenListPage: React.FC = () => {
       color: '#10b981',
     },
     {
+      id: 'family-register',
+      title: '👪 家族登録画面',
+      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'family-register' } }),
+      color: '#8b5cf6',
+    },
+    {
       id: 'parent-edit',
       title: '👤 親編集画面',
       onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'parent-edit' } }),

@@ -135,6 +135,20 @@ export const ComponentListPage: React.FC = () => {
       ],
     },
     {
+      key: 'family-register-page',
+      title: '👪 家族登録画面',
+      path: 'src/features/family/family-register-page',
+      description: '家族登録メイン画面',
+      components: [
+        {
+          id: 'family-register-page',
+          name: 'FamilyRegisterPage',
+          description: '家族登録メイン画面（全コンポーネント統合）',
+          screen: DemoStackMeta.screens.familyRegisterPageDemo,
+        },
+      ],
+    },
+    {
       key: 'core-components',
       title: '🧩 コアコンポーネント',
       path: 'src/core/components',

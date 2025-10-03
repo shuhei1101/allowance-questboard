@@ -23,7 +23,7 @@ export const ParentInfoInput: React.FC<ParentInfoInputProps> = ({
   parent,
   onPress,
   disabled = false,
-  placeholder = '(未設定)',
+  placeholder = '未設定',
 }) => {
   const { colors } = useTheme();
 
@@ -41,7 +41,7 @@ export const ParentInfoInput: React.FC<ParentInfoInputProps> = ({
             fontStyle: parent ? 'normal' : 'italic',
           }
         ]}>
-          {parent ? `(${parent.name.value})` : placeholder}
+          {parent ? `${parent.name.value}` : placeholder}
         </Text>
       </View>
     </NavigationEntryLayout>

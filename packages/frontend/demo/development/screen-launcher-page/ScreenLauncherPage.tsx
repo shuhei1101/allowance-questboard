@@ -26,6 +26,9 @@ export const ScreenLauncherPage: React.FC = () => {
       case 'login':
         navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.DemoLoginPage });
         break;
+      case 'family-register':
+        navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.DemoFamilyRegisterPage });
+        break;
       case 'parent-edit':
         navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.DemoParentEditPage });
         break;
@@ -190,6 +193,12 @@ function getScreenInfo(screenType: string) {
       icon: '🔐',
       description: 'メール・パスワード認証、家族作成、パスワードリセット機能',
       color: '#10b981',
+    },
+    'family-register': {
+      title: '家族登録画面',
+      icon: '👪',
+      description: '新規家族と親情報の登録画面',
+      color: '#8b5cf6',
     },
     'parent-edit': {
       title: '親編集画面',

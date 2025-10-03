@@ -26,6 +26,7 @@ import { IconSelectEntryPage } from './development/component/components/IconSele
 import { IconSelectInputEntryPage } from './development/component/components/IconSelectInputEntryPage';
 import { ParentInfoInputPage } from './development/component/components/ParentInfoInputPage';
 import { ParentInfoInputEntryPage } from './development/component/components/ParentInfoInputEntryPage';
+import { FamilyRegisterPageDemo } from './development/component/components/FamilyRegisterPageDemo';
 import { NavigationEntryLayoutPage } from './development/component/components/NavigationEntryLayoutPage';
 import { SessionSettingsPage } from './test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage';
@@ -54,6 +55,8 @@ export const DemoStackMeta = {
     iconSelectInputEntryPage: "IconSelectInputEntryPage",
     parentInfoInputPage: "ParentInfoInputPage",
     parentInfoInputEntryPage: "ParentInfoInputEntryPage",
+    familyRegisterPageDemo: "FamilyRegisterPageDemo",
+    DemoFamilyRegisterPage: "DemoFamilyRegisterPage",
     navigationEntryLayoutPage: "NavigationEntryLayoutPage",
     DemoLoginPage: "DemoLoginPage",
     DemoParentEditPage: "DemoParentEditPage",
@@ -97,6 +100,8 @@ export type DemoStackParamList = {
   IconSelectInputEntryPage: undefined;
   ParentInfoInputPage: undefined;
   ParentInfoInputEntryPage: undefined;
+  FamilyRegisterPageDemo: undefined;
+  DemoFamilyRegisterPage: undefined;
   NavigationEntryLayoutPage: undefined;
   DemoLoginPage: undefined;
   DemoParentEditPage: undefined;
@@ -223,6 +228,11 @@ export function DemoNavigator() {
           options={{ title: '👤 ParentInfoInputEntry詳細' }}
         />
         <DemoStack.Screen 
+          name={DemoStackMeta.screens.familyRegisterPageDemo}
+          component={FamilyRegisterPageDemo}
+          options={{ title: '👪 FamilyRegisterPage詳細' }}
+        />
+        <DemoStack.Screen 
           name={DemoStackMeta.screens.navigationEntryLayoutPage}
           component={NavigationEntryLayoutPage}
           options={{ title: '📱 NavigationEntryLayout詳細' }}
@@ -231,6 +241,11 @@ export function DemoNavigator() {
           name={DemoStackMeta.screens.DemoLoginPage} 
           component={DemoLoginPageScreen}
           options={{ title: '🔐 ログイン画面' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.DemoFamilyRegisterPage} 
+          component={DemoFamilyRegisterPageScreen}
+          options={{ title: '👪 家族登録画面' }}
         />
         <DemoStack.Screen 
           name={DemoStackMeta.screens.DemoParentEditPage} 
@@ -279,6 +294,17 @@ const DemoLoginPageScreen: React.FC = () => {
   return (
     <View style={{ flex: 1 }}>
       <LoginPage />
+    </View>
+  );
+};
+
+/**
+ * 家族登録画面のデモ
+ */
+const DemoFamilyRegisterPageScreen: React.FC = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      <FamilyRegisterPageDemo />
     </View>
   );
 };
