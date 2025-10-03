@@ -1,14 +1,15 @@
 import React from 'react';
 import { EntryLayout } from '@/core/components/EntryLayout';
 import { FamilyNameInput } from './FamilyNameInput';
+import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
 
 export interface FamilyNameInputEntryProps {
   /** エントリーのタイトル */
   title?: string;
   /** 入力値 */
-  value: string;
+  value: BaseFamilyName;
   /** 値変更時のコールバック */
-  onChange: (value: string) => void;
+  onChange: (value: BaseFamilyName) => void;
   /** プレースホルダー */
   placeholder?: string;
   /** エラーメッセージ */

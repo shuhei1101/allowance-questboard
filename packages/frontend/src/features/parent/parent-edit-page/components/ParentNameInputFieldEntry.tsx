@@ -4,10 +4,11 @@ import { EntryLayout } from '@/core/components/EntryLayout';
 import { EntryWithError } from '@/core/components/EntryWithError';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
+import { ParentName } from '@backend/features/parent/value-object/parentName';
 
 interface Props {
-  value: string;
-  onChange: (text: string) => void;
+  value: ParentName;
+  onChange: (value: ParentName) => void;
   error?: string;
 }
 
@@ -32,8 +33,8 @@ export const ParentNameInputFieldEntry: React.FC<Props> = ({ value, onChange, er
             backgroundColor: colors.background.secondary,
             color: colors.text.primary
           }]}
-          value={value}
-          onChangeText={onChange}
+          value={value.value}
+          onChangeText={(text) => onChange(new ParentName(text))}
           placeholder={t('parent.parentEditPage.components.parentNameInputFieldEntry.placeholder')}
           placeholderTextColor={colors.text.secondary}
           autoCapitalize="words"
