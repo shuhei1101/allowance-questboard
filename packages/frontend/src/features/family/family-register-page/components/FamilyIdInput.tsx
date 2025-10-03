@@ -22,7 +22,7 @@ export interface FamilyIdInputProps {
 export const FamilyIdInput: React.FC<FamilyIdInputProps> = ({
   value,
   onChange,
-  placeholder = '例: tanaka_family',
+  placeholder = 'tanaka_family',
   error,
   disabled = false,
 }) => {

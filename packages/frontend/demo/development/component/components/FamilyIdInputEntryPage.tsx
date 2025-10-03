@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { OnlineFamilyNameInputEntry } from '@/features/family/family-register-page/components/OnlineFamilyNameInputEntry';
-import { FamilyOnlineName } from '@backend/features/family/value-object/familyOnlineName';
+import { FamilyIdInputEntry } from '@/features/family/family-register-page/components/FamilyIdInputEntry';
+import { FamilyDisplayId } from '@backend/features/family/value-object/familyDisplayId';
 
 /**
- * OnlineFamilyNameInputEntry デモページ
- * オンライン家族名入力エントリーコンポーネントのデモとテスト
+ * FamilyIdInputEntry デモページ
+ * 家族ID入力エントリーコンポーネントのデモとテスト
  */
-export const OnlineFamilyNameInputEntryPage: React.FC = () => {
+export const FamilyIdInputEntryPage: React.FC = () => {
   const { colors } = useTheme();
-  const [value, setValue] = useState<FamilyOnlineName>(new FamilyOnlineName(''));
+  const [value, setValue] = useState<FamilyDisplayId>(new FamilyDisplayId(''));
   const [error, setError] = useState<string | undefined>();
   const [disabled, setDisabled] = useState(false);
 
   // バリデーション例
-  const handleChange = (newValue: FamilyOnlineName) => {
+  const handleChange = (newValue: FamilyDisplayId) => {
     setValue(newValue);
     
     // エラーの例
-    if (newValue.value.length > 10) {
-      setError('オンライン家族名は10文字以内で入力してください');
+    if (newValue.value.length > 20) {
+      setError('家族IDは20文字以内で入力してください');
     } else if (newValue.value.includes(' ')) {
-      setError('オンライン家族名にスペースは使用できません');
-    } else if (newValue.value.includes('@') || newValue.value.includes('#')) {
-      setError('特殊文字は使用できません');
+      setError('家族IDにスペースは使用できません');
+    } else if (newValue.value.match(/[^a-zA-Z0-9_]/)) {
+      setError('家族IDは英数字とアンダースコアのみ使用できます');
     } else {
       setError(undefined);
     }
@@ -34,10 +34,10 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text.primary }]}>
-          OnlineFamilyNameInputEntry
+          FamilyIdInputEntry
         </Text>
         <Text style={[styles.subtitle, { color: colors.text.secondary }]}>
-          オンライン家族名入力エントリーコンポーネントのデモ
+          家族ID入力エントリーコンポーネントのデモ
         </Text>
       </View>
 
@@ -48,11 +48,12 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
             🎯 インタラクティブデモ
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <OnlineFamilyNameInputEntry
+            <FamilyIdInputEntry
               value={value}
               onChange={handleChange}
               error={error}
               disabled={disabled}
+              placeholder="tanaka_family"
             />
           </View>
         </View>
@@ -63,9 +64,10 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
             ✅ 基本状態
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <OnlineFamilyNameInputEntry
-              value={new FamilyOnlineName('')}
+            <FamilyIdInputEntry
+              value={new FamilyDisplayId('')}
               onChange={() => {}}
+              placeholder="smith_family"
             />
           </View>
         </View>
@@ -76,10 +78,10 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
             ❌ エラー状態
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <OnlineFamilyNameInputEntry
-              value={new FamilyOnlineName('とても長いオンライン家族名')}
+            <FamilyIdInputEntry
+              value={new FamilyDisplayId('invalid family id!')}
               onChange={() => {}}
-              error="オンライン家族名は10文字以内で入力してください"
+              error="家族IDは英数字とアンダースコアのみ使用できます"
             />
           </View>
         </View>
@@ -90,8 +92,8 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
             🔒 無効状態
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <OnlineFamilyNameInputEntry
-              value={new FamilyOnlineName('田中')}
+            <FamilyIdInputEntry
+              value={new FamilyDisplayId('readonly_family')}
               onChange={() => {}}
               disabled
             />
@@ -104,10 +106,11 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
             🏷️ カスタムタイトル
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <OnlineFamilyNameInputEntry
-              value={new FamilyOnlineName('田中@#')}
+            <FamilyIdInputEntry
+              title="ファミリーID"
+              value={new FamilyDisplayId('custom_family')}
               onChange={() => {}}
-              placeholder="オンライン家族名を入力してください"
+              placeholder="ファミリーIDを入力"
             />
           </View>
         </View>
@@ -119,7 +122,7 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.debugInfo, { backgroundColor: colors.surface.elevated }]}>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
-              入力値: "{value.value}"
+              入力値: "@{value.value}"
             </Text>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
               エラー: {error || 'なし'}
@@ -127,51 +130,6 @@ export const OnlineFamilyNameInputEntryPage: React.FC = () => {
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
               無効状態: {disabled ? 'はい' : 'いいえ'}
             </Text>
-          </View>
-        </View>
-
-        {/* 操作ボタン */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-            🎮 コントロール
-          </Text>
-          <View style={[styles.controls, { backgroundColor: colors.surface.elevated }]}>
-            <View style={styles.buttonRow}>
-              <Text 
-                style={[styles.button, { backgroundColor: colors.primary }]}
-                onPress={() => setValue(new FamilyOnlineName('田中家'))}
-              >
-                値をセット
-              </Text>
-              <Text 
-                style={[styles.button, { backgroundColor: colors.primary }]}
-                onPress={() => setValue(new FamilyOnlineName(''))}
-              >
-                クリア
-              </Text>
-            </View>
-            <View style={styles.buttonRow}>
-              <Text 
-                style={[styles.button, { backgroundColor: colors.danger }]}
-                onPress={() => setError('テストエラー')}
-              >
-                エラー設定
-              </Text>
-              <Text 
-                style={[styles.button, { backgroundColor: colors.danger }]}
-                onPress={() => setError(undefined)}
-              >
-                エラークリア
-              </Text>
-            </View>
-            <View style={styles.buttonRow}>
-              <Text 
-                style={[styles.button, { backgroundColor: colors.warning }]}
-                onPress={() => setDisabled(!disabled)}
-              >
-                {disabled ? '有効にする' : '無効にする'}
-              </Text>
-            </View>
           </View>
         </View>
       </View>
@@ -220,23 +178,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 4,
     fontFamily: 'monospace',
-  },
-  controls: {
-    padding: 16,
-    borderRadius: 8,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    marginBottom: 12,
-    gap: 12,
-  },
-  button: {
-    flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: '600',
   },
 });

@@ -21,6 +21,9 @@ import { FamilyNameInputPage } from './development/component/components/FamilyNa
 import { FamilyNameInputEntryPage } from './development/component/components/FamilyNameInputEntryPage';
 import { OnlineFamilyNameInputEntryPage } from './development/component/components/OnlineFamilyNameInputEntryPage';
 import { FamilyIdInputPage } from './development/component/components/FamilyIdInputPage';
+import { FamilyIdInputEntryPage } from './development/component/components/FamilyIdInputEntryPage';
+import { IconSelectEntryPage } from './development/component/components/IconSelectEntryPage';
+import { IconSelectInputEntryPage } from './development/component/components/IconSelectInputEntryPage';
 import { NavigationEntryLayoutPage } from './development/component/components/NavigationEntryLayoutPage';
 import { SessionSettingsPage } from './test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage';
@@ -44,6 +47,9 @@ export const DemoStackMeta = {
     familyNameInputEntryPage: "FamilyNameInputEntryPage",
     onlineFamilyNameInputEntryPage: "OnlineFamilyNameInputEntryPage",
     familyIdInputPage: "FamilyIdInputPage",
+    familyIdInputEntryPage: "FamilyIdInputEntryPage",
+    iconSelectEntryPage: "IconSelectEntryPage",
+    iconSelectInputEntryPage: "IconSelectInputEntryPage",
     navigationEntryLayoutPage: "NavigationEntryLayoutPage",
     DemoLoginPage: "DemoLoginPage",
     DemoParentEditPage: "DemoParentEditPage",
@@ -82,6 +88,9 @@ export type DemoStackParamList = {
   FamilyNameInputEntryPage: undefined;
   OnlineFamilyNameInputEntryPage: undefined;
   FamilyIdInputPage: undefined;
+  FamilyIdInputEntryPage: undefined;
+  IconSelectEntryPage: undefined;
+  IconSelectInputEntryPage: undefined;
   NavigationEntryLayoutPage: undefined;
   DemoLoginPage: undefined;
   DemoParentEditPage: undefined;
@@ -181,6 +190,21 @@ export function DemoNavigator() {
           name={DemoStackMeta.screens.familyIdInputPage}
           component={FamilyIdInputPage}
           options={{ title: '🆔 FamilyIdInput詳細' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.familyIdInputEntryPage}
+          component={FamilyIdInputEntryPage}
+          options={{ title: '🆔 FamilyIdInputEntry詳細' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.iconSelectEntryPage}
+          component={IconSelectEntryPage}
+          options={{ title: '🎨 IconSelectEntry詳細' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.iconSelectInputEntryPage}
+          component={IconSelectInputEntryPage}
+          options={{ title: '🎨 IconSelectInputEntry詳細' }}
         />
         <DemoStack.Screen 
           name={DemoStackMeta.screens.navigationEntryLayoutPage}

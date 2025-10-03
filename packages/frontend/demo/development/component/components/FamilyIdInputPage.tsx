@@ -30,7 +30,7 @@ export const FamilyIdInputPage: React.FC = () => {
           <FamilyIdInput
             value={basicValue}
             onChange={setBasicValue}
-            placeholder="例: tanaka_family"
+            placeholder="tanaka_family"
           />
         </View>
 
