@@ -11,7 +11,6 @@ export const AuthStackMeta = {
     login: "Login",
     userRegister: "UserRegister",
     roleSelect: "RoleSelect",
-    familyCreate: "FamilyCreate",
   },
 } as const;
 
@@ -20,7 +19,6 @@ export type AuthStackParamList = {
   Login: undefined;
   UserRegister: undefined;
   RoleSelect: RoleSelectPageProps;
-  FamilyCreate: undefined;
   EmailVerify: {
     email: string;
   };

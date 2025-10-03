@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { LoginPage } from '@/features/auth/login-page/LoginPage';
 import { ParentEditPage } from '@/features/parent/parent-edit-page/ParentEditPage';
+import { FamilyRegisterPage } from '@/features/family/family-register-page/FamilyRegisterPage';
+import { FamilyRegisterForm } from '@/features/family/family-register-page/models/familyRegisterForm';
+import { Parent } from '@backend/features/parent/models/parent';
+import { ParentName } from '@backend/features/parent/value-object/parentName';
+import { ParentId } from '@backend/features/parent/value-object/parentId';
+import { IconId } from '@backend/features/icon/value-objects/iconId';
+import { FamilyId } from '@backend/features/family/value-object/familyId';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
+import { FamilyDisplayId } from '@backend/features/family/value-object/familyDisplayId';
+import { FamilyName } from '@backend/features/family/value-object/familyName';
+import { FamilyOnlineName } from '@backend/features/family/value-object/familyOnlineName';
+import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
+import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { DemoMockProvider } from './providers/DemoMockProvider';
 import { ComponentShowcase } from './development/component-showcase-page/ComponentShowcase';
 import { StoreInspector } from './development/store-inspector-page/StoreInspector';
@@ -245,7 +258,16 @@ export function DemoNavigator() {
         <DemoStack.Screen 
           name={DemoStackMeta.screens.DemoFamilyRegisterPage} 
           component={DemoFamilyRegisterPageScreen}
-          options={{ title: '👪 家族登録画面' }}
+          options={{ 
+            title: '👪 家族登録画面',
+            headerRight: () => (
+              <ComfirmButton
+                onPress={() => Alert.alert('登録完了', 'デモ用確定ボタンが押されました')}
+                variant="header"
+                size="small"
+              />
+            ),
+          }}
         />
         <DemoStack.Screen 
           name={DemoStackMeta.screens.DemoParentEditPage} 
@@ -302,9 +324,93 @@ const DemoLoginPageScreen: React.FC = () => {
  * 家族登録画面のデモ
  */
 const DemoFamilyRegisterPageScreen: React.FC = () => {
+  // サンプルフォームの作成
+  const [form, setForm] = useState(() => {
+    try {
+      return new FamilyRegisterForm({
+        family: {
+          displayId: new FamilyDisplayId('tanaka_family'),
+          name: new FamilyName('田中'),
+          onlineName: new FamilyOnlineName('田中'),
+        },
+        parent: {
+          name: new ParentName('田中太郎'),
+          birthday: new Birthday(new Date('1985-05-15')),
+        },
+      });
+    } catch (error) {
+      console.error('Failed to create FamilyRegisterForm:', error);
+      // フォールバック用の簡単なオブジェクト
+      return {
+        family: {
+          displayId: { value: 'tanaka_family' },
+          name: { value: '田中' },
+          onlineName: { value: '田中' },
+        },
+        parent: {
+          name: { value: '田中太郎' },
+          birthday: { value: new Date('1985-05-15') },
+        },
+      } as any;
+    }
+  });
+
+  // サンプル親情報の作成
+  const [parent, setParent] = useState<Parent | undefined>(() => {
+    try {
+      return new Parent({
+        id: new ParentId(123),
+        familyId: new FamilyId(456),
+        name: new ParentName('田中太郎'),
+        iconId: new IconId(1),
+        birthday: new Birthday(new Date('1985-05-15')),
+      });
+    } catch (error) {
+      console.error('Failed to create Parent:', error);
+      return undefined;
+    }
+  });
+
+  // ハンドラー関数群
+  const handleFamilyNameChange = (value: BaseFamilyName) => {
+    console.log('家族名変更:', value.value);
+  };
+
+  const handleOnlineFamilyNameChange = (value: FamilyOnlineName) => {
+    console.log('オンライン家族名変更:', value.value);
+  };
+
+  const handleFamilyIdChange = (value: FamilyDisplayId) => {
+    console.log('家族ID変更:', value.value);
+  };
+
+  const handleIconSelect = () => {
+    Alert.alert('アイコン選択', 'アイコン選択画面（未実装）');
+  };
+
+  const handleParentEdit = () => {
+    Alert.alert('親情報編集', '親編集画面（未実装）');
+  };
+
+  const handleSubmit = (familyId?: string, parentId?: string) => {
+    Alert.alert('登録完了', `家族ID: ${familyId}, 親ID: ${parentId}`);
+  };
+
   return (
     <View style={{ flex: 1 }}>
-      <FamilyRegisterPageDemo />
+      <FamilyRegisterPage
+        form={form}
+        parent={parent}
+        onFamilyNameChange={handleFamilyNameChange}
+        onOnlineFamilyNameChange={handleOnlineFamilyNameChange}
+        onFamilyIdChange={handleFamilyIdChange}
+        onIconSelect={handleIconSelect}
+        onParentEdit={handleParentEdit}
+        onSubmit={handleSubmit}
+        isValid={true}
+        isLoading={false}
+        disabled={false}
+      />
     </View>
   );
 };

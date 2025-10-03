@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
 import { FamilyNameInputEntry } from './components/FamilyNameInputEntry';
 import { OnlineFamilyNameInputEntry } from './components/OnlineFamilyNameInputEntry';
 import { FamilyIdInputEntry } from './components/FamilyIdInputEntry';
@@ -57,12 +56,6 @@ export const FamilyRegisterPage: React.FC<FamilyRegisterPageProps> = ({
 }) => {
   const { colors } = useTheme();
 
-  const handleSubmit = () => {
-    if (isValid && !isLoading && !disabled) {
-      onSubmit();
-    }
-  };
-
   return (
     <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <ScrollView 
@@ -114,15 +107,6 @@ export const FamilyRegisterPage: React.FC<FamilyRegisterPageProps> = ({
           />
         </View>
       </ScrollView>
-
-      {/* 確定ボタン */}
-      <View style={[styles.footer, { backgroundColor: colors.background.primary }]}>
-        <ComfirmButton
-          onPress={handleSubmit}
-          disabled={!isValid || isLoading || disabled}
-          loading={isLoading}
-        />
-      </View>
     </View>
   );
 };
@@ -137,26 +121,9 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 16,
     paddingTop: 16,
-    paddingBottom: 100, // 確定ボタン分の余白
+    paddingBottom: 32,
   },
   section: {
     marginBottom: 24,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    paddingBottom: 32,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
   },
 });
