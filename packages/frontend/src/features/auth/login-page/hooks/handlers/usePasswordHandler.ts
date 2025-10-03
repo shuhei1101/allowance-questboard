@@ -14,10 +14,10 @@ export const usePasswordHandler = (params: {
   passwordError: FormError,
   setPasswordError: SetFormError
 }) => {
-  return useCallback((value: string) => {
+  return useCallback((value: Password) => {
     const updatedForm = new LoginForm({ 
       ...params.loginForm,
-      password: new Password(value)
+      password: value
     });
     
     params.setLoginForm(updatedForm);

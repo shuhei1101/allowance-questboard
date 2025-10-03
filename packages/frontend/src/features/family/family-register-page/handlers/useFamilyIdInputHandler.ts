@@ -5,7 +5,7 @@ import { FamilyDisplayId } from '@backend/features/family/value-object/familyDis
 import { LocaleString } from '../../../../../../backend/src/core/messages/localeString';
 import { LanguageTypeValue } from '../../../../../../backend/src/features/language/value-object/languageTypeValue';
 
-export type HandleFamilyIdChange = (text: string) => void;
+export type HandleFamilyIdChange = (value: FamilyDisplayId) => void;
 
 export interface UseFamilyIdInputHandlerResult {
   /** 家族ID入力変更ハンドラー */
@@ -45,17 +45,16 @@ export const useFamilyIdInputHandler = (params: {
     };
   }, []);
 
-  const handleFamilyIdChange = useCallback((text: string) => {
+  const handleFamilyIdChange = useCallback((value: FamilyDisplayId) => {
     // フォームを即座に更新
-    const newDisplayId = new FamilyDisplayId(text);
-    const updatedForm = params.currentForm.updateFamily({ displayId: newDisplayId });
+    const updatedForm = params.currentForm.updateFamily({ displayId: value });
     params.setForm(updatedForm);
 
     // エラー状態をリセット
     setDuplicateError(undefined);
 
     // 空文字の場合は重複チェックしない
-    if (!text.trim()) {
+    if (!value.value.trim()) {
       return;
     }
 
@@ -70,7 +69,7 @@ export const useFamilyIdInputHandler = (params: {
         setIsCheckingDuplicate(true);
 
         const isDuplicate = await params.checkFamilyIdDuplicate({
-          familyDisplayId: text.trim()
+          familyDisplayId: value
         });
         
         if (isDuplicate) {

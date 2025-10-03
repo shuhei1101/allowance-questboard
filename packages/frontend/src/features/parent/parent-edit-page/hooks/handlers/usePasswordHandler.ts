@@ -14,22 +14,18 @@ export const usePasswordHandler = (params: {
   passwordError: FormError,
   setPasswordError: SetFormError
 }) => {
-  return useCallback((password: string) => {
-    try {
-      const updatedForm = new ParentForm({
-        name: params.parentForm.name,
-        email: params.parentForm.email,
-        password: new Password(password),
-        icon: params.parentForm.icon,
-        birthday: params.parentForm.birthday,
-      });
-      params.setParentForm(updatedForm);
-      
-      if (params.passwordError) {
-        params.setPasswordError(undefined);
-      }
-    } catch (error: any) {
-      params.setPasswordError(error.message);
+  return useCallback((value: Password) => {
+    const updatedForm = new ParentForm({
+      name: params.parentForm.name,
+      email: params.parentForm.email,
+      password: value,
+      icon: params.parentForm.icon,
+      birthday: params.parentForm.birthday,
+    });
+    params.setParentForm(updatedForm);
+    
+    if (params.passwordError) {
+      params.setPasswordError(undefined);
     }
   }, [
     params.parentForm.name, 

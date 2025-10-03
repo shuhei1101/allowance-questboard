@@ -1,8 +1,9 @@
 import { supabase } from '@/core/supabase/supabase';
+import { FamilyDisplayId } from '@backend/features/family/value-object/familyDisplayId';
 
 export type CheckFamilyIdDuplicate = (params: {
   /** 家族表示ID */
-  familyDisplayId: string;
+  familyDisplayId: FamilyDisplayId;
 }) => Promise<boolean>;
 
 /** 家族IDの重複チェック
@@ -16,7 +17,7 @@ export const checkFamilyIdDuplicate: CheckFamilyIdDuplicate = async (params) => 
     const { data, error } = await supabase
       .from('families')
       .select('display_id')
-      .eq('display_id', familyDisplayId)
+      .eq('display_id', familyDisplayId.value)
       .single();
 
     // エラーが発生した場合の処理
