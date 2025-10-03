@@ -24,6 +24,8 @@ import { FamilyIdInputPage } from './development/component/components/FamilyIdIn
 import { FamilyIdInputEntryPage } from './development/component/components/FamilyIdInputEntryPage';
 import { IconSelectEntryPage } from './development/component/components/IconSelectEntryPage';
 import { IconSelectInputEntryPage } from './development/component/components/IconSelectInputEntryPage';
+import { ParentInfoInputPage } from './development/component/components/ParentInfoInputPage';
+import { ParentInfoInputEntryPage } from './development/component/components/ParentInfoInputEntryPage';
 import { NavigationEntryLayoutPage } from './development/component/components/NavigationEntryLayoutPage';
 import { SessionSettingsPage } from './test-environment/SessionSettingsPage';
 import { PageStateSettingsPage } from './test-environment/PageStateSettingsPage';
@@ -50,6 +52,8 @@ export const DemoStackMeta = {
     familyIdInputEntryPage: "FamilyIdInputEntryPage",
     iconSelectEntryPage: "IconSelectEntryPage",
     iconSelectInputEntryPage: "IconSelectInputEntryPage",
+    parentInfoInputPage: "ParentInfoInputPage",
+    parentInfoInputEntryPage: "ParentInfoInputEntryPage",
     navigationEntryLayoutPage: "NavigationEntryLayoutPage",
     DemoLoginPage: "DemoLoginPage",
     DemoParentEditPage: "DemoParentEditPage",
@@ -91,6 +95,8 @@ export type DemoStackParamList = {
   FamilyIdInputEntryPage: undefined;
   IconSelectEntryPage: undefined;
   IconSelectInputEntryPage: undefined;
+  ParentInfoInputPage: undefined;
+  ParentInfoInputEntryPage: undefined;
   NavigationEntryLayoutPage: undefined;
   DemoLoginPage: undefined;
   DemoParentEditPage: undefined;
@@ -205,6 +211,16 @@ export function DemoNavigator() {
           name={DemoStackMeta.screens.iconSelectInputEntryPage}
           component={IconSelectInputEntryPage}
           options={{ title: '🎨 IconSelectInputEntry詳細' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.parentInfoInputPage}
+          component={ParentInfoInputPage}
+          options={{ title: '👤 ParentInfoInput詳細' }}
+        />
+        <DemoStack.Screen 
+          name={DemoStackMeta.screens.parentInfoInputEntryPage}
+          component={ParentInfoInputEntryPage}
+          options={{ title: '👤 ParentInfoInputEntry詳細' }}
         />
         <DemoStack.Screen 
           name={DemoStackMeta.screens.navigationEntryLayoutPage}

@@ -19,25 +19,25 @@ export const IconSelectEntryPage: React.FC = () => {
   // サンプルアイコンの作成
   const sampleIcons = [
     new Icon({
-      id: new IconId('1'),
+      id: new IconId(1),
       name: new IconName('diamond'),
       sortOrder: new SortOrder(1),
       isActive: true,
     }),
     new Icon({
-      id: new IconId('2'),
+      id: new IconId(2),
       name: new IconName('star'),
       sortOrder: new SortOrder(2),
       isActive: true,
     }),
     new Icon({
-      id: new IconId('3'),
+      id: new IconId(3),
       name: new IconName('heart'),
       sortOrder: new SortOrder(3),
       isActive: true,
     }),
     new Icon({
-      id: new IconId('4'),
+      id: new IconId(4),
       name: new IconName('shield'),
       sortOrder: new SortOrder(4),
       isActive: true,

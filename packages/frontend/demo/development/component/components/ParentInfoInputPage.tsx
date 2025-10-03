@@ -1,70 +1,72 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { IconSelectInputEntry } from '@/features/family/family-register-page/components/IconSelectInputEntry';
-import { Icon } from '@backend/features/icon/domain/icon';
-import { IconName } from '@backend/features/icon/value-objects/iconName';
+import { ParentInfoInput } from '@/features/family/family-register-page/components/ParentInfoInput';
+import { Parent } from '@backend/features/parent/models/parent';
+import { ParentName } from '@backend/features/parent/value-object/parentName';
+import { ParentId } from '@backend/features/parent/value-object/parentId';
 import { IconId } from '@backend/features/icon/value-objects/iconId';
-import { SortOrder } from '@backend/features/shared/value-object/sortOrder';
+import { FamilyId } from '@backend/features/family/value-object/familyId';
+import { Birthday } from '@backend/features/shared/value-object/birthday';
 
 /**
- * IconSelectInputEntry デモページ
- * アイコン選択入力エントリーコンポーネントのデモとテスト
+ * ParentInfoInput デモページ
+ * 親情報表示コンポーネントのデモとテスト
  */
-export const IconSelectInputEntryPage: React.FC = () => {
+export const ParentInfoInputPage: React.FC = () => {
   const { colors } = useTheme();
-  const [selectedIcon, setSelectedIcon] = useState<Icon | undefined>();
+  const [selectedParent, setSelectedParent] = useState<Parent | undefined>();
   const [disabled, setDisabled] = useState(false);
 
-  // サンプルアイコンの作成
-  const sampleIcons = [
-    new Icon({
-      id: new IconId(1),
-      name: new IconName('diamond'),
-      sortOrder: new SortOrder(1),
-      isActive: true,
+  // サンプル親情報の作成
+  const sampleIconId = new IconId(1);
+  const sampleFamilyId = new FamilyId(1);
+
+  const sampleParents = [
+    new Parent({
+      id: new ParentId(1),
+      name: new ParentName('田中太郎'),
+      iconId: sampleIconId,
+      birthday: new Birthday(new Date('1985-05-15')),
+      familyId: sampleFamilyId,
     }),
-    new Icon({
-      id: new IconId(2),
-      name: new IconName('star'),
-      sortOrder: new SortOrder(2),
-      isActive: true,
+    new Parent({
+      id: new ParentId(2),
+      name: new ParentName('佐藤花子'),
+      iconId: sampleIconId,
+      birthday: new Birthday(new Date('1987-12-03')),
+      familyId: sampleFamilyId,
     }),
-    new Icon({
-      id: new IconId(3),
-      name: new IconName('heart'),
-      sortOrder: new SortOrder(3),
-      isActive: true,
-    }),
-    new Icon({
-      id: new IconId(4),
-      name: new IconName('crown'),
-      sortOrder: new SortOrder(4),
-      isActive: true,
+    new Parent({
+      id: new ParentId(3),
+      name: new ParentName('山田二郎'),
+      iconId: sampleIconId,
+      birthday: new Birthday(new Date('1982-08-20')),
+      familyId: sampleFamilyId,
     }),
   ];
 
-  const handleIconSelect = () => {
+  const handleParentEdit = () => {
     Alert.alert(
-      '家紋選択',
-      'アイコン選択画面への遷移',
+      '親情報編集',
+      '親編集画面への遷移',
       [
         { text: 'キャンセル', style: 'cancel' },
         {
-          text: 'ダイヤモンド選択',
-          onPress: () => setSelectedIcon(sampleIcons[0]),
+          text: '田中太郎選択',
+          onPress: () => setSelectedParent(sampleParents[0]),
         },
         {
-          text: 'スター選択',
-          onPress: () => setSelectedIcon(sampleIcons[1]),
+          text: '佐藤花子選択',
+          onPress: () => setSelectedParent(sampleParents[1]),
         },
         {
-          text: 'ハート選択',
-          onPress: () => setSelectedIcon(sampleIcons[2]),
+          text: '山田二郎選択',
+          onPress: () => setSelectedParent(sampleParents[2]),
         },
         {
-          text: 'クラウン選択',
-          onPress: () => setSelectedIcon(sampleIcons[3]),
+          text: '未設定にする',
+          onPress: () => setSelectedParent(undefined),
         },
       ]
     );
@@ -74,10 +76,10 @@ export const IconSelectInputEntryPage: React.FC = () => {
     <ScrollView style={[styles.container, { backgroundColor: colors.background.primary }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text.primary }]}>
-          IconSelectInputEntry
+          ParentInfoInput
         </Text>
         <Text style={[styles.subtitle, { color: colors.text.secondary }]}>
-          アイコン選択入力エントリーコンポーネントのデモ
+          親情報表示コンポーネントのデモ
         </Text>
       </View>
 
@@ -88,36 +90,36 @@ export const IconSelectInputEntryPage: React.FC = () => {
             🎯 インタラクティブデモ
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <IconSelectInputEntry
-              selectedIcon={selectedIcon}
-              onPress={handleIconSelect}
+            <ParentInfoInput
+              parent={selectedParent}
+              onPress={handleParentEdit}
               disabled={disabled}
             />
           </View>
         </View>
 
-        {/* 基本状態 */}
+        {/* 基本状態（未設定） */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-            ✅ 基本状態（未選択）
+            ✅ 基本状態（未設定）
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <IconSelectInputEntry
-              selectedIcon={undefined}
-              onPress={() => Alert.alert('家紋選択', '基本状態の家紋選択')}
+            <ParentInfoInput
+              parent={undefined}
+              onPress={() => Alert.alert('親情報編集', '基本状態の親情報編集')}
             />
           </View>
         </View>
 
-        {/* 選択済み状態 */}
+        {/* 設定済み状態 */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-            ✨ 選択済み状態
+            ✨ 設定済み状態
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <IconSelectInputEntry
-              selectedIcon={sampleIcons[0]}
-              onPress={() => Alert.alert('家紋変更', 'ダイヤモンドが選択されています')}
+            <ParentInfoInput
+              parent={sampleParents[0]}
+              onPress={() => Alert.alert('親情報編集', '田中太郎の情報を編集')}
             />
           </View>
         </View>
@@ -128,25 +130,24 @@ export const IconSelectInputEntryPage: React.FC = () => {
             🔒 無効状態
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <IconSelectInputEntry
-              selectedIcon={sampleIcons[1]}
+            <ParentInfoInput
+              parent={sampleParents[1]}
               onPress={() => {}}
               disabled
             />
           </View>
         </View>
 
-        {/* カスタムタイトル */}
+        {/* カスタムプレースホルダー */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text.primary }]}>
-            🏷️ カスタムタイトル
+            🏷️ カスタムプレースホルダー
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
-            <IconSelectInputEntry
-              title="シンボル"
-              selectedIcon={sampleIcons[2]}
-              onPress={() => Alert.alert('シンボル変更', 'ハートが選択されています')}
-              placeholder="シンボルを選択"
+            <ParentInfoInput
+              parent={undefined}
+              onPress={() => Alert.alert('カスタム', 'カスタムプレースホルダー')}
+              placeholder="親情報を設定してください"
             />
           </View>
         </View>
@@ -158,10 +159,16 @@ export const IconSelectInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.debugInfo, { backgroundColor: colors.surface.elevated }]}>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
-              選択中アイコン: {selectedIcon ? selectedIcon.name.value : '未選択'}
+              選択中親: {selectedParent ? selectedParent.name.value : '未設定'}
             </Text>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
-              アイコンID: {selectedIcon ? selectedIcon.id?.value || '未設定' : '未選択'}
+              親ID: {selectedParent ? selectedParent.id?.value || '未設定' : '未設定'}
+            </Text>
+            <Text style={[styles.debugText, { color: colors.text.secondary }]}>
+              アイコンID: {selectedParent ? selectedParent.iconId?.value || '未設定' : '未設定'}
+            </Text>
+            <Text style={[styles.debugText, { color: colors.text.secondary }]}>
+              誕生日: {selectedParent ? selectedParent.birthday?.value.toLocaleDateString() || '未設定' : '未設定'}
             </Text>
             <Text style={[styles.debugText, { color: colors.text.secondary }]}>
               無効状態: {disabled ? 'はい' : 'いいえ'}

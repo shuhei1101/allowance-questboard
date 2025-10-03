@@ -35,17 +35,11 @@ export const IconSelectEntry: React.FC<IconSelectEntryProps> = ({
     >
       <View style={styles.content}>
         {selectedIcon ? (
-          <>
-            <Ionicons
-              name={selectedIcon.name.value as any}
-              size={24}
-              color={colors.text.primary}
-              style={styles.icon}
-            />
-            <Text style={[styles.iconText, { color: colors.text.primary }]}>
-              {selectedIcon.name.value}
-            </Text>
-          </>
+          <Ionicons
+            name={selectedIcon.name.value as any}
+            size={24}
+            color={colors.text.primary}
+          />
         ) : (
           <Text style={[styles.placeholderText, { color: colors.text.secondary }]}>
             {placeholder}
@@ -62,13 +56,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
-  },
-  icon: {
-    marginRight: 8,
-  },
-  iconText: {
-    fontSize: 16,
-    fontWeight: '500',
   },
   placeholderText: {
     fontSize: 16,

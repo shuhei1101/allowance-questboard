@@ -120,6 +120,18 @@ export const ComponentListPage: React.FC = () => {
           description: 'アイコン選択入力エントリー（EntryLayout使用）',
           screen: DemoStackMeta.screens.iconSelectInputEntryPage,
         },
+        {
+          id: 'parent-info-input',
+          name: 'ParentInfoInput',
+          description: '親情報表示エントリー（NavigationEntryLayout使用）',
+          screen: DemoStackMeta.screens.parentInfoInputPage,
+        },
+        {
+          id: 'parent-info-input-entry',
+          name: 'ParentInfoInputEntry',
+          description: '親情報入力エントリー（EntryLayout使用）',
+          screen: DemoStackMeta.screens.parentInfoInputEntryPage,
+        },
       ],
     },
     {
