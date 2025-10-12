@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { FamilyRegisterForm } from '../models/familyRegisterForm';
+import { FamilyRegisterForm } from '../../models/familyRegisterForm';
 import { Icon } from '@backend/features/icon/domain/icon';
-import { AppStackParamList } from '../../../../../AppNavigator';
-import { CommonStackMeta } from '../../../shared/CommonNavigator';
-import { useIconStore } from '../../../../core/constants/iconStore';
+import { AppStackParamList } from '../../../../../../AppNavigator';
+import { CommonStackMeta } from '../../../../shared/CommonNavigator';
+import { useIconStore } from '../../../../../core/constants/iconStore';
 
 export type HandleFamilyIconSelect = () => void;
 

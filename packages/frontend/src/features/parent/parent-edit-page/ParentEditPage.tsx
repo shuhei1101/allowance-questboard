@@ -10,7 +10,7 @@ import { ParentForm } from './models/parentForm';
 import { JwtStorage } from '../../auth/services/jwtStorage';
 import { useInitializeParentData } from './hooks/handlers/useParentDataInitializer';
 import { useAppNavigation } from '../../../../AppNavigator';
-import { ComfirmButton } from '../../shared/components/ComfirmButton';
+import { ConfirmButton } from '../../shared/components/ConfirmButton';
 import { useSessionStore } from '../../../core/constants/sessionStore';
 import { useIconStore } from '../../../core/constants/iconStore';
 import { useTranslation } from 'react-i18next';
@@ -92,7 +92,7 @@ export const ParentEditPage: React.FC<ParentEditPageProps> = async ({
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <ComfirmButton
+        <ConfirmButton
           onPress={handleConfirm}
           disabled={!formStore.form.isValid}
           loading={isLoading}

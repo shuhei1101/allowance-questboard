@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
-import { FamilyRegisterForm } from '../models/familyRegisterForm';
-import { RegisterFamily } from '../services/registerFamily';
+import { FamilyRegisterForm } from '../../models/familyRegisterForm';
+import { RegisterFamily } from '../../services/registerFamily';
 import { ParentId } from '@backend/features/parent/value-object/parentId';
-import { FamilyId } from '../../../../../../backend/src/features/family/value-object/familyId';
+import { FamilyId } from '../../../../../../../backend/src/features/family/value-object/familyId';
 
 export type HandleFamilyRegisterSubmit = () => Promise<void>;
 

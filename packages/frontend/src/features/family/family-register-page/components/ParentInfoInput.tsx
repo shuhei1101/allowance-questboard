@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
 import { NavigationEntryLayout } from '@/core/components/NavigationEntryLayout';
-import { Parent } from '@backend/features/parent/models/parent';
+import { ParentName } from '../../../../../../backend/src/features/parent/value-object/parentName';
 
 export interface ParentInfoInputProps {
   /** 親情報 */
-  parent?: Parent;
+  parentName?: ParentName;
   /** タップ時のコールバック */
   onPress: () => void;
   /** 無効状態 */
@@ -20,7 +20,7 @@ export interface ParentInfoInputProps {
  * NavigationEntryLayoutを使用した親情報表示コンポーネント
  * 親の名前を表示し、右側に矢印を表示して編集画面への遷移を促す */
 export const ParentInfoInput: React.FC<ParentInfoInputProps> = ({
-  parent,
+  parentName,
   onPress,
   disabled = false,
   placeholder = '未設定',
@@ -41,7 +41,7 @@ export const ParentInfoInput: React.FC<ParentInfoInputProps> = ({
             fontStyle: parent ? 'normal' : 'italic',
           }
         ]}>
-          {parent ? `${parent.name.value}` : placeholder}
+          {parentName ? `${parentName.value}` : placeholder}
         </Text>
       </View>
     </NavigationEntryLayout>

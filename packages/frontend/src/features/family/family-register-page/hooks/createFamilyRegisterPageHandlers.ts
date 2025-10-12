@@ -1,7 +1,9 @@
-import { useFamilyIdInputHandler } from '../handlers/useFamilyIdInputHandler';
-import { useFamilyIconSelectHandler } from '../handlers/useFamilyIconSelectHandler';
-import { useParentEditHandler } from '../handlers/useParentEditHandler';
-import { useFamilyRegisterSubmitHandler } from '../handlers/useFamilyRegisterSubmitHandler';
+import { useFamilyNameInputHandler } from './handlers/useFamilyNameInputHandler';
+import { useOnlineFamilyNameInputHandler } from './handlers/useOnlineFamilyNameInputHandler';
+import { useFamilyIdInputHandler } from './handlers/useFamilyIdInputHandler';
+import { useFamilyIconSelectHandler } from './handlers/useFamilyIconSelectHandler';
+import { useParentEditHandler } from './handlers/useParentEditHandler';
+import { useFamilyRegisterSubmitHandler } from './handlers/useFamilyRegisterSubmitHandler';
 import { FamilyRegisterFormStore, useFamilyRegisterFormStore } from '../stores/familyRegisterFormStore';
 import { registerFamily } from '../services/registerFamily';
 import { checkFamilyIdDuplicate } from '../../services/checkFamilyIdDuplicate';
@@ -18,6 +20,17 @@ export const createFamilyRegisterPageHandlers = (params: {
   formStore: FamilyRegisterFormStore,
   sessionStore: SessionStore,
 }) => {
+  // 家族名入力ハンドラー
+  const familyNameInputHandler = useFamilyNameInputHandler({
+    currentForm: params.formStore.form,
+    setForm: params.formStore.setForm,
+  });
+
+  // オンライン家族名入力ハンドラー
+  const onlineFamilyNameInputHandler = useOnlineFamilyNameInputHandler({
+    currentForm: params.formStore.form,
+    setForm: params.formStore.setForm,
+  });
 
   // 家族ID入力ハンドラー
   const familyIdInputHandler = useFamilyIdInputHandler({
@@ -48,6 +61,12 @@ export const createFamilyRegisterPageHandlers = (params: {
   });
 
   return {
+    // 家族名入力関連
+    handleFamilyNameChange: familyNameInputHandler.handleFamilyNameChange,
+    
+    // オンライン家族名入力関連
+    handleOnlineFamilyNameChange: onlineFamilyNameInputHandler.handleOnlineFamilyNameChange,
+    
     // 家族ID入力関連
     handleFamilyIdChange: familyIdInputHandler.handleFamilyIdChange,
     isCheckingDuplicate: familyIdInputHandler.isCheckingDuplicate,

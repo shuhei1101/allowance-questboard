@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
 import { FamilyRegisterPage, FamilyRegisterPageProps } from './family-register-page/FamilyRegisterPage';
-import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
+import { ConfirmButton } from '@/features/shared/components/ConfirmButton';
 
 export const FamilyStackMeta = {
   name: 'Family',
@@ -35,7 +35,7 @@ const FamilyRegisterPageWrapper: React.FC = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <ComfirmButton
+        <ConfirmButton
           onPress={handleSubmit}
           disabled={false} // 実際の実装では、フォームのバリデーション状態を使用
           loading={false}  // 実際の実装では、ローディング状態を使用

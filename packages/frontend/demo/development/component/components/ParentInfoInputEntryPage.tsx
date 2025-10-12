@@ -91,7 +91,7 @@ export const ParentInfoInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInputEntry
-              parent={selectedParent}
+              parentName={selectedParent?.name}
               onPress={handleParentEdit}
               disabled={disabled}
             />
@@ -105,7 +105,7 @@ export const ParentInfoInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInputEntry
-              parent={undefined}
+              parentName={undefined}
               onPress={() => Alert.alert('親情報編集', '基本状態の親情報編集')}
             />
           </View>
@@ -118,7 +118,7 @@ export const ParentInfoInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInputEntry
-              parent={sampleParents[0]}
+              parentName={sampleParents[0].name}
               onPress={() => Alert.alert('親情報編集', '田中太郎の情報を編集')}
             />
           </View>
@@ -131,7 +131,7 @@ export const ParentInfoInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInputEntry
-              parent={sampleParents[1]}
+              parentName={sampleParents[1].name}
               onPress={() => {}}
               disabled
             />
@@ -146,7 +146,7 @@ export const ParentInfoInputEntryPage: React.FC = () => {
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInputEntry
               title="保護者情報"
-              parent={sampleParents[2]}
+              parentName={sampleParents[2].name}
               onPress={() => Alert.alert('保護者情報', 'カスタムタイトルでの編集')}
             />
           </View>
@@ -159,7 +159,7 @@ export const ParentInfoInputEntryPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInputEntry
-              parent={undefined}
+              parentName={undefined}
               onPress={() => Alert.alert('カスタム', 'カスタムプレースホルダー')}
               placeholder="親情報を設定してください"
             />

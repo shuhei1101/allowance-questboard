@@ -11,7 +11,7 @@ import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { OnIconSelected } from './hooks/handlers/useConfirmHandler';
 import { useAppNavigation } from '../../../../AppNavigator';
-import { ComfirmButton } from '../../shared/components/ComfirmButton';
+import { ConfirmButton } from '../../shared/components/ConfirmButton';
 import { useIconStore } from '../../../core/constants/iconStore';
 
 export interface IconSelectPageProps {
@@ -69,7 +69,7 @@ export const IconSelectPage: React.FC<IconSelectPageProps> = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <ComfirmButton
+        <ConfirmButton
           onPress={handleConfirm}
           disabled={!pageStore.selectedIcon || 
             (initialSelectedIcon && 

@@ -5,7 +5,7 @@ import { EmailInput } from '@/features/shared/components/EmailInput';
 import { PasswordInputField } from '@/features/shared/components/PasswordInput';
 import { BirthdayInput } from '@/features/shared/components/BirthdayInput';
 import { IconSelectButton } from '@/features/shared/components/IconSelectButton';
-import { ComfirmButton } from '../../../src/features/shared/components/ComfirmButton';
+import { ConfirmButton } from '../../../src/features/shared/components/ConfirmButton';
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 import { Birthday } from '@backend/features/shared/value-object/birthday';
@@ -105,7 +105,7 @@ export const ComponentShowcase: React.FC = () => {
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             保存ボタン
           </Text>
-          <ComfirmButton
+          <ConfirmButton
             onPress={() => console.log('保存ボタンが押されました')}
             disabled={false}
           />
@@ -115,7 +115,7 @@ export const ComponentShowcase: React.FC = () => {
           <Text style={[styles.componentLabel, { color: colors.text.secondary }]}>
             無効化された保存ボタン
           </Text>
-          <ComfirmButton
+          <ConfirmButton
             onPress={() => console.log('無効化されたボタン')}
             disabled={true}
           />

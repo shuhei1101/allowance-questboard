@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { ComfirmButton } from '../../shared/components/ComfirmButton';
+import { ConfirmButton } from '../../shared/components/ConfirmButton';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useAppNavigation } from '../../../../AppNavigator';
@@ -52,7 +52,7 @@ export const UserRegisterPage: React.FC = () => {
     // ヘッダーボタンを設定
     navigation.setOptions({
       headerRight: () => (
-        <ComfirmButton
+        <ConfirmButton
           onPress={handleUserRegister}
           disabled={!formStore.form.isValid}
           loading={isLoading}

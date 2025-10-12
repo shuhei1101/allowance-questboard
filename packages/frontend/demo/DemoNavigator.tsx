@@ -15,7 +15,7 @@ import { FamilyDisplayId } from '@backend/features/family/value-object/familyDis
 import { FamilyName } from '@backend/features/family/value-object/familyName';
 import { FamilyOnlineName } from '@backend/features/family/value-object/familyOnlineName';
 import { BaseFamilyName } from '@backend/features/family/value-object/baseFamilyName';
-import { ComfirmButton } from '@/features/shared/components/ComfirmButton';
+import { ConfirmButton } from '@/features/shared/components/ConfirmButton';
 import { DemoMockProvider } from './providers/DemoMockProvider';
 import { ComponentShowcase } from './development/component-showcase-page/ComponentShowcase';
 import { StoreInspector } from './development/store-inspector-page/StoreInspector';
@@ -261,7 +261,7 @@ export function DemoNavigator() {
           options={{ 
             title: '👪 家族登録画面',
             headerRight: () => (
-              <ComfirmButton
+              <ConfirmButton
                 onPress={() => Alert.alert('登録完了', 'デモ用確定ボタンが押されました')}
                 variant="header"
                 size="small"
@@ -374,14 +374,35 @@ const DemoFamilyRegisterPageScreen: React.FC = () => {
   // ハンドラー関数群
   const handleFamilyNameChange = (value: BaseFamilyName) => {
     console.log('家族名変更:', value.value);
+    setForm((prevForm: any) => ({
+      ...prevForm,
+      family: {
+        ...prevForm.family,
+        name: value,
+      },
+    }));
   };
 
   const handleOnlineFamilyNameChange = (value: FamilyOnlineName) => {
     console.log('オンライン家族名変更:', value.value);
+    setForm((prevForm: any) => ({
+      ...prevForm,
+      family: {
+        ...prevForm.family,
+        onlineName: value,
+      },
+    }));
   };
 
   const handleFamilyIdChange = (value: FamilyDisplayId) => {
     console.log('家族ID変更:', value.value);
+    setForm((prevForm: any) => ({
+      ...prevForm,
+      family: {
+        ...prevForm.family,
+        displayId: value,
+      },
+    }));
   };
 
   const handleIconSelect = () => {
@@ -398,16 +419,16 @@ const DemoFamilyRegisterPageScreen: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FamilyRegisterPage
+            <FamilyRegisterPage
         form={form}
-        parent={parent}
+        parent={undefined}
         onFamilyNameChange={handleFamilyNameChange}
         onOnlineFamilyNameChange={handleOnlineFamilyNameChange}
         onFamilyIdChange={handleFamilyIdChange}
         onIconSelect={handleIconSelect}
         onParentEdit={handleParentEdit}
         onSubmit={handleSubmit}
-        isValid={true}
+        isValid={form.isValid}
         isLoading={false}
         disabled={false}
       />

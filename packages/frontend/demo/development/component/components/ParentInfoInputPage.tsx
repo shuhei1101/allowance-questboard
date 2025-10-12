@@ -91,7 +91,7 @@ export const ParentInfoInputPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInput
-              parent={selectedParent}
+              parentName={selectedParent?.name}
               onPress={handleParentEdit}
               disabled={disabled}
             />
@@ -105,7 +105,7 @@ export const ParentInfoInputPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInput
-              parent={undefined}
+              parentName={undefined}
               onPress={() => Alert.alert('親情報編集', '基本状態の親情報編集')}
             />
           </View>
@@ -118,7 +118,7 @@ export const ParentInfoInputPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInput
-              parent={sampleParents[0]}
+              parentName={sampleParents[0].name}
               onPress={() => Alert.alert('親情報編集', '田中太郎の情報を編集')}
             />
           </View>
@@ -131,7 +131,7 @@ export const ParentInfoInputPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInput
-              parent={sampleParents[1]}
+              parentName={sampleParents[1].name}
               onPress={() => {}}
               disabled
             />
@@ -145,7 +145,7 @@ export const ParentInfoInputPage: React.FC = () => {
           </Text>
           <View style={[styles.example, { backgroundColor: colors.surface.elevated }]}>
             <ParentInfoInput
-              parent={undefined}
+              parentName={undefined}
               onPress={() => Alert.alert('カスタム', 'カスタムプレースホルダー')}
               placeholder="親情報を設定してください"
             />

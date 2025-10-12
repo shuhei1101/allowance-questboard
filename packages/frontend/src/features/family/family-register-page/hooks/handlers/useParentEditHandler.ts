@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { FamilyRegisterForm } from '../models/familyRegisterForm';
-import { ParentForm } from '../../../parent/parent-edit-page/models/parentForm';
-import { AppStackParamList } from '../../../../../AppNavigator';
-import { ParentStackMeta } from '../../../parent/ParentNavigator';
+import { FamilyRegisterForm } from '../../models/familyRegisterForm';
+import { ParentForm } from '../../../../parent/parent-edit-page/models/parentForm';
+import { AppStackParamList } from '../../../../../../AppNavigator';
+import { ParentStackMeta } from '../../../../parent/ParentNavigator';
 import { Email } from '@backend/features/auth/value-object/email';
 import { Password } from '@backend/features/auth/value-object/password';
 
