@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { ConfirmButton } from '../../shared/components/ConfirmButton';
+import { ConfirmButton } from '../../shared/components/ComfirmButton';
 import { useTheme } from '@/core/theme';
 import { useTranslation } from '@/core/i18n/useTranslation';
 import { useAppNavigation } from '../../../../AppNavigator';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { LoginPage } from './login-page/LoginPage';
+import { LoginPage, LoginPageProps } from './login-page/LoginPage';
 import { UserRegisterPage } from './create-user-page/UserRegisterPage';
 import { RoleSelectPage, RoleSelectPageProps } from './role-select-page/RoleSelectPage';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 export const AuthStackMeta = {
   name: 'Auth',
@@ -16,15 +16,18 @@ export const AuthStackMeta = {
 
 // 認証関連のナビゲーションパラメータ型定義
 export type AuthStackParamList = {
-  Login: undefined;
+  Login: LoginPageProps;
   UserRegister: undefined;
   RoleSelect: RoleSelectPageProps;
-  EmailVerify: {
-    email: string;
-  };
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
+
+/** LoginPageラッパー */
+const LoginPageWrapper: React.FC = () => {
+  const route = useRoute<RouteProp<AuthStackParamList, typeof AuthStackMeta.screens.login>>();
+  return <LoginPage {...route.params} />;
+};
 
 /** 認証関連のナビゲーター
  *
@@ -33,14 +36,11 @@ export function AuthNavigator() {
   return (
     <AuthStack.Navigator
       initialRouteName={AuthStackMeta.screens.login}
-      screenOptions={{
-        headerShown: false,
-      }}
       {...({} as any)}
     >
       <AuthStack.Screen 
         name={AuthStackMeta.screens.login}
-        component={LoginPage} 
+        component={LoginPageWrapper}
       />
       <AuthStack.Screen 
         name={AuthStackMeta.screens.userRegister}

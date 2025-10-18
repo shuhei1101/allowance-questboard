@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer, NavigationProp, NavigatorScreenParams, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthNavigator, AuthStackMeta as AuthStackMeta, AuthStackParamList } from '@/features/auth/AuthNavigator';
@@ -7,16 +6,17 @@ import { ParentNavigator, ParentStackMeta, ParentStackParamList } from '@/featur
 import { CommonNavigator, CommonStackMeta, CommonStackParamList } from '@/features/shared/CommonNavigator';
 import { DemoNavigator, DemoStackMeta, DemoStackParamList } from '@demo/DemoNavigator';
 import { useTheme } from '@/core/theme';
+import { FamilyNavigator, FamilyStackMeta, FamilyStackParamList } from './src/features/family/FamilyNavigator';
 
 export const useAppNavigation = () => useNavigation<NavigationProp<AppStackParamList>>();
 
 // Navigation types - 機能別Navigatorを組み合わせる
 export type AppStackParamList = {
-  // Navigator 系
   Auth: NavigatorScreenParams<AuthStackParamList>;
   Parent: NavigatorScreenParams<ParentStackParamList>;
   Common: NavigatorScreenParams<CommonStackParamList>;
   Demo: NavigatorScreenParams<DemoStackParamList>;
+  Family: NavigatorScreenParams<FamilyStackParamList>;
 };
 
 const AppStack = createStackNavigator<AppStackParamList>();
@@ -74,6 +74,10 @@ export function AppNavigator() {
           component={ParentNavigator} 
         />
         <AppStack.Screen 
+          name={FamilyStackMeta.name}
+          component={FamilyNavigator} 
+        />
+        <AppStack.Screen 
           name={CommonStackMeta.name} 
           component={CommonNavigator} 
         />
@@ -85,9 +89,3 @@ export function AppNavigator() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-  },
-});

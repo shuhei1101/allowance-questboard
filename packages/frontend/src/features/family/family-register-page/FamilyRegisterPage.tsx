@@ -11,7 +11,7 @@ import { useSessionStore } from '../../../core/constants/sessionStore';
 import { ParentId } from '../../../../../backend/src/features/parent/value-object/parentId';
 import { createFamilyRegisterPageHandlers } from './hooks/createFamilyRegisterPageHandlers';
 import { FamilyId } from '../../../../../backend/src/features/family/value-object/familyId';
-import { ConfirmButton } from '../../shared/components/ConfirmButton';
+import { ConfirmButton } from '../../shared/components/ComfirmButton';
 import { useAppNavigation } from '../../../../AppNavigator';
 
 export interface FamilyRegisterPageProps {

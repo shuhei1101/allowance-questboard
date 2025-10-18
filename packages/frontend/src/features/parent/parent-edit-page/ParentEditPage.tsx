@@ -10,7 +10,7 @@ import { ParentForm } from './models/parentForm';
 import { JwtStorage } from '../../auth/services/jwtStorage';
 import { useInitializeParentData } from './hooks/handlers/useParentDataInitializer';
 import { useAppNavigation } from '../../../../AppNavigator';
-import { ConfirmButton } from '../../shared/components/ConfirmButton';
+import { ConfirmButton } from '../../shared/components/ComfirmButton';
 import { useSessionStore } from '../../../core/constants/sessionStore';
 import { useIconStore } from '../../../core/constants/iconStore';
 import { useTranslation } from 'react-i18next';
@@ -24,10 +24,14 @@ export type HandleParentForm = (form: ParentForm) => void;
 /** 親情報編集画面
  * 家族の親情報を編集するためのページ */
 export interface ParentEditPageProps {
-  shouldUpdate?: boolean;  // 更新クエリを送信するかのフラグ（デフォルト: true）
-  parentId?: ParentId; // 親ID（オプション）
+  /** 更新クエリを送信するかのフラグ（デフォルト: true） */
+  shouldUpdate?: boolean;
+  /** 親ID（オプション） */
+  parentId?: ParentId;
+  /** 親フォームのハンドラー（オプション） */
   handleParentForm?: HandleParentForm;
-  initialParentForm?: ParentForm; // 初期フォームデータ（オプション）
+  /** 初期フォームデータ（オプション） */
+  initialParentForm?: ParentForm;
 }
 
 export const ParentEditPage: React.FC<ParentEditPageProps> = async ({

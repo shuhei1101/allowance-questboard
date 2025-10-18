@@ -12,20 +12,36 @@ import { useTheme } from '@/core/theme';
 import { useLoginFormStore } from './stores/loginFormStore';
 import { createLoginPageHandlers } from './hooks/createloginPageHandlers';
 import { useLoadToken, useSessionStore } from '../../../core/constants/sessionStore';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { JwtStorage } from '../services/jwtStorage';
+import { useNavigation } from '@react-navigation/native';
+
+export interface LoginPageProps {
+  /** ヘッダー表示フラグ（デフォルト: false） */
+  headerShown?: boolean;
+}
 
 /** ログインページ
  * 
  * ログイン機能全体を統合管理するメインページ */
-export const LoginPage: React.FC = () => {
+export const LoginPage: React.FC<LoginPageProps> = ({
+  headerShown,
+}) => {
   const { colors } = useTheme();
   const formStore = useLoginFormStore();
   const sessionStore = useSessionStore();
   const [isLoading, setLoading] = useState<boolean>(false);
+  const navigation = useNavigation();
 
   // JWTトークンのロード
   useLoadToken({setLoading});
+
+  // ヘッダー設定（フックは条件分岐より前に配置）
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: headerShown,
+    });
+  }, [navigation, headerShown]);
 
   // 統合フックで全ハンドラーを取得
   const {

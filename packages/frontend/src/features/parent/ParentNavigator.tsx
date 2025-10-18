@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ParentEditPage, ParentEditPageProps } from './parent-edit-page/ParentEditPage'
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 export const ParentStackMeta = {
   name: 'Parent',
@@ -15,6 +16,12 @@ export type ParentStackParamList = {
 };
 
 const ParentStack = createStackNavigator<ParentStackParamList>();
+
+/** 親情報編集画面ラッパー */
+const ParentEditPageWrapper: React.FC = () => {
+  const route = useRoute<RouteProp<ParentStackParamList, typeof ParentStackMeta.screens.parentEdit>>();
+  return <ParentEditPage {...route.params} />;
+}
 
 /**
  * 親機能関連のナビゲーター
@@ -32,7 +39,7 @@ export function ParentNavigator() {
     >
       <ParentStack.Screen 
         name={ParentStackMeta.screens.parentEdit}
-        component={ParentEditPage} 
+        component={ParentEditPageWrapper}
       />
     </ParentStack.Navigator>
   );

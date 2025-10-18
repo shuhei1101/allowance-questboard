@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useNavigation } from '@react-navigation/native';
-import { DemoStackMeta } from '../../DemoNavigator';
-import { useAppNavigation } from '../../../AppNavigator';
+import { useAppNavigation } from '../../AppNavigator';
+import { AuthStackMeta } from '../../src/features/auth/AuthNavigator';
+import { ParentStackMeta } from '../../src/features/parent/ParentNavigator';
+import { FamilyStackMeta } from '../../src/features/family/FamilyNavigator';
 
 /**
  * 画面一覧ページ
@@ -17,32 +18,20 @@ export const ScreenListPage: React.FC = () => {
     {
       id: 'login',
       title: '🔐 ログイン画面',
-      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'login' } }),
+      onPress: () => navigation.navigate(AuthStackMeta.name, { screen: AuthStackMeta.screens.login, params: { headerShown: true } }),
       color: '#10b981',
     },
     {
       id: 'family-register',
       title: '👪 家族登録画面',
-      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'family-register' } }),
+      onPress: () => navigation.navigate(FamilyStackMeta.name, { screen: FamilyStackMeta.screens.familyRegister, params: {  } }),
       color: '#8b5cf6',
     },
     {
       id: 'parent-edit',
       title: '👤 親編集画面',
-      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'parent-edit' } }),
+      onPress: () => navigation.navigate(ParentStackMeta.name, { screen: ParentStackMeta.screens.parentEdit, params: {} }),
       color: '#3b82f6',
-    },
-    {
-      id: 'child-edit',
-      title: '👶 子編集画面',
-      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'child-edit' } }),
-      color: '#f59e0b',
-    },
-    {
-      id: 'family-member-list',
-      title: '👨‍👩‍👧‍👦 家族メンバー一覧',
-      onPress: () => navigation.navigate(DemoStackMeta.name, { screen: DemoStackMeta.screens.screenLauncher, params: { screenType: 'family-member-list' } }),
-      color: '#ef4444',
     },
   ];
 

@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/theme';
-import { useAppNavigation } from '../../../AppNavigator';
-import { DemoStackMeta } from '../../DemoNavigator';
+import { useAppNavigation } from '../../AppNavigator';
+import { DemoStackMeta } from '../DemoNavigator';
+import { DemoComponentStackMeta } from './DemoComponentNavigator';
 
 /**
  * コンポーネント一覧ページ
@@ -44,107 +45,93 @@ export const ComponentListPage: React.FC = () => {
           id: 'email-input',
           name: 'EmailInputField',
           description: 'メールアドレス入力フィールド',
-          screen: DemoStackMeta.screens.emailInputPage,
+          screen: DemoComponentStackMeta.screens.emailInputPage,
         },
         {
           id: 'password-input',
           name: 'PasswordInputField', 
           description: 'パスワード入力フィールド',
-          screen: DemoStackMeta.screens.passwordInputPage,
+          screen: DemoComponentStackMeta.screens.passwordInputPage,
         },
         {
           id: 'birthday-input',
           name: 'BirthdayInputField',
           description: '誕生日入力フィールド',
-          screen: DemoStackMeta.screens.birthdayInputPage,
+          screen: DemoComponentStackMeta.screens.birthdayInputPage,
         },
         {
           id: 'save-button',
           name: 'SaveButton',
           description: '保存ボタン',
-          screen: DemoStackMeta.screens.saveButtonPage,
+          screen: DemoComponentStackMeta.screens.saveButtonPage,
         },
         {
           id: 'icon-select-button',
           name: 'IconSelectButton',
           description: 'アイコン選択ボタン',
-          screen: DemoStackMeta.screens.iconSelectButtonPage,
+          screen: DemoComponentStackMeta.screens.iconSelectButtonPage,
         },
       ],
     },
     {
       key: 'family-register-page',
       title: '👪 家族登録画面コンポーネント',
-      path: 'src/features/familyRegister/components',
+      path: 'src/features/familyRegister/',
       description: '家族登録画面で使用されているコンポーネント',
       components: [
         {
           id: 'family-name-input',
           name: 'FamilyNameInput',
           description: '家族名入力フィールド（後ろに"家"付き）',
-          screen: DemoStackMeta.screens.familyNameInputPage,
+          screen: DemoComponentStackMeta.screens.familyNameInputPage,
         },
         {
           id: 'family-name-input-entry',
           name: 'FamilyNameInputEntry',
           description: 'EntryLayout付き家族名入力フィールド',
-          screen: DemoStackMeta.screens.familyNameInputEntryPage,
+          screen: DemoComponentStackMeta.screens.familyNameInputEntryPage,
         },
         {
           id: 'online-family-name-input-entry',
           name: 'OnlineFamilyNameInputEntry',
           description: 'オンライン家族名入力（ヘルプテキスト付き）',
-          screen: DemoStackMeta.screens.onlineFamilyNameInputEntryPage,
+          screen: DemoComponentStackMeta.screens.onlineFamilyNameInputEntryPage,
         },
         {
           id: 'family-id-input',
           name: 'FamilyIdInput',
           description: '家族ID入力フィールド（前に"@"マーク付き）',
-          screen: DemoStackMeta.screens.familyIdInputPage,
+          screen: DemoComponentStackMeta.screens.familyIdInputPage,
         },
         {
           id: 'family-id-input-entry',
           name: 'FamilyIdInputEntry',
           description: '家族ID入力エントリー（EntryLayout使用）',
-          screen: DemoStackMeta.screens.familyIdInputEntryPage,
+          screen: DemoComponentStackMeta.screens.familyIdInputEntryPage,
         },
         {
           id: 'icon-select-entry',
           name: 'IconSelectEntry',
           description: 'アイコン選択エントリー（NavigationEntryLayout使用）',
-          screen: DemoStackMeta.screens.iconSelectEntryPage,
+          screen: DemoComponentStackMeta.screens.iconSelectEntryPage,
         },
         {
           id: 'icon-select-input-entry',
           name: 'IconSelectInputEntry',
           description: 'アイコン選択入力エントリー（EntryLayout使用）',
-          screen: DemoStackMeta.screens.iconSelectInputEntryPage,
+          screen: DemoComponentStackMeta.screens.iconSelectInputEntryPage,
         },
         {
           id: 'parent-info-input',
           name: 'ParentInfoInput',
           description: '親情報表示エントリー（NavigationEntryLayout使用）',
-          screen: DemoStackMeta.screens.parentInfoInputPage,
+          screen: DemoComponentStackMeta.screens.parentInfoInputPage,
         },
         {
           id: 'parent-info-input-entry',
           name: 'ParentInfoInputEntry',
           description: '親情報入力エントリー（EntryLayout使用）',
-          screen: DemoStackMeta.screens.parentInfoInputEntryPage,
-        },
-      ],
-    },
-    {
-      key: 'family-register-page',
-      title: '👪 家族登録画面',
-      path: 'src/features/family/family-register-page',
-      description: '家族登録メイン画面',
-      components: [
-        {
-          id: 'family-register-page',
-          name: 'FamilyRegisterPage',
-          description: '家族登録メイン画面（全コンポーネント統合）',
-          screen: DemoStackMeta.screens.familyRegisterPageDemo,
+          screen: DemoComponentStackMeta.screens.parentInfoInputEntryPage,
         },
       ],
     },
@@ -158,7 +145,7 @@ export const ComponentListPage: React.FC = () => {
           id: 'navigation-entry-layout',
           name: 'NavigationEntryLayout',
           description: '右矢印付きナビゲーションレイアウト',
-          screen: DemoStackMeta.screens.navigationEntryLayoutPage,
+          screen: DemoComponentStackMeta.screens.navigationEntryLayoutPage,
         },
       ],
     },
@@ -223,7 +210,12 @@ export const ComponentListPage: React.FC = () => {
                 style={[styles.componentCard, { backgroundColor: colors.surface.elevated }]}
                 onPress={() => {
                   // 各コンポーネントの詳細ページに遷移
-                  navigation.navigate(component.screen as any);
+                  navigation.navigate(DemoStackMeta.name, {
+                    screen: DemoComponentStackMeta.name,
+                    params: {
+                      screen: component.screen
+                    }
+                  });
                 }}
               >
                 <View style={styles.componentInfo}>

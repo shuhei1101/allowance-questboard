@@ -11,7 +11,7 @@ import { AppError } from '@backend/core/errors/appError';
 import { LocaleString } from '@backend/core/messages/localeString';
 import { OnIconSelected } from './hooks/handlers/useConfirmHandler';
 import { useAppNavigation } from '../../../../AppNavigator';
-import { ConfirmButton } from '../../shared/components/ConfirmButton';
+import { ConfirmButton } from '../../shared/components/ComfirmButton';
 import { useIconStore } from '../../../core/constants/iconStore';
 
 export interface IconSelectPageProps {

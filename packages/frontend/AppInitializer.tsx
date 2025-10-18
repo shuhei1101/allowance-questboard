@@ -24,8 +24,8 @@ export const AppInitializer: React.FC<{children: React.ReactNode}> = ({children}
     const init = async () => {
       try {
         // マスタデータ初期化
-        setLoadingMessage("マスタデータを読み込んでいます... 🚀");
-        console.log("マスタデータを読み込んでいます... 🚀");
+        setLoadingMessage("マスタデータを読み込んでいますaaa... 🚀");
+        console.log("マスタデータを読み込んでいます...aaa 🚀");
         console.log('🚀 マスタデータ初期化開始...');
         await initMasterData({
           getMasterData: trpcClient.init.getMasterData,

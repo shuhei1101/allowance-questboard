@@ -36,9 +36,9 @@ export const ParentInfoInput: React.FC<ParentInfoInputProps> = ({
         <Text style={[
           styles.text, 
           { 
-            color: parent ? colors.text.primary : colors.text.secondary,
-            fontWeight: parent ? '500' : 'normal',
-            fontStyle: parent ? 'normal' : 'italic',
+            color: parentName ? colors.text.primary : colors.text.secondary,
+            fontWeight: parentName ? '500' : 'normal',
+            fontStyle: parentName ? 'normal' : 'italic',
           }
         ]}>
           {parentName ? `${parentName.value}` : placeholder}
